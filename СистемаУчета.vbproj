@@ -1,0 +1,552 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{F4A4201D-1040-4A0E-9C23-3DC969A1091C}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <StartupObject>WindowsApp2.My.MyApplication</StartupObject>
+    <RootNamespace>WindowsApp2</RootNamespace>
+    <AssemblyName>WindowsApp2</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <MyType>WindowsForms</MyType>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile>WindowsApp2.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DocumentationFile>WindowsApp2.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionExplicit>On</OptionExplicit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionCompare>Binary</OptionCompare>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionStrict>Off</OptionStrict>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionInfer>On</OptionInfer>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DocumentationFile>WindowsApp2.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DocumentationFile>WindowsApp2.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DocumentationFile>WindowsApp2.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DocumentationFile>WindowsApp2.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Приложение\ВедомостиБланки\Иконки\A2.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="BouncyCastle.Crypto, Version=1.9.0.0, Culture=neutral, PublicKeyToken=0e99375e54769942, processorArchitecture=MSIL">
+      <HintPath>packages\Portable.BouncyCastle.1.9.0\lib\net40\BouncyCastle.Crypto.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Protobuf, Version=3.19.4.0, Culture=neutral, PublicKeyToken=a7d26565bac4d604, processorArchitecture=MSIL">
+      <HintPath>packages\Google.Protobuf.3.19.4\lib\net45\Google.Protobuf.dll</HintPath>
+    </Reference>
+    <Reference Include="K4os.Compression.LZ4, Version=1.2.6.0, Culture=neutral, PublicKeyToken=2186fa9121ef231d, processorArchitecture=MSIL">
+      <HintPath>packages\K4os.Compression.LZ4.1.2.6\lib\net46\K4os.Compression.LZ4.dll</HintPath>
+    </Reference>
+    <Reference Include="K4os.Compression.LZ4.Streams, Version=1.2.6.0, Culture=neutral, PublicKeyToken=2186fa9121ef231d, processorArchitecture=MSIL">
+      <HintPath>packages\K4os.Compression.LZ4.Streams.1.2.6\lib\net46\K4os.Compression.LZ4.Streams.dll</HintPath>
+    </Reference>
+    <Reference Include="K4os.Hash.xxHash, Version=1.0.6.0, Culture=neutral, PublicKeyToken=32cd54395057cec3, processorArchitecture=MSIL">
+      <HintPath>packages\K4os.Hash.xxHash.1.0.6\lib\net46\K4os.Hash.xxHash.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Data, Version=8.0.31.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <HintPath>packages\MySql.Data.8.0.31\lib\net452\MySql.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Configuration.Install" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\System.Memory.4.5.4\lib\net461\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Runtime.CompilerServices.Unsafe.5.0.0\lib\net45\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="ZstdNet, Version=1.4.5.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <HintPath>packages\MySql.Data.8.0.31\lib\net452\ZstdNet.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.Data" />
+    <Import Include="System.Drawing" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Windows.Forms" />
+    <Import Include="System.Linq" />
+    <Import Include="System.Xml.Linq" />
+    <Import Include="System.Threading.Tasks" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ApplicationEvents.vb" />
+    <Compile Include="Tables_control.designer.vb">
+      <DependentUpon>Tables_control.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Tables_control.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Приложение\Organization.vb" />
+    <Compile Include="Приложение\Doljnosti.vb" />
+    <Compile Include="Приложение\Programm.vb" />
+    <Compile Include="Приложение\SqlQueryString.vb" />
+    <Compile Include="Приложение\Worker.vb" />
+    <Compile Include="Приложение\Gruppa.vb" />
+    <Compile Include="Приложение\Prikaz.vb" />
+    <Compile Include="Приложение\Slushatel.vb" />
+    <Compile Include="Приложение\БазаД\MySQLConnect.vb" />
+    <Compile Include="Приложение\БазаД\QueryString.vb" />
+    <Compile Include="Приложение\Интерфейс\ListViewItemComparer.vb" />
+    <Compile Include="Приложение\Интерфейс\ListViewLib.vb" />
+    <Compile Include="Приложение\ПриказыКниги\ПП_ПриложениеКДиплому.vb" />
+    <Compile Include="Приложение\ПриказыКниги\ПО_Свидетельство.vb" />
+    <Compile Include="Приложение\ПриказыКниги\Приказ_Практика.vb" />
+    <Compile Include="Приложение\ПриказыКниги\Приказ_ДопускКИА.vb" />
+    <Compile Include="Приложение\ПриказыКниги\Приказ_Окончание.vb" />
+    <Compile Include="Приложение\ПриказыКниги\Приказ_Отчисление.vb" />
+    <Compile Include="Приложение\ПриказыКниги\Приказ_Зачисление.vb" />
+    <Compile Include="Приложение\Отчеты\ПеднагрузкаОтчет.vb" />
+    <Compile Include="Приложение\Интерфейс\ДействияСДатаГрид.vb" />
+    <Compile Include="Приложение\Формы\ВедомостьПеднагрузка.Designer.vb">
+      <DependentUpon>ВедомостьПеднагрузка.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Приложение\Формы\ВедомостьПеднагрузка.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Приложение\ВедомостиБланки\СправкаОбОкончании.vb" />
+    <Compile Include="Приложение\ВедомостиБланки\СправкаОбОбучении.vb" />
+    <Compile Include="Приложение\ВедомостиБланки\ВедомостьПромежуточнойАттестации.vb" />
+    <Compile Include="Приложение\ВедомостиБланки\ДоверенностьПолученияБланковНаГруппу.vb" />
+    <Compile Include="Приложение\ВедомостиБланки\ВедомостьСлушИОрг.vb" />
+    <Compile Include="Приложение\ПриказыКниги\Спецэкзамен_приказ.vb" />
+    <Compile Include="Приложение\ПриказыКниги\КнигаУчетаСпецэкзамен.vb" />
+    <Compile Include="Приложение\Интерфейс\МСВорд.vb" />
+    <Compile Include="Приложение\ПриказыКниги\ПК_Окончание.vb" />
+    <Compile Include="Приложение\ПриказыКниги\КнигаУчетаФРДО.vb" />
+    <Compile Include="Приложение\ПриказыКниги\КнигаУчета.vb" />
+    <Compile Include="Приложение\ВедомостиБланки\АДействияСОценкиИА.vb" />
+    <Compile Include="Приложение\Формы\АОценкиИА.Designer.vb">
+      <DependentUpon>АОценкиИА.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Приложение\Формы\АОценкиИА.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Приложение\Формы\НастройкаСортировкиСлушателей.Designer.vb">
+      <DependentUpon>НастройкаСортировкиСлушателей.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Приложение\Формы\НастройкаСортировкиСлушателей.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Приложение\Формы\НастройкаСортировкиГрупп.Designer.vb">
+      <DependentUpon>НастройкаСортировкиГрупп.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Приложение\Формы\НастройкаСортировкиГрупп.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Приложение\Формы\НастройкаПоискаГрупп.Designer.vb">
+      <DependentUpon>НастройкаПоискаГрупп.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Приложение\Формы\НастройкаПоискаГрупп.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Приложение\Формы\НастройкаПоискаСлушателей.Designer.vb">
+      <DependentUpon>НастройкаПоискаСлушателей.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Приложение\Формы\НастройкаПоискаСлушателей.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Приложение\Формы\ЗавершениеРаботы.Designer.vb">
+      <DependentUpon>ЗавершениеРаботы.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Приложение\Формы\ЗавершениеРаботы.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Приложение\Формы\Загрузка.Designer.vb">
+      <DependentUpon>Загрузка.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Приложение\Формы\Загрузка.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Приложение\ВедомостиБланки\АДействияСОВедомостью.vb" />
+    <Compile Include="Приложение\Формы\АОценочнаяВедомость.Designer.vb">
+      <DependentUpon>АОценочнаяВедомость.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Приложение\Формы\АОценочнаяВедомость.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Приложение\БазаД\АА.Тренеровочный.vb" />
+    <Compile Include="Приложение\ПриказыКниги\АПриказ2Часть.vb" />
+    <Compile Include="Приложение\ВедомостиБланки\Бланки.vb" />
+    <Compile Include="Приложение\Интерфейс\Интерфейс.vb" />
+    <Compile Include="Приложение\Интерфейс\Вспомогательный.vb" />
+    <Compile Include="Приложение\Формы\Предупреждение.Designer.vb">
+      <DependentUpon>Предупреждение.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Приложение\Формы\Предупреждение.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="My Project\Module1.bas" />
+    <Compile Include="Приложение\Интерфейс\ОчиститьПоляФормы.vb" />
+    <Compile Include="Приложение\Формы\АСформироватьПриказ.Designer.vb">
+      <DependentUpon>АСформироватьПриказ.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Приложение\Формы\АСформироватьПриказ.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Приложение\ПриказыКниги\АПриказ.vb" />
+    <Compile Include="Приложение\Интерфейс\УбратьПустотыВМассиве.vb" />
+    <Compile Include="Приложение\Отчеты\ЗаписьИнформацииДляОтчетаExcell.vb" />
+    <Compile Include="Приложение\Интерфейс\ИзменениеВыделеннойСтрокиВListView.vb" />
+    <Compile Include="Приложение\Справочники\ЗаполнитьФормуССлушВГруппе.vb" />
+    <Compile Include="Приложение\Формы\СписокСлушателейВГруппе.Designer.vb">
+      <DependentUpon>СписокСлушателейВГруппе.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Приложение\Формы\СписокСлушателейВГруппе.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Приложение\Справочники\ЗаполнитьРедакторСлушателя.vb" />
+    <Compile Include="Приложение\Формы\РедакторСлушателя.Designer.vb">
+      <DependentUpon>РедакторСлушателя.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Приложение\Формы\РедакторСлушателя.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Приложение\БазаД\СвязьСБазой.vb" />
+    <Compile Include="Приложение\Справочники\ЗаполнитьРедакторГруппы.vb" />
+    <Compile Include="Приложение\Формы\РедакторГруппы.Designer.vb">
+      <DependentUpon>РедакторГруппы.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Приложение\Формы\РедакторГруппы.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Приложение\Формы\НовыйСлушатель.Designer.vb">
+      <DependentUpon>НовыйСлушатель.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Приложение\Формы\НовыйСлушатель.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Приложение\Формы\ФормаДаНетУдалить.Designer.vb">
+      <DependentUpon>ФормаДаНетУдалить.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Приложение\Формы\ФормаДаНетУдалить.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Приложение\Формы\ФормаДаНет.Designer.vb">
+      <DependentUpon>ФормаДаНет.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Приложение\Формы\ФормаДаНет.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Приложение\БазаД\ИдентифицироватьБазу.vb" />
+    <Compile Include="Приложение\Формы\ФормаСписок.Designer.vb">
+      <DependentUpon>ФормаСписок.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Приложение\Формы\ФормаСписок.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Приложение\Формы\НоваяГруппа.Designer.vb">
+      <DependentUpon>НоваяГруппа.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Приложение\Формы\НоваяГруппа.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Приложение\БазаД\ЗаписьВБазу.vb" />
+    <Compile Include="Приложение\Интерфейс\ДобавитьРубашку.vb" />
+    <Compile Include="Приложение\Формы\СправочникГруппы.Designer.vb">
+      <DependentUpon>СправочникГруппы.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Приложение\Формы\СправочникГруппы.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Приложение\Интерфейс\ЗаписьВListView.vb" />
+    <Compile Include="Приложение\Формы\ААОсновная.Designer.vb">
+      <DependentUpon>ААОсновная.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Приложение\Формы\ААОсновная.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Приложение\Интерфейс\Запуск.vb" />
+    <Compile Include="Приложение\Формы\СправочникСлушатели.Designer.vb">
+      <DependentUpon>СправочникСлушатели.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Приложение\Формы\СправочникСлушатели.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Приложение\Интерфейс\АнализСнилс.vb" />
+    <Compile Include="Приложение\БазаД\Поиск.vb" />
+    <Compile Include="Приложение\БазаД\ЗагрузитьИзБазы.vb" />
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Tables_control.resx">
+      <DependentUpon>Tables_control.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Приложение\Формы\АОценкиИА.resx">
+      <DependentUpon>АОценкиИА.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Приложение\Формы\ВедомостьПеднагрузка.resx">
+      <DependentUpon>ВедомостьПеднагрузка.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Приложение\Формы\НастройкаСортировкиСлушателей.resx">
+      <DependentUpon>НастройкаСортировкиСлушателей.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Приложение\Формы\НастройкаСортировкиГрупп.resx">
+      <DependentUpon>НастройкаСортировкиГрупп.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Приложение\Формы\НастройкаПоискаГрупп.resx">
+      <DependentUpon>НастройкаПоискаГрупп.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Приложение\Формы\НастройкаПоискаСлушателей.resx">
+      <DependentUpon>НастройкаПоискаСлушателей.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Приложение\Формы\ЗавершениеРаботы.resx">
+      <DependentUpon>ЗавершениеРаботы.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Приложение\Формы\Загрузка.resx">
+      <DependentUpon>Загрузка.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Приложение\Формы\АОценочнаяВедомость.resx">
+      <DependentUpon>АОценочнаяВедомость.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Приложение\Формы\Предупреждение.resx">
+      <DependentUpon>Предупреждение.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Приложение\Формы\СписокСлушателейВГруппе.resx">
+      <DependentUpon>СписокСлушателейВГруппе.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Приложение\Формы\РедакторСлушателя.resx">
+      <DependentUpon>РедакторСлушателя.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Приложение\Формы\РедакторГруппы.resx">
+      <DependentUpon>РедакторГруппы.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Приложение\Формы\НовыйСлушатель.resx">
+      <DependentUpon>НовыйСлушатель.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Приложение\Формы\АСформироватьПриказ.resx">
+      <DependentUpon>АСформироватьПриказ.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Приложение\Формы\ФормаДаНетУдалить.resx">
+      <DependentUpon>ФормаДаНетУдалить.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Приложение\Формы\ФормаДаНет.resx">
+      <DependentUpon>ФормаДаНет.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Приложение\Формы\ФормаСписок.resx">
+      <DependentUpon>ФормаСписок.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Приложение\Формы\НоваяГруппа.resx">
+      <DependentUpon>НоваяГруппа.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Приложение\Формы\СправочникГруппы.resx">
+      <DependentUpon>СправочникГруппы.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Приложение\Формы\ААОсновная.resx">
+      <DependentUpon>ААОсновная.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Приложение\Формы\СправочникСлушатели.resx">
+      <DependentUpon>СправочникСлушатели.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="ADODB">
+      <Guid>{B691E011-1797-432E-907A-4D8C69339129}</Guid>
+      <VersionMajor>6</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="ADOR">
+      <Guid>{00000300-0000-0010-8000-00AA006D2EA4}</Guid>
+      <VersionMajor>6</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="Microsoft.Office.Core">
+      <Guid>{2DF8D04C-5BFA-101B-BDE5-00AA0044DE52}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>8</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="Microsoft.Office.Interop.Word">
+      <Guid>{00020905-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>8</VersionMajor>
+      <VersionMinor>7</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="stdole">
+      <Guid>{00020430-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="VBIDE">
+      <Guid>{0002E157-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>5</VersionMajor>
+      <VersionMinor>3</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\lefth.png" />
+    <None Include="Resources\Group 7.png" />
+    <None Include="Resources\bottom.png" />
+    <None Include="Resources\top.png" />
+    <None Include="Resources\plus.png" />
+    <None Include="Resources\ok.png" />
+    <Content Include="Приложение\ВедомостиБланки\Иконки\000.ico" />
+    <Content Include="Приложение\ВедомостиБланки\Иконки\A2.ico" />
+    <None Include="packages.config" />
+    <None Include="Приложение\ВедомостиБланки\Иконки\icons8-сохранить-50.png" />
+    <None Include="Приложение\ВедомостиБланки\Иконки\diskette.png" />
+    <None Include="Приложение\ВедомостиБланки\Иконки\ОбновитьБазу %282%29.png" />
+    <None Include="Приложение\ВедомостиБланки\Иконки\ОбновитьБазу.png" />
+    <None Include="Приложение\ВедомостиБланки\Иконки\добавитьКлиента.png" />
+    <None Include="Приложение\ВедомостиБланки\Иконки\поиск.png" />
+    <None Include="Resources\file_icon_129474.ico" />
+    <None Include="Resources\file_icon_129474.png" />
+    <None Include="Resources\1497559423-upload-file_85001.png" />
+    <None Include="Resources\1497559423-upload-file_85001 %281%29.png" />
+    <None Include="Resources\поиск.png" />
+    <None Include="Resources\icons8-загрузка-обновлений-50.png" />
+    <None Include="Resources\icons8-загрузка-обновлений-30.png" />
+    <Content Include="My Project\Сортировка.png" />
+    <Content Include="Resources\Лупа.png" />
+    <Content Include="Resources\поВозрастанию35.png" />
+    <Content Include="Resources\поУбыванию35.png" />
+    <Content Include="Resources\Сортировка.png" />
+    <Content Include="Resources\Сортировка35.png" />
+    <Content Include="Resources\сортировка50.png" />
+    <Content Include="Приложение\ВедомостиБланки\Иконки\А.ico" />
+    <None Include="Приложение\ВедомостиБланки\Иконки\треугольник3.jpg" />
+    <None Include="Приложение\ВедомостиБланки\Иконки\Плей.jpg" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
+</Project>

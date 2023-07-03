@@ -1,0 +1,112 @@
+﻿Module Поиск
+    Function Поиск(str As String, mass As Object, Optional ПоискПоСтолбцуНомер As Integer = 0) As Object
+        Dim schet1 As Long
+        Dim schet2 As Long
+        Dim schet3 As Long
+        Dim ChMass As Object
+        Dim Dlina As Integer
+        Dim stroka As String
+        Dlina = Len(str)
+        schet1 = UBound(mass, 2)
+
+        schet2 = 0
+        schet3 = 0
+
+        If mass(0, 0).ToString = "нет записей" Then
+            Поиск = mass
+            Exit Function
+        End If
+
+        While schet2 <= schet1
+
+            stroka = Left(mass(ПоискПоСтолбцуНомер, schet2), Dlina)
+
+            If Not str = "" Then
+
+                If LCase(str) = LCase(stroka) Then
+
+                    schet3 = schet3 + 1
+
+                End If
+
+
+            End If
+
+
+            schet2 = schet2 + 1
+
+
+        End While
+
+        If schet3 = 1 Then
+            ReDim ChMass(UBound(mass, 1), schet3 - 1)
+            ЗаписьВListView.массивПуст = False
+        ElseIf schet3 = 0 Then
+            ReDim ChMass(1, 1)
+            ChMass(0, 0) = "нет записей"
+            ЗаписьВListView.массивПуст = True
+        Else ReDim ChMass(UBound(mass, 1), schet3 - 1)
+            ЗаписьВListView.массивПуст = False
+        End If
+
+        schet3 = 0
+        schet2 = 0
+
+        While schet2 <= schet1
+
+            stroka = Left(mass(ПоискПоСтолбцуНомер, schet2), Dlina)
+
+            If Not str = "" Then
+
+
+                If LCase(str) = LCase(stroka) Then
+                    ChMass(0, schet3) = mass(0, schet2)
+                    If UBound(mass, 1) >= 1 Then ChMass(1, schet3) = mass(1, schet2)
+                    If UBound(mass, 1) >= 2 Then ChMass(2, schet3) = mass(2, schet2)
+                    If UBound(mass, 1) >= 3 Then ChMass(3, schet3) = mass(3, schet2)
+                    If UBound(mass, 1) >= 4 Then ChMass(4, schet3) = mass(4, schet2)
+                    If UBound(mass, 1) >= 5 Then ChMass(5, schet3) = mass(5, schet2)
+                    If UBound(mass, 1) >= 6 Then ChMass(6, schet3) = mass(6, schet2)
+                    schet3 = schet3 + 1
+
+                End If
+
+            End If
+
+
+            schet2 = schet2 + 1
+
+
+        End While
+
+        Поиск = ChMass
+
+
+    End Function
+
+    Function SQLПоиск(str As String, Таблица As String, НазванияСтолбцов As String, СтолбецДляПоиска As String, СтолбецДляСортировки As String) As Object
+
+        Dim СтрокаЗапроса As String
+        Dim ChMass As Object
+        Dim Dlina As Integer
+        Dim счетчик As Integer
+        Dlina = Len(str)
+
+        счетчик = 0
+
+        If Таблица = "Группа" Then
+            СтрокаЗапроса = load_spr_group_search(СправочникГруппы.СГУровеньКвалификации.Text, СтолбецДляСортировки, СтолбецДляПоиска, str, СправочникГруппы.yearSpravochnikGr.Text)
+            'СтрокаЗапроса = "SELECT " & НазванияСтолбцов & " FROM " & Таблица & " WHERE  (((" & СтолбецДляПоиска & ") LIKE " & Chr(39) & str & "%" & Chr(39) & " )) AND УровеньКвалификации='" + СправочникГруппы.СГУровеньКвалификации.Text + "' ORDER BY " & СтолбецДляСортировки
+        Else
+            СтрокаЗапроса = "SELECT " & НазванияСтолбцов & " FROM " & Таблица & " WHERE  (((" & СтолбецДляПоиска & ") LIKE " & Chr(39) & str & "%" & Chr(39) & " )) ORDER BY " & СтолбецДляСортировки
+
+        End If
+
+        ChMass = ААОсновная.mySqlConnect.ЗагрузитьИзБДMySQLвМассив(СтрокаЗапроса, 1)
+        ChMass = УбратьПустотыВМассиве.УбратьПустотыВМассиве(ChMass)
+
+        SQLПоиск = ChMass
+
+    End Function
+
+End Module
