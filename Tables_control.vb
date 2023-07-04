@@ -14,7 +14,7 @@ Public Class Tables_control
     Public queryString_load As String
     Private queryString As String
 
-    Private result As New DataTable
+    Private result As DataTable
 
     Public number_column As Int16 'количество столбцов в таблице
 
@@ -54,11 +54,19 @@ Public Class Tables_control
             SplitContainer_second.Panel2Collapsed = False
             redactor_name_element_second.Text = names.redactor_element_second
 
+        Else
+
+            SplitContainer_second.Panel2Collapsed = True
+
         End If
 
         redactor_name_element_first.Text = names.redactor_element_first
 
         SplitContainer_main.Panel2Collapsed = True
+
+        result = New DataTable
+
+        DataGridTablesResult.DataSource = result
 
         load_table()
 

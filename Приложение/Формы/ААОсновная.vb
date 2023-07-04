@@ -41,6 +41,7 @@ Public Class ААОсновная
     Private flag_worker_dolgnost As Boolean
     Private flag_worker_type As Boolean
     Public tbl_obrazovanie As New Tables_control
+    Private sqlQueryString As New SqlQueryString
 
 
     Private Sub Основная_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -4344,31 +4345,15 @@ Public Class ААОсновная
 
         ElseIf ToolStrip_name_list.Text = "Должности" Then
 
-            tbl_obrazovanie.Visible = False
-            SplitContainerOtherList.Visible = True
-
+            SplitContainerOtherList.Visible = False
             ToolStripButton1.Visible = False
-            SplitContainerOtherList.Panel2Collapsed = True
-            loadTblDoljnosti()
-            DataGridView_list.Visible = False
-            DataGridDoljnost.Visible = True
-            SplitContainer_dolj_org.Visible = True
-            SplitContainer_dolj_org.Panel2Collapsed = True
-            'redactor_doljnost.Visible = True
+            connect_table_doljnosti()
 
         ElseIf ToolStrip_name_list.Text = "Организации" Then
 
-            tbl_obrazovanie.Visible = False
-            SplitContainerOtherList.Visible = True
-
+            SplitContainerOtherList.Visible = False
             ToolStripButton1.Visible = False
-            SplitContainerOtherList.Panel2Collapsed = True
-            loadTblOrganization()
-            DataGridView_list.Visible = False
-            DataGridDoljnost.Visible = True
-            SplitContainer_dolj_org.Visible = True
-            SplitContainer_dolj_org.Panel2Collapsed = False
-            'redactor_doljnost.Visible = True
+            connect_table_organization()
 
         ElseIf ToolStrip_name_list.Text = "Образование" Then
 
@@ -4377,6 +4362,28 @@ Public Class ААОсновная
             connect_table_obrazovanie()
 
         End If
+
+    End Sub
+
+    Private Sub connect_table_doljnosti()
+
+        tbl_obrazovanie.Parent = Panel_main
+        tbl_obrazovanie.Visible = True
+        tbl_obrazovanie.Dock = DockStyle.Fill
+        tbl_obrazovanie.number_column = 1
+
+        tbl_obrazovanie.queryString_load = sqlQueryString.load_list_doljnosti()
+
+        tbl_obrazovanie.persent_width_column_0 = 98
+        tbl_obrazovanie.persent_width_column_1 = 1
+
+        tbl_obrazovanie.names.redactor_element_first = "Наименование"
+        tbl_obrazovanie.names.db_element_first = "name"
+        tbl_obrazovanie.name_table = "doljnost"
+
+        tbl_obrazovanie.kod_number = 1
+
+        tbl_obrazovanie.table_init()
 
     End Sub
 
@@ -4396,15 +4403,37 @@ Public Class ААОсновная
 
         tbl_obrazovanie.persent_width_column_0 = 98
         tbl_obrazovanie.persent_width_column_1 = 1
-        'tbl_obrazovanie.persent_width_column_2 = 1
 
         tbl_obrazovanie.names.redactor_element_first = "Наименование"
-        'tbl_obrazovanie.names.redactor_element_second = "Полное наименование"
         tbl_obrazovanie.names.db_element_first = "name"
-        'tbl_obrazovanie.names.db_element_second = "full_name"
         tbl_obrazovanie.name_table = "doo_vid_dok"
 
         tbl_obrazovanie.kod_number = 1
+
+        tbl_obrazovanie.table_init()
+
+    End Sub
+
+    Private Sub connect_table_organization()
+
+        tbl_obrazovanie.Parent = Panel_main
+        tbl_obrazovanie.Visible = True
+        tbl_obrazovanie.Dock = DockStyle.Fill
+        tbl_obrazovanie.number_column = 2
+
+        tbl_obrazovanie.queryString_load = sqlQueryString.load_list_organization()
+
+        tbl_obrazovanie.persent_width_column_0 = 30
+        tbl_obrazovanie.persent_width_column_1 = 67
+        tbl_obrazovanie.persent_width_column_2 = 1
+
+        tbl_obrazovanie.names.redactor_element_first = "Наименование"
+        tbl_obrazovanie.names.redactor_element_second = "Полное наименование"
+        tbl_obrazovanie.names.db_element_first = "name"
+        tbl_obrazovanie.names.db_element_second = "full_name"
+        tbl_obrazovanie.name_table = "napr_organization"
+
+        tbl_obrazovanie.kod_number = 2
 
         tbl_obrazovanie.table_init()
 
