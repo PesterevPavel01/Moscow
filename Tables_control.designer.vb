@@ -116,7 +116,7 @@ Partial Class Tables_control
         Me.SplitContainer_second.Panel2.Controls.Add(Me.SplitContainer4)
         Me.SplitContainer_second.Panel2Collapsed = True
         Me.SplitContainer_second.Size = New System.Drawing.Size(668, 185)
-        Me.SplitContainer_second.SplitterDistance = 25
+        Me.SplitContainer_second.SplitterDistance = 92
         Me.SplitContainer_second.TabIndex = 0
         '
         'SplitContainer_first
@@ -173,7 +173,7 @@ Partial Class Tables_control
         'SplitContainer4.Panel2
         '
         Me.SplitContainer4.Panel2.Controls.Add(Me.SplitContainer5)
-        Me.SplitContainer4.Size = New System.Drawing.Size(150, 46)
+        Me.SplitContainer4.Size = New System.Drawing.Size(668, 89)
         Me.SplitContainer4.SplitterDistance = 25
         Me.SplitContainer4.TabIndex = 1
         '
@@ -185,7 +185,7 @@ Partial Class Tables_control
         Me.redactor_name_element_second.Multiline = True
         Me.redactor_name_element_second.Name = "redactor_name_element_second"
         Me.redactor_name_element_second.ReadOnly = True
-        Me.redactor_name_element_second.Size = New System.Drawing.Size(150, 25)
+        Me.redactor_name_element_second.Size = New System.Drawing.Size(668, 25)
         Me.redactor_name_element_second.TabIndex = 1
         '
         'SplitContainer5
@@ -204,7 +204,7 @@ Partial Class Tables_control
         '
         Me.SplitContainer5.Panel2.Controls.Add(Me.SplitContainer6)
         Me.SplitContainer5.Panel2Collapsed = True
-        Me.SplitContainer5.Size = New System.Drawing.Size(150, 25)
+        Me.SplitContainer5.Size = New System.Drawing.Size(668, 60)
         Me.SplitContainer5.SplitterDistance = 25
         Me.SplitContainer5.TabIndex = 1
         '
@@ -214,7 +214,7 @@ Partial Class Tables_control
         Me.redactor_element_second.Location = New System.Drawing.Point(0, 0)
         Me.redactor_element_second.Multiline = True
         Me.redactor_element_second.Name = "redactor_element_second"
-        Me.redactor_element_second.Size = New System.Drawing.Size(150, 50)
+        Me.redactor_element_second.Size = New System.Drawing.Size(668, 60)
         Me.redactor_element_second.TabIndex = 1
         '
         'SplitContainer6
@@ -232,7 +232,7 @@ Partial Class Tables_control
         'SplitContainer6.Panel2
         '
         Me.SplitContainer6.Panel2.Controls.Add(Me.TextBox6)
-        Me.SplitContainer6.Size = New System.Drawing.Size(150, 54)
+        Me.SplitContainer6.Size = New System.Drawing.Size(150, 46)
         Me.SplitContainer6.SplitterDistance = 25
         Me.SplitContainer6.TabIndex = 1
         '

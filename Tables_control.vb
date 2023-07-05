@@ -601,11 +601,15 @@ Public Class Tables_control
         Dim curNumber = DataGridTablesResult.CurrentCell.RowIndex
 
         If IsNumeric(DataGridTablesResult.Rows(curNumber).Cells(kod_number).Value) Then
+
             values.kod = Convert.ToInt64(DataGridTablesResult.Rows(curNumber).Cells(kod_number).Value)
             values.element_first = Convert.ToString(DataGridTablesResult.Rows(curNumber).Cells(0).Value)
             values.element_second = Convert.ToString(DataGridTablesResult.Rows(curNumber).Cells(1).Value)
+
         Else
+
             Return
+
         End If
 
         redactor_element_first.Text = DataGridTablesResult.Rows(curNumber).Cells(0).Value

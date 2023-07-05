@@ -150,7 +150,6 @@ Partial Class ААОсновная
         Me.SplitContainerOther = New System.Windows.Forms.SplitContainer()
         Me.Panel_main = New System.Windows.Forms.Panel()
         Me.SplitContainerOtherList = New System.Windows.Forms.SplitContainer()
-        Me.DataGridDoljnost = New System.Windows.Forms.DataGridView()
         Me.DataGridView_list = New System.Windows.Forms.DataGridView()
         Me.checkBox = New System.Windows.Forms.DataGridViewCheckBoxColumn()
         Me.FIO = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -159,9 +158,6 @@ Partial Class ААОсновная
         Me.Doljnost = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.type = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.kod = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.SplitContainer_dolj_org = New System.Windows.Forms.SplitContainer()
-        Me.SplitContainerName_doljnost = New System.Windows.Forms.SplitContainer()
-        Me.TextBox1 = New System.Windows.Forms.TextBox()
         Me.panel_worker = New System.Windows.Forms.Panel()
         Me.ButtonFK = New System.Windows.Forms.Button()
         Me.TextBoxS = New System.Windows.Forms.TextBox()
@@ -170,10 +166,6 @@ Partial Class ААОсновная
         Me.worker_name_pad = New System.Windows.Forms.TextBox()
         Me.worker_name_full = New System.Windows.Forms.TextBox()
         Me.worker_name = New System.Windows.Forms.TextBox()
-        Me.redactor_doljnost = New System.Windows.Forms.TextBox()
-        Me.SplitContainerFullName_doljnost = New System.Windows.Forms.SplitContainer()
-        Me.TextBoxEdit = New System.Windows.Forms.TextBox()
-        Me.redactor_full_name = New System.Windows.Forms.TextBox()
         Me.ToolStrip1 = New System.Windows.Forms.ToolStrip()
         Me.ToolStripLabel2 = New System.Windows.Forms.ToolStripLabel()
         Me.ToolStrip_name_list = New System.Windows.Forms.ToolStripComboBox()
@@ -224,21 +216,8 @@ Partial Class ААОсновная
         Me.SplitContainerOtherList.Panel1.SuspendLayout()
         Me.SplitContainerOtherList.Panel2.SuspendLayout()
         Me.SplitContainerOtherList.SuspendLayout()
-        CType(Me.DataGridDoljnost, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DataGridView_list, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.SplitContainer_dolj_org, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.SplitContainer_dolj_org.Panel1.SuspendLayout()
-        Me.SplitContainer_dolj_org.Panel2.SuspendLayout()
-        Me.SplitContainer_dolj_org.SuspendLayout()
-        CType(Me.SplitContainerName_doljnost, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.SplitContainerName_doljnost.Panel1.SuspendLayout()
-        Me.SplitContainerName_doljnost.Panel2.SuspendLayout()
-        Me.SplitContainerName_doljnost.SuspendLayout()
         Me.panel_worker.SuspendLayout()
-        CType(Me.SplitContainerFullName_doljnost, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.SplitContainerFullName_doljnost.Panel1.SuspendLayout()
-        Me.SplitContainerFullName_doljnost.Panel2.SuspendLayout()
-        Me.SplitContainerFullName_doljnost.SuspendLayout()
         Me.ToolStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -1918,43 +1897,23 @@ Partial Class ААОсновная
         'SplitContainerOtherList
         '
         Me.SplitContainerOtherList.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.SplitContainerOtherList.FixedPanel = System.Windows.Forms.FixedPanel.Panel2
         Me.SplitContainerOtherList.Location = New System.Drawing.Point(0, 0)
         Me.SplitContainerOtherList.Name = "SplitContainerOtherList"
         Me.SplitContainerOtherList.Orientation = System.Windows.Forms.Orientation.Horizontal
         '
         'SplitContainerOtherList.Panel1
         '
-        Me.SplitContainerOtherList.Panel1.Controls.Add(Me.DataGridDoljnost)
         Me.SplitContainerOtherList.Panel1.Controls.Add(Me.DataGridView_list)
         Me.SplitContainerOtherList.Panel1MinSize = 26
         '
         'SplitContainerOtherList.Panel2
         '
-        Me.SplitContainerOtherList.Panel2.Controls.Add(Me.SplitContainer_dolj_org)
-        Me.SplitContainerOtherList.Panel2Collapsed = True
+        Me.SplitContainerOtherList.Panel2.Controls.Add(Me.panel_worker)
         Me.SplitContainerOtherList.Panel2MinSize = 26
         Me.SplitContainerOtherList.Size = New System.Drawing.Size(1352, 788)
-        Me.SplitContainerOtherList.SplitterDistance = 26
+        Me.SplitContainerOtherList.SplitterDistance = 592
         Me.SplitContainerOtherList.TabIndex = 4
-        '
-        'DataGridDoljnost
-        '
-        Me.DataGridDoljnost.AllowUserToAddRows = False
-        Me.DataGridDoljnost.AllowUserToDeleteRows = False
-        Me.DataGridDoljnost.AllowUserToOrderColumns = True
-        Me.DataGridDoljnost.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.DataGridDoljnost.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DataGridDoljnost.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.DataGridDoljnost.Location = New System.Drawing.Point(0, 0)
-        Me.DataGridDoljnost.MultiSelect = False
-        Me.DataGridDoljnost.Name = "DataGridDoljnost"
-        Me.DataGridDoljnost.ReadOnly = True
-        Me.DataGridDoljnost.RowHeadersVisible = False
-        Me.DataGridDoljnost.RowHeadersWidth = 53
-        Me.DataGridDoljnost.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DataGridDoljnost.Size = New System.Drawing.Size(1352, 788)
-        Me.DataGridDoljnost.TabIndex = 35
-        Me.DataGridDoljnost.Visible = False
         '
         'DataGridView_list
         '
@@ -1972,7 +1931,7 @@ Partial Class ААОсновная
         Me.DataGridView_list.RowHeadersVisible = False
         Me.DataGridView_list.RowHeadersWidth = 53
         Me.DataGridView_list.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DataGridView_list.Size = New System.Drawing.Size(1352, 788)
+        Me.DataGridView_list.Size = New System.Drawing.Size(1352, 592)
         Me.DataGridView_list.TabIndex = 34
         Me.DataGridView_list.Visible = False
         '
@@ -2019,57 +1978,6 @@ Partial Class ААОсновная
         Me.kod.ReadOnly = True
         Me.kod.Width = 5
         '
-        'SplitContainer_dolj_org
-        '
-        Me.SplitContainer_dolj_org.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SplitContainer_dolj_org.Location = New System.Drawing.Point(0, 0)
-        Me.SplitContainer_dolj_org.Name = "SplitContainer_dolj_org"
-        Me.SplitContainer_dolj_org.Orientation = System.Windows.Forms.Orientation.Horizontal
-        '
-        'SplitContainer_dolj_org.Panel1
-        '
-        Me.SplitContainer_dolj_org.Panel1.Controls.Add(Me.SplitContainerName_doljnost)
-        '
-        'SplitContainer_dolj_org.Panel2
-        '
-        Me.SplitContainer_dolj_org.Panel2.Controls.Add(Me.SplitContainerFullName_doljnost)
-        Me.SplitContainer_dolj_org.Size = New System.Drawing.Size(150, 46)
-        Me.SplitContainer_dolj_org.SplitterDistance = 25
-        Me.SplitContainer_dolj_org.TabIndex = 47
-        Me.SplitContainer_dolj_org.Visible = False
-        '
-        'SplitContainerName_doljnost
-        '
-        Me.SplitContainerName_doljnost.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SplitContainerName_doljnost.FixedPanel = System.Windows.Forms.FixedPanel.Panel1
-        Me.SplitContainerName_doljnost.Location = New System.Drawing.Point(0, 0)
-        Me.SplitContainerName_doljnost.Name = "SplitContainerName_doljnost"
-        Me.SplitContainerName_doljnost.Orientation = System.Windows.Forms.Orientation.Horizontal
-        '
-        'SplitContainerName_doljnost.Panel1
-        '
-        Me.SplitContainerName_doljnost.Panel1.Controls.Add(Me.TextBox1)
-        '
-        'SplitContainerName_doljnost.Panel2
-        '
-        Me.SplitContainerName_doljnost.Panel2.Controls.Add(Me.panel_worker)
-        Me.SplitContainerName_doljnost.Panel2.Controls.Add(Me.redactor_doljnost)
-        Me.SplitContainerName_doljnost.Size = New System.Drawing.Size(150, 51)
-        Me.SplitContainerName_doljnost.SplitterDistance = 25
-        Me.SplitContainerName_doljnost.SplitterWidth = 1
-        Me.SplitContainerName_doljnost.TabIndex = 0
-        '
-        'TextBox1
-        '
-        Me.TextBox1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TextBox1.Enabled = False
-        Me.TextBox1.Location = New System.Drawing.Point(0, 0)
-        Me.TextBox1.Multiline = True
-        Me.TextBox1.Name = "TextBox1"
-        Me.TextBox1.Size = New System.Drawing.Size(150, 25)
-        Me.TextBox1.TabIndex = 49
-        Me.TextBox1.Text = "Наименование"
-        '
         'panel_worker
         '
         Me.panel_worker.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
@@ -2083,13 +1991,12 @@ Partial Class ААОсновная
         Me.panel_worker.Dock = System.Windows.Forms.DockStyle.Fill
         Me.panel_worker.Location = New System.Drawing.Point(0, 0)
         Me.panel_worker.Name = "panel_worker"
-        Me.panel_worker.Size = New System.Drawing.Size(150, 25)
+        Me.panel_worker.Size = New System.Drawing.Size(1352, 192)
         Me.panel_worker.TabIndex = 15
-        Me.panel_worker.Visible = False
         '
         'ButtonFK
         '
-        Me.ButtonFK.Location = New System.Drawing.Point(648, 176)
+        Me.ButtonFK.Location = New System.Drawing.Point(562, 59)
         Me.ButtonFK.Name = "ButtonFK"
         Me.ButtonFK.Size = New System.Drawing.Size(65, 22)
         Me.ButtonFK.TabIndex = 45
@@ -2103,10 +2010,10 @@ Partial Class ААОсновная
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.TextBoxS.Enabled = False
-        Me.TextBoxS.Location = New System.Drawing.Point(2, 157)
+        Me.TextBoxS.Location = New System.Drawing.Point(2, 147)
         Me.TextBoxS.Multiline = True
         Me.TextBoxS.Name = "TextBoxS"
-        Me.TextBoxS.Size = New System.Drawing.Size(145, 0)
+        Me.TextBoxS.Size = New System.Drawing.Size(1346, 40)
         Me.TextBoxS.TabIndex = 44
         Me.TextBoxS.Text = "Укажите ФИО в формате Фамилия И.О."
         '
@@ -2117,10 +2024,9 @@ Partial Class ААОсновная
         Me.worker_type.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.worker_type.FormattingEnabled = True
         Me.worker_type.ItemHeight = 16
-        Me.worker_type.Items.AddRange(New Object() {"0-нет", "1-куратор", "2-директор", "3-+директор"})
         Me.worker_type.Location = New System.Drawing.Point(3, 117)
         Me.worker_type.Name = "worker_type"
-        Me.worker_type.Size = New System.Drawing.Size(144, 24)
+        Me.worker_type.Size = New System.Drawing.Size(1346, 24)
         Me.worker_type.TabIndex = 43
         '
         'worker_dolgnost
@@ -2132,7 +2038,7 @@ Partial Class ААОсновная
         Me.worker_dolgnost.ItemHeight = 16
         Me.worker_dolgnost.Location = New System.Drawing.Point(3, 87)
         Me.worker_dolgnost.Name = "worker_dolgnost"
-        Me.worker_dolgnost.Size = New System.Drawing.Size(144, 24)
+        Me.worker_dolgnost.Size = New System.Drawing.Size(1346, 24)
         Me.worker_dolgnost.TabIndex = 42
         '
         'worker_name_pad
@@ -2142,7 +2048,7 @@ Partial Class ААОсновная
         Me.worker_name_pad.Location = New System.Drawing.Point(3, 59)
         Me.worker_name_pad.Multiline = True
         Me.worker_name_pad.Name = "worker_name_pad"
-        Me.worker_name_pad.Size = New System.Drawing.Size(144, 22)
+        Me.worker_name_pad.Size = New System.Drawing.Size(1346, 22)
         Me.worker_name_pad.TabIndex = 2
         '
         'worker_name_full
@@ -2152,67 +2058,16 @@ Partial Class ААОсновная
         Me.worker_name_full.Location = New System.Drawing.Point(3, 31)
         Me.worker_name_full.Multiline = True
         Me.worker_name_full.Name = "worker_name_full"
-        Me.worker_name_full.Size = New System.Drawing.Size(144, 22)
+        Me.worker_name_full.Size = New System.Drawing.Size(1346, 22)
         Me.worker_name_full.TabIndex = 1
         '
         'worker_name
         '
-        Me.worker_name.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.worker_name.Location = New System.Drawing.Point(3, 3)
         Me.worker_name.Multiline = True
         Me.worker_name.Name = "worker_name"
-        Me.worker_name.Size = New System.Drawing.Size(144, 22)
+        Me.worker_name.Size = New System.Drawing.Size(1346, 22)
         Me.worker_name.TabIndex = 0
-        '
-        'redactor_doljnost
-        '
-        Me.redactor_doljnost.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.redactor_doljnost.Location = New System.Drawing.Point(0, 0)
-        Me.redactor_doljnost.Multiline = True
-        Me.redactor_doljnost.Name = "redactor_doljnost"
-        Me.redactor_doljnost.Size = New System.Drawing.Size(150, 25)
-        Me.redactor_doljnost.TabIndex = 46
-        '
-        'SplitContainerFullName_doljnost
-        '
-        Me.SplitContainerFullName_doljnost.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SplitContainerFullName_doljnost.FixedPanel = System.Windows.Forms.FixedPanel.Panel1
-        Me.SplitContainerFullName_doljnost.Location = New System.Drawing.Point(0, 0)
-        Me.SplitContainerFullName_doljnost.Name = "SplitContainerFullName_doljnost"
-        Me.SplitContainerFullName_doljnost.Orientation = System.Windows.Forms.Orientation.Horizontal
-        '
-        'SplitContainerFullName_doljnost.Panel1
-        '
-        Me.SplitContainerFullName_doljnost.Panel1.Controls.Add(Me.TextBoxEdit)
-        '
-        'SplitContainerFullName_doljnost.Panel2
-        '
-        Me.SplitContainerFullName_doljnost.Panel2.Controls.Add(Me.redactor_full_name)
-        Me.SplitContainerFullName_doljnost.Size = New System.Drawing.Size(150, 51)
-        Me.SplitContainerFullName_doljnost.SplitterDistance = 25
-        Me.SplitContainerFullName_doljnost.SplitterWidth = 1
-        Me.SplitContainerFullName_doljnost.TabIndex = 0
-        '
-        'TextBoxEdit
-        '
-        Me.TextBoxEdit.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TextBoxEdit.Enabled = False
-        Me.TextBoxEdit.Location = New System.Drawing.Point(0, 0)
-        Me.TextBoxEdit.Multiline = True
-        Me.TextBoxEdit.Name = "TextBoxEdit"
-        Me.TextBoxEdit.Size = New System.Drawing.Size(150, 25)
-        Me.TextBoxEdit.TabIndex = 48
-        Me.TextBoxEdit.Text = "Наименование полное"
-        '
-        'redactor_full_name
-        '
-        Me.redactor_full_name.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.redactor_full_name.Location = New System.Drawing.Point(0, 0)
-        Me.redactor_full_name.Multiline = True
-        Me.redactor_full_name.Name = "redactor_full_name"
-        Me.redactor_full_name.Size = New System.Drawing.Size(150, 25)
-        Me.redactor_full_name.TabIndex = 47
         '
         'ToolStrip1
         '
@@ -2341,26 +2196,9 @@ Partial Class ААОсновная
         Me.SplitContainerOtherList.Panel2.ResumeLayout(False)
         CType(Me.SplitContainerOtherList, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SplitContainerOtherList.ResumeLayout(False)
-        CType(Me.DataGridDoljnost, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.DataGridView_list, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.SplitContainer_dolj_org.Panel1.ResumeLayout(False)
-        Me.SplitContainer_dolj_org.Panel2.ResumeLayout(False)
-        CType(Me.SplitContainer_dolj_org, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.SplitContainer_dolj_org.ResumeLayout(False)
-        Me.SplitContainerName_doljnost.Panel1.ResumeLayout(False)
-        Me.SplitContainerName_doljnost.Panel1.PerformLayout()
-        Me.SplitContainerName_doljnost.Panel2.ResumeLayout(False)
-        Me.SplitContainerName_doljnost.Panel2.PerformLayout()
-        CType(Me.SplitContainerName_doljnost, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.SplitContainerName_doljnost.ResumeLayout(False)
         Me.panel_worker.ResumeLayout(False)
         Me.panel_worker.PerformLayout()
-        Me.SplitContainerFullName_doljnost.Panel1.ResumeLayout(False)
-        Me.SplitContainerFullName_doljnost.Panel1.PerformLayout()
-        Me.SplitContainerFullName_doljnost.Panel2.ResumeLayout(False)
-        Me.SplitContainerFullName_doljnost.Panel2.PerformLayout()
-        CType(Me.SplitContainerFullName_doljnost, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.SplitContainerFullName_doljnost.ResumeLayout(False)
         Me.ToolStrip1.ResumeLayout(False)
         Me.ToolStrip1.PerformLayout()
         Me.ResumeLayout(False)
@@ -2509,18 +2347,10 @@ Partial Class ААОсновная
     Friend WithEvents ImageList40 As ImageList
     Friend WithEvents passwrdSetts As MaskedTextBox
     Friend WithEvents PanelSetts As Panel
-    Friend WithEvents DataGridDoljnost As DataGridView
-    Friend WithEvents redactor_doljnost As TextBox
     Friend WithEvents ToolStrip1 As ToolStrip
     Friend WithEvents ToolStripLabel2 As ToolStripLabel
     Friend WithEvents ToolStrip_name_list As ToolStripComboBox
     Private WithEvents other_add As ToolStripButton
     Friend WithEvents ToolStripButton1 As ToolStripButton
-    Friend WithEvents SplitContainer_dolj_org As SplitContainer
-    Friend WithEvents redactor_full_name As TextBox
-    Friend WithEvents SplitContainerFullName_doljnost As SplitContainer
-    Friend WithEvents TextBoxEdit As TextBox
-    Friend WithEvents SplitContainerName_doljnost As SplitContainer
-    Friend WithEvents TextBox1 As TextBox
     Friend WithEvents Panel_main As Panel
 End Class

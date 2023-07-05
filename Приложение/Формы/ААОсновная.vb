@@ -11,6 +11,7 @@ Imports System.Xml
 
 
 Public Class ААОсновная
+    Private redactor_enter As Boolean
     Public password0 As String
     Public Запросы
     Public КлавишаПереключенияВкладок As Integer = 39 ' 34
@@ -35,8 +36,6 @@ Public Class ААОсновная
     Public prikazCvalif As UInt16 = 0
     Private programm As New Programm
     Private worker As New Worker
-    Private doljnosti As New Doljnosti
-    Private organization As New Organization
     Private flag_ToolStrip_name_list As Boolean
     Private flag_worker_dolgnost As Boolean
     Private flag_worker_type As Boolean
@@ -188,7 +187,6 @@ Public Class ААОсновная
                     End While
 
                 End If
-
 
                 Счетчик2 = Счетчик2 + 1
             End While
@@ -751,50 +749,6 @@ Public Class ААОсновная
 
     End Sub
 
-    'Private Sub Стаж_ДопускКИА_Click(sender As Object, e As EventArgs) Handles Стаж_ДопускКИА.Click
-
-    '    prikazCvalif = PK
-    '    АСформироватьПриказ.Text = "Стаж_Допуск к ИА"
-    '    АСформироватьПриказ.ВидПриказа = ActiveControl.Name
-
-    '    ОтветственныйЗаАттестацию(True, "Председатель комиссии")
-    '    чекбоксы(False, "ММС", "санитар", "должность слушателей")
-    '    ПроектВносит(True)
-    '    Исполнитель(True)
-    '    Согласовано1(True)
-    '    Согласовано2(True)
-    '    РуководительСтажировки(True, "Комиссия №1")
-    '    Комиссия2(True)
-    '    Комиссия3(True)
-    '    СекретарьКомиссии(True)
-    '    ЗаместительРПК(False)
-
-    '    ОчиститьПоляФормы.Очиститьформу(АСформироватьПриказ)
-
-    '    АСформироватьПриказ.Button1.Visible = False
-    '    АСформироватьПриказ.Size = New Size(840, 883)
-    '    АСформироватьПриказ.КнопкаСформировать.Location = New Point(135, 800)
-    '    АСформироватьПриказ.КнопкаОчистить.Location = New Point(2, 800)
-
-
-    '    ActiveControl = Button2
-
-    '    местоНаФорме(1, АСформироватьПриказ.Label4, АСформироватьПриказ.Label13, АСформироватьПриказ.Ответственный, АСформироватьПриказ.ОтветственныйДолжность, АСформироватьПриказ.GroupBox5)
-    '    местоНаФорме(2, АСформироватьПриказ.LabelРуководительСтажировки, АСформироватьПриказ.Label16, АСформироватьПриказ.РуководительСтажировки, АСформироватьПриказ.РуководительСтажировкиДолжность, АСформироватьПриказ.GroupBox7)
-    '    местоНаФорме(3, АСформироватьПриказ.label20, АСформироватьПриказ.Label17, АСформироватьПриказ.Комиссия2, АСформироватьПриказ.Комиссия2Должность, АСформироватьПриказ.GroupBox8)
-    '    местоНаФорме(4, АСформироватьПриказ.Label18, АСформироватьПриказ.Label19, АСформироватьПриказ.Комиссия3, АСформироватьПриказ.Комиссия3Должность, АСформироватьПриказ.GroupBox9)
-    '    местоНаФорме(5, АСформироватьПриказ.Label15, АСформироватьПриказ.Label21, АСформироватьПриказ.СекретарьКомиссии, АСформироватьПриказ.СекретарьКомиссииДолжность, АСформироватьПриказ.GroupBox10)
-    '    местоНаФорме(6, АСформироватьПриказ.Label2, АСформироватьПриказ.Label14, АСформироватьПриказ.Утверждает, АСформироватьПриказ.УтверждаетДолжность, АСформироватьПриказ.GroupBox6)
-    '    местоНаФормеПослеДиректора(7, АСформироватьПриказ.Label5, АСформироватьПриказ.Label6, АСформироватьПриказ.ПроектВносит, АСформироватьПриказ.ПроектВноситДолжность, АСформироватьПриказ.GroupBox1)
-    '    местоНаФормеПослеДиректора(8, АСформироватьПриказ.Label7, АСформироватьПриказ.Label8, АСформироватьПриказ.Исполнитель, АСформироватьПриказ.ИсполнительДолжность, АСформироватьПриказ.GroupBox2)
-    '    местоНаФормеПослеДиректора(9, АСформироватьПриказ.Label9, АСформироватьПриказ.Label10, АСформироватьПриказ.Согласовано1, АСформироватьПриказ.Согласовано1Должность, АСформироватьПриказ.GroupBox3)
-    '    местоНаФормеПослеДиректора(10, АСформироватьПриказ.Label11, АСформироватьПриказ.Label12, АСформироватьПриказ.Согласовано2, АСформироватьПриказ.Согласовано2Должность, АСформироватьПриказ.GroupBox4)
-
-    '    АСформироватьПриказ.ShowDialog()
-
-    'End Sub
-
-
     Private Sub ПК_Заявление_Click(sender As Object, e As EventArgs) Handles ПК_Заявление.Click
 
         prikazCvalif = PK
@@ -1179,13 +1133,21 @@ Public Class ААОсновная
                 Return
 
             ElseIf DataGridView_list.Visible Then
+
                 If e.KeyValue = Keys.Escape Then
 
                     closeRedactorWorker(sender, e)
                     ActiveControl = DataGridView_list
 
-                End If
+                ElseIf e.KeyValue = Keys.Enter Then
 
+                    worker_EnterDown()
+
+                ElseIf e.KeyValue = Keys.Escape Then
+
+                    closeRedactorWorker(sender, e)
+
+                End If
 
             End If
 
@@ -1193,7 +1155,7 @@ Public Class ААОсновная
 
                 Return
 
-            ElseIf (DataGridDoljnost.Focused Or DataGridView_list.Focused Or ActiveControl.Name = "TabControlOther" Or passwordOther.Focused) And SplitContainerOtherList.Panel2Collapsed Then
+            ElseIf (DataGridView_list.Focused Or ActiveControl.Name = "TabControlOther" Or passwordOther.Focused) And SplitContainerOtherList.Panel2Collapsed Then
 
                 If e.KeyCode = КлавишаПереключенияВкладок Then
 
@@ -1264,7 +1226,7 @@ Public Class ААОсновная
 
         If e.KeyCode = КлавишаПереключенияВкладок Then
 
-            If redactor_doljnost.Focused Or red_moduls.Focused Or newProgramm.Focused Or newModAddName.Focused Or newModAddHour.Focused Or worker_name.Focused Or worker_name_full.Focused Or worker_name_pad.Focused Then
+            If red_moduls.Focused Or newProgramm.Focused Or newModAddName.Focused Or newModAddHour.Focused Or worker_name.Focused Or worker_name_full.Focused Or worker_name_pad.Focused Then
                 Return
             End If
             переключательВкладок(TabControlOther)
@@ -1273,7 +1235,7 @@ Public Class ААОсновная
         End If
 
         If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
-            If redactor_doljnost.Focused Or red_moduls.Focused Or newProgramm.Focused Or newModAddName.Focused Or newModAddHour.Focused Or worker_name.Focused Or worker_name_full.Focused Or worker_name_pad.Focused Then
+            If red_moduls.Focused Or newProgramm.Focused Or newModAddName.Focused Or newModAddHour.Focused Or worker_name.Focused Or worker_name_full.Focused Or worker_name_pad.Focused Then
                 Return
             End If
             обратныйПереключательВкладок(TabControlOther)
@@ -4261,9 +4223,14 @@ Public Class ААОсновная
     Private Sub passwordOther_TextChanged(sender As Object, e As EventArgs) Handles passwordOther.TextChanged
 
         If passwordOther.Text = password0 Then
+
             SplitContainerOther.Visible = True
             passwordOther.Visible = False
             ToolStrip_name_list.Focus()
+            worker.loadLists()
+            worker_dolgnost.Items.AddRange(worker.worker_struct.worker_dolj)
+            worker_type.Items.AddRange(worker.worker_struct.worker_type_list)
+
         End If
 
     End Sub
@@ -4271,23 +4238,19 @@ Public Class ААОсновная
     Private Sub ToolStrip_name_list_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ToolStrip_name_list.SelectedIndexChanged
 
         If ToolStrip_name_list.Text = "" Then
+
             Return
+
         End If
 
         If ToolStrip_name_list.Text = "Преподаватели" Then
 
             tbl_obrazovanie.Visible = False
             SplitContainerOtherList.Visible = True
-
             ToolStripButton1.Visible = True
             SplitContainerOtherList.Panel2Collapsed = True
             DataGridView_list.Visible = True
-            DataGridDoljnost.Visible = False
-            SplitContainer_dolj_org.Visible = False
-            'redactor_doljnost.Visible = False
             loadTblWorker()
-            worker.loadLists()
-            worker_dolgnost.Items.AddRange(worker.worker_struct.worker_dolj)
 
         ElseIf ToolStrip_name_list.Text = "Должности" Then
 
@@ -4417,39 +4380,20 @@ Public Class ААОсновная
 
     End Sub
 
-    Private Sub loadTblDoljnosti()
-
-        doljnosti.load_list_doljnosti()
-        Dim count As Integer = 0
-        DataGridDoljnost.DataSource = doljnosti.result
-
-        DataGridDoljnost.Columns(0).Width = DataGridView_list.Width - 1
-        DataGridDoljnost.Columns(1).Width = 1
-
-    End Sub
-
-    Private Sub loadTblOrganization()
-
-        organization.load_list_organizations()
-        Dim count As Integer = 0
-        DataGridDoljnost.DataSource = New DataTable
-        DataGridDoljnost.DataSource = organization.result
-
-        DataGridDoljnost.Columns(0).Width = DataGridView_list.Width / 3
-        DataGridDoljnost.Columns(1).Width = DataGridView_list.Width * 2 / 3 - 1
-        DataGridDoljnost.Columns(2).Width = 1
-
-    End Sub
-
     Private Sub other_add_Click(sender As Object, e As EventArgs) Handles other_add.Click
 
-        tbl_obrazovanie.redactorOpen()
+        If DataGridView_list.Visible Then
 
-        redactorOpen(sender, e)
-        redactor_doljnost.Clear()
-        redactor_full_name.Clear()
-        doljnosti.flagUpdate = False
-        organization.flagUpdate = False
+            redactorOpen(sender, e)
+
+        ElseIf tbl_obrazovanie.Visible Then
+
+            tbl_obrazovanie.redactorOpen()
+            SplitContainerOtherList.Panel2Collapsed = True
+
+        End If
+
+
 
     End Sub
 
@@ -4462,48 +4406,10 @@ Public Class ААОсновная
         ElseIf ToolStrip_name_list.Text = "Преподаватели" Then
 
             SplitContainerOtherList.Panel2Collapsed = False
-            SplitContainerOtherList.SplitterDistance = SplitContainerOtherList.Height * 2 / 3
+            SplitContainerOtherList.SplitterDistance = SplitContainerOtherList.Height - 205
+            ButtonFK.Focus()
             clear_panel_worker(sender, e)
             ActiveControl = ButtonFK
-            SplitContainer_dolj_org.Visible = False
-            'redactor_doljnost.Visible = False
-            panel_worker.Visible = True
-            worker_name.Focus()
-
-        ElseIf ToolStrip_name_list.Text = "Должности" Then
-
-            SplitContainerOtherList.Panel2Collapsed = False
-            SplitContainerOtherList.SplitterDistance = SplitContainerOtherList.Height * 4 / 5
-            SplitContainer_dolj_org.Visible = True
-            SplitContainer_dolj_org.Panel2Collapsed = True
-            SplitContainerName_doljnost.SplitterDistance = 25
-            SplitContainerFullName_doljnost.SplitterDistance = 25
-            redactor_doljnost.BackColor = Color.White
-            'redactor_doljnost.Clear()
-            'redactor_doljnost.Visible = True
-            panel_worker.Visible = False
-            doljnosti.flagUpdate = True
-            redactor_doljnost.Select()
-            redactor_doljnost.Select(redactor_doljnost.Text.Length, 0)
-
-        ElseIf ToolStrip_name_list.Text = "Организации" Then
-
-            SplitContainerOtherList.Panel2Collapsed = False
-            SplitContainerOtherList.SplitterDistance = SplitContainerOtherList.Height * 4 / 5
-            redactor_doljnost.BackColor = Color.White
-            redactor_full_name.BackColor = Color.White
-            'redactor_doljnost.Clear()
-            'redactor_full_name.Clear()
-            SplitContainer_dolj_org.Visible = True
-            SplitContainer_dolj_org.Panel2Collapsed = False
-            SplitContainer_dolj_org.SplitterDistance = SplitContainer_dolj_org.Height / 2
-            SplitContainerName_doljnost.SplitterDistance = 25
-            SplitContainerFullName_doljnost.SplitterDistance = 25
-            'redactor_doljnost.Visible = True
-            panel_worker.Visible = False
-            organization.flagUpdate = True
-            redactor_doljnost.Select()
-            redactor_doljnost.Select(redactor_doljnost.Text.Length, 0)
 
         End If
 
@@ -4523,37 +4429,11 @@ Public Class ААОсновная
         Next
 
         worker_dolgnost.Text = "нет"
-        worker_type.Text = "0-нет"
+        worker_type.Text = "нет"
 
         worker_name_Leave(sender, e)
         worker_name_pad_Leave(sender, e)
         worker_name_full_Leave(sender, e)
-
-    End Sub
-
-    'Private Sub newOrganization_KeyDown(sender As Object, e As KeyEventArgs) Handles newOrganization.KeyDown
-    '    If e.KeyValue = Keys.Enter Then
-    '        SendKeys.Send("{BACKSPACE}")
-    '    End If
-    'End Sub
-
-    'Private Sub newOrganization_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs) Handles newOrganization.PreviewKeyDown
-    '    If e.KeyValue = Keys.Enter Then
-    '        e.IsInputKey = True
-    '    End If
-    'End Sub
-
-    Private Sub worker_name_KeyDown(sender As Object, e As KeyEventArgs) Handles worker_name.KeyDown
-
-        If e.KeyValue = Keys.Enter Then
-            worker_name.Select(worker_name.Text.Length, 0)
-            worker.activTextBox = "worker_name"
-            SendKeys.Send("{BACKSPACE}")
-            saveWorker()
-            selectRowInListWorker()
-        ElseIf e.KeyValue = Keys.Escape Then
-            closeRedactorWorker(sender, e)
-        End If
 
     End Sub
 
@@ -4569,6 +4449,12 @@ Public Class ААОсновная
 
     Private Sub closeRedactorWorker(sender As Object, e As KeyEventArgs)
 
+        If redactor_enter = False Or SplitContainerOtherList.Panel2Collapsed Then
+
+            Return
+
+        End If
+
         clear_panel_worker(sender, e)
         worker.flagUpdate = False
         SplitContainerOtherList.Panel2Collapsed = True
@@ -4576,37 +4462,17 @@ Public Class ААОсновная
 
     End Sub
 
-    Private Sub worker_name_full_KeyDown(sender As Object, e As KeyEventArgs) Handles worker_name_full.KeyDown
-        If e.KeyValue = Keys.Enter Then
-            worker.activTextBox = "worker_name_full"
-            worker_name_full.Select(worker_name_full.Text.Length, 0)
-            SendKeys.Send("{BACKSPACE}")
-            saveWorker()
-            selectRowInListWorker()
-        End If
-    End Sub
+    Private Sub worker_EnterDown()
 
-    Private Sub worker_name_pad_KeyDown(sender As Object, e As KeyEventArgs) Handles worker_name_pad.KeyDown
-        If e.KeyValue = Keys.Enter Then
-            worker.activTextBox = "worker_name_pad"
-            SendKeys.Send("{BACKSPACE}")
-            saveWorker()
-            selectRowInListWorker()
-        End If
-    End Sub
+        If redactor_enter = False Or SplitContainerOtherList.Panel2Collapsed Then
 
-    Private Sub worker_dolgnost_KeyDown(sender As Object, e As KeyEventArgs) Handles worker_dolgnost.KeyDown
-        If e.KeyValue = Keys.Enter Then
-            saveWorker()
-            selectRowInListWorker()
-        End If
-    End Sub
+            Return
 
-    Private Sub worker_type_KeyDown(sender As Object, e As KeyEventArgs) Handles worker_type.KeyDown
-        If e.KeyValue = Keys.Enter Then
-            saveWorker()
-            selectRowInListWorker()
         End If
+
+        saveWorker()
+        selectRowInListWorker()
+
     End Sub
 
     Private Sub saveWorker()
@@ -4634,16 +4500,6 @@ Public Class ААОсновная
             предупреждение.ShowDialog()
             worker_name.Select(worker_name.Text.Length, 0)
 
-            If worker.activTextBox = "worker_name" Then
-                ActiveControl = worker_name
-            ElseIf worker.activTextBox = "worker_name_full" Then
-                ActiveControl = worker_name_full
-            ElseIf worker.activTextBox = "worker_name_pad" Then
-                ActiveControl = worker_name_pad
-            End If
-            worker.activTextBox = ""
-            Return
-
         End If
 
 
@@ -4665,13 +4521,21 @@ Public Class ААОсновная
         worker.worker_struct.worker_type = worker_type.Text
 
         If worker.flagUpdate Then
+
             worker.updateWorker()
+
         Else
+
             If Not worker.checkWorker() Then
+
                 Return
+
             End If
+
             worker.addWorker()
+
         End If
+
         loadTblWorker()
 
     End Sub
@@ -4818,6 +4682,7 @@ Public Class ААОсновная
             ToolStripButton1.Image = ImageList40.Images(2)
             worker.flagRedactor = False
         End If
+
     End Sub
 
     Private Sub DataGridView_list_CellEndEdit(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridView_list.CellEndEdit
@@ -4846,7 +4711,7 @@ Public Class ААОсновная
             Return
         End If
 
-        other_add_Click(sender, e)
+        SplitContainerOtherList.Panel2Collapsed = False
 
         worker_name.Text = Convert.ToString(DataGridView_list.Rows(curNumber).Cells(1).Value)
         worker_name.BackColor = Color.AliceBlue
@@ -4861,8 +4726,7 @@ Public Class ААОсновная
         worker_type.Text = Convert.ToString(DataGridView_list.Rows(curNumber).Cells(5).Value)
 
         worker.flagUpdate = True
-        'programm.struct_progs.flag_update = True
-        'programm.struct_progs.program_kod_update = Convert.ToString(dataGridProgs.Rows(curNumber).Cells(2).Value)
+        ButtonFK.Focus()
 
     End Sub
 
@@ -4890,216 +4754,6 @@ Public Class ААОсновная
             PanelSetts.Visible = True
             passwrdSetts.Visible = False
         End If
-
-    End Sub
-
-    Private Sub saveDoljnost()
-
-        doljnosti.doljnost = redactor_doljnost.Text.Trim
-        doljnosti.save_doljnost()
-
-    End Sub
-
-    Private Sub updateDoljnost()
-
-        doljnosti.doljnost = redactor_doljnost.Text.Trim
-        doljnosti.update_doljnost()
-
-    End Sub
-
-    Private Sub saveOrganization()
-
-        organization.organization = redactor_doljnost.Text.Trim
-        organization.full_name = redactor_full_name.Text.Trim
-        organization.save_organization()
-
-    End Sub
-
-    Private Sub updateOrganization()
-
-        organization.organization = redactor_doljnost.Text.Trim
-        organization.full_name = redactor_full_name.Text.Trim
-        organization.update_organization()
-
-    End Sub
-
-    Private Sub redactor_doljnost_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs) Handles redactor_doljnost.PreviewKeyDown
-
-        If e.KeyValue = Keys.Tab Then
-
-            e.IsInputKey = True
-
-        ElseIf e.KeyValue = Keys.Left Then
-
-            e.IsInputKey = True
-
-        ElseIf e.KeyValue = Keys.Right Then
-
-            e.IsInputKey = True
-
-        End If
-    End Sub
-
-    Private Sub redactor_doljnost_KeyDown(sender As Object, e As KeyEventArgs) Handles redactor_doljnost.KeyDown
-
-        If e.KeyValue = Keys.Down Then
-
-            ActiveControl = redactor_full_name
-            redactor_full_name.Select(redactor_full_name.Text.Length, 0)
-            e.Handled = True
-
-        ElseIf e.KeyValue = Keys.Up Then
-
-            ActiveControl = DataGridDoljnost
-        e.Handled = True
-
-        End If
-    End Sub
-
-    Private Sub selectRowInListDoljnost(kod As Int64, columnNumber As Int16)
-
-        Dim numberRow As Integer = -1
-        If kod = -1 Then
-            Return
-        End If
-        numberRow = ДействияСДатаГрид.dataGridViewSearchRow(DataGridDoljnost.Rows, columnNumber, Convert.ToString(kod))
-        DataGridDoljnost.CurrentCell = DataGridDoljnost.Rows(numberRow).Cells(0)
-        DataGridDoljnost.Rows(numberRow).Cells(0).Selected = True
-
-    End Sub
-
-    Private Sub DataGridDoljnost_KeyDown(sender As Object, e As KeyEventArgs) Handles DataGridDoljnost.KeyDown
-
-        If e.KeyValue = Keys.Delete Then
-
-            Dim curNumber = DataGridDoljnost.CurrentCell.RowIndex
-            ФормаДаНетУдалить.текстДаНет.Text = "Удалить " + DataGridDoljnost.Rows(curNumber).Cells(0).Value + "?"
-            ФормаДаНетУдалить.ShowDialog()
-
-            If Not ФормаДаНетУдалить.НажатаКнопкаДа Then
-                Return
-            End If
-
-            ФормаДаНетУдалить.текстДаНет.Text = "Такая запись уже найдена. Заменить информацию в базе?"
-
-            If ToolStrip_name_list.Text = "Должности" Then
-
-                doljnosti.kod = Convert.ToInt64(DataGridDoljnost.Rows(curNumber).Cells(1).Value)
-
-                If Not doljnosti.removeDoljnost() Then
-
-                    предупреждение.TextBox.Visible = False
-                    предупреждение.текст.Visible = True
-                    предупреждение.текст.Text = "Должность не может быть удалена"
-                    предупреждение.ShowDialog()
-                    Return
-
-                End If
-
-            ElseIf ToolStrip_name_list.Text = "Организации" Then
-
-                organization.kod = Convert.ToInt64(DataGridDoljnost.Rows(curNumber).Cells(2).Value)
-                organization.organization = Convert.ToString(DataGridDoljnost.Rows(curNumber).Cells(0).Value)
-                organization.full_name = Convert.ToString(DataGridDoljnost.Rows(curNumber).Cells(1).Value)
-
-                If Not organization.removeOrganization() Then
-                    предупреждение.TextBox.Visible = False
-                    предупреждение.текст.Visible = True
-                    предупреждение.текст.Text = "Организация не может быть удалена"
-                    предупреждение.ShowDialog()
-                    Return
-                End If
-
-            End If
-
-            If redactor_doljnost.Text.Trim = Convert.ToString(DataGridDoljnost.Rows(curNumber).Cells(0).Value) Then
-
-                SendKeys.Send("{ESC}")
-
-            End If
-
-            ToolStrip_name_list_SelectedIndexChanged(sender, e)
-
-            If (curNumber <> 0) Then
-
-                DataGridDoljnost.CurrentCell = DataGridDoljnost.Rows(curNumber - 1).Cells(0)
-
-            End If
-
-        ElseIf e.KeyValue = Keys.Add Then
-
-            If Not ToolStrip_name_list.Text.Trim = "" Then
-
-                redactor_doljnost.Clear()
-                redactor_full_name.Clear()
-                other_add_Click(sender, e)
-
-            End If
-
-        ElseIf e.KeyValue = Keys.R Then
-
-            If Not ToolStrip_name_list.Text.Trim = "" Then
-
-                Dim e1 As DataGridViewCellEventArgs
-                DataGridDoljnost_CellDoubleClick(sender, e1)
-
-            End If
-
-        ElseIf e.KeyValue = Keys.Tab Then
-
-            If SplitContainerOtherList.Panel2Collapsed Then
-
-                ToolStrip_name_list.Focus()
-                e.Handled = True
-
-            Else
-
-                redactor_doljnost.Focus()
-                e.Handled = True
-
-            End If
-
-        End If
-
-    End Sub
-
-    Private Sub DataGridDoljnost_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridDoljnost.CellDoubleClick
-
-        If DataGridDoljnost.Rows.Count < 0 Then
-            Return
-        ElseIf Convert.ToString(DataGridDoljnost.Rows(0).Cells(0).Value) = "" Then
-            Return
-        End If
-
-        Dim curNumber = DataGridDoljnost.CurrentCell.RowIndex
-
-        If ToolStrip_name_list.Text = "Должности" Then
-
-            If IsNumeric(DataGridDoljnost.Rows(curNumber).Cells(1).Value) Then
-                doljnosti.kod = Convert.ToInt64(DataGridDoljnost.Rows(curNumber).Cells(1).Value)
-            Else
-                Return
-            End If
-
-        ElseIf ToolStrip_name_list.Text = "Организации" Then
-
-            If IsNumeric(DataGridDoljnost.Rows(curNumber).Cells(2).Value) Then
-                organization.kod = Convert.ToInt64(DataGridDoljnost.Rows(curNumber).Cells(2).Value)
-                organization.organization = Convert.ToString(DataGridDoljnost.Rows(curNumber).Cells(0).Value)
-                organization.full_name = Convert.ToString(DataGridDoljnost.Rows(curNumber).Cells(1).Value)
-            Else
-                Return
-            End If
-
-        End If
-
-
-
-        redactor_doljnost.Text = DataGridDoljnost.Rows(curNumber).Cells(0).Value
-        redactor_full_name.Text = Convert.ToString(DataGridDoljnost.Rows(curNumber).Cells(1).Value)
-        redactorOpen(sender, e)
-        redactor_doljnost.BackColor = Color.AliceBlue
-        redactor_full_name.BackColor = Color.AliceBlue
 
     End Sub
 
@@ -5257,7 +4911,7 @@ Public Class ААОсновная
         End If
     End Sub
 
-    Private Sub DataGridDoljnost_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs) Handles DataGridDoljnost.PreviewKeyDown
+    Private Sub DataGridDoljnost_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs)
 
         If e.KeyValue = Keys.Tab Then
 
@@ -5286,13 +4940,8 @@ Public Class ААОсновная
             ElseIf DataGridView_list.Visible Then
 
                 ActiveControl = DataGridView_list
-
-            ElseIf DataGridDoljnost.Visible Then
-
-                ActiveControl = DataGridDoljnost
-
+                e.Handled = True
             End If
-            e.Handled = True
 
         End If
 
@@ -5384,25 +5033,7 @@ Public Class ААОсновная
 
     End Sub
 
-    Private Sub redactor_full_name_KeyDown(sender As Object, e As KeyEventArgs) Handles redactor_full_name.KeyDown
-
-        If e.KeyValue = Keys.Up Then
-
-            ActiveControl = redactor_doljnost
-            redactor_doljnost.Select(redactor_doljnost.Text.Length, 0)
-            e.Handled = True
-
-        End If
-
-    End Sub
-
-    Private Sub redactor_full_name_Enter(sender As Object, e As EventArgs) Handles redactor_full_name.Enter
-
-        redactor_doljnost.Text = redactor_doljnost.Text.Trim
-
-    End Sub
-
-    Private Sub redactor_full_name_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs) Handles redactor_full_name.PreviewKeyDown
+    Private Sub redactor_full_name_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs)
 
         If e.KeyValue = Keys.Tab Then
 
@@ -5417,136 +5048,6 @@ Public Class ААОсновная
             e.IsInputKey = True
 
         End If
-
-    End Sub
-
-    Private Sub redactor_doljnost_Enter(sender As Object, e As EventArgs) Handles redactor_doljnost.Enter
-
-        redactor_full_name.Text = redactor_full_name.Text.Trim
-
-    End Sub
-
-    Private Sub redactor_full_name_KeyPress(sender As Object, e As KeyPressEventArgs) Handles redactor_full_name.KeyPress
-
-        If e.KeyChar = Convert.ToChar(Keys.Enter) Then
-
-            redactor_doljnost.Select(redactor_doljnost.Text.Length, 0)
-            'SendKeys.Send("{BACKSPACE}")
-
-            If ToolStrip_name_list.Text = "Должности" Then
-
-                If doljnosti.flagUpdate Then
-                    updateDoljnost()
-                Else
-                    saveDoljnost()
-                End If
-
-                loadTblDoljnosti()
-
-                selectRowInListDoljnost(doljnosti.kod, 1)
-
-            ElseIf ToolStrip_name_list.Text = "Организации" Then
-
-                If organization.flagUpdate Then
-                    updateOrganization()
-                Else
-                    saveOrganization()
-                End If
-
-                loadTblOrganization()
-
-                selectRowInListDoljnost(organization.kod, 2)
-
-            End If
-
-            e.Handled = True
-
-        ElseIf e.KeyChar = Convert.ToChar(Keys.Tab) Then
-
-            If DataGridView_list.Visible Then
-
-                ActiveControl = DataGridView_list
-
-            Else
-
-                ActiveControl = DataGridDoljnost
-
-            End If
-
-            e.Handled = True
-
-        End If
-
-    End Sub
-
-    Private Sub redactor_doljnost_KeyPress(sender As Object, e As KeyPressEventArgs) Handles redactor_doljnost.KeyPress
-
-        If e.KeyChar = Convert.ToChar(Keys.Enter) Then
-
-            redactor_doljnost.Select(redactor_doljnost.Text.Length, 0)
-            'SendKeys.Send("{BACKSPACE}")
-
-            If ToolStrip_name_list.Text = "Должности" Then
-
-                If doljnosti.flagUpdate Then
-                    updateDoljnost()
-                Else
-                    saveDoljnost()
-                End If
-
-                loadTblDoljnosti()
-
-                selectRowInListDoljnost(doljnosti.kod, 1)
-
-            ElseIf ToolStrip_name_list.Text = "Организации" Then
-
-                If organization.flagUpdate Then
-                    updateOrganization()
-                Else
-                    saveOrganization()
-                End If
-
-                loadTblOrganization()
-
-                selectRowInListDoljnost(organization.kod, 2)
-
-            End If
-
-            e.Handled = True
-
-        ElseIf e.KeyChar = Convert.ToChar(Keys.Tab) Then
-
-            If ToolStrip_name_list.Text = "Организации" Then
-
-                ActiveControl = redactor_full_name
-                redactor_full_name.Select(redactor_full_name.Text.Length, 0)
-
-            Else
-
-                ActiveControl = DataGridDoljnost
-
-            End If
-
-            e.Handled = True
-
-        End If
-
-    End Sub
-
-    Private Sub SplitContainerOtherList_Panel2_SizeChanged(sender As Object, e As EventArgs) Handles SplitContainerOtherList.Panel2.SizeChanged
-
-        Try
-            SplitContainerName_doljnost.SplitterDistance = 25
-        Catch ex As Exception
-
-        End Try
-
-        Try
-            SplitContainerFullName_doljnost.SplitterDistance = 25
-        Catch ex As Exception
-
-        End Try
-
 
     End Sub
 
@@ -5602,4 +5103,15 @@ Public Class ААОсновная
 
     End Sub
 
+    Private Sub SplitContainerOtherList_Enter(sender As Object, e As EventArgs) Handles SplitContainerOtherList.Enter
+
+        redactor_enter = True
+
+    End Sub
+
+    Private Sub SplitContainerOtherList_Leave(sender As Object, e As EventArgs) Handles SplitContainerOtherList.Leave
+
+        redactor_enter = False
+
+    End Sub
 End Class

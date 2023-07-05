@@ -163,8 +163,6 @@
     <Compile Include="Tables_control.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Приложение\Organization.vb" />
-    <Compile Include="Приложение\Doljnosti.vb" />
     <Compile Include="Приложение\Programm.vb" />
     <Compile Include="Приложение\SqlQueryString.vb" />
     <Compile Include="Приложение\Worker.vb" />

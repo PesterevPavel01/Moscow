@@ -9,7 +9,7 @@ Public Class Worker
     Public worker_struct As Worker_structure
     Public flagRedactor As Boolean = False ' редактирование чекбоксов
     Public flagUpdate As Boolean = False ' редактирование записей
-    Public activTextBox As String ' имя текстбокса на котором была нажата клавиша enter
+    'Public activTextBox As String ' имя текстбокса на котором была нажата клавиша enter
     Public Structure Worker_structure
 
         Dim kod As Int64
@@ -19,6 +19,7 @@ Public Class Worker
         Dim worker_doljnost As String
         Dim worker_type As String
         Dim worker_dolj() As String
+        Dim worker_type_list() As String
         Dim worker_check As Int16
 
     End Structure
@@ -36,6 +37,10 @@ Public Class Worker
         queryString = ""
         queryString = sqlQueryString.loadListDoljnost()
         worker_struct.worker_dolj = mySQLConnector.ЗагрузитьИзMySQLвОдномерныйМассив(queryString, 1, 0)
+
+        queryString = sqlQueryString.loadListWorkerType()
+        worker_struct.worker_type_list = mySQLConnector.ЗагрузитьИзMySQLвОдномерныйМассив(queryString, 1, 0)
+
 
     End Sub
 
@@ -80,14 +85,14 @@ Public Class Worker
 
     Public Sub addWorker()
 
-        Dim worker_type() As String
+        'Dim worker_type() As String
         Dim result() As String
-        worker_type = worker_struct.worker_type.Split("-")
-        If worker_type.Count <> 2 Then
-            Return
-        End If
+        'worker_type = worker_struct.worker_type.Split("-")
+        'If worker_type.Count <> 2 Then
+        '    Return
+        'End If
         queryString = ""
-        queryString = sqlQueryString.addWorker(worker_struct, worker_type(1))
+        queryString = sqlQueryString.addWorker(worker_struct, worker_struct.worker_type)
         mySQLConnector.ОтправитьВбдЗапись(queryString, 1)
 
         queryString = sqlQueryString.loadKodWorker(worker_struct.name)
@@ -103,12 +108,12 @@ Public Class Worker
 
         Dim worker_type() As String
 
-        worker_type = worker_struct.worker_type.Split("-")
-        If worker_type.Count <> 2 Then
-            Return
-        End If
+        'worker_type = worker_struct.worker_type.Split("-")
+        'If worker_type.Count <> 2 Then
+        '    Return
+        'End If
         queryString = ""
-        queryString = sqlQueryString.updateWorker(worker_struct, worker_type(1))
+        queryString = sqlQueryString.updateWorker(worker_struct, worker_struct.worker_type)
         mySQLConnector.ОтправитьВбдЗапись(queryString, 1)
 
     End Sub

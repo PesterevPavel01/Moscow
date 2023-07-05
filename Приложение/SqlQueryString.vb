@@ -234,6 +234,16 @@ Public Class SqlQueryString
 
     End Function
 
+    Public Function loadListWorkerType() As String
+
+        Dim sqlString As String = ""
+        sqlString = "SELECT
+                      name 
+                    FROM kodirovka"
+        Return sqlString
+
+    End Function
+
     Public Function loadWorker() As String
 
         Dim sqlString As String = ""
