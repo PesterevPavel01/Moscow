@@ -79,7 +79,7 @@ Partial Class Tables_control
         Me.SplitContainer_main.Panel2.Controls.Add(Me.SplitContainer_second)
         Me.SplitContainer_main.Panel2Collapsed = True
         Me.SplitContainer_main.Size = New System.Drawing.Size(668, 549)
-        Me.SplitContainer_main.SplitterDistance = 364
+        Me.SplitContainer_main.SplitterDistance = 360
         Me.SplitContainer_main.TabIndex = 0
         '
         'DataGridTablesResult
@@ -115,8 +115,8 @@ Partial Class Tables_control
         '
         Me.SplitContainer_second.Panel2.Controls.Add(Me.SplitContainer4)
         Me.SplitContainer_second.Panel2Collapsed = True
-        Me.SplitContainer_second.Size = New System.Drawing.Size(150, 46)
-        Me.SplitContainer_second.SplitterDistance = 82
+        Me.SplitContainer_second.Size = New System.Drawing.Size(668, 185)
+        Me.SplitContainer_second.SplitterDistance = 25
         Me.SplitContainer_second.TabIndex = 0
         '
         'SplitContainer_first
@@ -134,13 +134,14 @@ Partial Class Tables_control
         'SplitContainer_first.Panel2
         '
         Me.SplitContainer_first.Panel2.Controls.Add(Me.redactor_element_first)
-        Me.SplitContainer_first.Size = New System.Drawing.Size(668, 181)
+        Me.SplitContainer_first.Size = New System.Drawing.Size(668, 185)
         Me.SplitContainer_first.SplitterDistance = 25
         Me.SplitContainer_first.TabIndex = 0
         '
         'redactor_name_element_first
         '
         Me.redactor_name_element_first.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.redactor_name_element_first.Enabled = False
         Me.redactor_name_element_first.Location = New System.Drawing.Point(0, 0)
         Me.redactor_name_element_first.Multiline = True
         Me.redactor_name_element_first.Name = "redactor_name_element_first"
@@ -154,7 +155,7 @@ Partial Class Tables_control
         Me.redactor_element_first.Location = New System.Drawing.Point(0, 0)
         Me.redactor_element_first.Multiline = True
         Me.redactor_element_first.Name = "redactor_element_first"
-        Me.redactor_element_first.Size = New System.Drawing.Size(668, 152)
+        Me.redactor_element_first.Size = New System.Drawing.Size(668, 156)
         Me.redactor_element_first.TabIndex = 1
         '
         'SplitContainer4
@@ -172,7 +173,7 @@ Partial Class Tables_control
         'SplitContainer4.Panel2
         '
         Me.SplitContainer4.Panel2.Controls.Add(Me.SplitContainer5)
-        Me.SplitContainer4.Size = New System.Drawing.Size(150, 54)
+        Me.SplitContainer4.Size = New System.Drawing.Size(150, 46)
         Me.SplitContainer4.SplitterDistance = 25
         Me.SplitContainer4.TabIndex = 1
         '
@@ -183,6 +184,7 @@ Partial Class Tables_control
         Me.redactor_name_element_second.Location = New System.Drawing.Point(0, 0)
         Me.redactor_name_element_second.Multiline = True
         Me.redactor_name_element_second.Name = "redactor_name_element_second"
+        Me.redactor_name_element_second.ReadOnly = True
         Me.redactor_name_element_second.Size = New System.Drawing.Size(150, 25)
         Me.redactor_name_element_second.TabIndex = 1
         '
@@ -212,7 +214,7 @@ Partial Class Tables_control
         Me.redactor_element_second.Location = New System.Drawing.Point(0, 0)
         Me.redactor_element_second.Multiline = True
         Me.redactor_element_second.Name = "redactor_element_second"
-        Me.redactor_element_second.Size = New System.Drawing.Size(668, 62)
+        Me.redactor_element_second.Size = New System.Drawing.Size(150, 50)
         Me.redactor_element_second.TabIndex = 1
         '
         'SplitContainer6
@@ -237,10 +239,10 @@ Partial Class Tables_control
         'TextBox5
         '
         Me.TextBox5.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TextBox5.Enabled = False
         Me.TextBox5.Location = New System.Drawing.Point(0, 0)
         Me.TextBox5.Multiline = True
         Me.TextBox5.Name = "TextBox5"
+        Me.TextBox5.ReadOnly = True
         Me.TextBox5.Size = New System.Drawing.Size(150, 25)
         Me.TextBox5.TabIndex = 1
         '

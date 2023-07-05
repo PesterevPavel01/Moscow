@@ -1175,69 +1175,17 @@ Public Class ААОсновная
 
             If tbl_obrazovanie.flag_active_control Then
 
-                If e.KeyValue = Keys.Tab Then
-
-                    If tbl_obrazovanie.active_last_element Then
-
-                        ToolStrip_name_list.Focus()
-                        e.Handled = True
-
-                    End If
-
-                ElseIf e.KeyValue = Keys.Right Then
-
-                    If tbl_obrazovanie.active_last_element Then
-
-                        переключательВкладок(TabControlOther)
-                        e.Handled = True
-
-                    End If
-
-
-
-                ElseIf e.KeyValue = Keys.Left Then
-
-                    If tbl_obrazovanie.active_last_element Then
-
-                        обратныйПереключательВкладок(TabControlOther)
-                        e.Handled = True
-
-                    End If
-
-
-
-                End If
-
-
-            End If
-
-            Dim s As String = ActiveControl.Name
-
-            If ToolStrip_name_list.Text = "Образование" Then
-
-                If e.KeyValue = Keys.Escape Then
-
-                    tbl_obrazovanie.redactorClose()
-
-                End If
-
+                tbl_obrazovanie_keyDown(e)
                 Return
 
-            End If
+            ElseIf DataGridView_list.Visible Then
+                If e.KeyValue = Keys.Escape Then
 
-            If e.KeyValue = Keys.Escape Then
-
-                closeRedactorWorker(sender, e)
-
-                If DataGridView_list.Visible Then
-
+                    closeRedactorWorker(sender, e)
                     ActiveControl = DataGridView_list
 
-                Else
-
-                    ActiveControl = DataGridDoljnost
-
                 End If
+
 
             End If
 
@@ -1245,9 +1193,7 @@ Public Class ААОсновная
 
                 Return
 
-            End If
-
-            If (DataGridDoljnost.Focused Or DataGridView_list.Focused Or ActiveControl.Name = "TabControlOther" Or passwordOther.Focused) And SplitContainerOtherList.Panel2Collapsed Then
+            ElseIf (DataGridDoljnost.Focused Or DataGridView_list.Focused Or ActiveControl.Name = "TabControlOther" Or passwordOther.Focused) And SplitContainerOtherList.Panel2Collapsed Then
 
                 If e.KeyCode = КлавишаПереключенияВкладок Then
 
@@ -4622,10 +4568,12 @@ Public Class ААОсновная
     End Sub
 
     Private Sub closeRedactorWorker(sender As Object, e As KeyEventArgs)
+
         clear_panel_worker(sender, e)
         worker.flagUpdate = False
         SplitContainerOtherList.Panel2Collapsed = True
         SplitContainerOtherList.Focus()
+
     End Sub
 
     Private Sub worker_name_full_KeyDown(sender As Object, e As KeyEventArgs) Handles worker_name_full.KeyDown
@@ -5615,4 +5563,43 @@ Public Class ААОсновная
         End If
 
     End Sub
+
+    Private Sub tbl_obrazovanie_keyDown(e As KeyEventArgs)
+
+        If e.KeyValue = Keys.Tab Then
+
+            If tbl_obrazovanie.active_last_element Then
+
+                ToolStrip_name_list.Focus()
+                e.Handled = True
+
+            End If
+
+        ElseIf e.KeyValue = Keys.Right Then
+
+            If tbl_obrazovanie.active_last_element Then
+
+                переключательВкладок(TabControlOther)
+                e.Handled = True
+
+            End If
+
+        ElseIf e.KeyValue = Keys.Left Then
+
+            If tbl_obrazovanie.active_last_element Then
+
+                обратныйПереключательВкладок(TabControlOther)
+                e.Handled = True
+
+            End If
+
+        ElseIf e.KeyValue = Keys.Escape Then
+
+            tbl_obrazovanie.redactorClose()
+            e.Handled = True
+
+        End If
+
+    End Sub
+
 End Class

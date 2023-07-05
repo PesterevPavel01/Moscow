@@ -84,11 +84,30 @@ Public Class Tables_control
 
             ElseIf number_row = 1 And persent_width_column_1 <> -1 Then
 
-                dataGridViewColumn.Width = DataGridTablesResult.Width * persent_width_column_1 / 100
+                If persent_width_column_1 = 1 Then
+
+                    dataGridViewColumn.Width = 1
+
+                Else
+
+                    dataGridViewColumn.Width = DataGridTablesResult.Width * persent_width_column_1 / 100
+
+                End If
+
 
             ElseIf number_row = 2 And persent_width_column_2 <> -1 Then
 
-                dataGridViewColumn.Width = DataGridTablesResult.Width * persent_width_column_2 / 100
+                If persent_width_column_2 = 1 Then
+
+                    dataGridViewColumn.Width = 1
+
+                Else
+
+                    dataGridViewColumn.Width = DataGridTablesResult.Width * persent_width_column_2 / 100
+
+                End If
+
+
 
             End If
 
