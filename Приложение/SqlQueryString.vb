@@ -234,6 +234,16 @@ Public Class SqlQueryString
 
     End Function
 
+    Public Function loadDefaultType() As String
+
+        Dim sqlString As String = ""
+        sqlString = "SELECT
+                      name 
+                    FROM kodirovka WHERE kod=0"
+        Return sqlString
+
+    End Function
+
     Public Function loadListWorkerType() As String
 
         Dim sqlString As String = ""
@@ -584,7 +594,7 @@ sotrudnik.in_list,
         Dim sqlString As String = ""
         sqlString = "SELECT sotrudnik.name FROM sotrudnik
                      INNER JOIN kodirovka ON sotrudnik.type_sotrudnik = kodirovka.kod
-                     WHERE kodirovka.name = 'директор' OR kodirovka.name = '+директор' AND sotrudnik.in_list=1 ORDER BY sotrudnik.name"
+                     WHERE kodirovka.name = 'директор' OR kodirovka.name = 'замдир' AND sotrudnik.in_list=1 ORDER BY sotrudnik.name"
         Return sqlString
 
     End Function
@@ -602,6 +612,84 @@ sotrudnik.in_list,
 
     End Function
 
+    Public Function load_list_prepod() As String
+
+        Dim sqlString As String = ""
+        sqlString = "SELECT sotrudnik.name FROM sotrudnik
+                     INNER JOIN 
+                     kodirovka 
+                     ON 
+                     sotrudnik.type_sotrudnik = kodirovka.kod
+                     WHERE (kodirovka.name = 'сотрудник' OR kodirovka.name = 'преподаватель') AND sotrudnik.in_list=1  ORDER BY sotrudnik.name"
+        Return sqlString
+
+    End Function
+
+    Public Function load_ruk_staj() As String
+
+        Dim sqlString As String = ""
+        sqlString = "SELECT sotrudnik.name FROM sotrudnik
+                     INNER JOIN 
+                     kodirovka 
+                     ON 
+                     sotrudnik.type_sotrudnik = kodirovka.kod
+                     WHERE kodirovka.name = 'сотрудник' AND sotrudnik.in_list=1  ORDER BY sotrudnik.name"
+        Return sqlString
+
+    End Function
+
+    Public Function load_komissiya() As String
+
+        Dim sqlString As String = ""
+        sqlString = "SELECT sotrudnik.name FROM sotrudnik
+                     INNER JOIN 
+                     kodirovka 
+                     ON 
+                     sotrudnik.type_sotrudnik = kodirovka.kod
+                     WHERE (kodirovka.name = 'сотрудник' OR kodirovka.name = 'замдир') AND sotrudnik.in_list=1  ORDER BY sotrudnik.name"
+        Return sqlString
+
+    End Function
+
+    Public Function load_soglasovano() As String
+
+        Dim sqlString As String = ""
+        sqlString = "SELECT sotrudnik.name FROM sotrudnik
+                     INNER JOIN 
+                     kodirovka 
+                     ON 
+                     sotrudnik.type_sotrudnik = kodirovka.kod
+                     WHERE (kodirovka.name = 'согласование' OR kodirovka.name = 'замдир') AND sotrudnik.in_list=1  ORDER BY sotrudnik.name"
+        Return sqlString
+
+    End Function
+
+    Public Function load_ispolnitel() As String
+
+        Dim sqlString As String = ""
+        sqlString = "SELECT sotrudnik.name FROM sotrudnik
+                     INNER JOIN 
+                     kodirovka 
+                     ON 
+                     sotrudnik.type_sotrudnik = kodirovka.kod
+                     WHERE kodirovka.name = 'сотрудник' AND sotrudnik.in_list=1  ORDER BY sotrudnik.name"
+        Return sqlString
+
+    End Function
+
+    Public Function load_proeсt_vnosit() As String
+
+        Dim sqlString As String = ""
+        sqlString = "SELECT sotrudnik.name FROM sotrudnik
+                     INNER JOIN 
+                     kodirovka 
+                     ON 
+                     sotrudnik.type_sotrudnik = kodirovka.kod
+                     WHERE kodirovka.name = 'сотрудник' AND sotrudnik.in_list=1  ORDER BY sotrudnik.name"
+        Return sqlString
+
+    End Function
+
     Public Function loadOtv_attestat() As String
 
         Dim sqlString As String = ""
@@ -610,7 +698,7 @@ sotrudnik.in_list,
                      kodirovka 
                      ON 
                      sotrudnik.type_sotrudnik = kodirovka.kod
-                     WHERE kodirovka.name <> 'директор' AND sotrudnik.in_list=1  ORDER BY sotrudnik.name"
+                     WHERE kodirovka.name = 'сотрудник' AND sotrudnik.in_list=1  ORDER BY sotrudnik.name"
         Return sqlString
 
     End Function

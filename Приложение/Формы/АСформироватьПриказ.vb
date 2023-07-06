@@ -6,6 +6,9 @@
     Public path As String
     Public flagCheck As Boolean = False
     Public ЧекнутыеСлушатели
+    Public komissiya As Boolean = False
+    Public praktika As Boolean = False
+
     Private Sub ПОЗачисленииНомерГруппы_Click(sender As Object, e As EventArgs) Handles НомерГруппы.Click
         ФормаСписок.ListViewСписок.Columns.RemoveAt(0)
         ФормаСписок.ListViewСписок.Columns.Add("Программа", 500)
@@ -23,100 +26,98 @@
     End Sub
 
     Private Sub Директор_Click(sender As Object, e As EventArgs)
+
         ФормаСписок.textboxName = Me.ActiveControl.Name
-        'ФормаСписок.FormName = ActiveForm.Name
-        'ФормаСписок.ShowDialog()
+
     End Sub
 
     Private Sub Ответственный_Click(sender As Object, e As EventArgs) Handles Ответственный.Click
+
         ФормаСписок.textboxName = Me.ActiveControl.Name
-        'ФормаСписок.FormName = Me.Name
-        'ФормаСписок.ShowDialog()
+
     End Sub
 
 
     Private Sub ОтветственныйДолжность_Click(sender As Object, e As EventArgs)
 
         ФормаСписок.textboxName = Me.ActiveControl.Name
-        'ФормаСписок.FormName = ActiveForm.Name
-        'ФормаСписок.ShowDialog()
+
 
     End Sub
 
     Private Sub ПроектВносит_Click(sender As Object, e As EventArgs)
+
         ФормаСписок.textboxName = Me.ActiveControl.Name
-        'ФормаСписок.FormName = ActiveForm.Name
-        'ФормаСписок.ShowDialog()
+
     End Sub
 
     Private Sub ПроектВноситДолжность_Click(sender As Object, e As EventArgs)
+
         ФормаСписок.textboxName = Me.ActiveControl.Name
-        'ФормаСписок.FormName = ActiveForm.Name
-        'ФормаСписок.ShowDialog()
+
     End Sub
 
     Private Sub Согласовано1_Click(sender As Object, e As EventArgs)
+
         ФормаСписок.textboxName = Me.ActiveControl.Name
-        'ФормаСписок.FormName = ActiveForm.Name
-        'ФормаСписок.ShowDialog()
     End Sub
 
     Private Sub Согласовано1Должность_Click(sender As Object, e As EventArgs)
+
         ФормаСписок.textboxName = Me.ActiveControl.Name
-        'ФормаСписок.FormName = ActiveForm.Name
-        'ФормаСписок.ShowDialog()
+
     End Sub
 
     Private Sub Согласовано2_Click(sender As Object, e As EventArgs)
+
         ФормаСписок.textboxName = Me.ActiveControl.Name
-        'ФормаСписок.FormName = ActiveForm.Name
-        'ФормаСписок.ShowDialog()
+
     End Sub
 
     Private Sub Согласовано2Должность_Click(sender As Object, e As EventArgs)
+
         ФормаСписок.textboxName = Me.ActiveControl.Name
-        'ФормаСписок.FormName = ActiveForm.Name
-        'ФормаСписок.ShowDialog()
+
     End Sub
 
     Private Sub Исполнитель_Click(sender As Object, e As EventArgs)
+
         ФормаСписок.textboxName = Me.ActiveControl.Name
-        'ФормаСписок.FormName = ActiveForm.Name
-        'ФормаСписок.ShowDialog()
+
     End Sub
 
     Private Sub ИсполнительДолжность_Click(sender As Object, e As EventArgs)
+
         ФормаСписок.textboxName = Me.ActiveControl.Name
-        'ФормаСписок.FormName = ActiveForm.Name
-        'ФормаСписок.ShowDialog()
+
     End Sub
     Private Sub Утверждает_Click(sender As Object, e As EventArgs)
+
         ФормаСписок.textboxName = Me.ActiveControl.Name
-        'ФормаСписок.FormName = Me.Name
-        'ФормаСписок.ShowDialog()
+
     End Sub
 
     Private Sub УтверждаетДолжность_Click(sender As Object, e As EventArgs)
+
         ФормаСписок.textboxName = Me.ActiveControl.Name
-        'ФормаСписок.FormName = Me.Name
-        'ФормаСписок.ShowDialog()
+
     End Sub
 
 
     Private Sub ДолжностьРуководительСтажировки_Click(sender As Object, e As EventArgs)
+
         ФормаСписок.textboxName = Me.ActiveControl.Name
-        'ФормаСписок.FormName = Me.Name
-        'ФормаСписок.ShowDialog()
+
     End Sub
     Private Sub РуководительСтажировки_Click(sender As Object, e As EventArgs)
+
         ФормаСписок.textboxName = Me.ActiveControl.Name
-        'ФормаСписок.FormName = Me.Name
-        'ФормаСписок.ShowDialog()
+
     End Sub
     Private Sub Комиссия2_Click(sender As Object, e As EventArgs)
+
         ФормаСписок.textboxName = Me.ActiveControl.Name
-        'ФормаСписок.FormName = Me.Name
-        'ФормаСписок.ShowDialog()
+
     End Sub
 
     Private Sub Сформировать_Click(sender As Object, e As EventArgs) Handles КнопкаСформировать.Click
@@ -297,20 +298,60 @@
             Согласовано2Должность.Text = ААОсновная.Согласовано2ДолжностьПУ.Text
         End If
 
+        If komissiya Then
+
+            РуководительСтажировки.Items.Clear()
+            РуководительСтажировки.Items.Add("")
+            РуководительСтажировки.Items.AddRange(prikaz.formPrikazList.komissiya)
+
+            Ответственный.Items.Clear()
+            Ответственный.Items.Add("")
+            Ответственный.Items.AddRange(prikaz.formPrikazList.komissiya)
+
+        ElseIf praktika Then
+
+            РуководительСтажировки.Items.Clear()
+            РуководительСтажировки.Items.Add("")
+            РуководительСтажировки.Items.AddRange(prikaz.formPrikazList.ruk_staj)
+
+            Ответственный.Items.Clear()
+            Ответственный.Items.Add("")
+            Ответственный.Items.AddRange(prikaz.formPrikazList.otv_attestat)
+
+        Else
+
+            РуководительСтажировки.Items.Clear()
+            РуководительСтажировки.Items.Add("")
+            РуководительСтажировки.Items.AddRange(prikaz.formPrikazList.ruk_staj)
+
+            Ответственный.Items.Clear()
+            Ответственный.Items.Add("")
+            Ответственный.Items.AddRange(prikaz.formPrikazList.otv_attestat)
+
+        End If
+
+
+
         If Label2.Text = "Ответственный" Then
+
             Утверждает.Items.Clear()
             Утверждает.Items.Add("")
             Утверждает.Items.AddRange(prikaz.formPrikazList.otv_attestat)
+
         Else
+
             Утверждает.Items.Clear()
             Утверждает.Items.Add("")
             Утверждает.Items.AddRange(prikaz.formPrikazList.director)
+
         End If
 
         If Not ААОсновная.отключитьДиректора Then
+
             If ААОсновная.ДиректорФИО.Text <> "" Then
                 Утверждает.Text = ААОсновная.ДиректорФИО.Text
             End If
+
         End If
 
     End Sub
@@ -869,39 +910,39 @@
 
             ПроектВносит.Items.Clear()
             ПроектВносит.Items.Add("")
-            ПроектВносит.Items.AddRange(prikaz.formPrikazList.otv_attestat)
+            ПроектВносит.Items.AddRange(prikaz.formPrikazList.proect_vnosit)
 
             Исполнитель.Items.Clear()
             Исполнитель.Items.Add("")
-            Исполнитель.Items.AddRange(prikaz.formPrikazList.otv_attestat)
+            Исполнитель.Items.AddRange(prikaz.formPrikazList.ispolnitel)
 
             Согласовано1.Items.Clear()
             Согласовано1.Items.Add("")
-            Согласовано1.Items.AddRange(prikaz.formPrikazList.otv_attestat)
+            Согласовано1.Items.AddRange(prikaz.formPrikazList.soglasovano)
 
             Согласовано2.Items.Clear()
             Согласовано2.Items.Add("")
-            Согласовано2.Items.AddRange(prikaz.formPrikazList.otv_attestat)
+            Согласовано2.Items.AddRange(prikaz.formPrikazList.soglasovano)
 
             РуководительСтажировки.Items.Clear()
             РуководительСтажировки.Items.Add("")
-            РуководительСтажировки.Items.AddRange(prikaz.formPrikazList.otv_attestat)
+            РуководительСтажировки.Items.AddRange(prikaz.formPrikazList.ruk_staj)
 
             Комиссия2.Items.Clear()
             Комиссия2.Items.Add("")
-            Комиссия2.Items.AddRange(prikaz.formPrikazList.otv_attestat)
+            Комиссия2.Items.AddRange(prikaz.formPrikazList.komissiya)
 
             Комиссия3.Items.Clear()
             Комиссия3.Items.Add("")
-            Комиссия3.Items.AddRange(prikaz.formPrikazList.otv_attestat)
+            Комиссия3.Items.AddRange(prikaz.formPrikazList.komissiya)
 
             СекретарьКомиссии.Items.Clear()
             СекретарьКомиссии.Items.Add("")
-            СекретарьКомиссии.Items.AddRange(prikaz.formPrikazList.otv_attestat)
+            СекретарьКомиссии.Items.AddRange(prikaz.formPrikazList.komissiya)
 
             ЗамПредседателя.Items.Clear()
             ЗамПредседателя.Items.Add("")
-            ЗамПредседателя.Items.AddRange(prikaz.formPrikazList.otv_attestat)
+            ЗамПредседателя.Items.AddRange(prikaz.formPrikazList.komissiya)
 
             flagLoad = True
 

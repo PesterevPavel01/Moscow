@@ -157,10 +157,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationEvents.vb" />
-    <Compile Include="Tables_control.designer.vb">
+    <Compile Include="Приложение\User_controls\Tables_control.designer.vb">
       <DependentUpon>Tables_control.vb</DependentUpon>
     </Compile>
-    <Compile Include="Tables_control.vb">
+    <Compile Include="Приложение\User_controls\Tables_control.vb">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Приложение\Programm.vb" />
@@ -368,7 +368,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Tables_control.resx">
+    <EmbeddedResource Include="Приложение\User_controls\Tables_control.resx">
       <DependentUpon>Tables_control.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Приложение\Формы\АОценкиИА.resx">

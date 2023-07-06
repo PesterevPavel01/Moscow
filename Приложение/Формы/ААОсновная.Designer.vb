@@ -310,7 +310,7 @@ Partial Class ААОсновная
         Me.SplitContainerProgs.Panel2Collapsed = True
         Me.SplitContainerProgs.Panel2MinSize = 60
         Me.SplitContainerProgs.Size = New System.Drawing.Size(558, 782)
-        Me.SplitContainerProgs.SplitterDistance = 25
+        Me.SplitContainerProgs.SplitterDistance = 566
         Me.SplitContainerProgs.TabIndex = 3
         '
         'dataGridProgs
@@ -337,7 +337,7 @@ Partial Class ААОсновная
         Me.newProgramm.Location = New System.Drawing.Point(0, 0)
         Me.newProgramm.Multiline = True
         Me.newProgramm.Name = "newProgramm"
-        Me.newProgramm.Size = New System.Drawing.Size(150, 46)
+        Me.newProgramm.Size = New System.Drawing.Size(558, 212)
         Me.newProgramm.TabIndex = 13
         '
         'ToolStrip2

@@ -595,6 +595,8 @@ Public Class ААОсновная
         АСформироватьПриказ.ВидПриказа = "ПО_Практика"
 
         ОтветственныйЗаАттестацию(True, "Руководитель ПО")
+        АСформироватьПриказ.praktika = True
+
         чекбоксы(False, "", "", "")
         ПроектВносит(True)
         Исполнитель(True)
@@ -622,6 +624,8 @@ Public Class ААОсновная
         местоНаФормеПослеДиректора(6, АСформироватьПриказ.Label11, АСформироватьПриказ.Label12, АСформироватьПриказ.Согласовано2, АСформироватьПриказ.Согласовано2Должность, АСформироватьПриказ.GroupBox4)
 
         АСформироватьПриказ.ShowDialog()
+
+        АСформироватьПриказ.praktika = False
 
     End Sub
 
@@ -682,6 +686,8 @@ Public Class ААОсновная
         СекретарьКомиссии(True)
         ЗаместительРПК(False)
 
+        АСформироватьПриказ.komissiya = True
+
         ОчиститьПоляФормы.Очиститьформу(АСформироватьПриказ)
 
         АСформироватьПриказ.Button1.Visible = False
@@ -704,6 +710,8 @@ Public Class ААОсновная
 
         АСформироватьПриказ.ShowDialog()
 
+        АСформироватьПриказ.komissiya = False
+
     End Sub
 
     Private Sub ПП_ДопускКИА_Click(sender As Object, e As EventArgs) Handles ПП_ДопускКИА.Click
@@ -712,6 +720,7 @@ Public Class ААОсновная
         АСформироватьПриказ.Text = "ПП_Допуск к ИА"
         АСформироватьПриказ.ВидПриказа = ActiveControl.Name
 
+        АСформироватьПриказ.komissiya = True
         ОтветственныйЗаАттестацию(True, "Председатель комиссии")
         чекбоксы(True, "ПП", "стажировка", "Практическая подготовка/стажировка")
         ПроектВносит(True)
@@ -746,6 +755,7 @@ Public Class ААОсновная
 
         АСформироватьПриказ.ShowDialog()
 
+        АСформироватьПриказ.komissiya = False
 
     End Sub
 
@@ -761,13 +771,13 @@ Public Class ААОсновная
         АСформироватьПриказ.Label14.Visible = False
 
 
-        Call ОтветственныйЗаАттестацию(False, "Председатель комиссии")
+        Call ОтветственныйЗаАттестацию(False)
         Call чекбоксы(False, "ММС", "санитар", "должность слушателей")
         Call ПроектВносит(False)
         Call Исполнитель(False)
         Call Согласовано1(False)
         Call Согласовано2(False)
-        Call РуководительСтажировки(False, "Комиссия №1")
+        Call РуководительСтажировки(False)
         Call Комиссия2(False)
         Call Комиссия3(False)
         Call СекретарьКомиссии(False)
@@ -802,13 +812,13 @@ Public Class ААОсновная
         АСформироватьПриказ.Label14.Visible = False
 
 
-        Call ОтветственныйЗаАттестацию(False, "Председатель комиссии")
+        Call ОтветственныйЗаАттестацию(False)
         Call чекбоксы(False, "ММС", "санитар", "должность слушателей")
         Call ПроектВносит(False)
         Call Исполнитель(False)
         Call Согласовано1(False)
         Call Согласовано2(False)
-        Call РуководительСтажировки(False, "Комиссия №1")
+        Call РуководительСтажировки(False)
         Call Комиссия2(False)
         Call Комиссия3(False)
         Call СекретарьКомиссии(False)
@@ -840,13 +850,13 @@ Public Class ААОсновная
         АСформироватьПриказ.Label14.Visible = False
 
 
-        ОтветственныйЗаАттестацию(False, "Председатель комиссии")
+        ОтветственныйЗаАттестацию(False)
         чекбоксы(False, "ММС", "санитар", "должность слушателей")
         ПроектВносит(False)
         Исполнитель(False)
         Согласовано1(False)
         Согласовано2(False)
-        РуководительСтажировки(False, "Комиссия №1")
+        РуководительСтажировки(False)
         Комиссия2(False)
         Комиссия3(False)
         СекретарьКомиссии(False)
@@ -1982,13 +1992,13 @@ Public Class ААОсновная
         АСформироватьПриказ.Label14.Visible = False
 
 
-        Call ОтветственныйЗаАттестацию(False, "Председатель комиссии")
+        Call ОтветственныйЗаАттестацию(False)
         Call чекбоксы(False, "ММС", "санитар", "должность слушателей")
         Call ПроектВносит(False)
         Call Исполнитель(False)
         Call Согласовано1(False)
         Call Согласовано2(False)
-        Call РуководительСтажировки(False, "Комиссия №1")
+        Call РуководительСтажировки(False)
         Call Комиссия2(False)
         Call Комиссия3(False)
         Call СекретарьКомиссии(False)
@@ -2022,13 +2032,13 @@ Public Class ААОсновная
         АСформироватьПриказ.Label2.Text = "Ответственный"
 
 
-        ОтветственныйЗаАттестацию(False, "Председатель комиссии")
+        ОтветственныйЗаАттестацию(False)
         чекбоксы(False, "ММС", "санитар", "должность слушателей")
         ПроектВносит(False)
         Исполнитель(False)
         Согласовано1(False)
         Согласовано2(False)
-        РуководительСтажировки(False, "Комиссия №1")
+        РуководительСтажировки(False)
         Комиссия2(False)
         Комиссия3(False)
         СекретарьКомиссии(False)
@@ -2082,13 +2092,13 @@ Public Class ААОсновная
         АСформироватьПриказ.Label2.Text = "Ответственный"
 
 
-        ОтветственныйЗаАттестацию(False, "Председатель комиссии")
+        ОтветственныйЗаАттестацию(False)
         чекбоксы(False, "ММС", "санитар", "должность слушателей")
         ПроектВносит(False)
         Исполнитель(False)
         Согласовано1(False)
         Согласовано2(False)
-        РуководительСтажировки(False, "Комиссия №1")
+        РуководительСтажировки(False)
         Комиссия2(False)
         Комиссия3(False)
         СекретарьКомиссии(False)
@@ -2138,13 +2148,13 @@ Public Class ААОсновная
         АСформироватьПриказ.Label14.Visible = False
 
 
-        Call ОтветственныйЗаАттестацию(False, "Председатель комиссии")
+        Call ОтветственныйЗаАттестацию(False)
         Call чекбоксы(False, "ММС", "санитар", "должность слушателей")
         Call ПроектВносит(False)
         Call Исполнитель(False)
         Call Согласовано1(False)
         Call Согласовано2(False)
-        Call РуководительСтажировки(False, "Комиссия №1")
+        Call РуководительСтажировки(False)
         Call Комиссия2(False)
         Call Комиссия3(False)
         Call СекретарьКомиссии(False)
@@ -2190,13 +2200,13 @@ Public Class ААОсновная
         АСформироватьПриказ.Label14.Visible = False
 
 
-        Call ОтветственныйЗаАттестацию(False, "Председатель комиссии")
+        Call ОтветственныйЗаАттестацию(False)
         Call чекбоксы(False, "ММС", "санитар", "должность слушателей")
         Call ПроектВносит(False)
         Call Исполнитель(False)
         Call Согласовано1(False)
         Call Согласовано2(False)
-        Call РуководительСтажировки(False, "Комиссия №1")
+        Call РуководительСтажировки(False)
         Call Комиссия2(False)
         Call Комиссия3(False)
         Call СекретарьКомиссии(False)
@@ -2285,13 +2295,13 @@ Public Class ААОсновная
         АСформироватьПриказ.ListViewСписокСлушателей.Columns(0).Text = "ФИО"
 
 
-        Call ОтветственныйЗаАттестацию(False, "Председатель комиссии")
+        Call ОтветственныйЗаАттестацию(False)
         Call чекбоксы(False, "ММС", "санитар", "должность слушателей")
         Call ПроектВносит(False)
         Call Исполнитель(False)
         Call Согласовано1(False)
         Call Согласовано2(False)
-        Call РуководительСтажировки(False, "Комиссия №1")
+        Call РуководительСтажировки(False)
         Call Комиссия2(False)
         Call Комиссия3(False)
         Call СекретарьКомиссии(False)
@@ -2373,13 +2383,13 @@ Public Class ААОсновная
         АСформироватьПриказ.ListViewСписокСлушателей.Columns(0).Width = 805
         АСформироватьПриказ.ListViewСписокСлушателей.Columns(0).Text = "ФИО"
 
-        Call ОтветственныйЗаАттестацию(False, "Председатель комиссии")
+        Call ОтветственныйЗаАттестацию(False)
         Call чекбоксы(False, "ММС", "санитар", "должность слушателей")
         Call ПроектВносит(False)
         Call Исполнитель(False)
         Call Согласовано1(False)
         Call Согласовано2(False)
-        Call РуководительСтажировки(False, "Комиссия №1")
+        Call РуководительСтажировки(False)
         Call Комиссия2(False)
         Call Комиссия3(False)
         Call СекретарьКомиссии(False)
@@ -4429,7 +4439,7 @@ Public Class ААОсновная
         Next
 
         worker_dolgnost.Text = "нет"
-        worker_type.Text = "нет"
+        worker_type.Text = worker.default_type
 
         worker_name_Leave(sender, e)
         worker_name_pad_Leave(sender, e)
@@ -4649,8 +4659,10 @@ Public Class ААОсновная
         ElseIf e.KeyValue = Keys.R Then
 
             If Not ToolStrip_name_list.Text.Trim = "" Then
+
                 Dim e1 As DataGridViewCellEventArgs
                 DataGridView_list_CellDoubleClick(sender, e1)
+
             End If
 
         ElseIf e.KeyValue = Keys.Tab Then
@@ -4740,6 +4752,8 @@ Public Class ААОсновная
         End If
 
         SplitContainerOtherList.Panel2Collapsed = False
+
+        redactorOpen(sender, e)
 
         worker_name.Text = Convert.ToString(DataGridView_list.Rows(curNumber).Cells(1).Value)
         worker_name.BackColor = Color.AliceBlue

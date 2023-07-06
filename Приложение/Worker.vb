@@ -9,6 +9,7 @@ Public Class Worker
     Public worker_struct As Worker_structure
     Public flagRedactor As Boolean = False ' редактирование чекбоксов
     Public flagUpdate As Boolean = False ' редактирование записей
+    Public default_type As String ' тип работника поумолчанию
     'Public activTextBox As String ' имя текстбокса на котором была нажата клавиша enter
     Public Structure Worker_structure
 
@@ -23,6 +24,22 @@ Public Class Worker
         Dim worker_check As Int16
 
     End Structure
+
+    Private Sub load_default_type()
+
+        Dim result() As String
+        queryString = sqlQueryString.loadDefaultType()
+        result = mySQLConnector.ЗагрузитьИзMySQLвОдномерныйМассив(queryString, 1, 0)
+
+        If result.Length < 1 Then
+
+            Return
+
+        End If
+
+        default_type = result(0)
+
+    End Sub
 
     Public Sub update_status_list()
 
@@ -41,6 +58,7 @@ Public Class Worker
         queryString = sqlQueryString.loadListWorkerType()
         worker_struct.worker_type_list = mySQLConnector.ЗагрузитьИзMySQLвОдномерныйМассив(queryString, 1, 0)
 
+        load_default_type()
 
     End Sub
 
