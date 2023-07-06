@@ -51,13 +51,15 @@ Partial Class СправочникГруппы
         Me.ListViewСписокГрупп.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.ListViewСписокГрупп.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.ListViewСписокГрупп.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.Номер, Me.Группа, Me.Программа, Me.Куратор, Me.Начало, Me.Конец})
+        Me.ListViewСписокГрупп.Font = New System.Drawing.Font("Microsoft YaHei", 11.0!)
         Me.ListViewСписокГрупп.FullRowSelect = True
         Me.ListViewСписокГрупп.GridLines = True
         Me.ListViewСписокГрупп.HideSelection = False
         Me.ListViewСписокГрупп.Location = New System.Drawing.Point(3, 66)
         Me.ListViewСписокГрупп.Name = "ListViewСписокГрупп"
-        Me.ListViewСписокГрупп.Size = New System.Drawing.Size(1277, 879)
+        Me.ListViewСписокГрупп.Size = New System.Drawing.Size(1311, 879)
         Me.ListViewСписокГрупп.TabIndex = 1
         Me.ListViewСписокГрупп.UseCompatibleStateImageBehavior = False
         Me.ListViewСписокГрупп.View = System.Windows.Forms.View.Details
@@ -70,12 +72,12 @@ Partial Class СправочникГруппы
         'Группа
         '
         Me.Группа.Text = "Группа"
-        Me.Группа.Width = 150
+        Me.Группа.Width = 200
         '
         'Программа
         '
         Me.Программа.Text = "Программа"
-        Me.Программа.Width = 450
+        Me.Программа.Width = 500
         '
         'Куратор
         '
@@ -85,12 +87,12 @@ Partial Class СправочникГруппы
         'Начало
         '
         Me.Начало.Text = "Дата начала"
-        Me.Начало.Width = 110
+        Me.Начало.Width = 120
         '
         'Конец
         '
         Me.Конец.Text = "Дата окончания"
-        Me.Конец.Width = 110
+        Me.Конец.Width = 140
         '
         'Label1
         '
@@ -209,7 +211,7 @@ Partial Class СправочникГруппы
         Me.AccessibleRole = System.Windows.Forms.AccessibleRole.TitleBar
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1281, 947)
+        Me.ClientSize = New System.Drawing.Size(1315, 947)
         Me.Controls.Add(Me.yearSpravochnikGr)
         Me.Controls.Add(Me.ListViewСписокГрупп)
         Me.Controls.Add(Me.СГУровеньКвалификации)

@@ -4462,9 +4462,43 @@ Public Class ААОсновная
 
     End Sub
 
+    Private Sub worker_DeleteDown(sender, e)
+
+        Dim curNumber = DataGridView_list.CurrentCell.RowIndex
+        ФормаДаНетУдалить.текстДаНет.Text = "Удалить " + DataGridView_list.Rows(curNumber).Cells(1).Value + "?"
+        ФормаДаНетУдалить.ShowDialog()
+
+        If Not ФормаДаНетУдалить.НажатаКнопкаДа Then
+            Return
+        End If
+
+        ФормаДаНетУдалить.текстДаНет.Text = "Такая запись уже найдена. Заменить информацию в базе?"
+
+        worker.worker_struct.kod = Convert.ToInt64(DataGridView_list.Rows(curNumber).Cells(6).Value)
+
+        If Not worker.removeWorker() Then
+            предупреждение.TextBox.Visible = False
+            предупреждение.текст.Visible = True
+            предупреждение.текст.Text = "Сотрудник не может быть удален"
+            предупреждение.ShowDialog()
+            Return
+        End If
+
+        If worker_name.Text.Trim = Convert.ToString(DataGridView_list.Rows(curNumber).Cells(1).Value) Then
+            SendKeys.Send("{ESC}")
+        End If
+
+        ToolStrip_name_list_SelectedIndexChanged(sender, e)
+
+        If (curNumber <> 0) Then
+            DataGridView_list.CurrentCell = DataGridView_list.Rows(curNumber - 1).Cells(0)
+        End If
+
+    End Sub
+
     Private Sub worker_EnterDown()
 
-        If redactor_enter = False Or SplitContainerOtherList.Panel2Collapsed Then
+        If redactor_enter = False Or SplitContainerOtherList.Panel2Collapsed Or worker_dolgnost.DroppedDown Or worker_type.DroppedDown Then
 
             Return
 
@@ -4604,35 +4638,7 @@ Public Class ААОсновная
 
         If e.KeyValue = Keys.Delete Then
 
-            Dim curNumber = DataGridView_list.CurrentCell.RowIndex
-            ФормаДаНетУдалить.текстДаНет.Text = "Удалить " + DataGridView_list.Rows(curNumber).Cells(1).Value + "?"
-            ФормаДаНетУдалить.ShowDialog()
-
-            If Not ФормаДаНетУдалить.НажатаКнопкаДа Then
-                Return
-            End If
-
-            ФормаДаНетУдалить.текстДаНет.Text = "Такая запись уже найдена. Заменить информацию в базе?"
-
-            worker.worker_struct.kod = Convert.ToInt64(DataGridView_list.Rows(curNumber).Cells(6).Value)
-
-            If Not worker.removeWorker() Then
-                предупреждение.TextBox.Visible = False
-                предупреждение.текст.Visible = True
-                предупреждение.текст.Text = "Сотрудник не может быть удален"
-                предупреждение.ShowDialog()
-                Return
-            End If
-
-            If worker_name.Text.Trim = Convert.ToString(DataGridView_list.Rows(curNumber).Cells(1).Value) Then
-                SendKeys.Send("{ESC}")
-            End If
-
-            ToolStrip_name_list_SelectedIndexChanged(sender, e)
-
-            If (curNumber <> 0) Then
-                DataGridView_list.CurrentCell = DataGridView_list.Rows(curNumber - 1).Cells(0)
-            End If
+            worker_DeleteDown(sender, e)
 
         ElseIf e.KeyValue = Keys.Add Then
 
@@ -4661,26 +4667,48 @@ Public Class ААОсновная
 
             End If
 
+        ElseIf e.KeyValue = Keys.Enter Then
+
+            If Not DataGridView_list.ReadOnly Then
+
+                If DataGridView_list.RowCount < 1 Then
+
+                    Return
+
+                ElseIf DataGridView_list.SelectedRows.Count < 1 Then
+
+                    Return
+
+                ElseIf DataGridView_list.SelectedRows(0).Cells(1).Value.Trim = "" Then
+
+                    Return
+
+                End If
+
+                DataGridView_list.SelectedRows(0).Cells(0).Value = Not DataGridView_list.SelectedRows(0).Cells(0).Value
+
+            End If
+
         End If
-
-    End Sub
-
-    Private Sub DataGridView_list_SizeChanged(sender As Object, e As EventArgs) Handles DataGridView_list.SizeChanged
-
-        'ToolStrip_name_list_SelectedIndexChanged(sender, e)
 
     End Sub
 
     Private Sub ToolStripButton1_Click(sender As Object, e As EventArgs) Handles ToolStripButton1.Click
 
         If DataGridView_list.ReadOnly Then
+
             DataGridView_list.ReadOnly = False
             ToolStripButton1.Image = ImageList40.Images(3)
             worker.flagRedactor = True
+            ActiveControl = DataGridView_list
+
         Else
+
             DataGridView_list.ReadOnly = True
             ToolStripButton1.Image = ImageList40.Images(2)
             worker.flagRedactor = False
+            ActiveControl = DataGridView_list
+
         End If
 
     End Sub
@@ -4697,7 +4725,7 @@ Public Class ААОсновная
 
     Private Sub DataGridView_list_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridView_list.CellDoubleClick
 
-        If DataGridView_list.Rows.Count < 0 Then
+        If DataGridView_list.Rows.Count <0 Then
             Return
         ElseIf Convert.ToString(DataGridView_list.Rows(0).Cells(0).Value) = "" Then
             Return

@@ -24,7 +24,7 @@ Partial Class ФормаСправочникСлушатели
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(ФормаСправочникСлушатели))
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.ListViewСписокСлушателей = New System.Windows.Forms.ListView()
         Me.ColumnHeader5 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ColumnHeader6 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
@@ -56,6 +56,7 @@ Partial Class ФормаСправочникСлушатели
         '
         Me.ListViewСписокСлушателей.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.ColumnHeader5, Me.ColumnHeader6, Me.ColumnHeader1, Me.ColumnHeader2, Me.ColumnHeader3})
         Me.ListViewСписокСлушателей.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.ListViewСписокСлушателей.Font = New System.Drawing.Font("Microsoft YaHei", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
         Me.ListViewСписокСлушателей.FullRowSelect = True
         Me.ListViewСписокСлушателей.GridLines = True
         Me.ListViewСписокСлушателей.HideSelection = False
@@ -69,7 +70,7 @@ Partial Class ФормаСправочникСлушатели
         'ColumnHeader5
         '
         Me.ColumnHeader5.Text = "Номер"
-        Me.ColumnHeader5.Width = 50
+        Me.ColumnHeader5.Width = 100
         '
         'ColumnHeader6
         '
@@ -236,8 +237,8 @@ Partial Class ФормаСправочникСлушатели
         Me.ССлушТаблицаИнфСлушателя.Name = "ССлушТаблицаИнфСлушателя"
         Me.ССлушТаблицаИнфСлушателя.ReadOnly = True
         Me.ССлушТаблицаИнфСлушателя.RowHeadersVisible = False
-        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.ССлушТаблицаИнфСлушателя.RowsDefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.ССлушТаблицаИнфСлушателя.RowsDefaultCellStyle = DataGridViewCellStyle4
         Me.ССлушТаблицаИнфСлушателя.Size = New System.Drawing.Size(593, 879)
         Me.ССлушТаблицаИнфСлушателя.TabIndex = 1
         '

@@ -349,17 +349,20 @@
         SqlString = sprSlushTblGroup(Snils)
         Dtable = ААОсновная.mySqlConnect.ЗагрузитьИзMySQLвDataTable(SqlString, 1)
         ССлушТаблицаИнфСлушателя.DataSource = Dtable
-        ССлушТаблицаИнфСлушателя.AutoResizeColumn(0)
-        ССлушТаблицаИнфСлушателя.AutoResizeColumn(1)
-        Try
-            ССлушТаблицаИнфСлушателя.AutoResizeColumn(2)
-        Catch ex As Exception
+        ''ССлушТаблицаИнфСлушателя.AutoResizeColumn(0)
+        'ССлушТаблицаИнфСлушателя.AutoResizeColumn(1)
 
-        End Try
-        Try
-            ССлушТаблицаИнфСлушателя.AutoResizeColumn(3)
-        Catch ex As Exception
+        If ССлушТаблицаИнфСлушателя.Columns.Count <> 5 Then
+            Return
+        End If
 
-        End Try
+        ССлушТаблицаИнфСлушателя.Columns(0).Width = ССлушТаблицаИнфСлушателя.Width * 0.1
+        ССлушТаблицаИнфСлушателя.Columns(1).Width = ССлушТаблицаИнфСлушателя.Width * 0.15
+        ССлушТаблицаИнфСлушателя.Columns(2).Width = ССлушТаблицаИнфСлушателя.Width * 0.5
+        ССлушТаблицаИнфСлушателя.Columns(3).Width = ССлушТаблицаИнфСлушателя.Width * 0.125
+        ССлушТаблицаИнфСлушателя.Columns(4).Width = ССлушТаблицаИнфСлушателя.Width * 0.125
+
+        ССлушТаблицаИнфСлушателя.DefaultCellStyle.Font = New Font("Microsoft YaHei", 10)
+
     End Sub
 End Class

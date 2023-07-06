@@ -134,7 +134,7 @@ Public Class СписокСлушателейВГруппе
 
                 РедакторСлушателя.Text = ListViewСписокСлушателей.SelectedItems.Item(0).SubItems(2).Text & " " & ListViewСписокСлушателей.SelectedItems.Item(0).SubItems(3).Text & " " & ListViewСписокСлушателей.SelectedItems.Item(0).SubItems(4).Text & " "
 
-                СтрокаЗапроса = "SELECT * FROM Слушатель WHERE Снилс = " & Chr(39) & Снилс & Chr(39)
+                СтрокаЗапроса = load_slushatel(Снилс)
 
                 ФормаСправочникСлушатели.ИнформацияОСлушателе = УбратьПустотыВМассиве.УбратьПустотыВМассиве(ААОсновная.mySqlConnect.ЗагрузитьИзБДMySQLвМассив(СтрокаЗапроса, 1))
 

@@ -222,7 +222,7 @@ Module QueryString
 
     End Function
 
-    Public Function load_spr_group_search(ur_kval As String, sort As String,col_search As String, text As String, Optional year As String = "0") As String
+    Public Function load_spr_group_search(ur_kval As String, sort As String, col_search As String, text As String, Optional year As String = "0") As String
 
         Dim sqlString As String = ""
 

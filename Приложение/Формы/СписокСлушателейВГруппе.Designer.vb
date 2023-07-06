@@ -53,12 +53,13 @@ Partial Class СписокСлушателейВГруппе
         '
         Me.ListViewСписокСлушателей.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.ColumnHeader1, Me.ColumnHeader2, Me.ColumnHeader8, Me.ColumnHeader9, Me.ColumnHeader10, Me.ColumnHeader11})
         Me.ListViewСписокСлушателей.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.ListViewСписокСлушателей.Font = New System.Drawing.Font("Microsoft YaHei", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
         Me.ListViewСписокСлушателей.FullRowSelect = True
         Me.ListViewСписокСлушателей.GridLines = True
         Me.ListViewСписокСлушателей.HideSelection = False
         Me.ListViewСписокСлушателей.Location = New System.Drawing.Point(0, 0)
         Me.ListViewСписокСлушателей.Name = "ListViewСписокСлушателей"
-        Me.ListViewСписокСлушателей.Size = New System.Drawing.Size(1121, 651)
+        Me.ListViewСписокСлушателей.Size = New System.Drawing.Size(1115, 646)
         Me.ListViewСписокСлушателей.TabIndex = 4
         Me.ListViewСписокСлушателей.UseCompatibleStateImageBehavior = False
         Me.ListViewСписокСлушателей.View = System.Windows.Forms.View.Details
@@ -66,32 +67,32 @@ Partial Class СписокСлушателейВГруппе
         'ColumnHeader1
         '
         Me.ColumnHeader1.Text = "Номер"
-        Me.ColumnHeader1.Width = 50
+        Me.ColumnHeader1.Width = 80
         '
         'ColumnHeader2
         '
         Me.ColumnHeader2.Text = "СНИЛС"
-        Me.ColumnHeader2.Width = 120
+        Me.ColumnHeader2.Width = 172
         '
         'ColumnHeader8
         '
         Me.ColumnHeader8.Text = "Фамилия"
-        Me.ColumnHeader8.Width = 130
+        Me.ColumnHeader8.Width = 250
         '
         'ColumnHeader9
         '
         Me.ColumnHeader9.Text = "Имя"
-        Me.ColumnHeader9.Width = 120
+        Me.ColumnHeader9.Width = 230
         '
         'ColumnHeader10
         '
         Me.ColumnHeader10.Text = "Отчество"
-        Me.ColumnHeader10.Width = 130
+        Me.ColumnHeader10.Width = 240
         '
         'ColumnHeader11
         '
         Me.ColumnHeader11.Text = "Дата рождения"
-        Me.ColumnHeader11.Width = 120
+        Me.ColumnHeader11.Width = 131
         '
         'Прочее
         '
@@ -101,7 +102,7 @@ Partial Class СписокСлушателейВГруппе
         Me.Прочее.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
         Me.Прочее.Location = New System.Drawing.Point(0, 0)
         Me.Прочее.Name = "Прочее"
-        Me.Прочее.Size = New System.Drawing.Size(439, 46)
+        Me.Прочее.Size = New System.Drawing.Size(437, 45)
         Me.Прочее.TabIndex = 5
         Me.Прочее.Text = "Прочее"
         Me.Прочее.UseVisualStyleBackColor = False
@@ -116,7 +117,7 @@ Partial Class СписокСлушателейВГруппе
         Me.ДобавитьВГруппу.Location = New System.Drawing.Point(0, 0)
         Me.ДобавитьВГруппу.Name = "ДобавитьВГруппу"
         Me.ДобавитьВГруппу.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.ДобавитьВГруппу.Size = New System.Drawing.Size(340, 46)
+        Me.ДобавитьВГруппу.Size = New System.Drawing.Size(338, 45)
         Me.ДобавитьВГруппу.TabIndex = 1
         Me.ДобавитьВГруппу.Text = "Добавить из списка"
         Me.ДобавитьВГруппу.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -132,7 +133,7 @@ Partial Class СписокСлушателейВГруппе
         Me.ДобавитьВгруппуНового.Location = New System.Drawing.Point(0, 0)
         Me.ДобавитьВгруппуНового.Name = "ДобавитьВгруппуНового"
         Me.ДобавитьВгруппуНового.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.ДобавитьВгруппуНового.Size = New System.Drawing.Size(334, 46)
+        Me.ДобавитьВгруппуНового.Size = New System.Drawing.Size(332, 45)
         Me.ДобавитьВгруппуНового.TabIndex = 3
         Me.ДобавитьВгруппуНового.Text = "Добавить нового"
         Me.ДобавитьВгруппуНового.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -141,7 +142,7 @@ Partial Class СписокСлушателейВГруппе
         'SplitContainer1
         '
         Me.SplitContainer1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SplitContainer1.Location = New System.Drawing.Point(0, 0)
+        Me.SplitContainer1.Location = New System.Drawing.Point(3, 3)
         Me.SplitContainer1.Name = "SplitContainer1"
         Me.SplitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal
         '
@@ -152,8 +153,8 @@ Partial Class СписокСлушателейВГруппе
         'SplitContainer1.Panel2
         '
         Me.SplitContainer1.Panel2.Controls.Add(Me.ListViewСписокСлушателей)
-        Me.SplitContainer1.Size = New System.Drawing.Size(1121, 701)
-        Me.SplitContainer1.SplitterDistance = 46
+        Me.SplitContainer1.Size = New System.Drawing.Size(1115, 695)
+        Me.SplitContainer1.SplitterDistance = 45
         Me.SplitContainer1.TabIndex = 7
         '
         'SplitContainer2
@@ -169,8 +170,8 @@ Partial Class СписокСлушателейВГруппе
         'SplitContainer2.Panel2
         '
         Me.SplitContainer2.Panel2.Controls.Add(Me.SplitContainer3)
-        Me.SplitContainer2.Size = New System.Drawing.Size(1121, 46)
-        Me.SplitContainer2.SplitterDistance = 340
+        Me.SplitContainer2.Size = New System.Drawing.Size(1115, 45)
+        Me.SplitContainer2.SplitterDistance = 338
         Me.SplitContainer2.TabIndex = 4
         '
         'SplitContainer3
@@ -186,8 +187,8 @@ Partial Class СписокСлушателейВГруппе
         'SplitContainer3.Panel2
         '
         Me.SplitContainer3.Panel2.Controls.Add(Me.Прочее)
-        Me.SplitContainer3.Size = New System.Drawing.Size(777, 46)
-        Me.SplitContainer3.SplitterDistance = 334
+        Me.SplitContainer3.Size = New System.Drawing.Size(773, 45)
+        Me.SplitContainer3.SplitterDistance = 332
         Me.SplitContainer3.TabIndex = 2
         '
         'СписокСлушателейВГруппе
@@ -198,6 +199,7 @@ Partial Class СписокСлушателейВГруппе
         Me.Controls.Add(Me.SplitContainer1)
         Me.KeyPreview = True
         Me.Name = "СписокСлушателейВГруппе"
+        Me.Padding = New System.Windows.Forms.Padding(3)
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
         Me.Text = "Form2"
         Me.SplitContainer1.Panel1.ResumeLayout(False)

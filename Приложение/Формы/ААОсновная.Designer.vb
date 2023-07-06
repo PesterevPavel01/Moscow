@@ -1910,9 +1910,10 @@ Partial Class ААОсновная
         'SplitContainerOtherList.Panel2
         '
         Me.SplitContainerOtherList.Panel2.Controls.Add(Me.panel_worker)
+        Me.SplitContainerOtherList.Panel2Collapsed = True
         Me.SplitContainerOtherList.Panel2MinSize = 26
         Me.SplitContainerOtherList.Size = New System.Drawing.Size(1352, 788)
-        Me.SplitContainerOtherList.SplitterDistance = 592
+        Me.SplitContainerOtherList.SplitterDistance = 26
         Me.SplitContainerOtherList.TabIndex = 4
         '
         'DataGridView_list
@@ -1931,7 +1932,7 @@ Partial Class ААОсновная
         Me.DataGridView_list.RowHeadersVisible = False
         Me.DataGridView_list.RowHeadersWidth = 53
         Me.DataGridView_list.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DataGridView_list.Size = New System.Drawing.Size(1352, 592)
+        Me.DataGridView_list.Size = New System.Drawing.Size(1352, 788)
         Me.DataGridView_list.TabIndex = 34
         Me.DataGridView_list.Visible = False
         '
@@ -1991,7 +1992,7 @@ Partial Class ААОсновная
         Me.panel_worker.Dock = System.Windows.Forms.DockStyle.Fill
         Me.panel_worker.Location = New System.Drawing.Point(0, 0)
         Me.panel_worker.Name = "panel_worker"
-        Me.panel_worker.Size = New System.Drawing.Size(1352, 192)
+        Me.panel_worker.Size = New System.Drawing.Size(150, 46)
         Me.panel_worker.TabIndex = 15
         '
         'ButtonFK
@@ -2013,7 +2014,7 @@ Partial Class ААОсновная
         Me.TextBoxS.Location = New System.Drawing.Point(2, 147)
         Me.TextBoxS.Multiline = True
         Me.TextBoxS.Name = "TextBoxS"
-        Me.TextBoxS.Size = New System.Drawing.Size(1346, 40)
+        Me.TextBoxS.Size = New System.Drawing.Size(144, 0)
         Me.TextBoxS.TabIndex = 44
         Me.TextBoxS.Text = "Укажите ФИО в формате Фамилия И.О."
         '
@@ -2026,7 +2027,7 @@ Partial Class ААОсновная
         Me.worker_type.ItemHeight = 16
         Me.worker_type.Location = New System.Drawing.Point(3, 117)
         Me.worker_type.Name = "worker_type"
-        Me.worker_type.Size = New System.Drawing.Size(1346, 24)
+        Me.worker_type.Size = New System.Drawing.Size(144, 24)
         Me.worker_type.TabIndex = 43
         '
         'worker_dolgnost
@@ -2038,7 +2039,7 @@ Partial Class ААОсновная
         Me.worker_dolgnost.ItemHeight = 16
         Me.worker_dolgnost.Location = New System.Drawing.Point(3, 87)
         Me.worker_dolgnost.Name = "worker_dolgnost"
-        Me.worker_dolgnost.Size = New System.Drawing.Size(1346, 24)
+        Me.worker_dolgnost.Size = New System.Drawing.Size(144, 24)
         Me.worker_dolgnost.TabIndex = 42
         '
         'worker_name_pad
@@ -2048,7 +2049,7 @@ Partial Class ААОсновная
         Me.worker_name_pad.Location = New System.Drawing.Point(3, 59)
         Me.worker_name_pad.Multiline = True
         Me.worker_name_pad.Name = "worker_name_pad"
-        Me.worker_name_pad.Size = New System.Drawing.Size(1346, 22)
+        Me.worker_name_pad.Size = New System.Drawing.Size(144, 22)
         Me.worker_name_pad.TabIndex = 2
         '
         'worker_name_full
@@ -2058,7 +2059,7 @@ Partial Class ААОсновная
         Me.worker_name_full.Location = New System.Drawing.Point(3, 31)
         Me.worker_name_full.Multiline = True
         Me.worker_name_full.Name = "worker_name_full"
-        Me.worker_name_full.Size = New System.Drawing.Size(1346, 22)
+        Me.worker_name_full.Size = New System.Drawing.Size(144, 22)
         Me.worker_name_full.TabIndex = 1
         '
         'worker_name
