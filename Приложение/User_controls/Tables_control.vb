@@ -84,9 +84,9 @@ Public Class Tables_control
 
             ElseIf number_row = 1 And persent_width_column_1 <> -1 Then
 
-                If persent_width_column_1 = 1 Then
+                If persent_width_column_1 = 0 Then
 
-                    dataGridViewColumn.Width = 1
+                    dataGridViewColumn.Visible = False
 
                 Else
 
@@ -97,9 +97,9 @@ Public Class Tables_control
 
             ElseIf number_row = 2 And persent_width_column_2 <> -1 Then
 
-                If persent_width_column_2 = 1 Then
+                If persent_width_column_2 = 0 Then
 
-                    dataGridViewColumn.Width = 1
+                    dataGridViewColumn.Visible = False
 
                 Else
 

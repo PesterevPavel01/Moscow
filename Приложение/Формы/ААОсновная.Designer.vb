@@ -160,7 +160,7 @@ Partial Class ААОсновная
         Me.kod = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.panel_worker = New System.Windows.Forms.Panel()
         Me.ButtonFK = New System.Windows.Forms.Button()
-        Me.TextBoxS = New System.Windows.Forms.TextBox()
+        Me.spravka = New System.Windows.Forms.TextBox()
         Me.worker_type = New System.Windows.Forms.ComboBox()
         Me.worker_dolgnost = New System.Windows.Forms.ComboBox()
         Me.worker_name_pad = New System.Windows.Forms.TextBox()
@@ -310,7 +310,7 @@ Partial Class ААОсновная
         Me.SplitContainerProgs.Panel2Collapsed = True
         Me.SplitContainerProgs.Panel2MinSize = 60
         Me.SplitContainerProgs.Size = New System.Drawing.Size(558, 782)
-        Me.SplitContainerProgs.SplitterDistance = 566
+        Me.SplitContainerProgs.SplitterDistance = 25
         Me.SplitContainerProgs.TabIndex = 3
         '
         'dataGridProgs
@@ -337,7 +337,7 @@ Partial Class ААОсновная
         Me.newProgramm.Location = New System.Drawing.Point(0, 0)
         Me.newProgramm.Multiline = True
         Me.newProgramm.Name = "newProgramm"
-        Me.newProgramm.Size = New System.Drawing.Size(558, 212)
+        Me.newProgramm.Size = New System.Drawing.Size(150, 46)
         Me.newProgramm.TabIndex = 13
         '
         'ToolStrip2
@@ -1983,7 +1983,7 @@ Partial Class ААОсновная
         '
         Me.panel_worker.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.panel_worker.Controls.Add(Me.ButtonFK)
-        Me.panel_worker.Controls.Add(Me.TextBoxS)
+        Me.panel_worker.Controls.Add(Me.spravka)
         Me.panel_worker.Controls.Add(Me.worker_type)
         Me.panel_worker.Controls.Add(Me.worker_dolgnost)
         Me.panel_worker.Controls.Add(Me.worker_name_pad)
@@ -2005,18 +2005,18 @@ Partial Class ААОсновная
         Me.ButtonFK.UseVisualStyleBackColor = True
         Me.ButtonFK.Visible = False
         '
-        'TextBoxS
+        'spravka
         '
-        Me.TextBoxS.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+        Me.spravka.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.TextBoxS.Enabled = False
-        Me.TextBoxS.Location = New System.Drawing.Point(2, 147)
-        Me.TextBoxS.Multiline = True
-        Me.TextBoxS.Name = "TextBoxS"
-        Me.TextBoxS.Size = New System.Drawing.Size(144, 0)
-        Me.TextBoxS.TabIndex = 44
-        Me.TextBoxS.Text = "Укажите ФИО в формате Фамилия И.О."
+        Me.spravka.Enabled = False
+        Me.spravka.Location = New System.Drawing.Point(2, 147)
+        Me.spravka.Multiline = True
+        Me.spravka.Name = "spravka"
+        Me.spravka.Size = New System.Drawing.Size(144, 0)
+        Me.spravka.TabIndex = 44
+        Me.spravka.Text = "Укажите ФИО в формате Фамилия И.О."
         '
         'worker_type
         '
@@ -2028,7 +2028,7 @@ Partial Class ААОсновная
         Me.worker_type.Location = New System.Drawing.Point(3, 117)
         Me.worker_type.Name = "worker_type"
         Me.worker_type.Size = New System.Drawing.Size(144, 24)
-        Me.worker_type.TabIndex = 43
+        Me.worker_type.TabIndex = 1004
         '
         'worker_dolgnost
         '
@@ -2040,7 +2040,7 @@ Partial Class ААОсновная
         Me.worker_dolgnost.Location = New System.Drawing.Point(3, 87)
         Me.worker_dolgnost.Name = "worker_dolgnost"
         Me.worker_dolgnost.Size = New System.Drawing.Size(144, 24)
-        Me.worker_dolgnost.TabIndex = 42
+        Me.worker_dolgnost.TabIndex = 1003
         '
         'worker_name_pad
         '
@@ -2050,7 +2050,7 @@ Partial Class ААОсновная
         Me.worker_name_pad.Multiline = True
         Me.worker_name_pad.Name = "worker_name_pad"
         Me.worker_name_pad.Size = New System.Drawing.Size(144, 22)
-        Me.worker_name_pad.TabIndex = 2
+        Me.worker_name_pad.TabIndex = 1002
         '
         'worker_name_full
         '
@@ -2060,15 +2060,17 @@ Partial Class ААОсновная
         Me.worker_name_full.Multiline = True
         Me.worker_name_full.Name = "worker_name_full"
         Me.worker_name_full.Size = New System.Drawing.Size(144, 22)
-        Me.worker_name_full.TabIndex = 1
+        Me.worker_name_full.TabIndex = 1001
         '
         'worker_name
         '
+        Me.worker_name.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.worker_name.Location = New System.Drawing.Point(3, 3)
         Me.worker_name.Multiline = True
         Me.worker_name.Name = "worker_name"
-        Me.worker_name.Size = New System.Drawing.Size(1346, 22)
-        Me.worker_name.TabIndex = 0
+        Me.worker_name.Size = New System.Drawing.Size(144, 22)
+        Me.worker_name.TabIndex = 1000
         '
         'ToolStrip1
         '
@@ -2335,7 +2337,7 @@ Partial Class ААОсновная
     Friend WithEvents worker_name As TextBox
     Friend WithEvents worker_type As ComboBox
     Friend WithEvents worker_dolgnost As ComboBox
-    Friend WithEvents TextBoxS As TextBox
+    Friend WithEvents spravka As TextBox
     Friend WithEvents ButtonFK As Button
     Friend WithEvents DataGridView_list As DataGridView
     Friend WithEvents checkBox As DataGridViewCheckBoxColumn

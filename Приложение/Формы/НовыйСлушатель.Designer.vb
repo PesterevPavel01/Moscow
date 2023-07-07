@@ -95,7 +95,7 @@ Partial Class НовыйСлушатель
         '
         Me.Очистить.BackColor = System.Drawing.SystemColors.MenuBar
         Me.Очистить.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.Очистить.Location = New System.Drawing.Point(4, 655)
+        Me.Очистить.Location = New System.Drawing.Point(4, 661)
         Me.Очистить.Name = "Очистить"
         Me.Очистить.Size = New System.Drawing.Size(198, 34)
         Me.Очистить.TabIndex = 26
@@ -356,7 +356,7 @@ Partial Class НовыйСлушатель
         '
         Me.Сохранить.BackColor = System.Drawing.SystemColors.MenuBar
         Me.Сохранить.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.Сохранить.Location = New System.Drawing.Point(200, 655)
+        Me.Сохранить.Location = New System.Drawing.Point(200, 661)
         Me.Сохранить.Name = "Сохранить"
         Me.Сохранить.Size = New System.Drawing.Size(590, 34)
         Me.Сохранить.TabIndex = 25

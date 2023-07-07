@@ -9,7 +9,6 @@ Imports System.Text.RegularExpressions
 Imports System.Data.SqlTypes
 Imports System.Xml
 
-
 Public Class ААОсновная
     Private redactor_enter As Boolean
     Public password0 As String
@@ -4293,8 +4292,8 @@ Public Class ААОсновная
 
         tbl_obrazovanie.queryString_load = sqlQueryString.load_list_doljnosti()
 
-        tbl_obrazovanie.persent_width_column_0 = 98
-        tbl_obrazovanie.persent_width_column_1 = 1
+        tbl_obrazovanie.persent_width_column_0 = 100
+        tbl_obrazovanie.persent_width_column_1 = 0
 
         tbl_obrazovanie.names.redactor_element_first = "Наименование"
         tbl_obrazovanie.names.db_element_first = "name"
@@ -4320,8 +4319,8 @@ Public Class ААОсновная
                 FROM doo_vid_dok
                 ORDER BY name"
 
-        tbl_obrazovanie.persent_width_column_0 = 98
-        tbl_obrazovanie.persent_width_column_1 = 1
+        tbl_obrazovanie.persent_width_column_0 = 100
+        tbl_obrazovanie.persent_width_column_1 = 0
 
         tbl_obrazovanie.names.redactor_element_first = "Наименование"
         tbl_obrazovanie.names.db_element_first = "name"
@@ -4343,8 +4342,8 @@ Public Class ААОсновная
         tbl_obrazovanie.queryString_load = sqlQueryString.load_list_organization()
 
         tbl_obrazovanie.persent_width_column_0 = 30
-        tbl_obrazovanie.persent_width_column_1 = 67
-        tbl_obrazovanie.persent_width_column_2 = 1
+        tbl_obrazovanie.persent_width_column_1 = 70
+        tbl_obrazovanie.persent_width_column_2 = 0
 
         tbl_obrazovanie.names.redactor_element_first = "Наименование"
         tbl_obrazovanie.names.redactor_element_second = "Полное наименование"
@@ -4386,7 +4385,7 @@ Public Class ААОсновная
         DataGridView_list.Columns(5).Width = 100
         DataGridView_list.Columns(4).Width = DataGridView_list.Width - DataGridView_list.Columns(0).Width -
         DataGridView_list.Columns(1).Width - DataGridView_list.Columns(2).Width - DataGridView_list.Columns(3).Width - DataGridView_list.Columns(5).Width
-        DataGridView_list.Columns(6).Width = 1
+        DataGridView_list.Columns(6).Visible = False
 
     End Sub
 
@@ -4504,6 +4503,8 @@ Public Class ААОсновная
             DataGridView_list.CurrentCell = DataGridView_list.Rows(curNumber - 1).Cells(0)
         End If
 
+        АСформироватьПриказ.reload_lists()
+
     End Sub
 
     Private Sub worker_EnterDown()
@@ -4581,6 +4582,7 @@ Public Class ААОсновная
         End If
 
         loadTblWorker()
+        АСформироватьПриказ.reload_lists()
 
     End Sub
 
@@ -4737,7 +4739,7 @@ Public Class ААОсновная
 
     Private Sub DataGridView_list_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridView_list.CellDoubleClick
 
-        If DataGridView_list.Rows.Count <0 Then
+        If DataGridView_list.Rows.Count < 0 Then
             Return
         ElseIf Convert.ToString(DataGridView_list.Rows(0).Cells(0).Value) = "" Then
             Return
@@ -5156,4 +5158,96 @@ Public Class ААОсновная
         redactor_enter = False
 
     End Sub
+
+    Private Sub worker_name_KeyDown(sender As Object, e As KeyEventArgs) Handles worker_name.KeyDown
+
+        redactor_worker_activator(sender, e)
+
+    End Sub
+
+    Private Sub worker_name_full_KeyDown(sender As Object, e As KeyEventArgs) Handles worker_name_full.KeyDown
+
+        redactor_worker_activator(sender, e)
+
+    End Sub
+
+    Private Sub worker_name_pad_KeyDown(sender As Object, e As KeyEventArgs) Handles worker_name_pad.KeyDown
+
+        redactor_worker_activator(sender, e)
+
+    End Sub
+
+    Private Sub worker_dolgnost_KeyDown(sender As Object, e As KeyEventArgs) Handles worker_dolgnost.KeyDown
+
+        If Not worker_dolgnost.DroppedDown Then
+
+            redactor_worker_activator(sender, e)
+
+        End If
+
+    End Sub
+
+    Private Sub worker_type_KeyDown(sender As Object, e As KeyEventArgs) Handles worker_type.KeyDown
+
+        If Not worker_type.DroppedDown Then
+
+            redactor_worker_activator(sender, e)
+
+        End If
+
+    End Sub
+
+    Sub redactor_worker_activator(control As Control, e As KeyEventArgs)
+
+        If e.KeyCode = Keys.Down Or e.KeyCode = Keys.Up Then
+
+            Dim index As Integer = control.TabIndex
+            Dim flag_ok As Boolean = False
+
+            For Each element As Control In panel_worker.Controls
+
+                If element.GetType.ToString <> "System.Windows.Forms.TextBox" And element.GetType.ToString <> "System.Windows.Forms.ComboBox" Then
+
+                    Continue For
+
+                End If
+
+                If e.KeyCode = Keys.Down Then
+
+                    If element.TabIndex = index + 1 And element.Name <> "spravka" Then
+
+                        ActiveControl = element
+                        element.Select()
+                        element.Focus()
+                        flag_ok = True
+                        Exit For
+
+                    End If
+
+                Else
+
+                    If element.TabIndex = index - 1 And element.Name <> "spravka" Then
+
+                        ActiveControl = element
+                        flag_ok = True
+                        Exit For
+
+                    End If
+
+                End If
+
+            Next
+
+            If Not flag_ok Then
+
+                ActiveControl = DataGridView_list
+
+            End If
+
+            e.Handled = True
+
+        End If
+
+    End Sub
+
 End Class

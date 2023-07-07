@@ -461,14 +461,75 @@ Module Интерфейс
         проверитьЗаполненностьФормыСлушатели = True
 
         For Each i In Форма.Controls
-            nameControl = i.Name
-            If i.Name <> "Телефон" And i.Name <> "ValidOn" And i.Name <> "Образование" And i.Name <> "КемВыданДУЛ" And i.Name <> "СтранаДОО" And i.Name <> "Email" And i.Name <> "Отчество" And i.Name <> "НомерДУЛ" And i.Name <> "СерияДУЛ" And i.Name <> "ДУЛ" And i.Name <> "ИсточникФин" And i.Name <> "СтранаДОО" And i.Name <> "НаправившаяОрг" And i.Name <> "ДатаНаправленияРосздравнвдзора" And i.Name <> "НомерНаправленияРосздравнадзора" And i.Name <> "СпециальностьСлушателя" And i.Name <> "АдресРегистрации" And i.Name <> "Образование" And i.Name <> "Выполнение" And i.Name <> "BtnFocus" And i.Name <> "Сохранить" And i.Name <> "Очистить" And Strings.Left(i.Name, 5) <> "Label" And Strings.Left(i.Name, 5) <> "label" And Strings.Left(i.Name, 5) <> "Check" Then
-                If i.Text = "" And i.Visible = True Then
-                    проверитьЗаполненностьФормыСлушатели = False
-                End If
-            End If
-        Next
 
+            nameControl = i.Name
+
+            Dim t As String = i.GetType.ToString
+
+            If i.GetType.ToString <> "System.Windows.Forms.ComboBox" And i.GetType.ToString <> "System.Windows.Forms.TextBox" Then
+
+                Continue For
+
+            End If
+
+            If i.Visible = True Then
+
+                Continue For
+
+            End If
+
+            Select Case nameControl
+
+                Case "Телефон"
+                    Continue For
+                Case "ValidOn"
+                    Continue For
+                Case "Образование"
+                    Continue For
+                Case "КемВыданДУЛ"
+                    Continue For
+                Case "СтранаДОО"
+                    Continue For
+                Case "Email"
+                    Continue For
+                Case "Отчество"
+                    Continue For
+                Case "НомерДУЛ"
+                    Continue For
+                Case "СерияДУЛ"
+                    Continue For
+                Case "ДУЛ"
+                    Continue For
+                Case "ИсточникФин"
+                    Continue For
+                Case "СтранаДОО"
+                    Continue For
+                Case "НаправившаяОрг"
+                    Continue For
+                Case "ДатаНаправленияРосздравнвдзора"
+                    Continue For
+                Case "НомерНаправленияРосздравнадзора"
+                    Continue For
+                Case "СпециальностьСлушателя"
+                    Continue For
+                Case "АдресРегистрации"
+                    Continue For
+                Case "Образование"
+                    Continue For
+                Case "Выполнение"
+                    Continue For
+                Case "doo_vid_dok"
+                    Continue For
+
+            End Select
+
+            If i.Text = "" Then
+
+                Return False
+
+            End If
+
+        Next
 
     End Function
 

@@ -888,6 +888,13 @@
         ААОсновная.prikazCvalif=0
     End Sub
 
+    Public Sub reload_lists()
+
+        flagLoad = False
+        АСформироватьПриказ_Load(New Object, New EventArgs)
+
+    End Sub
+
     Private Sub АСформироватьПриказ_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
         If Not flagLoad Then
@@ -1236,4 +1243,5 @@
             Должность.Text = quaryResult(0, 0)
         End If
     End Sub
+
 End Class

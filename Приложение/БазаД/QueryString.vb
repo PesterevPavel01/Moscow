@@ -28,7 +28,7 @@ Module QueryString
 
                       LEFT JOIN napr_organization
                         ON result.НОрг = kod
-                        ORDER BY  name,result.slush"
+                        ORDER BY  result.slush"
         Return SqlString
 
     End Function
