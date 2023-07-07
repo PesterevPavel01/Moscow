@@ -536,13 +536,17 @@ sotrudnik.in_list,
     Public Function loadProgramms(uroven_cval As String) As String
 
         Dim sqlString As String = ""
+
         sqlString = "SELECT
-                    programma.name as Наименование,
-                    programma.date as 'дата создания',
-                    programma.kod
+                      programma.name AS Наименование,
+                      kol_chas.name AS Часы,
+                      programma.kod,
+                      programma.date AS 'дата создания'
                     FROM programma
-                    INNER JOIN uroven_kvalifik
-                    ON programma.uroven_kvalifik = uroven_kvalifik.kod
+                      INNER JOIN uroven_kvalifik
+                        ON programma.uroven_kvalifik = uroven_kvalifik.kod
+                      INNER JOIN kol_chas
+                        ON programma.hours = kol_chas.kod
                     WHERE uroven_kvalifik.name = '" + uroven_cval + "' ORDER BY programma.name"
         Return sqlString
 

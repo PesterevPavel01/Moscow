@@ -115,8 +115,8 @@ Partial Class Tables_control
         '
         Me.SplitContainer_second.Panel2.Controls.Add(Me.SplitContainer4)
         Me.SplitContainer_second.Panel2Collapsed = True
-        Me.SplitContainer_second.Size = New System.Drawing.Size(668, 185)
-        Me.SplitContainer_second.SplitterDistance = 92
+        Me.SplitContainer_second.Size = New System.Drawing.Size(150, 46)
+        Me.SplitContainer_second.SplitterDistance = 25
         Me.SplitContainer_second.TabIndex = 0
         '
         'SplitContainer_first

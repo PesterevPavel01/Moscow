@@ -17,7 +17,7 @@ Public Class Programm
         Dim name_current_modul As String
         Dim program_kod As String
         Dim program_kod_update As String
-        Dim list_progs As List(Of String)
+        'Dim list_progs As List(Of String)
         Dim tbl_progs As DataTable
         Dim tbl_modulsInProgs As DataTable
         Dim tbl_moduls As DataTable
@@ -28,13 +28,11 @@ Public Class Programm
         Dim name As String
         Dim hours As Double
     End Structure
-    Public Sub loadProgramms()
+    Public Function loadProgramms() As String
         Dim queryString As String
-        mySQLConnector.opdateArgument()
         queryString = sqlQueryString.loadProgramms(uroven_cval)
-        struct_progs.list_progs = mySQLConnector.LoadToListString(queryString, 1, 0)
-        struct_progs.tbl_progs = mySQLConnector.ЗагрузитьИзMySQLвDataTable(queryString, 1)
-    End Sub
+        Return queryString
+    End Function
 
     Public Sub loadModulAndHours()
         Dim queryString As String

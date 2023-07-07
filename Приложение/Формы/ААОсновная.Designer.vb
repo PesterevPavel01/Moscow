@@ -29,9 +29,7 @@ Partial Class ААОсновная
         Me.pageProgs = New System.Windows.Forms.TabPage()
         Me.password = New System.Windows.Forms.MaskedTextBox()
         Me.SplitContainer4 = New System.Windows.Forms.SplitContainer()
-        Me.SplitContainerProgs = New System.Windows.Forms.SplitContainer()
-        Me.dataGridProgs = New System.Windows.Forms.DataGridView()
-        Me.newProgramm = New System.Windows.Forms.TextBox()
+        Me.programms_tbl_parent = New System.Windows.Forms.Panel()
         Me.ToolStrip2 = New System.Windows.Forms.ToolStrip()
         Me.ToolStripLabel1 = New System.Windows.Forms.ToolStripLabel()
         Me.comboBoxProgramms = New System.Windows.Forms.ToolStripComboBox()
@@ -177,11 +175,6 @@ Partial Class ААОсновная
         Me.SplitContainer4.Panel1.SuspendLayout()
         Me.SplitContainer4.Panel2.SuspendLayout()
         Me.SplitContainer4.SuspendLayout()
-        CType(Me.SplitContainerProgs, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.SplitContainerProgs.Panel1.SuspendLayout()
-        Me.SplitContainerProgs.Panel2.SuspendLayout()
-        Me.SplitContainerProgs.SuspendLayout()
-        CType(Me.dataGridProgs, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.ToolStrip2.SuspendLayout()
         CType(Me.SplitContainer5, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SplitContainer5.Panel1.SuspendLayout()
@@ -282,7 +275,7 @@ Partial Class ААОсновная
         '
         'SplitContainer4.Panel1
         '
-        Me.SplitContainer4.Panel1.Controls.Add(Me.SplitContainerProgs)
+        Me.SplitContainer4.Panel1.Controls.Add(Me.programms_tbl_parent)
         Me.SplitContainer4.Panel1.Controls.Add(Me.ToolStrip2)
         '
         'SplitContainer4.Panel2
@@ -293,52 +286,13 @@ Partial Class ААОсновная
         Me.SplitContainer4.TabIndex = 36
         Me.SplitContainer4.Visible = False
         '
-        'SplitContainerProgs
+        'programms_tbl_parent
         '
-        Me.SplitContainerProgs.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SplitContainerProgs.Location = New System.Drawing.Point(0, 48)
-        Me.SplitContainerProgs.Name = "SplitContainerProgs"
-        Me.SplitContainerProgs.Orientation = System.Windows.Forms.Orientation.Horizontal
-        '
-        'SplitContainerProgs.Panel1
-        '
-        Me.SplitContainerProgs.Panel1.Controls.Add(Me.dataGridProgs)
-        '
-        'SplitContainerProgs.Panel2
-        '
-        Me.SplitContainerProgs.Panel2.Controls.Add(Me.newProgramm)
-        Me.SplitContainerProgs.Panel2Collapsed = True
-        Me.SplitContainerProgs.Panel2MinSize = 60
-        Me.SplitContainerProgs.Size = New System.Drawing.Size(558, 782)
-        Me.SplitContainerProgs.SplitterDistance = 25
-        Me.SplitContainerProgs.TabIndex = 3
-        '
-        'dataGridProgs
-        '
-        Me.dataGridProgs.AllowUserToAddRows = False
-        Me.dataGridProgs.AllowUserToDeleteRows = False
-        Me.dataGridProgs.AllowUserToOrderColumns = True
-        Me.dataGridProgs.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.dataGridProgs.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dataGridProgs.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.dataGridProgs.Location = New System.Drawing.Point(0, 0)
-        Me.dataGridProgs.MultiSelect = False
-        Me.dataGridProgs.Name = "dataGridProgs"
-        Me.dataGridProgs.ReadOnly = True
-        Me.dataGridProgs.RowHeadersVisible = False
-        Me.dataGridProgs.RowHeadersWidth = 53
-        Me.dataGridProgs.Size = New System.Drawing.Size(558, 782)
-        Me.dataGridProgs.TabIndex = 33
-        '
-        'newProgramm
-        '
-        Me.newProgramm.AccessibleRole = System.Windows.Forms.AccessibleRole.Clock
-        Me.newProgramm.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.newProgramm.Location = New System.Drawing.Point(0, 0)
-        Me.newProgramm.Multiline = True
-        Me.newProgramm.Name = "newProgramm"
-        Me.newProgramm.Size = New System.Drawing.Size(150, 46)
-        Me.newProgramm.TabIndex = 13
+        Me.programms_tbl_parent.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.programms_tbl_parent.Location = New System.Drawing.Point(0, 48)
+        Me.programms_tbl_parent.Name = "programms_tbl_parent"
+        Me.programms_tbl_parent.Size = New System.Drawing.Size(558, 782)
+        Me.programms_tbl_parent.TabIndex = 2
         '
         'ToolStrip2
         '
@@ -403,7 +357,7 @@ Partial Class ААОсновная
         Me.SplitContainer5.Panel2.Controls.Add(Me.SplitContainerModuls)
         Me.SplitContainer5.Panel2.Controls.Add(Me.ToolStrip4)
         Me.SplitContainer5.Size = New System.Drawing.Size(784, 830)
-        Me.SplitContainer5.SplitterDistance = 423
+        Me.SplitContainer5.SplitterDistance = 436
         Me.SplitContainer5.TabIndex = 37
         '
         'SplitModulsInProg
@@ -421,7 +375,7 @@ Partial Class ААОсновная
         '
         Me.SplitModulsInProg.Panel2.Controls.Add(Me.red_moduls)
         Me.SplitModulsInProg.Panel2Collapsed = True
-        Me.SplitModulsInProg.Size = New System.Drawing.Size(377, 830)
+        Me.SplitModulsInProg.Size = New System.Drawing.Size(390, 830)
         Me.SplitModulsInProg.SplitterDistance = 803
         Me.SplitModulsInProg.TabIndex = 4
         '
@@ -439,7 +393,7 @@ Partial Class ААОсновная
         Me.dataGridModuls.ReadOnly = True
         Me.dataGridModuls.RowHeadersVisible = False
         Me.dataGridModuls.RowHeadersWidth = 53
-        Me.dataGridModuls.Size = New System.Drawing.Size(377, 830)
+        Me.dataGridModuls.Size = New System.Drawing.Size(390, 830)
         Me.dataGridModuls.TabIndex = 34
         '
         'red_moduls
@@ -456,7 +410,7 @@ Partial Class ААОсновная
         '
         Me.ToolStrip3.Dock = System.Windows.Forms.DockStyle.Right
         Me.ToolStrip3.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripTop, Me.ToolStripBottom, Me.addMidulInGroupp, Me.modulInProgsIndicator})
-        Me.ToolStrip3.Location = New System.Drawing.Point(377, 0)
+        Me.ToolStrip3.Location = New System.Drawing.Point(390, 0)
         Me.ToolStrip3.Name = "ToolStrip3"
         Me.ToolStrip3.Size = New System.Drawing.Size(46, 830)
         Me.ToolStrip3.TabIndex = 3
@@ -519,7 +473,7 @@ Partial Class ААОсновная
         '
         Me.SplitContainerModuls.Panel2.Controls.Add(Me.TableLayoutAddNewModul)
         Me.SplitContainerModuls.Panel2Collapsed = True
-        Me.SplitContainerModuls.Size = New System.Drawing.Size(311, 830)
+        Me.SplitContainerModuls.Size = New System.Drawing.Size(298, 830)
         Me.SplitContainerModuls.SplitterDistance = 676
         Me.SplitContainerModuls.TabIndex = 4
         '
@@ -537,7 +491,7 @@ Partial Class ААОсновная
         Me.DataGridAllModuls.ReadOnly = True
         Me.DataGridAllModuls.RowHeadersVisible = False
         Me.DataGridAllModuls.RowHeadersWidth = 53
-        Me.DataGridAllModuls.Size = New System.Drawing.Size(311, 830)
+        Me.DataGridAllModuls.Size = New System.Drawing.Size(298, 830)
         Me.DataGridAllModuls.TabIndex = 35
         '
         'TableLayoutAddNewModul
@@ -619,7 +573,7 @@ Partial Class ААОсновная
         '
         Me.ToolStrip4.Dock = System.Windows.Forms.DockStyle.Right
         Me.ToolStrip4.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripAddModul, Me.modulIndicator})
-        Me.ToolStrip4.Location = New System.Drawing.Point(311, 0)
+        Me.ToolStrip4.Location = New System.Drawing.Point(298, 0)
         Me.ToolStrip4.Name = "ToolStrip4"
         Me.ToolStrip4.Size = New System.Drawing.Size(46, 830)
         Me.ToolStrip4.TabIndex = 3
@@ -2147,12 +2101,6 @@ Partial Class ААОсновная
         Me.SplitContainer4.Panel2.ResumeLayout(False)
         CType(Me.SplitContainer4, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SplitContainer4.ResumeLayout(False)
-        Me.SplitContainerProgs.Panel1.ResumeLayout(False)
-        Me.SplitContainerProgs.Panel2.ResumeLayout(False)
-        Me.SplitContainerProgs.Panel2.PerformLayout()
-        CType(Me.SplitContainerProgs, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.SplitContainerProgs.ResumeLayout(False)
-        CType(Me.dataGridProgs, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ToolStrip2.ResumeLayout(False)
         Me.ToolStrip2.PerformLayout()
         Me.SplitContainer5.Panel1.ResumeLayout(False)
@@ -2212,9 +2160,6 @@ Partial Class ААОсновная
     Friend WithEvents ImageList1 As ImageList
     Friend WithEvents pageProgs As TabPage
     Friend WithEvents SplitContainer4 As SplitContainer
-    Friend WithEvents SplitContainerProgs As SplitContainer
-    Private WithEvents dataGridProgs As DataGridView
-    Friend WithEvents newProgramm As TextBox
     Friend WithEvents ToolStrip2 As ToolStrip
     Friend WithEvents ToolStripLabel1 As ToolStripLabel
     Friend WithEvents comboBoxProgramms As ToolStripComboBox
@@ -2356,4 +2301,5 @@ Partial Class ААОсновная
     Private WithEvents other_add As ToolStripButton
     Friend WithEvents ToolStripButton1 As ToolStripButton
     Friend WithEvents Panel_main As Panel
+    Friend WithEvents programms_tbl_parent As Panel
 End Class

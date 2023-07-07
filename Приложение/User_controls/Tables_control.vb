@@ -6,6 +6,9 @@ Public Class Tables_control
     Public kod_number As Int16
     Private remove_kod As Int64
     Public name_table As String
+    Public programm_on As Boolean
+
+    Public selected_row As DataGridViewRow
 
     Public flag_active_control As Boolean = False
 
@@ -21,6 +24,7 @@ Public Class Tables_control
     Public persent_width_column_0 As Int16
     Public persent_width_column_1 As Int16 = -1
     Public persent_width_column_2 As Int16 = -1
+    Public persent_width_column_3 As Int16 = -1
 
     Public names As New Names
     Public values As New Values
@@ -28,6 +32,9 @@ Public Class Tables_control
     Private flagUpdate As Boolean = False
 
     Dim mySQLConnector As New MySQLConnect
+
+
+
 
     Private Sub DataGridTables_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs) Handles DataGridTablesResult.PreviewKeyDown
 
@@ -107,7 +114,17 @@ Public Class Tables_control
 
                 End If
 
+            ElseIf number_row = 3 And persent_width_column_3 <> -1 Then
 
+                If persent_width_column_3 = 0 Then
+
+                    dataGridViewColumn.Visible = False
+
+                Else
+
+                    dataGridViewColumn.Width = DataGridTablesResult.Width * persent_width_column_3 / 100
+
+                End If
 
             End If
 
@@ -159,7 +176,19 @@ Public Class Tables_control
     Private Function update_delete_query() As String
 
         Dim queryString As String = ""
-        queryString = "DELETE FROM " + name_table + " WHERE kod=" + Convert.ToString(remove_kod)
+
+        If programm_on Then
+
+            queryString = "DELETE FROM " + name_table + " WHERE kod=" + Convert.ToString(remove_kod) + " 
+                           AND uroven_kvalifik = (SELECT kod FROM uroven_kvalifik WHERE name = '" + ААОсновная.comboBoxProgramms.Text + "' LIMIT 1)"
+
+        Else
+
+            queryString = "DELETE FROM " + name_table + " WHERE kod=" + Convert.ToString(remove_kod)
+
+        End If
+
+
         Return queryString
 
     End Function
@@ -171,14 +200,26 @@ Public Class Tables_control
         If number_column = 1 Then
 
             queryString = "INSERT INTO " + name_table + " (" + names.db_element_first + ")
-                       VALUES ('" + values.element_first + "')"
+                           VALUES ('" + values.element_first + "')"
 
         ElseIf number_column = 2 Then
 
             queryString = "INSERT INTO " + name_table + " (" + names.db_element_first + "," + names.db_element_second + ")
-                       VALUES ('" + values.element_first + "','" + values.element_second + "')"
+                           VALUES ('" + values.element_first + "','" + values.element_second + "')"
 
         End If
+
+        Return queryString
+
+    End Function
+
+    Private Function update_prog_insert_query() As String
+
+        Dim queryString As String = ""
+
+        queryString = "INSERT INTO " + name_table + " (" + names.db_element_first + "," + names.db_element_second + ",uroven_kvalifik)
+                       VALUES ('" + values.element_first + "',(SELECT kod FROM kol_chas WHERE name=" + values.element_second + " LIMIT 1)
+                        ,(SELECT kod FROM uroven_kvalifik WHERE name = '" + ААОсновная.comboBoxProgramms.Text + "' LIMIT 1))"
 
         Return queryString
 
@@ -211,6 +252,21 @@ Public Class Tables_control
 
     End Function
 
+    Private Function update_prog_load_kod_query() As String
+
+        Dim queryString As String
+
+        queryString = "SELECT
+                            IFNULL(MAX(kod),-1)
+                           FROM 
+                            " + name_table + "
+                           WHERE " + names.db_element_first + "='" + values.element_first + "' 
+                           AND uroven_kvalifik=(SELECT kod FROM uroven_kvalifik WHERE name = '" + ААОсновная.comboBoxProgramms.Text + "' LIMIT 1)"
+
+        Return queryString
+
+    End Function
+
     Private Function update_update_query() As String
 
         Dim queryString As String = ""
@@ -229,10 +285,21 @@ Public Class Tables_control
 
     End Function
 
+    Private Function update_prog_update_query() As String
+
+        Dim queryString As String = ""
+
+        queryString = "UPDATE " + name_table + " Set " + names.db_element_first + "='" + values.element_first + "'," + names.db_element_second + "=
+                        (SELECT kod FROM kol_chas WHERE name=" + values.element_second + " LIMIT 1) WHERE kod=" + Convert.ToString(values.kod)
+
+        Return queryString
+
+    End Function
+
     Private Function update_check_query() As String
 
         Dim queryString As String = ""
-        
+
         If number_column = 1 Then
 
             queryString = "Select
@@ -250,6 +317,21 @@ Public Class Tables_control
                            WHERE " + names.db_element_first + " ='" + values.element_first + "' AND " + names.db_element_second + "='" + values.element_second + "'"
 
         End If
+
+        Return queryString
+
+    End Function
+
+    Private Function update_prog_check_query() As String
+
+        Dim queryString As String = ""
+
+        queryString = "Select
+                            COUNT(kod)
+                           FROM
+                            " + name_table + "
+                           WHERE " + names.db_element_first + " ='" + values.element_first + "' AND " + names.db_element_second + "= 
+                           (SELECT kod FROM kol_chas WHERE name=" + values.element_second + " LIMIT 1)"
 
         Return queryString
 
@@ -459,17 +541,6 @@ Public Class Tables_control
 
             mySQLConnector.ОтправитьВбдЗапись(queryString, 1)
 
-            '    If Not Doljnosti.removeDoljnost() Then
-
-            '        предупреждение.TextBox.Visible = False
-            '        предупреждение.текст.Visible = True
-            '        предупреждение.текст.Text = "Должность не может быть удалена"
-            '        предупреждение.ShowDialog()
-            '        Return
-
-            '    End If
-
-
             If redactor_element_first.Text.Trim = Convert.ToString(DataGridTablesResult.Rows(curNumber).Cells(0).Value) Then
 
                 SendKeys.Send("{ESC}")
@@ -626,14 +697,32 @@ Public Class Tables_control
 
         Dim resAr() As String
 
-        queryString = update_check_query()
+        If programm_on Then
+
+            queryString = update_prog_check_query()
+
+        Else
+
+            queryString = update_check_query()
+
+        End If
+
         resAr = mySQLConnector.ЗагрузитьИзMySQLвОдномерныйМассив(queryString, 1, 0)
 
         If Not resAr(0) = "0" Then
             Return
         End If
 
-        queryString = update_update_query()
+        If programm_on Then
+
+            queryString = update_prog_update_query()
+
+        Else
+
+            queryString = update_update_query()
+
+        End If
+
         mySQLConnector.ОтправитьВбдЗапись(queryString, 1)
 
     End Sub
@@ -642,17 +731,45 @@ Public Class Tables_control
 
         Dim resAr() As String
 
-        queryString = update_check_query()
+        If programm_on Then
+
+            queryString = update_prog_check_query()
+
+        Else
+
+            queryString = update_check_query()
+
+        End If
+
         resAr = mySQLConnector.ЗагрузитьИзMySQLвОдномерныйМассив(queryString, 1, 0)
 
         If Not resAr(0) = "0" Then
             Return
         End If
 
-        queryString = update_insert_query()
+        If programm_on Then
+
+            queryString = update_prog_insert_query()
+
+        Else
+
+            queryString = update_insert_query()
+
+        End If
+
+
         mySQLConnector.ОтправитьВбдЗапись(queryString, 1)
 
-        queryString = update_load_kod_query()
+        If programm_on Then
+
+            queryString = update_prog_load_kod_query()
+
+        Else
+
+            queryString = update_load_kod_query()
+
+        End If
+
         resAr = mySQLConnector.ЗагрузитьИзMySQLвОдномерныйМассив(queryString, 1, 0)
 
         values.kod = resAr(0)
@@ -694,14 +811,50 @@ Public Class Tables_control
         ActiveControl = DataGridTablesResult
         flag_active_control = True
 
+        If programm_on Then
+
+            ААОсновная.progsIndicator.Image = ААОсновная.ImageList1.Images(9)
+
+        End If
+
     End Sub
 
     Private Sub Tables_control_Leave(sender As Object, e As EventArgs) Handles MyBase.Leave
 
         flag_active_control = False
 
+        If programm_on Then
+
+            ААОсновная.progsIndicator.Image = ААОсновная.ImageList1.Images(8)
+
+        End If
+
     End Sub
 
+    Private Sub response_programms()
+
+        If DataGridTablesResult.SelectedRows.Count > 0 Then
+
+            ААОсновная.loadModulsInProgramm()
+
+        End If
+
+    End Sub
+
+    Private Sub DataGridTablesResult_SelectionChanged(sender As Object, e As EventArgs) Handles DataGridTablesResult.SelectionChanged
+
+        If programm_on Then
+
+            If IsNothing(DataGridTablesResult.CurrentCell) Then
+                Return
+            End If
+
+            selected_row = DataGridTablesResult.Rows(DataGridTablesResult.CurrentCell.RowIndex)
+            response_programms()
+
+        End If
+
+    End Sub
 End Class
 
 Public Structure Values
