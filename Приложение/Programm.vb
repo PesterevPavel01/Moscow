@@ -14,6 +14,7 @@ Public Class Programm
         Dim flag_update_modInProg As Boolean
         Dim modul_kod_inModuls As String
         Dim modul_kod As String
+        Dim sum_hours_programm As Int64
         Dim name_current_modul As String
         Dim program_kod As String
         Dim program_kod_update As String
@@ -22,12 +23,22 @@ Public Class Programm
         Dim tbl_modulsInProgs As DataTable
         Dim tbl_moduls As DataTable
         Dim list_moduls As List(Of modul_struct)
+        Dim list_hours As String()
     End Structure
 
     Public Structure modul_struct
         Dim name As String
         Dim hours As Double
     End Structure
+
+    Public Sub load_hours_list()
+
+        Dim queryString As String
+        queryString = sqlQueryString.loadHours(struct_progs.program_kod)
+        struct_progs.list_hours = mySQLConnector.ЗагрузитьИзMySQLвОдномерныйМассив(queryString, 1, 0)
+
+    End Sub
+
     Public Function loadProgramms() As String
         Dim queryString As String
         queryString = sqlQueryString.loadProgramms(uroven_cval)
@@ -35,9 +46,26 @@ Public Class Programm
     End Function
 
     Public Sub loadModulAndHours()
+
+        Dim result() As String
+
         Dim queryString As String
         queryString = sqlQueryString.loadModulsAndHours(struct_progs.program_kod)
         struct_progs.tbl_modulsInProgs = mySQLConnector.ЗагрузитьИзMySQLвDataTable(queryString, 1)
+
+        queryString = sqlQueryString.load_sum_hours(struct_progs.program_kod)
+        result = mySQLConnector.ЗагрузитьИзMySQLвОдномерныйМассив(queryString, 1, 0)
+
+        If IsNumeric(result(0)) Then
+
+            struct_progs.sum_hours_programm = Convert.ToInt64(result(0))
+
+        Else
+
+            struct_progs.sum_hours_programm = 0
+
+        End If
+
     End Sub
 
     Public Sub loadModul()

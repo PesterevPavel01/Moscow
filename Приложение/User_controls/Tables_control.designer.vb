@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class Tables_control
     Inherits System.Windows.Forms.UserControl
 
     'Пользовательский элемент управления (UserControl) переопределяет метод Dispose для очистки списка компонентов.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,7 +20,7 @@ Partial Class Tables_control
     'Примечание: следующая процедура является обязательной для конструктора форм Windows Forms
     'Для ее изменения используйте конструктор форм Windows Form.  
     'Не изменяйте ее в редакторе исходного кода.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.SplitContainer_main = New System.Windows.Forms.SplitContainer()
         Me.DataGridTablesResult = New System.Windows.Forms.DataGridView()
@@ -30,11 +30,9 @@ Partial Class Tables_control
         Me.redactor_element_first = New System.Windows.Forms.TextBox()
         Me.SplitContainer4 = New System.Windows.Forms.SplitContainer()
         Me.redactor_name_element_second = New System.Windows.Forms.TextBox()
-        Me.SplitContainer5 = New System.Windows.Forms.SplitContainer()
+        Me.panel_second_element = New System.Windows.Forms.Panel()
+        Me.comboBox_second_element = New WindowsApp2.user_comboBox()
         Me.redactor_element_second = New System.Windows.Forms.TextBox()
-        Me.SplitContainer6 = New System.Windows.Forms.SplitContainer()
-        Me.TextBox5 = New System.Windows.Forms.TextBox()
-        Me.TextBox6 = New System.Windows.Forms.TextBox()
         CType(Me.SplitContainer_main, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SplitContainer_main.Panel1.SuspendLayout()
         Me.SplitContainer_main.Panel2.SuspendLayout()
@@ -52,14 +50,7 @@ Partial Class Tables_control
         Me.SplitContainer4.Panel1.SuspendLayout()
         Me.SplitContainer4.Panel2.SuspendLayout()
         Me.SplitContainer4.SuspendLayout()
-        CType(Me.SplitContainer5, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.SplitContainer5.Panel1.SuspendLayout()
-        Me.SplitContainer5.Panel2.SuspendLayout()
-        Me.SplitContainer5.SuspendLayout()
-        CType(Me.SplitContainer6, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.SplitContainer6.Panel1.SuspendLayout()
-        Me.SplitContainer6.Panel2.SuspendLayout()
-        Me.SplitContainer6.SuspendLayout()
+        Me.panel_second_element.SuspendLayout()
         Me.SuspendLayout()
         '
         'SplitContainer_main
@@ -77,9 +68,8 @@ Partial Class Tables_control
         'SplitContainer_main.Panel2
         '
         Me.SplitContainer_main.Panel2.Controls.Add(Me.SplitContainer_second)
-        Me.SplitContainer_main.Panel2Collapsed = True
-        Me.SplitContainer_main.Size = New System.Drawing.Size(668, 549)
-        Me.SplitContainer_main.SplitterDistance = 360
+        Me.SplitContainer_main.Size = New System.Drawing.Size(959, 549)
+        Me.SplitContainer_main.SplitterDistance = 356
         Me.SplitContainer_main.TabIndex = 0
         '
         'DataGridTablesResult
@@ -97,7 +87,7 @@ Partial Class Tables_control
         Me.DataGridTablesResult.RowHeadersVisible = False
         Me.DataGridTablesResult.RowHeadersWidth = 53
         Me.DataGridTablesResult.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DataGridTablesResult.Size = New System.Drawing.Size(668, 549)
+        Me.DataGridTablesResult.Size = New System.Drawing.Size(959, 356)
         Me.DataGridTablesResult.TabIndex = 36
         '
         'SplitContainer_second
@@ -114,9 +104,8 @@ Partial Class Tables_control
         'SplitContainer_second.Panel2
         '
         Me.SplitContainer_second.Panel2.Controls.Add(Me.SplitContainer4)
-        Me.SplitContainer_second.Panel2Collapsed = True
-        Me.SplitContainer_second.Size = New System.Drawing.Size(150, 46)
-        Me.SplitContainer_second.SplitterDistance = 25
+        Me.SplitContainer_second.Size = New System.Drawing.Size(959, 189)
+        Me.SplitContainer_second.SplitterDistance = 90
         Me.SplitContainer_second.TabIndex = 0
         '
         'SplitContainer_first
@@ -134,7 +123,7 @@ Partial Class Tables_control
         'SplitContainer_first.Panel2
         '
         Me.SplitContainer_first.Panel2.Controls.Add(Me.redactor_element_first)
-        Me.SplitContainer_first.Size = New System.Drawing.Size(668, 185)
+        Me.SplitContainer_first.Size = New System.Drawing.Size(959, 90)
         Me.SplitContainer_first.SplitterDistance = 25
         Me.SplitContainer_first.TabIndex = 0
         '
@@ -146,7 +135,7 @@ Partial Class Tables_control
         Me.redactor_name_element_first.Multiline = True
         Me.redactor_name_element_first.Name = "redactor_name_element_first"
         Me.redactor_name_element_first.ReadOnly = True
-        Me.redactor_name_element_first.Size = New System.Drawing.Size(668, 25)
+        Me.redactor_name_element_first.Size = New System.Drawing.Size(959, 25)
         Me.redactor_name_element_first.TabIndex = 0
         '
         'redactor_element_first
@@ -155,7 +144,7 @@ Partial Class Tables_control
         Me.redactor_element_first.Location = New System.Drawing.Point(0, 0)
         Me.redactor_element_first.Multiline = True
         Me.redactor_element_first.Name = "redactor_element_first"
-        Me.redactor_element_first.Size = New System.Drawing.Size(668, 156)
+        Me.redactor_element_first.Size = New System.Drawing.Size(959, 61)
         Me.redactor_element_first.TabIndex = 1
         '
         'SplitContainer4
@@ -172,8 +161,8 @@ Partial Class Tables_control
         '
         'SplitContainer4.Panel2
         '
-        Me.SplitContainer4.Panel2.Controls.Add(Me.SplitContainer5)
-        Me.SplitContainer4.Size = New System.Drawing.Size(668, 89)
+        Me.SplitContainer4.Panel2.Controls.Add(Me.panel_second_element)
+        Me.SplitContainer4.Size = New System.Drawing.Size(959, 95)
         Me.SplitContainer4.SplitterDistance = 25
         Me.SplitContainer4.TabIndex = 1
         '
@@ -185,75 +174,38 @@ Partial Class Tables_control
         Me.redactor_name_element_second.Multiline = True
         Me.redactor_name_element_second.Name = "redactor_name_element_second"
         Me.redactor_name_element_second.ReadOnly = True
-        Me.redactor_name_element_second.Size = New System.Drawing.Size(668, 25)
+        Me.redactor_name_element_second.Size = New System.Drawing.Size(959, 25)
         Me.redactor_name_element_second.TabIndex = 1
         '
-        'SplitContainer5
+        'panel_second_element
         '
-        Me.SplitContainer5.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SplitContainer5.FixedPanel = System.Windows.Forms.FixedPanel.Panel1
-        Me.SplitContainer5.Location = New System.Drawing.Point(0, 0)
-        Me.SplitContainer5.Name = "SplitContainer5"
-        Me.SplitContainer5.Orientation = System.Windows.Forms.Orientation.Horizontal
+        Me.panel_second_element.BackColor = System.Drawing.SystemColors.Window
+        Me.panel_second_element.Controls.Add(Me.comboBox_second_element)
+        Me.panel_second_element.Controls.Add(Me.redactor_element_second)
+        Me.panel_second_element.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.panel_second_element.Location = New System.Drawing.Point(0, 0)
+        Me.panel_second_element.Name = "panel_second_element"
+        Me.panel_second_element.Size = New System.Drawing.Size(959, 66)
+        Me.panel_second_element.TabIndex = 0
         '
-        'SplitContainer5.Panel1
+        'comboBox_second_element
         '
-        Me.SplitContainer5.Panel1.Controls.Add(Me.redactor_element_second)
-        '
-        'SplitContainer5.Panel2
-        '
-        Me.SplitContainer5.Panel2.Controls.Add(Me.SplitContainer6)
-        Me.SplitContainer5.Panel2Collapsed = True
-        Me.SplitContainer5.Size = New System.Drawing.Size(668, 60)
-        Me.SplitContainer5.SplitterDistance = 25
-        Me.SplitContainer5.TabIndex = 1
+        Me.comboBox_second_element.BackColor = System.Drawing.SystemColors.Window
+        Me.comboBox_second_element.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.comboBox_second_element.Location = New System.Drawing.Point(3, 20)
+        Me.comboBox_second_element.Name = "comboBox_second_element"
+        Me.comboBox_second_element.Size = New System.Drawing.Size(956, 43)
+        Me.comboBox_second_element.TabIndex = 37
         '
         'redactor_element_second
         '
+        Me.redactor_element_second.BackColor = System.Drawing.SystemColors.Window
         Me.redactor_element_second.Dock = System.Windows.Forms.DockStyle.Fill
         Me.redactor_element_second.Location = New System.Drawing.Point(0, 0)
         Me.redactor_element_second.Multiline = True
         Me.redactor_element_second.Name = "redactor_element_second"
-        Me.redactor_element_second.Size = New System.Drawing.Size(668, 60)
+        Me.redactor_element_second.Size = New System.Drawing.Size(959, 66)
         Me.redactor_element_second.TabIndex = 1
-        '
-        'SplitContainer6
-        '
-        Me.SplitContainer6.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SplitContainer6.FixedPanel = System.Windows.Forms.FixedPanel.Panel1
-        Me.SplitContainer6.Location = New System.Drawing.Point(0, 0)
-        Me.SplitContainer6.Name = "SplitContainer6"
-        Me.SplitContainer6.Orientation = System.Windows.Forms.Orientation.Horizontal
-        '
-        'SplitContainer6.Panel1
-        '
-        Me.SplitContainer6.Panel1.Controls.Add(Me.TextBox5)
-        '
-        'SplitContainer6.Panel2
-        '
-        Me.SplitContainer6.Panel2.Controls.Add(Me.TextBox6)
-        Me.SplitContainer6.Size = New System.Drawing.Size(150, 46)
-        Me.SplitContainer6.SplitterDistance = 25
-        Me.SplitContainer6.TabIndex = 1
-        '
-        'TextBox5
-        '
-        Me.TextBox5.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TextBox5.Location = New System.Drawing.Point(0, 0)
-        Me.TextBox5.Multiline = True
-        Me.TextBox5.Name = "TextBox5"
-        Me.TextBox5.ReadOnly = True
-        Me.TextBox5.Size = New System.Drawing.Size(150, 25)
-        Me.TextBox5.TabIndex = 1
-        '
-        'TextBox6
-        '
-        Me.TextBox6.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TextBox6.Location = New System.Drawing.Point(0, 0)
-        Me.TextBox6.Multiline = True
-        Me.TextBox6.Name = "TextBox6"
-        Me.TextBox6.Size = New System.Drawing.Size(150, 25)
-        Me.TextBox6.TabIndex = 1
         '
         'Tables_control
         '
@@ -261,7 +213,7 @@ Partial Class Tables_control
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.Controls.Add(Me.SplitContainer_main)
         Me.Name = "Tables_control"
-        Me.Size = New System.Drawing.Size(668, 549)
+        Me.Size = New System.Drawing.Size(959, 549)
         Me.SplitContainer_main.Panel1.ResumeLayout(False)
         Me.SplitContainer_main.Panel2.ResumeLayout(False)
         CType(Me.SplitContainer_main, System.ComponentModel.ISupportInitialize).EndInit()
@@ -282,17 +234,8 @@ Partial Class Tables_control
         Me.SplitContainer4.Panel2.ResumeLayout(False)
         CType(Me.SplitContainer4, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SplitContainer4.ResumeLayout(False)
-        Me.SplitContainer5.Panel1.ResumeLayout(False)
-        Me.SplitContainer5.Panel1.PerformLayout()
-        Me.SplitContainer5.Panel2.ResumeLayout(False)
-        CType(Me.SplitContainer5, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.SplitContainer5.ResumeLayout(False)
-        Me.SplitContainer6.Panel1.ResumeLayout(False)
-        Me.SplitContainer6.Panel1.PerformLayout()
-        Me.SplitContainer6.Panel2.ResumeLayout(False)
-        Me.SplitContainer6.Panel2.PerformLayout()
-        CType(Me.SplitContainer6, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.SplitContainer6.ResumeLayout(False)
+        Me.panel_second_element.ResumeLayout(False)
+        Me.panel_second_element.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub
@@ -301,13 +244,11 @@ Partial Class Tables_control
     Friend WithEvents SplitContainer_second As SplitContainer
     Friend WithEvents SplitContainer_first As SplitContainer
     Friend WithEvents SplitContainer4 As SplitContainer
-    Friend WithEvents SplitContainer5 As SplitContainer
-    Friend WithEvents SplitContainer6 As SplitContainer
     Friend WithEvents redactor_name_element_first As TextBox
     Friend WithEvents redactor_element_first As TextBox
     Friend WithEvents redactor_name_element_second As TextBox
     Friend WithEvents redactor_element_second As TextBox
-    Friend WithEvents TextBox5 As TextBox
-    Friend WithEvents TextBox6 As TextBox
     Friend WithEvents DataGridTablesResult As DataGridView
+    Friend WithEvents panel_second_element As Panel
+    Friend WithEvents comboBox_second_element As user_comboBox
 End Class

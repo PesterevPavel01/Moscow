@@ -152,14 +152,23 @@
     End Sub
 
     Public Sub updateKodProg()
-        Dim result As List(Of String) = New List(Of String)
+
+        Dim result As Object(,)
         Dim queryString As String
+
         queryString = sqlQueryString.loadKogProgramm(struct_gruppa.urKvalific, struct_gruppa.programma)
-        result = mySQLConnector.ЗагрузитьИзMySQLвList(queryString, 1, 0)
-        If result.Count < 1 Then
+
+        result = mySQLConnector.ЗагрузитьИзБДMySQLвМассив(queryString, 1)
+
+        If result.Length < 2 Then
+
             Return
+
         End If
-        struct_gruppa.kodProgramm = result(0)
+
+        struct_gruppa.kodProgramm = result(0, 0)
+        struct_gruppa.kolChasov = result(1, 0)
+
     End Sub
 
     Public Sub Clear()

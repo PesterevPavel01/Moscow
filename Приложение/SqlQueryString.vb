@@ -1,4 +1,5 @@
-﻿Imports Org.BouncyCastle.Utilities
+﻿Imports System.Xml
+Imports Org.BouncyCastle.Utilities
 Imports WindowsApp2.Worker
 
 Public Class SqlQueryString
@@ -494,6 +495,171 @@ sotrudnik.in_list,
 
     End Function
 
+    Public Function update_insert_query(number_column As Int16, name_table As String, db_element_first As String, values_element_first As String, db_element_second As String, values_element_second As String) As String
+
+        Dim queryString As String = ""
+
+        If number_column = 1 Then
+
+            queryString = "INSERT INTO " + name_table + " (" + db_element_first + ")
+                           VALUES ('" + values_element_first + "')"
+
+        ElseIf number_column = 2 Then
+
+            queryString = "INSERT INTO " + name_table + " (" + db_element_first + "," + db_element_second + ")
+                           VALUES ('" + values_element_first + "','" + values_element_second + "')"
+
+        End If
+
+        Return queryString
+
+    End Function
+
+    Public Function update_check_query(number_column As Int16, name_table As String, db_element_first As String, values_element_first As String, db_element_second As String, values_element_second As String) As String
+
+        Dim queryString As String = ""
+
+        If number_column = 1 Then
+
+            queryString = "Select
+                            COUNT(kod)
+                           FROM
+                            " + name_table + "
+                           WHERE " + db_element_first + " ='" + values_element_first + "'"
+
+        ElseIf number_column = 2 Then
+
+            queryString = "Select
+                            COUNT(kod)
+                           FROM
+                            " + name_table + "
+                           WHERE " + db_element_first + " ='" + values_element_first + "' AND " + db_element_second + "='" + values_element_second + "'"
+
+        End If
+
+        Return queryString
+
+    End Function
+
+    Public Function update_update_query(number_column As Int16, name_table As String, db_element_first As String, values_element_first As String, db_element_second As String, values_element_second As String, kod As Int64) As String
+
+        Dim queryString As String = ""
+
+        If number_column = 1 Then
+
+            queryString = "UPDATE " + name_table + " SET " + db_element_first + "='" + values_element_first + "' WHERE kod=" + Convert.ToString(kod)
+
+        ElseIf number_column = 2 Then
+
+            queryString = "UPDATE " + name_table + " Set " + db_element_first + "='" + values_element_first + "'," + db_element_second + "='" + values_element_second + "' WHERE kod=" + Convert.ToString(kod)
+
+        End If
+
+        Return queryString
+
+    End Function
+
+    Public Function update_load_kod_query(number_column As Int16, name_table As String, db_element_first As String, values_element_first As String, db_element_second As String, values_element_second As String) As String
+
+        Dim queryString As String
+
+        If number_column = 1 Then
+
+            queryString = "SELECT
+                            kod
+                           FROM 
+                            " + name_table + "
+                           WHERE " + db_element_first + "='" + values_element_first + "'"
+
+        ElseIf number_column = 2 Then
+
+            queryString = "SELECT
+                            kod
+                           FROM 
+                            " + name_table + "
+                           WHERE " + db_element_first + "='" + values_element_first + "' 
+                           AND " + db_element_second + "='" + values_element_second + "'"
+
+        End If
+
+        Return queryString
+
+    End Function
+
+    Public Function update_prog_insert_query(number_column As Int16, name_table As String, db_element_first As String, values_element_first As String, db_element_second As String, values_element_second As String, name_prog As String) As String
+
+        Dim queryString As String = ""
+
+        queryString = "INSERT INTO " + name_table + " (" + db_element_first + "," + db_element_second + ",uroven_kvalifik)
+                       VALUES ('" + values_element_first + "',(SELECT kod FROM kol_chas WHERE name=" + values_element_second + " LIMIT 1)
+                        ,(SELECT kod FROM uroven_kvalifik WHERE name = '" + name_prog + "' LIMIT 1))"
+
+        Return queryString
+
+    End Function
+
+    Public Function update_prog_check_query(name_table As String, db_element_first As String, values_element_first As String, db_element_second As String, values_element_second As String, name_prog As String) As String
+
+        Dim queryString As String = ""
+
+        queryString = "Select
+                            COUNT(kod)
+                           FROM
+                            " + name_table + "
+                           WHERE " + db_element_first + " ='" + values_element_first + "' AND " + db_element_second + "= 
+                           (SELECT kod FROM kol_chas WHERE name=" + values_element_second + " LIMIT 1) AND uroven_kvalifik = 
+                           (SELECT kod FROM uroven_kvalifik WHERE name = '" + name_prog + "' LIMIT 1)"
+
+        Return queryString
+
+    End Function
+
+    Public Function update_prog_update_query(name_table As String, db_element_first As String, values_element_first As String, db_element_second As String, values_element_second As String, kod As Int64) As String
+
+        Dim queryString As String = ""
+
+        queryString = "UPDATE " + name_table + " Set " + db_element_first + "='" + values_element_first + "'," + db_element_second + "=
+                        (SELECT kod FROM kol_chas WHERE name=" + values_element_second + " LIMIT 1) WHERE kod=" + Convert.ToString(kod)
+
+        Return queryString
+
+    End Function
+
+    Public Function update_prog_load_kod_query(name_table As String, db_element_first As String, values_element_first As String, name_prog As String) As String
+
+        Dim queryString As String
+
+        queryString = "SELECT
+                            IFNULL(MAX(kod),-1)
+                           FROM 
+                            " + name_table + "
+                           WHERE " + db_element_first + "='" + values_element_first + "' 
+                           AND uroven_kvalifik=(SELECT kod FROM uroven_kvalifik WHERE name = '" + name_prog + "' LIMIT 1)"
+
+        Return queryString
+
+    End Function
+
+    Public Function update_delete_query(programm_on As Boolean, name_table As String, name_programm As String, remove_kod As Int64) As String
+
+        Dim queryString As String = ""
+
+        If programm_on Then
+
+            queryString = "DELETE FROM " + name_table + " WHERE kod=" + Convert.ToString(remove_kod) + " 
+                           AND uroven_kvalifik = (SELECT kod FROM uroven_kvalifik WHERE name = '" + name_programm + "' LIMIT 1)"
+
+        Else
+
+            queryString = "DELETE FROM " + name_table + " WHERE kod=" + Convert.ToString(remove_kod)
+
+        End If
+
+
+        Return queryString
+
+    End Function
+
     Public Function loadModulKod(name As String) As String
 
         Dim sqlString As String = ""
@@ -515,6 +681,17 @@ sotrudnik.in_list,
         Return sqlString
 
     End Function
+
+    Public Function loadHours(kod As String) As String
+
+        Dim sqlString As String = ""
+        sqlString = "SELECT 
+                        name
+                        FROM kol_chas
+                        ORDER BY name"
+        Return sqlString
+
+    End Function
     Public Function loadModulsAndHours(kod As String) As String
 
         Dim sqlString As String = ""
@@ -529,6 +706,22 @@ sotrudnik.in_list,
                      ON progs_mods_hours.kod_modul = moduls.kod
                      WHERE programma.kod =" + kod + "
                      ORDER BY modul_number"
+        Return sqlString
+
+    End Function
+
+    Public Function load_sum_hours(kod As String) As String
+
+        Dim sqlString As String = ""
+        sqlString = "SELECT
+                     SUM(progs_mods_hours.hours) as Часы
+                     FROM progs_mods_hours
+                     INNER JOIN programma
+                     ON progs_mods_hours.kod_prog = programma.kod
+                     INNER JOIN moduls
+                     ON progs_mods_hours.kod_modul = moduls.kod
+                     WHERE programma.kod =" + kod + "
+                     GROUP BY programma.kod"
         Return sqlString
 
     End Function
@@ -745,7 +938,8 @@ sotrudnik.in_list,
 
         Dim sqlString As String = ""
         sqlString = "SELECT
-                    programma.kod
+                    programma.kod,
+                    IFNULL(kc.name, 0)
                     FROM(
                     SELECT
                       prog.name,
@@ -766,6 +960,8 @@ sotrudnik.in_list,
                     INNER JOIN programma
                     ON tbl.name=programma.name AND
                         tbl.date=programma.date
+                    LEFT JOIN kol_chas kc 
+                    ON programma.hours = kc.kod
                     ORDER BY programma.name"
         Return sqlString
 

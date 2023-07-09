@@ -157,6 +157,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationEvents.vb" />
+    <Compile Include="Приложение\User_controls\user_comboBox.Designer.vb">
+      <DependentUpon>user_comboBox.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Приложение\User_controls\user_comboBox.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Приложение\User_controls\Tables_control.designer.vb">
       <DependentUpon>Tables_control.vb</DependentUpon>
     </Compile>
@@ -368,6 +374,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Приложение\User_controls\user_comboBox.resx">
+      <DependentUpon>user_comboBox.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Приложение\User_controls\Tables_control.resx">
       <DependentUpon>Tables_control.vb</DependentUpon>
     </EmbeddedResource>

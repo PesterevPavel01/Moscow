@@ -114,6 +114,7 @@ Public Class НоваяГруппа
     End Sub
 
     Private Sub Сохранить_Click(sender As Object, e As EventArgs) Handles Сохранить.Click
+
         Dim СтрокаЗапроса As String
         Dim DataString As String
 
@@ -188,6 +189,7 @@ Public Class НоваяГруппа
         queryResult = ЗаписьВБазу.ПроверкаСовпаденийЧислоДА_2("Группа", "Year(ДатаНЗ)", gruppa.yearNZ, "Номер", gruppa.number)
 
         If queryResult = 2 Then
+
             ФормаДаНет.ShowDialog()
             If Not ЗаписьВБазу.УдалитьСовпадения Then
                 SC.Send(AddressOf enabledButton, gruppa.number)
@@ -204,6 +206,7 @@ Public Class НоваяГруппа
             SQLString = QueryString.updateGroup(gruppa)
 
             If SQLString = "" Then
+
                 SC.Send(AddressOf enabledButton, gruppa.number)
                 Exit Sub
             End If
@@ -230,6 +233,7 @@ Public Class НоваяГруппа
         End If
 
         SC.Send(AddressOf enabledButton, gruppa.number)
+
     End Sub
 
     Sub endTread(gruppa_number As String)
@@ -994,7 +998,9 @@ Public Class НоваяГруппа
     End Sub
 
     Private Sub НоваяГруппаПрограмма_TextChanged(sender As Object, e As EventArgs) Handles НоваяГруппаПрограмма.TextChanged
+
         активироватьМодули(Me, НоваяГруппаПрограмма.Text, gruppa.struct_gruppa.kodProgramm)
+
     End Sub
 
     Private Sub НоваяГруппа_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -1470,16 +1476,29 @@ Public Class НоваяГруппа
     End Sub
 
     Private Sub НоваяГруппаПрограмма_SelectedIndexChanged(sender As Object, e As EventArgs) Handles НоваяГруппаПрограмма.SelectedIndexChanged
+
         gruppa.struct_gruppa.programma = НоваяГруппаПрограмма.Text
+
         If НоваяГруппаПрограмма.Text = "" Then
+
             gruppa.struct_gruppa.kodProgramm = -1
+
         Else
+
             If gruppa.struct_gruppa.flagAllListProgs Then
+
                 gruppa.struct_gruppa.flagAllListProgs = False
                 Return
+
             End If
+
             gruppa.updateKodProg()
+            НоваяГруппаКоличествоЧасов.Text = gruppa.struct_gruppa.kolChasov
+
         End If
+
         активироватьМодули(Me, НоваяГруппаПрограмма.Text, gruppa.struct_gruppa.kodProgramm)
+
     End Sub
+
 End Class

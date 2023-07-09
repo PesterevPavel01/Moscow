@@ -41,7 +41,7 @@ Public Class ААОсновная
     Private flag_worker_type As Boolean
     Public tbl_obrazovanie As New Tables_control
     Public programms_tbl As New Tables_control
-    Private sqlQueryString As New SqlQueryString
+    Public sqlQueryString As New SqlQueryString
 
     Private Sub Основная_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
@@ -55,6 +55,31 @@ Public Class ААОсновная
         modulInProgsIndicator.Image = ImageList1.Images(8)
         modulIndicator.Image = ImageList1.Images(8)
         panel_worker.Parent = SplitContainerOtherList.Panel2
+
+    End Sub
+
+    Public Sub prog_DataGridTablesResult_activate()
+
+        ActiveControl = programms_tbl.DataGridTablesResult
+
+    End Sub
+
+    Public Sub prog_redactor_element_first_activate()
+
+        ActiveControl = programms_tbl.redactor_element_first
+        select_textBox(programms_tbl.redactor_element_first)
+
+    End Sub
+
+    Private Sub select_textBox(control As Control)
+
+        If control.GetType.ToString = "System.Windows.Forms.TextBox" Then
+
+            Dim lenght As Integer = control.Text.Length
+            Dim s_control As TextBox = control
+            s_control.Select(lenght, 0)
+
+        End If
 
     End Sub
 
@@ -3512,6 +3537,8 @@ Public Class ААОсновная
         programms_tbl.Visible = True
         programms_tbl.number_column = 2
 
+        programms_tbl.flag_second_control_combo = True
+
         programms_tbl.programm_on = True
 
         programms_tbl.queryString_load = programm.loadProgramms()
@@ -3527,6 +3554,10 @@ Public Class ААОсновная
         programms_tbl.names.redactor_element_second = "Часы"
         programms_tbl.names.db_element_second = "hours"
         programms_tbl.name_table = "programma"
+
+        programm.load_hours_list()
+
+        programms_tbl.comboBox_second_element.settings.item_list = programm.struct_progs.list_hours
 
         programms_tbl.kod_number = 2
         programms_tbl.table_init()
@@ -3570,10 +3601,14 @@ Public Class ААОсновная
 
 
         If IsNothing(programms_tbl.selected_row) Then
+
             Return
+
         End If
         If Convert.ToString(programms_tbl.selected_row.Cells(0).Value).Trim = "" Then
+
             Return
+
         End If
 
         Try
@@ -3583,6 +3618,9 @@ Public Class ААОсновная
         End Try
 
         programm.loadModulAndHours()
+
+        tbl_moduls_sum_hours.Text = programm.struct_progs.sum_hours_programm
+
         dataGridModuls.DataSource = programm.struct_progs.tbl_modulsInProgs
         dataGridModuls.Columns(0).Width = dataGridModuls.Width - 70
         dataGridModuls.Columns(1).Width = 70
@@ -3696,6 +3734,7 @@ Public Class ААОсновная
         programm.updateMudulsInGroup(Convert.ToString(DataGridAllModuls.Rows(selectedRow).Cells(2).Value))
 
         loadModulsInProgramm()
+
     End Sub
 
     Private Sub dataGridModuls_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles dataGridModuls.CellDoubleClick

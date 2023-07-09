@@ -11,11 +11,12 @@ Public Class Tables_control
     Public selected_row As DataGridViewRow
 
     Public flag_active_control As Boolean = False
-
     Public active_last_element As Boolean = False
 
     Public queryString_load As String
     Private queryString As String
+
+    Public flag_second_control_combo As Boolean = False
 
     Private result As DataTable
 
@@ -33,27 +34,6 @@ Public Class Tables_control
 
     Dim mySQLConnector As New MySQLConnect
 
-
-
-
-    Private Sub DataGridTables_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs) Handles DataGridTablesResult.PreviewKeyDown
-
-        If e.KeyValue = Keys.Tab Then
-
-            e.IsInputKey = True
-
-        ElseIf e.KeyValue = Keys.Left Then
-
-            e.IsInputKey = True
-
-        ElseIf e.KeyValue = Keys.Right Then
-
-            e.IsInputKey = True
-
-        End If
-
-    End Sub
-
     Public Sub table_init()
 
         If number_column = 2 Then
@@ -61,8 +41,26 @@ Public Class Tables_control
             SplitContainer_second.Panel2Collapsed = False
             redactor_name_element_second.Text = names.redactor_element_second
 
+            If flag_second_control_combo Then
+
+                redactor_element_second.Visible = False
+                comboBox_second_element.Visible = True
+
+                comboBox_second_element.Parent = panel_second_element
+                comboBox_second_element.Parent = panel_second_element
+                comboBox_second_element.Dock = DockStyle.Fill
+
+                comboBox_second_element.my_comboBox_Init()
+            Else
+
+                redactor_element_second.Visible = True
+                comboBox_second_element.Visible = False
+
+            End If
+
         Else
 
+            redactor_element_second.Visible = True
             SplitContainer_second.Panel2Collapsed = True
 
         End If
@@ -153,7 +151,16 @@ Public Class Tables_control
 
         If persent_width_column_1 <> -1 Then
 
-            redactor_element_second.BackColor = Color.White
+            If flag_second_control_combo Then
+
+                comboBox_second_element.set_color(Color.White)
+
+            Else
+
+                redactor_element_second.BackColor = Color.White
+
+            End If
+
 
         End If
 
@@ -173,210 +180,31 @@ Public Class Tables_control
 
     End Sub
 
-    Private Function update_delete_query() As String
+    Private Sub DataGridTables_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs) Handles DataGridTablesResult.PreviewKeyDown
 
-        Dim queryString As String = ""
+        If e.KeyValue = Keys.Tab Then
 
-        If programm_on Then
+            e.IsInputKey = True
 
-            queryString = "DELETE FROM " + name_table + " WHERE kod=" + Convert.ToString(remove_kod) + " 
-                           AND uroven_kvalifik = (SELECT kod FROM uroven_kvalifik WHERE name = '" + ААОсновная.comboBoxProgramms.Text + "' LIMIT 1)"
+        ElseIf e.KeyValue = Keys.Left Then
 
-        Else
+            e.IsInputKey = True
 
-            queryString = "DELETE FROM " + name_table + " WHERE kod=" + Convert.ToString(remove_kod)
+        ElseIf e.KeyValue = Keys.Right Then
 
-        End If
-
-
-        Return queryString
-
-    End Function
-
-    Private Function update_insert_query() As String
-
-        Dim queryString As String = ""
-
-        If number_column = 1 Then
-
-            queryString = "INSERT INTO " + name_table + " (" + names.db_element_first + ")
-                           VALUES ('" + values.element_first + "')"
-
-        ElseIf number_column = 2 Then
-
-            queryString = "INSERT INTO " + name_table + " (" + names.db_element_first + "," + names.db_element_second + ")
-                           VALUES ('" + values.element_first + "','" + values.element_second + "')"
-
-        End If
-
-        Return queryString
-
-    End Function
-
-    Private Function update_prog_insert_query() As String
-
-        Dim queryString As String = ""
-
-        queryString = "INSERT INTO " + name_table + " (" + names.db_element_first + "," + names.db_element_second + ",uroven_kvalifik)
-                       VALUES ('" + values.element_first + "',(SELECT kod FROM kol_chas WHERE name=" + values.element_second + " LIMIT 1)
-                        ,(SELECT kod FROM uroven_kvalifik WHERE name = '" + ААОсновная.comboBoxProgramms.Text + "' LIMIT 1))"
-
-        Return queryString
-
-    End Function
-
-    Private Function update_load_kod_query() As String
-
-        Dim queryString As String
-
-        If number_column = 1 Then
-
-            queryString = "SELECT
-                            kod
-                           FROM 
-                            " + name_table + "
-                           WHERE " + names.db_element_first + "='" + values.element_first + "'"
-
-        ElseIf number_column = 2 Then
-
-            queryString = "SELECT
-                            kod
-                           FROM 
-                            " + name_table + "
-                           WHERE " + names.db_element_first + "='" + values.element_first + "' 
-                           AND " + names.db_element_second + "='" + values.element_second + "'"
-
-        End If
-
-        Return queryString
-
-    End Function
-
-    Private Function update_prog_load_kod_query() As String
-
-        Dim queryString As String
-
-        queryString = "SELECT
-                            IFNULL(MAX(kod),-1)
-                           FROM 
-                            " + name_table + "
-                           WHERE " + names.db_element_first + "='" + values.element_first + "' 
-                           AND uroven_kvalifik=(SELECT kod FROM uroven_kvalifik WHERE name = '" + ААОсновная.comboBoxProgramms.Text + "' LIMIT 1)"
-
-        Return queryString
-
-    End Function
-
-    Private Function update_update_query() As String
-
-        Dim queryString As String = ""
-
-        If number_column = 1 Then
-
-            queryString = "UPDATE " + name_table + " SET " + names.db_element_first + "='" + values.element_first + "' WHERE kod=" + Convert.ToString(values.kod)
-
-        ElseIf number_column = 2 Then
-
-            queryString = "UPDATE " + name_table + " Set " + names.db_element_first + "='" + values.element_first + "'," + names.db_element_second + "='" + values.element_second + "' WHERE kod=" + Convert.ToString(values.kod)
-
-        End If
-
-        Return queryString
-
-    End Function
-
-    Private Function update_prog_update_query() As String
-
-        Dim queryString As String = ""
-
-        queryString = "UPDATE " + name_table + " Set " + names.db_element_first + "='" + values.element_first + "'," + names.db_element_second + "=
-                        (SELECT kod FROM kol_chas WHERE name=" + values.element_second + " LIMIT 1) WHERE kod=" + Convert.ToString(values.kod)
-
-        Return queryString
-
-    End Function
-
-    Private Function update_check_query() As String
-
-        Dim queryString As String = ""
-
-        If number_column = 1 Then
-
-            queryString = "Select
-                            COUNT(kod)
-                           FROM
-                            " + name_table + "
-                           WHERE " + names.db_element_first + " ='" + values.element_first + "'"
-
-        ElseIf number_column = 2 Then
-
-            queryString = "Select
-                            COUNT(kod)
-                           FROM
-                            " + name_table + "
-                           WHERE " + names.db_element_first + " ='" + values.element_first + "' AND " + names.db_element_second + "='" + values.element_second + "'"
-
-        End If
-
-        Return queryString
-
-    End Function
-
-    Private Function update_prog_check_query() As String
-
-        Dim queryString As String = ""
-
-        queryString = "Select
-                            COUNT(kod)
-                           FROM
-                            " + name_table + "
-                           WHERE " + names.db_element_first + " ='" + values.element_first + "' AND " + names.db_element_second + "= 
-                           (SELECT kod FROM kol_chas WHERE name=" + values.element_second + " LIMIT 1)"
-
-        Return queryString
-
-    End Function
-
-    Private Sub redactor_element_second_KeyPress(sender As Object, e As KeyPressEventArgs) Handles redactor_element_second.KeyPress
-
-        If e.KeyChar = Convert.ToChar(Keys.Enter) Then
-
-            If redactor_element_first.Text.Trim = "" Then
-
-                e.Handled = True
-                Return
-
-            End If
-
-            values.element_first = redactor_element_first.Text.Trim
-            values.element_second = redactor_element_second.Text.Trim
-
-            If flagUpdate Then
-
-                updateRow()
-
-            Else
-
-                saveRow()
-
-            End If
-
-            load_table()
-
-            selectRowInList(values.kod, kod_number)
-
-            e.Handled = True
-
-        ElseIf e.KeyChar = Convert.ToChar(Keys.Tab) Or e.KeyChar = Convert.ToChar(Keys.Down) Then
-
-            ActiveControl = DataGridTablesResult
-            e.Handled = True
+            e.IsInputKey = True
 
         End If
 
     End Sub
 
     Private Sub redactor_element_second_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs) Handles redactor_element_second.PreviewKeyDown
+
+        second_element_PreviewKeyDown(e)
+
+    End Sub
+
+    Private Sub second_element_PreviewKeyDown(e As PreviewKeyDownEventArgs)
 
         If e.KeyValue = Keys.Tab Then
 
@@ -408,8 +236,17 @@ Public Class Tables_control
 
             If number_column = 2 Then
 
-                redactor_element_second.Focus()
-                redactor_element_second.Select(redactor_element_second.Text.Length, 0)
+                If flag_second_control_combo Then
+
+                    comboBox_second_element.Focus()
+
+                Else
+
+                    redactor_element_second.Focus()
+                    redactor_element_second.Select(redactor_element_second.Text.Length, 0)
+
+                End If
+
 
             Else
 
@@ -472,7 +309,7 @@ Public Class Tables_control
 
     End Sub
 
-    Private Sub redactor_element_first_KeyPress(sender As Object, e As KeyPressEventArgs) Handles redactor_element_first.KeyPress
+    Public Sub second_element_pressEnter(e As KeyPressEventArgs)
 
         If e.KeyChar = Convert.ToChar(Keys.Enter) Then
 
@@ -484,7 +321,17 @@ Public Class Tables_control
             End If
 
             values.element_first = redactor_element_first.Text.Trim
-            values.element_second = redactor_element_second.Text.Trim
+
+            If flag_second_control_combo Then
+
+                values.element_second = comboBox_second_element.my_ComboBox.Text.Trim
+
+            Else
+
+                values.element_second = redactor_element_second.Text.Trim
+
+            End If
+
 
             If flagUpdate Then
 
@@ -502,12 +349,30 @@ Public Class Tables_control
 
             e.Handled = True
 
+        End If
+
+    End Sub
+
+    Private Sub redactor_element_first_KeyPress(sender As Object, e As KeyPressEventArgs) Handles redactor_element_first.KeyPress
+
+        If e.KeyChar = Convert.ToChar(Keys.Enter) Then
+
+            second_element_pressEnter(e)
+
         ElseIf e.KeyChar = Convert.ToChar(Keys.Tab) Then
 
             If number_column = 2 Then
 
-                redactor_element_second.Focus()
-                redactor_element_second.Select(redactor_element_second.Text.Length, 0)
+                If flag_second_control_combo Then
+
+                    comboBox_second_element.Focus()
+
+                Else
+
+                    redactor_element_second.Focus()
+                    redactor_element_second.Select(redactor_element_second.Text.Length, 0)
+
+                End If
 
             ElseIf number_column = 1 Then
 
@@ -537,7 +402,7 @@ Public Class Tables_control
 
             remove_kod = Convert.ToInt64(DataGridTablesResult.Rows(curNumber).Cells(kod_number).Value)
 
-            queryString = update_delete_query()
+            queryString = ААОсновная.sqlQueryString.update_delete_query(programm_on, name_table, ААОсновная.comboBoxProgramms.Text, remove_kod)
 
             mySQLConnector.ОтправитьВбдЗапись(queryString, 1)
 
@@ -558,7 +423,16 @@ Public Class Tables_control
         ElseIf e.KeyValue = Keys.Add Then
 
             redactor_element_first.Clear()
-            redactor_element_second.Clear()
+
+            If flag_second_control_combo Then
+
+                comboBox_second_element.my_ComboBox.SelectedIndex = 0
+
+            Else
+
+                redactor_element_second.Clear()
+
+            End If
 
             redactorOpen()
 
@@ -597,20 +471,6 @@ Public Class Tables_control
             active_last_element = True
 
         End If
-
-    End Sub
-
-    Private Sub redactor_element_second_Enter(sender As Object, e As EventArgs) Handles redactor_element_second.Enter
-
-        'If number_column = 2 Then
-
-        '    If Not SplitContainer_main.Panel2Collapsed Then
-
-        '        active_last_element = True
-
-        '    End If
-
-        'End If
 
     End Sub
 
@@ -684,10 +544,29 @@ Public Class Tables_control
         End If
 
         redactor_element_first.Text = DataGridTablesResult.Rows(curNumber).Cells(0).Value
-        redactor_element_second.Text = Convert.ToString(DataGridTablesResult.Rows(curNumber).Cells(1).Value)
+
+        If flag_second_control_combo Then
+
+            comboBox_second_element.my_ComboBox.Text = Convert.ToString(DataGridTablesResult.Rows(curNumber).Cells(1).Value)
+
+        Else
+
+            redactor_element_second.Text = Convert.ToString(DataGridTablesResult.Rows(curNumber).Cells(1).Value)
+
+        End If
+
         redactorOpen()
         redactor_element_first.BackColor = Color.AliceBlue
-        redactor_element_second.BackColor = Color.AliceBlue
+
+        If flag_second_control_combo Then
+
+            comboBox_second_element.set_color(Color.AliceBlue)
+
+        Else
+
+            redactor_element_second.BackColor = Color.AliceBlue
+
+        End If
 
         flagUpdate = True
 
@@ -699,11 +578,11 @@ Public Class Tables_control
 
         If programm_on Then
 
-            queryString = update_prog_check_query()
+            queryString = ААОсновная.sqlQueryString.update_prog_check_query(name_table, names.db_element_first, values.element_first, names.db_element_second, values.element_second, ААОсновная.comboBoxProgramms.Text)
 
         Else
 
-            queryString = update_check_query()
+            queryString = ААОсновная.sqlQueryString.update_check_query(number_column, name_table, names.db_element_first, values.element_first, names.db_element_second, values.element_second)
 
         End If
 
@@ -715,11 +594,11 @@ Public Class Tables_control
 
         If programm_on Then
 
-            queryString = update_prog_update_query()
+            queryString = ААОсновная.sqlQueryString.update_prog_update_query(name_table, names.db_element_first, values.element_first, names.db_element_second, values.element_second, values.kod)
 
         Else
 
-            queryString = update_update_query()
+            queryString = ААОсновная.sqlQueryString.update_update_query(number_column, name_table, names.db_element_first, values.element_first, names.db_element_second, values.element_second, values.kod)
 
         End If
 
@@ -733,11 +612,11 @@ Public Class Tables_control
 
         If programm_on Then
 
-            queryString = update_prog_check_query()
+            queryString = ААОсновная.sqlQueryString.update_prog_check_query(name_table, names.db_element_first, values.element_first, names.db_element_second, values.element_second, ААОсновная.comboBoxProgramms.Text)
 
         Else
 
-            queryString = update_check_query()
+            queryString = ААОсновная.sqlQueryString.update_check_query(number_column, name_table, names.db_element_first, values.element_first, names.db_element_second, values.element_second)
 
         End If
 
@@ -749,11 +628,11 @@ Public Class Tables_control
 
         If programm_on Then
 
-            queryString = update_prog_insert_query()
+            queryString = ААОсновная.sqlQueryString.update_prog_insert_query(number_column, name_table, names.db_element_first, values.element_first, names.db_element_second, values.element_second, ААОсновная.comboBoxProgramms.Text)
 
         Else
 
-            queryString = update_insert_query()
+            queryString = ААОсновная.sqlQueryString.update_insert_query(number_column, name_table, names.db_element_first, values.element_first, names.db_element_second, values.element_second)
 
         End If
 
@@ -762,11 +641,11 @@ Public Class Tables_control
 
         If programm_on Then
 
-            queryString = update_prog_load_kod_query()
+            queryString = ААОсновная.sqlQueryString.update_prog_load_kod_query(name_table, names.db_element_first, values.element_first, ААОсновная.comboBoxProgramms.Text)
 
         Else
 
-            queryString = update_load_kod_query()
+            queryString = ААОсновная.sqlQueryString.update_load_kod_query(number_column, name_table, names.db_element_first, values.element_first, names.db_element_second, values.element_second)
 
         End If
 
@@ -855,6 +734,69 @@ Public Class Tables_control
         End If
 
     End Sub
+
+    Private Sub Tables_control_KeyPress(sender As Object, e As KeyPressEventArgs) Handles MyBase.KeyPress
+    End Sub
+
+    Private Sub second_element_keyPress(e As KeyPressEventArgs)
+
+        Dim second_element As Control = redactor_element_second
+
+        If flag_second_control_combo Then
+
+            second_element = comboBox_second_element
+
+        End If
+
+        If Not second_element.Focused Then
+
+            Return
+
+        End If
+
+        If e.KeyChar = Convert.ToChar(Keys.Enter) Then
+
+            If flag_second_control_combo And comboBox_second_element.my_ComboBox.DroppedDown Then
+
+                Return
+
+            End If
+
+            If redactor_element_first.Text.Trim = "" Then
+
+                e.Handled = True
+                Return
+
+            End If
+
+            values.element_first = redactor_element_first.Text.Trim
+            values.element_second = redactor_element_second.Text.Trim
+
+            If flagUpdate Then
+
+                updateRow()
+
+            Else
+
+                saveRow()
+
+            End If
+
+            load_table()
+
+            selectRowInList(values.kod, kod_number)
+
+            e.Handled = True
+
+        ElseIf e.KeyChar = Convert.ToChar(Keys.Tab) Or e.KeyChar = Convert.ToChar(Keys.Down) Then
+
+            ActiveControl = DataGridTablesResult
+            e.Handled = True
+
+        End If
+
+    End Sub
+
 End Class
 
 Public Structure Values

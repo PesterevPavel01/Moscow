@@ -44,6 +44,7 @@ Partial Class ААОсновная
         Me.ToolStripBottom = New System.Windows.Forms.ToolStripButton()
         Me.addMidulInGroupp = New System.Windows.Forms.ToolStripButton()
         Me.modulInProgsIndicator = New System.Windows.Forms.ToolStripButton()
+        Me.tbl_moduls_sum_hours = New System.Windows.Forms.ToolStripTextBox()
         Me.SplitContainerModuls = New System.Windows.Forms.SplitContainer()
         Me.DataGridAllModuls = New System.Windows.Forms.DataGridView()
         Me.TableLayoutAddNewModul = New System.Windows.Forms.TableLayoutPanel()
@@ -409,7 +410,7 @@ Partial Class ААОсновная
         'ToolStrip3
         '
         Me.ToolStrip3.Dock = System.Windows.Forms.DockStyle.Right
-        Me.ToolStrip3.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripTop, Me.ToolStripBottom, Me.addMidulInGroupp, Me.modulInProgsIndicator})
+        Me.ToolStrip3.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripTop, Me.ToolStripBottom, Me.addMidulInGroupp, Me.modulInProgsIndicator, Me.tbl_moduls_sum_hours})
         Me.ToolStrip3.Location = New System.Drawing.Point(390, 0)
         Me.ToolStrip3.Name = "ToolStrip3"
         Me.ToolStrip3.Size = New System.Drawing.Size(46, 830)
@@ -457,6 +458,17 @@ Partial Class ААОсновная
         Me.modulInProgsIndicator.Name = "modulInProgsIndicator"
         Me.modulInProgsIndicator.Size = New System.Drawing.Size(43, 20)
         Me.modulInProgsIndicator.Text = "ToolStripButton1"
+        '
+        'tbl_moduls_sum_hours
+        '
+        Me.tbl_moduls_sum_hours.BackColor = System.Drawing.Color.White
+        Me.tbl_moduls_sum_hours.BorderStyle = System.Windows.Forms.BorderStyle.None
+        Me.tbl_moduls_sum_hours.Enabled = False
+        Me.tbl_moduls_sum_hours.Font = New System.Drawing.Font("Microsoft YaHei", 16.0!, System.Drawing.FontStyle.Bold)
+        Me.tbl_moduls_sum_hours.Name = "tbl_moduls_sum_hours"
+        Me.tbl_moduls_sum_hours.ReadOnly = True
+        Me.tbl_moduls_sum_hours.Size = New System.Drawing.Size(41, 29)
+        Me.tbl_moduls_sum_hours.Text = "0"
         '
         'SplitContainerModuls
         '
@@ -2302,4 +2314,5 @@ Partial Class ААОсновная
     Friend WithEvents ToolStripButton1 As ToolStripButton
     Friend WithEvents Panel_main As Panel
     Friend WithEvents programms_tbl_parent As Panel
+    Friend WithEvents tbl_moduls_sum_hours As ToolStripTextBox
 End Class

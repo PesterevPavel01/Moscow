@@ -321,9 +321,11 @@ Public Class РедакторГруппы
     End Function
 
     Private Sub РедакторГруппы_Shown(sender As Object, e As EventArgs) Handles MyBase.Shown
+
         Сообщение.Visible = False
         gruppa.struct_gruppa.flagAllListProgs = False
         ActiveControl = BtnFocus
+
     End Sub
     Private Sub НоваяГруппаФормаОбучения_KeyDown(sender As Object, e As KeyEventArgs)
 
@@ -1571,7 +1573,10 @@ Public Class РедакторГруппы
                 gruppa.struct_gruppa.flagAllListProgs = False
                 Return
             End If
+
             gruppa.updateKodProg()
+            НоваяГруппаКоличествоЧасов.Text = gruppa.struct_gruppa.kolChasov
+
         End If
         активироватьМодули(Me, НоваяГруппаПрограмма.Text, gruppa.struct_gruppa.kodProgramm)
     End Sub

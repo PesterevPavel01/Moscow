@@ -712,6 +712,7 @@ Partial Class НоваяГруппа
         'НоваяГруппаКоличествоЧасов
         '
         Me.НоваяГруппаКоличествоЧасов.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.НоваяГруппаКоличествоЧасов.Enabled = False
         Me.НоваяГруппаКоличествоЧасов.FormattingEnabled = True
         Me.НоваяГруппаКоличествоЧасов.ItemHeight = 13
         Me.НоваяГруппаКоличествоЧасов.Location = New System.Drawing.Point(337, 202)
