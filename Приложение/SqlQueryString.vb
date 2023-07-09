@@ -781,7 +781,7 @@ sotrudnik.in_list,
         Dim sqlString As String = ""
         sqlString = "SELECT sotrudnik.name FROM sotrudnik
                      INNER JOIN kodirovka ON sotrudnik.type_sotrudnik = kodirovka.kod
-                     WHERE kodirovka.name = 'куратор' AND sotrudnik.in_list=1 ORDER BY sotrudnik.name"
+                     WHERE kodirovka.name = 'сотрудник' AND sotrudnik.in_list=1 ORDER BY sotrudnik.name"
         Return sqlString
 
     End Function
@@ -930,6 +930,19 @@ sotrudnik.in_list,
 
         Dim sqlString As String = ""
         sqlString = "SELECT name FROM kvalifikaciya ORDER BY name"
+        Return sqlString
+
+    End Function
+
+    Public Function load_kol_chas(kod As String) As String
+
+        Dim sqlString As String = ""
+        sqlString = "SELECT
+                      kol_chas.name
+                    FROM programma
+                      INNER JOIN kol_chas
+                        ON programma.hours = kol_chas.kod
+                    WHERE programma.kod = " + kod
         Return sqlString
 
     End Function

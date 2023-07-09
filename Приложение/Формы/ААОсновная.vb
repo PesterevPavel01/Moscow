@@ -3570,6 +3570,8 @@ Public Class ААОсновная
             Return
         End If
 
+        programms_tbl.add_Down()
+
     End Sub
 
     Private Sub ToolStripUpdate_Click(sender As Object, e As EventArgs)

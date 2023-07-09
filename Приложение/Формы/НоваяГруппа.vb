@@ -10,7 +10,11 @@ Public Class НоваяГруппа
     Public Sub setProgKod(kod As Integer)
         gruppa.struct_gruppa.kodProgramm = kod
         gruppa.struct_gruppa.flagAllListProgs = True
+
         активироватьМодули(Me, НоваяГруппаПрограмма.Text, gruppa.struct_gruppa.kodProgramm)
+
+        gruppa.load_kol_chas()
+        НоваяГруппаКоличествоЧасов.Text = gruppa.struct_gruppa.kolChasov
     End Sub
     Public Function getProgKod() As Int16
         Return gruppa.struct_gruppa.kodProgramm
@@ -1026,10 +1030,6 @@ Public Class НоваяГруппа
         НоваяГруппаСпециальность.Items.Add("")
         НоваяГруппаСпециальность.Items.AddRange(gruppa.formGrouppLists.specialnost)
 
-        НоваяГруппаКоличествоЧасов.Items.Clear()
-        НоваяГруппаКоличествоЧасов.Items.Add("")
-        НоваяГруппаКоличествоЧасов.Items.AddRange(gruppa.formGrouppLists.kol_chasov)
-
         НоваяГруппаОтветственныйКуратор.Items.Clear()
         НоваяГруппаОтветственныйКуратор.Items.Add("")
         НоваяГруппаОтветственныйКуратор.Items.AddRange(gruppa.formGrouppLists.kurator)
@@ -1136,28 +1136,6 @@ Public Class НоваяГруппа
     Private Sub НоваяГруппаСпециальность_EnabledChanged(sender As Object, e As EventArgs) Handles НоваяГруппаСпециальность.EnabledChanged
         If НоваяГруппаСпециальность.Enabled = False Then
             НоваяГруппаСпециальность.DroppedDown = False
-        End If
-    End Sub
-
-    Private Sub НоваяГруппаКоличествоЧасов_MouseLeave(sender As Object, e As EventArgs) Handles НоваяГруппаКоличествоЧасов.MouseLeave
-        gruppa.flagGrouppForm.kol_chasov = False
-    End Sub
-
-    Private Sub НоваяГруппаКоличествоЧасов_MouseMove(sender As Object, e As MouseEventArgs) Handles НоваяГруппаКоличествоЧасов.MouseMove
-        gruppa.flagGrouppForm.kol_chasov = True
-    End Sub
-
-    Private Sub НоваяГруппаКоличествоЧасов_Enter(sender As Object, e As EventArgs) Handles НоваяГруппаКоличествоЧасов.Enter
-        If gruppa.flagGrouppForm.kol_chasov Then
-            НоваяГруппаКоличествоЧасов.DroppedDown = False
-        Else
-            НоваяГруппаКоличествоЧасов.DroppedDown = True
-        End If
-    End Sub
-
-    Private Sub НоваяГруппаКоличествоЧасов_EnabledChanged(sender As Object, e As EventArgs) Handles НоваяГруппаКоличествоЧасов.EnabledChanged
-        If НоваяГруппаКоличествоЧасов.Enabled = False Then
-            НоваяГруппаКоличествоЧасов.DroppedDown = False
         End If
     End Sub
 

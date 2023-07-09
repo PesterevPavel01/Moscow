@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class НоваяГруппа
     Inherits System.Windows.Forms.Form
 
     'Форма переопределяет dispose для очистки списка компонентов.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,7 +20,7 @@ Partial Class НоваяГруппа
     'Примечание: следующая процедура является обязательной для конструктора форм Windows Forms
     'Для ее изменения используйте конструктор форм Windows Form.  
     'Не изменяйте ее в редакторе исходного кода.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.Сохранить = New System.Windows.Forms.Button()
         Me.Label9 = New System.Windows.Forms.Label()
@@ -87,7 +87,6 @@ Partial Class НоваяГруппа
         Me.НоваяГруппаФормаОбучения = New System.Windows.Forms.ComboBox()
         Me.НоваяГруппаПрограмма = New System.Windows.Forms.ComboBox()
         Me.НоваяГруппаСпециальность = New System.Windows.Forms.ComboBox()
-        Me.НоваяГруппаКоличествоЧасов = New System.Windows.Forms.ComboBox()
         Me.НоваяГруппаОтветственныйКуратор = New System.Windows.Forms.ComboBox()
         Me.НоваягруппаОтветственныйЗаПрактику = New System.Windows.Forms.ComboBox()
         Me.Модуль1 = New System.Windows.Forms.ComboBox()
@@ -103,6 +102,7 @@ Partial Class НоваяГруппа
         Me.НоваяГруппаФинансирование = New System.Windows.Forms.ComboBox()
         Me.Квалификация = New System.Windows.Forms.ComboBox()
         Me.versProgs = New System.Windows.Forms.Button()
+        Me.НоваяГруппаКоличествоЧасов = New System.Windows.Forms.TextBox()
         Me.SuspendLayout()
         '
         'Сохранить
@@ -709,17 +709,6 @@ Partial Class НоваяГруппа
         Me.НоваяГруппаСпециальность.Size = New System.Drawing.Size(546, 21)
         Me.НоваяГруппаСпециальность.TabIndex = 7
         '
-        'НоваяГруппаКоличествоЧасов
-        '
-        Me.НоваяГруппаКоличествоЧасов.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.НоваяГруппаКоличествоЧасов.Enabled = False
-        Me.НоваяГруппаКоличествоЧасов.FormattingEnabled = True
-        Me.НоваяГруппаКоличествоЧасов.ItemHeight = 13
-        Me.НоваяГруппаКоличествоЧасов.Location = New System.Drawing.Point(337, 202)
-        Me.НоваяГруппаКоличествоЧасов.Name = "НоваяГруппаКоличествоЧасов"
-        Me.НоваяГруппаКоличествоЧасов.Size = New System.Drawing.Size(546, 21)
-        Me.НоваяГруппаКоличествоЧасов.TabIndex = 8
-        '
         'НоваяГруппаОтветственныйКуратор
         '
         Me.НоваяГруппаОтветственныйКуратор.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
@@ -869,11 +858,20 @@ Partial Class НоваяГруппа
         Me.versProgs.Text = "расширенный"
         Me.versProgs.UseVisualStyleBackColor = True
         '
+        'НоваяГруппаКоличествоЧасов
+        '
+        Me.НоваяГруппаКоличествоЧасов.Location = New System.Drawing.Point(337, 203)
+        Me.НоваяГруппаКоличествоЧасов.Name = "НоваяГруппаКоличествоЧасов"
+        Me.НоваяГруппаКоличествоЧасов.ReadOnly = True
+        Me.НоваяГруппаКоличествоЧасов.Size = New System.Drawing.Size(546, 20)
+        Me.НоваяГруппаКоличествоЧасов.TabIndex = 97
+        '
         'НоваяГруппа
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(888, 862)
+        Me.Controls.Add(Me.НоваяГруппаКоличествоЧасов)
         Me.Controls.Add(Me.versProgs)
         Me.Controls.Add(Me.Квалификация)
         Me.Controls.Add(Me.НоваяГруппаФинансирование)
@@ -889,7 +887,6 @@ Partial Class НоваяГруппа
         Me.Controls.Add(Me.Модуль1)
         Me.Controls.Add(Me.НоваягруппаОтветственныйЗаПрактику)
         Me.Controls.Add(Me.НоваяГруппаОтветственныйКуратор)
-        Me.Controls.Add(Me.НоваяГруппаКоличествоЧасов)
         Me.Controls.Add(Me.НоваяГруппаСпециальность)
         Me.Controls.Add(Me.НоваяГруппаПрограмма)
         Me.Controls.Add(Me.НоваяГруппаФормаОбучения)
@@ -1029,7 +1026,6 @@ Partial Class НоваяГруппа
     Friend WithEvents НоваяГруппаФормаОбучения As ComboBox
     Friend WithEvents НоваяГруппаПрограмма As ComboBox
     Friend WithEvents НоваяГруппаСпециальность As ComboBox
-    Friend WithEvents НоваяГруппаКоличествоЧасов As ComboBox
     Friend WithEvents НоваяГруппаОтветственныйКуратор As ComboBox
     Friend WithEvents НоваягруппаОтветственныйЗаПрактику As ComboBox
     Friend WithEvents Модуль1 As ComboBox
@@ -1045,4 +1041,5 @@ Partial Class НоваяГруппа
     Friend WithEvents НоваяГруппаФинансирование As ComboBox
     Friend WithEvents Квалификация As ComboBox
     Friend WithEvents versProgs As Button
+    Friend WithEvents НоваяГруппаКоличествоЧасов As TextBox
 End Class

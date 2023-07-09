@@ -76,7 +76,6 @@
         Public forma_obuch As Boolean
         Public programma As Boolean
         Public specialnost As Boolean
-        Public kol_chasov As Boolean
         Public kurator As Boolean
         Public otvetstv_praktika As Boolean
         Public finansirovanie As Boolean
@@ -111,9 +110,6 @@
         queryString = sqlQueryString.loadSpecialnost()
         formGrouppLists.specialnost = mySQLConnector.ЗагрузитьИзMySQLвОдномерныйМассив(queryString, 1, 0)
 
-        queryString = sqlQueryString.loadKolChasov()
-        formGrouppLists.kol_chasov = mySQLConnector.ЗагрузитьИзMySQLвОдномерныйМассив(queryString, 1, 0)
-
         queryString = sqlQueryString.loadKurator()
         formGrouppLists.kurator = mySQLConnector.ЗагрузитьИзMySQLвОдномерныйМассив(queryString, 1, 0)
 
@@ -129,7 +125,6 @@
         flagGrouppForm.forma_obuch = False
         flagGrouppForm.programma = False
         flagGrouppForm.specialnost = False
-        flagGrouppForm.kol_chasov = False
         flagGrouppForm.kurator = False
         flagGrouppForm.otvetstv_praktika = False
         flagGrouppForm.modul_1 = False
@@ -169,6 +164,24 @@
         struct_gruppa.kodProgramm = result(0, 0)
         struct_gruppa.kolChasov = result(1, 0)
 
+    End Sub
+
+    Public Sub load_kol_chas()
+
+        Dim result As String()
+        Dim queryString As String
+
+        queryString = sqlQueryString.load_kol_chas(struct_gruppa.kodProgramm)
+
+        result = mySQLConnector.ЗагрузитьИзMySQLвОдномерныйМассив(queryString, 1, 0)
+
+        If result.Length < 1 Then
+
+            Return
+
+        End If
+
+        struct_gruppa.kolChasov = result(0)
     End Sub
 
     Public Sub Clear()

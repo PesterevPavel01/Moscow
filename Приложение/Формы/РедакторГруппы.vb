@@ -5,9 +5,16 @@ Public Class РедакторГруппы
     Dim secondThread As Thread
     Dim SC As SynchronizationContext
     Public Sub setProgKod(kod As Integer)
+
         gruppa.struct_gruppa.kodProgramm = kod
         gruppa.struct_gruppa.flagAllListProgs = True
+
         активироватьМодули(Me, НоваяГруппаПрограмма.Text, gruppa.struct_gruppa.kodProgramm)
+
+        gruppa.load_kol_chas()
+        НоваяГруппаКоличествоЧасов.Text = gruppa.struct_gruppa.kolChasov
+
+
     End Sub
 
     Public Function getProgKod() As Int16
@@ -358,13 +365,6 @@ Public Class РедакторГруппы
     End Sub
 
     Private Sub НоваяГруппаКоличествоЧасов_KeyDown(sender As Object, e As KeyEventArgs)
-
-        If e.KeyCode = 13 Then
-
-
-            Call НоваяГруппаКоличествоЧасов_Click(sender, e)
-
-        End If
 
     End Sub
 
@@ -1176,28 +1176,6 @@ Public Class РедакторГруппы
         End If
     End Sub
 
-    Private Sub НоваяГруппаКоличествоЧасов_MouseLeave(sender As Object, e As EventArgs) Handles НоваяГруппаКоличествоЧасов.MouseLeave
-        gruppa.flagGrouppForm.kol_chasov = False
-    End Sub
-
-    Private Sub НоваяГруппаКоличествоЧасов_MouseMove(sender As Object, e As MouseEventArgs) Handles НоваяГруппаКоличествоЧасов.MouseMove
-        gruppa.flagGrouppForm.kol_chasov = True
-    End Sub
-
-    Private Sub НоваяГруппаКоличествоЧасов_Enter(sender As Object, e As EventArgs) Handles НоваяГруппаКоличествоЧасов.Enter
-        If gruppa.flagGrouppForm.kol_chasov Then
-            НоваяГруппаКоличествоЧасов.DroppedDown = False
-        Else
-            НоваяГруппаКоличествоЧасов.DroppedDown = True
-        End If
-    End Sub
-
-    Private Sub НоваяГруппаКоличествоЧасов_EnabledChanged(sender As Object, e As EventArgs) Handles НоваяГруппаКоличествоЧасов.EnabledChanged
-        If НоваяГруппаКоличествоЧасов.Enabled = False Then
-            НоваяГруппаКоличествоЧасов.DroppedDown = False
-        End If
-    End Sub
-
     Private Sub НоваяГруппаОтветственныйКуратор_MouseLeave(sender As Object, e As EventArgs) Handles НоваяГруппаОтветственныйКуратор.MouseLeave
         gruppa.flagGrouppForm.kurator = False
     End Sub
@@ -1225,7 +1203,7 @@ Public Class РедакторГруппы
     End Sub
 
     Private Sub НоваягруппаОтветственныйЗаПрактику_MouseMove(sender As Object, e As MouseEventArgs) Handles НоваягруппаОтветственныйЗаПрактику.MouseMove
-        gruppa.flagGrouppForm.otvetstv_praktika = False
+        gruppa.flagGrouppForm.otvetstv_praktika = True
     End Sub
 
     Private Sub НоваягруппаОтветственныйЗаПрактику_Enter(sender As Object, e As EventArgs) Handles НоваягруппаОтветственныйЗаПрактику.Enter
@@ -1528,10 +1506,6 @@ Public Class РедакторГруппы
         НоваяГруппаСпециальность.Items.Add("")
         НоваяГруппаСпециальность.Items.AddRange(gruppa.formGrouppLists.specialnost)
 
-        НоваяГруппаКоличествоЧасов.Items.Clear()
-        НоваяГруппаКоличествоЧасов.Items.Add("")
-        НоваяГруппаКоличествоЧасов.Items.AddRange(gruppa.formGrouppLists.kol_chasov)
-
         НоваяГруппаОтветственныйКуратор.Items.Clear()
         НоваяГруппаОтветственныйКуратор.Items.Add("")
         НоваяГруппаОтветственныйКуратор.Items.AddRange(gruppa.formGrouppLists.kurator)
@@ -1565,19 +1539,27 @@ Public Class РедакторГруппы
     End Sub
 
     Private Sub НоваяГруппаПрограмма_SelectedIndexChanged(sender As Object, e As EventArgs) Handles НоваяГруппаПрограмма.SelectedIndexChanged
+
         gruppa.struct_gruppa.programma = НоваяГруппаПрограмма.Text
+
         If НоваяГруппаПрограмма.Text = "" Then
+
             gruppa.struct_gruppa.kodProgramm = -1
+
         Else
+
             If gruppa.struct_gruppa.flagAllListProgs Then
+
                 gruppa.struct_gruppa.flagAllListProgs = False
                 Return
+
             End If
 
             gruppa.updateKodProg()
             НоваяГруппаКоличествоЧасов.Text = gruppa.struct_gruppa.kolChasov
 
         End If
+
         активироватьМодули(Me, НоваяГруппаПрограмма.Text, gruppa.struct_gruppa.kodProgramm)
     End Sub
 

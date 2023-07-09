@@ -37,11 +37,17 @@ Public Class ФормаСписок
         If textboxName = "НоваяГруппаПрограмма" Or textboxName = "versProgs" Then
 
             If FormName = "НоваяГруппа" And НоваяГруппа.НоваяГруппаУровеньКвалификации.Text <> "" Then
+
                 СтрокаЗапроса = ProgrammPoUKvalifik(НоваяГруппа.НоваяГруппаУровеньКвалификации.Text)
+
             ElseIf FormName = "РедакторГруппы" And РедакторГруппы.НоваяГруппаУровеньКвалификации.Text <> "" Then
+
                 СтрокаЗапроса = ProgrammPoUKvalifik(РедакторГруппы.НоваяГруппаУровеньКвалификации.Text)
+
             Else
+
                 СтрокаЗапроса = "SELECT name, date, kod FROM programma ORDER BY name"
+
             End If
 
             ListViewСписок.Columns(0).Width = 500
@@ -154,12 +160,17 @@ Public Class ФормаСписок
 
     End Sub
     Private Sub ListViewСписок_DoubleClick(sender As Object, e As EventArgs) Handles ListViewСписок.DoubleClick
+
         Dim ind As String
 
         If textboxName = "НомерГруппы" Or textboxName = "НоваяГруппаПрограмма" Then
+
             ind = ListViewСписок.SelectedItems(0).SubItems(0).Text
+
         Else
+
             ind = ListViewСписок.SelectedItems(0).SubItems(1).Text
+
         End If
 
 
@@ -228,6 +239,7 @@ Public Class ФормаСписок
 
 
         If FormName = "НоваяГруппа" Then
+
             If (textboxName = "НоваяГруппаУровеньКвалификации") Then
                 НоваяГруппа.НомерДиплома.Clear()
                 НоваяГруппа.РегНомерДиплома.Clear()
@@ -239,7 +251,9 @@ Public Class ФормаСписок
             End If
 
             If (textboxName = "НоваяГруппаПрограмма") Then
+
                 НоваяГруппа.setProgKod(Convert.ToInt32(ListViewСписок.SelectedItems(0).SubItems(2).Text))
+
             End If
 
 
@@ -249,7 +263,9 @@ Public Class ФормаСписок
                 End If
             Next
         End If
+
         If FormName = "РедакторГруппы" Then
+
             If (textboxName = "НоваяГруппаУровеньКвалификации") Then
                 РедакторГруппы.НомерДиплома.Clear()
                 РедакторГруппы.РегНомерДиплома.Clear()
@@ -258,10 +274,13 @@ Public Class ФормаСписок
                 РедакторГруппы.НомерУд.Clear()
                 РедакторГруппы.РегНомерУд.Clear()
                 РедакторГруппы.НомерПротоколаСпецэкзамен.Clear()
+
             End If
 
             If (textboxName = "НоваяГруппаПрограмма") Then
+
                 РедакторГруппы.setProgKod(Convert.ToInt32(ListViewСписок.SelectedItems(0).SubItems(2).Text))
+
             End If
 
             For Each i In РедакторГруппы.Controls

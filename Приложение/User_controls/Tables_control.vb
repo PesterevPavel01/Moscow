@@ -422,20 +422,7 @@ Public Class Tables_control
 
         ElseIf e.KeyValue = Keys.Add Then
 
-            redactor_element_first.Clear()
-
-            If flag_second_control_combo Then
-
-                comboBox_second_element.my_ComboBox.SelectedIndex = 0
-
-            Else
-
-                redactor_element_second.Clear()
-
-            End If
-
-            redactorOpen()
-
+            add_Down()
 
         ElseIf e.KeyValue = Keys.R Then
 
@@ -455,6 +442,24 @@ Public Class Tables_control
             End If
 
         End If
+
+    End Sub
+
+    Public Sub add_Down()
+
+        redactor_element_first.Clear()
+
+        If flag_second_control_combo Then
+
+            comboBox_second_element.my_ComboBox.SelectedIndex = 0
+
+        Else
+
+            redactor_element_second.Clear()
+
+        End If
+
+        redactorOpen()
 
     End Sub
 
