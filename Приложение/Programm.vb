@@ -56,6 +56,11 @@ Public Class Programm
         queryString = sqlQueryString.load_sum_hours(struct_progs.program_kod)
         result = mySQLConnector.ЗагрузитьИзMySQLвОдномерныйМассив(queryString, 1, 0)
 
+        If result.Length = 0 Then
+            struct_progs.sum_hours_programm = 0
+            Return
+        End If
+
         If IsNumeric(result(0)) Then
 
             struct_progs.sum_hours_programm = Convert.ToInt64(result(0))

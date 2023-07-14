@@ -43,6 +43,7 @@ Partial Class ФормаСписок
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.ListViewСписок.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.ColumnHeader1, Me.ColumnHeader2})
+        Me.ListViewСписок.Font = New System.Drawing.Font("Microsoft YaHei", 11.25!)
         Me.ListViewСписок.FullRowSelect = True
         Me.ListViewСписок.GridLines = True
         Me.ListViewСписок.HideSelection = False

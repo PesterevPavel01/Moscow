@@ -140,6 +140,10 @@ Public Class Tables_control
 
         bild_table()
 
+        DataGridTablesResult.DefaultCellStyle.Font = New Font("Microsoft YaHei", 12)
+        DataGridTablesResult.ColumnHeadersDefaultCellStyle.Font = New Font("Microsoft YaHei", 12)
+
+
     End Sub
 
     Public Sub redactorOpen()

@@ -89,7 +89,7 @@
 
     Private Sub my_ComboBox_KeyDown(sender As Object, e As KeyEventArgs) Handles my_ComboBox.KeyDown
 
-        If my_ComboBox.DroppedDown Then
+        If my_ComboBox.DroppedDown  Then
 
             Return
 
@@ -130,6 +130,7 @@
         e.Handled = True
 
     End Sub
+
 End Class
 
 Public Structure Control_Settings

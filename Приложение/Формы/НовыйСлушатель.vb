@@ -109,93 +109,21 @@ Public Class НовыйСлушатель
         slushatel.structSlushatel.snilsRub = Снилс.Text
         ВторойПоток = New Thread(AddressOf ДобавитьСлушателя)
         ВторойПоток.IsBackground = True
-        ВторойПоток.Start(slushatel.structSlushatel)
+        ВторойПоток.Start(slushatel)
     End Sub
 
-    Sub ДобавитьСлушателя(slushatel As Slushatel.strSlushatel)
+    Sub ДобавитьСлушателя(slushatel As Slushatel)
 
-        Dim СтрокаЗапроса As String
-        Dim Часть1 As String, Часть2 As String, Часть3 As String, Часть4 As String
-        Dim Запросы
         SC.Send(AddressOf ЗаблокироватьКнопки, 1)
 
-        ReDim Запросы(3)
+        If slushatel.insertSlushatel() Then
 
-        ReDim Запросы(3)
+            SC.Send(AddressOf ЗаписьВСтатус, ДобавитьРубашку.ДобавитьРубашку(slushatel.structSlushatel.snils))
+            SC.Send(AddressOf ЗаполнитьФормуССлушВГруппе.ЗаполнитьФормуССлушВГруппе, slushatel.structSlushatel.kodGroup)
 
-        Запросы(0) = "Группа"
-
-        Запросы(1) = "SELECT * FROM " & "Слушатель" & " WHERE " & "Снилс" & " = " & Chr(39) & slushatel.snils & Chr(39)
-
-        Часть1 = "Снилс=" & Chr(39) & slushatel.snils & Chr(39) & ", Фамилия=" & Chr(39) & slushatel.фамилия & Chr(39) & ", Имя=" & Chr(39) & slushatel.имя & Chr(39) & ", Отчество=" & Chr(39) & slushatel.отчество & Chr(39) & ", ДатаРождения=" & Chr(39) & slushatel.датаР & Chr(39) & ", Пол=" & Chr(39) & slushatel.пол & Chr(39)
-
-        Часть2 = ", УОбразования=" & Chr(39) & slushatel.уровеньОбразования & Chr(39) & ", doo_vid_dok= (SELECT kod FROM doo_vid_dok WHERE name=" & Chr(39) & slushatel.doo_vid_dok & Chr(39) & " LIMIT 1), НаимДОО=" & Chr(39) & slushatel.образование & Chr(39) & ", СерияДОО=" & Chr(39) & slushatel.серияДокументаООбразовании & Chr(39) & ", НомерДОО=" & Chr(39) & slushatel.номерДокументаООбразовании & Chr(39) & ", ФамилияДОО=" & Chr(39) & slushatel.фамилияВДокОбОбразовании & Chr(39)
-
-        Часть3 = ",АРег=" & Chr(39) & slushatel.адресРегистрации & Chr(39) & ", Телефон=" & Chr(39) & slushatel.телефон & Chr(39) & ", Гражданство=" & Chr(39) & slushatel.гражданство & Chr(39) & ", ДУЛ=" & Chr(39) & slushatel.ДУЛ & Chr(39) & ", СерияДУЛ=" & Chr(39) & slushatel.серияДУЛ & Chr(39) & ", НомерДУЛ=" & Chr(39) & slushatel.номерДУЛ & Chr(39)
-
-        Часть4 = ",ИФин=" & Chr(39) & slushatel.источникФин & Chr(39) & ", НОрг= (SELECT kod FROM napr_organization WHERE name=" & Chr(39) & slushatel.направившаяОрг & Chr(39) & " LIMIT 1), НомерНапрРосздрав=" & Chr(39) & slushatel.номерНаправленияРосздравнадзора & Chr(39) & ", ДатаНапрРосздрав=" & Chr(39) & slushatel.датаНаправленияРосздравнвдзора & Chr(39) & ", Специальность=" & Chr(39) & slushatel.специальностьСлушателя & Chr(39) & ", ДатаРегистрации=" & Chr(39) & slushatel.датаРег & Chr(39) & ", Почта=" & Chr(39) & slushatel.Email & Chr(39) & ", ДУЛКемВыдан=" & Chr(39) & slushatel.кемВыданДУЛ & Chr(39)
-
-        If slushatel.датаВыдачиДУЛ = "null" Then
-            Часть4 += ", ДУЛДатаВыдачи=null"
-        Else
-            Часть4 += ", ДУЛДатаВыдачи=" & Chr(39) & slushatel.датаВыдачиДУЛ & Chr(39)
         End If
 
-        Запросы(2) = "UPDATE Слушатель SET " & Часть1 & Часть2 & Часть3 & Часть4 & " WHERE Снилс =" & Chr(39) & slushatel.snils & Chr(39)
-
-        Часть1 = "(Снилс, Фамилия, Имя, Отчество, ДатаРождения, Пол, УОбразования, doo_vid_dok, НаимДОО, СерияДОО, НомерДОО, ФамилияДОО, АРег, Телефон, Гражданство, ДУЛ, СерияДУЛ, НомерДУЛ, ИФин, НОрг, НомерНапрРосздрав, ДатаНапрРосздрав, Специальность, ДатаРегистрации, Почта, ДУЛКемВыдан,ДУЛДатаВыдачи ) "
-
-        Часть2 = "(" & Chr(39) & slushatel.snils & Chr(39) & "," & Chr(39) & slushatel.фамилия & Chr(39) & "," & Chr(39) & slushatel.имя & Chr(39) & "," & Chr(39) & slushatel.отчество & Chr(39) & "," & Chr(39) & slushatel.датаР & Chr(39) & "," & Chr(39) & slushatel.пол & Chr(39) & "," & Chr(39) & slushatel.уровеньОбразования & Chr(39) & ",(SELECT kod FROM doo_vid_dok WHERE name=" & Chr(39) & slushatel.doo_vid_dok & Chr(39) & " LIMIT 1) ," & Chr(39) & slushatel.образование & Chr(39) & "," & Chr(39) & slushatel.серияДокументаООбразовании & Chr(39) & "," & Chr(39) & slushatel.номерДокументаООбразовании & Chr(39) & "," & Chr(39) & slushatel.фамилияВДокОбОбразовании & Chr(39) & "," & Chr(39) & slushatel.адресРегистрации & Chr(39) & "," & Chr(39) & slushatel.телефон & Chr(39) & "," & Chr(39) & slushatel.гражданство & Chr(39) & "," & Chr(39) & slushatel.ДУЛ & Chr(39) & "," & Chr(39) & slushatel.серияДУЛ & Chr(39) & "," & Chr(39) & slushatel.номерДУЛ & Chr(39)
-
-        Часть3 = "," & Chr(39) & slushatel.источникФин & Chr(39) & ", (SELECT kod FROM napr_organization WHERE name=" & Chr(39) & slushatel.направившаяОрг & Chr(39) & " LIMIT 1) , " & Chr(39) & slushatel.номерНаправленияРосздравнадзора & Chr(39) & " , " & Chr(39) & slushatel.датаНаправленияРосздравнвдзора & Chr(39) & " , " & Chr(39) & slushatel.специальностьСлушателя & Chr(39) & " , " & Chr(39) & slushatel.датаРег & Chr(39) & " , " & Chr(39) & slushatel.Email & Chr(39) & " , " & Chr(39) & slushatel.кемВыданДУЛ & Chr(39) & ","
-
-        If slushatel.датаВыдачиДУЛ = "null" Then
-            Часть3 += "null)"
-        Else Часть3 += Chr(39) & slushatel.датаВыдачиДУЛ & Chr(39) & " ) "
-        End If
-
-        Запросы(3) = "INSERT INTO Слушатель " & Часть1 & "  VALUES " & Часть2 & Часть3
-
-        If ЗаписьВБазу.ПроверкаСовпадений("Слушатель", "Снилс", slushatel.snils) Then
-            ФормаДаНет.ShowDialog()
-            If Not ЗаписьВБазу.УдалитьСовпадения Then
-                SC.Send(AddressOf РазблокироватьКнопки, ДобавитьРубашку.ДобавитьРубашку(slushatel.snils))
-                Exit Sub
-            End If
-            СтрокаЗапроса = Запросы(2)
-            ЗаписьВБазу.УдалитьСовпадения = False
-        Else
-            СтрокаЗапроса = Запросы(3)
-        End If
-
-        ЗаписьВБазу.ЗаписьВБазу(СтрокаЗапроса)
-
-        СтрокаЗапроса = "DELETE FROM СоставГрупп WHERE Слушатель= " & Chr(39) & slushatel.snils & Chr(39)
-        ААОсновная.mySqlConnect.ОтправитьВбдЗапись(СтрокаЗапроса, 1)
-
-        SC.Send(AddressOf РазблокироватьКнопки, ДобавитьРубашку.ДобавитьРубашку(slushatel.snils))
-        SC.Send(AddressOf ЗаписьВСтатус, ДобавитьРубашку.ДобавитьРубашку(slushatel.snils))
-
-        If slushatel.kodGroup <> -1 Then
-            ДобавитьВГруппу(slushatel)
-        End If
-
-    End Sub
-
-    Sub ДобавитьВГруппу(slushatel As Slushatel.strSlushatel)
-
-        Dim queryStr As String
-
-        queryStr = "INSERT INTO СоставГрупп (Слушатель, Kod) VALUES ( " & Chr(39) & slushatel.snils & Chr(39) & " , " & slushatel.kodGroup & ")"
-
-        If Not ЗаписьВБазу.ПроверкаСовпаденийЧислоДА_2("СоставГрупп", "Kod", slushatel.kodGroup, "Слушатель", slushatel.snils) = 2 Then
-
-            ЗаписьВБазу.ЗаписьВБазу(queryStr)
-            SC.Send(AddressOf ЗаполнитьФормуССлушВГруппе.ЗаполнитьФормуССлушВГруппе, slushatel.kodGroup)
-
-        Else
-            MsgBox("Слушатель уже добавлен в группу")
-        End If
+        SC.Send(AddressOf РазблокироватьКнопки, ДобавитьРубашку.ДобавитьРубашку(slushatel.structSlushatel.snils))
 
     End Sub
     Sub ЗаписьВСтатус(Слушатель As String)
@@ -359,7 +287,6 @@ Public Class НовыйСлушатель
             ФамилияВДокОбОбразовании.Text = Фамилия.Text
 
         End If
-        'Фамилия.SelectionStart = 1
     End Sub
 
     Private Sub Фамилия_KeyDown(sender As Object, e As KeyEventArgs) Handles Фамилия.KeyDown

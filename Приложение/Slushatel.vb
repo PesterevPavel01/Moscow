@@ -1,4 +1,6 @@
-﻿Public Class Slushatel
+﻿Imports System.Data.SqlTypes
+
+Public Class Slushatel
 
 
     Public flagSlushatelForm As formSlushatelFlag
@@ -99,31 +101,28 @@
         Dim queryString As String
         mySQLConnector.opdateArgument()
 
-        queryString = "SELECT name FROM doo_vid_dok ORDER BY name"
+        queryString = loadDooVidDok()
         formSlushLists.doo_vid_dok = mySQLConnector.ЗагрузитьИзMySQLвОдномерныйМассив(queryString, 1, 0)
 
-        queryString = "SELECT pol FROM pol ORDER BY kod"
+        queryString = loadPol()
         formSlushLists.pol = mySQLConnector.ЗагрузитьИзMySQLвОдномерныйМассив(queryString, 1, 0)
 
-        queryString = "SELECT name FROM uroven_obr ORDER BY kod"
+        queryString = loadUrovenObr()
         formSlushLists.urovenObr = mySQLConnector.ЗагрузитьИзMySQLвОдномерныйМассив(queryString, 1, 0)
 
-        queryString = "SELECT name FROM DOO_country ORDER BY kod"
+        queryString = loadDooCountry()
         formSlushLists.DOO_strana = mySQLConnector.ЗагрузитьИзMySQLвОдномерныйМассив(queryString, 1, 0)
 
-        queryString = "SELECT name FROM grajdanstvo ORDER BY kod"
+        queryString = loadGrajdanstvo()
         formSlushLists.grajdanstvo = mySQLConnector.ЗагрузитьИзMySQLвОдномерныйМассив(queryString, 1, 0)
 
-        queryString = "SELECT name FROM dok_UL ORDER BY kod"
+        queryString = loadDokUL()
         formSlushLists.dok_UL = mySQLConnector.ЗагрузитьИзMySQLвОдномерныйМассив(queryString, 1, 0)
 
-        queryString = "SELECT name FROM ist_finans ORDER BY kod"
+        queryString = loadIstFinans()
         formSlushLists.ist_finans = mySQLConnector.ЗагрузитьИзMySQLвОдномерныйМассив(queryString, 1, 0)
 
-        queryString = "SELECT name FROM napr_organization ORDER BY kod"
-        formSlushLists.napr_organization = mySQLConnector.ЗагрузитьИзMySQLвОдномерныйМассив(queryString, 1, 0)
-
-        queryString = "SELECT name FROM napr_organization ORDER BY kod"
+        queryString = loadNOrganization()
         formSlushLists.napr_organization = mySQLConnector.ЗагрузитьИзMySQLвОдномерныйМассив(queryString, 1, 0)
 
         flagSlushatelForm.doo_vid_dok = False
@@ -136,5 +135,101 @@
         flagSlushatelForm.napr_organization = False
 
     End Sub
+
+    Public Function insertSlushatel() As Boolean
+
+        Dim queryString As String
+        Dim listQuery
+
+        ReDim listQuery(3)
+
+        listQuery(0) = "Группа"
+
+        listQuery(1) = SqlString__loadSlushList(structSlushatel.snils)
+
+        listQuery(2) = SqlString__updateSlush(structSlushatel)
+
+        listQuery(3) = SqlString__insertSlush(structSlushatel)
+
+        If ЗаписьВБазу.ПроверкаСовпадений("Слушатель", "Снилс", structSlushatel.snils) Then
+
+            ФормаДаНет.ShowDialog()
+
+            If Not ЗаписьВБазу.УдалитьСовпадения Then
+                Return False
+            End If
+
+            queryString = listQuery(2)
+            ЗаписьВБазу.УдалитьСовпадения = False
+
+        Else
+
+            queryString = listQuery(3)
+
+        End If
+
+        ЗаписьВБазу.ЗаписьВБазу(queryString)
+
+        queryString = SqlString__deleteSlushFromGrouppList(structSlushatel.snils)
+
+        ААОсновная.mySqlConnect.ОтправитьВбдЗапись(queryString, 1)
+
+        If structSlushatel.kodGroup <> -1 Then
+            addToGroupp(structSlushatel)
+        End If
+
+        Return True
+
+    End Function
+
+    Public Function insertSlushatelRedactor() As Boolean
+
+        Dim queryString As String
+
+        If Not structSlushatel.snils = structSlushatel.старыйСнилс Then
+
+            queryString = SqlString__deleteSlush(structSlushatel.snils)
+            ААОсновная.mySqlConnect.ОтправитьВбдЗапись(queryString, 1)
+            queryString = SqlString__deleteSlushFromGrouppList(structSlushatel.snils)
+            ААОсновная.mySqlConnect.ОтправитьВбдЗапись(queryString, 1)
+
+        End If
+
+        queryString = updateSlushatel(structSlushatel)
+
+        ААОсновная.mySqlConnect.ОтправитьВбдЗапись(queryString, 1)
+
+        If ЗаписьВБазу.ПроверкаСовпадений("Слушатель", "Снилс", structSlushatel.snils, "ДатаРегистрации", ААОсновная.mySqlConnect.dateToFormatMySQL(structSlushatel.датаРег)) Then
+
+            queryString = SqlString__updateSlushInListSlGroupp(structSlushatel.snils, structSlushatel.старыйСнилс)
+            ААОсновная.mySqlConnect.ОтправитьВбдЗапись(queryString, 1)
+            Return True
+
+        Else
+
+            Return False
+
+        End If
+
+    End Function
+
+    Sub addToGroupp(slushatel As Slushatel.strSlushatel)
+
+        Dim queryStr As String
+
+        queryStr = SqlString__insertIntoListGroupp(slushatel.snils, Convert.ToString(slushatel.kodGroup))
+
+        If Not ЗаписьВБазу.ПроверкаСовпаденийЧислоДА_2("СоставГрупп", "Kod", slushatel.kodGroup, "Слушатель", slushatel.snils) = 2 Then
+
+            ЗаписьВБазу.ЗаписьВБазу(queryStr)
+
+        Else
+
+            MsgBox("Слушатель уже добавлен в группу")
+
+        End If
+
+    End Sub
+
 End Class
 

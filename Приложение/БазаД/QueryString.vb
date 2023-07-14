@@ -1,18 +1,178 @@
 ﻿Imports System.Data.SqlTypes
+Imports WindowsApp2.Slushatel
 
 Module QueryString
+    Dim sqlString As String
+
+    Public Function SqlString__updateSlushInListSlGroupp(snils As String, prevSnils As String)
+
+        sqlString = " UPDATE СоставГрупп SET Слушатель = " & Chr(39) & snils & Chr(39) & " WHERE Слушатель = " & Chr(39) & prevSnils & Chr(39)
+        Return sqlString
+
+    End Function
+
+    Public Function SqlString__insertIntoListGroupp(snils As String, kodGroupp As String)
+
+        sqlString = "INSERT INTO СоставГрупп (Слушатель, Kod) VALUES ( " & Chr(39) & snils & Chr(39) & " , " & kodGroupp & ")"
+        Return sqlString
+
+    End Function
+
+    Public Function SqlString__insertSlush(structSlushatel As strSlushatel)
+
+        Dim Часть1 As String, Часть2 As String, Часть3 As String, Часть4 As String
+
+        Часть1 = "(Снилс, Фамилия, Имя, Отчество, ДатаРождения, Пол, УОбразования, doo_vid_dok, НаимДОО, СерияДОО, НомерДОО, ФамилияДОО, АРег, Телефон, Гражданство, ДУЛ, СерияДУЛ, НомерДУЛ, ИФин, НОрг, НомерНапрРосздрав, ДатаНапрРосздрав, Специальность, ДатаРегистрации, Почта, ДУЛКемВыдан,ДУЛДатаВыдачи ) "
+
+        Часть2 = "(" & Chr(39) & structSlushatel.snils & Chr(39) & ",
+                 " & Chr(39) & structSlushatel.фамилия & Chr(39) & ",
+                 " & Chr(39) & structSlushatel.имя & Chr(39) & ",
+                 " & Chr(39) & structSlushatel.отчество & Chr(39) & ",
+                 " & Chr(39) & structSlushatel.датаР & Chr(39) & ",
+                 " & Chr(39) & structSlushatel.пол & Chr(39) & ",
+                 " & Chr(39) & structSlushatel.уровеньОбразования & Chr(39) & "
+                 ,(SELECT kod FROM doo_vid_dok WHERE name=
+                 " & Chr(39) & structSlushatel.doo_vid_dok & Chr(39) & "
+                 LIMIT 1) ," & Chr(39) & structSlushatel.образование & Chr(39) & "
+                 ," & Chr(39) & structSlushatel.серияДокументаООбразовании & Chr(39) & "
+                 ," & Chr(39) & structSlushatel.номерДокументаООбразовании & Chr(39) & "
+                 ," & Chr(39) & structSlushatel.фамилияВДокОбОбразовании & Chr(39) & "
+                 ," & Chr(39) & structSlushatel.адресРегистрации & Chr(39) & "
+                 ," & Chr(39) & structSlushatel.телефон & Chr(39) & "
+                 ," & Chr(39) & structSlushatel.гражданство & Chr(39) & "
+                 ," & Chr(39) & structSlushatel.ДУЛ & Chr(39) & "
+                 ," & Chr(39) & structSlushatel.серияДУЛ & Chr(39) & "
+                 ," & Chr(39) & structSlushatel.номерДУЛ & Chr(39)
+
+        Часть3 = "," & Chr(39) & structSlushatel.источникФин & Chr(39) & "
+                , (SELECT kod FROM napr_organization WHERE name=" & Chr(39) & structSlushatel.направившаяОрг & Chr(39) & "
+                LIMIT 1) , " & Chr(39) & structSlushatel.номерНаправленияРосздравнадзора & Chr(39) & "
+                , " & Chr(39) & structSlushatel.датаНаправленияРосздравнвдзора & Chr(39) & "
+                , " & Chr(39) & structSlushatel.специальностьСлушателя & Chr(39) & "
+                , " & Chr(39) & structSlushatel.датаРег & Chr(39) & "
+                , " & Chr(39) & structSlushatel.Email & Chr(39) & "
+                , " & Chr(39) & structSlushatel.кемВыданДУЛ & Chr(39) & ","
+
+        If structSlushatel.датаВыдачиДУЛ = "null" Then
+            Часть3 += "null)"
+        Else Часть3 += Chr(39) & structSlushatel.датаВыдачиДУЛ & Chr(39) & " ) "
+        End If
+
+        sqlString = "INSERT INTO Слушатель " & Часть1 & "  VALUES " & Часть2 & Часть3
+
+        Return sqlString
+
+    End Function
+
+    Public Function SqlString__updateSlush(structSlushatel As strSlushatel)
+
+        Dim Часть1 As String, Часть2 As String, Часть3 As String, Часть4 As String
+
+        Часть1 = "Снилс=" & Chr(39) & structSlushatel.snils & Chr(39) & ", Фамилия=" & Chr(39) & structSlushatel.фамилия & Chr(39) & ", Имя=" & Chr(39) & structSlushatel.имя & Chr(39) & ", Отчество=" & Chr(39) & structSlushatel.отчество & Chr(39) & ", ДатаРождения=" & Chr(39) & structSlushatel.датаР & Chr(39) & ", Пол=" & Chr(39) & structSlushatel.пол & Chr(39)
+
+        Часть2 = ", УОбразования=" & Chr(39) & structSlushatel.уровеньОбразования & Chr(39) & ", doo_vid_dok= (SELECT kod FROM doo_vid_dok WHERE name=" & Chr(39) & structSlushatel.doo_vid_dok & Chr(39) & " LIMIT 1), НаимДОО=" & Chr(39) & structSlushatel.образование & Chr(39) & ", СерияДОО=" & Chr(39) & structSlushatel.серияДокументаООбразовании & Chr(39) & ", НомерДОО=" & Chr(39) & structSlushatel.номерДокументаООбразовании & Chr(39) & ", ФамилияДОО=" & Chr(39) & structSlushatel.фамилияВДокОбОбразовании & Chr(39)
+
+        Часть3 = ",АРег=" & Chr(39) & structSlushatel.адресРегистрации & Chr(39) & ", Телефон=" & Chr(39) & structSlushatel.телефон & Chr(39) & ", Гражданство=" & Chr(39) & structSlushatel.гражданство & Chr(39) & ", ДУЛ=" & Chr(39) & structSlushatel.ДУЛ & Chr(39) & ", СерияДУЛ=" & Chr(39) & structSlushatel.серияДУЛ & Chr(39) & ", НомерДУЛ=" & Chr(39) & structSlushatel.номерДУЛ & Chr(39)
+
+        Часть4 = ",ИФин=" & Chr(39) & structSlushatel.источникФин & Chr(39) & ", НОрг= (SELECT kod FROM napr_organization WHERE name=" & Chr(39) & structSlushatel.направившаяОрг & Chr(39) & " LIMIT 1), НомерНапрРосздрав=" & Chr(39) & structSlushatel.номерНаправленияРосздравнадзора & Chr(39) & ", ДатаНапрРосздрав=" & Chr(39) & structSlushatel.датаНаправленияРосздравнвдзора & Chr(39) & ", Специальность=" & Chr(39) & structSlushatel.специальностьСлушателя & Chr(39) & ", ДатаРегистрации=" & Chr(39) & structSlushatel.датаРег & Chr(39) & ", Почта=" & Chr(39) & structSlushatel.Email & Chr(39) & ", ДУЛКемВыдан=" & Chr(39) & structSlushatel.кемВыданДУЛ & Chr(39)
+
+        If structSlushatel.датаВыдачиДУЛ = "null" Then
+            Часть4 += ", ДУЛДатаВыдачи=null"
+        Else
+            Часть4 += ", ДУЛДатаВыдачи=" & Chr(39) & structSlushatel.датаВыдачиДУЛ & Chr(39)
+        End If
+
+        sqlString = "UPDATE Слушатель SET " & Часть1 & Часть2 & Часть3 & Часть4 & " WHERE Снилс =" & Chr(39) & structSlushatel.snils & Chr(39)
+
+        Return sqlString
+
+    End Function
+
+    Public Function SqlString__loadSlushList(snils As String)
+
+        sqlString = "SELECT * FROM " & "Слушатель" & " WHERE " & "Снилс" & " = " & Chr(39) & snils & Chr(39)
+        Return sqlString
+
+    End Function
+
+    Public Function SqlString__deleteSlushFromGrouppList(snils As String)
+
+        sqlString = "DELETE FROM СоставГрупп WHERE Слушатель= " & Chr(39) & snils & Chr(39)
+        Return sqlString
+
+    End Function
+
+    Public Function SqlString__deleteSlush(snils As String)
+
+        sqlString = "DELETE FROM Слушатель WHERE Снилс= " & Chr(39) & snils & Chr(39)
+        Return sqlString
+
+    End Function
+
+    Public Function loadNOrganization()
+
+        sqlString = "SELECT name FROM napr_organization ORDER BY kod"
+        Return sqlString
+
+    End Function
+
+    Public Function loadIstFinans()
+
+        sqlString = "SELECT name FROM ist_finans ORDER BY kod"
+        Return sqlString
+
+    End Function
+
+    Public Function loadDokUL()
+
+        sqlString = "SELECT name FROM dok_UL ORDER BY kod"
+        Return sqlString
+
+    End Function
+
+    Public Function loadGrajdanstvo()
+
+        sqlString = "SELECT name FROM grajdanstvo ORDER BY kod"
+        Return sqlString
+
+    End Function
+
+    Public Function loadDooCountry()
+
+        sqlString = "SELECT name FROM DOO_country ORDER BY kod"
+        Return sqlString
+
+    End Function
+
+    Public Function loadDooVidDok()
+
+        sqlString = "SELECT name FROM doo_vid_dok ORDER BY name"
+        Return sqlString
+
+    End Function
+    Public Function loadUrovenObr()
+
+        sqlString = "SELECT name FROM uroven_obr ORDER BY kod"
+        Return sqlString
+
+    End Function
+    Public Function loadPol()
+
+        sqlString = "SELECT pol FROM pol ORDER BY kod"
+        Return sqlString
+
+    End Function
 
     Public Function load_prepod() As String
 
-        Dim sqlString As String = "SELECT name FROM sotrudnik WHERE in_list=1"
+        sqlString = "SELECT name FROM sotrudnik WHERE in_list=1"
         Return sqlString
 
     End Function
 
     Public Function load_slushatel_and_org(kodGroup As String) As String
-        Dim SqlString As String
 
-        SqlString = "SELECT
+        sqlString = "SELECT
                       result.slush,
                       name AS napr_org,
                       result.ИФин
@@ -29,7 +189,7 @@ Module QueryString
                       LEFT JOIN napr_organization
                         ON result.НОрг = kod
                         ORDER BY  result.slush"
-        Return SqlString
+        Return sqlString
 
     End Function
 

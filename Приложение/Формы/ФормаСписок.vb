@@ -58,24 +58,40 @@ Public Class ФормаСписок
             Me.Text = "Программа. Расширенный список"
 
         ElseIf textboxName = "НоваяГруппаУровеньКвалификации" Then
+
             СтрокаЗапроса = "SELECT Уровень FROM " & НазваниеБазы & " ORDER BY Уровень"
+
         ElseIf textboxName = "Пол" Then
+
             СтрокаЗапроса = "SELECT * FROM Пол ORDER BY Код"
+
         Else
+
             If (АСформироватьПриказ.Text = "Спецэкзамен_протокол" Or АСформироватьПриказ.Text = "") And (textboxName = "ПОЗачисленииНомерГруппы" Or textboxName = "ПроектВносит" Or textboxName = "Исполнитель" Or textboxName = "Согласовано1" Or textboxName = "РуководительСтажировки" Or textboxName = "Комиссия2" Or textboxName = "Комиссия3" Or textboxName = "Ответственный" Or textboxName = "Утверждает" Or textboxName = "СекретарьКомиссии") Then
+
                 СтрокаЗапроса = "SELECT kod,name,name_pad,name_full,doljnost FROM sotrudnik ORDER BY name"
                 prikaz = "спецэкзамен"
+
             ElseIf (НазваниеБазы = "Группа") Then
+
                 СтрокаЗапроса = "SELECT * FROM Группа WHERE ДатаНЗ > '" & ААОсновная.mySqlConnect.dateToFormatMySQL(Date.Now.AddMonths(-6)) & "'"
+
             Else
+
                 СтрокаЗапроса = "SELECT * FROM " & НазваниеБазы
+
             End If
+
         End If
 
         If textboxName = "СпециальностьСлушателя" Then
+
             СтрокаЗапроса = "SELECT * FROM " & НазваниеБазы & " ORDER BY Специальность"
+
         ElseIf textboxName = "ПОЗачисленииНомерГруппы" Or textboxName = "НомерГруппы" Or textboxName = "ГруппаОценочнаяВедомость" Or textboxName = "ГруппаОценкиИА" Then
+
             СтрокаЗапроса = SQLString_loadGruppa()
+
         End If
 
         If textboxName = "Ответственный" And АСформироватьПриказ.Label4.Text = "Слушатель(ФИО)" Then

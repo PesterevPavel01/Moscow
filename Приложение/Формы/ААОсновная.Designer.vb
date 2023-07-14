@@ -24,6 +24,12 @@ Partial Class ААОсновная
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(ААОсновная))
+        Dim DataGridViewCellStyle13 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle14 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle15 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle16 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle17 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle18 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
         Me.ImageList1 = New System.Windows.Forms.ImageList(Me.components)
         Me.pageProgs = New System.Windows.Forms.TabPage()
@@ -265,7 +271,7 @@ Partial Class ААОсновная
         Me.password.Location = New System.Drawing.Point(3, 3)
         Me.password.Name = "password"
         Me.password.PasswordChar = Global.Microsoft.VisualBasic.ChrW(42)
-        Me.password.Size = New System.Drawing.Size(556, 22)
+        Me.password.Size = New System.Drawing.Size(556, 26)
         Me.password.TabIndex = 37
         '
         'SplitContainer4
@@ -315,7 +321,7 @@ Partial Class ААОсновная
         'comboBoxProgramms
         '
         Me.comboBoxProgramms.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.comboBoxProgramms.Font = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
+        Me.comboBoxProgramms.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
         Me.comboBoxProgramms.Items.AddRange(New Object() {"повышение квалификации", "профессиональная переподготовка", "профессиональное обучение"})
         Me.comboBoxProgramms.Name = "comboBoxProgramms"
         Me.comboBoxProgramms.Size = New System.Drawing.Size(300, 48)
@@ -358,7 +364,7 @@ Partial Class ААОсновная
         Me.SplitContainer5.Panel2.Controls.Add(Me.SplitContainerModuls)
         Me.SplitContainer5.Panel2.Controls.Add(Me.ToolStrip4)
         Me.SplitContainer5.Size = New System.Drawing.Size(784, 830)
-        Me.SplitContainer5.SplitterDistance = 436
+        Me.SplitContainer5.SplitterDistance = 435
         Me.SplitContainer5.TabIndex = 37
         '
         'SplitModulsInProg
@@ -376,7 +382,7 @@ Partial Class ААОсновная
         '
         Me.SplitModulsInProg.Panel2.Controls.Add(Me.red_moduls)
         Me.SplitModulsInProg.Panel2Collapsed = True
-        Me.SplitModulsInProg.Size = New System.Drawing.Size(390, 830)
+        Me.SplitModulsInProg.Size = New System.Drawing.Size(389, 830)
         Me.SplitModulsInProg.SplitterDistance = 803
         Me.SplitModulsInProg.TabIndex = 4
         '
@@ -385,8 +391,27 @@ Partial Class ААОсновная
         Me.dataGridModuls.AllowUserToAddRows = False
         Me.dataGridModuls.AllowUserToDeleteRows = False
         Me.dataGridModuls.AllowUserToOrderColumns = True
+        Me.dataGridModuls.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells
         Me.dataGridModuls.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight
+        DataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle13.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle13.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
+        DataGridViewCellStyle13.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle13.Padding = New System.Windows.Forms.Padding(10, 3, 3, 3)
+        DataGridViewCellStyle13.SelectionBackColor = System.Drawing.SystemColors.ControlLight
+        DataGridViewCellStyle13.SelectionForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle13.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.dataGridModuls.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle13
         Me.dataGridModuls.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        DataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle14.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle14.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
+        DataGridViewCellStyle14.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle14.Padding = New System.Windows.Forms.Padding(10, 3, 3, 3)
+        DataGridViewCellStyle14.SelectionBackColor = System.Drawing.SystemColors.ControlLight
+        DataGridViewCellStyle14.SelectionForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle14.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.dataGridModuls.DefaultCellStyle = DataGridViewCellStyle14
         Me.dataGridModuls.Dock = System.Windows.Forms.DockStyle.Fill
         Me.dataGridModuls.Location = New System.Drawing.Point(0, 0)
         Me.dataGridModuls.MultiSelect = False
@@ -394,7 +419,8 @@ Partial Class ААОсновная
         Me.dataGridModuls.ReadOnly = True
         Me.dataGridModuls.RowHeadersVisible = False
         Me.dataGridModuls.RowHeadersWidth = 53
-        Me.dataGridModuls.Size = New System.Drawing.Size(390, 830)
+        Me.dataGridModuls.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+        Me.dataGridModuls.Size = New System.Drawing.Size(389, 830)
         Me.dataGridModuls.TabIndex = 34
         '
         'red_moduls
@@ -411,7 +437,7 @@ Partial Class ААОсновная
         '
         Me.ToolStrip3.Dock = System.Windows.Forms.DockStyle.Right
         Me.ToolStrip3.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripTop, Me.ToolStripBottom, Me.addMidulInGroupp, Me.modulInProgsIndicator, Me.tbl_moduls_sum_hours})
-        Me.ToolStrip3.Location = New System.Drawing.Point(390, 0)
+        Me.ToolStrip3.Location = New System.Drawing.Point(389, 0)
         Me.ToolStrip3.Name = "ToolStrip3"
         Me.ToolStrip3.Size = New System.Drawing.Size(46, 830)
         Me.ToolStrip3.TabIndex = 3
@@ -461,7 +487,7 @@ Partial Class ААОсновная
         '
         'tbl_moduls_sum_hours
         '
-        Me.tbl_moduls_sum_hours.BackColor = System.Drawing.Color.White
+        Me.tbl_moduls_sum_hours.BackColor = System.Drawing.Color.WhiteSmoke
         Me.tbl_moduls_sum_hours.BorderStyle = System.Windows.Forms.BorderStyle.None
         Me.tbl_moduls_sum_hours.Enabled = False
         Me.tbl_moduls_sum_hours.Font = New System.Drawing.Font("Microsoft YaHei", 16.0!, System.Drawing.FontStyle.Bold)
@@ -485,7 +511,7 @@ Partial Class ААОсновная
         '
         Me.SplitContainerModuls.Panel2.Controls.Add(Me.TableLayoutAddNewModul)
         Me.SplitContainerModuls.Panel2Collapsed = True
-        Me.SplitContainerModuls.Size = New System.Drawing.Size(298, 830)
+        Me.SplitContainerModuls.Size = New System.Drawing.Size(299, 830)
         Me.SplitContainerModuls.SplitterDistance = 676
         Me.SplitContainerModuls.TabIndex = 4
         '
@@ -494,8 +520,27 @@ Partial Class ААОсновная
         Me.DataGridAllModuls.AllowUserToAddRows = False
         Me.DataGridAllModuls.AllowUserToDeleteRows = False
         Me.DataGridAllModuls.AllowUserToOrderColumns = True
+        Me.DataGridAllModuls.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells
         Me.DataGridAllModuls.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight
+        DataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle15.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle15.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
+        DataGridViewCellStyle15.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle15.Padding = New System.Windows.Forms.Padding(10, 3, 3, 3)
+        DataGridViewCellStyle15.SelectionBackColor = System.Drawing.SystemColors.ControlLight
+        DataGridViewCellStyle15.SelectionForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle15.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.DataGridAllModuls.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle15
         Me.DataGridAllModuls.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        DataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle16.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle16.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
+        DataGridViewCellStyle16.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle16.Padding = New System.Windows.Forms.Padding(10, 3, 3, 3)
+        DataGridViewCellStyle16.SelectionBackColor = System.Drawing.SystemColors.ControlLight
+        DataGridViewCellStyle16.SelectionForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle16.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.DataGridAllModuls.DefaultCellStyle = DataGridViewCellStyle16
         Me.DataGridAllModuls.Dock = System.Windows.Forms.DockStyle.Fill
         Me.DataGridAllModuls.Location = New System.Drawing.Point(0, 0)
         Me.DataGridAllModuls.MultiSelect = False
@@ -503,7 +548,8 @@ Partial Class ААОсновная
         Me.DataGridAllModuls.ReadOnly = True
         Me.DataGridAllModuls.RowHeadersVisible = False
         Me.DataGridAllModuls.RowHeadersWidth = 53
-        Me.DataGridAllModuls.Size = New System.Drawing.Size(298, 830)
+        Me.DataGridAllModuls.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+        Me.DataGridAllModuls.Size = New System.Drawing.Size(299, 830)
         Me.DataGridAllModuls.TabIndex = 35
         '
         'TableLayoutAddNewModul
@@ -585,7 +631,7 @@ Partial Class ААОсновная
         '
         Me.ToolStrip4.Dock = System.Windows.Forms.DockStyle.Right
         Me.ToolStrip4.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripAddModul, Me.modulIndicator})
-        Me.ToolStrip4.Location = New System.Drawing.Point(298, 0)
+        Me.ToolStrip4.Location = New System.Drawing.Point(299, 0)
         Me.ToolStrip4.Name = "ToolStrip4"
         Me.ToolStrip4.Size = New System.Drawing.Size(46, 830)
         Me.ToolStrip4.TabIndex = 3
@@ -628,7 +674,7 @@ Partial Class ААОсновная
         Me.passwrdSetts.Location = New System.Drawing.Point(3, 3)
         Me.passwrdSetts.Name = "passwrdSetts"
         Me.passwrdSetts.PasswordChar = Global.Microsoft.VisualBasic.ChrW(42)
-        Me.passwrdSetts.Size = New System.Drawing.Size(556, 22)
+        Me.passwrdSetts.Size = New System.Drawing.Size(556, 26)
         Me.passwrdSetts.TabIndex = 54
         '
         'PanelSetts
@@ -676,7 +722,7 @@ Partial Class ААОсновная
         '
         Me.Согласовано2ДолжностьПУ.Location = New System.Drawing.Point(479, 293)
         Me.Согласовано2ДолжностьПУ.Name = "Согласовано2ДолжностьПУ"
-        Me.Согласовано2ДолжностьПУ.Size = New System.Drawing.Size(808, 22)
+        Me.Согласовано2ДолжностьПУ.Size = New System.Drawing.Size(808, 26)
         Me.Согласовано2ДолжностьПУ.TabIndex = 52
         '
         'ПоискСлушателейПоУм
@@ -685,14 +731,14 @@ Partial Class ААОсновная
         Me.ПоискСлушателейПоУм.Items.AddRange(New Object() {"Снилс", "Фамилия", "Имя", "Отчество"})
         Me.ПоискСлушателейПоУм.Location = New System.Drawing.Point(479, 9)
         Me.ПоискСлушателейПоУм.Name = "ПоискСлушателейПоУм"
-        Me.ПоискСлушателейПоУм.Size = New System.Drawing.Size(808, 24)
+        Me.ПоискСлушателейПоУм.Size = New System.Drawing.Size(808, 28)
         Me.ПоискСлушателейПоУм.TabIndex = 31
         '
         'Согласовано2ПУ
         '
         Me.Согласовано2ПУ.Location = New System.Drawing.Point(479, 265)
         Me.Согласовано2ПУ.Name = "Согласовано2ПУ"
-        Me.Согласовано2ПУ.Size = New System.Drawing.Size(808, 22)
+        Me.Согласовано2ПУ.Size = New System.Drawing.Size(808, 26)
         Me.Согласовано2ПУ.TabIndex = 50
         '
         'ПоискГруппПоУм
@@ -702,14 +748,14 @@ Partial Class ААОсновная
         Me.ПоискГруппПоУм.Items.AddRange(New Object() {"Номер", "Программа", "Специальность"})
         Me.ПоискГруппПоУм.Location = New System.Drawing.Point(479, 38)
         Me.ПоискГруппПоУм.Name = "ПоискГруппПоУм"
-        Me.ПоискГруппПоУм.Size = New System.Drawing.Size(808, 24)
+        Me.ПоискГруппПоУм.Size = New System.Drawing.Size(808, 28)
         Me.ПоискГруппПоУм.TabIndex = 33
         '
         'Согласовано1ДолжностьПУ
         '
         Me.Согласовано1ДолжностьПУ.Location = New System.Drawing.Point(479, 237)
         Me.Согласовано1ДолжностьПУ.Name = "Согласовано1ДолжностьПУ"
-        Me.Согласовано1ДолжностьПУ.Size = New System.Drawing.Size(808, 22)
+        Me.Согласовано1ДолжностьПУ.Size = New System.Drawing.Size(808, 26)
         Me.Согласовано1ДолжностьПУ.TabIndex = 48
         '
         'Label8
@@ -726,7 +772,7 @@ Partial Class ААОсновная
         '
         Me.Согласовано1ПУ.Location = New System.Drawing.Point(479, 209)
         Me.Согласовано1ПУ.Name = "Согласовано1ПУ"
-        Me.Согласовано1ПУ.Size = New System.Drawing.Size(808, 22)
+        Me.Согласовано1ПУ.Size = New System.Drawing.Size(808, 26)
         Me.Согласовано1ПУ.TabIndex = 46
         '
         'НастройкаСортировкиСлушателей
@@ -735,14 +781,14 @@ Partial Class ААОсновная
         Me.НастройкаСортировкиСлушателей.Items.AddRange(New Object() {"Снилс", "Фамилия", "Имя"})
         Me.НастройкаСортировкиСлушателей.Location = New System.Drawing.Point(479, 67)
         Me.НастройкаСортировкиСлушателей.Name = "НастройкаСортировкиСлушателей"
-        Me.НастройкаСортировкиСлушателей.Size = New System.Drawing.Size(808, 24)
+        Me.НастройкаСортировкиСлушателей.Size = New System.Drawing.Size(808, 28)
         Me.НастройкаСортировкиСлушателей.TabIndex = 35
         '
         'ДиректорДолжность
         '
         Me.ДиректорДолжность.Location = New System.Drawing.Point(479, 181)
         Me.ДиректорДолжность.Name = "ДиректорДолжность"
-        Me.ДиректорДолжность.Size = New System.Drawing.Size(808, 22)
+        Me.ДиректорДолжность.Size = New System.Drawing.Size(808, 26)
         Me.ДиректорДолжность.TabIndex = 44
         '
         'Label10
@@ -759,7 +805,7 @@ Partial Class ААОсновная
         '
         Me.ДиректорФИО.Location = New System.Drawing.Point(479, 153)
         Me.ДиректорФИО.Name = "ДиректорФИО"
-        Me.ДиректорФИО.Size = New System.Drawing.Size(808, 22)
+        Me.ДиректорФИО.Size = New System.Drawing.Size(808, 26)
         Me.ДиректорФИО.TabIndex = 42
         '
         'НастройкаСортировкиГрупп
@@ -769,14 +815,14 @@ Partial Class ААОсновная
         Me.НастройкаСортировкиГрупп.Items.AddRange(New Object() {"Номер", "Программа", "Специальность"})
         Me.НастройкаСортировкиГрупп.Location = New System.Drawing.Point(479, 96)
         Me.НастройкаСортировкиГрупп.Name = "НастройкаСортировкиГрупп"
-        Me.НастройкаСортировкиГрупп.Size = New System.Drawing.Size(808, 24)
+        Me.НастройкаСортировкиГрупп.Size = New System.Drawing.Size(808, 28)
         Me.НастройкаСортировкиГрупп.TabIndex = 37
         '
         'КоличествоСтрокВТаблице
         '
         Me.КоличествоСтрокВТаблице.Location = New System.Drawing.Point(479, 125)
         Me.КоличествоСтрокВТаблице.Name = "КоличествоСтрокВТаблице"
-        Me.КоличествоСтрокВТаблице.Size = New System.Drawing.Size(808, 22)
+        Me.КоличествоСтрокВТаблице.Size = New System.Drawing.Size(808, 26)
         Me.КоличествоСтрокВТаблице.TabIndex = 40
         Me.КоличествоСтрокВТаблице.Text = "1000"
         '
@@ -896,7 +942,7 @@ Partial Class ААОсновная
         Me.ChРМАНПО.AutoSize = True
         Me.ChРМАНПО.Location = New System.Drawing.Point(18, 215)
         Me.ChРМАНПО.Name = "ChРМАНПО"
-        Me.ChРМАНПО.Size = New System.Drawing.Size(85, 20)
+        Me.ChРМАНПО.Size = New System.Drawing.Size(98, 24)
         Me.ChРМАНПО.TabIndex = 9
         Me.ChРМАНПО.Text = "РМАНПО"
         Me.ChРМАНПО.UseVisualStyleBackColor = True
@@ -970,7 +1016,7 @@ Partial Class ААОсновная
         Me.ОтчетПеднагрузка.AutoSize = True
         Me.ОтчетПеднагрузка.Location = New System.Drawing.Point(18, 189)
         Me.ОтчетПеднагрузка.Name = "ОтчетПеднагрузка"
-        Me.ОтчетПеднагрузка.Size = New System.Drawing.Size(113, 20)
+        Me.ОтчетПеднагрузка.Size = New System.Drawing.Size(126, 24)
         Me.ОтчетПеднагрузка.TabIndex = 8
         Me.ОтчетПеднагрузка.Text = "Педнагрузка"
         Me.ОтчетПеднагрузка.UseVisualStyleBackColor = True
@@ -996,7 +1042,7 @@ Partial Class ААОсновная
         Me.СводПоОрганиз.AutoSize = True
         Me.СводПоОрганиз.Location = New System.Drawing.Point(18, 137)
         Me.СводПоОрганиз.Name = "СводПоОрганиз"
-        Me.СводПоОрганиз.Size = New System.Drawing.Size(175, 20)
+        Me.СводПоОрганиз.Size = New System.Drawing.Size(201, 24)
         Me.СводПоОрганиз.TabIndex = 6
         Me.СводПоОрганиз.Text = "Свод по организациям"
         Me.СводПоОрганиз.UseVisualStyleBackColor = True
@@ -1022,7 +1068,7 @@ Partial Class ААОсновная
         Me.БюджетВбюдж.AutoSize = True
         Me.БюджетВбюдж.Location = New System.Drawing.Point(18, 163)
         Me.БюджетВбюдж.Name = "БюджетВбюдж"
-        Me.БюджетВбюдж.Size = New System.Drawing.Size(156, 20)
+        Me.БюджетВбюдж.Size = New System.Drawing.Size(185, 24)
         Me.БюджетВбюдж.TabIndex = 7
         Me.БюджетВбюдж.Text = "Бюджет/Внебюджет"
         Me.БюджетВбюдж.UseVisualStyleBackColor = True
@@ -1048,7 +1094,7 @@ Partial Class ААОсновная
         Me.ChСводПоКурсам.AutoSize = True
         Me.ChСводПоКурсам.Location = New System.Drawing.Point(18, 85)
         Me.ChСводПоКурсам.Name = "ChСводПоКурсам"
-        Me.ChСводПоКурсам.Size = New System.Drawing.Size(128, 20)
+        Me.ChСводПоКурсам.Size = New System.Drawing.Size(146, 24)
         Me.ChСводПоКурсам.TabIndex = 4
         Me.ChСводПоКурсам.Text = "Свод по курсам"
         Me.ChСводПоКурсам.UseVisualStyleBackColor = True
@@ -1058,7 +1104,7 @@ Partial Class ААОсновная
         Me.СводПоСпец.AutoSize = True
         Me.СводПоСпец.Location = New System.Drawing.Point(18, 111)
         Me.СводПоСпец.Name = "СводПоСпец"
-        Me.СводПоСпец.Size = New System.Drawing.Size(189, 20)
+        Me.СводПоСпец.Size = New System.Drawing.Size(221, 24)
         Me.СводПоСпец.TabIndex = 5
         Me.СводПоСпец.Text = "Свод по специальностям"
         Me.СводПоСпец.UseVisualStyleBackColor = True
@@ -1068,7 +1114,7 @@ Partial Class ААОсновная
         Me.ДатаНачалаОтчета.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
         Me.ДатаНачалаОтчета.Location = New System.Drawing.Point(82, 7)
         Me.ДатаНачалаОтчета.Name = "ДатаНачалаОтчета"
-        Me.ДатаНачалаОтчета.Size = New System.Drawing.Size(105, 22)
+        Me.ДатаНачалаОтчета.Size = New System.Drawing.Size(105, 26)
         Me.ДатаНачалаОтчета.TabIndex = 1
         '
         'ОтчетРуководителя
@@ -1078,7 +1124,7 @@ Partial Class ААОсновная
         Me.ОтчетРуководителя.FlatAppearance.BorderSize = 2
         Me.ОтчетРуководителя.Location = New System.Drawing.Point(18, 61)
         Me.ОтчетРуководителя.Name = "ОтчетРуководителя"
-        Me.ОтчетРуководителя.Size = New System.Drawing.Size(162, 20)
+        Me.ОтчетРуководителя.Size = New System.Drawing.Size(188, 24)
         Me.ОтчетРуководителя.TabIndex = 3
         Me.ОтчетРуководителя.Text = "Отчет руководителя"
         Me.ОтчетРуководителя.UseVisualStyleBackColor = False
@@ -1088,7 +1134,7 @@ Partial Class ААОсновная
         Me.ДатаКонцаОтчета.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
         Me.ДатаКонцаОтчета.Location = New System.Drawing.Point(214, 7)
         Me.ДатаКонцаОтчета.Name = "ДатаКонцаОтчета"
-        Me.ДатаКонцаОтчета.Size = New System.Drawing.Size(101, 22)
+        Me.ДатаКонцаОтчета.Size = New System.Drawing.Size(101, 26)
         Me.ДатаКонцаОтчета.TabIndex = 2
         '
         'Label3
@@ -1096,7 +1142,7 @@ Partial Class ААОсновная
         Me.Label3.AutoSize = True
         Me.Label3.Location = New System.Drawing.Point(15, 9)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(70, 16)
+        Me.Label3.Size = New System.Drawing.Size(84, 20)
         Me.Label3.TabIndex = 113
         Me.Label3.Text = "Период с:"
         '
@@ -1105,7 +1151,7 @@ Partial Class ААОсновная
         Me.Label2.AutoSize = True
         Me.Label2.Location = New System.Drawing.Point(189, 9)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(23, 16)
+        Me.Label2.Size = New System.Drawing.Size(27, 20)
         Me.Label2.TabIndex = 114
         Me.Label2.Text = "по"
         '
@@ -1600,11 +1646,12 @@ Partial Class ААОсновная
         Me.TabPage1.Controls.Add(Me.GroupBox3)
         Me.TabPage1.Controls.Add(Me.ИтоговаяАттествцияОценки)
         Me.TabPage1.Controls.Add(Me.GroupBox2)
+        Me.TabPage1.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
         Me.TabPage1.ImageIndex = 20
-        Me.TabPage1.Location = New System.Drawing.Point(4, 27)
+        Me.TabPage1.Location = New System.Drawing.Point(4, 29)
         Me.TabPage1.Name = "TabPage1"
         Me.TabPage1.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage1.Size = New System.Drawing.Size(1352, 836)
+        Me.TabPage1.Size = New System.Drawing.Size(1352, 834)
         Me.TabPage1.TabIndex = 0
         Me.TabPage1.Text = "Главная"
         Me.TabPage1.UseVisualStyleBackColor = True
@@ -1806,7 +1853,7 @@ Partial Class ААОсновная
         Me.TabControlOther.Controls.Add(Me.pageProgs)
         Me.TabControlOther.Controls.Add(Me.Other)
         Me.TabControlOther.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TabControlOther.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
+        Me.TabControlOther.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
         Me.TabControlOther.ImageList = Me.ImageList1
         Me.TabControlOther.ImeMode = System.Windows.Forms.ImeMode.Off
         Me.TabControlOther.Location = New System.Drawing.Point(0, 0)
@@ -1832,7 +1879,7 @@ Partial Class ААОсновная
         Me.passwordOther.Location = New System.Drawing.Point(3, 3)
         Me.passwordOther.Name = "passwordOther"
         Me.passwordOther.PasswordChar = Global.Microsoft.VisualBasic.ChrW(42)
-        Me.passwordOther.Size = New System.Drawing.Size(556, 22)
+        Me.passwordOther.Size = New System.Drawing.Size(556, 26)
         Me.passwordOther.TabIndex = 40
         '
         'SplitContainerOther
@@ -1887,9 +1934,28 @@ Partial Class ААОсновная
         Me.DataGridView_list.AllowUserToAddRows = False
         Me.DataGridView_list.AllowUserToDeleteRows = False
         Me.DataGridView_list.AllowUserToOrderColumns = True
+        Me.DataGridView_list.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells
         Me.DataGridView_list.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight
+        DataGridViewCellStyle17.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle17.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle17.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
+        DataGridViewCellStyle17.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle17.Padding = New System.Windows.Forms.Padding(10, 3, 3, 3)
+        DataGridViewCellStyle17.SelectionBackColor = System.Drawing.SystemColors.ControlLight
+        DataGridViewCellStyle17.SelectionForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle17.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.DataGridView_list.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle17
         Me.DataGridView_list.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.DataGridView_list.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.checkBox, Me.FIO, Me.FIO_full, Me.FIO_pad, Me.Doljnost, Me.type, Me.kod})
+        DataGridViewCellStyle18.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle18.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle18.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!)
+        DataGridViewCellStyle18.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle18.Padding = New System.Windows.Forms.Padding(10, 3, 3, 3)
+        DataGridViewCellStyle18.SelectionBackColor = System.Drawing.SystemColors.ControlLight
+        DataGridViewCellStyle18.SelectionForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle18.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.DataGridView_list.DefaultCellStyle = DataGridViewCellStyle18
         Me.DataGridView_list.Dock = System.Windows.Forms.DockStyle.Fill
         Me.DataGridView_list.Location = New System.Drawing.Point(0, 0)
         Me.DataGridView_list.MultiSelect = False
@@ -1990,10 +2056,10 @@ Partial Class ААОсновная
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.worker_type.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.worker_type.FormattingEnabled = True
-        Me.worker_type.ItemHeight = 16
+        Me.worker_type.ItemHeight = 20
         Me.worker_type.Location = New System.Drawing.Point(3, 117)
         Me.worker_type.Name = "worker_type"
-        Me.worker_type.Size = New System.Drawing.Size(144, 24)
+        Me.worker_type.Size = New System.Drawing.Size(144, 28)
         Me.worker_type.TabIndex = 1004
         '
         'worker_dolgnost
@@ -2002,10 +2068,10 @@ Partial Class ААОсновная
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.worker_dolgnost.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.worker_dolgnost.FormattingEnabled = True
-        Me.worker_dolgnost.ItemHeight = 16
+        Me.worker_dolgnost.ItemHeight = 20
         Me.worker_dolgnost.Location = New System.Drawing.Point(3, 87)
         Me.worker_dolgnost.Name = "worker_dolgnost"
-        Me.worker_dolgnost.Size = New System.Drawing.Size(144, 24)
+        Me.worker_dolgnost.Size = New System.Drawing.Size(144, 28)
         Me.worker_dolgnost.TabIndex = 1003
         '
         'worker_name_pad

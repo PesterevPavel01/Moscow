@@ -56,6 +56,15 @@ Public Class ААОсновная
         modulIndicator.Image = ImageList1.Images(8)
         panel_worker.Parent = SplitContainerOtherList.Panel2
 
+        DataGridView_list.ColumnHeadersDefaultCellStyle.Font = New Font("Microsoft YaHei", 12)
+        DataGridView_list.DefaultCellStyle.Font = New Font("Microsoft YaHei", 12)
+
+        DataGridAllModuls.ColumnHeadersDefaultCellStyle.Font = New Font("Microsoft YaHei", 12)
+        DataGridAllModuls.DefaultCellStyle.Font = New Font("Microsoft YaHei", 12)
+
+        dataGridModuls.ColumnHeadersDefaultCellStyle.Font = New Font("Microsoft YaHei", 12)
+        dataGridModuls.DefaultCellStyle.Font = New Font("Microsoft YaHei", 12)
+
     End Sub
 
     Public Sub prog_DataGridTablesResult_activate()
@@ -1293,8 +1302,124 @@ Public Class ААОсновная
             e.Handled = True
         End If
 
+    End Sub
+
+    Private Sub redactor_full_name_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs)
+
+        If e.KeyValue = Keys.Tab Then
+
+            e.IsInputKey = True
+
+        ElseIf e.KeyValue = Keys.Left Then
+
+            e.IsInputKey = True
+
+        ElseIf e.KeyValue = Keys.Right Then
+
+            e.IsInputKey = True
+
+        End If
 
     End Sub
+
+    Private Sub ААОсновная_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs) Handles MyBase.PreviewKeyDown
+
+        If tbl_obrazovanie.Focused Then
+
+            If e.KeyValue = Keys.Tab Then
+
+                e.IsInputKey = True
+
+            End If
+
+        End If
+
+    End Sub
+
+    Private Sub tbl_obrazovanie_keyDown(e As KeyEventArgs)
+
+        If e.KeyValue = Keys.Tab Then
+
+            If tbl_obrazovanie.active_last_element Then
+
+                ToolStrip_name_list.Focus()
+                e.Handled = True
+
+            End If
+
+        ElseIf e.KeyValue = Keys.Right Then
+
+            If tbl_obrazovanie.active_last_element Then
+
+                переключательВкладок(TabControlOther)
+                e.Handled = True
+
+            End If
+
+        ElseIf e.KeyValue = Keys.Left Then
+
+            If tbl_obrazovanie.active_last_element Then
+
+                обратныйПереключательВкладок(TabControlOther)
+                e.Handled = True
+
+            End If
+
+        ElseIf e.KeyValue = Keys.Escape Then
+
+            tbl_obrazovanie.redactorClose()
+            e.Handled = True
+
+        End If
+
+    End Sub
+
+    Private Sub programms_tbl_keyDown(e As KeyEventArgs)
+
+        If e.KeyValue = Keys.Tab Then
+
+            If programms_tbl.active_last_element Then
+
+                dataGridModuls.Focus()
+                e.Handled = True
+
+            End If
+
+        ElseIf e.KeyValue = Keys.Right Then
+
+            If programms_tbl.active_last_element Then
+
+                dataGridModuls.Focus()
+                e.Handled = True
+
+            End If
+
+        ElseIf e.KeyValue = Keys.Left Then
+
+            If programms_tbl.active_last_element Then
+
+                обратныйПереключательВкладок(TabControlOther)
+                e.Handled = True
+
+            End If
+
+        ElseIf e.KeyValue = Keys.Escape Then
+
+            If Not programms_tbl.comboBox_second_element.my_ComboBox.DroppedDown Then
+
+                programms_tbl.redactorClose()
+
+            Else
+
+                programms_tbl.comboBox_second_element.my_ComboBox.DroppedDown = False
+
+            End If
+            e.Handled = True
+
+        End If
+
+    End Sub
+
     Sub ААперемещениеВверх(номерНажатойКлавиши As Integer, Optional номерКлавишиСФункционаломВверх As Integer = 38)
         If номерНажатойКлавиши = номерКлавишиСФункционаломВверх Then
 
@@ -4334,7 +4459,7 @@ Public Class ААОсновная
 
         Next
 
-        DataGridView_list.Columns(0).Width = 20
+        DataGridView_list.Columns(0).Width = 40
         DataGridView_list.Columns(1).Width = 200
         DataGridView_list.Columns(2).Width = 300
         DataGridView_list.Columns(3).Width = 300
@@ -5003,114 +5128,6 @@ Public Class ААОсновная
     Private Sub worker_type_MouseLeave(sender As Object, e As EventArgs) Handles worker_type.MouseLeave
 
         flag_worker_type = False
-
-    End Sub
-
-    Private Sub redactor_full_name_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs)
-
-        If e.KeyValue = Keys.Tab Then
-
-            e.IsInputKey = True
-
-        ElseIf e.KeyValue = Keys.Left Then
-
-            e.IsInputKey = True
-
-        ElseIf e.KeyValue = Keys.Right Then
-
-            e.IsInputKey = True
-
-        End If
-
-    End Sub
-
-    Private Sub ААОсновная_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs) Handles MyBase.PreviewKeyDown
-
-        If tbl_obrazovanie.Focused Then
-
-            If e.KeyValue = Keys.Tab Then
-
-                e.IsInputKey = True
-
-            End If
-
-        End If
-
-    End Sub
-
-    Private Sub tbl_obrazovanie_keyDown(e As KeyEventArgs)
-
-        If e.KeyValue = Keys.Tab Then
-
-            If tbl_obrazovanie.active_last_element Then
-
-                ToolStrip_name_list.Focus()
-                e.Handled = True
-
-            End If
-
-        ElseIf e.KeyValue = Keys.Right Then
-
-            If tbl_obrazovanie.active_last_element Then
-
-                переключательВкладок(TabControlOther)
-                e.Handled = True
-
-            End If
-
-        ElseIf e.KeyValue = Keys.Left Then
-
-            If tbl_obrazovanie.active_last_element Then
-
-                обратныйПереключательВкладок(TabControlOther)
-                e.Handled = True
-
-            End If
-
-        ElseIf e.KeyValue = Keys.Escape Then
-
-            tbl_obrazovanie.redactorClose()
-            e.Handled = True
-
-        End If
-
-    End Sub
-
-    Private Sub programms_tbl_keyDown(e As KeyEventArgs)
-
-        If e.KeyValue = Keys.Tab Then
-
-            If programms_tbl.active_last_element Then
-
-                dataGridModuls.Focus()
-                e.Handled = True
-
-            End If
-
-        ElseIf e.KeyValue = Keys.Right Then
-
-            If programms_tbl.active_last_element Then
-
-                dataGridModuls.Focus()
-                e.Handled = True
-
-            End If
-
-        ElseIf e.KeyValue = Keys.Left Then
-
-            If programms_tbl.active_last_element Then
-
-                обратныйПереключательВкладок(TabControlOther)
-                e.Handled = True
-
-            End If
-
-        ElseIf e.KeyValue = Keys.Escape Then
-
-            programms_tbl.redactorClose()
-            e.Handled = True
-
-        End If
 
     End Sub
 

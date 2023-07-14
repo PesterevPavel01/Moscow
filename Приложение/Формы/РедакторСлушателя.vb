@@ -3,13 +3,9 @@ Imports System.Threading
 Public Class РедакторСлушателя
     Public Press As Boolean
     Public СтарыйСнилс As String
-    Public prevFormSpisSlushVGr As Boolean = False
+    'Public prevFormSpisSlushVGr As Boolean = False
     Dim slushatel As New Slushatel
     Private Sub Сохранить_Click(sender As Object, e As EventArgs) Handles Сохранить.Click
-
-        Dim Часть1 As String, Часть2 As String, Часть3 As String, Часть4 As String
-        Dim Data, sqlString As String
-        Dim DataString As String, ДатаВыдачиДул, СтрокаЗапроса As String
 
         ActiveControl = BtnFocus
         Сообщение.Visible = False
@@ -43,53 +39,53 @@ Public Class РедакторСлушателя
         slushatel.structSlushatel.doo_vid_dok = doo_vid_dok.Text
 
         If Not ПроверитьЗаполненностьРедСлушателя() Then
+
             Exit Sub
+
         End If
 
         If Me.ДатаВыдачиДУЛ.Value.ToShortDateString = "01.01.1753" Then
+
             slushatel.structSlushatel.датаВыдачиДУЛ = "null"
+
         Else
+
             slushatel.structSlushatel.датаВыдачиДУЛ = Me.ДатаВыдачиДУЛ.Value.ToShortDateString
+
         End If
 
         If ЗаписьВБазу.ПроверкаСовпадений("Слушатель", "Снилс", slushatel.structSlushatel.snils) Then
+
             ФормаДаНет.ShowDialog()
+
             If Not ЗаписьВБазу.УдалитьСовпадения Then
+
                 Exit Sub
+
             End If
+
             ЗаписьВБазу.УдалитьСовпадения = False
+
         End If
 
-        If Not slushatel.structSlushatel.snils = slushatel.structSlushatel.старыйСнилс Then
-            sqlString = "DELETE FROM Слушатель WHERE Снилс= " & Chr(39) & slushatel.structSlushatel.snils & Chr(39)
-            ААОсновная.mySqlConnect.ОтправитьВбдЗапись(sqlString, 1)
-
-            sqlString = "DELETE FROM СоставГрупп WHERE Слушатель= " & Chr(39) & slushatel.structSlushatel.snils & Chr(39)
-            ААОсновная.mySqlConnect.ОтправитьВбдЗапись(sqlString, 1)
-            prevFormSpisSlushVGr = False
-        End If
-
+        'prevFormSpisSlushVGr = False
         СтарыйСнилс = slushatel.structSlushatel.snils
 
-        sqlString = updateSlushatel(slushatel.structSlushatel)
-        ААОсновная.mySqlConnect.ОтправитьВбдЗапись(sqlString, 1)
-
-        If ЗаписьВБазу.ПроверкаСовпадений("Слушатель", "Снилс", slushatel.structSlushatel.snils, "ДатаРегистрации", ААОсновная.mySqlConnect.dateToFormatMySQL(slushatel.structSlushatel.датаРег)) Then
+        If slushatel.insertSlushatelRedactor() Then
 
             Сообщение.Text = "Слушатель " & slushatel.structSlushatel.snils & " успешно зарегистрирован, дата записи: " & slushatel.structSlushatel.датаРег
             Сообщение.Visible = True
             СтарыйСнилс = slushatel.structSlushatel.snils
             Me.Text = slushatel.structSlushatel.фамилия & " " & slushatel.structSlushatel.имя & " " & slushatel.structSlushatel.отчество
 
-            Call ИзменениеВыделеннойСтрокиВListView.ИзменениеВыделеннойСтрокиВListView("СправочникСлушатели", 1, ДобавитьРубашку.ДобавитьРубашку(slushatel.structSlushatel.snils), 2, slushatel.structSlushatel.фамилия, 3, slushatel.structSlushatel.имя, 4, slushatel.structSlushatel.отчество)
+            ИзменениеВыделеннойСтрокиВListView.ИзменениеВыделеннойСтрокиВListView("СправочникСлушатели", 1, ДобавитьРубашку.ДобавитьРубашку(slushatel.structSlushatel.snils), 2, slushatel.structSlushatel.фамилия, 3, slushatel.structSlushatel.имя, 4, slushatel.structSlushatel.отчество)
 
-            sqlString = " UPDATE СоставГрупп SET Слушатель = " & Chr(39) & slushatel.structSlushatel.snils & Chr(39) & " WHERE Слушатель = " & Chr(39) & slushatel.structSlushatel.старыйСнилс & Chr(39)
-            ААОсновная.mySqlConnect.ОтправитьВбдЗапись(sqlString, 1)
+        Else
 
-        Else Сообщение.Text = "Произошла ошибка, слушатель не найден"
-
+            Сообщение.Text = "Произошла ошибка, слушатель не найден"
 
         End If
+
     End Sub
 
     Private Sub Пол_Click(sender As Object, e As EventArgs)
