@@ -2,7 +2,152 @@
 Imports WindowsApp2.Slushatel
 
 Module QueryString
+
     Dim sqlString As String
+
+    Public Function pednagruzkaloadOtchet(DateStart As String, DateEnd As String) As String
+
+        sqlString = " SELECT
+                      ПреподавательСписокВнебюджет,
+                      СуммаЧасовБ,
+                      СуммаЧасовВБ
+                    FROM (SELECT
+                        sotrudnik.name AS ПреподавательСписокВнебюджет,
+                        IFNULL(СуммаЧасовВБ,0) AS СуммаЧасовВБ
+                      FROM sotrudnik
+                        LEFT JOIN (SELECT
+                            pednagruzka.worker AS Преподаватель1,
+                            SUM(IFNULL(pednagruzka.lectures,0)
+                              + IFNULL(pednagruzka.practical,0)
+                              + IFNULL(pednagruzka.stimulating,0)
+                              + IFNULL(pednagruzka.consultation,0)
+                              + IFNULL(PA,0)
+                              + IFNULL(IA,0)
+                            ) AS СуммаЧасовВБ
+                          FROM pednagruzka
+                            INNER JOIN `group`
+                              ON `group`.Код = pednagruzka.kod
+                          WHERE `group`.Финансирование = 'внебюджет'
+                          AND `group`.ДатаНЗ BETWEEN '" + DateStart + "' AND '" + DateEnd + "'
+                          GROUP BY pednagruzka.worker) AS Внебюджет
+                          ON Внебюджет.Преподаватель1 = sotrudnik.kod) AS СводВнебюджет
+                      INNER JOIN (SELECT
+                          sotrudnik.name AS ПреподавательСписокБюджет,
+                          IFNULL(СуммаЧасовБ,0) AS СуммаЧасовБ
+                        FROM sotrudnik
+                          LEFT JOIN (SELECT
+                              pednagruzka.worker AS Преподаватель1,
+                              SUM(IFNULL(pednagruzka.lectures,0)
+                                + IFNULL(pednagruzka.practical,0)
+                                + IFNULL(pednagruzka.stimulating,0)
+                                + IFNULL(pednagruzka.consultation,0)
+                                + IFNULL(PA,0)
+                                + IFNULL(IA,0)
+                            ) AS СуммаЧасовБ
+                            FROM pednagruzka
+                              INNER JOIN `group`
+                                ON `group`.Код = pednagruzka.kod
+                            WHERE `group`.Финансирование = 'бюджет'
+                            AND `group`.ДатаНЗ BETWEEN '" + DateStart + "' AND '" + DateEnd + "'
+                            GROUP BY pednagruzka.worker) AS Бюджет
+                            ON Бюджет.Преподаватель1 = sotrudnik.kod) AS СводБюджет
+                        ON СводБюджет.ПреподавательСписокБюджет = СводВнебюджет.ПреподавательСписокВнебюджет
+                    WHERE СуммаЧасовБ > 0
+                    OR СуммаЧасовВБ > 0"
+        Return sqlString
+
+    End Function
+
+    Public Sub datagridInsertRowIntoDB(ДатаГрид As DataGridView, nameTbl As String, massValues As Object, massTypes As Object, numberFirstColumn As Integer, numberLastColumn As Integer)
+        Dim fio, tranzitMass
+        Dim sqlStringSecondPart As String
+        Dim count As Integer = 0, countRows, countQueryStr As Integer
+
+        countRows = ДатаГрид.Rows.Count
+        countRows = UBound(massTypes, 2)
+
+        If numberLastColumn > ДатаГрид.Columns.Count Then
+            предупреждение.текст.Text = "Неверно указан номер последнего столбца таблицы"
+            предупреждение.ShowDialog()
+            Exit Sub
+        End If
+
+        If Not UBound(massTypes, 2) = numberLastColumn - numberFirstColumn Then
+            предупреждение.текст.Text = "Неверно указаны имена столбцов"
+            предупреждение.ShowDialog()
+            Exit Sub
+        End If
+
+        ЗаписьВБазу.УдалитьЗаписиСЧислом(nameTbl, massValues(0), massValues(1))
+        fio = ДатаГрид.Rows.Count - 1
+        ReDim tranzitMass(ДатаГрид.Rows.Count - 1)
+
+        countQueryStr = 0
+
+        For i = 0 To ДатаГрид.Rows.Count - 1
+
+            sqlString = ""
+            sqlStringSecondPart = ""
+            countQueryStr += 1
+
+            If IsNothing(ДатаГрид.Rows(i).Cells(0).Value) Then
+
+                countQueryStr -= 1
+
+                Continue For
+
+            End If
+
+            sqlString = "INSERT INTO " & nameTbl & " ( " & massValues(0) & " , "
+
+            For счетчикСтолбцов = 0 To UBound(massTypes, 2)
+
+                sqlString = sqlString & massTypes(0, счетчикСтолбцов) & " , "
+
+                If massTypes(1, счетчикСтолбцов) = "String" Then
+
+                    If massTypes(0, счетчикСтолбцов) = "worker" Then
+
+                        sqlStringSecondPart += "(SELECT kod FROM sotrudnik WHERE sotrudnik.name=" + Chr(39) & ДатаГрид.Rows(i).Cells(numberFirstColumn + счетчикСтолбцов).Value & Chr(39) & " LIMIT 1 ), "
+
+                    Else
+
+                        sqlStringSecondPart += Chr(39) & ДатаГрид.Rows(i).Cells(numberFirstColumn + счетчикСтолбцов).Value & Chr(39) & " , "
+
+                    End If
+
+                Else
+                    If IsNothing(ДатаГрид.Rows(i).Cells(numberFirstColumn + счетчикСтолбцов).Value) Or Trim(ДатаГрид.Rows(i).Cells(numberFirstColumn + счетчикСтолбцов).Value) = "" Then
+                        sqlStringSecondPart = sqlStringSecondPart & " 0 , "
+                    Else
+                        sqlStringSecondPart = sqlStringSecondPart & ДатаГрид.Rows(i).Cells(numberFirstColumn + счетчикСтолбцов).Value.Replace(",", ".") & " , "
+                    End If
+                End If
+            Next
+            sqlString = Strings.Left(sqlString, Strings.Len(sqlString) - 2) & ") VALUES ( " & Chr(39) & massValues(1) & Chr(39) & " , " & Strings.Left(sqlStringSecondPart, Strings.Len(sqlStringSecondPart) - 2) & ")"
+            ЗаписьВБазу.ЗаписьВБазу(sqlString)
+
+        Next
+
+    End Sub
+
+    Public Function pednagruzkaload(kodGroup As String) As String
+
+        sqlString = " SELECT
+                      sotrudnik.name,
+                      pednagruzka.lectures,
+                      pednagruzka.practical,
+                      pednagruzka.stimulating,
+                      pednagruzka.consultation,
+                      pednagruzka.PA,
+                      pednagruzka.IA
+                    FROM pednagruzka
+                      INNER JOIN sotrudnik
+                        ON pednagruzka.worker = sotrudnik.kod
+                        WHERE pednagruzka.kod= " & kodGroup & " ORDER BY sotrudnik.name"
+        Return sqlString
+
+    End Function
 
     Public Function SqlString__updateSlushInListSlGroupp(snils As String, prevSnils As String)
 
