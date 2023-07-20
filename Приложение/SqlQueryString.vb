@@ -156,29 +156,29 @@ Public Class SqlQueryString
         sqlString = "SELECT
                     COUNT(tbl.Код)
                     FROM
-                    (SELECT Код FROM группа WHERE modul1=" + kod + "
+                    (SELECT Код FROM `group` WHERE modul1=" + kod + "
                     UNION ALL 
-                    SELECT Код FROM группа WHERE modul2=" + kod + "
+                    SELECT Код FROM `group` WHERE modul2=" + kod + "
                     UNION ALL 
-                    SELECT Код FROM группа WHERE modul3=" + kod + "
+                    SELECT Код FROM `group` WHERE modul3=" + kod + "
                     UNION ALL 
-                    SELECT Код FROM группа WHERE modul4=" + kod + "
+                    SELECT Код FROM `group` WHERE modul4=" + kod + "
                     UNION ALL 
-                    SELECT Код FROM группа WHERE modul5=" + kod + "
+                    SELECT Код FROM `group` WHERE modul5=" + kod + "
                     UNION ALL 
-                    SELECT Код FROM группа WHERE modul6=" + kod + "
+                    SELECT Код FROM `group` WHERE modul6=" + kod + "
                     UNION ALL 
-                    SELECT Код FROM группа WHERE modul7=" + kod + "
+                    SELECT Код FROM `group` WHERE modul7=" + kod + "
                     UNION ALL 
-                    SELECT Код FROM группа WHERE modul8=" + kod + "
+                    SELECT Код FROM `group` WHERE modul8=" + kod + "
                     UNION ALL 
-                    SELECT Код FROM группа WHERE modul9=" + kod + "
+                    SELECT Код FROM `group` WHERE modul9=" + kod + "
                     UNION ALL 
-                    SELECT Код FROM группа WHERE modul10=" + kod + "
+                    SELECT Код FROM `group` WHERE modul10=" + kod + "
                     UNION ALL 
-                    SELECT Код FROM группа WHERE Куратор=" + kod + "
+                    SELECT Код FROM `group` WHERE Куратор=" + kod + "
                     UNION ALL 
-                    SELECT ОтвЗаПракт FROM группа WHERE ОтвЗаПракт=" + kod + "
+                    SELECT ОтвЗаПракт FROM `group` WHERE ОтвЗаПракт=" + kod + "
                     ) AS tbl"
         Return sqlString
 
@@ -282,8 +282,8 @@ sotrudnik.in_list,
         sqlString = "SELECT
                       COUNT(progs_mods_hours.kod_modul) AS expr1
                     FROM progs_mods_hours
-                      INNER JOIN programma
-                        ON progs_mods_hours.kod_prog = programma.kod
+                      INNER JOIN programm
+                        ON progs_mods_hours.kod_prog = programm.kod
                     WHERE progs_mods_hours.kod_prog = " + kod
         Return sqlString
 
@@ -422,7 +422,7 @@ sotrudnik.in_list,
     Public Function deleteProgramm(kod As String) As String
 
         Dim sqlString As String = ""
-        sqlString = "DELETE FROM progs_mods_hours WHERE kod_prog=" + kod + ";DELETE FROM programma WHERE kod=" + kod + ";UPDATE группа SET kod_programm = NULL,Программа = NULL WHERE kod_programm=" + kod
+        sqlString = "DELETE FROM progs_mods_hours WHERE kod_prog=" + kod + ";DELETE FROM programm WHERE kod=" + kod + ";UPDATE `group` SET kod_programm = NULL,Программа = NULL WHERE kod_programm=" + kod
         Return sqlString
 
     End Function
@@ -437,7 +437,7 @@ sotrudnik.in_list,
     Public Function updateProgramm(programm As String, kod As String) As String
 
         Dim sqlString As String = ""
-        sqlString = "UPDATE programma SET name='" + programm + "' WHERE kod=" + kod
+        sqlString = "UPDATE programm SET name='" + programm + "' WHERE kod=" + kod
         Return sqlString
 
     End Function
@@ -448,7 +448,7 @@ sotrudnik.in_list,
         sqlString = " SELECT" +
                     "     MAX(kod)" +
                     "         FROM" +
-                    "         programma" +
+                    "         programm" +
                     "         WHERE name ='" + programm + "' AND uroven_kvalifik=" +
                     "   (SELECT kod FROM uroven_kvalifik WHERE name='" + ur_kvalif + "' LIMIT 1)"
         Return sqlString
@@ -482,13 +482,13 @@ sotrudnik.in_list,
     Public Function addProgramm(programm As String, ur_kvalif As String) As String
 
         Dim sqlString As String = ""
-        sqlString = "INSERT IGNORE INTO programma (uroven_kvalifik, name, kod)
+        sqlString = "INSERT IGNORE INTO programm (uroven_kvalifik, name, kod)
                       SELECT
                         uroven_kvalifik.kod,
                         '" + programm + "',
                         (SELECT
-                            MAX(programma.kod)+1 AS expr1
-                          FROM programma) AS expr1
+                            MAX(programm.kod)+1 AS expr1
+                          FROM programm) AS expr1
                       FROM uroven_kvalifik
                       WHERE uroven_kvalifik.name = '" + ur_kvalif + "'"
         Return sqlString
@@ -700,11 +700,11 @@ sotrudnik.in_list,
                      progs_mods_hours.hours as Часы,
                      progs_mods_hours.kod_modul
                      FROM progs_mods_hours
-                     INNER JOIN programma
-                     ON progs_mods_hours.kod_prog = programma.kod
+                     INNER JOIN programm
+                     ON progs_mods_hours.kod_prog = programm.kod
                      INNER JOIN moduls
                      ON progs_mods_hours.kod_modul = moduls.kod
-                     WHERE programma.kod =" + kod + "
+                     WHERE programm.kod =" + kod + "
                      ORDER BY modul_number"
         Return sqlString
 
@@ -716,12 +716,12 @@ sotrudnik.in_list,
         sqlString = "SELECT
                      SUM(progs_mods_hours.hours) as Часы
                      FROM progs_mods_hours
-                     INNER JOIN programma
-                     ON progs_mods_hours.kod_prog = programma.kod
+                     INNER JOIN programm
+                     ON progs_mods_hours.kod_prog = programm.kod
                      INNER JOIN moduls
                      ON progs_mods_hours.kod_modul = moduls.kod
-                     WHERE programma.kod =" + kod + "
-                     GROUP BY programma.kod"
+                     WHERE programm.kod =" + kod + "
+                     GROUP BY programm.kod"
         Return sqlString
 
     End Function
@@ -731,16 +731,16 @@ sotrudnik.in_list,
         Dim sqlString As String = ""
 
         sqlString = "SELECT
-                      programma.name AS Наименование,
+                      programm.name AS Наименование,
                       kol_chas.name AS Часы,
-                      programma.kod,
-                      programma.date AS 'дата создания'
-                    FROM programma
+                      programm.kod,
+                      programm.date AS 'дата создания'
+                    FROM programm
                       INNER JOIN uroven_kvalifik
-                        ON programma.uroven_kvalifik = uroven_kvalifik.kod
+                        ON programm.uroven_kvalifik = uroven_kvalifik.kod
                       INNER JOIN kol_chas
-                        ON programma.hours = kol_chas.kod
-                    WHERE uroven_kvalifik.name = '" + uroven_cval + "' ORDER BY programma.name"
+                        ON programm.hours = kol_chas.kod
+                    WHERE uroven_kvalifik.name = '" + uroven_cval + "' ORDER BY programm.name"
         Return sqlString
 
     End Function
@@ -801,9 +801,9 @@ sotrudnik.in_list,
         Dim sqlString As String = ""
         sqlString = "Select 
                      CONCAT(Слушатель.Фамилия,' ',Слушатель.Имя,' ',IFNULL(слушатель.Отчество,' ')) 
-                     FROM СоставГрупп 
-                     INNER JOIN Слушатель ON СоставГрупп.Слушатель = Слушатель.Снилс 
-                     WHERE СоставГрупп.Kod = " & ААОсновная.prikazKodGroup & " 
+                     FROM group_list 
+                     INNER JOIN Слушатель ON group_list.Слушатель = Слушатель.Снилс 
+                     WHERE group_list.Kod = " & ААОсновная.prikazKodGroup & " 
                      ORDER BY Слушатель.Фамилия"
         Return sqlString
 
@@ -939,10 +939,10 @@ sotrudnik.in_list,
         Dim sqlString As String = ""
         sqlString = "SELECT
                       kol_chas.name
-                    FROM programma
+                    FROM programm
                       INNER JOIN kol_chas
-                        ON programma.hours = kol_chas.kod
-                    WHERE programma.kod = " + kod
+                        ON programm.hours = kol_chas.kod
+                    WHERE programm.kod = " + kod
         Return sqlString
 
     End Function
@@ -951,7 +951,7 @@ sotrudnik.in_list,
 
         Dim sqlString As String = ""
         sqlString = "SELECT
-                    programma.kod,
+                    programm.kod,
                     IFNULL(kc.name, 0)
                     FROM(
                     SELECT
@@ -966,16 +966,16 @@ sotrudnik.in_list,
         End If
 
         sqlString += " ) AS tbl1
-                      INNER JOIN (SELECT * FROM programma WHERE programma.name='" + name_prog + "') AS prog
+                      INNER JOIN (SELECT * FROM programm WHERE programm.name='" + name_prog + "') AS prog
                         ON tbl1.kod = prog.uroven_kvalifik
                         GROUP BY prog.name
                         ) AS tbl
-                    INNER JOIN programma
-                    ON tbl.name=programma.name AND
-                        tbl.date=programma.date
+                    INNER JOIN programm
+                    ON tbl.name=programm.name AND
+                        tbl.date=programm.date
                     LEFT JOIN kol_chas kc 
-                    ON programma.hours = kc.kod
-                    ORDER BY programma.name"
+                    ON programm.hours = kc.kod
+                    ORDER BY programm.name"
         Return sqlString
 
     End Function

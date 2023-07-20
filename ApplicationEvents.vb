@@ -9,11 +9,15 @@ Namespace My
     ' NetworkAvailabilityChanged: возникает при изменении состояния подключения — при подключении или отключении.
     Partial Friend Class MyApplication
         Private Sub MyApplication_Startup(sender As Object, e As StartupEventArgs) Handles Me.Startup
+
             Запуск.ЗапускПриложения()
+
         End Sub
 
         Private Sub MyApplication_Shutdown(sender As Object, e As EventArgs) Handles Me.Shutdown
 
+
         End Sub
+
     End Class
 End Namespace

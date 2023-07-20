@@ -84,29 +84,4 @@
 
     End Function
 
-    Function SQLПоиск(str As String, Таблица As String, НазванияСтолбцов As String, СтолбецДляПоиска As String, СтолбецДляСортировки As String) As Object
-
-        Dim СтрокаЗапроса As String
-        Dim ChMass As Object
-        Dim Dlina As Integer
-        Dim счетчик As Integer
-        Dlina = Len(str)
-
-        счетчик = 0
-
-        If Таблица = "Группа" Then
-            СтрокаЗапроса = load_spr_group_search(СправочникГруппы.СГУровеньКвалификации.Text, СтолбецДляСортировки, СтолбецДляПоиска, str, СправочникГруппы.yearSpravochnikGr.Text)
-            'СтрокаЗапроса = "SELECT " & НазванияСтолбцов & " FROM " & Таблица & " WHERE  (((" & СтолбецДляПоиска & ") LIKE " & Chr(39) & str & "%" & Chr(39) & " )) AND УровеньКвалификации='" + СправочникГруппы.СГУровеньКвалификации.Text + "' ORDER BY " & СтолбецДляСортировки
-        Else
-            СтрокаЗапроса = "SELECT " & НазванияСтолбцов & " FROM " & Таблица & " WHERE  (((" & СтолбецДляПоиска & ") LIKE " & Chr(39) & str & "%" & Chr(39) & " )) ORDER BY " & СтолбецДляСортировки
-
-        End If
-
-        ChMass = ААОсновная.mySqlConnect.ЗагрузитьИзБДMySQLвМассив(СтрокаЗапроса, 1)
-        ChMass = УбратьПустотыВМассиве.УбратьПустотыВМассиве(ChMass)
-
-        SQLПоиск = ChMass
-
-    End Function
-
 End Module

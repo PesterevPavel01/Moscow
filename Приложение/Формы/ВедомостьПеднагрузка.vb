@@ -87,6 +87,7 @@
     End Sub
 
     Private Sub Сохранить_Click(sender As Object, e As EventArgs) Handles Сохранить.Click
+
         Dim Критерий, МассивИменИТипов
         ReDim Критерий(1)
         ReDim МассивИменИТипов(1, 6)

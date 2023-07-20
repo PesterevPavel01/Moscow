@@ -5,6 +5,37 @@ Imports System.Threading
 Module Вспомогательный
 
     Public массивЗапросов(0)
+
+    Function month(nomber As String)
+        If nomber = "01" Or nomber = "1" Then month = "января"
+        If nomber = "02" Or nomber = "2" Then month = "февраля"
+        If nomber = "03" Or nomber = "3" Then month = "марта"
+        If nomber = "04" Or nomber = "4" Then month = "апреля"
+        If nomber = "05" Or nomber = "5" Then month = "мая"
+        If nomber = "06" Or nomber = "6" Then month = "июня"
+        If nomber = "07" Or nomber = "7" Then month = "июля"
+        If nomber = "08" Or nomber = "8" Then month = "августа"
+        If nomber = "09" Or nomber = "9" Then month = "сентября"
+        If nomber = "10" Then month = "октября"
+        If nomber = "11" Then month = "ноября"
+        If nomber = "12" Then month = "декабря"
+    End Function
+
+    Function перевернуть(строка As String) As String
+        Dim часть As String
+        If Len(строка) < 4 Then
+            перевернуть = ""
+            Exit Function
+        End If
+        часть = Right(строка, 4)
+        строка = Left(строка, Len(строка) - 4)
+        строка = часть & " " & строка
+        строка = Left(строка, Len(строка) - 1)
+        перевернуть = строка
+
+    End Function
+
+
     Function новаяГруппаЗаполненность() As Boolean
         новаяГруппаЗаполненность = False
         Dim ОсновнойДокумент As String
@@ -304,9 +335,9 @@ Module Вспомогательный
 
         Снилс = ДобавитьРубашку.УдалитьРубашку(Снилс)
 
-        queryStr = "INSERT INTO СоставГрупп (Слушатель, Kod ) VALUES ( " & Chr(39) & Снилс & Chr(39) & " , " & СправочникГруппы.kod & ")"
+        queryStr = "INSERT INTO group_list (Слушатель, Kod ) VALUES ( " & Chr(39) & Снилс & Chr(39) & " , " & СправочникГруппы.kod & ")"
 
-        If Not ЗаписьВБазу.ПроверкаСовпаденийЧислоДА_2("СоставГрупп", "Kod", СправочникГруппы.kod, "Слушатель", Снилс) = 2 Then
+        If Not ЗаписьВБазу.ПроверкаСовпаденийЧислоДА_2("group_list", "Kod", СправочникГруппы.kod, "Слушатель", Снилс) = 2 Then
 
             ЗаписьВБазу.ЗаписьВБазу(queryStr)
 

@@ -50,7 +50,7 @@
             Снилс = ОпределитьСНИЛС(CDbl(row.Cells(0).Value))
             Try
 
-                СтрокаЗапроса = "SELECT СоставГрупп.Слушатель FROM СоставГрупп WHERE СоставГрупп.Слушатель = " & Chr(39) & Снилс & Chr(39) & " AND СоставГрупп.Kod = " & kod
+                СтрокаЗапроса = "SELECT group_list.Слушатель FROM group_list WHERE group_list.Слушатель = " & Chr(39) & Снилс & Chr(39) & " AND group_list.Kod = " & kod
 
             Catch ex As Exception
 
@@ -70,7 +70,7 @@
 
             Try
 
-                СтрокаЗапроса = "UPDATE СоставГрупп SET ИАТестирование= " & Chr(39) & row.Cells(2).Value & Chr(39) & ",ИАПрактическиеНавыки= " & Chr(39) & row.Cells(3).Value & Chr(39) & ",ИАИтог= " & Chr(39) & row.Cells(4).Value & Chr(39) & " WHERE СоставГрупп.Слушатель = " & Chr(39) & Снилс & Chr(39) & "  AND СоставГрупп.Kod = " & kod
+                СтрокаЗапроса = "UPDATE group_list SET ИАТестирование= " & Chr(39) & row.Cells(2).Value & Chr(39) & ",ИАПрактическиеНавыки= " & Chr(39) & row.Cells(3).Value & Chr(39) & ",ИАИтог= " & Chr(39) & row.Cells(4).Value & Chr(39) & " WHERE group_list.Слушатель = " & Chr(39) & Снилс & Chr(39) & "  AND group_list.Kod = " & kod
 
             Catch ex As Exception
 

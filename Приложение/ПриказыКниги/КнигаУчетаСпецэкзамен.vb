@@ -8,7 +8,7 @@
 
         Название = "Спецэкзамен"
 
-        Массив = ЗагрузитьСписок("SELECT Фамилия,Имя, Отчество, Специальность,СоставГрупп.НомерПротоколаСпецэкзамен,Группа.ДатаСпецЭкзамен, Группа.ДатаСпецЭкзамен FROM (СоставГрупп INNER JOIN Слушатель On СоставГрупп.Слушатель = Слушатель.Снилс) INNER JOIN Группа On СоставГрупп.Kod = Группа.Код WHERE Группа.УровеньКвалификации= 'специальный экзамен' and Группа.ДатаСпецЭкзамен BETWEEN  '" & ААОсновная.mySqlConnect.dateToFormatMySQL(ААОсновная.ДатаНачалаОтчета.Value.ToShortDateString) & "'  and '" & ААОсновная.mySqlConnect.dateToFormatMySQL(ААОсновная.ДатаКонцаОтчета.Value.ToShortDateString) & " ' ORDER BY СоставГрупп.Группа")
+        Массив = ЗагрузитьСписок("SELECT Фамилия,Имя, Отчество, Специальность,group_list.НомерПротоколаСпецэкзамен,Группа.ДатаСпецЭкзамен, Группа.ДатаСпецЭкзамен FROM (group_list INNER JOIN Слушатель On group_list.Слушатель = Слушатель.Снилс) INNER JOIN Группа On group_list.Kod = Группа.Код WHERE Группа.УровеньКвалификации= 'специальный экзамен' and Группа.ДатаСпецЭкзамен BETWEEN  '" & ААОсновная.mySqlConnect.dateToFormatMySQL(ААОсновная.ДатаНачалаОтчета.Value.ToShortDateString) & "'  and '" & ААОсновная.mySqlConnect.dateToFormatMySQL(ААОсновная.ДатаКонцаОтчета.Value.ToShortDateString) & " ' ORDER BY group_list.Группа")
 
         If Массив(0, 0).ToString = "нет записей" Then
             Exit Sub
@@ -56,7 +56,7 @@
 
         End Try
 
-        Массив = ЗагрузитьСписок("SELECT Фамилия,Имя, Отчество, Специальность,Группа.ДатаСпецЭкзамен FROM (СоставГрупп INNER JOIN Слушатель On СоставГрупп.Слушатель = Слушатель.Снилс) INNER JOIN Группа On СоставГрупп.Kod = Группа.Код WHERE Группа.УровеньКвалификации= 'специальный экзамен' and Группа.ДатаСпецЭкзамен BETWEEN '" & ААОсновная.mySqlConnect.dateToFormatMySQL(ААОсновная.ДатаНачалаОтчета.Value.ToShortDateString) & "'and '" & ААОсновная.mySqlConnect.dateToFormatMySQL(ААОсновная.ДатаКонцаОтчета.Value.ToShortDateString) & " ' ORDER BY СоставГрупп.Группа")
+        Массив = ЗагрузитьСписок("SELECT Фамилия,Имя, Отчество, Специальность,Группа.ДатаСпецЭкзамен FROM (group_list INNER JOIN Слушатель On group_list.Слушатель = Слушатель.Снилс) INNER JOIN Группа On group_list.Kod = Группа.Код WHERE Группа.УровеньКвалификации= 'специальный экзамен' and Группа.ДатаСпецЭкзамен BETWEEN '" & ААОсновная.mySqlConnect.dateToFormatMySQL(ААОсновная.ДатаНачалаОтчета.Value.ToShortDateString) & "'and '" & ААОсновная.mySqlConnect.dateToFormatMySQL(ААОсновная.ДатаКонцаОтчета.Value.ToShortDateString) & " ' ORDER BY group_list.Группа")
 
         If Массив(0, 0).ToString = "нет записей" Then
             Exit Sub

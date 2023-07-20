@@ -230,7 +230,7 @@ Public Class РедакторГруппы
         Dim gruppa As Gruppa.strGruppa = argument(1)
 
         If gruppa.number <> gruppa.oldNumber Or gruppa.yearNZ <> gruppa.oldYearNZ Then
-            If ЗаписьВБазу.ПроверкаСовпадений("Группа", "Номер", gruppa.number, "Year(ДатаНЗ)", gruppa.yearNZ) Then
+            If ЗаписьВБазу.ПроверкаСовпадений("`group`", "Номер", gruppa.number, "Year(ДатаНЗ)", gruppa.yearNZ) Then
                 ФормаДаНетУдалить.текстДаНет.Text = "Группа " + gruppa.number + " уже существует, удалить старую запись?"
                 ФормаДаНетУдалить.ShowDialog()
 
@@ -239,14 +239,10 @@ Public Class РедакторГруппы
                     Exit Sub
                 End If
 
-                'SQLString = "SELECT Код FROM Группа WHERE Номер='" & gruppa.number & "' AND Year(ДатаНЗ) = " & gruppa.yearNZ
-                'result = ЗагрузитьИзБазы.ЗагрузитьИзБазы(SQLString)
-                'gruppa.Kod = result(0, 0)
-
-                SQLString = " DELETE FROM СоставГрупп WHERE Kod = (SELECT Код FROM Группа WHERE Номер= " & Chr(39) & gruppa.number & Chr(39) & " AND Year(ДатаНЗ)=" & gruppa.yearNZ & " LIMIT 1)"
+                SQLString = redactorGroup__deketeGroupInGroupList(gruppa.number, gruppa.yearNZ)
                 ЗаписьВБазу.ЗаписьВБазу(SQLString)
 
-                SQLString = "DELETE FROM группа WHERE Номер= " & Chr(39) & gruppa.number & Chr(39) & " AND Year(ДатаНЗ)=" & gruppa.yearNZ
+                SQLString = redactorGroup__deketeGroupInGroup(gruppa.number, gruppa.yearNZ)
                 ЗаписьВБазу.ЗаписьВБазу(SQLString)
 
                 SC.Send(AddressOf updateNomberGroup, gruppa)
@@ -254,7 +250,7 @@ Public Class РедакторГруппы
             End If
         End If
 
-        If ЗаписьВБазу.ПроверкаСовпадений("Группа", "Номер", gruppa.oldNumber, "Year(ДатаНЗ)", gruppa.oldYearNZ) Then
+        If ЗаписьВБазу.ПроверкаСовпадений("`group`", "Номер", gruppa.oldNumber, "Year(ДатаНЗ)", gruppa.oldYearNZ) Then
             SQLString = QueryString.updateGroup(gruppa)
             If SQLString = "" Then
                 SC.Send(AddressOf enabledButton, gruppa.number)
@@ -276,6 +272,7 @@ Public Class РедакторГруппы
             SQLString = SQLString_UpdateNumbersSGrupp(gruppa.Kod)
 
         End If
+
         SC.Send(AddressOf updateSpravGroup, gruppa)
         SC.Send(AddressOf enabledButton, gruppa.number)
     End Sub
@@ -284,7 +281,7 @@ Public Class РедакторГруппы
         Dim СтрокаЗапроса As String
         Dim DataString As String
         Dim mySqlConnect As New MySQLConnect()
-        If ЗаписьВБазу.ПроверкаСовпадений("Группа", "Номер", gruppa.number, "Year(ДатаНЗ)", gruppa.yearNZ) Then
+        If ЗаписьВБазу.ПроверкаСовпадений("`group`", "Номер", gruppa.number, "Year(ДатаНЗ)", gruppa.yearNZ) Then
             DataString = mySqlConnect.dateToFormatMySQL(Date.Now.ToShortDateString)
             Сообщение.Text = "Группа № " & СправочникГруппы.numberGr & " успешно изменена, дата записи: " & DataString
             Сообщение.Visible = True
@@ -293,7 +290,7 @@ Public Class РедакторГруппы
             СправочникГруппы.ИнформацияОГруппе(1, 0) = gruppa.number
             Me.Text = "Группа № " & gruppa.number
             If gruppa.number <> gruppa.oldNumber Then
-                СтрокаЗапроса = " UPDATE СоставГрупп SET Группа = " & Chr(39) & gruppa.number & Chr(39) & " WHERE gruppa_kod = (SELECT Код FROM Группа WHERE Номер= " & Chr(39) & gruppa.number & Chr(39) & " AND Year(ДатаНЗ)=" & gruppa.yearNZ & " LIMIT 1)"
+                СтрокаЗапроса = redactorGroup__updateGroupList(gruppa.number, gruppa.yearNZ)
                 СправочникГруппы.numberGr = gruppa.number
                 ЗаписьВБазу.ЗаписьВБазу(СтрокаЗапроса)
             End If

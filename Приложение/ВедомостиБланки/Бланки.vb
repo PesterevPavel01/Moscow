@@ -7,7 +7,7 @@
         Dim НомерАбзаца As Integer, счетчик As Integer
         Dim Дата As String, СтрокаЗапроса As String, год As String
 
-        СтрокаЗапроса = "SELECT Слушатель FROM СоставГрупп WHERE Kod =" & ААОсновная.prikazKodGroup
+        СтрокаЗапроса = blanki_loadSlush(ААОсновная.prikazKodGroup)
 
         Слушатели = ЗагрузитьИзБазы.ЗагрузитьИзБазы(СтрокаЗапроса)
 
@@ -19,7 +19,7 @@
 
         End If
 
-        СтрокаЗапроса = "SELECT Программа, ДатаНЗ FROM Группа WHERE Код =" & ААОсновная.prikazKodGroup
+        СтрокаЗапроса = blanki_loadProgAndDateTFromGroup(ААОсновная.prikazKodGroup)
 
         Группа = ЗагрузитьИзБазы.ЗагрузитьИзБазы(СтрокаЗапроса)
 
@@ -307,7 +307,8 @@
         Dim НомерАбзаца As Integer, счетчик As Integer
         Dim Дата As String, СтрокаЗапроса As String
 
-        СтрокаЗапроса = "SELECT Слушатель FROM СоставГрупп WHERE Kod =" & ААОсновная.prikazKodGroup
+        СтрокаЗапроса = blanki_loadSlush(Convert.ToString(ААОсновная.prikazKodGroup))
+
         Слушатели = ЗагрузитьИзБазы.ЗагрузитьИзБазы(СтрокаЗапроса)
 
         If Слушатели(0, 0).ToString = "нет записей" Then
@@ -319,7 +320,7 @@
 
         End If
 
-        СтрокаЗапроса = "SELECT Программа FROM Группа WHERE Код =" & ААОсновная.prikazKodGroup
+        СтрокаЗапроса = blanki_loadProgram(ААОсновная.prikazKodGroup)
 
         Группа = ЗагрузитьИзБазы.ЗагрузитьИзБазы(СтрокаЗапроса)
 
@@ -551,7 +552,8 @@
         Dim НомерАбзаца As Integer, счетчик As Integer
         Dim Дата As String, СтрокаЗапроса As String
 
-        СтрокаЗапроса = "SELECT Слушатель FROM СоставГрупп WHERE Kod =" & ААОсновная.prikazKodGroup
+        СтрокаЗапроса = blanki_loadSlush(ААОсновная.prikazKodGroup)
+
         Слушатели = ЗагрузитьИзБазы.ЗагрузитьИзБазы(СтрокаЗапроса)
 
         If Слушатели(0, 0).ToString = "нет записей" Then
@@ -563,7 +565,7 @@
 
         End If
 
-        СтрокаЗапроса = "SELECT Спец FROM Группа WHERE Код =" & ААОсновная.prikazKodGroup
+        СтрокаЗапроса = blanki_loadSpesh(ААОсновная.prikazKodGroup)
 
         Группа = ЗагрузитьИзБазы.ЗагрузитьИзБазы(СтрокаЗапроса)
 

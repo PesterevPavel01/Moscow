@@ -34,62 +34,67 @@
 
         Вспомогательный.saveKniga(ДокументВорд, "Книга учета " & Критерий, ПутьККаталогуСРесурсами)
 
-
+        'ПриложениеВорд.Visible = True
         Таблица = ДокументВорд.Tables(1)
-        ЗаполнитьТаблицу(Таблица, Массив, ААОсновная.ДатаНачалаОтчета.Value.ToShortDateString, ААОсновная.ДатаКонцаОтчета.Value.ToShortDateString)
+        ЗаполнитьТаблицу(ПриложениеВорд, Таблица, Массив, ААОсновная.ДатаНачалаОтчета.Value.ToShortDateString, ААОсновная.ДатаКонцаОтчета.Value.ToShortDateString)
         ДокументВорд.Save
         ПриложениеВорд.Visible = True
     End Sub
 
     Function ЗагрузитьСписок(Критерий As String, ДатаНачалаОтчета As String, ДатаКонцаОтчета As String) As Object
-        Dim Список
-        Dim СтрокаЗапроса As String
+        Dim listResult
+        Dim queryString As String
 
         If Критерий = "Удостоверение" Then
-            СтрокаЗапроса = "SELECT  СоставГрупп.РегНомерУд, СоставГрупп.НомерУд,Группа.Номер, Фамилия,Имя, Отчество, Программа, КолЧас, ДатаКЗ, ДатаВыдачиУд FROM (СоставГрупп INNER JOIN Слушатель On СоставГрупп.Слушатель = Слушатель.Снилс) INNER JOIN Группа On СоставГрупп.Kod = Группа.Код WHERE Группа.ОсновнойДокумент= 'Удостоверение' AND NOT ISNULL(составгрупп.РегНомерУд) AND составгрупп.РегНомерУд<>0 AND ДатаВыдачиУд BETWEEN '" & ААОсновная.mySqlConnect.dateToFormatMySQL(Convert.ToDateTime(ДатаНачалаОтчета)) & "' and  '" & ААОсновная.mySqlConnect.dateToFormatMySQL(Convert.ToDateTime(ДатаКонцаОтчета)) & " ' ORDER BY СоставГрупп.РегНомерУд"
+
+            queryString = accountingBook__loadListUd(ААОсновная.mySqlConnect.dateToFormatMySQL(Convert.ToDateTime(ДатаНачалаОтчета)), ААОсновная.mySqlConnect.dateToFormatMySQL(Convert.ToDateTime(ДатаКонцаОтчета)))
+
         End If
 
         If Критерий = "Диплом" Then
-            СтрокаЗапроса = "SELECT СоставГрупп.РегНомерДиплома, СоставГрупп.НомерДиплома,Группа.Номер, Фамилия,Имя, Отчество, Программа, КолЧас, ДатаКЗ, ДатаВыдачиДиплома FROM (СоставГрупп INNER JOIN Слушатель On СоставГрупп.Слушатель = Слушатель.Снилс) INNER JOIN Группа On СоставГрупп.Kod = Группа.Код WHERE Группа.ОсновнойДокумент= 'Диплом' AND NOT ISNULL(составгрупп.РегНомерДиплома) AND составгрупп.РегНомерДиплома<>0 AND составгрупп.РегНомерДиплома<>0 AND ДатаВыдачиДиплома BETWEEN '" & ААОсновная.mySqlConnect.dateToFormatMySQL(Convert.ToDateTime(ДатаНачалаОтчета)) & "' and  '" & ААОсновная.mySqlConnect.dateToFormatMySQL(Convert.ToDateTime(ДатаКонцаОтчета)) & " '  and ОсновнойДокумент= 'Диплом' ORDER BY СоставГрупп.РегНомерДиплома"
+
+            queryString = accountingBook__loadListDip(ААОсновная.mySqlConnect.dateToFormatMySQL(Convert.ToDateTime(ДатаНачалаОтчета)), ААОсновная.mySqlConnect.dateToFormatMySQL(Convert.ToDateTime(ДатаКонцаОтчета)))
+
         End If
 
         If Критерий = "Свидетельство" Then
-            СтрокаЗапроса = "SELECT  СоставГрупп.РегНомерСвид, СоставГрупп.НомерСвид,Группа.Номер, Фамилия,Имя, Отчество, Программа, КолЧас, ДатаКЗ, ДатаВыдачиСвид FROM (СоставГрупп INNER JOIN Слушатель On СоставГрупп.Слушатель = Слушатель.Снилс) INNER JOIN Группа On СоставГрупп.Kod = Группа.Код WHERE  Группа.ОсновнойДокумент= 'Свидетельство' AND NOT ISNULL(составгрупп.РегНомерСвид) AND составгрупп.РегНомерСвид<>0 AND ДатаВыдачиСвид BETWEEN '" & ААОсновная.mySqlConnect.dateToFormatMySQL(Convert.ToDateTime(ДатаНачалаОтчета)) & "' and  '" & ААОсновная.mySqlConnect.dateToFormatMySQL(Convert.ToDateTime(ДатаКонцаОтчета)) & " '  and ОсновнойДокумент= 'Свидетельство' ORDER BY СоставГрупп.РегНомерСвид"
+
+            queryString = accountingBook__loadListSvid(ААОсновная.mySqlConnect.dateToFormatMySQL(Convert.ToDateTime(ДатаНачалаОтчета)), ААОсновная.mySqlConnect.dateToFormatMySQL(Convert.ToDateTime(ДатаКонцаОтчета)))
+
         End If
 
-        Список = УбратьПустотыВМассиве.УбратьПустотыВМассиве(ЗагрузитьИзБазы.ЗагрузитьИзБазы(СтрокаЗапроса))
+        listResult = УбратьПустотыВМассиве.УбратьПустотыВМассиве(ЗагрузитьИзБазы.ЗагрузитьИзБазы(queryString))
 
-        If Список(0, 0).ToString = "нет записей" Then
+        If listResult(0, 0).ToString = "нет записей" Then
 
             предупреждение.текст.Text = "Нет данных для отображения"
             ОткрытьФорму(предупреждение)
-            ЗагрузитьСписок = Список
+            ЗагрузитьСписок = listResult
             Exit Function
 
         End If
-        ЗагрузитьСписок = Список
+        ЗагрузитьСписок = listResult
     End Function
 
-    Sub ЗаполнитьТаблицу(Таблица As Object, Массив As Object, ДатаНачалаОтчета As String, ДатаКонцаОтчета As String)
+    Sub ЗаполнитьТаблицу(wordApp As Object, Таблица As Object, Массив As Object, ДатаНачалаОтчета As String, ДатаКонцаОтчета As String)
 
         Dim СчетчикСтрок As Integer
 
         Таблица.Cell(2, 1).Range.text = "за период с " & ДатаНачалаОтчета & " по " & ДатаКонцаОтчета
 
+        СчетчикСтрок = UBound(Массив, 2)
+
+        Таблица.Rows(6).Select
+
+        wordApp.Selection.InsertRows(СчетчикСтрок)
+
         For НомерСтолбца = 1 To Таблица.Columns.Count - 2
             Таблица.Cell(6, НомерСтолбца).Range.text = Массив(НомерСтолбца - 1, 0)
         Next
-        СчетчикСтрок = UBound(Массив, 2)
-
 
         For НомерСтроки = 1 To UBound(Массив, 2)
-            Таблица.Rows.add
             For НомерСтолбца = 1 To Таблица.Columns.Count - 2
-                'If НомерСтолбца = 1 Then
-                'Таблица.Cell(6 + НомерСтроки, НомерСтолбца).Range.text = НомерСтроки + 1
-                'Else
                 Таблица.Cell(6 + НомерСтроки, НомерСтолбца).Range.text = Массив(НомерСтолбца - 1, НомерСтроки)
-                'End If
             Next
         Next
 

@@ -1,5 +1,34 @@
 ﻿Module МСВорд
 
+    Sub КопироватьВставить(MSWord As Object, DOK As Object, НачальныйАбзац As Integer, КонечныйАбзац As Integer)
+
+        Dim Начало, Конец
+
+        Начало = DOK.Paragraphs(НачальныйАбзац).Range.Start
+        Конец = DOK.Paragraphs(КонечныйАбзац).Range.End
+        DOK.Range(Начало, Конец).Select
+        MSWord.Selection.Copy
+
+        DOK.Bookmarks("\EndOfDoc").Select
+        MSWord.Selection.PasteAndFormat(0)
+
+    End Sub
+    Sub ВставитьПараграф(DOK As Object, номерАбзаца As Integer, текст As String, Шрифт As String, РазмерШрифта As Integer, Выравнивание As Double, ОтступКраснаяСтрока As Double, ОтступПередАбзацем As Double, МежстрочныйИнтервал As Double, Жирный As Boolean)
+
+        DOK.Paragraphs(номерАбзаца).Range.Font.Name = Шрифт
+        DOK.Paragraphs(номерАбзаца).Range.Font.Size = РазмерШрифта
+        DOK.Paragraphs(номерАбзаца).Range.Text = текст
+        DOK.Paragraphs(номерАбзаца).Format.Alignment = Выравнивание
+        DOK.Paragraphs(номерАбзаца).LeftIndent = 28.34646 * ОтступКраснаяСтрока
+        DOK.Paragraphs(номерАбзаца).FirstLineIndent = 28.34646 * ОтступПередАбзацем
+        DOK.Paragraphs(номерАбзаца).LineUnitAfter = 0
+        DOK.Paragraphs(номерАбзаца).LineUnitBefore = 0
+        DOK.Paragraphs(номерАбзаца).SpaceAfter = 0
+        DOK.Paragraphs(номерАбзаца).SpaceBefore = МежстрочныйИнтервал
+        DOK.Paragraphs(номерАбзаца).Range.Font.Bold = Жирный
+        DOK.Paragraphs(номерАбзаца).Range.ParagraphFormat.LineSpacing = 12
+    End Sub
+
     Sub ЗаполнитьТаблицу(Таблица As Object, Массив As Object, номерПервойСтроки As Integer, ВключитьНумерацию As Boolean)
         Dim количествоСтолбцов
         Dim номерПервогоСтолбца As Integer = 0

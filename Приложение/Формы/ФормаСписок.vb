@@ -18,7 +18,7 @@ Public Class ФормаСписок
 
     Private Sub Список_Shown(sender As Object, e As EventArgs) Handles Me.Shown
 
-        Dim НазваниеБазы As String
+        Dim nameTbl As String
         Dim СтрокаЗапроса As String
         Dim prikaz As String = ""
 
@@ -30,7 +30,7 @@ Public Class ФормаСписок
 
         СтрокаПоиска.Text = ""
 
-        НазваниеБазы = ИдентифицироватьБазу.ИдентифицироватьБазу(textboxName)
+        nameTbl = ИдентифицироватьБазу.ИдентифицироватьБазу(textboxName)
 
         Text = textboxName
 
@@ -46,7 +46,7 @@ Public Class ФормаСписок
 
             Else
 
-                СтрокаЗапроса = "SELECT name, date, kod FROM programma ORDER BY name"
+                СтрокаЗапроса = formList__loadProgramms()
 
             End If
 
@@ -59,65 +59,65 @@ Public Class ФормаСписок
 
         ElseIf textboxName = "НоваяГруппаУровеньКвалификации" Then
 
-            СтрокаЗапроса = "SELECT Уровень FROM " & НазваниеБазы & " ORDER BY Уровень"
-
-        ElseIf textboxName = "Пол" Then
-
-            СтрокаЗапроса = "SELECT * FROM Пол ORDER BY Код"
+            СтрокаЗапроса = formList__loadProfLevel(nameTbl)
 
         Else
 
-            If (АСформироватьПриказ.Text = "Спецэкзамен_протокол" Or АСформироватьПриказ.Text = "") And (textboxName = "ПОЗачисленииНомерГруппы" Or textboxName = "ПроектВносит" Or textboxName = "Исполнитель" Or textboxName = "Согласовано1" Or textboxName = "РуководительСтажировки" Or textboxName = "Комиссия2" Or textboxName = "Комиссия3" Or textboxName = "Ответственный" Or textboxName = "Утверждает" Or textboxName = "СекретарьКомиссии") Then
+            If (nameTbl = "`group`") Then
 
-                СтрокаЗапроса = "SELECT kod,name,name_pad,name_full,doljnost FROM sotrudnik ORDER BY name"
-                prikaz = "спецэкзамен"
-
-            ElseIf (НазваниеБазы = "Группа") Then
-
-                СтрокаЗапроса = "SELECT * FROM Группа WHERE ДатаНЗ > '" & ААОсновная.mySqlConnect.dateToFormatMySQL(Date.Now.AddMonths(-6)) & "'"
-
+                СтрокаЗапроса = formList__loadKodGroup(ААОсновная.mySqlConnect.dateToFormatMySQL(Date.Now.AddMonths(-6)))
             Else
 
-                СтрокаЗапроса = "SELECT * FROM " & НазваниеБазы
+                СтрокаЗапроса = "SELECT * FROM " & nameTbl
 
             End If
 
         End If
 
-        If textboxName = "СпециальностьСлушателя" Then
-
-            СтрокаЗапроса = "SELECT * FROM " & НазваниеБазы & " ORDER BY Специальность"
-
-        ElseIf textboxName = "ПОЗачисленииНомерГруппы" Or textboxName = "НомерГруппы" Or textboxName = "ГруппаОценочнаяВедомость" Or textboxName = "ГруппаОценкиИА" Then
+        If textboxName = "ПОЗачисленииНомерГруппы" Or textboxName = "НомерГруппы" Or textboxName = "ГруппаОценочнаяВедомость" Or textboxName = "ГруппаОценкиИА" Then
 
             СтрокаЗапроса = SQLString_loadGruppa()
 
         End If
 
         If textboxName = "Ответственный" And АСформироватьПриказ.Label4.Text = "Слушатель(ФИО)" Then
-            СтрокаЗапроса = "SELECT СоставГрупп.Группа, CONCAT(Слушатель.Фамилия,' ',Слушатель.Имя,' ',IFNULL(слушатель.Отчество,' ')) FROM СоставГрупп INNER JOIN Слушатель ON СоставГрупп.Слушатель = Слушатель.Снилс WHERE СоставГрупп.Kod = " & ААОсновная.prikazKodGroup & " ORDER BY Слушатель.Фамилия"
+
+            СтрокаЗапроса = formList__loadOtvOrSlush(Convert.ToString(ААОсновная.prikazKodGroup))
+
         End If
 
         If СтрокаЗапроса = "SELECT * FROM " Then
+
             Return
+
         End If
 
         massiv = ЗагрузитьИзБазы.ЗагрузитьИзБазы(СтрокаЗапроса)
 
         If Not massiv(0, 0).ToString = "ошибка" Then
+
             If textboxName = "ПОЗачисленииНомерГруппы" Or textboxName = "НомерГруппы" Or textboxName = "ГруппаОценочнаяВедомость" Or textboxName = "ГруппаОценкиИА" Then
+
                 ЗаписьВListView.ЗаписьВListView(False, False, ListViewСписок, massiv, 0, 1, 2, 3)
                 Dim QueryString As String
-                QueryString = "SELECT Код FROM группа WHERE УровеньКвалификации = 'профессиональная переподготовка'"
+                QueryString = formList__loadKodGroupPP()
                 listViewColoriz(ListViewСписок, ЗагрузитьИзБазы.ЗагрузитьИзБазы(QueryString))
+
             ElseIf textboxName = "versProgs" Then
+
                 ЗаписьВListView.ЗаписьВListView(False, False, ListViewСписок, massiv, 0, 1, 2)
+
             Else
+
                 ЗаписьВListView.ЗаписьВListView(False, True, ListViewСписок, massiv, 1)
+
             End If
+
         Else
+
             MsgBox("ошибка, повторите последнее действие")
             Exit Sub
+
         End If
 
         ActiveControl = ListViewСписок
@@ -129,11 +129,15 @@ Public Class ФормаСписок
         End Try
 
         If textboxName = "versProgs" And FormName = "НоваяГруппа" Then
+
             SelectedRow(2, НоваяГруппа.getProgKod())
             textboxName = "НоваяГруппаПрограмма"
+
         ElseIf textboxName = "versProgs" And FormName = "РедакторГруппы" Then
+
             SelectedRow(2, РедакторГруппы.getProgKod())
             textboxName = "НоваяГруппаПрограмма"
+
         End If
 
 
@@ -362,7 +366,7 @@ Public Class ФормаСписок
             End If
         Else
             If textboxName = "ПОЗачисленииНомерГруппы" Then
-                mass = Поиск.SQLПоиск(СтрокаПоиска.Text, "Группа", "Номер", "Номер", "Группа")
+                mass = SQLПоиск(СтрокаПоиска.Text, "`group`", "Номер", "Номер", "Номер")
                 ЗаписьВListView.ЗаписьВListView(False, True, ListViewСписок, mass, 0)
             Else mass = Поиск.Поиск(СтрокаПоиска.Text, massiv, 1)
                 ЗаписьВListView.ЗаписьВListView(False, True, ListViewСписок, mass, 1)
@@ -374,7 +378,7 @@ Public Class ФормаСписок
 
     Sub проверитьГруппу()
         Dim строкаЗапроса, Слушатели
-        строкаЗапроса = "SELECT Слушатель FROM СоставГрупп WHERE Kod= " & ААОсновная.prikazKodGroup
+        строкаЗапроса = formList__checkGroup(ААОсновная.prikazKodGroup)
         Слушатели = ЗагрузитьИзБазы.ЗагрузитьИзБазы(строкаЗапроса)
         If Слушатели(0, 0).ToString = "нет записей" Then
             предупреждение.текст.Text = "В выбранной группе нет слушателей"
@@ -433,7 +437,7 @@ Public Class ФормаСписок
             Список_Shown(sender, e)
 
             Dim QueryString As String
-            QueryString = "SELECT Код FROM группа WHERE УровеньКвалификации = 'профессиональная переподготовка'"
+            QueryString = formList__loadKodGroupPP()
             listViewColoriz(ListViewСписок, ЗагрузитьИзБазы.ЗагрузитьИзБазы(QueryString))
 
             Return

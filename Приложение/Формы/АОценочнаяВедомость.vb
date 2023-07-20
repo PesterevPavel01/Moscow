@@ -73,6 +73,7 @@ Public Class ОценочнаяВедомость
     End Sub
 
     Private Sub Группа_Click(sender As Object, e As EventArgs) Handles НомерГруппы.Click
+
         ФормаСписок.ListViewСписок.Columns(0).Width = 120
         ФормаСписок.ListViewСписок.Columns.Add("Год", 100)
         ФормаСписок.ListViewСписок.Columns.Add("Код", 100)
@@ -92,12 +93,14 @@ Public Class ОценочнаяВедомость
     Private Sub Сохранить_Click(sender As Object, e As EventArgs) Handles Сохранить.Click
 
         ActiveControl = Button2
+
         If АДействияСОВедомостью.проверка(ТаблицаВедомость) Then
+
             Exit Sub
+
         End If
+
         АДействияСОВедомостью.СохранитьОценки(ТаблицаВедомость, kodGroup)
-
-
 
     End Sub
 
@@ -124,6 +127,7 @@ Public Class ОценочнаяВедомость
     End Sub
 
     Private Sub Группа_KeyDown(sender As Object, e As KeyEventArgs) Handles НомерГруппы.KeyDown
+
         If e.KeyCode = 13 Then
 
             Call Группа_Click(sender, e)

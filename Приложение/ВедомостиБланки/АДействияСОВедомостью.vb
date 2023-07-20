@@ -1,4 +1,6 @@
-﻿Module АДействияСОВедомостью
+﻿Imports System.Windows.Forms.VisualStyles.VisualStyleElement.ProgressBar
+
+Module АДействияСОВедомостью
 
     Public СписокСлушателей
     Sub ЗаписатьСписокСлушателей(Список As Object)
@@ -28,6 +30,8 @@
         Dim СтрокаЗапроса, Снилс As String
         Dim Счетчик As Integer = 0, СчетчикСтрок As Integer
         ReDim Запросы(3)
+        Dim argument As String()
+        ReDim argument(12)
 
         СчетчикСтрок = Ведомость.Rows.Count
         For Счетчик = 0 To СчетчикСтрок - 1
@@ -37,7 +41,7 @@
             Снилс = ОпределитьСНИЛС(CDbl(ОценочнаяВедомость.ТаблицаВедомость.Rows(Счетчик).Cells(0).Value))
             ФИО = Split(ОценочнаяВедомость.ТаблицаВедомость.Rows(Счетчик).Cells(1).Value, " ")
             Try
-                СтрокаЗапроса = "SELECT СоставГрупп.Слушатель FROM СоставГрупп WHERE СоставГрупп.Слушатель = " & Chr(39) & Снилс & Chr(39) & " AND СоставГрупп.Kod = " & kod
+                СтрокаЗапроса = oVedom__checkSlush(Снилс, Convert.ToString(kod))
             Catch ex As Exception
                 Continue For
             End Try
@@ -45,8 +49,18 @@
             If Проверочный(0, 0) = "нет записей" Then
                 Continue For
             End If
+
+            For count As Int16 = 0 To 9
+
+                argument(count) = Convert.ToString(ОценочнаяВедомость.ТаблицаВедомость.Rows(Счетчик).Cells(count + 2).Value)
+
+            Next
+
+            argument(10) = Снилс
+            argument(11) = Convert.ToString(kod)
+
             Try
-                СтрокаЗапроса = "UPDATE СоставГрупп SET ОценкаМодуль1= " & Chr(39) & ОценочнаяВедомость.ТаблицаВедомость.Rows(Счетчик).Cells(2).Value & Chr(39) & ",ОценкаМодуль2= " & Chr(39) & ОценочнаяВедомость.ТаблицаВедомость.Rows(Счетчик).Cells(3).Value & Chr(39) & ",ОценкаМодуль3= " & Chr(39) & ОценочнаяВедомость.ТаблицаВедомость.Rows(Счетчик).Cells(4).Value & Chr(39) & ",ОценкаМодуль4= " & Chr(39) & ОценочнаяВедомость.ТаблицаВедомость.Rows(Счетчик).Cells(5).Value & Chr(39) & ",ОценкаМодуль5= " & Chr(39) & ОценочнаяВедомость.ТаблицаВедомость.Rows(Счетчик).Cells(6).Value & Chr(39) & ",ОценкаМодуль6= " & Chr(39) & ОценочнаяВедомость.ТаблицаВедомость.Rows(Счетчик).Cells(7).Value & Chr(39) & ",ОценкаМодуль7= " & Chr(39) & ОценочнаяВедомость.ТаблицаВедомость.Rows(Счетчик).Cells(8).Value & Chr(39) & ",ОценкаМодуль8= " & Chr(39) & ОценочнаяВедомость.ТаблицаВедомость.Rows(Счетчик).Cells(9).Value & Chr(39) & ",ОценкаМодуль9= " & Chr(39) & ОценочнаяВедомость.ТаблицаВедомость.Rows(Счетчик).Cells(10).Value & Chr(39) & ",ОценкаМодуль10= " & Chr(39) & ОценочнаяВедомость.ТаблицаВедомость.Rows(Счетчик).Cells(11).Value & Chr(39) & " WHERE СоставГрупп.Слушатель = " & Chr(39) & Снилс & Chr(39) & " AND СоставГрупп.Kod = " & kod
+                СтрокаЗапроса = oVedom__updateOcenki(argument)
             Catch ex As Exception
                 предупреждение.текст.Text = "Информация не была сохранена"
                 ОткрытьФорму(предупреждение)

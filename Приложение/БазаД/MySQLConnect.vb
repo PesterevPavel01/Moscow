@@ -253,6 +253,7 @@ Public Class MySQLConnect
 
         ПодключениеКБД.ConnectionString = СтрокаПодключения
         ПодключениеКБД.Open()
+
         запрос = New MySqlCommand(sqlString, ПодключениеКБД)
         Адаптер = New MySqlDataAdapter(запрос)
         Адаптер.Fill(DSet, "Result")

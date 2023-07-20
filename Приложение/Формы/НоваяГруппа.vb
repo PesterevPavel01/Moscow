@@ -190,7 +190,7 @@ Public Class НоваяГруппа
         Dim result
         Dim queryResult As Int16 = 0
 
-        queryResult = ЗаписьВБазу.ПроверкаСовпаденийЧислоДА_2("Группа", "Year(ДатаНЗ)", gruppa.yearNZ, "Номер", gruppa.number)
+        queryResult = ЗаписьВБазу.ПроверкаСовпаденийЧислоДА_2("`group`", "Year(ДатаНЗ)", gruppa.yearNZ, "Номер", gruppa.number)
 
         If queryResult = 2 Then
 
@@ -199,11 +199,12 @@ Public Class НоваяГруппа
                 SC.Send(AddressOf enabledButton, gruppa.number)
                 Exit Sub
             End If
-            SQLString = "SELECT Код FROM Группа WHERE Номер='" & gruppa.number & "' AND Year(ДатаНЗ) = " & gruppa.yearNZ
+
+            SQLString = "SELECT Код FROM `group` WHERE Номер='" & gruppa.number & "' AND Year(ДатаНЗ) = " & gruppa.yearNZ
             result = ЗагрузитьИзБазы.ЗагрузитьИзБазы(SQLString)
             gruppa.Kod = result(0, 0)
 
-            SQLString = "DELETE FROM СоставГрупп WHERE Kod = " & gruppa.Kod
+            SQLString = "DELETE FROM group_list WHERE Kod = " & gruppa.Kod
             ЗаписьВБазу.УдалитьСовпадения = False
             ЗаписьВБазу.ЗаписьВБазу(SQLString)
 
@@ -232,7 +233,7 @@ Public Class НоваяГруппа
 
         Data = ААОсновная.mySqlConnect.dateToFormatMySQL(Date.Now.ToShortDateString)
 
-        If ЗаписьВБазу.ПроверкаСовпадений("Группа", "Номер", gruppa.number, "датаСоздания", Data, "Year(ДатаНЗ)", gruppa.yearNZ) Then
+        If ЗаписьВБазу.ПроверкаСовпадений("`group`", "Номер", gruppa.number, "датаСоздания", Data, "Year(ДатаНЗ)", gruppa.yearNZ) Then
             SC.Send(AddressOf endTread, gruppa.number)
         End If
 

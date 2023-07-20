@@ -219,7 +219,7 @@ Public Class Slushatel
 
         queryStr = SqlString__insertIntoListGroupp(slushatel.snils, Convert.ToString(slushatel.kodGroup))
 
-        If Not ЗаписьВБазу.ПроверкаСовпаденийЧислоДА_2("СоставГрупп", "Kod", slushatel.kodGroup, "Слушатель", slushatel.snils) = 2 Then
+        If Not ЗаписьВБазу.ПроверкаСовпаденийЧислоДА_2("group_list", "Kod", slushatel.kodGroup, "Слушатель", slushatel.snils) = 2 Then
 
             ЗаписьВБазу.ЗаписьВБазу(queryStr)
 

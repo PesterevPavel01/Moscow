@@ -3678,7 +3678,7 @@ Public Class ААОсновная
         programms_tbl.names.db_element_first = "name"
         programms_tbl.names.redactor_element_second = "Часы"
         programms_tbl.names.db_element_second = "hours"
-        programms_tbl.name_table = "programma"
+        programms_tbl.name_table = "programm"
 
         programm.load_hours_list()
 
