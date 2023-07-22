@@ -35,7 +35,7 @@
             Exit Sub
         End If
 
-        resourcesPath = Вспомогательный.ПутьККаталогуСРесурсами()
+        resourcesPath = Вспомогательный.resourcesPath()
         ПутьКШаблону = resourcesPath & "Шаблоны\Справка об окончании без ИА.docx"
 
         wordApp = CreateObject("Word.Application")

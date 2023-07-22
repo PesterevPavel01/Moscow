@@ -277,7 +277,7 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Приложение\Интерфейс\УбратьПустотыВМассиве.vb" />
-    <Compile Include="Приложение\Отчеты\ЗаписьИнформацииДляОтчетаExcell.vb" />
+    <Compile Include="Приложение\Отчеты\OtchetExcell.vb" />
     <Compile Include="Приложение\Интерфейс\ИзменениеВыделеннойСтрокиВListView.vb" />
     <Compile Include="Приложение\Справочники\ЗаполнитьФормуССлушВГруппе.vb" />
     <Compile Include="Приложение\Формы\СписокСлушателейВГруппе.Designer.vb">

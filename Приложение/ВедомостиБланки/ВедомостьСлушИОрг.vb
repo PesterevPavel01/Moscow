@@ -17,7 +17,7 @@
             Exit Sub
         End If
 
-        resourcesPath = Вспомогательный.ПутьККаталогуСРесурсами()
+        resourcesPath = Вспомогательный.resourcesPath()
         ПутьКШаблону = resourcesPath & "Шаблоны\Ведомость слушаетели и организации.docx"
 
         ПриложениеВорд = CreateObject("Word.Application")

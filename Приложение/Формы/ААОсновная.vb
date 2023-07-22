@@ -164,7 +164,7 @@ Public Class ААОсновная
 
         ActiveControl = Button2
         ФормаСправочникСлушатели.ДобавитьВГруппу.Visible = False
-        ФормаСправочникСлушатели.ПоказатьСправочникСлушатели()
+        ФормаСправочникСлушатели.showStudentsList()
         ФормаСправочникСлушатели.ShowDialog()
 
     End Sub
@@ -177,229 +177,10 @@ Public Class ААОсновная
     End Sub
 
 
-    Private Sub Button1_Click_1(sender As Object, e As EventArgs) Handles Button1.Click
-        Dim excellApp As Object
-        Dim excellWorkBook As Object
-        Dim excellSheet As Object
-        Dim excellObjects
-        ReDim excellObjects(1)
-        Dim groupsArray
-        Dim list
-        Dim studentList
-        Dim resultList
-        Dim otchetList
-        Dim listData As List(Of List(Of String))
-        Dim hours
-        Dim counter, counter2, counter3, СчетчикПр As Integer
-        Dim queryString, DateStart, DateEnd, path As String
+    Private Sub createOtchet_Click(sender As Object, e As EventArgs) Handles createOtchet.Click
 
         ActiveControl = Button2
-
-        DateStart = mySqlConnect.dateToFormatMySQL(ДатаНачалаОтчета.Value.ToShortDateString)
-        DateEnd = mySqlConnect.dateToFormatMySQL(ДатаКонцаОтчета.Value.ToShortDateString)
-
-        queryString = selectCol_otchet_info(DateStart, DateEnd)
-        groupsArray = ЗагрузитьИзБазы.ЗагрузитьИзБазы(queryString)
-
-        queryString = selectCol_chas()
-        hours = ЗагрузитьИзБазы.ЗагрузитьИзБазы(queryString)
-
-
-        queryString = SQLString_OtchetMassSlush(DateStart, DateEnd)
-        list = ЗагрузитьИзБазы.ЗагрузитьИзБазы(queryString)
-
-        '------------------------------------------------------------------------------------------------------
-
-        If list(0, 0).ToString = "нет записей" Then
-            MsgBox("Не найденно групп с зарегистрированными слушателями")
-            Exit Sub
-        End If
-        queryString = SQLString_OtchetMassDataSlush(DateStart, DateEnd)
-
-        studentList = ЗагрузитьИзБазы.ЗагрузитьИзБазы(queryString)
-
-        counter = 0
-
-        ReDim resultList(50, UBound(list, 2))
-
-        While counter <= UBound(resultList, 2)
-
-            resultList(0, counter) = list(1, counter)
-            resultList(1, counter) = list(2, counter)
-
-            counter2 = 0
-            СчетчикПр = UBound(studentList, 2)
-            While counter2 <= UBound(studentList, 2)
-
-                If resultList(0, counter) = studentList(1, counter2) Then
-
-                    counter3 = 2
-                    While counter3 <= UBound(studentList, 1)
-
-                        resultList(counter3, counter) = studentList(counter3, counter2)
-                        counter3 = counter3 + 1
-
-                    End While
-
-                End If
-
-                counter2 = counter2 + 1
-            End While
-
-            counter = counter + 1
-
-        End While
-
-        counter = 0
-        While counter <= UBound(resultList, 2)
-
-            counter2 = 0
-            СчетчикПр = UBound(groupsArray, 2)
-            While counter2 <= UBound(groupsArray, 2)
-
-                If resultList(1, counter) = groupsArray(1, counter2) Then
-
-                    counter3 = 2
-                    While counter3 <= UBound(groupsArray, 1)
-
-                        resultList(counter3 + 25, counter) = groupsArray(counter3, counter2)
-                        counter3 = counter3 + 1
-
-                    End While
-
-                End If
-
-
-                counter2 = counter2 + 1
-            End While
-
-            counter = counter + 1
-
-        End While
-
-        resultList = УбратьПустотыВМассиве.УбратьПустотыВМассиве(resultList)
-
-        Name = "Отчет" & Date.Now.ToShortDateString & "_" & НомерОтчета.ToString & ".xlsx"
-        path = Вспомогательный.ПутьККаталогуСРесурсами
-        path = path & "Отчеты\"
-
-        excellObjects = Вспомогательный.СозданиеКнигиЭксельИЛИОшибкаВ0(path, Name, НомерОтчета)
-
-        If excellObjects(0).ToString = "Ошибка" Then
-            Exit Sub
-        End If
-        excellApp = excellObjects(0)
-        excellWorkBook = excellObjects(1)
-        'ПриложениеЭксель.Visible = True
-
-ПослеСохранения:
-
-        НомерОтчета = НомерОтчета + 1
-
-        If ОтчетРуководителя.Checked Then
-            excellSheet = excellWorkBook.Worksheets.Add
-            excellSheet.Name = "ОтчетРуководителя"
-            queryString = WindowsApp2.SQLString_OtchetRuk(DateStart, DateEnd)
-            listData = mySqlConnect.ЗагрузитьИзMySQLвListAll(queryString, 1)
-
-            If Not listData.Count = 0 Then
-                ЗаписьИнформацииДляОтчетаExcell.СозданиеОтчетаРуководителя(excellSheet, listData, resultList, groupsArray)
-            Else
-                предупреждение.текст.Text = "Нет информации отвечающей условиям отбора для отчета руководителя"
-                предупреждение.ShowDialog()
-            End If
-
-        End If
-
-        If ChРМАНПО.Checked Then
-            queryString = WindowsApp2.SQLString_OtchetRMANPO(DateStart, DateEnd)
-            listData = mySqlConnect.ЗагрузитьИзMySQLвListAll(queryString, 1)
-
-            If Not listData.Count = 0 Then
-                ЗаписьИнформацииДляОтчетаExcell.CreateRMANPO(excellApp, excellWorkBook, listData, resultList, groupsArray, MonthName(ДатаКонцаОтчета.Value.Month))
-            Else
-                предупреждение.текст.Text = "Нет информации отвечающей условиям отбора для отчета руководителя"
-                предупреждение.ShowDialog()
-            End If
-        End If
-
-        If ChСводПоКурсам.Checked Then
-            excellSheet = excellWorkBook.Worksheets.Add
-            excellSheet.Name = "СводПоКурсам"
-            queryString = WindowsApp2.SQLString_OtchetKurs(DateStart, DateEnd, "курс")
-            otchetList = mySqlConnect.ЗагрузитьИзБДMySQLвМассив(queryString, 1)
-
-            If Not otchetList(0, 0).ToString = "нет записей" Then
-                ЗаписьИнформацииДляОтчетаExcell.СозданиеСводаПоКурсамСпециальностям(excellSheet, перевернутьмассив(otchetList), "СводПоКурсам")
-            Else
-                предупреждение.текст.Text = "Нет информации отвечающей условиям отбора для отчета Свод по курсам"
-                предупреждение.ShowDialog()
-            End If
-        End If
-
-        If СводПоСпец.Checked Then
-            excellSheet = excellWorkBook.Worksheets.Add
-            excellSheet.Name = "СводПоСпециальностям"
-            queryString = WindowsApp2.SQLString_OtchetKurs(DateStart, DateEnd, "специальность")
-            otchetList = mySqlConnect.ЗагрузитьИзБДMySQLвМассив(queryString, 1)
-
-            If Not otchetList.ToString = "нет записей" Then
-                ЗаписьИнформацииДляОтчетаExcell.СозданиеСводаПоКурсамСпециальностям(excellSheet, перевернутьмассив(otchetList), "СводПоСпециальностям")
-            Else
-                предупреждение.текст.Text = "Нет информации отвечающей условиям отбора для отчета Свод по специальностям"
-                предупреждение.ShowDialog()
-            End If
-        End If
-
-        If СводПоОрганиз.Checked Then
-            excellSheet = excellWorkBook.Worksheets.Add
-            excellSheet.Name = "ПереченьОрганизаций"
-            queryString = SQLString_OtchetOrg(DateStart, DateEnd)
-            otchetList = mySqlConnect.ЗагрузитьИзБДMySQLвМассив(queryString, 1)
-
-            If Not otchetList.ToString = "нет записей" Then
-                ЗаписьИнформацииДляОтчетаExcell.СозданиеСводаПоОрганизациям(excellSheet, otchetList)
-            Else
-                предупреждение.текст.Text = "Нет информации отвечающей условиям отбора для отчета Свод по организациям"
-                предупреждение.ShowDialog()
-            End If
-        End If
-
-        If БюджетВбюдж.Checked Then
-            excellSheet = excellWorkBook.Worksheets.Add
-            excellSheet.Name = "БюджетВнебюджет"
-
-            ReDim otchetList(2)
-            queryString = SQLString_OtchetBud_Vbud(DateStart, DateEnd, "полный")
-            listData = mySqlConnect.ЗагрузитьИзMySQLвListAll(queryString, 1)
-            otchetList(0) = listData
-
-            queryString = SQLString_OtchetBud_Vbud(DateStart, DateEnd, "бюджет")
-            otchetList(1) = mySqlConnect.ЗагрузитьИзMySQLвListAll(queryString, 1)
-
-            queryString = SQLString_OtchetBud_Vbud(DateStart, DateEnd, "внебюджет")
-            otchetList(2) = mySqlConnect.ЗагрузитьИзMySQLвListAll(queryString, 1)
-
-            If Not listData.Count = 0 Then
-                ЗаписьИнформацииДляОтчетаExcell.СозданиеОтчетаБюджетВнебюджет(excellSheet, otchetList, hours)
-            Else
-                предупреждение.текст.Text = "Нет информации отвечающей условиям отбора для отчета Бюджет/Внебюджет"
-                предупреждение.ShowDialog()
-            End If
-        End If
-
-        If ОтчетПеднагрузка.Checked Then
-            ПеднагрузкаОтчет.Педнагрузка("Педнагрузка", excellApp, excellWorkBook, DateStart, DateEnd)
-        End If
-
-        Try
-            excellWorkBook.Save
-        Catch ex As Exception
-            Exit Sub
-        End Try
-
-        excellApp.DisplayAlerts = True
-        excellApp.Visible = True
+        createMainDokument()
 
     End Sub
 
@@ -1718,12 +1499,12 @@ Public Class ААОсновная
         Call НормальныйШрифт(ПО_ДопускКИА)
     End Sub
 
-    Private Sub Button1_GotFocus(sender As Object, e As EventArgs) Handles Button1.GotFocus
+    Private Sub Button1_GotFocus(sender As Object, e As EventArgs) Handles createOtchet.GotFocus
         Call увеличитьШрифт(ActiveControl)
     End Sub
 
-    Private Sub Button1_LostFocus(sender As Object, e As EventArgs) Handles Button1.LostFocus
-        Call НормальныйШрифт(Button1)
+    Private Sub Button1_LostFocus(sender As Object, e As EventArgs) Handles createOtchet.LostFocus
+        Call НормальныйШрифт(createOtchet)
     End Sub
 
     Private Sub ОтчетРуководителя_GotFocus(sender As Object, e As EventArgs) Handles ОтчетРуководителя.GotFocus
@@ -3599,7 +3380,7 @@ Public Class ААОсновная
         End If
     End Sub
 
-    Private Sub Button1_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs) Handles Button1.PreviewKeyDown
+    Private Sub Button1_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs) Handles createOtchet.PreviewKeyDown
         If e.KeyCode = КлавишаПереключенияВкладок Then
             e.IsInputKey = True
         End If

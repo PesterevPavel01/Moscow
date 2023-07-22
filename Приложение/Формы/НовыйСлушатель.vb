@@ -177,7 +177,7 @@ Public Class НовыйСлушатель
         Снилс.SelectionStart = Len(Снилс.Text)
         snils = УдалитьРубашку(Снилс.Text)
         If Len(snils) = 11 Then
-            If ЗаписьВБазу.ПроверкаСовпадений("Слушатель", "Снилс", snils) Then
+            If ЗаписьВБазу.ПроверкаСовпадений("students", "Снилс", snils) Then
                 Снилс.BackColor = Color.Pink
             Else
                 Снилс.BackColor = SystemColors.Window

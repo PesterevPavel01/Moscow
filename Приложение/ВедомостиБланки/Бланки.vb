@@ -245,7 +245,7 @@
             счетчик = счетчик + 1
         End While
 
-        Вспомогательный.savePrikazBlank(DOK, ААОсновная.prikazKodGroup, видПриказа, ПутьККаталогуСРесурсами, "Карточки")
+        Вспомогательный.savePrikazBlank(DOK, ААОсновная.prikazKodGroup, видПриказа, resourcesPath, "Карточки")
         MSWord.Visible = True
 
         'Call сохранить(DOK, видПриказа)
@@ -534,7 +534,7 @@
             счетчик = счетчик + 1
         End While
 
-        Вспомогательный.savePrikazBlank(DOK, ААОсновная.prikazKodGroup, видПриказа, ПутьККаталогуСРесурсами, "Заявления")
+        Вспомогательный.savePrikazBlank(DOK, ААОсновная.prikazKodGroup, видПриказа, resourcesPath, "Заявления")
 
         MSWord.Visible = True
 
@@ -806,7 +806,7 @@
             счетчик = счетчик + 1
         End While
 
-        Вспомогательный.savePrikazBlank(DOK, ААОсновная.prikazKodGroup, видПриказа, ПутьККаталогуСРесурсами, "Заявления")
+        Вспомогательный.savePrikazBlank(DOK, ААОсновная.prikazKodGroup, видПриказа, resourcesPath, "Заявления")
         MSWord.Visible = True
 
         'Call сохранить(DOK, видПриказа)

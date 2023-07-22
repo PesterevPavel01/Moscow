@@ -26,121 +26,62 @@ Public Class РедакторГруппы
     End Sub
 
     Private Sub Квалификация_Click(sender As Object, e As EventArgs)
-
         Сообщение.Visible = False
-        'ФормаСписок.textboxName = Me.ActiveControl.Name
-        'ФормаСписок.FormName = ActiveForm.Name
-        'ОткрытьФорму(ФормаСписок)
-
     End Sub
     Private Sub Модуль1_Click(sender As Object, e As EventArgs)
         Сообщение.Visible = False
-        'ФормаСписок.textboxName = Me.ActiveControl.Name
-        'ФормаСписок.FormName = ActiveForm.Name
-        'ОткрытьФорму(ФормаСписок)
     End Sub
     Private Sub Модуль2_Click(sender As Object, e As EventArgs)
         Сообщение.Visible = False
-        'ФормаСписок.textboxName = Me.ActiveControl.Name
-        'ФормаСписок.FormName = ActiveForm.Name
-        'ОткрытьФорму(ФормаСписок)
     End Sub
     Private Sub Модуль3_Click(sender As Object, e As EventArgs)
         Сообщение.Visible = False
-        'ФормаСписок.textboxName = Me.ActiveControl.Name
-        'ФормаСписок.FormName = ActiveForm.Name
-        'ОткрытьФорму(ФормаСписок)
     End Sub
 
     Private Sub Модуль4_Click(sender As Object, e As EventArgs)
         Сообщение.Visible = False
-        'ФормаСписок.textboxName = Me.ActiveControl.Name
-        'ФормаСписок.FormName = ActiveForm.Name
-        'ОткрытьФорму(ФормаСписок)
     End Sub
     Private Sub Модуль5_Click(sender As Object, e As EventArgs)
         Сообщение.Visible = False
-        'ФормаСписок.textboxName = Me.ActiveControl.Name
-        'ФормаСписок.FormName = ActiveForm.Name
-        'ОткрытьФорму(ФормаСписок)
     End Sub
     Private Sub Модуль6_Click(sender As Object, e As EventArgs)
         Сообщение.Visible = False
-        'ФормаСписок.textboxName = Me.ActiveControl.Name
-        'ФормаСписок.FormName = ActiveForm.Name
-        'ОткрытьФорму(ФормаСписок)
     End Sub
     Private Sub Модуль7_Click(sender As Object, e As EventArgs)
         Сообщение.Visible = False
-        'ФормаСписок.textboxName = Me.ActiveControl.Name
-        'ФормаСписок.FormName = ActiveForm.Name
-        'ОткрытьФорму(ФормаСписок)
     End Sub
     Private Sub Модуль8_Click(sender As Object, e As EventArgs)
         Сообщение.Visible = False
-        'ФормаСписок.textboxName = Me.ActiveControl.Name
-        'ФормаСписок.FormName = ActiveForm.Name
-        'ОткрытьФорму(ФормаСписок)
     End Sub
     Private Sub Модуль9_Click(sender As Object, e As EventArgs)
         Сообщение.Visible = False
-        'ФормаСписок.textboxName = Me.ActiveControl.Name
-        'ФормаСписок.FormName = ActiveForm.Name
-        'ОткрытьФорму(ФормаСписок)
     End Sub
     Private Sub Модуль10_Click(sender As Object, e As EventArgs)
         Сообщение.Visible = False
-        'ФормаСписок.textboxName = Me.ActiveControl.Name
-        'ФормаСписок.FormName = ActiveForm.Name
-        'ОткрытьФорму(ФормаСписок)
     End Sub
     Private Sub НоваяГруппаКоличествоЧасов_Click(sender As Object, e As EventArgs)
         Сообщение.Visible = False
-        'ФормаСписок.textboxName = Me.ActiveControl.Name
-        'ФормаСписок.FormName = ActiveForm.Name
-        'ОткрытьФорму(ФормаСписок)
     End Sub
     Private Sub НоваяГруппаОтветственныйКуратор_Click(sender As Object, e As EventArgs)
         Сообщение.Visible = False
-        'ФормаСписок.textboxName = Me.ActiveControl.Name
-        'ФормаСписок.FormName = ActiveForm.Name
-        'ОткрытьФорму(ФормаСписок)
     End Sub
     Private Sub НоваягруппаОтветственныйЗаПрактику_Click(sender As Object, e As EventArgs)
         Сообщение.Visible = False
-        'ФормаСписок.textboxName = Me.ActiveControl.Name
-        'ФормаСписок.FormName = ActiveForm.Name
-        'ОткрытьФорму(ФормаСписок)
     End Sub
     Private Sub НоваяГруппаСпециальность_Click(sender As Object, e As EventArgs)
         Сообщение.Visible = False
-        'ФормаСписок.textboxName = Me.ActiveControl.Name
-        'ФормаСписок.FormName = ActiveForm.Name
-        'ОткрытьФорму(ФормаСписок)
     End Sub
     Private Sub НоваяГруппаПрограмма_Click(sender As Object, e As EventArgs)
         Сообщение.Visible = False
-        'ФормаСписок.textboxName = Me.ActiveControl.Name
-        'ФормаСписок.FormName = ActiveForm.Name
-        'ОткрытьФорму(ФормаСписок)
     End Sub
     Private Sub НоваяГруппаФормаОбучения_Click(sender As Object, e As EventArgs)
         Сообщение.Visible = False
-        'ФормаСписок.textboxName = Me.ActiveControl.Name
-        'ФормаСписок.FormName = ActiveForm.Name
-        'ОткрытьФорму(ФормаСписок)
     End Sub
     Private Sub НоваяГруппаУровеньКвалификации_Click(sender As Object, e As EventArgs)
         Сообщение.Visible = False
-        'ФормаСписок.textboxName = Me.ActiveControl.Name
-        'ФормаСписок.FormName = Me.Name
-        'ОткрытьФорму(ФормаСписок)
     End Sub
     Private Sub НоваяГруппаФинансирование_Click(sender As Object, e As EventArgs)
         Сообщение.Visible = False
-        'ФормаСписок.textboxName = Me.ActiveControl.Name
-        'ФормаСписок.FormName = ActiveForm.Name
-        'ОткрытьФорму(ФормаСписок)
     End Sub
     Private Sub Сохранить_Click(sender As Object, e As EventArgs) Handles Сохранить.Click
 

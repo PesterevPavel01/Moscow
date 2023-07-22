@@ -88,7 +88,7 @@ Partial Class ААОсновная
         Me.Label14 = New System.Windows.Forms.Label()
         Me.TabPage4 = New System.Windows.Forms.TabPage()
         Me.ChРМАНПО = New System.Windows.Forms.CheckBox()
-        Me.Button1 = New System.Windows.Forms.Button()
+        Me.createOtchet = New System.Windows.Forms.Button()
         Me.КнигаДипломовФРДО = New System.Windows.Forms.Button()
         Me.КнигаУчетаУдостоверенийФРДО = New System.Windows.Forms.Button()
         Me.КнигаСвидетельствФРДО = New System.Windows.Forms.Button()
@@ -909,7 +909,7 @@ Partial Class ААОсновная
         'TabPage4
         '
         Me.TabPage4.Controls.Add(Me.ChРМАНПО)
-        Me.TabPage4.Controls.Add(Me.Button1)
+        Me.TabPage4.Controls.Add(Me.createOtchet)
         Me.TabPage4.Controls.Add(Me.КнигаДипломовФРДО)
         Me.TabPage4.Controls.Add(Me.КнигаУчетаУдостоверенийФРДО)
         Me.TabPage4.Controls.Add(Me.КнигаСвидетельствФРДО)
@@ -947,21 +947,21 @@ Partial Class ААОсновная
         Me.ChРМАНПО.Text = "РМАНПО"
         Me.ChРМАНПО.UseVisualStyleBackColor = True
         '
-        'Button1
+        'createOtchet
         '
-        Me.Button1.FlatAppearance.BorderColor = System.Drawing.Color.WhiteSmoke
-        Me.Button1.FlatAppearance.BorderSize = 0
-        Me.Button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.Button1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Button1.Location = New System.Drawing.Point(8, 241)
-        Me.Button1.Name = "Button1"
-        Me.Button1.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.Button1.Size = New System.Drawing.Size(155, 41)
-        Me.Button1.TabIndex = 10
-        Me.Button1.Text = "Сформировать"
-        Me.Button1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Button1.UseVisualStyleBackColor = True
+        Me.createOtchet.FlatAppearance.BorderColor = System.Drawing.Color.WhiteSmoke
+        Me.createOtchet.FlatAppearance.BorderSize = 0
+        Me.createOtchet.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.createOtchet.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
+        Me.createOtchet.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.createOtchet.Location = New System.Drawing.Point(8, 241)
+        Me.createOtchet.Name = "createOtchet"
+        Me.createOtchet.RightToLeft = System.Windows.Forms.RightToLeft.No
+        Me.createOtchet.Size = New System.Drawing.Size(155, 41)
+        Me.createOtchet.TabIndex = 10
+        Me.createOtchet.Text = "Сформировать"
+        Me.createOtchet.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.createOtchet.UseVisualStyleBackColor = True
         '
         'КнигаДипломовФРДО
         '
@@ -2278,7 +2278,7 @@ Partial Class ААОсновная
     Friend WithEvents ПоискСлушателейПоУм As ComboBox
     Friend WithEvents TabPage4 As TabPage
     Friend WithEvents ChРМАНПО As CheckBox
-    Friend WithEvents Button1 As Button
+    Friend WithEvents createOtchet As Button
     Friend WithEvents КнигаДипломовФРДО As Button
     Friend WithEvents КнигаУчетаУдостоверенийФРДО As Button
     Friend WithEvents КнигаСвидетельствФРДО As Button

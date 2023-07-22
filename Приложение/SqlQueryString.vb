@@ -33,7 +33,7 @@ Public Class SqlQueryString
 
         sqlString = "SELECT
                       COUNT(Код)
-                    FROM слушатель
+                    FROM students
                     WHERE НОрг =" + kod
         Return sqlString
 
@@ -800,11 +800,11 @@ sotrudnik.in_list,
 
         Dim sqlString As String = ""
         sqlString = "Select 
-                     CONCAT(Слушатель.Фамилия,' ',Слушатель.Имя,' ',IFNULL(слушатель.Отчество,' ')) 
+                     CONCAT(students.Фамилия,' ',students.Имя,' ',IFNULL(students.Отчество,' ')) 
                      FROM group_list 
-                     INNER JOIN Слушатель ON group_list.Слушатель = Слушатель.Снилс 
+                     INNER JOIN students ON group_list.students = students.Снилс 
                      WHERE group_list.Kod = " & ААОсновная.prikazKodGroup & " 
-                     ORDER BY Слушатель.Фамилия"
+                     ORDER BY students.Фамилия"
         Return sqlString
 
     End Function

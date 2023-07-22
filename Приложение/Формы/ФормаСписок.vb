@@ -4,17 +4,11 @@ Public Class ФормаСписок
     Public textboxName As String
     Public FormName As String
     Public massiv
-    Public вклЧекбоксы As String
+    Public onCheckboxes As String
     Public sort As UInt16 = 0
     Public sortColumn As Integer = -1
     Public Const PoVozr = 1
     Public Const PoUb = 2
-
-    'Private Sub SelectRow(kod As String)
-    '    Dim numberRow As Integer = ДействияСДатаГрид.dataGridViewSearchRow(ListViewСписок.Rows, 0, newProgramm.Text)
-    '    dataGridProgs.CurrentCell = dataGridProgs.Rows(numberRow).Cells(0)
-    '    dataGridProgs.Rows(numberRow).Cells(0).Selected = True
-    'End Sub
 
     Private Sub Список_Shown(sender As Object, e As EventArgs) Handles Me.Shown
 

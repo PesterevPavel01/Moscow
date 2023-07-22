@@ -335,9 +335,9 @@ Module Вспомогательный
 
         Снилс = ДобавитьРубашку.УдалитьРубашку(Снилс)
 
-        queryStr = "INSERT INTO group_list (Слушатель, Kod ) VALUES ( " & Chr(39) & Снилс & Chr(39) & " , " & СправочникГруппы.kod & ")"
+        queryStr = "INSERT INTO group_list (students, Kod ) VALUES ( " & Chr(39) & Снилс & Chr(39) & " , " & СправочникГруппы.kod & ")"
 
-        If Not ЗаписьВБазу.ПроверкаСовпаденийЧислоДА_2("group_list", "Kod", СправочникГруппы.kod, "Слушатель", Снилс) = 2 Then
+        If Not ЗаписьВБазу.ПроверкаСовпаденийЧислоДА_2("group_list", "Kod", СправочникГруппы.kod, "students", Снилс) = 2 Then
 
             ЗаписьВБазу.ЗаписьВБазу(queryStr)
 
@@ -664,7 +664,7 @@ Module Вспомогательный
         Номер = Список.Count
     End Sub
 
-    Function ПутьККаталогуСРесурсами() As String
+    Function resourcesPath() As String
 
         Dim ПутьКФайлуRes, Путь As String
         Dim Массив
@@ -686,7 +686,7 @@ Module Вспомогательный
         End While
 
 
-        ПутьККаталогуСРесурсами = ПутьКФайлуRes & "Resources\"
+        resourcesPath = ПутьКФайлуRes & "Resources\"
 
     End Function
     Function ПутьКОбщейБазе() As String

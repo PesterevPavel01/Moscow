@@ -76,7 +76,7 @@ Public Class СписокСлушателейВГруппе
 
     Private Sub ДобавитьВГруппу_Click(sender As Object, e As EventArgs) Handles ДобавитьВГруппу.Click
 
-        ФормаСправочникСлушатели.ПоказатьСправочникСлушатели()
+        ФормаСправочникСлушатели.showStudentsList()
         ФормаСправочникСлушатели.ДобавитьВГруппу.Visible = True
         ФормаСправочникСлушатели.ShowDialog()
 

@@ -5,14 +5,14 @@
     Public str As String
     Public РубашкаДобавлена = False
 
-    Public Sub ПоказатьСправочникСлушатели()
+    Public Sub showStudentsList()
 
-        Dim Str As String, ПолеДляПоиска, ПолеДляСортировки As String
+        Dim queryString As String, columnSearch, columnSort As String
 
         ListViewСписокСлушателей.Visible = False
 
-        ПолеДляСортировки = Интерфейс.ИмяВключенногоЧекбоксыНаФорме(НастройкаСортировкиСлушателей)
-        ПолеДляПоиска = Интерфейс.ИмяВключенногоЧекбоксыНаФорме(НастройкаПоискаСлушателей)
+        columnSort = Интерфейс.ИмяВключенногоЧекбоксыНаФорме(НастройкаСортировкиСлушателей)
+        columnSearch = Интерфейс.ИмяВключенногоЧекбоксыНаФорме(НастройкаПоискаСлушателей)
 
         Label2.Visible = False
 
@@ -20,9 +20,9 @@
         Label1.Visible = True
         PictureBox1.Visible = True
 
-        Str = "SELECT Код, Снилс, Фамилия, Имя, Отчество FROM Слушатель ORDER BY " & ПолеДляСортировки & Интерфейс.ВидСортировки(Me, НастройкаСортировкиСлушателей.НажатПБСл)
+        queryString = studentsList__loadStudentsList(columnSort, Интерфейс.ВидСортировки(Me, НастройкаСортировкиСлушателей.НажатПБСл))
 
-        massiv = ААОсновная.mySqlConnect.ЗагрузитьИзБДMySQLвМассив(Str, 1)
+        massiv = ААОсновная.mySqlConnect.ЗагрузитьИзБДMySQLвМассив(queryString, 1)
         massiv = УбратьПустотыВМассиве.УбратьПустотыВМассиве(massiv)
         massiv = ДобавитьРубашку.ДобавитьРубашкуВМассив(massiv)
 
@@ -41,21 +41,23 @@
     Public ИнформацияОСлушателе
 
     Private Sub ListViewСписокСлушателей_DoubleClick(sender As Object, e As EventArgs) Handles ListViewСписокСлушателей.DoubleClick
-        Dim СтрокаЗапроса As String
-        Dim Снилс As String
+
+        Dim queryString As String
+        Dim snils As String
+
         Label2.Visible = False
 
         If Not ListViewСписокСлушателей.SelectedItems.Item(0).SubItems(1).Text = "удалено" Then
 
             Label2.Visible = False
 
-            Снилс = ДобавитьРубашку.УдалитьРубашку(ListViewСписокСлушателей.SelectedItems.Item(0).SubItems(1).Text)
+            snils = ДобавитьРубашку.УдалитьРубашку(ListViewСписокСлушателей.SelectedItems.Item(0).SubItems(1).Text)
 
             РедакторСлушателя.Text = ListViewСписокСлушателей.SelectedItems.Item(0).SubItems(2).Text & " " & ListViewСписокСлушателей.SelectedItems.Item(0).SubItems(3).Text & " " & ListViewСписокСлушателей.SelectedItems.Item(0).SubItems(4).Text & " "
 
-            СтрокаЗапроса = load_slushatel(Снилс)
+            queryString = load_slushatel(snils)
 
-            ИнформацияОСлушателе = ААОсновная.mySqlConnect.ЗагрузитьИзБДMySQLвМассив(СтрокаЗапроса, 1)
+            ИнформацияОСлушателе = ААОсновная.mySqlConnect.ЗагрузитьИзБДMySQLвМассив(queryString, 1)
             ИнформацияОСлушателе = УбратьПустотыВМассиве.УбратьПустотыВМассиве(ИнформацияОСлушателе)
 
             РедакторСлушателя.Show()
@@ -85,7 +87,7 @@
 
         If ПолеДляПоиска = "Снилс" Then
 
-            massiv = SQLПоиск(ДобавитьРубашку.УдалитьРубашку(СтрокаПоиска.Text), "Слушатель", "Снилс, Фамилия, Имя, Отчество, ДатаРождения", ПолеДляПоиска, ПолеДляСортировки & Интерфейс.ВидСортировки(НастройкаСортировкиСлушателей, НастройкаСортировкиСлушателей.НажатПБСл))
+            massiv = SQLПоиск(ДобавитьРубашку.УдалитьРубашку(СтрокаПоиска.Text), "students", "Снилс, Фамилия, Имя, Отчество, ДатаРождения", ПолеДляПоиска, ПолеДляСортировки & Интерфейс.ВидСортировки(НастройкаСортировкиСлушателей, НастройкаСортировкиСлушателей.НажатПБСл))
 
             If Not Press Then
 
@@ -104,7 +106,7 @@
 
         Else
 
-            massiv = SQLПоиск(СтрокаПоиска.Text, "Слушатель", "Снилс, Фамилия, Имя, Отчество, ДатаРождения", ПолеДляПоиска, ПолеДляСортировки)
+            massiv = SQLПоиск(СтрокаПоиска.Text, "students", "Снилс, Фамилия, Имя, Отчество, ДатаРождения", ПолеДляПоиска, ПолеДляСортировки)
             massiv = ДобавитьРубашкуВМассив(massiv, 0)
 
         End If
@@ -158,7 +160,7 @@
             ind = УдалитьРубашку(ListViewСписокСлушателей.SelectedItems.Item(0).SubItems(1).Text)
             nomer = ListViewСписокСлушателей.SelectedItems.Item(0).SubItems(0).Text
 
-            If Not ЗаписьВБазу.ПроверкаСовпадений("Слушатель", "СНИЛС", ind) Then
+            If Not ЗаписьВБазу.ПроверкаСовпадений("students", "СНИЛС", ind) Then
 
                 MsgBox("Ошибка. Запись уже удалена. Нажмите кнопку Загрузить из базы, чтобы обновить список")
                 GoTo Конец
@@ -171,15 +173,15 @@
 
             If ФормаДаНетУдалить.НажатаКнопкаДа Then
 
-                If ЗаписьВБазу.ПроверкаСовпадений("group_list", "Слушатель", ind) Then
+                If ЗаписьВБазу.ПроверкаСовпадений("group_list", "students", ind) Then
 
-                    ЗаписьВБазу.УдалитьЗаписи("group_list", "Слушатель", ind)
+                    ЗаписьВБазу.УдалитьЗаписи("group_list", "students", ind)
 
                 End If
 
-                ЗаписьВБазу.УдалитьЗаписи("Слушатель", "СНИЛС", ind)
+                ЗаписьВБазу.УдалитьЗаписи("students", "СНИЛС", ind)
 
-                If Not ЗаписьВБазу.ПроверкаСовпадений("Слушатель", "СНИЛС", ind) Then
+                If Not ЗаписьВБазу.ПроверкаСовпадений("students", "СНИЛС", ind) Then
 
                     Label2.Visible = True
                     Label2.Text = "Слушатель: Снилс №" & ind & " был удален."
@@ -343,6 +345,7 @@
     End Sub
 
     Private Sub ListViewСписокСлушателей_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ListViewСписокСлушателей.SelectedIndexChanged
+
         Dim Dtable As DataTable
         Dim Snils, SqlString As String
 
@@ -355,6 +358,7 @@
         SqlString = sprSlushTblGroup(Snils)
         Dtable = ААОсновная.mySqlConnect.ЗагрузитьИзMySQLвDataTable(SqlString, 1)
         ССлушТаблицаИнфСлушателя.DataSource = Dtable
+
         ''ССлушТаблицаИнфСлушателя.AutoResizeColumn(0)
         'ССлушТаблицаИнфСлушателя.AutoResizeColumn(1)
 

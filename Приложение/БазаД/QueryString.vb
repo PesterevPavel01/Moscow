@@ -6,15 +6,23 @@ Module QueryString
 
     Dim sqlString As String
 
+    Public Function studentsList__loadStudentsList(columnSort As String, arg As String) As String
+
+        sqlString = "SELECT Код, Снилс, Фамилия, Имя, Отчество FROM students ORDER BY " & columnSort & arg
+
+        Return sqlString
+
+    End Function
+
     Public Function formOrder__loadStudentsList(kodGroup As String) As String
 
         sqlString = "SELECT 
-                    CONCAT(Слушатель.Фамилия,' ',Слушатель.Имя,' ',IFNULL(слушатель.Отчество,' ')) 
+                    CONCAT(students.Фамилия,' ',students.Имя,' ',IFNULL(students.Отчество,' ')) 
                     FROM group_list 
-                    INNER JOIN Слушатель 
-                    ON group_list.Слушатель = Слушатель.Снилс 
+                    INNER JOIN students 
+                    ON group_list.students = students.Снилс 
                     WHERE group_list.Kod = " & kodGroup & " 
-                    ORDER BY Слушатель.Фамилия"
+                    ORDER BY students.Фамилия"
 
         Return sqlString
 
@@ -39,16 +47,16 @@ Module QueryString
     Public Function studentList__studentListInGroup(kodGroup As String) As String
 
         sqlString = "SELECT 
-                    Слушатель.Снилс,
-                    Слушатель.Фамилия,
-                    Слушатель.Имя,
-                    IFNULL(слушатель.Отчество,' '),
-                    Слушатель.ДатаРождения 
+                    students.Снилс,
+                    students.Фамилия,
+                    students.Имя,
+                    IFNULL(students.Отчество,' '),
+                    students.ДатаРождения 
                     FROM group_list 
-                    INNER JOIN Слушатель 
-                    ON group_list.Слушатель = Слушатель.Снилс 
+                    INNER JOIN students 
+                    ON group_list.students = students.Снилс 
                     WHERE group_list.Kod = " & kodGroup & " 
-                    ORDER BY Слушатель.Фамилия"
+                    ORDER BY students.Фамилия"
 
         Return sqlString
 
@@ -57,7 +65,7 @@ Module QueryString
     Public Function dopusk_loadListStudents(kodGroup As String) As String
 
         sqlString = "SELECT
-                      CONCAT(Слушатель.Фамилия, ' ', Слушатель.Имя, ' ', IFNULL(Слушатель.Отчество, ' ')),
+                      CONCAT(students.Фамилия, ' ', students.Имя, ' ', IFNULL(students.Отчество, ' ')),
                       programm.name,
                       ДатаНЗ,
                       ДатаКЗ,
@@ -67,14 +75,14 @@ Module QueryString
                       ИАИтог,
                       НомерПротоколаИА
                     FROM (group_list
-                      INNER JOIN Слушатель
-                        ON group_list.Слушатель = Слушатель.Снилс)
+                      INNER JOIN students
+                        ON group_list.students = students.Снилс)
                       INNER JOIN `group`
                         ON group_list.kod = `group`.Код
                       LEFT JOIN programm
                         ON `group`.kod_programm=programm.kod
                     WHERE `group`.Код=" & kodGroup & "
-                    ORDER BY Слушатель.Фамилия"
+                    ORDER BY students.Фамилия"
 
         Return sqlString
 
@@ -83,20 +91,20 @@ Module QueryString
     Public Function loadListStudents(kodGroup As String) As String
 
         sqlString = "SELECT
-                      CONCAT(Слушатель.Фамилия, ' ', Слушатель.Имя, ' ', IFNULL(Слушатель.Отчество, ' ')),
+                      CONCAT(students.Фамилия, ' ', students.Имя, ' ', IFNULL(students.Отчество, ' ')),
                       programm.name,
                       ДатаНЗ,
                       ДатаКЗ,
                       КолЧас
                     FROM (group_list
-                      INNER JOIN Слушатель
-                        ON group_list.Слушатель = Слушатель.Снилс)
+                      INNER JOIN students
+                        ON group_list.students = students.Снилс)
                       INNER JOIN `group`
                         ON group_list.kod = `group`.Код
                       LEFT JOIN programm
                         ON kod_programm=programm.kod
                     WHERE `group`.Код=" & kodGroup & "
-                    ORDER BY Слушатель.Фамилия"
+                    ORDER BY students.Фамилия"
 
         Return sqlString
 
@@ -118,11 +126,11 @@ Module QueryString
     Public Function poPpEnd__loadShortListStudents(kodGroup As String) As String
 
         sqlString = "SELECT
-                      CONCAT(Слушатель.Фамилия, ' ', Слушатель.Имя, ' ', IFNULL(Слушатель.Отчество, ' '))
+                      CONCAT(students.Фамилия, ' ', students.Имя, ' ', IFNULL(students.Отчество, ' '))
                     FROM group_list
-                      INNER JOIN Слушатель
-                        ON group_list.Слушатель = Слушатель.Снилс
-                    WHERE group_list.kod =" & kodGroup & " ORDER BY Слушатель.Фамилия"
+                      INNER JOIN students
+                        ON group_list.students = students.Снилс
+                    WHERE group_list.kod =" & kodGroup & " ORDER BY students.Фамилия"
         Return sqlString
 
     End Function
@@ -130,12 +138,12 @@ Module QueryString
     Public Function pkEnd__loadShortListStudents(kodGroup As String) As String
 
         sqlString = "SELECT
-                      CONCAT(Слушатель.Фамилия, ' ', Слушатель.Имя, ' ', IFNULL(Слушатель.Отчество, ' ')),
+                      CONCAT(students.Фамилия, ' ', students.Имя, ' ', IFNULL(students.Отчество, ' ')),
                       'зачтено'
                     FROM group_list
-                      INNER JOIN Слушатель
-                        ON group_list.Слушатель = Слушатель.Снилс
-                    WHERE group_list.kod =" & kodGroup & " ORDER BY Слушатель.Фамилия"
+                      INNER JOIN students
+                        ON group_list.students = students.Снилс
+                    WHERE group_list.kod =" & kodGroup & " ORDER BY students.Фамилия"
         Return sqlString
 
     End Function
@@ -151,11 +159,11 @@ Module QueryString
         While counter <= UBound(group, 2)
 
             If type = "Удостоверение" Then
-                queryString = "UPDATE group_list SET НомерУд = " & group(4, 0) + counter & " , РегНомерУд= " & group(5, 0) + counter & ", НомерСвид=0, РегНомерСвид=0, НомерДиплома=0, РегНомерДиплома=0  WHERE Kod = " & kodGroup & " AND Слушатель = " & Chr(39) & group(3, counter) & Chr(39)
+                queryString = "UPDATE group_list SET НомерУд = " & group(4, 0) + counter & " , РегНомерУд= " & group(5, 0) + counter & ", НомерСвид=0, РегНомерСвид=0, НомерДиплома=0, РегНомерДиплома=0  WHERE Kod = " & kodGroup & " AND students = " & Chr(39) & group(3, counter) & Chr(39)
             ElseIf type = "Свидетельство" Then
-                queryString = "UPDATE group_list SET НомерУд = 0 , РегНомерУд= 0, НомерСвид = " & group(4, 0) + counter & " , РегНомерСвид= " & group(5, 0) + counter & ", НомерДиплома=0, РегНомерДиплома=0 WHERE Kod = " & kodGroup & " AND Слушатель = " & Chr(39) & group(3, counter) & Chr(39)
+                queryString = "UPDATE group_list SET НомерУд = 0 , РегНомерУд= 0, НомерСвид = " & group(4, 0) + counter & " , РегНомерСвид= " & group(5, 0) + counter & ", НомерДиплома=0, РегНомерДиплома=0 WHERE Kod = " & kodGroup & " AND students = " & Chr(39) & group(3, counter) & Chr(39)
             ElseIf type = "Диплом" Then
-                queryString = "UPDATE group_list SET НомерУд = 0 , РегНомерУд= 0,НомерСвид=0, РегНомерСвид=0, НомерДиплома = " & group(4, 0) + counter & " , РегНомерДиплома= " & group(5, 0) + counter & " WHERE Kod = " & kodGroup & " AND Слушатель = " & Chr(39) & group(3, counter) & Chr(39)
+                queryString = "UPDATE group_list SET НомерУд = 0 , РегНомерУд= 0,НомерСвид=0, РегНомерСвид=0, НомерДиплома = " & group(4, 0) + counter & " , РегНомерДиплома= " & group(5, 0) + counter & " WHERE Kod = " & kodGroup & " AND students = " & Chr(39) & group(3, counter) & Chr(39)
             End If
             listSQLString.Add(queryString)
             counter = counter + 1
@@ -167,10 +175,10 @@ Module QueryString
     Public Function pkEndUd__loadListStudents(kodGroup As String) As String
 
         sqlString = "SELECT
-                      CONCAT(Слушатель.Фамилия ,' ', Слушатель.Имя ,' ', IFNULL(Слушатель.Отчество,' ')),
-                      Слушатель.Фамилия,
-                      CONCAT(Слушатель.Имя , ' ' , IFNULL(Слушатель.Отчество, ' ')),
-                      Слушатель.Снилс,
+                      CONCAT(students.Фамилия ,' ', students.Имя ,' ', IFNULL(students.Отчество,' ')),
+                      students.Фамилия,
+                      CONCAT(students.Имя , ' ' , IFNULL(students.Отчество, ' ')),
+                      students.Снилс,
                       `group`.НомерУд,
                       `group`.РегНомерУд,
                       `group`.ОсновнойДокумент,
@@ -182,11 +190,11 @@ Module QueryString
                     FROM `group`
                       INNER JOIN group_list
                         ON group_list.kod = `group`.Код
-                      INNER JOIN Слушатель
-                        ON group_list.Слушатель = Слушатель.Снилс
+                      INNER JOIN students
+                        ON group_list.students = students.Снилс
                       LEFT JOIN programm
                       ON `group`.kod_programm = programm.kod
-                    WHERE `group`.Код = " & kodGroup & " ORDER BY Слушатель.Фамилия"
+                    WHERE `group`.Код = " & kodGroup & " ORDER BY students.Фамилия"
 
         Return sqlString
 
@@ -195,10 +203,10 @@ Module QueryString
     Public Function poSvid__loadListSvid(kodGroup As String) As String
 
         sqlString = "SELECT
-                      Слушатель.Фамилия,
-                      Слушатель.Имя,
-                      IFNULL(Слушатель.Отчество, ' '),
-                      Слушатель.ДатаРождения,
+                      students.Фамилия,
+                      students.Имя,
+                      IFNULL(students.Отчество, ' '),
+                      students.ДатаРождения,
                       ОценкаМодуль1,
                       ОценкаМодуль2,
                       ОценкаМодуль3,
@@ -220,13 +228,13 @@ Module QueryString
                       ДатаНЗ,
                       programm.name
                     FROM (group_list
-                      INNER JOIN Слушатель
-                        ON group_list.Слушатель = Слушатель.Снилс)
+                      INNER JOIN students
+                        ON group_list.students = students.Снилс)
                       INNER JOIN `group`
                         ON group_list.kod = `group`.Код
                       LEFT JOIN programm 
                         ON programm.kod=kod_programm
-                    WHERE `group`.Код = " & kodGroup & " ORDER BY Слушатель.Фамилия"
+                    WHERE `group`.Код = " & kodGroup & " ORDER BY students.Фамилия"
 
         Return sqlString
 
@@ -239,7 +247,7 @@ Module QueryString
                       ДатаВыдачиСвид,
                       group_list.РегНомерСвид,
                       programm.name,
-                      Слушатель.УОбразования,
+                      students.УОбразования,
                       ФамилияДОО,
                       СерияДОО,
                       НомерДОО,
@@ -257,8 +265,8 @@ Module QueryString
                       Гражданство                    
                     FROM (
                     group_list 
-                    INNER JOIN Слушатель 
-                    ON group_list.Слушатель = Слушатель.Снилс) 
+                    INNER JOIN students 
+                    ON group_list.students = students.Снилс) 
                     INNER JOIN `group` 
                     ON group_list.Kod = `group`.Код 
                     LEFT JOIN programm
@@ -282,7 +290,7 @@ Module QueryString
                       ДатаВыдачиДиплома,
                       group_list.РегНомерДиплома,
                       programm.name,
-                      Слушатель.УОбразования,
+                      students.УОбразования,
                       ФамилияДОО,
                       СерияДОО,
                       НомерДОО,
@@ -300,8 +308,8 @@ Module QueryString
                       Гражданство
                     FROM (
                     group_list 
-                    INNER JOIN Слушатель 
-                    ON group_list.Слушатель = Слушатель.Снилс) 
+                    INNER JOIN students 
+                    ON group_list.students = students.Снилс) 
                     INNER JOIN `group` 
                     ON group_list.Kod = `group`.Код 
                     LEFT JOIN programm
@@ -325,7 +333,7 @@ Module QueryString
                       ДатаВыдачиУд,
                       group_list.РегНомерУд,
                       programm.name,
-                      Слушатель.УОбразования,
+                      students.УОбразования,
                       ФамилияДОО,
                       СерияДОО,
                       НомерДОО,
@@ -344,8 +352,8 @@ Module QueryString
                     FROM (
                     group_list 
                     INNER JOIN 
-                    Слушатель 
-                    ON group_list.Слушатель = Слушатель.Снилс)
+                    students 
+                    ON group_list.students = students.Снилс)
                     INNER JOIN `group` 
                     ON group_list.Kod = `group`.Код 
                     LEFT JOIN programm
@@ -363,7 +371,7 @@ Module QueryString
 
         sqlString = "SELECT  
                     group_list.РегНомерСвид, group_list.НомерСвид,`group`.Номер, Фамилия,Имя, Отчество, programm.name, КолЧас, ДатаКЗ, ДатаВыдачиСвид 
-                    FROM (group_list INNER JOIN Слушатель On group_list.Слушатель = Слушатель.Снилс) 
+                    FROM (group_list INNER JOIN students On group_list.students = students.Снилс) 
                     INNER JOIN `group` 
                         ON group_list.Kod = `group`.Код
                     LEFT JOIN programm
@@ -377,7 +385,7 @@ Module QueryString
     Public Function accountingBook__loadListDip(dateStart As String, dateEnd As String) As String
 
         sqlString = "SELECT group_list.РегНомерДиплома, group_list.НомерДиплома,`group`.Номер, Фамилия,Имя, Отчество, programm.name, КолЧас, ДатаКЗ, ДатаВыдачиДиплома 
-                    FROM (group_list INNER JOIN Слушатель On group_list.Слушатель = Слушатель.Снилс) 
+                    FROM (group_list INNER JOIN students On group_list.students = students.Снилс) 
                     INNER JOIN `group` 
                         ON group_list.Kod = `group`.Код 
                     LEFT JOIN programm
@@ -390,7 +398,7 @@ Module QueryString
 
     Public Function accountingBook__loadListUd(dateStart As String, dateEnd As String) As String
 
-        sqlString = "SELECT  group_list.РегНомерУд, group_list.НомерУд,`group`.Номер, Фамилия,Имя, Отчество, programm.name, КолЧас, ДатаКЗ, ДатаВыдачиУд FROM (group_list INNER JOIN Слушатель On group_list.Слушатель = Слушатель.Снилс) INNER JOIN `group` On group_list.Kod = `group`.Код 
+        sqlString = "SELECT  group_list.РегНомерУд, group_list.НомерУд,`group`.Номер, Фамилия,Имя, Отчество, programm.name, КолЧас, ДатаКЗ, ДатаВыдачиУд FROM (group_list INNER JOIN students On group_list.students = students.Снилс) INNER JOIN `group` On group_list.Kod = `group`.Код 
                      LEFT JOIN programm
                       ON kod_programm=programm.kod
                      WHERE `group`.ОсновнойДокумент= 'Удостоверение' AND NOT ISNULL(group_list.РегНомерУд) AND group_list.РегНомерУд<>0 AND ДатаВыдачиУд BETWEEN '" & dateStart & "' and  '" & dateEnd & " ' ORDER BY group_list.РегНомерУд"
@@ -401,7 +409,7 @@ Module QueryString
 
     Public Function formList__checkGroup(kodGroup As String) As String
 
-        sqlString = "SELECT Слушатель FROM group_list WHERE Kod= " & kodGroup
+        sqlString = "SELECT students FROM group_list WHERE Kod= " & kodGroup
 
         Return sqlString
 
@@ -409,7 +417,7 @@ Module QueryString
 
     Public Function formList__loadOtvOrSlush(kodGroup As String) As String
 
-        sqlString = "SELECT group_list.Группа, CONCAT(Слушатель.Фамилия,' ',Слушатель.Имя,' ',IFNULL(слушатель.Отчество,' ')) FROM group_list INNER JOIN Слушатель ON group_list.Слушатель = Слушатель.Снилс WHERE group_list.Kod = " & kodGroup & " ORDER BY Слушатель.Фамилия"
+        sqlString = "SELECT group_list.Группа, CONCAT(students.Фамилия,' ',students.Имя,' ',IFNULL(students.Отчество,' ')) FROM group_list INNER JOIN students ON group_list.students = students.Снилс WHERE group_list.Kod = " & kodGroup & " ORDER BY students.Фамилия"
 
         Return sqlString
 
@@ -448,7 +456,7 @@ Module QueryString
 
     Public Function redactorFormListGroup__loadData(groupKod As String) As String
 
-        sqlString = "SELECT Слушатель.Снилс, Слушатель.Фамилия, Слушатель.Имя, IFNULL(слушатель.Отчество,' '), Слушатель.ДатаРождения FROM group_list INNER JOIN Слушатель ON group_list.Слушатель = Слушатель.Снилс WHERE group_list.Kod = " & groupKod & " ORDER BY Слушатель.Фамилия"
+        sqlString = "SELECT students.Снилс, students.Фамилия, students.Имя, IFNULL(students.Отчество,' '), students.ДатаРождения FROM group_list INNER JOIN students ON group_list.students = students.Снилс WHERE group_list.Kod = " & groupKod & " ORDER BY students.Фамилия"
 
         Return sqlString
 
@@ -480,7 +488,7 @@ Module QueryString
 
     Public Function vedomPromAtt__loadListSlush(kodGroup As String) As String
 
-        sqlString = "SELECT CONCAT(Слушатель.Фамилия,' ',Слушатель.Имя,' ',IFNULL(слушатель.Отчество,' ')), Слушатель.Снилс  FROM group_list INNER JOIN Слушатель ON group_list.Слушатель = Слушатель.Снилс WHERE group_list.Kod= " & kodGroup & " ORDER BY Слушатель.Фамилия"
+        sqlString = "SELECT CONCAT(students.Фамилия,' ',students.Имя,' ',IFNULL(students.Отчество,' ')), students.Снилс  FROM group_list INNER JOIN students ON group_list.students = students.Снилс WHERE group_list.Kod= " & kodGroup & " ORDER BY students.Фамилия"
 
         Return sqlString
 
@@ -498,7 +506,7 @@ Module QueryString
                     ,ОценкаМодуль8= " & Chr(39) & argument(7) & Chr(39) & "
                     ,ОценкаМодуль9= " & Chr(39) & argument(8) & Chr(39) & "
                     ,ОценкаМодуль10= " & Chr(39) & argument(9) & Chr(39) & "
-                    WHERE group_list.Слушатель = " & Chr(39) & argument(10) & Chr(39) & "
+                    WHERE group_list.students = " & Chr(39) & argument(10) & Chr(39) & "
                     AND group_list.Kod = " & argument(11)
 
         Return sqlString
@@ -507,7 +515,7 @@ Module QueryString
 
     Public Function oVedom__checkSlush(kodGroup As String, snils As String) As String
 
-        sqlString = "SELECT group_list.Слушатель FROM group_list WHERE group_list.Слушатель = " & Chr(39) & snils & Chr(39) & " AND group_list.Kod = " & kodGroup
+        sqlString = "SELECT group_list.students FROM group_list WHERE group_list.students = " & Chr(39) & snils & Chr(39) & " AND group_list.Kod = " & kodGroup
 
         Return sqlString
 
@@ -516,10 +524,10 @@ Module QueryString
     Public Function prilDiplomLoadData(kodGroup As String) As String
 
         sqlString = "SELECT
-                      Слушатель.Фамилия,
-                      Слушатель.Имя,
-                      IFNULL(Слушатель.Отчество, ' '),
-                      Слушатель.ДатаРождения,
+                      students.Фамилия,
+                      students.Имя,
+                      IFNULL(students.Отчество, ' '),
+                      students.ДатаРождения,
                       ОценкаМодуль1,
                       ОценкаМодуль2,
                       ОценкаМодуль3,
@@ -542,14 +550,14 @@ Module QueryString
                       programm.name,
                       `group`.Спец
                     FROM (group_list
-                      INNER JOIN Слушатель
-                        ON group_list.Слушатель = Слушатель.Снилс
+                      INNER JOIN students
+                        ON group_list.students = students.Снилс
                       INNER JOIN `group`
                         ON group_list.kod = `group`.Код
                       LEFT JOIN programm 
                       ON `group`.kod_programm = programm.kod
                         )
-                    WHERE `group`.Код =" & kodGroup & " ORDER BY Слушатель.Фамилия"
+                    WHERE `group`.Код =" & kodGroup & " ORDER BY students.Фамилия"
 
         Return sqlString
 
@@ -557,7 +565,7 @@ Module QueryString
 
     Public Function blanki_loadSlush(kodGroup As String) As String
 
-        sqlString = "SELECT Слушатель FROM group_list WHERE Kod =" & kodGroup
+        sqlString = "SELECT students FROM group_list WHERE Kod =" & kodGroup
 
         Return sqlString
 
@@ -600,7 +608,7 @@ Module QueryString
 
     Public Function updateNumbersInGroup(number As String, regNumber As String, kodGroup As String, snils As String) As String
 
-        sqlString = "UPDATE group_list Set НомерУд = " & number & " , РегНомерУд= " & regNumber & " WHERE Kod = " & kodGroup & " And Слушатель = " & Chr(39) & snils & Chr(39)
+        sqlString = "UPDATE group_list Set НомерУд = " & number & " , РегНомерУд= " & regNumber & " WHERE Kod = " & kodGroup & " And students = " & Chr(39) & snils & Chr(39)
 
         Return sqlString
 
@@ -763,7 +771,7 @@ Module QueryString
 
     Public Function SqlString__updateSlushInListSlGroupp(snils As String, prevSnils As String)
 
-        sqlString = " UPDATE group_list SET Слушатель = " & Chr(39) & snils & Chr(39) & " WHERE Слушатель = " & Chr(39) & prevSnils & Chr(39)
+        sqlString = " UPDATE group_list SET students = " & Chr(39) & snils & Chr(39) & " WHERE students = " & Chr(39) & prevSnils & Chr(39)
 
         Return sqlString
 
@@ -771,7 +779,7 @@ Module QueryString
 
     Public Function SqlString__insertIntoListGroupp(snils As String, kodGroupp As String)
 
-        sqlString = "INSERT INTO group_list (Слушатель, Kod) VALUES ( " & Chr(39) & snils & Chr(39) & " , " & kodGroupp & ")"
+        sqlString = "INSERT INTO group_list (students, Kod) VALUES ( " & Chr(39) & snils & Chr(39) & " , " & kodGroupp & ")"
 
         Return sqlString
 
@@ -817,7 +825,7 @@ Module QueryString
         Else part3 += Chr(39) & structSlushatel.датаВыдачиДУЛ & Chr(39) & " ) "
         End If
 
-        sqlString = "INSERT INTO Слушатель " & part1 & "  VALUES " & part2 & part3
+        sqlString = "INSERT INTO students " & part1 & "  VALUES " & part2 & part3
 
         Return sqlString
 
@@ -841,7 +849,7 @@ Module QueryString
             part4 += ", ДУЛДатаВыдачи=" & Chr(39) & structSlushatel.датаВыдачиДУЛ & Chr(39)
         End If
 
-        sqlString = "UPDATE Слушатель SET " & part1 & part2 & part3 & part4 & " WHERE Снилс =" & Chr(39) & structSlushatel.snils & Chr(39)
+        sqlString = "UPDATE students SET " & part1 & part2 & part3 & part4 & " WHERE Снилс =" & Chr(39) & structSlushatel.snils & Chr(39)
 
         Return sqlString
 
@@ -849,7 +857,7 @@ Module QueryString
 
     Public Function SqlString__loadSlushList(snils As String)
 
-        sqlString = "SELECT * FROM " & "Слушатель" & " WHERE " & "Снилс" & " = " & Chr(39) & snils & Chr(39)
+        sqlString = "SELECT * FROM " & "students" & " WHERE " & "Снилс" & " = " & Chr(39) & snils & Chr(39)
 
         Return sqlString
 
@@ -857,7 +865,7 @@ Module QueryString
 
     Public Function SqlString__deleteSlushFromGrouppList(snils As String)
 
-        sqlString = "DELETE FROM group_list WHERE Слушатель= " & Chr(39) & snils & Chr(39)
+        sqlString = "DELETE FROM group_list WHERE students= " & Chr(39) & snils & Chr(39)
 
         Return sqlString
 
@@ -865,7 +873,7 @@ Module QueryString
 
     Public Function SqlString__deleteSlush(snils As String)
 
-        sqlString = "DELETE FROM Слушатель WHERE Снилс= " & Chr(39) & snils & Chr(39)
+        sqlString = "DELETE FROM students WHERE Снилс= " & Chr(39) & snils & Chr(39)
 
         Return sqlString
 
@@ -948,14 +956,14 @@ Module QueryString
                       name AS napr_org,
                       result.ИФин
                     FROM (SELECT
-                        CONCAT(слушатель.Фамилия, ' ', слушатель.Имя, ' ', IFNULL(слушатель.Отчество, ' ')) AS slush,
-                        слушатель.НОрг,
+                        CONCAT(students.Фамилия, ' ', students.Имя, ' ', IFNULL(students.Отчество, ' ')) AS slush,
+                        students.НОрг,
                         ИФин
                       FROM group_list
-                        INNER JOIN слушатель
-                          ON group_list.слушатель = слушатель.Снилс
+                        INNER JOIN students
+                          ON group_list.students = students.Снилс
                       WHERE group_list.kod = " & kodGroup & "
-                      ORDER BY слушатель.Фамилия) AS result
+                      ORDER BY students.Фамилия) AS result
 
                       LEFT JOIN napr_organization
                         ON result.НОрг = kod
@@ -970,42 +978,42 @@ Module QueryString
         sqlString = ""
 
         sqlString = "SELECT
-                      слушатель.Код,
-                      слушатель.Снилс,
-                      слушатель.Фамилия,
-                      слушатель.Имя,
-                      слушатель.Отчество,
-                      слушатель.ДатаРождения,
-                      слушатель.Пол,
-                      слушатель.УОбразования,
-                      слушатель.НаимДОО,
-                      слушатель.СерияДОО,
-                      слушатель.НомерДОО,
-                      слушатель.ФамилияДОО,
-                      слушатель.АРег,
-                      слушатель.Телефон,
-                      слушатель.Гражданство,
-                      слушатель.ДУЛ,
-                      слушатель.СерияДУЛ,
-                      слушатель.НомерДУЛ,
-                      слушатель.ИФин,
+                      students.Код,
+                      students.Снилс,
+                      students.Фамилия,
+                      students.Имя,
+                      students.Отчество,
+                      students.ДатаРождения,
+                      students.Пол,
+                      students.УОбразования,
+                      students.НаимДОО,
+                      students.СерияДОО,
+                      students.НомерДОО,
+                      students.ФамилияДОО,
+                      students.АРег,
+                      students.Телефон,
+                      students.Гражданство,
+                      students.ДУЛ,
+                      students.СерияДУЛ,
+                      students.НомерДУЛ,
+                      students.ИФин,
                       napr_organization.name,
-                      слушатель.НомерНапрРосздрав,
-                      слушатель.ДатаНапрРосздрав,
-                      слушатель.Специальность,
-                      слушатель.ДатаРегистрации,
-                      слушатель.ДатаОкончанияОбразованияПоДОО,
-                      слушатель.Почта,
-                      слушатель.СтранаДОО,
-                      слушатель.ДУЛКемВыдан,
-                      слушатель.ДУЛДатаВыдачи,
+                      students.НомерНапрРосздрав,
+                      students.ДатаНапрРосздрав,
+                      students.Специальность,
+                      students.ДатаРегистрации,
+                      students.ДатаОкончанияОбразованияПоДОО,
+                      students.Почта,
+                      students.СтранаДОО,
+                      students.ДУЛКемВыдан,
+                      students.ДУЛДатаВыдачи,
                       doo_vid_dok.name AS vid_doo
-                    FROM слушатель
+                    FROM students
                       LEFT JOIN doo_vid_dok
-                        ON слушатель.doo_vid_dok=doo_vid_dok.kod
+                        ON students.doo_vid_dok=doo_vid_dok.kod
                       INNER JOIN napr_organization
-                        ON слушатель.НОрг = napr_organization.kod
-                        WHERE слушатель.Снилс='" + snils + "'"
+                        ON students.НОрг = napr_organization.kod
+                        WHERE students.Снилс='" + snils + "'"
 
         Return sqlString
 
@@ -1014,10 +1022,10 @@ Module QueryString
     Public Function load_ppOk_group(kod As String) As String
 
         sqlString = "SELECT
-                                  CONCAT(слушатель.Фамилия, ' ', слушатель.Имя, ' ', IFNULL(слушатель.Отчество, ' ')),
-                                  слушатель.Фамилия,
-                                  CONCAT(слушатель.Имя, ' ', IFNULL(слушатель.Отчество, ' ')),
-                                  слушатель.Снилс,
+                                  CONCAT(students.Фамилия, ' ', students.Имя, ' ', IFNULL(students.Отчество, ' ')),
+                                  students.Фамилия,
+                                  CONCAT(students.Имя, ' ', IFNULL(students.Отчество, ' ')),
+                                  students.Снилс,
                                   `group`.НомерДиплома,
                                   `group`.РегНомерДиплома,
                                   `group`.ОсновнойДокумент,
@@ -1030,8 +1038,8 @@ Module QueryString
                                   НомерПротоколаИА,
                                   sotrudnik.name AS Куратор
                                 FROM (group_list
-                                  INNER JOIN слушатель
-                                    ON group_list.слушатель = слушатель.Снилс)
+                                  INNER JOIN students
+                                    ON group_list.students = students.Снилс)
                                   INNER JOIN `group`
                                     ON group_list.kod = `group`.Код
                                       LEFT JOIN sotrudnik
@@ -1039,7 +1047,7 @@ Module QueryString
                                       LEFT JOIN programm
                                     ON programm.kod = kod_programm
                                 WHERE `group`.Код = " + kod + "
-                                ORDER BY слушатель.Фамилия"
+                                ORDER BY students.Фамилия"
         Return sqlString
 
     End Function
@@ -1047,10 +1055,10 @@ Module QueryString
     Public Function load_pkOk_group(kod As String) As String
 
         sqlString = "SELECT
-                                  CONCAT(слушатель.Фамилия, ' ', слушатель.Имя, ' ', IFNULL(слушатель.Отчество, ' ')),
-                                  слушатель.Фамилия,
-                                  CONCAT(слушатель.Имя, ' ', IFNULL(слушатель.Отчество, ' ')),
-                                  слушатель.Снилс,
+                                  CONCAT(students.Фамилия, ' ', students.Имя, ' ', IFNULL(students.Отчество, ' ')),
+                                  students.Фамилия,
+                                  CONCAT(students.Имя, ' ', IFNULL(students.Отчество, ' ')),
+                                  students.Снилс,
                                   `group`.НомерУд,
                                   `group`.РегНомерУд,
                                   `group`.ОсновнойДокумент,
@@ -1063,8 +1071,8 @@ Module QueryString
                                   НомерПротоколаИА,
                                   sotrudnik.name AS Куратор
                                 FROM (group_list
-                                  INNER JOIN слушатель
-                                    ON group_list.слушатель = слушатель.Снилс)
+                                  INNER JOIN students
+                                    ON group_list.students = students.Снилс)
                                   INNER JOIN `group`
                                     ON group_list.kod = `group`.Код
                                   LEFT JOIN sotrudnik
@@ -1072,7 +1080,7 @@ Module QueryString
                                   LEFT JOIN programm
                                     ON programm.kod = kod_programm
                                 WHERE `group`.Код = " + kod + "
-                                ORDER BY слушатель.Фамилия"
+                                ORDER BY students.Фамилия"
         Return sqlString
 
     End Function
@@ -1080,10 +1088,10 @@ Module QueryString
     Public Function load_poOk_group(kod As String) As String
 
         sqlString = "SELECT
-                                      CONCAT(Слушатель.Фамилия, ' ', Слушатель.Имя, ' ', IFNULL(Слушатель.Отчество, ' ')),
-                                      Слушатель.Фамилия,
-                                      CONCAT(Слушатель.Имя, ' ', IFNULL(Слушатель.Отчество, ' ')),
-                                      Слушатель.Снилс,
+                                      CONCAT(students.Фамилия, ' ', students.Имя, ' ', IFNULL(students.Отчество, ' ')),
+                                      students.Фамилия,
+                                      CONCAT(students.Имя, ' ', IFNULL(students.Отчество, ' ')),
+                                      students.Снилс,
                                       `group`.НомерСвид,
                                       `group`.РегНомерСвид,
                                       `group`.ОсновнойДокумент,
@@ -1096,8 +1104,8 @@ Module QueryString
                                       НомерПротоколаИА,
                                       sotrudnik.name AS Куратор
                                     FROM (group_list
-                                      INNER JOIN Слушатель
-                                        ON group_list.Слушатель = Слушатель.Снилс)
+                                      INNER JOIN students
+                                        ON group_list.students = students.Снилс)
                                       INNER JOIN `group`
                                         ON group_list.kod = `group`.Код
                                       LEFT JOIN sotrudnik
@@ -1105,7 +1113,7 @@ Module QueryString
                                       LEFT JOIN programm
                                         ON programm.kod = kod_programm
                                 WHERE `group`.Код = " + kod + "
-                                ORDER BY слушатель.Фамилия"
+                                ORDER BY students.Фамилия"
         Return sqlString
 
     End Function
@@ -1209,7 +1217,7 @@ Module QueryString
         sqlString = ""
 
         sqlString = "SELECT 
-                      ocenka.Слушатель,
+                      ocenka.students,
                       ocenka.mod1
                     FROM
                     (SELECT
@@ -1230,69 +1238,69 @@ Module QueryString
                     LEFT JOIN
                       (SELECT
                     1 AS number,
-                    Слушатель,
+                    students,
                       group_list.ОценкаМодуль1 AS mod1
                     FROM group_list WHERE Kod=" + kod_group + "
                     UNION ALL 
                     SELECT
                     2 AS number,
-                    Слушатель,
+                    students,
                       group_list.ОценкаМодуль2 AS mod2
                     FROM group_list
                     WHERE Kod=" + kod_group + "
                     UNION ALL 
                     SELECT
                     3 AS number,
-                    Слушатель,
+                    students,
                       group_list.ОценкаМодуль3 AS mod3
                     FROM group_list
                     WHERE Kod=" + kod_group + "
                     UNION ALL 
                     SELECT
                     4 AS number,
-                    Слушатель,
+                    students,
                       group_list.ОценкаМодуль4 AS mod4
                     FROM group_list
                     WHERE Kod=" + kod_group + "
                     UNION ALL 
                     SELECT
                     5 AS number,
-                    Слушатель,
+                    students,
                       group_list.ОценкаМодуль5 AS mod5
                     FROM group_list
                     WHERE Kod=" + kod_group + "
                     UNION ALL 
                     SELECT
                     6 AS number,
-                    Слушатель,
+                    students,
                       group_list.ОценкаМодуль6 AS mod6
                     FROM group_list
                     WHERE Kod=" + kod_group + "
                     UNION ALL 
                     SELECT
                     7 AS number,
-                    Слушатель,
+                    students,
                       group_list.ОценкаМодуль7 AS mod7
                     FROM group_list
                     WHERE Kod=" + kod_group + "
                     UNION ALL 
                     SELECT
                     8 AS number,
-                    Слушатель,
+                    students,
                       group_list.ОценкаМодуль8 AS mod8
                     FROM group_list
                     WHERE Kod=" + kod_group + "
                     UNION ALL 
                     SELECT
                     9 AS number,
-                    Слушатель,
+                    students,
                       group_list.ОценкаМодуль9 AS mod9
                     FROM group_list
                     WHERE Kod=" + kod_group + "
                     UNION ALL 
                     SELECT
                     10 AS number,
-                    Слушатель,
+                    students,
                       group_list.ОценкаМодуль10 AS mod10
                     FROM group_list
                     WHERE Kod=" + kod_group + ") AS ocenka
@@ -1388,12 +1396,12 @@ Module QueryString
         sqlString = ""
 
         sqlString = "SELECT
-                      CONCAT(слушатель.Фамилия, ' ', слушатель.Имя, ' ', IFNULL(слушатель.Отчество, ' '))
+                      CONCAT(students.Фамилия, ' ', students.Имя, ' ', IFNULL(students.Отчество, ' '))
                     FROM group_list
-                      INNER JOIN слушатель
-                        ON group_list.слушатель = слушатель.Снилс
+                      INNER JOIN students
+                        ON group_list.students = students.Снилс
                     WHERE group_list.kod =" + kod_group + "
-                    ORDER BY слушатель.Фамилия"
+                    ORDER BY students.Фамилия"
 
         Return sqlString
 
@@ -1518,7 +1526,7 @@ Module QueryString
 
         sqlString = ""
 
-        sqlString = "SELECT  CONCAT(слушатель.Фамилия,' ',слушатель.Имя,' ',IFNULL(слушатель.Отчество,' ')) as 'ФИО', group_list.ИАТестирование as ИАТестирование, ИАПрактическиеНавыки as ИАПрактическиеНавыки, ИАИтог, Слушатель.Снилс FROM group_list INNER JOIN Слушатель ON group_list.Слушатель = Слушатель.Снилс WHERE group_list.Kod = " & kod_group & " ORDER BY Фамилия"
+        sqlString = "SELECT  CONCAT(students.Фамилия,' ',students.Имя,' ',IFNULL(students.Отчество,' ')) as 'ФИО', group_list.ИАТестирование as ИАТестирование, ИАПрактическиеНавыки as ИАПрактическиеНавыки, ИАИтог, students.Снилс FROM group_list INNER JOIN students ON group_list.students = students.Снилс WHERE group_list.Kod = " & kod_group & " ORDER BY Фамилия"
 
         Return sqlString
 
@@ -1527,7 +1535,7 @@ Module QueryString
 
         sqlString = ""
 
-        sqlString = "SELECT CONCAT(слушатель.Фамилия,' ',слушатель.Имя,' ',слушатель.Отчество), group_list.ОценкаМодуль1, ОценкаМодуль2, ОценкаМодуль3, ОценкаМодуль4, ОценкаМодуль5, ОценкаМодуль6, ОценкаМодуль7, ОценкаМодуль8, ОценкаМодуль9, ОценкаМодуль10, Слушатель.СНИЛС FROM group_list INNER JOIN Слушатель ON group_list.Слушатель = Слушатель.Снилс WHERE group_list.Kod = " & kod_group & " ORDER BY Фамилия"
+        sqlString = "SELECT CONCAT(students.Фамилия,' ',students.Имя,' ',students.Отчество), group_list.ОценкаМодуль1, ОценкаМодуль2, ОценкаМодуль3, ОценкаМодуль4, ОценкаМодуль5, ОценкаМодуль6, ОценкаМодуль7, ОценкаМодуль8, ОценкаМодуль9, ОценкаМодуль10, students.СНИЛС FROM group_list INNER JOIN students ON group_list.students = students.Снилс WHERE group_list.Kod = " & kod_group & " ORDER BY Фамилия"
 
         Return sqlString
 
@@ -1768,7 +1776,7 @@ Module QueryString
                      ) AS Tbl_spec" +
                      "  INNER JOIN (SELECT" +
                      "      spec.Код," +
-                     "      COUNT(слушатель) AS чел" +
+                     "      COUNT(students) AS чел" +
                      "    FROM (SELECT" +
                      "        Код" +
                      "      FROM `group`" +
@@ -1783,7 +1791,7 @@ Module QueryString
                      "      IFNULL(COUNT(slush.ИФин),0) AS bud" +
                      "    FROM (SELECT" +
                      "        spec.Код," +
-                     "        слушатель" +
+                     "        students" +
                      "      FROM (SELECT" +
                      "          Код" +
                      "        FROM `group`" +
@@ -1793,9 +1801,9 @@ Module QueryString
                      "      INNER JOIN (SELECT" +
                      "          Снилс," +
                      "          ИФин" +
-                     "        FROM слушатель" +
+                     "        FROM students" +
                      "        WHERE ИФин = 'Федеральный бюджет') AS slush" +
-                     "        ON slush.Снилс = sostav.слушатель" +
+                     "        ON slush.Снилс = sostav.students" +
                      "        GROUP BY sostav.Код" +
                      "        ) AS Tbl_data_2" +
                      "    ON Tbl_data_2.Код = Tbl_spec.Код" +
@@ -1838,7 +1846,7 @@ Module QueryString
 
                     INNER JOIN (SELECT
                         spec.Код,
-                        COUNT(слушатель) AS чел
+                        COUNT(students) AS чел
                       FROM (SELECT
                           Код
                         FROM `group`" +
@@ -1853,7 +1861,7 @@ Module QueryString
                         COUNT(slush.ИФин) AS bud
                       FROM (SELECT
                           spec.Код,
-                          слушатель
+                          students
                         FROM (SELECT
                             Код
                           FROM `group`" +
@@ -1864,9 +1872,9 @@ Module QueryString
                         INNER JOIN (SELECT
                             Снилс,
                             ИФин
-                          FROM слушатель
+                          FROM students
                           WHERE ИФин = 'Федеральный бюджет') AS slush
-                          ON slush.Снилс = sostav.слушатель
+                          ON slush.Снилс = sostav.students
                       GROUP BY sostav.Код) AS Tbl_data_2
                       ON Tbl_data_2.Код = Tbl_spec.Код
                     INNER JOIN (SELECT
@@ -1875,7 +1883,7 @@ Module QueryString
                         COUNT(slush.ИФин) AS bud
                       FROM (SELECT
                           spec.Код,
-                          слушатель
+                          students
                         FROM (SELECT
                             Код
                           FROM `group`" +
@@ -1887,8 +1895,8 @@ Module QueryString
                             Снилс,
                             ИФин,
                             НОрг
-                          FROM слушатель) AS slush
-                          ON slush.Снилс = sostav.слушатель
+                          FROM students) AS slush
+                          ON slush.Снилс = sostav.students
                         LEFT JOIN napr_organization
                                 ON slush.НОрг=kod
                       GROUP BY sostav.Код,
@@ -1936,7 +1944,7 @@ Module QueryString
                     ) AS Tbl_spec" +
                     "  INNER JOIN (SELECT" +
                     "      spec.Код," +
-                    "      COUNT(слушатель) AS чел" +
+                    "      COUNT(students) AS чел" +
                     "    FROM(SELECT" +
                     "        Код" +
                     "        From `group`" +
@@ -1971,7 +1979,7 @@ Module QueryString
                     "       COUNT(slush.Снилс) AS Человек" +
                     "     FROM(SELECT" +
                     "         spec.Код," +
-                    "         слушатель" +
+                    "         students" +
                     "       FROM(SELECT" +
                     "           Код" +
                     "         From `group`" +
@@ -1981,9 +1989,9 @@ Module QueryString
                     "       INNER Join (SELECT" +
                     "           Снилс," +
                     "           IFNULL(НОрг,'') AS НОрг" +
-                    "         From слушатель" +
+                    "         From students" +
                     "         ) AS slush" +
-                    "         ON slush.Снилс = sostav.слушатель" +
+                    "         ON slush.Снилс = sostav.students" +
                     "     GROUP By slush.НОрг" +
                     " ORDER BY slush.НОрг) AS result
 
@@ -2015,7 +2023,7 @@ Module QueryString
                             FROM(SELECT
                           spec.Код,
                           spec.КолЧас,
-                          слушатель
+                          students
                         FROM(SELECT
                             Код,
                             КолЧас
@@ -2028,7 +2036,7 @@ Module QueryString
                             Снилс,
                             If(Пол = 'женский', 0, 1) AS Пол,
                             If(If(month(Now()) >= month(ДатаРождения) And Day(Now()) >= Day(ДатаРождения), Year(Now()) >= Year(ДатаРождения), Year(Now()) >= Year(ДатаРождения) - 1) >= 60 And Пол = 'мужской', 1, 0) AS v_60
-                          From слушатель"
+                          From students"
 
         If argument = "бюджет" Then
             sqlString += "  WHERE ИФин = 'Федеральный бюджет'"
@@ -2037,7 +2045,7 @@ Module QueryString
         End If
 
         sqlString += " ) AS slush
-                          On slush.Снилс = sostav.слушатель
+                          On slush.Снилс = sostav.students
                       GROUP BY sostav.КолЧас) AS tbl_slush
                       INNER Join
                     
@@ -2051,7 +2059,7 @@ Module QueryString
                           FROM (SELECT
                               spec.Код,
                               spec.КолЧас,
-                              слушатель
+                              students
                             FROM (SELECT
                                 Код,
                                 КолЧас
@@ -2062,7 +2070,7 @@ Module QueryString
                                 ON spec.Код = kod) AS sostav
                             INNER JOIN (SELECT
                                 Снилс
-                                FROM слушатель
+                                FROM students
                                 "
 
         If argument = "бюджет" Then
@@ -2073,7 +2081,7 @@ Module QueryString
 
         sqlString += "
                               ) AS slush
-                              ON slush.Снилс = sostav.слушатель
+                              ON slush.Снилс = sostav.students
 
                           GROUP BY sostav.Код) AS tbl 
                         GROUP BY tbl.КолЧас)
@@ -2095,7 +2103,7 @@ Module QueryString
       INNER JOIN 
       (SELECT
           Снилс
-        FROM слушатель "
+        FROM students "
 
         If argument = "бюджет" Then
             sqlString += "  WHERE ИФин = 'Федеральный бюджет'"
@@ -2105,7 +2113,7 @@ Module QueryString
 
         sqlString += " ) AS slush
 
-        ON slush.Снилс = слушатель
+        ON slush.Снилс = students
 
     GROUP BY spec.КолЧас) AS sostav_chel
 
@@ -2272,37 +2280,37 @@ Module QueryString
         sqlString = ""
 
         sqlString = " SELECT" +
-  " слушатель.Код," +
-  " слушатель.Снилс," +
-  " слушатель.Фамилия," +
-  " слушатель.Отчество," +
-  " слушатель.Имя," +
-  " слушатель.ДатаРождения," +
-  " слушатель.Пол," +
-  " слушатель.УОбразования," +
-  " слушатель.НаимДОО," +
-  " слушатель.СерияДОО," +
-  " слушатель.НомерДОО," +
-  " слушатель.ФамилияДОО," +
-  " слушатель.АРег," +
-  " слушатель.Телефон," +
-  " слушатель.Гражданство," +
-  " слушатель.ДУЛ," +
-  " слушатель.СерияДУЛ," +
-  " слушатель.НомерДУЛ," +
-  " слушатель.ИФин," +
-  " слушатель.ДатаРегистрации" +
+  " students.Код," +
+  " students.Снилс," +
+  " students.Фамилия," +
+  " students.Отчество," +
+  " students.Имя," +
+  " students.ДатаРождения," +
+  " students.Пол," +
+  " students.УОбразования," +
+  " students.НаимДОО," +
+  " students.СерияДОО," +
+  " students.НомерДОО," +
+  " students.ФамилияДОО," +
+  " students.АРег," +
+  " students.Телефон," +
+  " students.Гражданство," +
+  " students.ДУЛ," +
+  " students.СерияДУЛ," +
+  " students.НомерДУЛ," +
+  " students.ИФин," +
+  " students.ДатаРегистрации" +
   " FROM" +
   " (" +
 " SELECT " +
- "        group_list.Слушатель" +
+ "        group_list.students" +
 " FROM `group`" +
 "   INNER JOIN group_list" +
 "     ON `group`.Код = group_list.Kod" +
 "     WHERE `group`.ДатаКЗ BETWEEN '" + DateNach + "' And '" + DateKon + "'" +
 "     ) AS tbl1" +
-"   INNER JOIN слушатель" +
-"     ON tbl1.Слушатель = слушатель.Снилс"
+"   INNER JOIN students" +
+"     ON tbl1.students = students.Снилс"
 
         Return sqlString
 
@@ -2313,7 +2321,7 @@ Module QueryString
         sqlString = ""
 
         sqlString = "SELECT" +
-  " group_list.Слушатель," +
+  " group_list.students," +
   " group_list.Kod," +
   " gr.Номер" +
   " FROM (SELECT " +
@@ -2343,7 +2351,7 @@ Module QueryString
                         ON `group`.Код = group_list.kod
                       LEFT JOIN programm 
                         ON `group`.kod_programm=programm.kod
-                    WHERE group_list.Слушатель = " & Chr(39) & Snils & Chr(39) + "
+                    WHERE group_list.students = " & Chr(39) & Snils & Chr(39) + "
                     ORDER BY ДатаНЗ"
 
         Return sqlString
@@ -2354,15 +2362,15 @@ Module QueryString
 
         sqlString = ""
         sqlString = "Select" +
-  " слушатель.Фамилия," +
-  " слушатель.Имя," +
-  " слушатель.Отчество," +
-  " слушатель.АРег," +
-  " слушатель.Телефон," +
-  " слушатель.Почта" +
-" FROM слушатель" +
+  " students.Фамилия," +
+  " students.Имя," +
+  " students.Отчество," +
+  " students.АРег," +
+  " students.Телефон," +
+  " students.Почта" +
+" FROM students" +
   " INNER JOIN group_list" +
-    " On слушатель.Снилс = group_list.Слушатель" +
+    " On students.Снилс = group_list.students" +
     " WHERE group_list.Kod = " & kod & "" +
       " ORDER BY Фамилия"
 
@@ -2375,17 +2383,17 @@ Module QueryString
         sqlString = ""
 
         sqlString = "SELECT" +
-  " слушатель.Фамилия," +
-  " слушатель.Имя," +
-  " слушатель.Отчество," +
-  " слушатель.ДатаРождения," +
-  " слушатель.НаимДОО," +
-  " слушатель.ДатаОкончанияОбразованияПоДОО," +
-  " слушатель.СерияДОО," +
-  " слушатель.НомерДОО" +
-" FROM слушатель" +
+  " students.Фамилия," +
+  " students.Имя," +
+  " students.Отчество," +
+  " students.ДатаРождения," +
+  " students.НаимДОО," +
+  " students.ДатаОкончанияОбразованияПоДОО," +
+  " students.СерияДОО," +
+  " students.НомерДОО" +
+" FROM students" +
   " INNER JOIN group_list" +
-    " ON слушатель.Снилс = group_list.Слушатель" +
+    " ON students.Снилс = group_list.students" +
     " WHERE group_list.Kod = " & kod & "" +
       " ORDER BY Фамилия"
 
@@ -2539,7 +2547,7 @@ Module QueryString
 
 
 
-        sqlString = "UPDATE Слушатель SET " & sqlString & " WHERE Снилс =" & Chr(39) & slushatel.старыйСнилс & Chr(39)
+        sqlString = "UPDATE students SET " & sqlString & " WHERE Снилс =" & Chr(39) & slushatel.старыйСнилс & Chr(39)
 
         Return sqlString
 
@@ -2581,7 +2589,7 @@ Module QueryString
         End If
 
 
-        sqlString = "INSERT INTO Слушатель " & part1 & "  VALUES " & part2
+        sqlString = "INSERT INTO students " & part1 & "  VALUES " & part2
         Return sqlString
 
     End Function

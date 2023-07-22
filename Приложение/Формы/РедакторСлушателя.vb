@@ -54,7 +54,7 @@ Public Class РедакторСлушателя
 
         End If
 
-        If ЗаписьВБазу.ПроверкаСовпадений("Слушатель", "Снилс", slushatel.structSlushatel.snils) Then
+        If ЗаписьВБазу.ПроверкаСовпадений("students", "Снилс", slushatel.structSlushatel.snils) Then
 
             ФормаДаНет.ShowDialog()
 
@@ -138,6 +138,7 @@ Public Class РедакторСлушателя
 
     Private Sub Снилс_TextChanged(sender As Object, e As EventArgs) Handles Снилс.TextChanged
         Dim snils As String
+
         If Not Press Then
 
             Снилс.Text = ДобавитьРубашку.РубашкаНаВвод(Снилс.Text, 3, 3, 3, 14)
@@ -148,7 +149,9 @@ Public Class РедакторСлушателя
 
         snils = УдалитьРубашку(Снилс.Text)
         If Len(snils) = 11 Then
-            If ЗаписьВБазу.ПроверкаСовпадений("Слушатель", "Снилс", snils) And СтарыйСнилс <> snils Then
+
+            If ЗаписьВБазу.ПроверкаСовпадений("students", "Снилс", snils) And СтарыйСнилс <> snils Then
+
                 Снилс.BackColor = Color.Pink
             Else
                 Снилс.BackColor = SystemColors.Window
@@ -258,10 +261,13 @@ Public Class РедакторСлушателя
     Private Sub РедакторСлушателя_Shown(sender As Object, e As EventArgs) Handles Me.Shown
 
         If ФормаСправочникСлушатели.ИнформацияОСлушателе(0, 0).ToString = "нет записей" Then
+
             Me.Close()
             предупреждение.текст.Text = "Ошибка. Некорректный СНИЛС в базе. Необходима ручная проверка базы!"
             ОткрытьФорму(предупреждение)
+
         Else
+
             СтарыйСнилс = УдалитьРубашку(ФормаСправочникСлушатели.ИнформацияОСлушателе(1, 0))
             Сообщение.Visible = False
             ActiveControl = BtnFocus

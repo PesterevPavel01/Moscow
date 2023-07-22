@@ -27,7 +27,7 @@ Module spravka
             Exit Sub
         End If
 
-        resourcesPath = Вспомогательный.ПутьККаталогуСРесурсами()
+        resourcesPath = Вспомогательный.resourcesPath()
         ПутьКШаблону = resourcesPath & "Шаблоны\Справка об обучении.docx"
 
         wordApp = CreateObject("Word.Application")

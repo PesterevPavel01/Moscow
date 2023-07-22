@@ -151,7 +151,7 @@ Public Class Slushatel
 
         listQuery(3) = SqlString__insertSlush(structSlushatel)
 
-        If ЗаписьВБазу.ПроверкаСовпадений("Слушатель", "Снилс", structSlushatel.snils) Then
+        If ЗаписьВБазу.ПроверкаСовпадений("students", "Снилс", structSlushatel.snils) Then
 
             ФормаДаНет.ShowDialog()
 
@@ -199,7 +199,7 @@ Public Class Slushatel
 
         ААОсновная.mySqlConnect.ОтправитьВбдЗапись(queryString, 1)
 
-        If ЗаписьВБазу.ПроверкаСовпадений("Слушатель", "Снилс", structSlushatel.snils, "ДатаРегистрации", ААОсновная.mySqlConnect.dateToFormatMySQL(structSlushatel.датаРег)) Then
+        If ЗаписьВБазу.ПроверкаСовпадений("students", "Снилс", structSlushatel.snils, "ДатаРегистрации", ААОсновная.mySqlConnect.dateToFormatMySQL(structSlushatel.датаРег)) Then
 
             queryString = SqlString__updateSlushInListSlGroupp(structSlushatel.snils, structSlushatel.старыйСнилс)
             ААОсновная.mySqlConnect.ОтправитьВбдЗапись(queryString, 1)
