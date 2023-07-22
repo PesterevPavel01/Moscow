@@ -5,18 +5,19 @@ Public Class ОценочнаяВедомость
 
     Public kodGroup As Integer
     Private Sub loadTables()
-        Dim Список
-        Dim СтрокаЗапроса As String
-        Dim Счетчик As Integer = 0, СчетчикСтрок As Integer
+
+        Dim list
+        Dim queryString As String
+        Dim counter As Integer = 0, counterRows As Integer
         Dim result As List(Of String)
 
         ТаблицаВедомость.Rows.Clear()
 
-        СтрокаЗапроса = loadVedomost(kodGroup)
+        queryString = loadVedomost(kodGroup)
 
-        Список = ЗагрузитьИзБазы.ЗагрузитьИзБазы(СтрокаЗапроса)
+        list = ЗагрузитьИзБазы.ЗагрузитьИзБазы(queryString)
 
-        If Список(0, 0).ToString = "нет записей" Then
+        If list(0, 0).ToString = "нет записей" Then
 
             предупреждение.текст.Text = "Нет данных для отображения"
             ОткрытьФорму(предупреждение)
@@ -25,9 +26,9 @@ Public Class ОценочнаяВедомость
 
         End If
 
-        СтрокаЗапроса = select_moduls_count(kodGroup)
+        queryString = select_moduls_count(kodGroup)
 
-        result = ААОсновная.mySqlConnect.LoadToListString(СтрокаЗапроса, 1, 0)
+        result = ААОсновная.mySqlConnect.LoadToListString(queryString, 1, 0)
 
         If Not (IsNumeric(result(0)) Or result(0) = "0") Then
 
@@ -40,31 +41,31 @@ Public Class ОценочнаяВедомость
 
         updateDataGreed(Convert.ToInt16(result(0)))
 
-        Список = УбратьПустотыВМассиве.УбратьПустотыВМассиве(Список)
+        list = УбратьПустотыВМассиве.УбратьПустотыВМассиве(list)
 
-        АДействияСОВедомостью.ЗаписатьСписокСлушателей(Список)
+        АДействияСОВедомостью.ЗаписатьСписокСлушателей(list)
 
-        СчетчикСтрок = UBound(Список, 2)
+        counterRows = UBound(list, 2)
 
-        ТаблицаВедомость.Rows.Add(UBound(Список, 2) + 1)
+        ТаблицаВедомость.Rows.Add(UBound(list, 2) + 1)
 
 
-        While Счетчик <= UBound(Список, 2)
+        While counter <= UBound(list, 2)
 
-            ТаблицаВедомость.Rows(Счетчик).Cells(0).Value = CStr(Счетчик + 1)
-            ТаблицаВедомость.Rows(Счетчик).Cells(1).Value = CStr(Список(0, Счетчик))
+            ТаблицаВедомость.Rows(counter).Cells(0).Value = CStr(counter + 1)
+            ТаблицаВедомость.Rows(counter).Cells(1).Value = CStr(list(0, counter))
 
-            ТаблицаВедомость.Rows(Счетчик).Cells(2).Value = CStr(Список(1, Счетчик))
-            ТаблицаВедомость.Rows(Счетчик).Cells(3).Value = CStr(Список(2, Счетчик))
-            ТаблицаВедомость.Rows(Счетчик).Cells(4).Value = CStr(Список(3, Счетчик))
-            ТаблицаВедомость.Rows(Счетчик).Cells(5).Value = CStr(Список(4, Счетчик))
-            ТаблицаВедомость.Rows(Счетчик).Cells(6).Value = CStr(Список(5, Счетчик))
-            ТаблицаВедомость.Rows(Счетчик).Cells(7).Value = CStr(Список(6, Счетчик))
-            ТаблицаВедомость.Rows(Счетчик).Cells(8).Value = CStr(Список(7, Счетчик))
-            ТаблицаВедомость.Rows(Счетчик).Cells(9).Value = CStr(Список(8, Счетчик))
-            ТаблицаВедомость.Rows(Счетчик).Cells(10).Value = CStr(Список(9, Счетчик))
-            ТаблицаВедомость.Rows(Счетчик).Cells(11).Value = CStr(Список(10, Счетчик))
-            Счетчик = Счетчик + 1
+            ТаблицаВедомость.Rows(counter).Cells(2).Value = CStr(list(1, counter))
+            ТаблицаВедомость.Rows(counter).Cells(3).Value = CStr(list(2, counter))
+            ТаблицаВедомость.Rows(counter).Cells(4).Value = CStr(list(3, counter))
+            ТаблицаВедомость.Rows(counter).Cells(5).Value = CStr(list(4, counter))
+            ТаблицаВедомость.Rows(counter).Cells(6).Value = CStr(list(5, counter))
+            ТаблицаВедомость.Rows(counter).Cells(7).Value = CStr(list(6, counter))
+            ТаблицаВедомость.Rows(counter).Cells(8).Value = CStr(list(7, counter))
+            ТаблицаВедомость.Rows(counter).Cells(9).Value = CStr(list(8, counter))
+            ТаблицаВедомость.Rows(counter).Cells(10).Value = CStr(list(9, counter))
+            ТаблицаВедомость.Rows(counter).Cells(11).Value = CStr(list(10, counter))
+            counter = counter + 1
 
         End While
 
@@ -153,4 +154,7 @@ Public Class ОценочнаяВедомость
 
     End Sub
 
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+
+    End Sub
 End Class

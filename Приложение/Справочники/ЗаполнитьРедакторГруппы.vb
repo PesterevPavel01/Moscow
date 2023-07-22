@@ -3,7 +3,7 @@
     Sub ЗаполнитьРедакторГруппы(НомерГруппы As String)
         Dim queryString As String
 
-        queryString = loadgroupp(СправочникГруппы.kod)
+        queryString = loadGroup(СправочникГруппы.kod)
 
         СправочникГруппы.ИнформацияОГруппе = ЗагрузитьИзБазы.ЗагрузитьИзБазы(queryString)
 

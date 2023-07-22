@@ -422,7 +422,7 @@ sotrudnik.in_list,
     Public Function deleteProgramm(kod As String) As String
 
         Dim sqlString As String = ""
-        sqlString = "DELETE FROM progs_mods_hours WHERE kod_prog=" + kod + ";DELETE FROM programm WHERE kod=" + kod + ";UPDATE `group` SET kod_programm = NULL,Программа = NULL WHERE kod_programm=" + kod
+        sqlString = "DELETE FROM progs_mods_hours WHERE kod_prog=" + kod + ";DELETE FROM programm WHERE kod=" + kod + ";UPDATE `group` SET kod_programm = NULL WHERE kod_programm=" + kod
         Return sqlString
 
     End Function

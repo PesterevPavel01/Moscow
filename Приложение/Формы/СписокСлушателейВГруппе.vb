@@ -16,16 +16,17 @@ Public Class СписокСлушателейВГруппе
     End Sub
 
     Private Sub СписокСлушателейВГруппе_Shown(sender As Object, e As EventArgs) Handles Me.Shown
+
         SC = SynchronizationContext.Current
-        Dim ВторойПоток As Thread
+        Dim secondThread As Thread
         Dim argument
         ReDim argument(2)
         argument(0) = СправочникГруппы.kod
         argument(1) = ААОсновная.mySqlConnect.mySqlSettings
 
-        ВторойПоток = New Thread(AddressOf СписокСлушВГруппе)
-        ВторойПоток.IsBackground = True
-        ВторойПоток.Start(argument)
+        secondThread = New Thread(AddressOf studentListInGroup)
+        secondThread.IsBackground = True
+        secondThread.Start(argument)
 
         ActiveControl = ListViewСписокСлушателей
 
@@ -38,50 +39,47 @@ Public Class СписокСлушателейВГруппе
 
     End Sub
 
-    Sub СписокСлушВГруппе(argument)
+    Sub studentListInGroup(argument)
 
-        Dim СписокСлушателей
-        Dim Параметр
+        Dim studentList
+        Dim params
         Dim queryStr As String
         Dim mySqlConn As New MySQLConnect
 
         mySqlConn.mySqlSettings = argument(1)
 
-        queryStr = "SELECT Слушатель.Снилс, Слушатель.Фамилия, Слушатель.Имя, IFNULL(слушатель.Отчество,' '), Слушатель.ДатаРождения FROM group_list INNER JOIN Слушатель ON group_list.Слушатель = Слушатель.Снилс WHERE group_list.Kod = " & argument(0) & " ORDER BY Слушатель.Фамилия"
+        queryStr = studentList__studentListInGroup(argument(0))
 
-        СписокСлушателей = mySqlConn.ЗагрузитьИзБДMySQLвМассив(queryStr, 1)
+        studentList = mySqlConn.ЗагрузитьИзБДMySQLвМассив(queryStr, 1)
 
-        If СписокСлушателей(0, 0) = "Нет записей" Then
+        If studentList(0, 0) = "Нет записей" Then
+
             Exit Sub
-        End If
-        СписокСлушателей = УбратьПустотыВМассиве.УбратьПустотыВМассиве(СписокСлушателей)
 
-        ReDim Параметр(7)
-        Параметр(0) = Me
-        Параметр(1) = ListViewСписокСлушателей
-        Параметр(2) = ДобавитьРубашку.ДобавитьРубашкуВМассив(СписокСлушателей, 0)
-        Параметр(3) = 0
-        Параметр(4) = 1
-        Параметр(5) = 2
-        Параметр(6) = 3
-        Параметр(7) = 4
-
-        queryStr = "SELECT Слушатель.Снилс, Слушатель.Фамилия, Слушатель.Имя, IFNULL(слушатель.Отчество,' '), Слушатель.ДатаРождения FROM group_list INNER JOIN Слушатель ON group_list.Слушатель = Слушатель.Снилс WHERE group_list.Kod = " & argument(0) & " ORDER BY Слушатель.Фамилия"
-
-        СписокСлушателей = mySqlConn.ЗагрузитьИзБДMySQLвМассив(queryStr, 1)
-
-        If СписокСлушателей(0, 0) = "Нет записей" Then
-            Exit Sub
         End If
 
-        SC.Send(AddressOf ЗаписьВListView.ЗаписьВListView2Поток, Параметр)
+        studentList = УбратьПустотыВМассиве.УбратьПустотыВМассиве(studentList)
+
+        ReDim params(7)
+        params(0) = Me
+        params(1) = ListViewСписокСлушателей
+        params(2) = ДобавитьРубашку.ДобавитьРубашкуВМассив(studentList, 0)
+        params(3) = 0
+        params(4) = 1
+        params(5) = 2
+        params(6) = 3
+        params(7) = 4
+
+        SC.Send(AddressOf ЗаписьВListView.ЗаписьВListView2Поток, params)
 
     End Sub
 
     Private Sub ДобавитьВГруппу_Click(sender As Object, e As EventArgs) Handles ДобавитьВГруппу.Click
+
         ФормаСправочникСлушатели.ПоказатьСправочникСлушатели()
         ФормаСправочникСлушатели.ДобавитьВГруппу.Visible = True
         ФормаСправочникСлушатели.ShowDialog()
+
     End Sub
 
     Private Sub ListViewСписокСлушателей_KeyDown(sender As Object, e As KeyEventArgs) Handles ListViewСписокСлушателей.KeyDown
@@ -101,15 +99,22 @@ Public Class СписокСлушателейВГруппе
             End If
 
             Dim kod As Integer = СправочникГруппы.kod
-            Dim Снилс As String
+            Dim snils As String
+
             Try
-                Снилс = ListViewСписокСлушателей.SelectedItems.Item(0).SubItems(1).Text
+
+                snils = ListViewСписокСлушателей.SelectedItems.Item(0).SubItems(1).Text
+
             Catch ex As Exception
+
                 MsgBox("Слушатель не выбран")
+
             End Try
-            Снилс = УдалитьРубашку(Снилс)
-            If ЗаписьВБазу.ПроверкаСовпаденийЧислоДА_2("group_list", "Kod", СправочникГруппы.kod, "Слушатель", Снилс) = 2 Then
-                ЗаписьВБазу.УдалитьЗаписиСЧислом("group_list", "Kod", СправочникГруппы.kod, "Слушатель", Снилс)
+
+            snils = УдалитьРубашку(snils)
+
+            If ЗаписьВБазу.ПроверкаСовпаденийЧислоДА_2("group_list", "Kod", СправочникГруппы.kod, "Слушатель", snils) = 2 Then
+                ЗаписьВБазу.УдалитьЗаписиСЧислом("group_list", "Kod", СправочникГруппы.kod, "Слушатель", snils)
                 ЗаполнитьФормуССлушВГруппе.ЗаполнитьФормуССлушВГруппе(СправочникГруппы.kod)
             End If
 
@@ -123,20 +128,20 @@ Public Class СписокСлушателейВГруппе
 
     Private Sub ListViewСписокСлушателей_DoubleClick(sender As Object, e As EventArgs) Handles ListViewСписокСлушателей.DoubleClick
 
-        Dim СтрокаЗапроса As String
-        Dim Снилс As String
+        Dim queryString As String
+        Dim snils As String
 
         Try
 
             If Not ListViewСписокСлушателей.SelectedItems.Item(0).SubItems(1).Text = "удалено" Then
 
-                Снилс = ДобавитьРубашку.УдалитьРубашку(ListViewСписокСлушателей.SelectedItems.Item(0).SubItems(1).Text)
+                snils = ДобавитьРубашку.УдалитьРубашку(ListViewСписокСлушателей.SelectedItems.Item(0).SubItems(1).Text)
 
                 РедакторСлушателя.Text = ListViewСписокСлушателей.SelectedItems.Item(0).SubItems(2).Text & " " & ListViewСписокСлушателей.SelectedItems.Item(0).SubItems(3).Text & " " & ListViewСписокСлушателей.SelectedItems.Item(0).SubItems(4).Text & " "
 
-                СтрокаЗапроса = load_slushatel(Снилс)
+                queryString = load_slushatel(snils)
 
-                ФормаСправочникСлушатели.ИнформацияОСлушателе = УбратьПустотыВМассиве.УбратьПустотыВМассиве(ААОсновная.mySqlConnect.ЗагрузитьИзБДMySQLвМассив(СтрокаЗапроса, 1))
+                ФормаСправочникСлушатели.ИнформацияОСлушателе = УбратьПустотыВМассиве.УбратьПустотыВМассиве(ААОсновная.mySqlConnect.ЗагрузитьИзБДMySQLвМассив(queryString, 1))
 
                 '                РедакторСлушателя.prevFormSpisSlushVGr = True
 
@@ -158,8 +163,10 @@ Public Class СписокСлушателейВГруппе
     End Sub
 
     Private Sub ДобавитьВгруппуНового_Click(sender As Object, e As EventArgs) Handles ДобавитьВгруппуНового.Click
+
         НовыйСлушатель.ВызваноСФормыСписокСлушателей = True
         НовыйСлушатель.ShowDialog()
+
     End Sub
 
     Private Sub ДобавитьВГруппу_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs) Handles ДобавитьВГруппу.PreviewKeyDown

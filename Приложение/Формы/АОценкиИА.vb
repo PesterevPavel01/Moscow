@@ -4,17 +4,17 @@
 
     Public Sub loadTables()
 
-        Dim Список
-        Dim СтрокаЗапроса As String
-        Dim Счетчик As Integer = 0, СчетчикСтрок As Integer
+        Dim list
+        Dim queryString As String
+        Dim counter As Integer = 0, counterRows As Integer
 
         ТаблицаОценкиИА.Rows.Clear()
 
-        СтрокаЗапроса = loadIA(kodGroup)
+        queryString = loadIA(kodGroup)
 
-        Список = ЗагрузитьИзБазы.ЗагрузитьИзБазы(СтрокаЗапроса)
+        list = ЗагрузитьИзБазы.ЗагрузитьИзБазы(queryString)
 
-        If Список(0, 0).ToString = "нет записей" Then
+        If list(0, 0).ToString = "нет записей" Then
 
             предупреждение.текст.Text = "Нет данных для отображения"
             ОткрытьФорму(предупреждение)
@@ -22,25 +22,26 @@
             Exit Sub
 
         End If
-        АДействияСОценкиИА.ЗаписатьСписокСлушателей(Список)
-        СчетчикСтрок = UBound(Список, 2)
+        АДействияСОценкиИА.ЗаписатьСписокСлушателей(list)
+        counterRows = UBound(list, 2)
 
-        ТаблицаОценкиИА.Rows.Add(UBound(Список, 2) + 1)
+        ТаблицаОценкиИА.Rows.Add(UBound(list, 2) + 1)
 
-        While Счетчик <= UBound(Список, 2)
+        While counter <= UBound(list, 2)
 
-            ТаблицаОценкиИА.Rows(Счетчик).Cells(0).Value = CStr(Счетчик + 1)
-            ТаблицаОценкиИА.Rows(Счетчик).Cells(1).Value = CStr(Список(0, Счетчик))
+            ТаблицаОценкиИА.Rows(counter).Cells(0).Value = CStr(counter + 1)
+            ТаблицаОценкиИА.Rows(counter).Cells(1).Value = CStr(list(0, counter))
 
-            ТаблицаОценкиИА.Rows(Счетчик).Cells(2).Value = CStr(Список(1, Счетчик))
-            ТаблицаОценкиИА.Rows(Счетчик).Cells(3).Value = CStr(Список(2, Счетчик))
-            ТаблицаОценкиИА.Rows(Счетчик).Cells(4).Value = CStr(Список(3, Счетчик))
+            ТаблицаОценкиИА.Rows(counter).Cells(2).Value = CStr(list(1, counter))
+            ТаблицаОценкиИА.Rows(counter).Cells(3).Value = CStr(list(2, counter))
+            ТаблицаОценкиИА.Rows(counter).Cells(4).Value = CStr(list(3, counter))
 
-            Счетчик = Счетчик + 1
+            counter = counter + 1
 
         End While
 
         ActiveControl = ТаблицаОценкиИА
+
     End Sub
 
     Private Sub Группа_Click(sender As Object, e As EventArgs) Handles НомерГруппы.Click
@@ -61,6 +62,7 @@
     End Sub
 
     Private Sub Сохранить_Click(sender As Object, e As EventArgs) Handles Сохранить.Click
+
         ActiveControl = Button1
 
         If АДействияСОценкиИА.проверка(ТаблицаОценкиИА) Then
@@ -74,11 +76,13 @@
     End Sub
 
     Private Sub Группа_KeyDown(sender As Object, e As KeyEventArgs) Handles НомерГруппы.KeyDown
+
         If e.KeyCode = 13 Then
 
             Call Группа_Click(sender, e)
 
         End If
+
     End Sub
 
     Private Sub Сохранить_GotFocus(sender As Object, e As EventArgs) Handles Сохранить.GotFocus

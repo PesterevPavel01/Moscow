@@ -83,7 +83,7 @@ Partial Class АОценкиИА
         Me.ТаблицаОценкиИА.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Номер, Me.ФИО, Me.ИАТест, Me.ИАПрактНав, Me.ИАИтог})
         Me.ТаблицаОценкиИА.Location = New System.Drawing.Point(2, 41)
         Me.ТаблицаОценкиИА.Name = "ТаблицаОценкиИА"
-        Me.ТаблицаОценкиИА.Size = New System.Drawing.Size(726, 795)
+        Me.ТаблицаОценкиИА.Size = New System.Drawing.Size(728, 795)
         Me.ТаблицаОценкиИА.TabIndex = 9
         '
         'Номер
@@ -136,7 +136,7 @@ Partial Class АОценкиИА
         Me.Сохранить.FlatAppearance.BorderSize = 0
         Me.Сохранить.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Сохранить.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.Сохранить.Location = New System.Drawing.Point(562, 4)
+        Me.Сохранить.Location = New System.Drawing.Point(564, 4)
         Me.Сохранить.Name = "Сохранить"
         Me.Сохранить.RightToLeft = System.Windows.Forms.RightToLeft.No
         Me.Сохранить.Size = New System.Drawing.Size(166, 31)
@@ -159,7 +159,7 @@ Partial Class АОценкиИА
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(731, 837)
+        Me.ClientSize = New System.Drawing.Size(733, 837)
         Me.Controls.Add(Me.Button1)
         Me.Controls.Add(Me.Сохранить)
         Me.Controls.Add(Me.ТаблицаОценкиИА)

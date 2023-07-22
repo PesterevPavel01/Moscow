@@ -480,12 +480,7 @@ Public Class ФормаСписок
     End Sub
 
     Private Sub SelectedRow(numberColumns As Int16, value As String)
-        'Dim countRow As Integer
-        'countRow = ListViewСписок.Items.Count
-        'If countRow < 1 Then
-        '    Return
-        'End If
-        'countRow = 0
+
         For Each item In ListViewСписок.Items
             If item.SubItems(numberColumns).Text = value Then
                 item.Selected = True

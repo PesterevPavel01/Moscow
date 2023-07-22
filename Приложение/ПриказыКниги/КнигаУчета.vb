@@ -49,15 +49,11 @@
 
             queryString = accountingBook__loadListUd(ААОсновная.mySqlConnect.dateToFormatMySQL(Convert.ToDateTime(ДатаНачалаОтчета)), ААОсновная.mySqlConnect.dateToFormatMySQL(Convert.ToDateTime(ДатаКонцаОтчета)))
 
-        End If
-
-        If Критерий = "Диплом" Then
+        ElseIf Критерий = "Диплом" Then
 
             queryString = accountingBook__loadListDip(ААОсновная.mySqlConnect.dateToFormatMySQL(Convert.ToDateTime(ДатаНачалаОтчета)), ААОсновная.mySqlConnect.dateToFormatMySQL(Convert.ToDateTime(ДатаКонцаОтчета)))
 
-        End If
-
-        If Критерий = "Свидетельство" Then
+        ElseIf Критерий = "Свидетельство" Then
 
             queryString = accountingBook__loadListSvid(ААОсновная.mySqlConnect.dateToFormatMySQL(Convert.ToDateTime(ДатаНачалаОтчета)), ААОсновная.mySqlConnect.dateToFormatMySQL(Convert.ToDateTime(ДатаКонцаОтчета)))
 

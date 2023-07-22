@@ -10,6 +10,7 @@
     Public praktika As Boolean = False
 
     Private Sub ПОЗачисленииНомерГруппы_Click(sender As Object, e As EventArgs) Handles НомерГруппы.Click
+
         ФормаСписок.ListViewСписок.Columns.RemoveAt(0)
         ФормаСписок.ListViewСписок.Columns.Add("Программа", 500)
         ФормаСписок.ListViewСписок.Columns(0).Width = 200
@@ -23,6 +24,7 @@
         ФормаСписок.ListViewСписок.Columns(0).Width = 100
         ФормаСписок.ListViewСписок.Columns(1).Width = 620
         ФормаСписок.ListViewСписок.Columns(1).Text = "Наименование"
+
     End Sub
 
     Private Sub Директор_Click(sender As Object, e As EventArgs)
@@ -126,7 +128,7 @@
         Dim ЧекнутыеСлушатели
         ActiveControl = Button1
 
-        ЗаполненыВсеПоля = проверитьЗаполненность()
+        ЗаполненыВсеПоля = checkSuff()
 
         If Not ЗаполненыВсеПоля Then
             Try
@@ -164,7 +166,7 @@
 
             ЧекнутыеСлушатели = ЗаписатьЧекнутыеСтроки(ListViewСписокСлушателей, 0)
 
-            СправкаОбОбучении.СправкаОбОбучении(ЧекнутыеСлушатели)
+            spravka.spravka(ЧекнутыеСлушатели)
 
         ElseIf ВидПриказа = "ДоверенностьПолученияБланковСлушателей" Then
 
@@ -178,7 +180,7 @@
 
         ElseIf ВидПриказа = "ПО_Свидетельство" Then
 
-            ПО_Свидетельство.ПО_Свидетельство(ВидПриказа)
+            ПО_Свидетельство.po_svid(ВидПриказа)
 
         ElseIf ВидПриказа = "ПП_ПриложениеКдиплому" Then
 
@@ -373,7 +375,7 @@
         If ВидПриказа = "ПК_Окончание_уд" Or ВидПриказа = "СправкаОбОкончании" Or ВидПриказа = "ДоверенностьПолученияБланковСлушателей" Or ВидПриказа = "СправкаОбОбучении" Or ВидПриказа = "СправкаОбОкончании" Then
 
             If Not НомерГруппы.Text = "" Then
-                ЗагрузитьСписокСлушателей()
+                loadStudentsList()
             End If
 
             If ВидПриказа = "СправкаОбОбучении" Then
@@ -385,7 +387,7 @@
         If ВидПриказа = "ВедомостьПромежуточнойАттестации" Or ВидПриказа = "ПП_Ведомость" Then
 
             If Not НомерГруппы.Text = "" Then
-                ЗагрузитьСписокМодулей()
+                loadModuls()
             End If
 
         End If
@@ -393,7 +395,7 @@
         If ВидПриказа = "ПК_Зачисление" Or ВидПриказа = "ПК_Зачисление_Доп" Then
 
             If Not НомерГруппы.Text = "" Then
-                ЗагрузитьСписокСлушателей()
+                loadStudentsList()
                 ListViewСписокСлушателей.Items.Insert(0, New ListViewItem("Выделить всех"))
                 chekAllItem(ListViewСписокСлушателей)
             End If
@@ -402,38 +404,39 @@
 
     End Sub
 
-    Sub ЗагрузитьСписокМодулей()
+    Sub loadModuls()
+
         Dim sqlString As String
-        Dim Программы, Преподователи, Итоговый
+        Dim progs, teachers, result
 
         sqlString = loadListModul(ААОсновная.prikazKodGroup)
-        Программы = ЗагрузитьИзБазы.ЗагрузитьИзБазы(sqlString)
+        progs = ЗагрузитьИзБазы.ЗагрузитьИзБазы(sqlString)
 
-        If Программы(0, 0) = "нет записей" Then
+        If progs(0, 0) = "нет записей" Then
             Exit Sub
         End If
 
         sqlString = loadListSotrudnicModul(ААОсновная.prikazKodGroup)
-        Преподователи = ЗагрузитьИзБазы.ЗагрузитьИзБазы(sqlString)
+        teachers = ЗагрузитьИзБазы.ЗагрузитьИзБазы(sqlString)
 
-        If Преподователи(0, 0) = "нет записей" Then
+        If teachers(0, 0) = "нет записей" Then
             Exit Sub
         End If
 
-        Преподователи = перевернутьмассив(Преподователи)
+        teachers = перевернутьмассив(teachers)
 
-        ReDim Итоговый(1, UBound(Программы, 2))
+        ReDim result(1, UBound(progs, 2))
 
-        For i = 0 To UBound(Программы, 2)
-            Итоговый(0, i) = Программы(0, i)
-            Итоговый(1, i) = Преподователи(0, i)
+        For i = 0 To UBound(progs, 2)
+            result(0, i) = progs(0, i)
+            result(1, i) = teachers(0, i)
         Next
 
         If ListViewСписокСлушателей.Columns.Count < 3 Then
             ListViewСписокСлушателей.Columns.Add("Преподаватель", 200)
         End If
 
-        ЗаписьВListView.ЗаписьВListView(False, True, ListViewСписокСлушателей, Итоговый, 0, 1)
+        ЗаписьВListView.ЗаписьВListView(False, True, ListViewСписокСлушателей, result, 0, 1)
 
         Try
             ListViewСписокСлушателей.Items(0).Selected = True
@@ -443,19 +446,20 @@
 
     End Sub
 
-    Sub ЗагрузитьСписокСлушателей()
-        Dim СтрокаЗапроса As String
-        Dim Слушатели
+    Sub loadStudentsList()
 
-        СтрокаЗапроса = "SELECT CONCAT(Слушатель.Фамилия,' ',Слушатель.Имя,' ',IFNULL(слушатель.Отчество,' ')) FROM group_list INNER JOIN Слушатель ON group_list.Слушатель = Слушатель.Снилс WHERE group_list.Kod = " & ААОсновная.prikazKodGroup & " ORDER BY Слушатель.Фамилия"
+        Dim queryString As String
+        Dim students
 
-        Слушатели = ЗагрузитьИзБазы.ЗагрузитьИзБазы(СтрокаЗапроса)
+        queryString = formOrder__loadStudentsList(ААОсновная.prikazKodGroup)
 
-        If Слушатели(0, 0) = "нет записей" Then
+        students = ЗагрузитьИзБазы.ЗагрузитьИзБазы(queryString)
+
+        If students(0, 0) = "нет записей" Then
             Exit Sub
         End If
 
-        ЗаписьВListView.ЗаписьВListView(True, False, ListViewСписокСлушателей, Слушатели, 0)
+        ЗаписьВListView.ЗаписьВListView(True, False, ListViewСписокСлушателей, students, 0)
 
         Try
             ListViewСписокСлушателей.Items(0).Selected = True
@@ -466,21 +470,20 @@
     End Sub
 
     Private Sub Комиссия3_Click(sender As Object, e As EventArgs)
+
         ФормаСписок.textboxName = Me.ActiveControl.Name
-        'ФормаСписок.FormName = Me.Name
-        'ФормаСписок.ShowDialog()
     End Sub
 
     Private Sub Комиссия2Должность_Click(sender As Object, e As EventArgs)
+
         ФормаСписок.textboxName = Me.ActiveControl.Name
-        'ФормаСписок.FormName = Me.Name
-        'ФормаСписок.ShowDialog()
+
     End Sub
 
     Private Sub СекретарьКомиссии_Click(sender As Object, e As EventArgs)
+
         ФормаСписок.textboxName = Me.ActiveControl.Name
-        'ФормаСписок.FormName = Me.Name
-        'ФормаСписок.ShowDialog()
+
     End Sub
 
     Private Sub Комиссия3Должность_Click(sender As Object, e As EventArgs)
@@ -490,42 +493,37 @@
     End Sub
 
     Private Sub СекретарьКомиссииДолжность_Click(sender As Object, e As EventArgs)
+
         ФормаСписок.textboxName = Me.ActiveControl.Name
-        'ФормаСписок.FormName = Me.Name
-        'ФормаСписок.ShowDialog()
+
     End Sub
 
     Private Sub ЗамПредседателя_Click(sender As Object, e As EventArgs)
 
         ФормаСписок.textboxName = Me.ActiveControl.Name
-        'ФормаСписок.FormName = Me.Name
-        'ФормаСписок.ShowDialog()
 
     End Sub
     Private Sub ЗамПредседателяДолжность_Click(sender As Object, e As EventArgs)
 
         ФормаСписок.textboxName = Me.ActiveControl.Name
-        'ФормаСписок.FormName = Me.Name
-        'ФормаСписок.ShowDialog()
 
     End Sub
 
-    Function проверитьЗаполненность() As Boolean
+    Function checkSuff() As Boolean
 
         Dim nameControl As String
 
-        проверитьЗаполненность = True
+        checkSuff = True
 
         For Each i In Me.Controls
             nameControl = i.Name
             If Strings.Left(i.Name, 8) <> "ListView" And Strings.Left(i.Name, 6) <> "Кнопка" And Strings.Left(i.Name, 8) <> "Включить" And i.Name <> "Сохранить" And i.Name <> "Очистить" And Strings.Left(i.Name, 5) <> "Label" And Strings.Left(i.Name, 5) <> "label" And Strings.Left(i.Name, 5) <> "Check" And Strings.Left(i.Name, 8) <> "GroupBox" Then
 
                 If i.Text = "" And i.Visible = True And i.Enabled = True Then
-                    проверитьЗаполненность = False
+                    checkSuff = False
                 End If
             End If
         Next
-
 
     End Function
     Private Sub АСформироватьПриказ_KeyDown(sender As Object, e As KeyEventArgs) Handles MyBase.KeyDown
@@ -823,67 +821,67 @@
 
     Private Sub Ответственный_TextChanged(sender As Object, e As EventArgs) Handles Ответственный.TextChanged
         If Label4.Text <> "Слушатель(ФИО)" Then
-            ЗагрузитьДолжность(Ответственный, ОтветственныйДолжность)
+            loadDolj(Ответственный, ОтветственныйДолжность)
         End If
 
     End Sub
 
     Private Sub ПроектВносит_TextChanged(sender As Object, e As EventArgs) Handles ПроектВносит.TextChanged
         If Not ПроектВносит.Text = "" And Me.Text <> "Спецэкзамен_протокол" Then
-            ЗагрузитьДолжность(ПроектВносит, ПроектВноситДолжность)
+            loadDolj(ПроектВносит, ПроектВноситДолжность)
         End If
     End Sub
 
     Private Sub Исполнитель_TextChanged(sender As Object, e As EventArgs) Handles Исполнитель.TextChanged
         If Not Исполнитель.Text = "" And Me.Text <> "Спецэкзамен_протокол" Then
-            ЗагрузитьДолжность(Исполнитель, ИсполнительДолжность)
+            loadDolj(Исполнитель, ИсполнительДолжность)
         End If
     End Sub
 
     Private Sub Согласовано1_TextChanged(sender As Object, e As EventArgs) Handles Согласовано1.TextChanged
         If Not Согласовано1.Text = "" And Me.Text <> "Спецэкзамен_протокол" Then
-            ЗагрузитьДолжность(Согласовано1, Согласовано1Должность)
+            loadDolj(Согласовано1, Согласовано1Должность)
         End If
     End Sub
 
     Private Sub Согласовано2_TextChanged(sender As Object, e As EventArgs) Handles Согласовано2.TextChanged
         If Not Согласовано2.Text = "" And Me.Text <> "Спецэкзамен_протокол" Then
-            ЗагрузитьДолжность(Согласовано2, Согласовано2Должность)
+            loadDolj(Согласовано2, Согласовано2Должность)
         End If
     End Sub
 
     Private Sub РуководительСтажировки_TextChanged(sender As Object, e As EventArgs) Handles РуководительСтажировки.TextChanged
         If Not РуководительСтажировки.Text = "" Then
-            ЗагрузитьДолжность(РуководительСтажировки, РуководительСтажировкиДолжность)
+            loadDolj(РуководительСтажировки, РуководительСтажировкиДолжность)
         End If
     End Sub
 
     Private Sub Комиссия2_TextChanged(sender As Object, e As EventArgs) Handles Комиссия2.TextChanged
         If Not Комиссия2.Text = "" And Me.Text <> "Спецэкзамен_протокол" Then
-            ЗагрузитьДолжность(Комиссия2, Комиссия2Должность)
+            loadDolj(Комиссия2, Комиссия2Должность)
         End If
     End Sub
 
     Private Sub Комиссия3_TextChanged(sender As Object, e As EventArgs) Handles Комиссия3.TextChanged
         If Not Комиссия3.Text = "" And Me.Text <> "Спецэкзамен_протокол" Then
-            ЗагрузитьДолжность(Комиссия3, Комиссия3Должность)
+            loadDolj(Комиссия3, Комиссия3Должность)
         End If
     End Sub
 
     Private Sub СекретарьКомиссии_TextChanged(sender As Object, e As EventArgs) Handles СекретарьКомиссии.TextChanged
         If Not СекретарьКомиссии.Text = "" And Me.Text <> "Спецэкзамен_протокол" Then
-            ЗагрузитьДолжность(СекретарьКомиссии, СекретарьКомиссииДолжность)
+            loadDolj(СекретарьКомиссии, СекретарьКомиссииДолжность)
         End If
     End Sub
 
     Private Sub ЗамПредседателя_TextChanged(sender As Object, e As EventArgs) Handles ЗамПредседателя.TextChanged
         If Not ЗамПредседателя.Text = "" And Me.Text <> "Спецэкзамен_протокол" Then
-            ЗагрузитьДолжность(ЗамПредседателя, ЗамПредседателяДолжность)
+            loadDolj(ЗамПредседателя, ЗамПредседателяДолжность)
         End If
     End Sub
 
     Private Sub АСформироватьПриказ_FormClosed(sender As Object, e As FormClosedEventArgs) Handles MyBase.FormClosed
-        ААОсновная.prikazCvalif=0
+        ААОсновная.prikazCvalif = 0
     End Sub
 
     Public Sub reload_lists()
@@ -1202,12 +1200,13 @@
 
     End Sub
 
-    Sub ЗагрузитьДолжность(ФИО As ComboBox, Должность As ComboBox)
+    Sub loadDolj(FIO As ComboBox, dolj As ComboBox)
+
         Dim quaryString As String
         Dim quaryResult As Object
 
         Try
-            If ФИО.SelectedItem = "" Then
+            If FIO.SelectedItem = "" Then
                 Return
             End If
         Catch ex As Exception
@@ -1215,30 +1214,35 @@
         End Try
 
 
-        quaryString = "SELECT doljnost FROM sotrudnik WHERE name='" + ФИО.SelectedItem + "' LIMIT 1"
+        quaryString = formOrder__loadKodDolj(FIO.SelectedItem)
+
         quaryResult = ЗагрузитьИзБазы.ЗагрузитьИзБазы(quaryString)
 
         If quaryResult(0, 0).ToString = "нет записей" Or quaryResult(0, 0).ToString = "" Then
+
             Try
-                ФИО.SelectedItem = ""
+                FIO.SelectedItem = ""
             Catch ex As Exception
                 Dim message As String = ex.Message
             End Try
+
             предупреждение.текст.Text = "Необходимо указать должность для этого сотрудника в БД!"
             ОткрытьФорму(предупреждение)
             Return
+
         End If
 
-        quaryString = "SELECT name FROM doljnost WHERE kod=" + quaryResult(0, 0).ToString
+        quaryString = formOrder__loadNameDolj(quaryResult(0, 0).ToString)
         quaryResult = ЗагрузитьИзБазы.ЗагрузитьИзБазы(quaryString)
 
         If quaryResult(0, 0).ToString = "нет записей" Or quaryResult(0, 0).ToString = "" Then
-            ФИО.SelectedItem = ""
+
+            FIO.SelectedItem = ""
             предупреждение.текст.Text = "Ошибка. Строка запроса " + quaryString
             ОткрытьФорму(предупреждение)
             Return
         Else
-            Должность.Text = quaryResult(0, 0)
+            dolj.Text = quaryResult(0, 0)
         End If
     End Sub
 

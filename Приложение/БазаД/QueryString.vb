@@ -1,13 +1,275 @@
-﻿Imports System.Data.SqlTypes
+﻿
+Imports MySql.Data.Authentication
 Imports WindowsApp2.Slushatel
 
 Module QueryString
 
     Dim sqlString As String
 
+    Public Function formOrder__loadStudentsList(kodGroup As String) As String
+
+        sqlString = "SELECT 
+                    CONCAT(Слушатель.Фамилия,' ',Слушатель.Имя,' ',IFNULL(слушатель.Отчество,' ')) 
+                    FROM group_list 
+                    INNER JOIN Слушатель 
+                    ON group_list.Слушатель = Слушатель.Снилс 
+                    WHERE group_list.Kod = " & kodGroup & " 
+                    ORDER BY Слушатель.Фамилия"
+
+        Return sqlString
+
+    End Function
+
+    Public Function formOrder__loadNameDolj(kod As String) As String
+
+        sqlString = "SELECT name FROM doljnost WHERE kod=" + kod
+
+        Return sqlString
+
+    End Function
+
+    Public Function formOrder__loadKodDolj(name As String) As String
+
+        sqlString = "SELECT doljnost FROM sotrudnik WHERE name='" + name + "' LIMIT 1"
+
+        Return sqlString
+
+    End Function
+
+    Public Function studentList__studentListInGroup(kodGroup As String) As String
+
+        sqlString = "SELECT 
+                    Слушатель.Снилс,
+                    Слушатель.Фамилия,
+                    Слушатель.Имя,
+                    IFNULL(слушатель.Отчество,' '),
+                    Слушатель.ДатаРождения 
+                    FROM group_list 
+                    INNER JOIN Слушатель 
+                    ON group_list.Слушатель = Слушатель.Снилс 
+                    WHERE group_list.Kod = " & kodGroup & " 
+                    ORDER BY Слушатель.Фамилия"
+
+        Return sqlString
+
+    End Function
+
+    Public Function dopusk_loadListStudents(kodGroup As String) As String
+
+        sqlString = "SELECT
+                      CONCAT(Слушатель.Фамилия, ' ', Слушатель.Имя, ' ', IFNULL(Слушатель.Отчество, ' ')),
+                      programm.name,
+                      ДатаНЗ,
+                      ДатаКЗ,
+                      КолЧас,
+                      ИАТестирование,
+                      ИАПрактическиеНавыки,
+                      ИАИтог,
+                      НомерПротоколаИА
+                    FROM (group_list
+                      INNER JOIN Слушатель
+                        ON group_list.Слушатель = Слушатель.Снилс)
+                      INNER JOIN `group`
+                        ON group_list.kod = `group`.Код
+                      LEFT JOIN programm
+                        ON `group`.kod_programm=programm.kod
+                    WHERE `group`.Код=" & kodGroup & "
+                    ORDER BY Слушатель.Фамилия"
+
+        Return sqlString
+
+    End Function
+
+    Public Function loadListStudents(kodGroup As String) As String
+
+        sqlString = "SELECT
+                      CONCAT(Слушатель.Фамилия, ' ', Слушатель.Имя, ' ', IFNULL(Слушатель.Отчество, ' ')),
+                      programm.name,
+                      ДатаНЗ,
+                      ДатаКЗ,
+                      КолЧас
+                    FROM (group_list
+                      INNER JOIN Слушатель
+                        ON group_list.Слушатель = Слушатель.Снилс)
+                      INNER JOIN `group`
+                        ON group_list.kod = `group`.Код
+                      LEFT JOIN programm
+                        ON kod_programm=programm.kod
+                    WHERE `group`.Код=" & kodGroup & "
+                    ORDER BY Слушатель.Фамилия"
+
+        Return sqlString
+
+    End Function
+
+    Public Function expulsion__loadProgramm(kodGroup As String) As String
+
+        sqlString = "SELECT
+                      programm.name
+                    FROM `group`
+                      INNER JOIN programm
+                    ON `group`.kod_programm = programm.kod
+                    WHERE `group`.Код=" & kodGroup
+
+        Return sqlString
+
+    End Function
+
+    Public Function poPpEnd__loadShortListStudents(kodGroup As String) As String
+
+        sqlString = "SELECT
+                      CONCAT(Слушатель.Фамилия, ' ', Слушатель.Имя, ' ', IFNULL(Слушатель.Отчество, ' '))
+                    FROM group_list
+                      INNER JOIN Слушатель
+                        ON group_list.Слушатель = Слушатель.Снилс
+                    WHERE group_list.kod =" & kodGroup & " ORDER BY Слушатель.Фамилия"
+        Return sqlString
+
+    End Function
+
+    Public Function pkEnd__loadShortListStudents(kodGroup As String) As String
+
+        sqlString = "SELECT
+                      CONCAT(Слушатель.Фамилия, ' ', Слушатель.Имя, ' ', IFNULL(Слушатель.Отчество, ' ')),
+                      'зачтено'
+                    FROM group_list
+                      INNER JOIN Слушатель
+                        ON group_list.Слушатель = Слушатель.Снилс
+                    WHERE group_list.kod =" & kodGroup & " ORDER BY Слушатель.Фамилия"
+        Return sqlString
+
+    End Function
+
+    Public Function pkEnd__insertNumbers(group As Object, type As String, kodGroup As String) As List(Of String)
+
+        Dim counter As Integer
+        Dim queryString As String
+        Dim listSQLString As New List(Of String)
+
+        counter = 0
+
+        While counter <= UBound(group, 2)
+
+            If type = "Удостоверение" Then
+                queryString = "UPDATE group_list SET НомерУд = " & group(4, 0) + counter & " , РегНомерУд= " & group(5, 0) + counter & ", НомерСвид=0, РегНомерСвид=0, НомерДиплома=0, РегНомерДиплома=0  WHERE Kod = " & kodGroup & " AND Слушатель = " & Chr(39) & group(3, counter) & Chr(39)
+            ElseIf type = "Свидетельство" Then
+                queryString = "UPDATE group_list SET НомерУд = 0 , РегНомерУд= 0, НомерСвид = " & group(4, 0) + counter & " , РегНомерСвид= " & group(5, 0) + counter & ", НомерДиплома=0, РегНомерДиплома=0 WHERE Kod = " & kodGroup & " AND Слушатель = " & Chr(39) & group(3, counter) & Chr(39)
+            ElseIf type = "Диплом" Then
+                queryString = "UPDATE group_list SET НомерУд = 0 , РегНомерУд= 0,НомерСвид=0, РегНомерСвид=0, НомерДиплома = " & group(4, 0) + counter & " , РегНомерДиплома= " & group(5, 0) + counter & " WHERE Kod = " & kodGroup & " AND Слушатель = " & Chr(39) & group(3, counter) & Chr(39)
+            End If
+            listSQLString.Add(queryString)
+            counter = counter + 1
+        End While
+
+        Return listSQLString
+
+    End Function
+    Public Function pkEndUd__loadListStudents(kodGroup As String) As String
+
+        sqlString = "SELECT
+                      CONCAT(Слушатель.Фамилия ,' ', Слушатель.Имя ,' ', IFNULL(Слушатель.Отчество,' ')),
+                      Слушатель.Фамилия,
+                      CONCAT(Слушатель.Имя , ' ' , IFNULL(Слушатель.Отчество, ' ')),
+                      Слушатель.Снилс,
+                      `group`.НомерУд,
+                      `group`.РегНомерУд,
+                      `group`.ОсновнойДокумент,
+                      programm.name,
+                      ДатаВыдачиУд,
+                      ДатаНЗ,
+                      ДатаКЗ,
+                      КолЧас
+                    FROM `group`
+                      INNER JOIN group_list
+                        ON group_list.kod = `group`.Код
+                      INNER JOIN Слушатель
+                        ON group_list.Слушатель = Слушатель.Снилс
+                      LEFT JOIN programm
+                      ON `group`.kod_programm = programm.kod
+                    WHERE `group`.Код = " & kodGroup & " ORDER BY Слушатель.Фамилия"
+
+        Return sqlString
+
+    End Function
+
+    Public Function poSvid__loadListSvid(kodGroup As String) As String
+
+        sqlString = "SELECT
+                      Слушатель.Фамилия,
+                      Слушатель.Имя,
+                      IFNULL(Слушатель.Отчество, ' '),
+                      Слушатель.ДатаРождения,
+                      ОценкаМодуль1,
+                      ОценкаМодуль2,
+                      ОценкаМодуль3,
+                      ОценкаМодуль4,
+                      ОценкаМодуль5,
+                      ОценкаМодуль6,
+                      ОценкаМодуль7,
+                      ОценкаМодуль8,
+                      ОценкаМодуль9,
+                      ОценкаМодуль10,
+                      ИАПрактическиеНавыки,
+                      ИАИтог,
+                      group_list.РегНомерСвид,
+                      `group`.ДатаВыдачиСвид,
+                      `group`.ДатаКЗ,
+                      НаимДОО,
+                      Квалификация,
+                      КолЧас,
+                      ДатаНЗ,
+                      programm.name
+                    FROM (group_list
+                      INNER JOIN Слушатель
+                        ON group_list.Слушатель = Слушатель.Снилс)
+                      INNER JOIN `group`
+                        ON group_list.kod = `group`.Код
+                      LEFT JOIN programm 
+                        ON programm.kod=kod_programm
+                    WHERE `group`.Код = " & kodGroup & " ORDER BY Слушатель.Фамилия"
+
+        Return sqlString
+
+    End Function
+
     Public Function accountingBook__loadListSvidFRDO(dateStart As String, dateEnd As String) As String
 
-        sqlString = "SELECT  group_list.НомерСвид ,ДатаВыдачиСвид,group_list.РегНомерСвид, Программа,Слушатель.УОбразования, ФамилияДОО, СерияДОО, НомерДОО, ДатаНЗ, ДатаКЗ, КолЧас, Фамилия, Имя, Отчество, ДатаРождения, Пол, СНИЛС, ФормаО, ИФин, Гражданство FROM (group_list INNER JOIN Слушатель On group_list.Слушатель = Слушатель.Снилс) INNER JOIN `group` On group_list.Kod = `group`.Код WHERE  `group`.ОсновнойДокумент= 'Свидетельство' AND NOT ISNULL(group_list.РегНомерСвид) AND group_list.РегНомерСвид<>0 AND ДатаВыдачиСвид BETWEEN '" & dateStart & "' and  '" & dateEnd & " ' and ОсновнойДокумент= 'Свидетельство' ORDER BY group_list.РегНомерСвид"
+        sqlString = "SELECT  
+                      group_list.НомерСвид,
+                      ДатаВыдачиСвид,
+                      group_list.РегНомерСвид,
+                      programm.name,
+                      Слушатель.УОбразования,
+                      ФамилияДОО,
+                      СерияДОО,
+                      НомерДОО,
+                      ДатаНЗ,
+                      ДатаКЗ,
+                      КолЧас,
+                      Фамилия,
+                      Имя,
+                      Отчество,
+                      ДатаРождения,
+                      Пол,
+                      Снилс,
+                      ФормаО,
+                      ИФин,
+                      Гражданство                    
+                    FROM (
+                    group_list 
+                    INNER JOIN Слушатель 
+                    ON group_list.Слушатель = Слушатель.Снилс) 
+                    INNER JOIN `group` 
+                    ON group_list.Kod = `group`.Код 
+                    LEFT JOIN programm
+                    ON kod_programm=programm.kod
+                    WHERE  
+                    `group`.ОсновнойДокумент= 'Свидетельство' 
+                    AND NOT ISNULL(group_list.РегНомерСвид) 
+                    AND group_list.РегНомерСвид<>0 
+                    AND ДатаВыдачиСвид BETWEEN '" & dateStart & "' AND  '" & dateEnd & " ' 
+                    AND ОсновнойДокумент= 'Свидетельство' 
+                    ORDER BY group_list.РегНомерСвид"
 
         Return sqlString
 
@@ -15,7 +277,42 @@ Module QueryString
 
     Public Function accountingBook__loadListDipFRDO(dateStart As String, dateEnd As String) As String
 
-        sqlString = "SELECT group_list.НомерДиплома ,ДатаВыдачиДиплома,group_list.РегНомерДиплома, Программа,Слушатель.УОбразования, ФамилияДОО, СерияДОО, НомерДОО, ДатаНЗ, ДатаКЗ, КолЧас, Фамилия, Имя, Отчество, ДатаРождения, Пол, СНИЛС, ФормаО, ИФин, Гражданство FROM (group_list INNER JOIN Слушатель On group_list.Слушатель = Слушатель.Снилс) INNER JOIN `group` On group_list.Kod = `group`.Код WHERE `group`.ОсновнойДокумент= 'Диплом'  AND NOT ISNULL(group_list.РегНомерДиплома) AND group_list.РегНомерДиплома<>0 AND ДатаВыдачиДиплома BETWEEN '" & dateStart & "' and  '" & dateEnd & " ' and ОсновнойДокумент= 'Диплом' ORDER BY group_list.РегНомерДиплома"
+        sqlString = "SELECT 
+                      group_list.НомерДиплома,
+                      ДатаВыдачиДиплома,
+                      group_list.РегНомерДиплома,
+                      programm.name,
+                      Слушатель.УОбразования,
+                      ФамилияДОО,
+                      СерияДОО,
+                      НомерДОО,
+                      ДатаНЗ,
+                      ДатаКЗ,
+                      КолЧас,
+                      Фамилия,
+                      Имя,
+                      Отчество,
+                      ДатаРождения,
+                      Пол,
+                      Снилс,
+                      ФормаО,
+                      ИФин,
+                      Гражданство
+                    FROM (
+                    group_list 
+                    INNER JOIN Слушатель 
+                    ON group_list.Слушатель = Слушатель.Снилс) 
+                    INNER JOIN `group` 
+                    ON group_list.Kod = `group`.Код 
+                    LEFT JOIN programm
+                    ON kod_programm=programm.kod
+                    WHERE 
+                    `group`.ОсновнойДокумент= 'Диплом'  
+                    AND NOT ISNULL(group_list.РегНомерДиплома) 
+                    AND group_list.РегНомерДиплома<>0 
+                    AND ДатаВыдачиДиплома BETWEEN '" & dateStart & "' and  '" & dateEnd & " ' 
+                    AND ОсновнойДокумент= 'Диплом' 
+                    ORDER BY group_list.РегНомерДиплома"
 
         Return sqlString
 
@@ -23,7 +320,40 @@ Module QueryString
 
     Public Function accountingBook__loadListUdFRDO(dateStart As String, dateEnd As String) As String
 
-        sqlString = "SELECT group_list.НомерУд, ДатаВыдачиУд, group_list.РегНомерУд, Программа, Слушатель.УОбразования, ФамилияДОО, СерияДОО, НомерДОО, ДатаНЗ, ДатаКЗ, КолЧас, Фамилия, Имя, Отчество, ДатаРождения, Пол, СНИЛС, ФормаО, ИФин, Гражданство  FROM (group_list INNER JOIN Слушатель On group_list.Слушатель = Слушатель.Снилс) INNER JOIN `group` On group_list.Kod = `group`.Код WHERE `group`.ОсновнойДокумент= 'Удостоверение'   AND NOT ISNULL(group_list.РегНомерУд) AND group_list.РегНомерУд<>0 AND ДатаВыдачиУд BETWEEN '" & dateStart & "' and  '" & dateEnd & " ' ORDER BY group_list.РегНомерУд"
+        sqlString = "SELECT 
+                      group_list.НомерУд,
+                      ДатаВыдачиУд,
+                      group_list.РегНомерУд,
+                      programm.name,
+                      Слушатель.УОбразования,
+                      ФамилияДОО,
+                      СерияДОО,
+                      НомерДОО,
+                      ДатаНЗ,
+                      ДатаКЗ,
+                      КолЧас,
+                      Фамилия,
+                      Имя,
+                      Отчество,
+                      ДатаРождения,
+                      Пол,
+                      Снилс,
+                      ФормаО,
+                      ИФин,
+                      Гражданство                    
+                    FROM (
+                    group_list 
+                    INNER JOIN 
+                    Слушатель 
+                    ON group_list.Слушатель = Слушатель.Снилс)
+                    INNER JOIN `group` 
+                    ON group_list.Kod = `group`.Код 
+                    LEFT JOIN programm
+                    ON kod_programm=programm.kod
+                        WHERE `group`.ОсновнойДокумент= 'Удостоверение'   
+                    AND NOT ISNULL(group_list.РегНомерУд) AND group_list.РегНомерУд<>0 
+                    AND ДатаВыдачиУд BETWEEN '" & dateStart & "' and  '" & dateEnd & " ' 
+                    ORDER BY group_list.РегНомерУд"
 
         Return sqlString
 
@@ -31,7 +361,14 @@ Module QueryString
 
     Public Function accountingBook__loadListSvid(dateStart As String, dateEnd As String) As String
 
-        sqlString = "SELECT  group_list.РегНомерСвид, group_list.НомерСвид,`group`.Номер, Фамилия,Имя, Отчество, Программа, КолЧас, ДатаКЗ, ДатаВыдачиСвид FROM (group_list INNER JOIN Слушатель On group_list.Слушатель = Слушатель.Снилс) INNER JOIN `group` On group_list.Kod = `group`.Код WHERE  `group`.ОсновнойДокумент= 'Свидетельство' AND NOT ISNULL(group_list.РегНомерСвид) AND group_list.РегНомерСвид<>0 AND ДатаВыдачиСвид BETWEEN '" & dateStart & "' and  '" & dateEnd & " '  and ОсновнойДокумент= 'Свидетельство' ORDER BY group_list.РегНомерСвид"
+        sqlString = "SELECT  
+                    group_list.РегНомерСвид, group_list.НомерСвид,`group`.Номер, Фамилия,Имя, Отчество, programm.name, КолЧас, ДатаКЗ, ДатаВыдачиСвид 
+                    FROM (group_list INNER JOIN Слушатель On group_list.Слушатель = Слушатель.Снилс) 
+                    INNER JOIN `group` 
+                        ON group_list.Kod = `group`.Код
+                    LEFT JOIN programm
+                        ON kod_programm=programm.kod
+                    WHERE  `group`.ОсновнойДокумент= 'Свидетельство' AND NOT ISNULL(group_list.РегНомерСвид) AND group_list.РегНомерСвид<>0 AND ДатаВыдачиСвид BETWEEN '" & dateStart & "' and  '" & dateEnd & " '  and ОсновнойДокумент= 'Свидетельство' ORDER BY group_list.РегНомерСвид"
 
         Return sqlString
 
@@ -39,7 +376,13 @@ Module QueryString
 
     Public Function accountingBook__loadListDip(dateStart As String, dateEnd As String) As String
 
-        sqlString = "SELECT group_list.РегНомерДиплома, group_list.НомерДиплома,`group`.Номер, Фамилия,Имя, Отчество, Программа, КолЧас, ДатаКЗ, ДатаВыдачиДиплома FROM (group_list INNER JOIN Слушатель On group_list.Слушатель = Слушатель.Снилс) INNER JOIN `group` On group_list.Kod = `group`.Код WHERE `group`.ОсновнойДокумент= 'Диплом' AND NOT ISNULL(group_list.РегНомерДиплома) AND group_list.РегНомерДиплома<>0 AND group_list.РегНомерДиплома<>0 AND ДатаВыдачиДиплома BETWEEN '" & dateStart & "' and  '" & dateEnd & " '  and ОсновнойДокумент= 'Диплом' ORDER BY group_list.РегНомерДиплома"
+        sqlString = "SELECT group_list.РегНомерДиплома, group_list.НомерДиплома,`group`.Номер, Фамилия,Имя, Отчество, programm.name, КолЧас, ДатаКЗ, ДатаВыдачиДиплома 
+                    FROM (group_list INNER JOIN Слушатель On group_list.Слушатель = Слушатель.Снилс) 
+                    INNER JOIN `group` 
+                        ON group_list.Kod = `group`.Код 
+                    LEFT JOIN programm
+                        ON kod_programm=programm.kod
+                    WHERE `group`.ОсновнойДокумент= 'Диплом' AND NOT ISNULL(group_list.РегНомерДиплома) AND group_list.РегНомерДиплома<>0 AND group_list.РегНомерДиплома<>0 AND ДатаВыдачиДиплома BETWEEN '" & dateStart & "' and  '" & dateEnd & " '  and ОсновнойДокумент= 'Диплом' ORDER BY group_list.РегНомерДиплома"
 
         Return sqlString
 
@@ -47,7 +390,10 @@ Module QueryString
 
     Public Function accountingBook__loadListUd(dateStart As String, dateEnd As String) As String
 
-        sqlString = "SELECT  group_list.РегНомерУд, group_list.НомерУд,`group`.Номер, Фамилия,Имя, Отчество, Программа, КолЧас, ДатаКЗ, ДатаВыдачиУд FROM (group_list INNER JOIN Слушатель On group_list.Слушатель = Слушатель.Снилс) INNER JOIN `group` On group_list.Kod = `group`.Код WHERE `group`.ОсновнойДокумент= 'Удостоверение' AND NOT ISNULL(group_list.РегНомерУд) AND group_list.РегНомерУд<>0 AND ДатаВыдачиУд BETWEEN '" & dateStart & "' and  '" & dateEnd & " ' ORDER BY group_list.РегНомерУд"
+        sqlString = "SELECT  group_list.РегНомерУд, group_list.НомерУд,`group`.Номер, Фамилия,Имя, Отчество, programm.name, КолЧас, ДатаКЗ, ДатаВыдачиУд FROM (group_list INNER JOIN Слушатель On group_list.Слушатель = Слушатель.Снилс) INNER JOIN `group` On group_list.Kod = `group`.Код 
+                     LEFT JOIN programm
+                      ON kod_programm=programm.kod
+                     WHERE `group`.ОсновнойДокумент= 'Удостоверение' AND NOT ISNULL(group_list.РегНомерУд) AND group_list.РегНомерУд<>0 AND ДатаВыдачиУд BETWEEN '" & dateStart & "' and  '" & dateEnd & " ' ORDER BY group_list.РегНомерУд"
 
         Return sqlString
 
@@ -56,6 +402,7 @@ Module QueryString
     Public Function formList__checkGroup(kodGroup As String) As String
 
         sqlString = "SELECT Слушатель FROM group_list WHERE Kod= " & kodGroup
+
         Return sqlString
 
     End Function
@@ -63,6 +410,7 @@ Module QueryString
     Public Function formList__loadOtvOrSlush(kodGroup As String) As String
 
         sqlString = "SELECT group_list.Группа, CONCAT(Слушатель.Фамилия,' ',Слушатель.Имя,' ',IFNULL(слушатель.Отчество,' ')) FROM group_list INNER JOIN Слушатель ON group_list.Слушатель = Слушатель.Снилс WHERE group_list.Kod = " & kodGroup & " ORDER BY Слушатель.Фамилия"
+
         Return sqlString
 
     End Function
@@ -70,12 +418,14 @@ Module QueryString
     Public Function formList__loadProfLevel(nameTbl As String) As String
 
         sqlString = "SELECT Уровень FROM " & nameTbl & " ORDER BY Уровень"
+
         Return sqlString
 
     End Function
     Public Function formList__loadKodGroup(dateStr As String) As String
 
         sqlString = "SELECT * FROM `group` WHERE ДатаНЗ > '" & dateStr & "'"
+
         Return sqlString
 
     End Function
@@ -83,6 +433,7 @@ Module QueryString
     Public Function formList__loadKodGroupPP() As String
 
         sqlString = "SELECT Код FROM `group` WHERE УровеньКвалификации = 'профессиональная переподготовка'"
+
         Return sqlString
 
     End Function
@@ -90,6 +441,7 @@ Module QueryString
     Public Function formList__loadProgramms() As String
 
         sqlString = "SELECT name, date, kod FROM programm ORDER BY name"
+
         Return sqlString
 
     End Function
@@ -97,6 +449,7 @@ Module QueryString
     Public Function redactorFormListGroup__loadData(groupKod As String) As String
 
         sqlString = "SELECT Слушатель.Снилс, Слушатель.Фамилия, Слушатель.Имя, IFNULL(слушатель.Отчество,' '), Слушатель.ДатаРождения FROM group_list INNER JOIN Слушатель ON group_list.Слушатель = Слушатель.Снилс WHERE group_list.Kod = " & groupKod & " ORDER BY Слушатель.Фамилия"
+
         Return sqlString
 
     End Function
@@ -104,6 +457,7 @@ Module QueryString
     Public Function redactorGroup__deketeGroupInGroup(gruppaNumber As String, gruppaYearNZ As String) As String
 
         sqlString = "DELETE FROM `group` WHERE Номер= " & Chr(39) & gruppaNumber & Chr(39) & " AND Year(ДатаНЗ)=" & gruppaYearNZ
+
         Return sqlString
 
     End Function
@@ -111,6 +465,7 @@ Module QueryString
     Public Function redactorGroup__deketeGroupInGroupList(gruppaNumber As String, gruppaYearNZ As String) As String
 
         sqlString = " DELETE FROM group_list WHERE Kod = (SELECT Код FROM `group` WHERE Номер= " & Chr(39) & gruppaNumber & Chr(39) & " AND Year(ДатаНЗ)=" & gruppaYearNZ & " LIMIT 1)"
+
         Return sqlString
 
     End Function
@@ -118,6 +473,7 @@ Module QueryString
     Public Function redactorGroup__updateGroupList(gruppaNumber As String, gruppaYearNZ As String) As String
 
         sqlString = " UPDATE group_list SET `group` = " & Chr(39) & gruppaNumber & Chr(39) & " WHERE gruppa_kod = (SELECT Код FROM `group` WHERE Номер= " & Chr(39) & gruppaNumber & Chr(39) & " AND Year(ДатаНЗ)=" & gruppaYearNZ & " LIMIT 1)"
+
         Return sqlString
 
     End Function
@@ -125,6 +481,7 @@ Module QueryString
     Public Function vedomPromAtt__loadListSlush(kodGroup As String) As String
 
         sqlString = "SELECT CONCAT(Слушатель.Фамилия,' ',Слушатель.Имя,' ',IFNULL(слушатель.Отчество,' ')), Слушатель.Снилс  FROM group_list INNER JOIN Слушатель ON group_list.Слушатель = Слушатель.Снилс WHERE group_list.Kod= " & kodGroup & " ORDER BY Слушатель.Фамилия"
+
         Return sqlString
 
     End Function
@@ -143,6 +500,7 @@ Module QueryString
                     ,ОценкаМодуль10= " & Chr(39) & argument(9) & Chr(39) & "
                     WHERE group_list.Слушатель = " & Chr(39) & argument(10) & Chr(39) & "
                     AND group_list.Kod = " & argument(11)
+
         Return sqlString
 
     End Function
@@ -150,14 +508,49 @@ Module QueryString
     Public Function oVedom__checkSlush(kodGroup As String, snils As String) As String
 
         sqlString = "SELECT group_list.Слушатель FROM group_list WHERE group_list.Слушатель = " & Chr(39) & snils & Chr(39) & " AND group_list.Kod = " & kodGroup
+
         Return sqlString
 
     End Function
 
     Public Function prilDiplomLoadData(kodGroup As String) As String
 
-        sqlString = "SELECT Слушатель.Фамилия,Слушатель.Имя,IFNULL(слушатель.Отчество,' '), Слушатель.ДатаРождения,ОценкаМодуль1,ОценкаМодуль2,ОценкаМодуль3,ОценкаМодуль4,ОценкаМодуль5,ОценкаМодуль6,ОценкаМодуль7,ОценкаМодуль8,ОценкаМодуль9,ОценкаМодуль10,ИАПрактическиеНавыки,ИАИтог, group_list.НомерДиплома, `group`.ДатаВыдачиДиплома, `group`.ДатаКЗ,НаимДОО, Квалификация,КолЧас,ДатаНЗ, Программа, `group`.Спец FROM (
-INNER JOIN Слушатель ON group_list.Слушатель = Слушатель.Снилс) INNER JOIN `group` ON group_list.Kod = `group`.Код WHERE `group`.Код=" & kodGroup & " ORDER BY Слушатель.Фамилия"
+        sqlString = "SELECT
+                      Слушатель.Фамилия,
+                      Слушатель.Имя,
+                      IFNULL(Слушатель.Отчество, ' '),
+                      Слушатель.ДатаРождения,
+                      ОценкаМодуль1,
+                      ОценкаМодуль2,
+                      ОценкаМодуль3,
+                      ОценкаМодуль4,
+                      ОценкаМодуль5,
+                      ОценкаМодуль6,
+                      ОценкаМодуль7,
+                      ОценкаМодуль8,
+                      ОценкаМодуль9,
+                      ОценкаМодуль10,
+                      ИАПрактическиеНавыки,
+                      ИАИтог,
+                      group_list.НомерДиплома,
+                      `group`.ДатаВыдачиДиплома,
+                      `group`.ДатаКЗ,
+                      НаимДОО,
+                      Квалификация,
+                      КолЧас,
+                      ДатаНЗ,
+                      programm.name,
+                      `group`.Спец
+                    FROM (group_list
+                      INNER JOIN Слушатель
+                        ON group_list.Слушатель = Слушатель.Снилс
+                      INNER JOIN `group`
+                        ON group_list.kod = `group`.Код
+                      LEFT JOIN programm 
+                      ON `group`.kod_programm = programm.kod
+                        )
+                    WHERE `group`.Код =" & kodGroup & " ORDER BY Слушатель.Фамилия"
+
         Return sqlString
 
     End Function
@@ -165,6 +558,7 @@ INNER JOIN Слушатель ON group_list.Слушатель = Слушате�
     Public Function blanki_loadSlush(kodGroup As String) As String
 
         sqlString = "SELECT Слушатель FROM group_list WHERE Kod =" & kodGroup
+
         Return sqlString
 
     End Function
@@ -172,6 +566,7 @@ INNER JOIN Слушатель ON group_list.Слушатель = Слушате�
     Public Function blanki_loadSpesh(kodGroup As String) As String
 
         sqlString = "SELECT Спец FROM `group` WHERE Код =" & kodGroup
+
         Return sqlString
 
     End Function
@@ -185,6 +580,7 @@ INNER JOIN Слушатель ON group_list.Слушатель = Слушате�
                       INNER JOIN programm
                         ON `group`.kod_programm = programm.kod 
                     WHERE Код =" & kodGroup
+
         Return sqlString
 
     End Function
@@ -197,6 +593,7 @@ INNER JOIN Слушатель ON group_list.Слушатель = Слушате�
                       INNER JOIN programm
                         ON `group`.kod_programm = programm.kod 
                     WHERE Код =" & kodGroup
+
         Return sqlString
 
     End Function
@@ -204,6 +601,7 @@ INNER JOIN Слушатель ON group_list.Слушатель = Слушате�
     Public Function updateNumbersInGroup(number As String, regNumber As String, kodGroup As String, snils As String) As String
 
         sqlString = "UPDATE group_list Set НомерУд = " & number & " , РегНомерУд= " & regNumber & " WHERE Kod = " & kodGroup & " And Слушатель = " & Chr(39) & snils & Chr(39)
+
         Return sqlString
 
     End Function
@@ -211,13 +609,14 @@ INNER JOIN Слушатель ON group_list.Слушатель = Слушате�
     Public Function checkGroup(kodGroup As String) As String
 
         sqlString = "Select Код FROM `group` WHERE Код = " & kodGroup
+
         Return sqlString
 
     End Function
 
     Public Function pednagruzkaloadOtchet(DateStart As String, DateEnd As String) As String
 
-        sqlString = " Select
+        sqlString = " SELECT
                       ПреподавательСписокВнебюджет,
                       СуммаЧасовБ,
                       СуммаЧасовВБ
@@ -264,14 +663,16 @@ INNER JOIN Слушатель ON group_list.Слушатель = Слушате�
                         ON СводБюджет.ПреподавательСписокБюджет = СводВнебюджет.ПреподавательСписокВнебюджет
                     WHERE СуммаЧасовБ > 0
                     OR СуммаЧасовВБ > 0"
+
         Return sqlString
 
     End Function
 
     Public Sub datagridInsertRowIntoDB(ДатаГрид As DataGridView, nameTbl As String, massValues As Object, massTypes As Object, numberFirstColumn As Integer, numberLastColumn As Integer)
+
         Dim fio, tranzitMass
         Dim sqlStringSecondPart As String
-        Dim count As Integer = 0, countRows, countQueryStr As Integer
+        Dim countRows, countQueryStr As Integer
 
         countRows = ДатаГрид.Rows.Count
         countRows = UBound(massTypes, 2)
@@ -355,6 +756,7 @@ INNER JOIN Слушатель ON group_list.Слушатель = Слушате�
                       INNER JOIN sotrudnik
                         ON pednagruzka.worker = sotrudnik.kod
                         WHERE pednagruzka.kod= " & kodGroup & " ORDER BY sotrudnik.name"
+
         Return sqlString
 
     End Function
@@ -362,6 +764,7 @@ INNER JOIN Слушатель ON group_list.Слушатель = Слушате�
     Public Function SqlString__updateSlushInListSlGroupp(snils As String, prevSnils As String)
 
         sqlString = " UPDATE group_list SET Слушатель = " & Chr(39) & snils & Chr(39) & " WHERE Слушатель = " & Chr(39) & prevSnils & Chr(39)
+
         Return sqlString
 
     End Function
@@ -369,17 +772,18 @@ INNER JOIN Слушатель ON group_list.Слушатель = Слушате�
     Public Function SqlString__insertIntoListGroupp(snils As String, kodGroupp As String)
 
         sqlString = "INSERT INTO group_list (Слушатель, Kod) VALUES ( " & Chr(39) & snils & Chr(39) & " , " & kodGroupp & ")"
+
         Return sqlString
 
     End Function
 
     Public Function SqlString__insertSlush(structSlushatel As strSlushatel)
 
-        Dim Часть1 As String, Часть2 As String, Часть3 As String, Часть4 As String
+        Dim part1, part2, part3 As String
 
-        Часть1 = "(Снилс, Фамилия, Имя, Отчество, ДатаРождения, Пол, УОбразования, doo_vid_dok, НаимДОО, СерияДОО, НомерДОО, ФамилияДОО, АРег, Телефон, Гражданство, ДУЛ, СерияДУЛ, НомерДУЛ, ИФин, НОрг, НомерНапрРосздрав, ДатаНапрРосздрав, Специальность, ДатаРегистрации, Почта, ДУЛКемВыдан,ДУЛДатаВыдачи ) "
+        part1 = "(Снилс, Фамилия, Имя, Отчество, ДатаРождения, Пол, УОбразования, doo_vid_dok, НаимДОО, СерияДОО, НомерДОО, ФамилияДОО, АРег, Телефон, Гражданство, ДУЛ, СерияДУЛ, НомерДУЛ, ИФин, НОрг, НомерНапрРосздрав, ДатаНапрРосздрав, Специальность, ДатаРегистрации, Почта, ДУЛКемВыдан,ДУЛДатаВыдачи ) "
 
-        Часть2 = "(" & Chr(39) & structSlushatel.snils & Chr(39) & ",
+        part2 = "(" & Chr(39) & structSlushatel.snils & Chr(39) & ",
                  " & Chr(39) & structSlushatel.фамилия & Chr(39) & ",
                  " & Chr(39) & structSlushatel.имя & Chr(39) & ",
                  " & Chr(39) & structSlushatel.отчество & Chr(39) & ",
@@ -399,7 +803,7 @@ INNER JOIN Слушатель ON group_list.Слушатель = Слушате�
                  ," & Chr(39) & structSlushatel.серияДУЛ & Chr(39) & "
                  ," & Chr(39) & structSlushatel.номерДУЛ & Chr(39)
 
-        Часть3 = "," & Chr(39) & structSlushatel.источникФин & Chr(39) & "
+        part3 = "," & Chr(39) & structSlushatel.источникФин & Chr(39) & "
                 , (SELECT kod FROM napr_organization WHERE name=" & Chr(39) & structSlushatel.направившаяОрг & Chr(39) & "
                 LIMIT 1) , " & Chr(39) & structSlushatel.номерНаправленияРосздравнадзора & Chr(39) & "
                 , " & Chr(39) & structSlushatel.датаНаправленияРосздравнвдзора & Chr(39) & "
@@ -409,11 +813,11 @@ INNER JOIN Слушатель ON group_list.Слушатель = Слушате�
                 , " & Chr(39) & structSlushatel.кемВыданДУЛ & Chr(39) & ","
 
         If structSlushatel.датаВыдачиДУЛ = "null" Then
-            Часть3 += "null)"
-        Else Часть3 += Chr(39) & structSlushatel.датаВыдачиДУЛ & Chr(39) & " ) "
+            part3 += "null)"
+        Else part3 += Chr(39) & structSlushatel.датаВыдачиДУЛ & Chr(39) & " ) "
         End If
 
-        sqlString = "INSERT INTO Слушатель " & Часть1 & "  VALUES " & Часть2 & Часть3
+        sqlString = "INSERT INTO Слушатель " & part1 & "  VALUES " & part2 & part3
 
         Return sqlString
 
@@ -421,23 +825,23 @@ INNER JOIN Слушатель ON group_list.Слушатель = Слушате�
 
     Public Function SqlString__updateSlush(structSlushatel As strSlushatel)
 
-        Dim Часть1 As String, Часть2 As String, Часть3 As String, Часть4 As String
+        Dim part1 As String, part2 As String, part3 As String, part4 As String
 
-        Часть1 = "Снилс=" & Chr(39) & structSlushatel.snils & Chr(39) & ", Фамилия=" & Chr(39) & structSlushatel.фамилия & Chr(39) & ", Имя=" & Chr(39) & structSlushatel.имя & Chr(39) & ", Отчество=" & Chr(39) & structSlushatel.отчество & Chr(39) & ", ДатаРождения=" & Chr(39) & structSlushatel.датаР & Chr(39) & ", Пол=" & Chr(39) & structSlushatel.пол & Chr(39)
+        part1 = "Снилс=" & Chr(39) & structSlushatel.snils & Chr(39) & ", Фамилия=" & Chr(39) & structSlushatel.фамилия & Chr(39) & ", Имя=" & Chr(39) & structSlushatel.имя & Chr(39) & ", Отчество=" & Chr(39) & structSlushatel.отчество & Chr(39) & ", ДатаРождения=" & Chr(39) & structSlushatel.датаР & Chr(39) & ", Пол=" & Chr(39) & structSlushatel.пол & Chr(39)
 
-        Часть2 = ", УОбразования=" & Chr(39) & structSlushatel.уровеньОбразования & Chr(39) & ", doo_vid_dok= (SELECT kod FROM doo_vid_dok WHERE name=" & Chr(39) & structSlushatel.doo_vid_dok & Chr(39) & " LIMIT 1), НаимДОО=" & Chr(39) & structSlushatel.образование & Chr(39) & ", СерияДОО=" & Chr(39) & structSlushatel.серияДокументаООбразовании & Chr(39) & ", НомерДОО=" & Chr(39) & structSlushatel.номерДокументаООбразовании & Chr(39) & ", ФамилияДОО=" & Chr(39) & structSlushatel.фамилияВДокОбОбразовании & Chr(39)
+        part2 = ", УОбразования=" & Chr(39) & structSlushatel.уровеньОбразования & Chr(39) & ", doo_vid_dok= (SELECT kod FROM doo_vid_dok WHERE name=" & Chr(39) & structSlushatel.doo_vid_dok & Chr(39) & " LIMIT 1), НаимДОО=" & Chr(39) & structSlushatel.образование & Chr(39) & ", СерияДОО=" & Chr(39) & structSlushatel.серияДокументаООбразовании & Chr(39) & ", НомерДОО=" & Chr(39) & structSlushatel.номерДокументаООбразовании & Chr(39) & ", ФамилияДОО=" & Chr(39) & structSlushatel.фамилияВДокОбОбразовании & Chr(39)
 
-        Часть3 = ",АРег=" & Chr(39) & structSlushatel.адресРегистрации & Chr(39) & ", Телефон=" & Chr(39) & structSlushatel.телефон & Chr(39) & ", Гражданство=" & Chr(39) & structSlushatel.гражданство & Chr(39) & ", ДУЛ=" & Chr(39) & structSlushatel.ДУЛ & Chr(39) & ", СерияДУЛ=" & Chr(39) & structSlushatel.серияДУЛ & Chr(39) & ", НомерДУЛ=" & Chr(39) & structSlushatel.номерДУЛ & Chr(39)
+        part3 = ",АРег=" & Chr(39) & structSlushatel.адресРегистрации & Chr(39) & ", Телефон=" & Chr(39) & structSlushatel.телефон & Chr(39) & ", Гражданство=" & Chr(39) & structSlushatel.гражданство & Chr(39) & ", ДУЛ=" & Chr(39) & structSlushatel.ДУЛ & Chr(39) & ", СерияДУЛ=" & Chr(39) & structSlushatel.серияДУЛ & Chr(39) & ", НомерДУЛ=" & Chr(39) & structSlushatel.номерДУЛ & Chr(39)
 
-        Часть4 = ",ИФин=" & Chr(39) & structSlushatel.источникФин & Chr(39) & ", НОрг= (SELECT kod FROM napr_organization WHERE name=" & Chr(39) & structSlushatel.направившаяОрг & Chr(39) & " LIMIT 1), НомерНапрРосздрав=" & Chr(39) & structSlushatel.номерНаправленияРосздравнадзора & Chr(39) & ", ДатаНапрРосздрав=" & Chr(39) & structSlushatel.датаНаправленияРосздравнвдзора & Chr(39) & ", Специальность=" & Chr(39) & structSlushatel.специальностьСлушателя & Chr(39) & ", ДатаРегистрации=" & Chr(39) & structSlushatel.датаРег & Chr(39) & ", Почта=" & Chr(39) & structSlushatel.Email & Chr(39) & ", ДУЛКемВыдан=" & Chr(39) & structSlushatel.кемВыданДУЛ & Chr(39)
+        part4 = ",ИФин=" & Chr(39) & structSlushatel.источникФин & Chr(39) & ", НОрг= (SELECT kod FROM napr_organization WHERE name=" & Chr(39) & structSlushatel.направившаяОрг & Chr(39) & " LIMIT 1), НомерНапрРосздрав=" & Chr(39) & structSlushatel.номерНаправленияРосздравнадзора & Chr(39) & ", ДатаНапрРосздрав=" & Chr(39) & structSlushatel.датаНаправленияРосздравнвдзора & Chr(39) & ", Специальность=" & Chr(39) & structSlushatel.специальностьСлушателя & Chr(39) & ", ДатаРегистрации=" & Chr(39) & structSlushatel.датаРег & Chr(39) & ", Почта=" & Chr(39) & structSlushatel.Email & Chr(39) & ", ДУЛКемВыдан=" & Chr(39) & structSlushatel.кемВыданДУЛ & Chr(39)
 
         If structSlushatel.датаВыдачиДУЛ = "null" Then
-            Часть4 += ", ДУЛДатаВыдачи=null"
+            part4 += ", ДУЛДатаВыдачи=null"
         Else
-            Часть4 += ", ДУЛДатаВыдачи=" & Chr(39) & structSlushatel.датаВыдачиДУЛ & Chr(39)
+            part4 += ", ДУЛДатаВыдачи=" & Chr(39) & structSlushatel.датаВыдачиДУЛ & Chr(39)
         End If
 
-        sqlString = "UPDATE Слушатель SET " & Часть1 & Часть2 & Часть3 & Часть4 & " WHERE Снилс =" & Chr(39) & structSlushatel.snils & Chr(39)
+        sqlString = "UPDATE Слушатель SET " & part1 & part2 & part3 & part4 & " WHERE Снилс =" & Chr(39) & structSlushatel.snils & Chr(39)
 
         Return sqlString
 
@@ -446,6 +850,7 @@ INNER JOIN Слушатель ON group_list.Слушатель = Слушате�
     Public Function SqlString__loadSlushList(snils As String)
 
         sqlString = "SELECT * FROM " & "Слушатель" & " WHERE " & "Снилс" & " = " & Chr(39) & snils & Chr(39)
+
         Return sqlString
 
     End Function
@@ -453,6 +858,7 @@ INNER JOIN Слушатель ON group_list.Слушатель = Слушате�
     Public Function SqlString__deleteSlushFromGrouppList(snils As String)
 
         sqlString = "DELETE FROM group_list WHERE Слушатель= " & Chr(39) & snils & Chr(39)
+
         Return sqlString
 
     End Function
@@ -460,6 +866,7 @@ INNER JOIN Слушатель ON group_list.Слушатель = Слушате�
     Public Function SqlString__deleteSlush(snils As String)
 
         sqlString = "DELETE FROM Слушатель WHERE Снилс= " & Chr(39) & snils & Chr(39)
+
         Return sqlString
 
     End Function
@@ -467,6 +874,7 @@ INNER JOIN Слушатель ON group_list.Слушатель = Слушате�
     Public Function loadNOrganization()
 
         sqlString = "SELECT name FROM napr_organization ORDER BY kod"
+
         Return sqlString
 
     End Function
@@ -474,6 +882,7 @@ INNER JOIN Слушатель ON group_list.Слушатель = Слушате�
     Public Function loadIstFinans()
 
         sqlString = "SELECT name FROM ist_finans ORDER BY kod"
+
         Return sqlString
 
     End Function
@@ -481,6 +890,7 @@ INNER JOIN Слушатель ON group_list.Слушатель = Слушате�
     Public Function loadDokUL()
 
         sqlString = "SELECT name FROM dok_UL ORDER BY kod"
+
         Return sqlString
 
     End Function
@@ -488,6 +898,7 @@ INNER JOIN Слушатель ON group_list.Слушатель = Слушате�
     Public Function loadGrajdanstvo()
 
         sqlString = "SELECT name FROM grajdanstvo ORDER BY kod"
+
         Return sqlString
 
     End Function
@@ -495,6 +906,7 @@ INNER JOIN Слушатель ON group_list.Слушатель = Слушате�
     Public Function loadDooCountry()
 
         sqlString = "SELECT name FROM DOO_country ORDER BY kod"
+
         Return sqlString
 
     End Function
@@ -502,18 +914,21 @@ INNER JOIN Слушатель ON group_list.Слушатель = Слушате�
     Public Function loadDooVidDok()
 
         sqlString = "SELECT name FROM doo_vid_dok ORDER BY name"
+
         Return sqlString
 
     End Function
     Public Function loadUrovenObr()
 
         sqlString = "SELECT name FROM uroven_obr ORDER BY kod"
+
         Return sqlString
 
     End Function
     Public Function loadPol()
 
         sqlString = "SELECT pol FROM pol ORDER BY kod"
+
         Return sqlString
 
     End Function
@@ -521,6 +936,7 @@ INNER JOIN Слушатель ON group_list.Слушатель = Слушате�
     Public Function load_prepod() As String
 
         sqlString = "SELECT name FROM sotrudnik WHERE in_list=1"
+
         Return sqlString
 
     End Function
@@ -544,14 +960,16 @@ INNER JOIN Слушатель ON group_list.Слушатель = Слушате�
                       LEFT JOIN napr_organization
                         ON result.НОрг = kod
                         ORDER BY  result.slush"
+
         Return sqlString
 
     End Function
 
     Public Function load_slushatel(snils As String) As String
-        Dim SqlString As String
 
-        SqlString = "SELECT
+        sqlString = ""
+
+        sqlString = "SELECT
                       слушатель.Код,
                       слушатель.Снилс,
                       слушатель.Фамилия,
@@ -588,13 +1006,14 @@ INNER JOIN Слушатель ON group_list.Слушатель = Слушате�
                       INNER JOIN napr_organization
                         ON слушатель.НОрг = napr_organization.kod
                         WHERE слушатель.Снилс='" + snils + "'"
-        Return SqlString
+
+        Return sqlString
 
     End Function
 
     Public Function load_ppOk_group(kod As String) As String
 
-        Dim sqlString As String = "SELECT
+        sqlString = "SELECT
                                   CONCAT(слушатель.Фамилия, ' ', слушатель.Имя, ' ', IFNULL(слушатель.Отчество, ' ')),
                                   слушатель.Фамилия,
                                   CONCAT(слушатель.Имя, ' ', IFNULL(слушатель.Отчество, ' ')),
@@ -602,7 +1021,7 @@ INNER JOIN Слушатель ON group_list.Слушатель = Слушате�
                                   `group`.НомерДиплома,
                                   `group`.РегНомерДиплома,
                                   `group`.ОсновнойДокумент,
-                                  Программа,
+                                  programm.name,
                                   ДатаВыдачиДиплома,
                                   ДатаНЗ,
                                   ДатаКЗ,
@@ -617,6 +1036,8 @@ INNER JOIN Слушатель ON group_list.Слушатель = Слушате�
                                     ON group_list.kod = `group`.Код
                                       LEFT JOIN sotrudnik
                                     ON sotrudnik.kod = Куратор
+                                      LEFT JOIN programm
+                                    ON programm.kod = kod_programm
                                 WHERE `group`.Код = " + kod + "
                                 ORDER BY слушатель.Фамилия"
         Return sqlString
@@ -625,7 +1046,7 @@ INNER JOIN Слушатель ON group_list.Слушатель = Слушате�
 
     Public Function load_pkOk_group(kod As String) As String
 
-        Dim sqlString As String = "SELECT
+        sqlString = "SELECT
                                   CONCAT(слушатель.Фамилия, ' ', слушатель.Имя, ' ', IFNULL(слушатель.Отчество, ' ')),
                                   слушатель.Фамилия,
                                   CONCAT(слушатель.Имя, ' ', IFNULL(слушатель.Отчество, ' ')),
@@ -633,7 +1054,7 @@ INNER JOIN Слушатель ON group_list.Слушатель = Слушате�
                                   `group`.НомерУд,
                                   `group`.РегНомерУд,
                                   `group`.ОсновнойДокумент,
-                                  Программа,
+                                  programm.name,
                                   ДатаВыдачиУд,
                                   ДатаНЗ,
                                   ДатаКЗ,
@@ -648,6 +1069,8 @@ INNER JOIN Слушатель ON group_list.Слушатель = Слушате�
                                     ON group_list.kod = `group`.Код
                                   LEFT JOIN sotrudnik
                                     ON sotrudnik.kod=Куратор
+                                  LEFT JOIN programm
+                                    ON programm.kod = kod_programm
                                 WHERE `group`.Код = " + kod + "
                                 ORDER BY слушатель.Фамилия"
         Return sqlString
@@ -656,29 +1079,31 @@ INNER JOIN Слушатель ON group_list.Слушатель = Слушате�
 
     Public Function load_poOk_group(kod As String) As String
 
-        Dim sqlString As String = "SELECT
-                                  CONCAT(слушатель.Фамилия, ' ', слушатель.Имя, ' ', IFNULL(слушатель.Отчество, ' ')),
-                                  слушатель.Фамилия,
-                                  CONCAT(слушатель.Имя, ' ', IFNULL(слушатель.Отчество, ' ')),
-                                  слушатель.Снилс,
-                                  `group`.НомерСвид,
-                                  `group`.РегНомерСвид,
-                                  `group`.ОсновнойДокумент,
-                                  Программа,
-                                  ДатаВыдачиСвид,
-                                  ДатаНЗ,
-                                  ДатаКЗ,
-                                  КолЧас,
-                                  Квалификация,
-                                  НомерПротоколаИА,
-                                  sotrudnik.name AS Куратор
-                                FROM (group_list
-                                  INNER JOIN слушатель
-                                    ON group_list.слушатель = слушатель.Снилс)
-                                  INNER JOIN `group`
-                                    ON group_list.kod = `group`.Код
+        sqlString = "SELECT
+                                      CONCAT(Слушатель.Фамилия, ' ', Слушатель.Имя, ' ', IFNULL(Слушатель.Отчество, ' ')),
+                                      Слушатель.Фамилия,
+                                      CONCAT(Слушатель.Имя, ' ', IFNULL(Слушатель.Отчество, ' ')),
+                                      Слушатель.Снилс,
+                                      `group`.НомерСвид,
+                                      `group`.РегНомерСвид,
+                                      `group`.ОсновнойДокумент,
+                                      programm.name,
+                                      ДатаВыдачиСвид,
+                                      ДатаНЗ,
+                                      ДатаКЗ,
+                                      КолЧас,
+                                      Квалификация,
+                                      НомерПротоколаИА,
+                                      sotrudnik.name AS Куратор
+                                    FROM (group_list
+                                      INNER JOIN Слушатель
+                                        ON group_list.Слушатель = Слушатель.Снилс)
+                                      INNER JOIN `group`
+                                        ON group_list.kod = `group`.Код
                                       LEFT JOIN sotrudnik
-                                    ON sotrudnik.kod = Куратор
+                                        ON sotrudnik.kod = Куратор
+                                      LEFT JOIN programm
+                                        ON programm.kod = kod_programm
                                 WHERE `group`.Код = " + kod + "
                                 ORDER BY слушатель.Фамилия"
         Return sqlString
@@ -687,50 +1112,52 @@ INNER JOIN Слушатель ON group_list.Слушатель = Слушате�
 
     Public Function load_prog_kurator(kod As String) As String
 
-        Dim sqlString As String = " SELECT
-                                      Программа,
+        sqlString = " SELECT
+                                      programm.name,
                                       sotrudnik.name
                                     FROM (SELECT
-                                        Программа,
-                                        Куратор
+                                        `group`.kod_programm,
+                                        `group`.Куратор
                                       FROM `group`
-                                      WHERE Код = " + kod + ") AS gr
-                                    LEFT JOIN sotrudnik
-                                    ON gr.Куратор=kod"
+                                      WHERE Код =" + kod + ") AS gr
+                                      LEFT JOIN sotrudnik
+                                        ON gr.Куратор = kod
+                                      LEFT JOIN programm
+                                        ON gr.kod_programm = programm.kod"
         Return sqlString
 
     End Function
 
     Public Function load_spr_group(ur_kval As String, sort As String, Optional year As String = "0") As String
 
-        Dim sqlString As String = ""
+        sqlString = ""
 
         sqlString = "SELECT
-                    tbl1.Код,
-                    tbl1.Номер,
-                    tbl1.Программа,
-                    name,
-                    tbl1.ДатаНЗ,
-                    tbl1.ДатаКЗ
-                    FROM
-                    (SELECT
-                      Код,
-                      Номер,
-                      Программа,
-                      Куратор,
-                      ДатаНЗ,
-                      ДатаКЗ
-                    FROM `group`
-                    WHERE УровеньКвалификации = '" + ur_kval + "'"
+                      tbl1.Код,
+                      tbl1.Номер,
+                      programm.name,
+                      sotrudnik.name,
+                      tbl1.ДатаНЗ,
+                      tbl1.ДатаКЗ
+                    FROM (SELECT
+                        `group`.Код,
+                        `group`.Номер,
+                        `group`.kod_programm AS prog,
+                        `group`.Куратор,
+                        `group`.ДатаНЗ,
+                        `group`.ДатаКЗ
+                      FROM `group`
+                      WHERE `group`.УровеньКвалификации = '" + ur_kval + "'"
 
         If year <> "0" Then
             sqlString += " AND YEAR(`group`.ДатаНЗ) = '" + year + "'"
         End If
 
         sqlString += ") AS tbl1
-                    LEFT JOIN
-                    sotrudnik
-                    ON Куратор=kod
+                    LEFT JOIN sotrudnik
+                        ON Куратор=kod
+                    LEFT JOIN programm
+                        ON tbl1.prog = programm.kod
                     ORDER BY " + sort
 
         Return sqlString
@@ -739,7 +1166,7 @@ INNER JOIN Слушатель ON group_list.Слушатель = Слушате�
 
     Public Function load_spr_group_search(ur_kval As String, sort As String, col_search As String, text As String, Optional year As String = "0") As String
 
-        Dim sqlString As String = ""
+        sqlString = ""
 
         sqlString = "SELECT
                     tbl1.Код,
@@ -752,11 +1179,13 @@ INNER JOIN Слушатель ON group_list.Слушатель = Слушате�
                     (SELECT
                       Код,
                       Номер,
-                      Программа,
+                      programm.name AS Программа,
                       Куратор,
                       ДатаНЗ,
                       ДатаКЗ
                     FROM `group`
+                    LEFT JOIN programm
+                      ON `group`.kod_programm=programm.kod
                     WHERE УровеньКвалификации = '" + ur_kval + "'"
 
         If year <> "0" Then
@@ -777,7 +1206,8 @@ INNER JOIN Слушатель ON group_list.Слушатель = Слушате�
 
     Public Function select_moduls_ocenka(kod_group As String, modul_name As String) As String
 
-        Dim sqlString As String = ""
+        sqlString = ""
+
         sqlString = "SELECT 
                       ocenka.Слушатель,
                       ocenka.mod1
@@ -869,13 +1299,15 @@ INNER JOIN Слушатель ON group_list.Слушатель = Слушате�
                     ON moduls.number=ocenka.number
                     WHERE moduls.name='" + modul_name + "'
                     ORDER BY moduls.number"
+
         Return sqlString
 
     End Function
 
     Public Function select_moduls_count(kod_group As String) As String
 
-        Dim sqlString As String = ""
+        sqlString = ""
+
         sqlString = "SELECT
                       COUNT(progs_mods_hours.kod_modul) AS expr1
                     FROM progs_mods_hours
@@ -884,13 +1316,15 @@ INNER JOIN Слушатель ON group_list.Слушатель = Слушате�
                       INNER JOIN `group`
                         ON `group`.kod_programm = programm.kod
                     WHERE `group`.Код = " + kod_group
+
         Return sqlString
 
     End Function
 
     Public Function selectSpravka_moduls_hours(kod_group As String) As String
 
-        Dim sqlString As String = ""
+        sqlString = ""
+
         sqlString = "SELECT
                       moduls.name,
                       progs_mods_hours.hours
@@ -903,15 +1337,17 @@ INNER JOIN Слушатель ON group_list.Слушатель = Слушате�
                         ON progs_mods_hours.kod_modul = moduls.kod
                     WHERE `group`.Код =" + kod_group + " AND moduls.name <> 'Итоговая аттестация'
                     ORDER BY modul_number"
+
         Return sqlString
 
     End Function
 
     Public Function selectSpravkaIA_group(kod_group As String) As String
 
-        Dim sqlString As String = ""
+        sqlString = ""
+
         sqlString = "SELECT
-                      Программа,
+                      programm.name,
                       uroven_kvalifik.name_padej,
                       Финансирование,
                       ДатаНЗ,
@@ -920,15 +1356,19 @@ INNER JOIN Слушатель ON group_list.Слушатель = Слушате�
                     FROM `group`
                       INNER JOIN uroven_kvalifik
                         ON `group`.УровеньКвалификации = uroven_kvalifik.name
+                      LEFT JOIN programm
+                        ON `group`.kod_programm = programm.kod
                     WHERE `group`.Код =" + kod_group
+
         Return sqlString
 
     End Function
-    Public Function selectSpravka_group(kod_group As String) As String
+    Public Function spravka__groupData(kod_group As String) As String
 
-        Dim sqlString As String = ""
+        sqlString = ""
+
         sqlString = "SELECT
-                      Программа,
+                      programm.name,
                       uroven_kvalifik.name_padej,
                       Финансирование,
                       ДатаНЗ,
@@ -936,13 +1376,17 @@ INNER JOIN Слушатель ON group_list.Слушатель = Слушате�
                     FROM `group`
                       INNER JOIN uroven_kvalifik
                         ON `group`.УровеньКвалификации = uroven_kvalifik.name
+                      LEFT JOIN programm
+                        ON `group`.kod_programm = programm.kod
                     WHERE `group`.Код =" + kod_group
+
         Return sqlString
 
     End Function
     Public Function selectDover_slush(kod_group As String) As String
 
-        Dim sqlString As String = ""
+        sqlString = ""
+
         sqlString = "SELECT
                       CONCAT(слушатель.Фамилия, ' ', слушатель.Имя, ' ', IFNULL(слушатель.Отчество, ' '))
                     FROM group_list
@@ -950,29 +1394,35 @@ INNER JOIN Слушатель ON group_list.Слушатель = Слушате�
                         ON group_list.слушатель = слушатель.Снилс
                     WHERE group_list.kod =" + kod_group + "
                     ORDER BY слушатель.Фамилия"
+
         Return sqlString
 
     End Function
 
-    Public Function selectDover_kval(kod_group As String) As String
+    Public Function selectDoverKval(kod_group As String) As String
 
-        Dim sqlString As String = ""
+        sqlString = ""
+
         sqlString = "SELECT
-                      Программа,
+                      programm.name,
                       uroven_kvalifik.name_padej,
                       Финансирование,
                       ДатаКЗ
                     FROM `group`
                       INNER JOIN uroven_kvalifik
                         ON `group`.УровеньКвалификации = uroven_kvalifik.name
-                    WHERE `group`.Код = " + kod_group
+                        LEFT JOIN programm 
+                        ON `group`.kod_programm = programm.kod
+                    WHERE `group`.Код =" + kod_group
+
         Return sqlString
 
     End Function
 
-    Public Function selectCol_otche_info(ДатаНачалаОтчета, ДатаКонцаОтчета) As String
+    Public Function selectCol_otchet_info(ДатаНачалаОтчета, ДатаКонцаОтчета) As String
 
-        Dim sqlString As String = ""
+        sqlString = ""
+
         sqlString = "
                     SELECT
                       Код,
@@ -981,7 +1431,7 @@ INNER JOIN Слушатель ON group_list.Слушатель = Слушате�
                       ДатаНЗ,
                       ДатаКЗ,
                       Спец,
-                      Программа,
+                      programm.name,
                       КолЧас,
                       s0.name AS Куратор,
                       s00.name AS ОтвЗаПракт,
@@ -1024,54 +1474,68 @@ INNER JOIN Слушатель ON group_list.Слушатель = Слушате�
                     LEFT JOIN sotrudnik AS s9
                         ON gr.modul9 = s9.kod
                     LEFT JOIN sotrudnik AS s10
-                        ON gr.modul10 = s10.kod"
+                        ON gr.modul10 = s10.kod
+                    LEFT JOIN programm
+                        ON gr.kod_programm = programm.kod"
+
         Return sqlString
 
     End Function
 
     Public Function selectCol_chas() As String
 
-        Dim sqlString As String = ""
+        sqlString = ""
+
         sqlString = "Select * FROM kol_chas "
+
         Return sqlString
 
     End Function
 
     Public Function updateSettings(name As String, value As String) As String
 
-        Dim sqlString As String = ""
+        sqlString = ""
+
         sqlString = "UPDATE Settings Set value='" + value + "' WHERE name='" + name + "'"
+
         Return sqlString
 
     End Function
 
     Public Function loadSettings() As String
 
-        Dim sqlString As String = ""
+        sqlString = ""
+
         sqlString = "SELECT name,value FROM Settings
                     UNION ALL
                     SELECT kod,passwrd FROM passwords"
+
         Return sqlString
 
     End Function
 
     Public Function loadIA(kod_group As String) As String
 
-        Dim sqlString As String = ""
+        sqlString = ""
+
         sqlString = "SELECT  CONCAT(слушатель.Фамилия,' ',слушатель.Имя,' ',IFNULL(слушатель.Отчество,' ')) as 'ФИО', group_list.ИАТестирование as ИАТестирование, ИАПрактическиеНавыки as ИАПрактическиеНавыки, ИАИтог, Слушатель.Снилс FROM group_list INNER JOIN Слушатель ON group_list.Слушатель = Слушатель.Снилс WHERE group_list.Kod = " & kod_group & " ORDER BY Фамилия"
+
         Return sqlString
 
     End Function
     Public Function loadVedomost(kod_group As String) As String
 
-        Dim sqlString As String = ""
+        sqlString = ""
+
         sqlString = "SELECT CONCAT(слушатель.Фамилия,' ',слушатель.Имя,' ',слушатель.Отчество), group_list.ОценкаМодуль1, ОценкаМодуль2, ОценкаМодуль3, ОценкаМодуль4, ОценкаМодуль5, ОценкаМодуль6, ОценкаМодуль7, ОценкаМодуль8, ОценкаМодуль9, ОценкаМодуль10, Слушатель.СНИЛС FROM group_list INNER JOIN Слушатель ON group_list.Слушатель = Слушатель.Снилс WHERE group_list.Kod = " & kod_group & " ORDER BY Фамилия"
+
         Return sqlString
 
     End Function
     Public Function selectMassForPrilDiplom(kod As String) As String
 
-        Dim sqlString As String = ""
+        sqlString = ""
+
         sqlString = "SELECT
                       moduls.name,
                       progs_mods_hours.hours,
@@ -1092,13 +1556,15 @@ INNER JOIN Слушатель ON group_list.Слушатель = Слушате�
                         AND progs_mods_hours.kod_prog = programm.kod
                     WHERE `group`.Код = " + kod + "
                     ORDER BY modul_number"
+
         Return sqlString
 
     End Function
 
     Public Function selectMassForPrilSvidetelstvo(kod As String) As String
 
-        Dim sqlString As String = ""
+        sqlString = ""
+
         sqlString = "SELECT
                       moduls.name,
                       progs_mods_hours.hours,
@@ -1120,18 +1586,20 @@ INNER JOIN Слушатель ON group_list.Слушатель = Слушате�
                         AND progs_mods_hours.kod_prog = programm.kod
                     WHERE `group`.Код = " + kod + "
                     ORDER BY modul_number"
+
         Return sqlString
 
     End Function
-    Public Function loadgroupp(kod_gr As String)
-        Dim sqlString As String = "SELECT
+    Public Function loadGroup(kod_gr As String)
+
+        sqlString = "SELECT
                                   gr.Код,
                                   gr.Номер,
                                   gr.ФормаО,
                                   gr.ДатаНЗ,
                                   gr.ДатаКЗ,
                                   gr.Спец,
-                                  gr.Программа,
+                                  programm.name AS Программа,
                                   gr.КолЧас,
                                   s0.name AS Куратор,
                                   s00.name AS ОтвЗаПракт,
@@ -1191,11 +1659,15 @@ INNER JOIN Слушатель ON group_list.Слушатель = Слушате�
                                   LEFT JOIN sotrudnik AS s9
                                     ON gr.modul9 = s9.kod
                                   LEFT JOIN sotrudnik AS s10
-                                    ON gr.modul10 = s10.kod"
+                                    ON gr.modul10 = s10.kod
+                                  LEFT JOIN programm
+                                    ON gr.kod_programm = programm.kod"
+
         Return sqlString
+
     End Function
     Public Function loadListModul(kod_gr As String)
-        Dim sqlString As String = "SELECT
+        sqlString = "SELECT
                                       moduls.name
                                     FROM (SELECT
                                         *
@@ -1206,11 +1678,14 @@ INNER JOIN Слушатель ON group_list.Слушатель = Слушате�
                                       INNER JOIN moduls
                                         ON progs_mods_hours.kod_modul = moduls.kod
                                     ORDER BY progs_mods_hours.modul_number"
+
         Return sqlString
+
     End Function
 
     Public Function loadListSotrudnicModul(kod_gr As String)
-        Dim sqlString As String = "SELECT
+
+        sqlString = "SELECT
                                       s1.name,
                                       s2.name,
                                       s3.name,
@@ -1244,16 +1719,17 @@ INNER JOIN Слушатель ON group_list.Слушатель = Слушате�
                                         ON `group`.modul10 = s10.kod
                                         WHERE `group`.Код=" + kod_gr
         Return sqlString
+
     End Function
 
     Public Function SQLString_OtchetRuk(DateNach As String, DateKon As String)
 
-        Dim sqlString As String = ""
+        sqlString = ""
 
         sqlString = "SELECT" +
                      "  Tbl_spec.Спец," +
                      "  Tbl_spec.Номер," +
-                     "  Tbl_spec.Программа," +
+                     "  Tbl_spec.programm," +
                      "  Tbl_spec.КолЧас," +
                      "  Tbl_spec.period," +
                      "  Tbl_data_1.чел," +
@@ -1263,16 +1739,33 @@ INNER JOIN Слушатель ON group_list.Слушатель = Слушате�
                      "  IF(Tbl_spec.Финансирование='внебюджет',1,0) AS внебюджет," +
                      "  IFNULL(Tbl_data_2.bud,0)*Tbl_spec.КолЧас AS бюджет," +
                      "  (Tbl_data_1.чел - IFNULL(Tbl_data_2.bud,0))*Tbl_spec.КолЧас AS Внебюджет" +
-                     " FROM (SELECT" +
+                     " FROM
+                     (
+                        SELECT 
+                        tblGroup.Номер,
+                        programm.name AS programm,
+                        tblGroup.Спец,
+                        tblGroup.КолЧас,
+                        tblGroup.Код,
+                        tblGroup.Финансирование,
+                        tblGroup.period
+                        FROM
+                        (
+                          SELECT" +
                      "    Номер," +
-                     "    Программа," +
+                     "    kod_programm," +
                      "    Спец," +
                      "    КолЧас," +
                      "    Код," +
                      "    Финансирование," +
                      "    CONCAT(DAY(ДатаНЗ), '.', IF(MONTH(ДатаНЗ) < 10, CONCAT('0', MONTH(ДатаНЗ)), MONTH(ДатаНЗ)), '.', YEAR(ДатаНЗ), '-', DAY(ДатаКЗ), '.', IF(MONTH(ДатаКЗ) < 10, CONCAT('0', MONTH(ДатаКЗ)), MONTH(ДатаКЗ)), '.', YEAR(ДатаКЗ)) AS period" +
                      "  FROM `group`" +
-                     "  WHERE `group`.ДатаКЗ BETWEEN '" + DateNach + "' AND '" + DateKon + "') AS Tbl_spec" +
+                     "  WHERE `group`.ДатаКЗ BETWEEN '" + DateNach + "' AND '" + DateKon + "'
+                     ) AS tblGroup
+                        LEFT JOIN
+                        programm
+                        ON tblGroup.kod_programm=kod
+                     ) AS Tbl_spec" +
                      "  INNER JOIN (SELECT" +
                      "      spec.Код," +
                      "      COUNT(слушатель) AS чел" +
@@ -1306,20 +1799,21 @@ INNER JOIN Слушатель ON group_list.Слушатель = Слушате�
                      "        GROUP BY sostav.Код" +
                      "        ) AS Tbl_data_2" +
                      "    ON Tbl_data_2.Код = Tbl_spec.Код" +
-                     " ORDER BY Tbl_spec.Спец,Tbl_spec.Программа DESC"
+                     " ORDER BY Tbl_spec.Спец,Tbl_spec.programm DESC"
 
         Return sqlString
+
     End Function
 
     Public Function SQLString_OtchetRMANPO(DateNach As String, DateKon As String)
 
-        Dim sqlString As String = ""
+        sqlString = ""
 
         sqlString = "SELECT
                     Tbl_spec.Спец,
                     Tbl_spec.Номер,
                     Tbl_spec.period,
-                    Tbl_spec.Программа,
+                    programm.name,
                     Tbl_data_1.чел,
                     Tbl_data_2.bud AS Бюджет,
                     Tbl_data_1.чел - Tbl_data_2.bud AS Внебюджет,
@@ -1327,7 +1821,7 @@ INNER JOIN Слушатель ON group_list.Слушатель = Слушате�
                     Tbl_org.bud
                   FROM (SELECT
                       Номер,
-                      Программа,
+                      kod_programm,
                       Спец,
                       КолЧас,
                       Код,
@@ -1336,6 +1830,12 @@ INNER JOIN Слушатель ON group_list.Слушатель = Слушате�
                     FROM `group`" +
                           "  WHERE `group`.ДатаКЗ BETWEEN '" + DateNach + "' AND '" + DateKon + "'" +
                     ") AS Tbl_spec
+
+                      LEFT JOIN
+                  programm
+                  ON 
+                  Tbl_spec.kod_programm=programm.kod
+
                     INNER JOIN (SELECT
                         spec.Код,
                         COUNT(слушатель) AS чел
@@ -1397,11 +1897,12 @@ INNER JOIN Слушатель ON group_list.Слушатель = Слушате�
                 ORDER BY Tbl_spec.Спец,Tbl_spec.Номер, Tbl_org.НОрг "
 
         Return sqlString
+
     End Function
 
     Public Function SQLString_OtchetKurs(DateNach As String, DateKon As String, Argument As String)
 
-        Dim sqlString As String = ""
+        sqlString = ""
 
         sqlString = "SELECT"
 
@@ -1416,15 +1917,24 @@ INNER JOIN Слушатель ON group_list.Слушатель = Слушате�
                     "  SUM(Tbl_spec.КолЧас * Tbl_data_1.чел) AS итого" +
                     " FROM(SELECT" +
                     "    Номер," +
-                    "        IFNULL(Программа,'') AS Программа,
+                    "        IFNULL(programm.name, '') AS Программа,
                              IFNULL(Спец,'') AS Спец,
                              КолЧас,
                              Код,
                              IFNULL(Финансирование,'')," +
                     "    CONCAT(Day(ДатаНЗ), '.', If(month(ДатаНЗ) < 10, CONCAT('0', month(ДатаНЗ)), month(ДатаНЗ)), '.', Year(ДатаНЗ), '-', Day(ДатаКЗ), '.', If(month(ДатаКЗ) < 10, CONCAT('0', month(ДатаКЗ)), month(ДатаКЗ)), '.', Year(ДатаКЗ)) AS period" +
-                    "  From `group`" +
-                    " WHERE `group`.ДатаКЗ BETWEEN '" + DateNach + "' AND '" + DateKon + "') AS Tbl_spec" +
-                    "  INNER Join(SELECT" +
+                    " FROM 
+                    (SELECT
+                      *
+                      FROM
+                    `group`" +
+                    " WHERE `group`.ДатаКЗ BETWEEN '" + DateNach + "' AND '" + DateKon + "'
+                    ) AS tblGroup
+                      LEFT JOIN 
+                          programm
+                          ON tblGroup.kod_programm=programm.kod
+                    ) AS Tbl_spec" +
+                    "  INNER JOIN (SELECT" +
                     "      spec.Код," +
                     "      COUNT(слушатель) AS чел" +
                     "    FROM(SELECT" +
@@ -1450,7 +1960,7 @@ INNER JOIN Слушатель ON group_list.Слушатель = Слушате�
 
     Public Function SQLString_OtchetOrg(DateNach As String, DateKon As String)
 
-        Dim sqlString As String = ""
+        sqlString = ""
 
         sqlString = "SELECT 
                         name AS Организация,
@@ -1484,11 +1994,12 @@ INNER JOIN Слушатель ON group_list.Слушатель = Слушате�
 
 
         Return sqlString
+
     End Function
 
     Public Function SQLString_OtchetBud_Vbud(DateNach As String, DateKon As String, argument As String)
 
-        Dim sqlString As String = ""
+        sqlString = ""
 
         sqlString = " SELECT 
                       gr.КолЧас часов,
@@ -1602,10 +2113,12 @@ INNER JOIN Слушатель ON group_list.Слушатель = Слушате�
 
 
         Return sqlString
+
     End Function
 
     Public Function SQLString_SELECT_dateAndKvalGrupp(kod As Integer)
-        Dim sqlString As String = ""
+
+        sqlString = ""
 
         sqlString = "SELECT" +
                     "   YEAR(ДатаКЗ) AS date," +
@@ -1614,31 +2127,31 @@ INNER JOIN Слушатель ON group_list.Слушатель = Слушате�
                     " WHERE Код =" & kod
 
         Return sqlString
+
     End Function
 
 
 
     Function SQLПоиск(str As String, Таблица As String, НазванияСтолбцов As String, СтолбецДляПоиска As String, СтолбецДляСортировки As String) As Object
 
-        Dim СтрокаЗапроса As String
         Dim ChMass As Object
         Dim Dlina As Integer
-        Dim счетчик As Integer
+        Dim counter As Integer
         Dlina = Len(str)
 
-        счетчик = 0
+        counter = 0
 
-        If Таблица = "Группа" Or "`group`" Then
+        If Таблица = "Группа" Or Таблица = "`group`" Then
 
-            СтрокаЗапроса = load_spr_group_search(СправочникГруппы.СГУровеньКвалификации.Text, СтолбецДляСортировки, СтолбецДляПоиска, str, СправочникГруппы.yearSpravochnikGr.Text)
+            sqlString = load_spr_group_search(СправочникГруппы.СГУровеньКвалификации.Text, СтолбецДляСортировки, СтолбецДляПоиска, str, СправочникГруппы.yearSpravochnikGr.Text)
 
         Else
 
-            СтрокаЗапроса = "SELECT " & НазванияСтолбцов & " FROM " & Таблица & " WHERE  (((" & СтолбецДляПоиска & ") LIKE " & Chr(39) & str & "%" & Chr(39) & " )) ORDER BY " & СтолбецДляСортировки
+            sqlString = "SELECT " & НазванияСтолбцов & " FROM " & Таблица & " WHERE  (((" & СтолбецДляПоиска & ") LIKE " & Chr(39) & str & "%" & Chr(39) & " )) ORDER BY " & СтолбецДляСортировки
 
         End If
 
-        ChMass = ААОсновная.mySqlConnect.ЗагрузитьИзБДMySQLвМассив(СтрокаЗапроса, 1)
+        ChMass = ААОсновная.mySqlConnect.ЗагрузитьИзБДMySQLвМассив(sqlString, 1)
         ChMass = УбратьПустотыВМассиве.УбратьПустотыВМассиве(ChMass)
 
         SQLПоиск = ChMass
@@ -1646,16 +2159,28 @@ INNER JOIN Слушатель ON group_list.Слушатель = Слушате�
     End Function
 
     Public Function SQLString_UpdateNumbersSGrupp(kod As Integer)
-        Dim sqlString As String = ""
+
+        sqlString = ""
 
         sqlString = " UPDATE group_list set НомерУд=NULL,РегНомерУд=NULL ,РегНомерСвид=NULL ,НомерСвид=NULL,РегНомерДиплома=NULL,НомерДиплома=NULL WHERE Kod=" & kod
 
         Return sqlString
+
     End Function
 
     Public Function SQLString_loadGruppa()
-        Dim sqlString As String = ""
-        sqlString = " SELECT Номер, Программа, YEAR(ДатаНЗ),Код FROM `group` WHERE Номер <> " & Chr(39) & "" & Chr(39) & " AND ДатаКЗ > '" & ААОсновная.mySqlConnect.dateToFormatMySQL(Date.Now.AddMonths(-6)) & "'"
+
+        sqlString = ""
+        sqlString = "SELECT
+                      Номер,
+                      programm.name,
+                      YEAR(ДатаНЗ),
+                      Код
+                    FROM `group`
+                    LEFT JOIN 
+                    programm ON `group`.kod_programm = programm.kod
+                    WHERE Номер <> ''
+                    AND ДатаКЗ >'" & ААОсновная.mySqlConnect.dateToFormatMySQL(Date.Now.AddMonths(-6)) & "'"
 
         If ААОсновная.prikazCvalif = ААОсновная.PP Then
             sqlString &= " AND УровеньКвалификации = 'профессиональная переподготовка'"
@@ -1674,56 +2199,68 @@ INNER JOIN Слушатель ON group_list.Слушатель = Слушате�
                     sqlString &= " DESC"
                 End If
             Else
-                sqlString &= " ORDER BY Программа"
+                sqlString &= " ORDER BY programm.name"
             End If
         Else
-            sqlString &= " ORDER BY Программа"
+            sqlString &= " ORDER BY programm.name"
         End If
         Return sqlString
+
     End Function
 
     Public Function ProgrammPoUKvalifikLimit1(UrovenKvalifik As String)
-        Dim sqlString As String = ""
+
+        sqlString = ""
+
         If UrovenKvalifik = "" Then
-            sqlString = "SELECT name FROM programm GROUP BY programm.name ORDER BY name"
+
+            sqlString = "SELECT 
+                            name 
+                        FROM programm 
+                        GROUP BY programm.name 
+                        ORDER BY name"
+
         Else
-            sqlString = " SELECT" +
-  " programm.name,
-    MAX(date),
-    MAX(programm.kod)" +
-  "       FROM" +
-" (SELECT " +
-" uroven_kvalifik.kod" +
-"        From uroven_kvalifik" +
-"     WHERE uroven_kvalifik.name = '" + UrovenKvalifik + "'" +
-"     ) AS tbl1" +
-"   INNER Join programm" +
-"     On tbl1.kod = programm.uroven_kvalifik
-  GROUP BY programm.name" +
-" ORDER BY name"
+            sqlString = " SELECT
+                           Programm.name,
+                            MAX(Of Date),
+                            MAX(Programm.kod)
+                                 FROM
+                         (SELECT 
+                         uroven_kvalifik.kod
+                                From uroven_kvalifik
+                             WHERE uroven_kvalifik.name = '" + UrovenKvalifik + "'
+                             ) AS tbl1
+                           INNER Join programm
+                             ON tbl1.kod = programm.uroven_kvalifik
+                          GROUP BY programm.name
+                         ORDER BY name"
         End If
+
         Return sqlString
 
     End Function
 
     Public Function ProgrammPoUKvalifik(UrovenKvalifik As String)
-        Dim sqlString As String = ""
+
+        sqlString = ""
+
         If UrovenKvalifik = "" Then
             sqlString = "SELECT name,date,kod FROM programm ORDER BY name"
         Else
             sqlString = " SELECT" +
-  " programm.name,
-    date,
-    programm.kod" +
-  "       FROM" +
-" (SELECT " +
-" uroven_kvalifik.kod" +
-"        From uroven_kvalifik" +
-"     WHERE uroven_kvalifik.name = '" + UrovenKvalifik + "'" +
-"     ) AS tbl1" +
-"   INNER Join programm" +
-"     On tbl1.kod = programm.uroven_kvalifik" +
-" ORDER BY name"
+                          " programm.name,
+                            date,
+                            programm.kod
+                                FROM
+                         (SELECT 
+                         uroven_kvalifik.kod
+                               FROM uroven_kvalifik
+                             WHERE uroven_kvalifik.name = '" + UrovenKvalifik + "'
+                             ) AS tbl1
+                           INNER Join programm
+                             On tbl1.kod = programm.uroven_kvalifik
+                        ORDER BY name"
         End If
         Return sqlString
 
@@ -1731,7 +2268,9 @@ INNER JOIN Слушатель ON group_list.Слушатель = Слушате�
 
 
     Public Function SQLString_OtchetMassDataSlush(DateNach As String, DateKon As String)
-        Dim sqlString As String = ""
+
+        sqlString = ""
+
         sqlString = " SELECT" +
   " слушатель.Код," +
   " слушатель.Снилс," +
@@ -1766,11 +2305,13 @@ INNER JOIN Слушатель ON group_list.Слушатель = Слушате�
 "     ON tbl1.Слушатель = слушатель.Снилс"
 
         Return sqlString
+
     End Function
 
 
     Public Function SQLString_OtchetMassSlush(DateNach As String, DateKon As String)
-        Dim sqlString As String = ""
+        sqlString = ""
+
         sqlString = "SELECT" +
   " group_list.Слушатель," +
   " group_list.Kod," +
@@ -1788,13 +2329,30 @@ INNER JOIN Слушатель ON group_list.Слушатель = Слушате�
 
 
     Public Function sprSlushTblGroup(Snils As String)
-        Dim sqlString As String = ""
-        sqlString = "Select Код, Номер, Программа, ДатаНЗ, ДатаКЗ FROM `group` INNER JOIN group_list On `group`.Код = group_list.Kod WHERE group_list.Слушатель = " & Chr(39) & Snils & Chr(39) + " ORDER BY ДатаНЗ"
+
+        sqlString = ""
+
+        sqlString = "SELECT
+                      Код,
+                      Номер,
+                      programm.name,
+                      ДатаНЗ,
+                      ДатаКЗ
+                    FROM `group`
+                      INNER JOIN group_list
+                        ON `group`.Код = group_list.kod
+                      LEFT JOIN programm 
+                        ON `group`.kod_programm=programm.kod
+                    WHERE group_list.Слушатель = " & Chr(39) & Snils & Chr(39) + "
+                    ORDER BY ДатаНЗ"
+
         Return sqlString
+
     End Function
 
     Public Function SQLSTring_PKZayavlenie(kod As Integer)
-        Dim sqlString As String = ""
+
+        sqlString = ""
         sqlString = "Select" +
   " слушатель.Фамилия," +
   " слушатель.Имя," +
@@ -1809,10 +2367,13 @@ INNER JOIN Слушатель ON group_list.Слушатель = Слушате�
       " ORDER BY Фамилия"
 
         Return sqlString
+
     End Function
 
     Public Function SQLSTring_KartSlushatel(kod As Integer)
-        Dim sqlString As String = ""
+
+        sqlString = ""
+
         sqlString = "SELECT" +
   " слушатель.Фамилия," +
   " слушатель.Имя," +
@@ -1829,47 +2390,41 @@ INNER JOIN Слушатель ON group_list.Слушатель = Слушате�
       " ORDER BY Фамилия"
 
         Return sqlString
+
     End Function
 
 
     Public Function updateGroup(gruppa As Gruppa.strGruppa) As String
-        Dim sqlString As String = ""
-        Dim КолЧас,
-            DataString,
-            ОсновнойДокумент,
-            Часть1,
-            Часть2,
-            Часть3,
-            Часть4 As String
 
-        Dim НомераУДС
+        Dim numberHours,
+            dataString,
+            part1,
+            part2,
+            part3,
+            part4 As String
 
-        If gruppa.urKvalific = "специальный экзамен" Then
-            КолЧас = "null"
-        Else
-            КолЧас = gruppa.kolChasov
-        End If
+        sqlString = ""
+        numberHours = gruppa.kolChasov
 
-        DataString = ААОсновная.mySqlConnect.dateToFormatMySQL(Date.Now.ToShortDateString)
+        dataString = ААОсновная.mySqlConnect.dateToFormatMySQL(Date.Now.ToShortDateString)
 
-        Часть1 = "Номер=" & Chr(39) & gruppa.number & Chr(39) &
+        part1 = "Номер=" & Chr(39) & gruppa.number & Chr(39) &
             ", ФормаО=" & Chr(39) & gruppa.formaObuch & Chr(39) &
             ", ДатаНЗ=" & Chr(39) & gruppa.dataNZ & Chr(39) &
             ", ДатаКЗ=" & Chr(39) & gruppa.dataKZ & Chr(39) &
             ", Спец=" & Chr(39) & gruppa.specialnost & Chr(39) &
             ",kod_programm=" & gruppa.kodProgramm &
-            ",Программа=" & Chr(39) & gruppa.programma & Chr(39) &
-            ",КолЧас=" & КолЧас & ", Куратор=(SELECT sotrudnik.kod FROM sotrudnik WHERE name=" & Chr(39) & gruppa.kurator & Chr(39) & " LIMIT 1)" &
+            ",КолЧас=" & numberHours & ", Куратор=(SELECT sotrudnik.kod FROM sotrudnik WHERE name=" & Chr(39) & gruppa.kurator & Chr(39) & " LIMIT 1)" &
             ", ОтвЗаПракт=(SELECT sotrudnik.kod FROM sotrudnik WHERE name=" & Chr(39) & gruppa.otvZaPraktiku & Chr(39) & " LIMIT 1)" &
-            ", датаСоздания=" & Chr(39) & DataString & Chr(39)
+            ", датаСоздания=" & Chr(39) & dataString & Chr(39)
 
-        Часть2 = ", modul1=(SELECT sotrudnik.kod FROM sotrudnik WHERE name=" & Chr(39) & gruppa.modul1 & Chr(39) & " LIMIT 1), modul2=(SELECT sotrudnik.kod FROM sotrudnik WHERE name=" & Chr(39) & gruppa.modul2 & Chr(39) & " LIMIT 1)
+        part2 = ", modul1=(SELECT sotrudnik.kod FROM sotrudnik WHERE name=" & Chr(39) & gruppa.modul1 & Chr(39) & " LIMIT 1), modul2=(SELECT sotrudnik.kod FROM sotrudnik WHERE name=" & Chr(39) & gruppa.modul2 & Chr(39) & " LIMIT 1)
             , modul3=(SELECT sotrudnik.kod FROM sotrudnik WHERE name=" & Chr(39) & gruppa.modul3 & Chr(39) & " LIMIT 1), modul4=(SELECT sotrudnik.kod FROM sotrudnik WHERE name=" & Chr(39) & gruppa.modul4 & Chr(39) & " LIMIT 1)
             , modul5=(SELECT sotrudnik.kod FROM sotrudnik WHERE name=" & Chr(39) & gruppa.modul5 & Chr(39) & " LIMIT 1), modul6=(SELECT sotrudnik.kod FROM sotrudnik WHERE name=" & Chr(39) & gruppa.modul6 & Chr(39) & " LIMIT 1)
             , modul7=(SELECT sotrudnik.kod FROM sotrudnik WHERE name=" & Chr(39) & gruppa.modul7 & Chr(39) & " LIMIT 1), modul8=(SELECT sotrudnik.kod FROM sotrudnik WHERE name=" & Chr(39) & gruppa.modul8 & Chr(39) & " LIMIT 1)
             , modul9=(SELECT sotrudnik.kod FROM sotrudnik WHERE name=" & Chr(39) & gruppa.modul9 & Chr(39) & " LIMIT 1), modul10=(SELECT sotrudnik.kod FROM sotrudnik WHERE name=" & Chr(39) & gruppa.modul10 & Chr(39) & " LIMIT 1)"
 
-        Часть3 = ", УровеньКвалификации=" & Chr(39) & gruppa.urKvalific & Chr(39) &
+        part3 = ", УровеньКвалификации=" & Chr(39) & gruppa.urKvalific & Chr(39) &
             ", Финансирование=" & Chr(39) & gruppa.financir & Chr(39) &
             ", НомерПротоколаИА=" & Chr(39) & gruppa.nomerProtIA & Chr(39) &
             ",НомерУд=" & gruppa.NumbersUDS(0, 0) &
@@ -1877,81 +2432,82 @@ INNER JOIN Слушатель ON group_list.Слушатель = Слушате�
             ",ДатаВыдачиУд=" & Chr(39) & gruppa.dataVUd & Chr(39) &
             ",НомерДиплома=" & gruppa.NumbersUDS(0, 2) & ", РегНомерДиплома=" & gruppa.NumbersUDS(0, 3)
 
-        Часть4 = ", ДатаВыдачиДиплома=" & Chr(39) & gruppa.dataVD & Chr(39) &
+        part4 = ", ДатаВыдачиДиплома=" & Chr(39) & gruppa.dataVD & Chr(39) &
             ", НомерСвид=" & gruppa.NumbersUDS(0, 4) & ", РегНомерСвид=" & gruppa.NumbersUDS(0, 5) &
             ", ДатаВыдачиСвид=" & Chr(39) & gruppa.dataVSv & Chr(39) &
             ", Квалификация=" & Chr(39) & gruppa.kvalifikaciya & Chr(39) & ", ОсновнойДокумент=" & Chr(39) & gruppa.osnovnoyDok & Chr(39) &
             ", НомерПротоколаСпецэкзамен=" & Chr(39) & gruppa.nomerProtokolaSpec & Chr(39) &
             ",ДатаСпецЭкзамен=" & Chr(39) & gruppa.dataSpec & Chr(39)
 
-        updateGroup = "UPDATE `group` SET " & Часть1 & Часть2 & Часть3 & Часть4 & " WHERE Код =" & gruppa.Kod
+        Return "UPDATE `group` SET " & part1 & part2 & part3 & part4 & " WHERE Код =" & gruppa.Kod
 
     End Function
 
 
     Public Function insertIntoGroup(gruppa As Gruppa.strGruppa) As String
-        Dim sqlString As String = ""
-        Dim КолЧас, DataString, Часть1, Часть2 As String
 
+        Dim numberHours, DataString, part1, part2 As String
+
+        sqlString = ""
         DataString = ААОсновная.mySqlConnect.dateToFormatMySQL(Date.Now.ToShortDateString)
 
         If gruppa.urKvalific = "специальный экзамен" Then
-            КолЧас = "null"
+            numberHours = "null"
         End If
 
-        Часть1 = "(Номер,"
-        Часть2 = "( " & Chr(39) & gruppa.number & Chr(39)
+        part1 = "(Номер,"
+        part2 = "( " & Chr(39) & gruppa.number & Chr(39)
 
-        Часть1 = Часть1 & "ФормаО,ДатаНЗ,"
-        Часть2 = Часть2 & " , " & Chr(39) & gruppa.formaObuch & Chr(39) & " , " & Chr(39) & gruppa.dataNZ & Chr(39)
+        part1 = part1 & "ФормаО,ДатаНЗ,"
+        part2 = part2 & " , " & Chr(39) & gruppa.formaObuch & Chr(39) & " , " & Chr(39) & gruppa.dataNZ & Chr(39)
 
-        Часть1 = Часть1 & "ДатаКЗ,Спец,"
-        Часть2 = Часть2 & " , " & Chr(39) & gruppa.dataKZ & Chr(39) & " , " & Chr(39) & gruppa.specialnost & Chr(39)
+        part1 = part1 & "ДатаКЗ,Спец,"
+        part2 = part2 & " , " & Chr(39) & gruppa.dataKZ & Chr(39) & " , " & Chr(39) & gruppa.specialnost & Chr(39)
 
-        Часть1 = Часть1 & "kod_programm,Программа,КолЧас,"
-        Часть2 = Часть2 & " , " & gruppa.kodProgramm & ", " & Chr(39) & gruppa.programma & Chr(39) & " , " & gruppa.kolChasov
+        part1 = part1 & "kod_programm,КолЧас,"
+        part2 = part2 & " , " & gruppa.kodProgramm & " , " & gruppa.kolChasov
 
-        Часть1 = Часть1 & "Куратор,ОтвЗаПракт,"
-        Часть2 = Часть2 & " , (SELECT sotrudnik.kod FROM sotrudnik WHERE name=" & Chr(39) & gruppa.kurator & Chr(39) & " LIMIT 1) ,(SELECT sotrudnik.kod FROM sotrudnik WHERE name=" & Chr(39) & gruppa.otvZaPraktiku & Chr(39) & "  LIMIT 1)"
+        part1 = part1 & "Куратор,ОтвЗаПракт,"
+        part2 = part2 & " , (SELECT sotrudnik.kod FROM sotrudnik WHERE name=" & Chr(39) & gruppa.kurator & Chr(39) & " LIMIT 1) ,(SELECT sotrudnik.kod FROM sotrudnik WHERE name=" & Chr(39) & gruppa.otvZaPraktiku & Chr(39) & "  LIMIT 1)"
 
-        Часть1 = Часть1 & "датаСоздания, modul1,"
-        Часть2 = Часть2 & " , " & Chr(39) & DataString & Chr(39) & " , (SELECT sotrudnik.kod FROM sotrudnik WHERE name=" & Chr(39) & gruppa.modul1 & Chr(39) & " LIMIT 1)"
+        part1 = part1 & "датаСоздания, modul1,"
+        part2 = part2 & " , " & Chr(39) & DataString & Chr(39) & " , (SELECT sotrudnik.kod FROM sotrudnik WHERE name=" & Chr(39) & gruppa.modul1 & Chr(39) & " LIMIT 1)"
 
-        Часть1 = Часть1 & "modul2,modul3,"
-        Часть2 = Часть2 & " , (SELECT sotrudnik.kod FROM sotrudnik WHERE name=" & Chr(39) & gruppa.modul2 & Chr(39) & " LIMIT 1) , (SELECT sotrudnik.kod FROM sotrudnik WHERE name=" & Chr(39) & gruppa.modul3 & Chr(39) & " LIMIT 1)"
+        part1 = part1 & "modul2,modul3,"
+        part2 = part2 & " , (SELECT sotrudnik.kod FROM sotrudnik WHERE name=" & Chr(39) & gruppa.modul2 & Chr(39) & " LIMIT 1) , (SELECT sotrudnik.kod FROM sotrudnik WHERE name=" & Chr(39) & gruppa.modul3 & Chr(39) & " LIMIT 1)"
 
-        Часть1 = Часть1 & "modul4,modul5,modul6,modul7,modul8,modul9,modul10,"
-        Часть2 = Часть2 & " , (SELECT sotrudnik.kod FROM sotrudnik WHERE name=" & Chr(39) & gruppa.modul4 & Chr(39) & " LIMIT 1) , (SELECT sotrudnik.kod FROM sotrudnik WHERE name=" & Chr(39) & gruppa.modul5 & Chr(39) & " LIMIT 1), (SELECT sotrudnik.kod FROM sotrudnik WHERE name=" & Chr(39) & gruppa.modul6 & Chr(39) & " LIMIT 1), (SELECT sotrudnik.kod FROM sotrudnik WHERE name=" & Chr(39) & gruppa.modul7 & Chr(39) & " LIMIT 1), (SELECT sotrudnik.kod FROM sotrudnik WHERE name=" & Chr(39) & gruppa.modul8 & Chr(39) & " LIMIT 1), (SELECT sotrudnik.kod FROM sotrudnik WHERE name=" & Chr(39) & gruppa.modul9 & Chr(39) & " LIMIT 1), (SELECT sotrudnik.kod FROM sotrudnik WHERE name=" & Chr(39) & gruppa.modul10 & Chr(39) & " LIMIT 1)"
+        part1 = part1 & "modul4,modul5,modul6,modul7,modul8,modul9,modul10,"
+        part2 = part2 & " , (SELECT sotrudnik.kod FROM sotrudnik WHERE name=" & Chr(39) & gruppa.modul4 & Chr(39) & " LIMIT 1) , (SELECT sotrudnik.kod FROM sotrudnik WHERE name=" & Chr(39) & gruppa.modul5 & Chr(39) & " LIMIT 1), (SELECT sotrudnik.kod FROM sotrudnik WHERE name=" & Chr(39) & gruppa.modul6 & Chr(39) & " LIMIT 1), (SELECT sotrudnik.kod FROM sotrudnik WHERE name=" & Chr(39) & gruppa.modul7 & Chr(39) & " LIMIT 1), (SELECT sotrudnik.kod FROM sotrudnik WHERE name=" & Chr(39) & gruppa.modul8 & Chr(39) & " LIMIT 1), (SELECT sotrudnik.kod FROM sotrudnik WHERE name=" & Chr(39) & gruppa.modul9 & Chr(39) & " LIMIT 1), (SELECT sotrudnik.kod FROM sotrudnik WHERE name=" & Chr(39) & gruppa.modul10 & Chr(39) & " LIMIT 1)"
 
-        Часть1 = Часть1 & "уровеньКвалификации,"
-        Часть2 = Часть2 & " , " & Chr(39) & gruppa.urKvalific & Chr(39)
+        part1 = part1 & "уровеньКвалификации,"
+        part2 = part2 & " , " & Chr(39) & gruppa.urKvalific & Chr(39)
 
-        Часть1 = Часть1 & "Финансирование, НомерПротоколаИА,"
-        Часть2 = Часть2 & " , " & Chr(39) & gruppa.financir & Chr(39) & " , " & Chr(39) & gruppa.nomerProtIA & Chr(39)
+        part1 = part1 & "Финансирование, НомерПротоколаИА,"
+        part2 = part2 & " , " & Chr(39) & gruppa.financir & Chr(39) & " , " & Chr(39) & gruppa.nomerProtIA & Chr(39)
 
-        Часть1 = Часть1 & "НомерУд, РегНомерУд, ДатаВыдачиУд,"
-        Часть2 = Часть2 & " , " & gruppa.NumbersUDS(0, 0) & " , " & gruppa.NumbersUDS(0, 1) & " , " & Chr(39) & gruppa.dataVUd & Chr(39)
+        part1 = part1 & "НомерУд, РегНомерУд, ДатаВыдачиУд,"
+        part2 = part2 & " , " & gruppa.NumbersUDS(0, 0) & " , " & gruppa.NumbersUDS(0, 1) & " , " & Chr(39) & gruppa.dataVUd & Chr(39)
 
-        Часть1 = Часть1 & "НомерДиплома, РегНомерДиплома,ДатаВыдачиДиплома,"
-        Часть2 &= " , " & gruppa.NumbersUDS(0, 2) & " , " & gruppa.NumbersUDS(0, 3) & " , " & Chr(39) & gruppa.dataVD & Chr(39)
+        part1 = part1 & "НомерДиплома, РегНомерДиплома,ДатаВыдачиДиплома,"
+        part2 &= " , " & gruppa.NumbersUDS(0, 2) & " , " & gruppa.NumbersUDS(0, 3) & " , " & Chr(39) & gruppa.dataVD & Chr(39)
 
-        Часть1 = Часть1 & " НомерСвид,РегНомерСвид, ДатаВыдачиСвид,"
-        Часть2 &= " , " & gruppa.NumbersUDS(0, 4) & " , " & gruppa.NumbersUDS(0, 5) & " , " & Chr(39) & gruppa.dataVSv & Chr(39)
+        part1 = part1 & " НомерСвид,РегНомерСвид, ДатаВыдачиСвид,"
+        part2 &= " , " & gruppa.NumbersUDS(0, 4) & " , " & gruppa.NumbersUDS(0, 5) & " , " & Chr(39) & gruppa.dataVSv & Chr(39)
 
-        Часть1 = Часть1 & "Квалификация, ОсновнойДокумент,"
-        Часть2 &= " , " & Chr(39) & gruppa.kvalifikaciya & Chr(39) & " , " & Chr(39) & gruppa.osnovnoyDok & Chr(39)
+        part1 = part1 & "Квалификация, ОсновнойДокумент,"
+        part2 &= " , " & Chr(39) & gruppa.kvalifikaciya & Chr(39) & " , " & Chr(39) & gruppa.osnovnoyDok & Chr(39)
 
-        Часть1 = Часть1 & "ДатаСпецЭкзамен,НомерПротоколаСпецэкзамен)"
-        Часть2 &= " , " & Chr(39) & gruppa.dataSpec & Chr(39) & " , " & Chr(39) & gruppa.nomerProtIA & Chr(39) & " )"
+        part1 = part1 & "ДатаСпецЭкзамен,НомерПротоколаСпецэкзамен)"
+        part2 &= " , " & Chr(39) & gruppa.dataSpec & Chr(39) & " , " & Chr(39) & gruppa.nomerProtIA & Chr(39) & " )"
 
-        sqlString = "INSERT INTO `group` " & Часть1 & "  VALUES " & Часть2
-        insertIntoGroup = sqlString
+        sqlString = "INSERT INTO `group` " & part1 & "  VALUES " & part2
+
+        Return sqlString
+
     End Function
 
     Public Function updateSlushatel(slushatel As Slushatel.strSlushatel) As String
 
-        Dim Часть1 As String, Часть2 As String, Часть3 As String, Часть4 As String
-        Dim Data As String
         Dim sqlString As String = "", ДатаВыдачиДул, СтрокаЗапроса As String
 
         sqlString = "Снилс=" & Chr(39) & slushatel.snils & Chr(39) &
@@ -1984,49 +2540,49 @@ INNER JOIN Слушатель ON group_list.Слушатель = Слушате�
 
 
         sqlString = "UPDATE Слушатель SET " & sqlString & " WHERE Снилс =" & Chr(39) & slushatel.старыйСнилс & Chr(39)
-        updateSlushatel = sqlString
 
+        Return sqlString
 
     End Function
 
 
     Public Function insertIntoSlushatel(slushatel As Slushatel.strSlushatel) As String
 
-        Dim Часть1 As String, Часть2 As String, Часть3 As String, Часть4 As String
-        Dim Data As String
-        Dim sqlString As String, ДатаВыдачиДул, СтрокаЗапроса As String
+        Dim part1, part2 As String
+        Dim sqlString, ДатаВыдачиДул As String
 
         sqlString = ""
 
 
-        Часть1 = "(Снилс,"
-        Часть2 = "(" & Chr(39) & ДобавитьРубашку.УдалитьРубашку(slushatel.snils) & Chr(39)
-        Часть1 = +"Фамилия, Имя, Отчество,"
-        Часть2 = +"," & Chr(39) & slushatel.фамилия & Chr(39) & "," & Chr(39) & slushatel.имя & Chr(39) & "," & Chr(39) & slushatel.отчество & Chr(39)
-        Часть1 = +"ДатаРождения, Пол, УОбразования,"
-        Часть2 = +"," & Chr(39) & ААОсновная.mySqlConnect.dateToFormatMySQL(slushatel.датаР) & Chr(39) & "," & Chr(39) & slushatel.пол & Chr(39) & "," & Chr(39) & slushatel.уровеньОбразования & Chr(39)
-        Часть1 = +"НаимДОО, СерияДОО, НомерДОО,"
-        Часть2 = +"," & Chr(39) & slushatel.образование & Chr(39) & "," & Chr(39) & slushatel.серияДокументаООбразовании & Chr(39) & "," & Chr(39) & slushatel.номерДокументаООбразовании & Chr(39) &
-        Часть1 = +"ФамилияДОО, АРег, Телефон,"
-        Часть2 = +"," & Chr(39) & slushatel.фамилияВДокОбОбразовании & Chr(39) & "," & Chr(39) & slushatel.адресРегистрации & Chr(39) & "," & Chr(39) & slushatel.телефон & Chr(39) &
-        Часть1 = +"Гражданство, ДУЛ, СерияДУЛ, НомерДУЛ,"
-        Часть2 = +"," & Chr(39) & slushatel.гражданство & Chr(39) & "," & Chr(39) & slushatel.ДУЛ & Chr(39) & "," & Chr(39) & slushatel.серияДУЛ & Chr(39) & "," & Chr(39) & slushatel.номерДУЛ & Chr(39)
-        Часть1 = +"ИФин, НОрг, НомерНапрРосздрав,"
-        Часть2 = +"," & Chr(39) & slushatel.источникФин & Chr(39) & ",(SELECT kod FROM napr_organization WHERE name=" & Chr(39) & slushatel.направившаяОрг & Chr(39) & ") , " & Chr(39) & slushatel.номерНаправленияРосздравнадзора & Chr(39)
-        Часть1 = +" ДатаНапрРосздрав,"
-        Часть2 = +" , " & Chr(39) & ААОсновная.mySqlConnect.dateToFormatMySQL(slushatel.датаНаправленияРосздравнвдзора) & Chr(39) &
-        Часть1 = +"Специальность, ДатаРегистрации, Почта,"
-        Часть2 = +" , " & Chr(39) & slushatel.специальностьСлушателя & Chr(39) & " , " & Chr(39) & ААОсновная.mySqlConnect.dateToFormatMySQL(slushatel.датаРег) & Chr(39) & " , " & Chr(39) & slushatel.Email & Chr(39) &
-        Часть1 = +"ДУЛКемВыдан,ДУЛДатаВыдачи ) "
-        Часть2 = +", " & Chr(39) & slushatel.кемВыданДУЛ & Chr(39) & ", "
+        part1 = "(Снилс,"
+        part2 = "(" & Chr(39) & ДобавитьРубашку.УдалитьРубашку(slushatel.snils) & Chr(39)
+        part1 = +"Фамилия, Имя, Отчество,"
+        part2 = +"," & Chr(39) & slushatel.фамилия & Chr(39) & "," & Chr(39) & slushatel.имя & Chr(39) & "," & Chr(39) & slushatel.отчество & Chr(39)
+        part1 = +"ДатаРождения, Пол, УОбразования,"
+        part2 = +"," & Chr(39) & ААОсновная.mySqlConnect.dateToFormatMySQL(slushatel.датаР) & Chr(39) & "," & Chr(39) & slushatel.пол & Chr(39) & "," & Chr(39) & slushatel.уровеньОбразования & Chr(39)
+        part1 = +"НаимДОО, СерияДОО, НомерДОО,"
+        part2 = +"," & Chr(39) & slushatel.образование & Chr(39) & "," & Chr(39) & slushatel.серияДокументаООбразовании & Chr(39) & "," & Chr(39) & slushatel.номерДокументаООбразовании & Chr(39) &
+        part1 = +"ФамилияДОО, АРег, Телефон,"
+        part2 = +"," & Chr(39) & slushatel.фамилияВДокОбОбразовании & Chr(39) & "," & Chr(39) & slushatel.адресРегистрации & Chr(39) & "," & Chr(39) & slushatel.телефон & Chr(39) &
+        part1 = +"Гражданство, ДУЛ, СерияДУЛ, НомерДУЛ,"
+        part2 = +"," & Chr(39) & slushatel.гражданство & Chr(39) & "," & Chr(39) & slushatel.ДУЛ & Chr(39) & "," & Chr(39) & slushatel.серияДУЛ & Chr(39) & "," & Chr(39) & slushatel.номерДУЛ & Chr(39)
+        part1 = +"ИФин, НОрг, НомерНапрРосздрав,"
+        part2 = +"," & Chr(39) & slushatel.источникФин & Chr(39) & ",(SELECT kod FROM napr_organization WHERE name=" & Chr(39) & slushatel.направившаяОрг & Chr(39) & ") , " & Chr(39) & slushatel.номерНаправленияРосздравнадзора & Chr(39)
+        part1 = +" ДатаНапрРосздрав,"
+        part2 = +" , " & Chr(39) & ААОсновная.mySqlConnect.dateToFormatMySQL(slushatel.датаНаправленияРосздравнвдзора) & Chr(39) &
+        part1 = +"Специальность, ДатаРегистрации, Почта,"
+        part2 = +" , " & Chr(39) & slushatel.специальностьСлушателя & Chr(39) & " , " & Chr(39) & ААОсновная.mySqlConnect.dateToFormatMySQL(slushatel.датаРег) & Chr(39) & " , " & Chr(39) & slushatel.Email & Chr(39) &
+        part1 = +"ДУЛКемВыдан,ДУЛДатаВыдачи ) "
+        part2 = +", " & Chr(39) & slushatel.кемВыданДУЛ & Chr(39) & ", "
 
         If slushatel.датаВыдачиДУЛ = "null" Then
-            Часть2 += ДатаВыдачиДул & " ) "
-        Else Часть2 += Chr(39) & ААОсновная.mySqlConnect.dateToFormatMySQL(slushatel.датаВыдачиДУЛ) & Chr(39) & " ) "
+            part2 += ДатаВыдачиДул & " ) "
+        Else part2 += Chr(39) & ААОсновная.mySqlConnect.dateToFormatMySQL(slushatel.датаВыдачиДУЛ) & Chr(39) & " ) "
         End If
 
 
-        sqlString = "INSERT INTO Слушатель " & Часть1 & "  VALUES " & Часть2
+        sqlString = "INSERT INTO Слушатель " & part1 & "  VALUES " & part2
+        Return sqlString
 
     End Function
 

@@ -93,42 +93,55 @@ Public Class ААОсновная
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs)
+
         ActiveControl = Button2
         ФормаСправочникСлушатели.ДобавитьВГруппу.Visible = False
         ФормаСправочникСлушатели.ShowDialog()
+
     End Sub
 
     Private Sub ОткрытьСправочникГруппы_Click(sender As Object, e As EventArgs) Handles СправочникГруппыПК.Click
+
         cvalific = PK
         ActiveControl = Button2
         СправочникГруппы.ShowDialog()
+
     End Sub
 
     Private Sub СправочникГруппыПП_Click(sender As Object, e As EventArgs) Handles СправочникГруппыПП.Click
+
         cvalific = PP
         ActiveControl = Button2
         СправочникГруппы.ShowDialog()
+
     End Sub
 
     Private Sub СправочникГруппыПО_Click(sender As Object, e As EventArgs) Handles СправочникГруппыПО.Click
+
         cvalific = PO
         ActiveControl = Button2
         СправочникГруппы.ShowDialog()
+
     End Sub
 
     Private Sub ИтоговаяАттествцияОценки_Click(sender As Object, e As EventArgs) Handles ИтоговаяАттествцияОценки.Click
+
         ActiveControl = Button2
         АОценкиИА.НомерГруппы.Clear()
         АОценкиИА.ТаблицаОценкиИА.Rows.Clear()
         АОценкиИА.ShowDialog()
+
     End Sub
 
     Private Sub Ведомость_Click(sender As Object, e As EventArgs) Handles Ведомость.Click
+
         ActiveControl = Button2
         ОценочнаяВедомость.НомерГруппы.Clear()
         ОценочнаяВедомость.ТаблицаВедомость.Rows.Clear()
         ОценочнаяВедомость.ShowDialog()
+
     End Sub
+
     Private Sub ДобавитьСлушателя_Click(sender As Object, e As EventArgs)
 
         ActiveControl = Button2
@@ -137,8 +150,10 @@ Public Class ААОсновная
     End Sub
 
     Private Sub КнопкаСоздатьГруппу_Click(sender As Object, e As EventArgs) Handles КнопкаСоздатьГруппу.Click
+
         ActiveControl = Button2
         НоваяГруппа.ShowDialog()
+
     End Sub
 
     Private Sub СправочникСлушатели_Click(sender As Object, e As EventArgs) Handles СправочникСлушатели.Click
@@ -151,125 +166,130 @@ Public Class ААОсновная
         ФормаСправочникСлушатели.ДобавитьВГруппу.Visible = False
         ФормаСправочникСлушатели.ПоказатьСправочникСлушатели()
         ФормаСправочникСлушатели.ShowDialog()
+
     End Sub
 
     Private Sub ДобавитьСлушателя_Click_1(sender As Object, e As EventArgs) Handles ДобавитьСлушателя.Click
+
         ActiveControl = Button2
         НовыйСлушатель.ShowDialog()
+
     End Sub
 
 
     Private Sub Button1_Click_1(sender As Object, e As EventArgs) Handles Button1.Click
-        Dim ПриложениеЭксель As Object
-        Dim КнигаЭксель As Object
-        Dim ЛистЭксель As Object
-        Dim ОбъектыЭксель
-        ReDim ОбъектыЭксель(1)
-        Dim МассивГрупп
-        Dim МассивСостав
-        Dim МассивСлушателей
-        Dim МассивИтоговый
-        Dim МассивДляОтчета
+        Dim excellApp As Object
+        Dim excellWorkBook As Object
+        Dim excellSheet As Object
+        Dim excellObjects
+        ReDim excellObjects(1)
+        Dim groupsArray
+        Dim list
+        Dim studentList
+        Dim resultList
+        Dim otchetList
         Dim listData As List(Of List(Of String))
-        Dim Часы
-        Dim Счетчик As Integer, Счетчик2 As Integer, Счетчик3 As Integer, СчетчикПр As Integer, СчетчикСна As Integer
-        Dim СтрокаЗапроса As String, DateStart, DateEnd, Путь As String
+        Dim hours
+        Dim counter, counter2, counter3, СчетчикПр As Integer
+        Dim queryString, DateStart, DateEnd, path As String
+
         ActiveControl = Button2
 
         DateStart = mySqlConnect.dateToFormatMySQL(ДатаНачалаОтчета.Value.ToShortDateString)
         DateEnd = mySqlConnect.dateToFormatMySQL(ДатаКонцаОтчета.Value.ToShortDateString)
 
-        МассивГрупп = ЗагрузитьИзБазы.ЗагрузитьИзБазы(selectCol_otche_info(DateStart, DateEnd))
+        queryString = selectCol_otchet_info(DateStart, DateEnd)
+        groupsArray = ЗагрузитьИзБазы.ЗагрузитьИзБазы(queryString)
 
-        СтрокаЗапроса = selectCol_chas()
-        Часы = ЗагрузитьИзБазы.ЗагрузитьИзБазы(СтрокаЗапроса)
+        queryString = selectCol_chas()
+        hours = ЗагрузитьИзБазы.ЗагрузитьИзБазы(queryString)
 
 
-        СтрокаЗапроса = SQLString_OtchetMassSlush(DateStart, DateEnd)
-        МассивСостав = ЗагрузитьИзБазы.ЗагрузитьИзБазы(СтрокаЗапроса)
+        queryString = SQLString_OtchetMassSlush(DateStart, DateEnd)
+        list = ЗагрузитьИзБазы.ЗагрузитьИзБазы(queryString)
 
         '------------------------------------------------------------------------------------------------------
 
-        If МассивСостав(0, 0).ToString = "нет записей" Then
+        If list(0, 0).ToString = "нет записей" Then
             MsgBox("Не найденно групп с зарегистрированными слушателями")
             Exit Sub
         End If
-        СтрокаЗапроса = SQLString_OtchetMassDataSlush(DateStart, DateEnd)
+        queryString = SQLString_OtchetMassDataSlush(DateStart, DateEnd)
 
-        МассивСлушателей = ЗагрузитьИзБазы.ЗагрузитьИзБазы(СтрокаЗапроса)
+        studentList = ЗагрузитьИзБазы.ЗагрузитьИзБазы(queryString)
 
-        Счетчик = 0
+        counter = 0
 
-        ReDim МассивИтоговый(50, UBound(МассивСостав, 2))
+        ReDim resultList(50, UBound(list, 2))
 
-        While Счетчик <= UBound(МассивИтоговый, 2)
+        While counter <= UBound(resultList, 2)
 
-            МассивИтоговый(0, Счетчик) = МассивСостав(1, Счетчик)
-            МассивИтоговый(1, Счетчик) = МассивСостав(2, Счетчик)
+            resultList(0, counter) = list(1, counter)
+            resultList(1, counter) = list(2, counter)
 
-            Счетчик2 = 0
-            СчетчикПр = UBound(МассивСлушателей, 2)
-            While Счетчик2 <= UBound(МассивСлушателей, 2)
+            counter2 = 0
+            СчетчикПр = UBound(studentList, 2)
+            While counter2 <= UBound(studentList, 2)
 
-                If МассивИтоговый(0, Счетчик) = МассивСлушателей(1, Счетчик2) Then
+                If resultList(0, counter) = studentList(1, counter2) Then
 
-                    Счетчик3 = 2
-                    While Счетчик3 <= UBound(МассивСлушателей, 1)
+                    counter3 = 2
+                    While counter3 <= UBound(studentList, 1)
 
-                        МассивИтоговый(Счетчик3, Счетчик) = МассивСлушателей(Счетчик3, Счетчик2)
-                        Счетчик3 = Счетчик3 + 1
-
-                    End While
-
-                End If
-
-                Счетчик2 = Счетчик2 + 1
-            End While
-
-            Счетчик = Счетчик + 1
-
-        End While
-
-        Счетчик = 0
-        While Счетчик <= UBound(МассивИтоговый, 2)
-
-            Счетчик2 = 0
-            СчетчикПр = UBound(МассивГрупп, 2)
-            While Счетчик2 <= UBound(МассивГрупп, 2)
-
-                If МассивИтоговый(1, Счетчик) = МассивГрупп(1, Счетчик2) Then
-
-                    Счетчик3 = 2
-                    While Счетчик3 <= UBound(МассивГрупп, 1)
-
-                        МассивИтоговый(Счетчик3 + 25, Счетчик) = МассивГрупп(Счетчик3, Счетчик2)
-                        Счетчик3 = Счетчик3 + 1
+                        resultList(counter3, counter) = studentList(counter3, counter2)
+                        counter3 = counter3 + 1
 
                     End While
 
                 End If
 
-
-                Счетчик2 = Счетчик2 + 1
+                counter2 = counter2 + 1
             End While
 
-            Счетчик = Счетчик + 1
+            counter = counter + 1
 
         End While
 
-        МассивИтоговый = УбратьПустотыВМассиве.УбратьПустотыВМассиве(МассивИтоговый)
+        counter = 0
+        While counter <= UBound(resultList, 2)
+
+            counter2 = 0
+            СчетчикПр = UBound(groupsArray, 2)
+            While counter2 <= UBound(groupsArray, 2)
+
+                If resultList(1, counter) = groupsArray(1, counter2) Then
+
+                    counter3 = 2
+                    While counter3 <= UBound(groupsArray, 1)
+
+                        resultList(counter3 + 25, counter) = groupsArray(counter3, counter2)
+                        counter3 = counter3 + 1
+
+                    End While
+
+                End If
+
+
+                counter2 = counter2 + 1
+            End While
+
+            counter = counter + 1
+
+        End While
+
+        resultList = УбратьПустотыВМассиве.УбратьПустотыВМассиве(resultList)
 
         Name = "Отчет" & Date.Now.ToShortDateString & "_" & НомерОтчета.ToString & ".xlsx"
-        Путь = Вспомогательный.ПутьККаталогуСРесурсами
-        Путь = Путь & "Отчеты\"
+        path = Вспомогательный.ПутьККаталогуСРесурсами
+        path = path & "Отчеты\"
 
-        ОбъектыЭксель = Вспомогательный.СозданиеКнигиЭксельИЛИОшибкаВ0(Путь, Name, НомерОтчета)
+        excellObjects = Вспомогательный.СозданиеКнигиЭксельИЛИОшибкаВ0(path, Name, НомерОтчета)
 
-        If ОбъектыЭксель(0).ToString = "Ошибка" Then
+        If excellObjects(0).ToString = "Ошибка" Then
             Exit Sub
         End If
-        ПриложениеЭксель = ОбъектыЭксель(0)
-        КнигаЭксель = ОбъектыЭксель(1)
+        excellApp = excellObjects(0)
+        excellWorkBook = excellObjects(1)
         'ПриложениеЭксель.Visible = True
 
 ПослеСохранения:
@@ -277,13 +297,13 @@ Public Class ААОсновная
         НомерОтчета = НомерОтчета + 1
 
         If ОтчетРуководителя.Checked Then
-            ЛистЭксель = КнигаЭксель.Worksheets.Add
-            ЛистЭксель.Name = "ОтчетРуководителя"
-            СтрокаЗапроса = QueryString.SQLString_OtchetRuk(DateStart, DateEnd)
-            listData = mySqlConnect.ЗагрузитьИзMySQLвListAll(СтрокаЗапроса, 1)
+            excellSheet = excellWorkBook.Worksheets.Add
+            excellSheet.Name = "ОтчетРуководителя"
+            queryString = WindowsApp2.SQLString_OtchetRuk(DateStart, DateEnd)
+            listData = mySqlConnect.ЗагрузитьИзMySQLвListAll(queryString, 1)
 
             If Not listData.Count = 0 Then
-                ЗаписьИнформацииДляОтчетаExcell.СозданиеОтчетаРуководителя(ЛистЭксель, listData, МассивИтоговый, МассивГрупп)
+                ЗаписьИнформацииДляОтчетаExcell.СозданиеОтчетаРуководителя(excellSheet, listData, resultList, groupsArray)
             Else
                 предупреждение.текст.Text = "Нет информации отвечающей условиям отбора для отчета руководителя"
                 предупреждение.ShowDialog()
@@ -292,11 +312,11 @@ Public Class ААОсновная
         End If
 
         If ChРМАНПО.Checked Then
-            СтрокаЗапроса = QueryString.SQLString_OtchetRMANPO(DateStart, DateEnd)
-            listData = mySqlConnect.ЗагрузитьИзMySQLвListAll(СтрокаЗапроса, 1)
+            queryString = WindowsApp2.SQLString_OtchetRMANPO(DateStart, DateEnd)
+            listData = mySqlConnect.ЗагрузитьИзMySQLвListAll(queryString, 1)
 
             If Not listData.Count = 0 Then
-                ЗаписьИнформацииДляОтчетаExcell.CreateRMANPO(ПриложениеЭксель, КнигаЭксель, listData, МассивИтоговый, МассивГрупп, MonthName(ДатаКонцаОтчета.Value.Month))
+                ЗаписьИнформацииДляОтчетаExcell.CreateRMANPO(excellApp, excellWorkBook, listData, resultList, groupsArray, MonthName(ДатаКонцаОтчета.Value.Month))
             Else
                 предупреждение.текст.Text = "Нет информации отвечающей условиям отбора для отчета руководителя"
                 предупреждение.ShowDialog()
@@ -304,13 +324,13 @@ Public Class ААОсновная
         End If
 
         If ChСводПоКурсам.Checked Then
-            ЛистЭксель = КнигаЭксель.Worksheets.Add
-            ЛистЭксель.Name = "СводПоКурсам"
-            СтрокаЗапроса = QueryString.SQLString_OtchetKurs(DateStart, DateEnd, "курс")
-            МассивДляОтчета = mySqlConnect.ЗагрузитьИзБДMySQLвМассив(СтрокаЗапроса, 1)
+            excellSheet = excellWorkBook.Worksheets.Add
+            excellSheet.Name = "СводПоКурсам"
+            queryString = WindowsApp2.SQLString_OtchetKurs(DateStart, DateEnd, "курс")
+            otchetList = mySqlConnect.ЗагрузитьИзБДMySQLвМассив(queryString, 1)
 
-            If Not МассивДляОтчета(0, 0).ToString = "нет записей" Then
-                ЗаписьИнформацииДляОтчетаExcell.СозданиеСводаПоКурсамСпециальностям(ЛистЭксель, перевернутьмассив(МассивДляОтчета), "СводПоКурсам")
+            If Not otchetList(0, 0).ToString = "нет записей" Then
+                ЗаписьИнформацииДляОтчетаExcell.СозданиеСводаПоКурсамСпециальностям(excellSheet, перевернутьмассив(otchetList), "СводПоКурсам")
             Else
                 предупреждение.текст.Text = "Нет информации отвечающей условиям отбора для отчета Свод по курсам"
                 предупреждение.ShowDialog()
@@ -318,13 +338,13 @@ Public Class ААОсновная
         End If
 
         If СводПоСпец.Checked Then
-            ЛистЭксель = КнигаЭксель.Worksheets.Add
-            ЛистЭксель.Name = "СводПоСпециальностям"
-            СтрокаЗапроса = QueryString.SQLString_OtchetKurs(DateStart, DateEnd, "специальность")
-            МассивДляОтчета = mySqlConnect.ЗагрузитьИзБДMySQLвМассив(СтрокаЗапроса, 1)
+            excellSheet = excellWorkBook.Worksheets.Add
+            excellSheet.Name = "СводПоСпециальностям"
+            queryString = WindowsApp2.SQLString_OtchetKurs(DateStart, DateEnd, "специальность")
+            otchetList = mySqlConnect.ЗагрузитьИзБДMySQLвМассив(queryString, 1)
 
-            If Not МассивДляОтчета.ToString = "нет записей" Then
-                ЗаписьИнформацииДляОтчетаExcell.СозданиеСводаПоКурсамСпециальностям(ЛистЭксель, перевернутьмассив(МассивДляОтчета), "СводПоСпециальностям")
+            If Not otchetList.ToString = "нет записей" Then
+                ЗаписьИнформацииДляОтчетаExcell.СозданиеСводаПоКурсамСпециальностям(excellSheet, перевернутьмассив(otchetList), "СводПоСпециальностям")
             Else
                 предупреждение.текст.Text = "Нет информации отвечающей условиям отбора для отчета Свод по специальностям"
                 предупреждение.ShowDialog()
@@ -332,13 +352,13 @@ Public Class ААОсновная
         End If
 
         If СводПоОрганиз.Checked Then
-            ЛистЭксель = КнигаЭксель.Worksheets.Add
-            ЛистЭксель.Name = "ПереченьОрганизаций"
-            СтрокаЗапроса = SQLString_OtchetOrg(DateStart, DateEnd)
-            МассивДляОтчета = mySqlConnect.ЗагрузитьИзБДMySQLвМассив(СтрокаЗапроса, 1)
+            excellSheet = excellWorkBook.Worksheets.Add
+            excellSheet.Name = "ПереченьОрганизаций"
+            queryString = SQLString_OtchetOrg(DateStart, DateEnd)
+            otchetList = mySqlConnect.ЗагрузитьИзБДMySQLвМассив(queryString, 1)
 
-            If Not МассивДляОтчета.ToString = "нет записей" Then
-                ЗаписьИнформацииДляОтчетаExcell.СозданиеСводаПоОрганизациям(ЛистЭксель, МассивДляОтчета)
+            If Not otchetList.ToString = "нет записей" Then
+                ЗаписьИнформацииДляОтчетаExcell.СозданиеСводаПоОрганизациям(excellSheet, otchetList)
             Else
                 предупреждение.текст.Text = "Нет информации отвечающей условиям отбора для отчета Свод по организациям"
                 предупреждение.ShowDialog()
@@ -346,22 +366,22 @@ Public Class ААОсновная
         End If
 
         If БюджетВбюдж.Checked Then
-            ЛистЭксель = КнигаЭксель.Worksheets.Add
-            ЛистЭксель.Name = "БюджетВнебюджет"
+            excellSheet = excellWorkBook.Worksheets.Add
+            excellSheet.Name = "БюджетВнебюджет"
 
-            ReDim МассивДляОтчета(2)
-            СтрокаЗапроса = SQLString_OtchetBud_Vbud(DateStart, DateEnd, "полный")
-            listData = mySqlConnect.ЗагрузитьИзMySQLвListAll(СтрокаЗапроса, 1)
-            МассивДляОтчета(0) = listData
+            ReDim otchetList(2)
+            queryString = SQLString_OtchetBud_Vbud(DateStart, DateEnd, "полный")
+            listData = mySqlConnect.ЗагрузитьИзMySQLвListAll(queryString, 1)
+            otchetList(0) = listData
 
-            СтрокаЗапроса = SQLString_OtchetBud_Vbud(DateStart, DateEnd, "бюджет")
-            МассивДляОтчета(1) = mySqlConnect.ЗагрузитьИзMySQLвListAll(СтрокаЗапроса, 1)
+            queryString = SQLString_OtchetBud_Vbud(DateStart, DateEnd, "бюджет")
+            otchetList(1) = mySqlConnect.ЗагрузитьИзMySQLвListAll(queryString, 1)
 
-            СтрокаЗапроса = SQLString_OtchetBud_Vbud(DateStart, DateEnd, "внебюджет")
-            МассивДляОтчета(2) = mySqlConnect.ЗагрузитьИзMySQLвListAll(СтрокаЗапроса, 1)
+            queryString = SQLString_OtchetBud_Vbud(DateStart, DateEnd, "внебюджет")
+            otchetList(2) = mySqlConnect.ЗагрузитьИзMySQLвListAll(queryString, 1)
 
             If Not listData.Count = 0 Then
-                ЗаписьИнформацииДляОтчетаExcell.СозданиеОтчетаБюджетВнебюджет(ЛистЭксель, МассивДляОтчета, Часы)
+                ЗаписьИнформацииДляОтчетаExcell.СозданиеОтчетаБюджетВнебюджет(excellSheet, otchetList, hours)
             Else
                 предупреждение.текст.Text = "Нет информации отвечающей условиям отбора для отчета Бюджет/Внебюджет"
                 предупреждение.ShowDialog()
@@ -369,34 +389,32 @@ Public Class ААОсновная
         End If
 
         If ОтчетПеднагрузка.Checked Then
-            ПеднагрузкаОтчет.Педнагрузка("Педнагрузка", ПриложениеЭксель, КнигаЭксель, DateStart, DateEnd)
+            ПеднагрузкаОтчет.Педнагрузка("Педнагрузка", excellApp, excellWorkBook, DateStart, DateEnd)
         End If
 
         Try
-            КнигаЭксель.Save
+            excellWorkBook.Save
         Catch ex As Exception
             Exit Sub
         End Try
 
-        ПриложениеЭксель.DisplayAlerts = True
-        ПриложениеЭксель.Visible = True
+        excellApp.DisplayAlerts = True
+        excellApp.Visible = True
 
     End Sub
 
-    Sub ОжиданиеОтвета(n As Integer)
+    Sub waitResponse(n As Integer)
 
-        Dim СчетчикСна As Integer
+        Dim counter As Integer
 Повтор:
-        СчетчикСна = 0
+        counter = 0
         Thread.Sleep(50)
-        СчетчикСна = СчетчикСна + 1
-        If СчетчикСна < n Then
+        counter = counter + 1
+        If counter < n Then
             GoTo Повтор
         Else
             Exit Sub
         End If
-
-
 
     End Sub
 

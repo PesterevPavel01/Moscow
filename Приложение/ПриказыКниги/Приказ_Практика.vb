@@ -5,7 +5,7 @@
         Dim ПутьККаталогуСРесурсами, ПутьКШаблону
         Dim СтрокаЗапроса As String
 
-        СтрокаЗапроса = "SELECT CONCAT(Слушатель.Фамилия,' ',Слушатель.Имя,' ',IFNULL(слушатель.Отчество,' ')), `group`.Программа, ДатаНЗ, ДатаКЗ, КолЧас FROM (group_list INNER JOIN Слушатель ON group_list.Слушатель = Слушатель.Снилс) INNER JOIN `group` ON group_list.Kod = `group`.Код WHERE `group`.Код = " & ААОсновная.prikazKodGroup & " ORDER BY Слушатель.Фамилия"
+        СтрокаЗапроса = loadListStudents(ААОсновная.prikazKodGroup)
         ДанныеСлушателей = ЗагрузитьИзБазы.ЗагрузитьИзБазы(СтрокаЗапроса)
 
         If ДанныеСлушателей(0, 0) = "нет записей" Then

@@ -58,6 +58,7 @@ Partial Class СписокСлушателейВГруппе
         Me.ListViewСписокСлушателей.GridLines = True
         Me.ListViewСписокСлушателей.HideSelection = False
         Me.ListViewСписокСлушателей.Location = New System.Drawing.Point(0, 0)
+        Me.ListViewСписокСлушателей.MultiSelect = False
         Me.ListViewСписокСлушателей.Name = "ListViewСписокСлушателей"
         Me.ListViewСписокСлушателей.Size = New System.Drawing.Size(1115, 646)
         Me.ListViewСписокСлушателей.TabIndex = 4

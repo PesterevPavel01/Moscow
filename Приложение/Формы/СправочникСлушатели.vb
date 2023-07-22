@@ -6,6 +6,7 @@
     Public РубашкаДобавлена = False
 
     Public Sub ПоказатьСправочникСлушатели()
+
         Dim Str As String, ПолеДляПоиска, ПолеДляСортировки As String
 
         ListViewСписокСлушателей.Visible = False
@@ -34,6 +35,7 @@
             Exit Sub
         End Try
         ListViewСписокСлушателей.Visible = True
+
     End Sub
 
     Public ИнформацияОСлушателе
@@ -114,9 +116,11 @@
     End Sub
 
     Private Sub ФормаСправочникСлушатели_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
         СтрокаПоиска.Visible = True
         Label1.Visible = False
         Label2.Visible = False
+
     End Sub
 
     Private Sub СтрокаПоиска_KeyDown(sender As Object, e As KeyEventArgs) Handles СтрокаПоиска.KeyDown
@@ -341,11 +345,13 @@
     Private Sub ListViewСписокСлушателей_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ListViewСписокСлушателей.SelectedIndexChanged
         Dim Dtable As DataTable
         Dim Snils, SqlString As String
+
         Try
             Snils = ДобавитьРубашку.УдалитьРубашку(ListViewСписокСлушателей.SelectedItems.Item(0).SubItems(1).Text)
         Catch ex As Exception
             Exit Sub
         End Try
+
         SqlString = sprSlushTblGroup(Snils)
         Dtable = ААОсновная.mySqlConnect.ЗагрузитьИзMySQLвDataTable(SqlString, 1)
         ССлушТаблицаИнфСлушателя.DataSource = Dtable
