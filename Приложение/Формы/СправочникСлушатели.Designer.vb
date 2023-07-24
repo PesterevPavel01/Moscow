@@ -24,7 +24,7 @@ Partial Class ФормаСправочникСлушатели
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(ФормаСправочникСлушатели))
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.ListViewСписокСлушателей = New System.Windows.Forms.ListView()
         Me.ColumnHeader5 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ColumnHeader6 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
@@ -94,16 +94,16 @@ Partial Class ФормаСправочникСлушатели
         '
         'СтрокаПоиска
         '
-        Me.СтрокаПоиска.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.СтрокаПоиска.Location = New System.Drawing.Point(41, 39)
+        Me.СтрокаПоиска.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
+        Me.СтрокаПоиска.Location = New System.Drawing.Point(41, 34)
         Me.СтрокаПоиска.Name = "СтрокаПоиска"
-        Me.СтрокаПоиска.Size = New System.Drawing.Size(648, 24)
+        Me.СтрокаПоиска.Size = New System.Drawing.Size(648, 29)
         Me.СтрокаПоиска.TabIndex = 2
         '
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(39, 23)
+        Me.Label1.Location = New System.Drawing.Point(38, 20)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(39, 13)
         Me.Label1.TabIndex = 10
@@ -167,12 +167,12 @@ Partial Class ФормаСправочникСлушатели
         Me.Button1.FlatAppearance.BorderColor = System.Drawing.Color.WhiteSmoke
         Me.Button1.FlatAppearance.BorderSize = 0
         Me.Button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button1.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
+        Me.Button1.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
         Me.Button1.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.Button1.Location = New System.Drawing.Point(1145, 4)
+        Me.Button1.Location = New System.Drawing.Point(923, 4)
         Me.Button1.Name = "Button1"
         Me.Button1.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.Button1.Size = New System.Drawing.Size(217, 64)
+        Me.Button1.Size = New System.Drawing.Size(402, 64)
         Me.Button1.TabIndex = 13
         Me.Button1.Text = "Загрузить все записи"
         Me.Button1.UseVisualStyleBackColor = False
@@ -182,7 +182,7 @@ Partial Class ФормаСправочникСлушатели
         '
         Me.Label3.AutoSize = True
         Me.Label3.ForeColor = System.Drawing.SystemColors.MenuHighlight
-        Me.Label3.Location = New System.Drawing.Point(98, 23)
+        Me.Label3.Location = New System.Drawing.Point(104, 4)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(349, 13)
         Me.Label3.TabIndex = 16
@@ -200,9 +200,9 @@ Partial Class ФормаСправочникСлушатели
         Me.PictureBox2.ErrorImage = Nothing
         Me.PictureBox2.Image = CType(resources.GetObject("PictureBox2.Image"), System.Drawing.Image)
         Me.PictureBox2.InitialImage = Nothing
-        Me.PictureBox2.Location = New System.Drawing.Point(695, 39)
+        Me.PictureBox2.Location = New System.Drawing.Point(695, 34)
         Me.PictureBox2.Name = "PictureBox2"
-        Me.PictureBox2.Size = New System.Drawing.Size(28, 23)
+        Me.PictureBox2.Size = New System.Drawing.Size(29, 28)
         Me.PictureBox2.TabIndex = 18
         Me.PictureBox2.TabStop = False
         '
@@ -237,8 +237,8 @@ Partial Class ФормаСправочникСлушатели
         Me.ССлушТаблицаИнфСлушателя.Name = "ССлушТаблицаИнфСлушателя"
         Me.ССлушТаблицаИнфСлушателя.ReadOnly = True
         Me.ССлушТаблицаИнфСлушателя.RowHeadersVisible = False
-        DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.ССлушТаблицаИнфСлушателя.RowsDefaultCellStyle = DataGridViewCellStyle4
+        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.ССлушТаблицаИнфСлушателя.RowsDefaultCellStyle = DataGridViewCellStyle1
         Me.ССлушТаблицаИнфСлушателя.Size = New System.Drawing.Size(593, 879)
         Me.ССлушТаблицаИнфСлушателя.TabIndex = 1
         '

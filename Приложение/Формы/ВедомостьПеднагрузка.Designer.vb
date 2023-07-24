@@ -22,17 +22,11 @@ Partial Class ВедомостьПеднагрузка
     'Не изменяйте ее в редакторе исходного кода.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Группа = New System.Windows.Forms.TextBox()
         Me.ТаблицаВедомость = New System.Windows.Forms.DataGridView()
-        Me.ФИО = New System.Windows.Forms.DataGridViewComboBoxColumn()
-        Me.Лекции = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Практические = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Стимулирующие = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Консультация = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.ПА = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.ИА = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Итого = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.НомерГруппы = New System.Windows.Forms.TextBox()
         Me.ПодписьИтого = New System.Windows.Forms.TextBox()
@@ -44,6 +38,14 @@ Partial Class ВедомостьПеднагрузка
         Me.ИтогоИА = New System.Windows.Forms.TextBox()
         Me.ИтогоИтого = New System.Windows.Forms.TextBox()
         Me.Сохранить = New System.Windows.Forms.Button()
+        Me.ФИО = New System.Windows.Forms.DataGridViewComboBoxColumn()
+        Me.Лекции = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Практические = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Стимулирующие = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Консультация = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.ПА = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.ИА = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Итого = New System.Windows.Forms.DataGridViewTextBoxColumn()
         CType(Me.ТаблицаВедомость, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -71,13 +73,150 @@ Partial Class ВедомостьПеднагрузка
         Me.ТаблицаВедомость.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.ТаблицаВедомость.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells
         Me.ТаблицаВедомость.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight
+        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle1.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
+        DataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.ControlLight
+        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.ТаблицаВедомость.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
         Me.ТаблицаВедомость.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.ТаблицаВедомость.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.ФИО, Me.Лекции, Me.Практические, Me.Стимулирующие, Me.Консультация, Me.ПА, Me.ИА, Me.Итого})
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle2.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
+        DataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle2.Padding = New System.Windows.Forms.Padding(10, 3, 3, 3)
+        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.ControlLight
+        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.ТаблицаВедомость.DefaultCellStyle = DataGridViewCellStyle2
         Me.ТаблицаВедомость.Location = New System.Drawing.Point(12, 38)
         Me.ТаблицаВедомость.Name = "ТаблицаВедомость"
-        Me.ТаблицаВедомость.Size = New System.Drawing.Size(1158, 516)
+        Me.ТаблицаВедомость.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+        Me.ТаблицаВедомость.Size = New System.Drawing.Size(1237, 516)
         Me.ТаблицаВедомость.TabIndex = 7
+        '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
+        Me.Label1.Location = New System.Drawing.Point(12, 9)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(65, 21)
+        Me.Label1.TabIndex = 10
+        Me.Label1.Text = "Группа"
+        '
+        'НомерГруппы
+        '
+        Me.НомерГруппы.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
+        Me.НомерГруппы.Location = New System.Drawing.Point(83, 4)
+        Me.НомерГруппы.Name = "НомерГруппы"
+        Me.НомерГруппы.ReadOnly = True
+        Me.НомерГруппы.Size = New System.Drawing.Size(379, 29)
+        Me.НомерГруппы.TabIndex = 9
+        '
+        'ПодписьИтого
+        '
+        Me.ПодписьИтого.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.ПодписьИтого.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.ПодписьИтого.Enabled = False
+        Me.ПодписьИтого.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.ПодписьИтого.Location = New System.Drawing.Point(12, 553)
+        Me.ПодписьИтого.Name = "ПодписьИтого"
+        Me.ПодписьИтого.Size = New System.Drawing.Size(343, 29)
+        Me.ПодписьИтого.TabIndex = 11
+        Me.ПодписьИтого.Text = "ИТОГО"
+        '
+        'ИтогоЛекции
+        '
+        Me.ИтогоЛекции.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.ИтогоЛекции.Enabled = False
+        Me.ИтогоЛекции.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
+        Me.ИтогоЛекции.Location = New System.Drawing.Point(354, 553)
+        Me.ИтогоЛекции.Name = "ИтогоЛекции"
+        Me.ИтогоЛекции.Size = New System.Drawing.Size(120, 29)
+        Me.ИтогоЛекции.TabIndex = 12
+        '
+        'ИтогоПрактические
+        '
+        Me.ИтогоПрактические.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.ИтогоПрактические.Enabled = False
+        Me.ИтогоПрактические.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.ИтогоПрактические.Location = New System.Drawing.Point(473, 553)
+        Me.ИтогоПрактические.Name = "ИтогоПрактические"
+        Me.ИтогоПрактические.Size = New System.Drawing.Size(120, 29)
+        Me.ИтогоПрактические.TabIndex = 13
+        '
+        'ИтогоСтимулирующие
+        '
+        Me.ИтогоСтимулирующие.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.ИтогоСтимулирующие.Enabled = False
+        Me.ИтогоСтимулирующие.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
+        Me.ИтогоСтимулирующие.Location = New System.Drawing.Point(592, 553)
+        Me.ИтогоСтимулирующие.Name = "ИтогоСтимулирующие"
+        Me.ИтогоСтимулирующие.Size = New System.Drawing.Size(122, 29)
+        Me.ИтогоСтимулирующие.TabIndex = 14
+        '
+        'ИтогоКонсультация
+        '
+        Me.ИтогоКонсультация.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.ИтогоКонсультация.Enabled = False
+        Me.ИтогоКонсультация.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
+        Me.ИтогоКонсультация.Location = New System.Drawing.Point(713, 553)
+        Me.ИтогоКонсультация.Name = "ИтогоКонсультация"
+        Me.ИтогоКонсультация.Size = New System.Drawing.Size(144, 29)
+        Me.ИтогоКонсультация.TabIndex = 15
+        '
+        'ИтогоПА
+        '
+        Me.ИтогоПА.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.ИтогоПА.Enabled = False
+        Me.ИтогоПА.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
+        Me.ИтогоПА.Location = New System.Drawing.Point(854, 553)
+        Me.ИтогоПА.Name = "ИтогоПА"
+        Me.ИтогоПА.Size = New System.Drawing.Size(100, 29)
+        Me.ИтогоПА.TabIndex = 16
+        '
+        'ИтогоИА
+        '
+        Me.ИтогоИА.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.ИтогоИА.Enabled = False
+        Me.ИтогоИА.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
+        Me.ИтогоИА.Location = New System.Drawing.Point(953, 553)
+        Me.ИтогоИА.Name = "ИтогоИА"
+        Me.ИтогоИА.Size = New System.Drawing.Size(100, 29)
+        Me.ИтогоИА.TabIndex = 17
+        '
+        'ИтогоИтого
+        '
+        Me.ИтогоИтого.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.ИтогоИтого.Enabled = False
+        Me.ИтогоИтого.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
+        Me.ИтогоИтого.Location = New System.Drawing.Point(1052, 553)
+        Me.ИтогоИтого.Name = "ИтогоИтого"
+        Me.ИтогоИтого.Size = New System.Drawing.Size(126, 29)
+        Me.ИтогоИтого.TabIndex = 18
+        '
+        'Сохранить
+        '
+        Me.Сохранить.BackColor = System.Drawing.Color.Transparent
+        Me.Сохранить.FlatAppearance.BorderColor = System.Drawing.Color.WhiteSmoke
+        Me.Сохранить.FlatAppearance.BorderSize = 0
+        Me.Сохранить.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Сохранить.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
+        Me.Сохранить.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.Сохранить.Location = New System.Drawing.Point(933, 2)
+        Me.Сохранить.Name = "Сохранить"
+        Me.Сохранить.RightToLeft = System.Windows.Forms.RightToLeft.No
+        Me.Сохранить.Size = New System.Drawing.Size(226, 31)
+        Me.Сохранить.TabIndex = 19
+        Me.Сохранить.Text = "Сохранить"
+        Me.Сохранить.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.Сохранить.UseVisualStyleBackColor = False
         '
         'ФИО
         '
@@ -117,7 +256,7 @@ Partial Class ВедомостьПеднагрузка
         Me.Консультация.Name = "Консультация"
         Me.Консультация.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
         Me.Консультация.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        Me.Консультация.Width = 120
+        Me.Консультация.Width = 140
         '
         'ПА
         '
@@ -140,128 +279,11 @@ Partial Class ВедомостьПеднагрузка
         Me.Итого.ReadOnly = True
         Me.Итого.Width = 120
         '
-        'Label1
-        '
-        Me.Label1.AutoSize = True
-        Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.Label1.Location = New System.Drawing.Point(12, 13)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(47, 15)
-        Me.Label1.TabIndex = 10
-        Me.Label1.Text = "Группа"
-        '
-        'НомерГруппы
-        '
-        Me.НомерГруппы.Location = New System.Drawing.Point(64, 13)
-        Me.НомерГруппы.Name = "НомерГруппы"
-        Me.НомерГруппы.ReadOnly = True
-        Me.НомерГруппы.Size = New System.Drawing.Size(294, 20)
-        Me.НомерГруппы.TabIndex = 9
-        '
-        'ПодписьИтого
-        '
-        Me.ПодписьИтого.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.ПодписьИтого.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.ПодписьИтого.Enabled = False
-        Me.ПодписьИтого.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.ПодписьИтого.Location = New System.Drawing.Point(12, 553)
-        Me.ПодписьИтого.Name = "ПодписьИтого"
-        Me.ПодписьИтого.Size = New System.Drawing.Size(343, 24)
-        Me.ПодписьИтого.TabIndex = 11
-        Me.ПодписьИтого.Text = "ИТОГО"
-        '
-        'ИтогоЛекции
-        '
-        Me.ИтогоЛекции.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.ИтогоЛекции.Enabled = False
-        Me.ИтогоЛекции.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.ИтогоЛекции.Location = New System.Drawing.Point(354, 553)
-        Me.ИтогоЛекции.Name = "ИтогоЛекции"
-        Me.ИтогоЛекции.Size = New System.Drawing.Size(120, 24)
-        Me.ИтогоЛекции.TabIndex = 12
-        '
-        'ИтогоПрактические
-        '
-        Me.ИтогоПрактические.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.ИтогоПрактические.Enabled = False
-        Me.ИтогоПрактические.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.ИтогоПрактические.Location = New System.Drawing.Point(473, 553)
-        Me.ИтогоПрактические.Name = "ИтогоПрактические"
-        Me.ИтогоПрактические.Size = New System.Drawing.Size(120, 24)
-        Me.ИтогоПрактические.TabIndex = 13
-        '
-        'ИтогоСтимулирующие
-        '
-        Me.ИтогоСтимулирующие.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.ИтогоСтимулирующие.Enabled = False
-        Me.ИтогоСтимулирующие.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.ИтогоСтимулирующие.Location = New System.Drawing.Point(592, 553)
-        Me.ИтогоСтимулирующие.Name = "ИтогоСтимулирующие"
-        Me.ИтогоСтимулирующие.Size = New System.Drawing.Size(122, 24)
-        Me.ИтогоСтимулирующие.TabIndex = 14
-        '
-        'ИтогоКонсультация
-        '
-        Me.ИтогоКонсультация.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.ИтогоКонсультация.Enabled = False
-        Me.ИтогоКонсультация.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.ИтогоКонсультация.Location = New System.Drawing.Point(713, 553)
-        Me.ИтогоКонсультация.Name = "ИтогоКонсультация"
-        Me.ИтогоКонсультация.Size = New System.Drawing.Size(122, 24)
-        Me.ИтогоКонсультация.TabIndex = 15
-        '
-        'ИтогоПА
-        '
-        Me.ИтогоПА.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.ИтогоПА.Enabled = False
-        Me.ИтогоПА.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.ИтогоПА.Location = New System.Drawing.Point(834, 553)
-        Me.ИтогоПА.Name = "ИтогоПА"
-        Me.ИтогоПА.Size = New System.Drawing.Size(100, 24)
-        Me.ИтогоПА.TabIndex = 16
-        '
-        'ИтогоИА
-        '
-        Me.ИтогоИА.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.ИтогоИА.Enabled = False
-        Me.ИтогоИА.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.ИтогоИА.Location = New System.Drawing.Point(933, 553)
-        Me.ИтогоИА.Name = "ИтогоИА"
-        Me.ИтогоИА.Size = New System.Drawing.Size(100, 24)
-        Me.ИтогоИА.TabIndex = 17
-        '
-        'ИтогоИтого
-        '
-        Me.ИтогоИтого.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.ИтогоИтого.Enabled = False
-        Me.ИтогоИтого.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.ИтогоИтого.Location = New System.Drawing.Point(1032, 553)
-        Me.ИтогоИтого.Name = "ИтогоИтого"
-        Me.ИтогоИтого.Size = New System.Drawing.Size(126, 24)
-        Me.ИтогоИтого.TabIndex = 18
-        '
-        'Сохранить
-        '
-        Me.Сохранить.BackColor = System.Drawing.Color.Transparent
-        Me.Сохранить.FlatAppearance.BorderColor = System.Drawing.Color.WhiteSmoke
-        Me.Сохранить.FlatAppearance.BorderSize = 0
-        Me.Сохранить.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Сохранить.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.Сохранить.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Сохранить.Location = New System.Drawing.Point(933, 2)
-        Me.Сохранить.Name = "Сохранить"
-        Me.Сохранить.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.Сохранить.Size = New System.Drawing.Size(226, 31)
-        Me.Сохранить.TabIndex = 19
-        Me.Сохранить.Text = "Сохранить"
-        Me.Сохранить.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.Сохранить.UseVisualStyleBackColor = False
-        '
         'ВедомостьПеднагрузка
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1176, 589)
+        Me.ClientSize = New System.Drawing.Size(1255, 589)
         Me.Controls.Add(Me.Сохранить)
         Me.Controls.Add(Me.ИтогоИтого)
         Me.Controls.Add(Me.ИтогоИА)
@@ -290,14 +312,6 @@ Partial Class ВедомостьПеднагрузка
     Friend WithEvents ТаблицаВедомость As DataGridView
     Friend WithEvents Label1 As Label
     Friend WithEvents НомерГруппы As TextBox
-    Friend WithEvents ФИО As DataGridViewComboBoxColumn
-    Friend WithEvents Лекции As DataGridViewTextBoxColumn
-    Friend WithEvents Практические As DataGridViewTextBoxColumn
-    Friend WithEvents Стимулирующие As DataGridViewTextBoxColumn
-    Friend WithEvents Консультация As DataGridViewTextBoxColumn
-    Friend WithEvents ПА As DataGridViewTextBoxColumn
-    Friend WithEvents ИА As DataGridViewTextBoxColumn
-    Friend WithEvents Итого As DataGridViewTextBoxColumn
     Friend WithEvents ПодписьИтого As TextBox
     Friend WithEvents ИтогоЛекции As TextBox
     Friend WithEvents ИтогоПрактические As TextBox
@@ -307,4 +321,12 @@ Partial Class ВедомостьПеднагрузка
     Friend WithEvents ИтогоИА As TextBox
     Friend WithEvents ИтогоИтого As TextBox
     Friend WithEvents Сохранить As Button
+    Friend WithEvents ФИО As DataGridViewComboBoxColumn
+    Friend WithEvents Лекции As DataGridViewTextBoxColumn
+    Friend WithEvents Практические As DataGridViewTextBoxColumn
+    Friend WithEvents Стимулирующие As DataGridViewTextBoxColumn
+    Friend WithEvents Консультация As DataGridViewTextBoxColumn
+    Friend WithEvents ПА As DataGridViewTextBoxColumn
+    Friend WithEvents ИА As DataGridViewTextBoxColumn
+    Friend WithEvents Итого As DataGridViewTextBoxColumn
 End Class

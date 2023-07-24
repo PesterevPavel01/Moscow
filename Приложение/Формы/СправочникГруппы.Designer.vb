@@ -98,7 +98,7 @@ Partial Class СправочникГруппы
         '
         Me.Label1.AutoSize = True
         Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.Label1.Location = New System.Drawing.Point(46, 20)
+        Me.Label1.Location = New System.Drawing.Point(46, 18)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(39, 13)
         Me.Label1.TabIndex = 12
@@ -106,10 +106,10 @@ Partial Class СправочникГруппы
         '
         'СтрокаПоиска
         '
-        Me.СтрокаПоиска.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.СтрокаПоиска.Location = New System.Drawing.Point(44, 36)
+        Me.СтрокаПоиска.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
+        Me.СтрокаПоиска.Location = New System.Drawing.Point(44, 31)
         Me.СтрокаПоиска.Name = "СтрокаПоиска"
-        Me.СтрокаПоиска.Size = New System.Drawing.Size(690, 24)
+        Me.СтрокаПоиска.Size = New System.Drawing.Size(690, 29)
         Me.СтрокаПоиска.TabIndex = 2
         '
         'BtnFocus
@@ -152,7 +152,7 @@ Partial Class СправочникГруппы
         Me.Label3.BackColor = System.Drawing.SystemColors.ButtonFace
         Me.Label3.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
         Me.Label3.ForeColor = System.Drawing.SystemColors.MenuHighlight
-        Me.Label3.Location = New System.Drawing.Point(100, 20)
+        Me.Label3.Location = New System.Drawing.Point(100, 6)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(39, 13)
         Me.Label3.TabIndex = 15
@@ -181,28 +181,30 @@ Partial Class СправочникГруппы
         Me.PictureBox2.ErrorImage = Nothing
         Me.PictureBox2.Image = CType(resources.GetObject("PictureBox2.Image"), System.Drawing.Image)
         Me.PictureBox2.InitialImage = Nothing
-        Me.PictureBox2.Location = New System.Drawing.Point(740, 36)
+        Me.PictureBox2.Location = New System.Drawing.Point(740, 31)
         Me.PictureBox2.Name = "PictureBox2"
-        Me.PictureBox2.Size = New System.Drawing.Size(28, 23)
+        Me.PictureBox2.Size = New System.Drawing.Size(28, 28)
         Me.PictureBox2.TabIndex = 17
         Me.PictureBox2.TabStop = False
         '
         'СГУровеньКвалификации
         '
+        Me.СГУровеньКвалификации.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
         Me.СГУровеньКвалификации.FormattingEnabled = True
         Me.СГУровеньКвалификации.Items.AddRange(New Object() {"профессиональная переподготовка", "профессиональное обучение", "повышение квалификации"})
-        Me.СГУровеньКвалификации.Location = New System.Drawing.Point(774, 36)
+        Me.СГУровеньКвалификации.Location = New System.Drawing.Point(774, 31)
         Me.СГУровеньКвалификации.Name = "СГУровеньКвалификации"
-        Me.СГУровеньКвалификации.Size = New System.Drawing.Size(303, 21)
+        Me.СГУровеньКвалификации.Size = New System.Drawing.Size(378, 29)
         Me.СГУровеньКвалификации.TabIndex = 18
         '
         'yearSpravochnikGr
         '
+        Me.yearSpravochnikGr.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
         Me.yearSpravochnikGr.FormattingEnabled = True
         Me.yearSpravochnikGr.Items.AddRange(New Object() {"2021", "2022", "2023", "2024"})
-        Me.yearSpravochnikGr.Location = New System.Drawing.Point(1083, 36)
+        Me.yearSpravochnikGr.Location = New System.Drawing.Point(1158, 31)
         Me.yearSpravochnikGr.Name = "yearSpravochnikGr"
-        Me.yearSpravochnikGr.Size = New System.Drawing.Size(113, 21)
+        Me.yearSpravochnikGr.Size = New System.Drawing.Size(113, 29)
         Me.yearSpravochnikGr.TabIndex = 19
         Me.yearSpravochnikGr.Text = "2023"
         '
