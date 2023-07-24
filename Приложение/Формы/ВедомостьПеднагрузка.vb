@@ -88,29 +88,29 @@
 
     Private Sub Сохранить_Click(sender As Object, e As EventArgs) Handles Сохранить.Click
 
-        Dim Критерий, МассивИменИТипов
-        ReDim Критерий(1)
-        ReDim МассивИменИТипов(1, 6)
-        Критерий(0) = "Kod"
-        Критерий(1) = kodGroup
+        Dim arg, arrayNameAndType
+        ReDim arg(1)
+        ReDim arrayNameAndType(1, 6)
+        arg(0) = "Kod"
+        arg(1) = kodGroup
 
-        МассивИменИТипов(0, 0) = "worker"
-        МассивИменИТипов(1, 0) = "String"
+        arrayNameAndType(0, 0) = "worker"
+        arrayNameAndType(1, 0) = "String"
 
-        МассивИменИТипов(0, 1) = "lectures"
-        МассивИменИТипов(1, 1) = "Double"
-        МассивИменИТипов(0, 2) = "practical"
-        МассивИменИТипов(1, 2) = "Double"
-        МассивИменИТипов(0, 3) = "stimulating"
-        МассивИменИТипов(1, 3) = "Double"
-        МассивИменИТипов(0, 4) = "consultation"
-        МассивИменИТипов(1, 4) = "Double"
-        МассивИменИТипов(0, 5) = "PA"
-        МассивИменИТипов(1, 5) = "Double"
-        МассивИменИТипов(0, 6) = "IA"
-        МассивИменИТипов(1, 6) = "Double"
+        arrayNameAndType(0, 1) = "lectures"
+        arrayNameAndType(1, 1) = "Double"
+        arrayNameAndType(0, 2) = "practical"
+        arrayNameAndType(1, 2) = "Double"
+        arrayNameAndType(0, 3) = "stimulating"
+        arrayNameAndType(1, 3) = "Double"
+        arrayNameAndType(0, 4) = "consultation"
+        arrayNameAndType(1, 4) = "Double"
+        arrayNameAndType(0, 5) = "PA"
+        arrayNameAndType(1, 5) = "Double"
+        arrayNameAndType(0, 6) = "IA"
+        arrayNameAndType(1, 6) = "Double"
 
-        datagridInsertRowIntoDB(ТаблицаВедомость, "pednagruzka", Критерий, МассивИменИТипов, 0, 6)
+        datagridInsertRowIntoDB(ТаблицаВедомость, "pednagruzka", arg, arrayNameAndType, 0, 6)
 
     End Sub
 

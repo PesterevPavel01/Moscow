@@ -160,7 +160,7 @@ Module OtchetExcell
             otchetList = ААОсновная.mySqlConnect.ЗагрузитьИзБДMySQLвМассив(queryString, 1)
 
             If Not otchetList(0, 0).ToString = "нет записей" Then
-                createSPK(excellSheet, перевернутьмассив(otchetList), "СводПоКурсам")
+                createSPK(excellSheet, rotateArray(otchetList), "СводПоКурсам")
             Else
                 предупреждение.текст.Text = "Нет информации отвечающей условиям отбора для отчета Свод по курсам"
                 предупреждение.ShowDialog()
@@ -174,7 +174,7 @@ Module OtchetExcell
             otchetList = ААОсновная.mySqlConnect.ЗагрузитьИзБДMySQLвМассив(queryString, 1)
 
             If Not otchetList.ToString = "нет записей" Then
-                createSPK(excellSheet, перевернутьмассив(otchetList), "СводПоСпециальностям")
+                createSPK(excellSheet, rotateArray(otchetList), "СводПоСпециальностям")
             Else
                 предупреждение.текст.Text = "Нет информации отвечающей условиям отбора для отчета Свод по специальностям"
                 предупреждение.ShowDialog()
@@ -219,13 +219,25 @@ Module OtchetExcell
         End If
 
         If ААОсновная.ОтчетПеднагрузка.Checked Then
-            ПеднагрузкаОтчет.Педнагрузка("Педнагрузка", excellApp, excellWorkBook, DateStart, DateEnd)
+
+            ПеднагрузкаОтчет.pednagruzka("Педнагрузка", excellApp, excellWorkBook, DateStart, DateEnd)
+
+        End If
+
+        If ААОсновная.chPednagrExt.Checked Then
+
+            ПеднагрузкаОтчет.pednagrExtended(excellApp, excellWorkBook, DateStart, DateEnd)
+
         End If
 
         Try
+
             excellWorkBook.Save
+
         Catch ex As Exception
+
             Exit Sub
+
         End Try
 
         excellApp.DisplayAlerts = True
@@ -552,7 +564,7 @@ Module OtchetExcell
 
         End With
 
-        array = перевернутьмассив(array)
+        array = rotateArray(array)
         WSOR.Range("A2").Resize(UBound(array, 1) + 1, 2) = array
 
         With WSOR.Range("A2").Resize(UBound(array, 1) + 1, 2)

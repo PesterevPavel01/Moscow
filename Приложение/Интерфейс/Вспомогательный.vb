@@ -1,6 +1,7 @@
 ﻿Imports System.IO
 Imports System.Reflection.Emit
 Imports System.Threading
+Imports System.Windows.Forms.VisualStyles.VisualStyleElement.ProgressBar
 
 Module Вспомогательный
 
@@ -621,11 +622,48 @@ Module Вспомогательный
 
     End Sub
 
+    Function list2ToArray2(list As List(Of List(Of String))) As String(,)
+
+        Dim array As String(,)
+        Dim countRow As Integer = 0
+        Dim countCol As Integer = 0
+
+        If (IsNothing(list)) Then
+            Return array
+        End If
+
+        If list.Count = 0 Then
+            Return array
+        End If
+
+        If list(0).Count = 0 Then
+            Return array
+        End If
+
+        ReDim array(list.Count - 1, list(0).Count - 1)
+
+        For Each row As List(Of String) In list
+
+            countCol = 0
+            For Each value As String In row
+
+                array(countRow, countCol) = value
+                countCol += 1
+
+            Next
+
+            countRow += 1
+
+
+        Next
+
+        Return array
+    End Function
+
     Function ЗаписьМассиваВКоллекцию(Массив As Object) As Collection
+
         Dim Список = New Collection
         Dim Номер As Integer
-
-
 
         Try
             For i = 0 To UBound(Массив, 1)
@@ -944,18 +982,23 @@ Module Вспомогательный
 
     End Sub
 
-    Function перевернутьмассив(массив As Object) As Object
-        Dim строка, столбец As Long
-        Dim перевернутыйМассив
-        строка = UBound(массив, 1)
-        столбец = UBound(массив, 2)
-        ReDim перевернутыйМассив(UBound(массив, 2), UBound(массив, 1))
-        For строка = 0 To UBound(массив, 1)
-            For столбец = 0 To UBound(массив, 2)
-                перевернутыйМассив(столбец, строка) = массив(строка, столбец)
+    Function rotateArray(array As Object) As Object
+
+        Dim row, column As Long
+        Dim resultArr
+        row = UBound(array, 1)
+        column = UBound(array, 2)
+
+        ReDim resultArr(UBound(array, 2), UBound(array, 1))
+
+        For row = 0 To UBound(array, 1)
+            For column = 0 To UBound(array, 2)
+                resultArr(column, row) = array(row, column)
             Next
         Next
-        перевернутьмассив = перевернутыйМассив
+
+        rotateArray = resultArr
+
     End Function
 
     Function ЗаменитьДатуНаГод(массив As Object, НомерСтолбца As Integer) As Object
@@ -980,27 +1023,135 @@ Module Вспомогательный
         ЗаменитьДатуНаГод = ИзмененныйМассив
     End Function
 
-    Function НастройкиРедактированияСтолбца(Лист As Object, Таблица As Object) As Object
-        Dim массивНастроек
+    Function styleColumn(workSheet As Object, tables As Object) As Object
 
-        ReDim массивНастроек(Таблица.ListColumns.Count, 4)
-        массивНастроек(0, 0) = "РазмерШрифта/.Font.Size"
-        массивНастроек(0, 1) = "ИмяШрифта/.Font.Name"
-        массивНастроек(0, 2) = "ВыравниваниеГоризонт/.HorizontalAlignment"
-        массивНастроек(0, 3) = "ВыравниваниеВертикаль/.VerticalAlignment"
-        массивНастроек(0, 4) = ".Orientation"
+        Dim listSettings
 
+        ReDim listSettings(tables.ListColumns.Count, 4)
 
-        For столбец = 1 To Таблица.ListColumns.Count
-            массивНастроек(столбец, 0) = Лист.Range("Таблица[Столбец" & столбец & "]").Font.Size
-            массивНастроек(столбец, 1) = Лист.Range("Таблица[Столбец" & столбец & "]").Font.Name
-            массивНастроек(столбец, 2) = Лист.Range("Таблица[Столбец" & столбец & "]").HorizontalAlignment
-            массивНастроек(столбец, 3) = Лист.Range("Таблица[Столбец" & столбец & "]").VerticalAlignment
-            массивНастроек(столбец, 4) = Лист.Range("Таблица[Столбец" & столбец & "]").Orientation
+        listSettings(0, 0) = "РазмерШрифта/.Font.Size"
+        listSettings(0, 1) = "ИмяШрифта/.Font.Name"
+        listSettings(0, 2) = "ВыравниваниеГоризонт/.HorizontalAlignment"
+        listSettings(0, 3) = "ВыравниваниеВертикаль/.VerticalAlignment"
+        listSettings(0, 4) = ".Orientation"
+
+        For column = 1 To tables.ListColumns.Count
+
+            Dim nameColumn As String = tables.name + "[" + tables.ListColumns(column).name + "]"
+
+            With workSheet.Range(nameColumn)
+
+                listSettings(column, 0) = .Font.Size
+                listSettings(column, 1) = .Font.Name
+                listSettings(column, 2) = .HorizontalAlignment
+                listSettings(column, 3) = .VerticalAlignment
+                listSettings(column, 4) = .Orientation
+
+            End With
+
         Next
-        НастройкиРедактированияСтолбца = массивНастроек
+
+        styleColumn = listSettings
 
     End Function
+
+    Function styleColumnRange(workSheet As Object, tables As Object) As Object
+
+        Dim listSettings
+
+        Dim adressRange As String
+        Dim numberFerstRow, numberFerstCol, numberLastRow, numberLastCol As Int32
+        Dim adress As String()
+        Dim colRange
+
+        adressRange = tables.Address
+        adress = Split(adressRange, ":")
+        numberFerstRow = workSheet.Range(adress(0)).Row
+        numberFerstCol = workSheet.Range(adress(0)).Column
+
+        If adress.Count > 1 Then
+
+            numberLastRow = workSheet.Range(adress(1)).Row
+            numberLastCol = workSheet.Range(adress(1)).Column
+
+        Else
+
+            numberLastRow = numberFerstRow
+            numberLastCol = numberFerstCol
+
+        End If
+
+        ReDim listSettings(numberLastCol - numberFerstCol + 1, 4)
+
+        listSettings(0, 0) = "РазмерШрифта/.Font.Size"
+        listSettings(0, 1) = "ИмяШрифта/.Font.Name"
+        listSettings(0, 2) = "ВыравниваниеГоризонт/.HorizontalAlignment"
+        listSettings(0, 3) = "ВыравниваниеВертикаль/.VerticalAlignment"
+        listSettings(0, 4) = ".Orientation"
+
+        For count = 1 To numberLastCol - numberFerstCol + 1
+
+            colRange = workSheet.Cells(numberFerstRow, count)
+            colRange = colRange.Resize(1, numberLastRow - numberFerstRow + 1)
+
+            With colRange
+
+                listSettings(count, 0) = .Font.Size
+                listSettings(count, 1) = .Font.Name
+                listSettings(count, 2) = .HorizontalAlignment
+                listSettings(count, 3) = .VerticalAlignment
+                listSettings(count, 4) = .Orientation
+
+            End With
+
+        Next
+
+        Return listSettings
+
+    End Function
+
+    Sub excell__setStyleRenge(workSheet As Object, rangeObj As Object, style As Object(,))
+
+        Dim adressRange As String
+        Dim numberFerstRow, numberFerstCol, numberLastRow, numberLastCol As Int32
+        Dim adress As String()
+        Dim colRange
+
+        adressRange = rangeObj.Address
+        adress = Split(adressRange, ":")
+        numberFerstRow = workSheet.Range(adress(0)).Row
+        numberFerstCol = workSheet.Range(adress(0)).Column
+
+        If adress.Count > 1 Then
+
+            numberLastRow = workSheet.Range(adress(1)).Row
+            numberLastCol = workSheet.Range(adress(1)).Column
+
+        Else
+
+            numberLastRow = numberFerstRow
+            numberLastCol = numberFerstCol
+
+        End If
+
+        For count As Integer = numberFerstCol To numberLastCol
+
+            colRange = workSheet.Cells(numberFerstRow, count)
+            colRange = colRange.Resize(1, numberLastRow - numberFerstRow + 1)
+
+            With colRange
+
+                .Font.Size = style(count - numberFerstCol + 1, 0)
+                .Font.Name = style(count - numberFerstCol + 1, 1)
+                .HorizontalAlignment = style(count - numberFerstCol + 1, 2)
+                .VerticalAlignment = style(count - numberFerstCol + 1, 3)
+                .Orientation = style(count - numberFerstCol + 1, 4)
+
+            End With
+
+        Next
+
+    End Sub
 
     Sub НастроитьРедактированияСтолбца(Лист As Object, Таблица As Object, МассивНастроек As Object)
 
@@ -1153,5 +1304,7 @@ Module Вспомогательный
         Next
 
     End Function
+
+
 
 End Module

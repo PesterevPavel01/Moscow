@@ -423,7 +423,7 @@
             Exit Sub
         End If
 
-        teachers = перевернутьмассив(teachers)
+        teachers = rotateArray(teachers)
 
         ReDim result(1, UBound(progs, 2))
 

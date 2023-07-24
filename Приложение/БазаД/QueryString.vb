@@ -621,6 +621,53 @@ Module QueryString
         Return sqlString
 
     End Function
+    Public Function pednagrExtended__loadListWorkerData(DateStart As String, DateEnd As String, kodWorker As String) As String
+
+        sqlString = "SELECT
+                      groupTbl.Номер,
+                      SUM(IFNULL(lectures,0)) AS lectures,
+                      SUM(IFNULL(practical,0)) AS practical,
+                      SUM(IFNULL(stimulating,0)) AS stimulating,
+                      SUM(IFNULL(consultation,0)) AS consultation,
+                      SUM(IFNULL(PA,0)) AS PA,
+                      SUM(IFNULL(IA,0)) AS IA,
+                      SUM(IFNULL(IA,0))+SUM(IFNULL(lectures,0)) +SUM(IFNULL(practical,0))+SUM(IFNULL(stimulating,0))+SUM(IFNULL(consultation,0))+SUM(IFNULL(PA,0))
+                    FROM pednagruzka
+                      INNER JOIN (SELECT
+                          `group`.Код,
+                          Номер
+                        FROM `group`
+                        WHERE `group`.ДатаНЗ BETWEEN '" + DateStart + "' AND '" + DateEnd + "') groupTbl
+                        ON pednagruzka.kod = groupTbl.Код
+                      INNER JOIN sotrudnik
+                        ON pednagruzka.worker = sotrudnik.kod
+                      WHERE sotrudnik.kod=" + kodWorker + "
+                      GROUP BY groupTbl.Код
+                      ORDER BY groupTbl.Номер"
+
+        Return sqlString
+
+    End Function
+
+    Public Function pednagrExtended__loadListWorker(DateStart As String, DateEnd As String) As String
+
+        sqlString = "SELECT
+                      sotrudnik.kod,
+                      name
+                    FROM pednagruzka
+                      INNER JOIN (SELECT
+                          `group`.Код,
+                          Номер
+                        FROM `group`
+                        WHERE `group`.ДатаНЗ BETWEEN '" + DateStart + "' AND '" + DateEnd + "') groupTbl
+                        ON pednagruzka.kod = groupTbl.Код
+                      INNER JOIN sotrudnik
+                        ON pednagruzka.worker = sotrudnik.kod
+                      GROUP BY worker"
+
+        Return sqlString
+
+    End Function
 
     Public Function pednagruzkaloadOtchet(DateStart As String, DateEnd As String) As String
 
@@ -676,16 +723,16 @@ Module QueryString
 
     End Function
 
-    Public Sub datagridInsertRowIntoDB(ДатаГрид As DataGridView, nameTbl As String, massValues As Object, massTypes As Object, numberFirstColumn As Integer, numberLastColumn As Integer)
+    Public Sub datagridInsertRowIntoDB(dataGridTbl As DataGridView, nameTbl As String, massValues As Object, massTypes As Object, numberFirstColumn As Integer, numberLastColumn As Integer)
 
         Dim fio, tranzitMass
         Dim sqlStringSecondPart As String
         Dim countRows, countQueryStr As Integer
 
-        countRows = ДатаГрид.Rows.Count
+        countRows = dataGridTbl.Rows.Count
         countRows = UBound(massTypes, 2)
 
-        If numberLastColumn > ДатаГрид.Columns.Count Then
+        If numberLastColumn > dataGridTbl.Columns.Count Then
             предупреждение.текст.Text = "Неверно указан номер последнего столбца таблицы"
             предупреждение.ShowDialog()
             Exit Sub
@@ -698,18 +745,18 @@ Module QueryString
         End If
 
         ЗаписьВБазу.УдалитьЗаписиСЧислом(nameTbl, massValues(0), massValues(1))
-        fio = ДатаГрид.Rows.Count - 1
-        ReDim tranzitMass(ДатаГрид.Rows.Count - 1)
+        fio = dataGridTbl.Rows.Count - 1
+        ReDim tranzitMass(dataGridTbl.Rows.Count - 1)
 
         countQueryStr = 0
 
-        For i = 0 To ДатаГрид.Rows.Count - 1
+        For i = 0 To dataGridTbl.Rows.Count - 1
 
             sqlString = ""
             sqlStringSecondPart = ""
             countQueryStr += 1
 
-            If IsNothing(ДатаГрид.Rows(i).Cells(0).Value) Then
+            If IsNothing(dataGridTbl.Rows(i).Cells(0).Value) Then
 
                 countQueryStr -= 1
 
@@ -727,19 +774,19 @@ Module QueryString
 
                     If massTypes(0, счетчикСтолбцов) = "worker" Then
 
-                        sqlStringSecondPart += "(SELECT kod FROM sotrudnik WHERE sotrudnik.name=" + Chr(39) & ДатаГрид.Rows(i).Cells(numberFirstColumn + счетчикСтолбцов).Value & Chr(39) & " LIMIT 1 ), "
+                        sqlStringSecondPart += "(SELECT kod FROM sotrudnik WHERE sotrudnik.name=" + Chr(39) & dataGridTbl.Rows(i).Cells(numberFirstColumn + счетчикСтолбцов).Value & Chr(39) & " LIMIT 1 ), "
 
                     Else
 
-                        sqlStringSecondPart += Chr(39) & ДатаГрид.Rows(i).Cells(numberFirstColumn + счетчикСтолбцов).Value & Chr(39) & " , "
+                        sqlStringSecondPart += Chr(39) & dataGridTbl.Rows(i).Cells(numberFirstColumn + счетчикСтолбцов).Value & Chr(39) & " , "
 
                     End If
 
                 Else
-                    If IsNothing(ДатаГрид.Rows(i).Cells(numberFirstColumn + счетчикСтолбцов).Value) Or Trim(ДатаГрид.Rows(i).Cells(numberFirstColumn + счетчикСтолбцов).Value) = "" Then
+                    If IsNothing(dataGridTbl.Rows(i).Cells(numberFirstColumn + счетчикСтолбцов).Value) Or Trim(dataGridTbl.Rows(i).Cells(numberFirstColumn + счетчикСтолбцов).Value) = "" Then
                         sqlStringSecondPart = sqlStringSecondPart & " 0 , "
                     Else
-                        sqlStringSecondPart = sqlStringSecondPart & ДатаГрид.Rows(i).Cells(numberFirstColumn + счетчикСтолбцов).Value.Replace(",", ".") & " , "
+                        sqlStringSecondPart = sqlStringSecondPart & dataGridTbl.Rows(i).Cells(numberFirstColumn + счетчикСтолбцов).Value.Replace(",", ".") & " , "
                     End If
                 End If
             Next

@@ -1,47 +1,51 @@
 ﻿Module ПеднагрузкаОтчет
-    Sub Педнагрузка(Критерий As String, ПриложениеЭксель As Object, КнигаЭксель As Object, DateStart As String, DateEnd As String)
-        Dim Шаблон, ФорматированиеСтолбцов, ЛистЭксель
-        Dim Координаты
-        Dim Массив
-        Dim ПутьКШаблону, ПутьКНовомуФайлу, ПутьККаталогуСРесурсами, Название, ТитульнаяСтрока, Адресс As String
+    Sub pednagruzka(arg As String, excellApp As Object, excellWorkbook As Object, DateStart As String, DateEnd As String)
 
-        If Критерий = "Педнагрузка" Then
-            Название = "педнагрузка"
-            ТитульнаяСтрока = "Книга учёта выданных свидетельств о профессии рабочего, должности служащего"
+        Dim sample, ФорматированиеСтолбцов, excellSheet
+        Dim adress
+        Dim list
+        Dim samplePath, pathNewFile, resourcesPath, name, titleRow, adressTbl As String
+
+        If arg = "Педнагрузка" Then
+
+            name = "педнагрузка"
+            titleRow = "Книга учёта выданных свидетельств о профессии рабочего, должности служащего"
+
         End If
-        'ПриложениеЭксель.Visible = True
-        ПутьККаталогуСРесурсами = Вспомогательный.resourcesPath()
-        ПутьКШаблону = ПутьККаталогуСРесурсами & "Шаблоны\Педнагрузка.xlsx"
-        ПутьКНовомуФайлу = ПутьККаталогуСРесурсами & "Отчеты\"
 
-        Шаблон = ПриложениеЭксель.Workbooks.Open(ПутьКШаблону, ReadOnly:=True)
-        Шаблон.Worksheets(1).copy(before:=КнигаЭксель.Worksheets(1))
-        Шаблон.Close
-        Массив = ЗагрузитьСписок(Критерий, DateStart, DateEnd)
+        excellApp.Visible = True
+        resourcesPath = Вспомогательный.resourcesPath()
+        samplePath = resourcesPath & "Шаблоны\Педнагрузка.xlsx"
+        pathNewFile = resourcesPath & "Отчеты\"
 
-        If Массив(0, 0).ToString = "нет записей" Then
+        sample = excellApp.Workbooks.Open(samplePath, ReadOnly:=True)
+        sample.Worksheets(1).copy(before:=excellWorkbook.Worksheets(1))
+        sample.Close
+        list = loadListData(arg, DateStart, DateEnd)
+
+        If list(0, 0).ToString = "нет записей" Then
             Exit Sub
         End If
 
-        ЛистЭксель = КнигаЭксель.Worksheets(1)
-        ЛистЭксель.name = Критерий
-        ФорматированиеСтолбцов = Вспомогательный.НастройкиРедактированияСтолбца(ЛистЭксель, ЛистЭксель.ListObjects("Таблица"))
-        Адресс = ЛистЭксель.ListObjects("Таблица").Range.Address
-        Координаты = Split(Адресс, ":")
-        Массив = перевернутьмассив(Массив)
-        Массив = ДобавитьНумерациюВМассив(Массив)
+        excellSheet = excellWorkbook.Worksheets(1)
+        excellSheet.name = arg
+        ФорматированиеСтолбцов = Вспомогательный.styleColumn(excellSheet, excellSheet.ListObjects("Таблица"))
+        adressTbl = excellSheet.ListObjects("Таблица").Range.Address
+        adress = Split(adressTbl, ":")
+        list = rotateArray(list)
+        list = ДобавитьНумерациюВМассив(list)
 
-        ТитульнаяСтрока = Strings.Replace(ЛистЭксель.Range("A1").Value, "$ДатаНачала$", ААОсновная.ДатаНачалаОтчета.Value.ToShortDateString)
-        ТитульнаяСтрока = Strings.Replace(ТитульнаяСтрока, "$ДатаОкончания$", ААОсновная.ДатаКонцаОтчета.Value.ToShortDateString)
-        ЛистЭксель.Range("A1") = ТитульнаяСтрока
+        titleRow = Strings.Replace(excellSheet.Range("A1").Value, "$ДатаНачала$", ААОсновная.ДатаНачалаОтчета.Value.ToShortDateString)
+        titleRow = Strings.Replace(titleRow, "$ДатаОкончания$", ААОсновная.ДатаКонцаОтчета.Value.ToShortDateString)
+        excellSheet.Range("A1") = titleRow
 
 
-        ЛистЭксель.Range(Координаты(0)).Resize(UBound(Массив, 1) + 1, UBound(Массив, 2) + 1) = Массив
-        ЛистЭксель.Range(Координаты(0)).Resize(UBound(Массив, 1) + 1, UBound(Массив, 2) + 1).cut(ЛистЭксель.Range(Координаты(0)))
+        excellSheet.Range(adress(0)).Resize(UBound(list, 1) + 1, UBound(list, 2) + 1) = list
+        excellSheet.Range(adress(0)).Resize(UBound(list, 1) + 1, UBound(list, 2) + 1).cut(excellSheet.Range(adress(0)))
 
-        НастроитьРедактированияСтолбца(ЛистЭксель, ЛистЭксель.ListObjects("Таблица"), ФорматированиеСтолбцов)
+        НастроитьРедактированияСтолбца(excellSheet, excellSheet.ListObjects("Таблица"), ФорматированиеСтолбцов)
 
-        With ЛистЭксель.ListObjects("Таблица").Range
+        With excellSheet.ListObjects("Таблица").Range
             .WrapText = True
             .EntireColumn.AutoFit
             .Borders.LineStyle = True
@@ -49,26 +53,167 @@
 
     End Sub
 
-    Function ЗагрузитьСписок(Критерий As String, DateStart As String, DateEnd As String) As Object
-        Dim Список
-        Dim СтрокаЗапроса As String
+    Function loadListData(arg As String, DateStart As String, DateEnd As String, Optional kod As String = "-1") As Object
 
-        If Критерий = "Педнагрузка" Then
+        Dim resultList
+        Dim resultArr
+        Dim queryString As String = ""
 
-            СтрокаЗапроса = pednagruzkaloadOtchet(DateStart, DateEnd)
+        If arg = "Педнагрузка" Then
+
+            queryString = pednagruzkaloadOtchet(DateStart, DateEnd)
+            resultArr = ЗагрузитьИзБазы.ЗагрузитьИзБазы(queryString)
+
+        ElseIf arg = "listWorker" Then
+
+            queryString = pednagrExtended__loadListWorker(DateStart, DateEnd)
+            resultList = ААОсновная.mySqlConnect.ЗагрузитьИзMySQLвListAll(queryString, 1)
+
+        ElseIf arg = "listWorkerData" Then
+
+            queryString = pednagrExtended__loadListWorkerData(DateStart, DateEnd, kod)
+            resultList = ААОсновная.mySqlConnect.ЗагрузитьИзMySQLвListAll(queryString, 1)
 
         End If
 
-        Список = ЗагрузитьИзБазы.ЗагрузитьИзБазы(СтрокаЗапроса)
+        If IsNothing(resultArr) Then
 
-        If Список(0, 0).ToString = "нет записей" Then
+            If resultList.Count = 0 Then
+
+                предупреждение.текст.Text = "Нет данных для отображения"
+                ОткрытьФорму(предупреждение)
+
+                Return resultList
+
+            End If
+
+            Return resultList
+
+        ElseIf resultArr(0, 0).ToString = "нет записей" Then
 
             предупреждение.текст.Text = "Нет данных для отображения"
             ОткрытьФорму(предупреждение)
-            ЗагрузитьСписок = Список
-            Exit Function
 
         End If
-        ЗагрузитьСписок = Список
+
+
+        Return resultArr
+
     End Function
+
+    Sub pednagrExtended(excellApp As Object, excellWorkbook As Object, DateStart As String, DateEnd As String)
+
+        Dim sample, columnStyle, excellSheet
+        Dim listWorker, resultList As New List(Of List(Of String))
+        Dim adress
+        Dim rangeObj, rangeTblTilte
+        Dim workerDataList
+        Dim samplePath, pathNewFile, resourcesPath, titleRow, adressTbl As String
+        Dim numberRow, numberColumnTitle, numberColumnTbl, counterRows As Integer
+        Dim listTitelAdress As New List(Of String)
+
+        counterRows = 0
+
+        listWorker = loadListData("listWorker", DateStart, DateEnd)
+
+        If listWorker.Count = 0 Then
+
+            Exit Sub
+
+        End If
+
+        resourcesPath = Вспомогательный.resourcesPath()
+        samplePath = resourcesPath & "Шаблоны\Педнагрузка.xlsx"
+        pathNewFile = resourcesPath & "Отчеты\"
+
+        sample = excellApp.Workbooks.Open(samplePath, ReadOnly:=True)
+        sample.Worksheets(2).copy(before:=excellWorkbook.Worksheets(1))
+        sample.Close
+
+        excellSheet = excellWorkbook.Worksheets(1)
+        excellSheet.name = "педнагрузка_расш"
+        columnStyle = Вспомогательный.styleColumnRange(excellSheet, excellSheet.Range("firstRow"))
+
+        titleRow = Strings.Replace(excellSheet.Range("title").Value, "$ДатаНачала$", ААОсновная.ДатаНачалаОтчета.Value.ToShortDateString)
+        titleRow = Strings.Replace(titleRow, "$ДатаОкончания$", ААОсновная.ДатаКонцаОтчета.Value.ToShortDateString)
+        excellSheet.Range("title") = titleRow
+
+        numberRow = excellSheet.Range("title").Row
+        numberColumnTitle = excellSheet.Range("title").Column
+
+        adressTbl = excellSheet.Range("tblPednagrExtended").Address
+
+        adress = Split(adressTbl, ":")
+
+        numberColumnTbl = excellSheet.Range(adress(0)).Column
+
+        numberRow = excellSheet.Range(adress(0)).Row
+
+        rangeTblTilte = excellSheet.Cells(numberRow, numberColumnTbl).Resize(1, 8)
+
+        For Each worker As List(Of String) In listWorker
+
+            If counterRows = 0 Then
+
+                listTitelAdress.Add(0)
+
+            Else
+
+                resultList.Add(New List(Of String)({"", "", "", "", "", "", "", ""}))
+                resultList.Add(New List(Of String)({worker(1), "", "", "", "", "", "", ""}))
+                resultList.Add(New List(Of String)({"", "", "", "", "", "", "", ""}))
+                resultList.Add(New List(Of String)({"", "", "", "", "", "", "", ""}))
+
+                counterRows += 4
+                listTitelAdress.Add(counterRows)
+
+            End If
+
+            workerDataList = loadListData("listWorkerData", DateStart, DateEnd, Convert.ToString(worker(0)))
+            counterRows += workerDataList.count
+
+            resultList.AddRange(workerDataList)
+
+        Next
+
+        workerDataList = list2ToArray2(resultList)
+
+        rangeObj = excellSheet.Cells(numberRow + 1, numberColumnTbl)
+
+        rangeObj.Resize(resultList.Count, resultList(0).Count) = workerDataList
+        rangeObj = rangeObj.Resize(resultList.Count, resultList(0).Count)
+        excellSheet.Range(adress(0)).Resize(UBound(workerDataList, 1) + 1, UBound(workerDataList, 2) + 1).cut(excellSheet.Range(adress(0)))
+
+
+        excell__setStyleRenge(excellSheet, rangeObj, columnStyle)
+
+        With rangeObj
+
+            .WrapText = True
+            .EntireColumn.AutoFit
+
+        End With
+
+        For Each title As String In listTitelAdress
+
+            rangeTblTilte.Copy()
+            rangeObj = excellSheet.Cells(Convert.ToInt32(title) + numberRow, numberColumnTbl)
+            rangeObj.PasteSpecial(-4104)
+
+            adressTbl = rangeObj.Address
+            adress = Split(adressTbl, ":")
+            rangeObj = excellSheet.Range(adress(0), rangeObj.End(-4161))
+            rangeObj = rangeObj.End(-4161)
+
+
+            With excellSheet.Range(adress(0), rangeObj.End(-4121))
+                .Borders.LineStyle = True
+            End With
+
+
+        Next
+
+    End Sub
+
+
 End Module

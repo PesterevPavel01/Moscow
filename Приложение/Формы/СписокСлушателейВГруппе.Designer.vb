@@ -100,7 +100,7 @@ Partial Class СписокСлушателейВГруппе
         Me.Прочее.BackColor = System.Drawing.Color.Transparent
         Me.Прочее.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Прочее.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Прочее.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
+        Me.Прочее.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
         Me.Прочее.Location = New System.Drawing.Point(0, 0)
         Me.Прочее.Name = "Прочее"
         Me.Прочее.Size = New System.Drawing.Size(437, 45)
@@ -113,7 +113,7 @@ Partial Class СписокСлушателейВГруппе
         Me.ДобавитьВГруппу.BackColor = System.Drawing.Color.Transparent
         Me.ДобавитьВГруппу.Dock = System.Windows.Forms.DockStyle.Fill
         Me.ДобавитьВГруппу.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.ДобавитьВГруппу.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
+        Me.ДобавитьВГруппу.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
         Me.ДобавитьВГруппу.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.ДобавитьВГруппу.Location = New System.Drawing.Point(0, 0)
         Me.ДобавитьВГруппу.Name = "ДобавитьВГруппу"
@@ -129,7 +129,7 @@ Partial Class СписокСлушателейВГруппе
         Me.ДобавитьВгруппуНового.BackColor = System.Drawing.Color.Transparent
         Me.ДобавитьВгруппуНового.Dock = System.Windows.Forms.DockStyle.Fill
         Me.ДобавитьВгруппуНового.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.ДобавитьВгруппуНового.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
+        Me.ДобавитьВгруппуНового.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
         Me.ДобавитьВгруппуНового.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.ДобавитьВгруппуНового.Location = New System.Drawing.Point(0, 0)
         Me.ДобавитьВгруппуНового.Name = "ДобавитьВгруппуНового"

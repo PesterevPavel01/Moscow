@@ -100,7 +100,7 @@ Public Class ААОсновная
 
     End Sub
 
-    Private Sub ОткрытьСправочникГруппы_Click(sender As Object, e As EventArgs) Handles СправочникГруппыПК.Click
+    Private Sub ОткрытьСправочникГруппы_Click(sender As Object, e As EventArgs)
 
         cvalific = PK
         ActiveControl = Button2
@@ -108,7 +108,7 @@ Public Class ААОсновная
 
     End Sub
 
-    Private Sub СправочникГруппыПП_Click(sender As Object, e As EventArgs) Handles СправочникГруппыПП.Click
+    Private Sub СправочникГруппыПП_Click(sender As Object, e As EventArgs) Handles СправочникГруппыПП.Click, СправочникГруппыПК.Click
 
         cvalific = PP
         ActiveControl = Button2
@@ -159,7 +159,9 @@ Public Class ААОсновная
     Private Sub СправочникСлушатели_Click(sender As Object, e As EventArgs) Handles СправочникСлушатели.Click
 
         If ПоискСлушателейПоУм.Text = "" Then
+
             НастройкаПоискаСлушателей.Снилс.Checked = True
+
         End If
 
         ActiveControl = Button2
@@ -209,7 +211,9 @@ Public Class ААОсновная
         АСформироватьПриказ.ListViewСписокСлушателей.Location = New Point(9, 320)
 
         While АСформироватьПриказ.ListViewСписокСлушателей.Columns.Count > 1
+
             АСформироватьПриказ.ListViewСписокСлушателей.Columns.RemoveAt(1)
+
         End While
 
         АСформироватьПриказ.ListViewСписокСлушателей.Columns(0).Width = 805
@@ -260,7 +264,9 @@ Public Class ААОсновная
         местоНаФормеПослеДиректора(2, АСформироватьПриказ.Label4, АСформироватьПриказ.Label13, АСформироватьПриказ.Ответственный, АСформироватьПриказ.ОтветственныйДолжность, АСформироватьПриказ.GroupBox5)
 
         If arg = 1 Then
+
             Return
+
         End If
 
         местоНаФормеПослеДиректора(3, АСформироватьПриказ.Label5, АСформироватьПриказ.Label6, АСформироватьПриказ.ПроектВносит, АСформироватьПриказ.ПроектВноситДолжность, АСформироватьПриказ.GroupBox1)
@@ -424,6 +430,7 @@ Public Class ААОсновная
     End Sub
 
     Private Sub ПО_Практика_Click(sender As Object, e As EventArgs) Handles ПО_Практика.Click
+
         prikazCvalif = PO
         АСформироватьПриказ.Text = "ПО_Практика"
         АСформироватьПриказ.ВидПриказа = "ПО_Практика"
@@ -464,6 +471,7 @@ Public Class ААОсновная
     End Sub
 
     Private Sub ПК_Отчисление_Click(sender As Object, e As EventArgs) Handles ПК_Отчисление.Click
+
         prikazCvalif = PK
         АСформироватьПриказ.Text = "ПК_Отчисление"
         АСформироватьПриказ.ВидПриказа = "ПК_Отчисление"
@@ -670,6 +678,7 @@ Public Class ААОсновная
 
         ActiveControl = Button2
         АСформироватьПриказ.ShowDialog()
+
     End Sub
 
     Private Sub Карточка_слушателя_Click(sender As Object, e As EventArgs) Handles Карточка_слушателя.Click
@@ -708,6 +717,7 @@ Public Class ААОсновная
 
         ActiveControl = Button2
         АСформироватьПриказ.ShowDialog()
+
     End Sub
 
 
@@ -753,11 +763,11 @@ Public Class ААОсновная
 
         АСформироватьПриказ.ShowDialog()
 
-
     End Sub
 
 
     Sub ОтветственныйЗаАттестацию(Видимость As Boolean, Optional Подпись1текстБ As String = "Ответственный за аттестацию")
+
         '----------------Ответственный за аттестацию------------
         АСформироватьПриказ.load_form()
 
@@ -1220,6 +1230,7 @@ Public Class ААОсновная
     End Sub
 
     Sub ААперемещениеВверх(номерНажатойКлавиши As Integer, Optional номерКлавишиСФункционаломВверх As Integer = 38)
+
         If номерНажатойКлавиши = номерКлавишиСФункционаломВверх Then
 
             If Me.ActiveControl.TabIndex = 0 Then
@@ -1233,150 +1244,224 @@ Public Class ААОсновная
             Next
 
         End If
+
     End Sub
 
 
     Private Sub ОткрытьСправочникГруппы_KeyDown(sender As Object, e As KeyEventArgs) Handles СправочникГруппыПК.KeyDown
+
         If e.KeyValue = 13 Then
-            Call ОткрытьСправочникГруппы_Click(sender, e)
+
+            ОткрытьСправочникГруппы_Click(sender, e)
+
         End If
         If e.KeyCode = КлавишаПереключенияВкладок Then
+
             переключательВкладок(TabControlOther)
             e.Handled = True
+
         End If
 
         If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
+
             обратныйПереключательВкладок(TabControlOther)
             e.Handled = True
+
         End If
+
     End Sub
 
     Private Sub СправочникГруппыПП_KeyDown(sender As Object, e As KeyEventArgs) Handles СправочникГруппыПП.KeyDown
+
         If e.KeyValue = 13 Then
+
             Call СправочникГруппыПП_Click(sender, e)
+
         End If
+
         If e.KeyCode = КлавишаПереключенияВкладок Then
+
             переключательВкладок(TabControlOther)
             e.Handled = True
+
         End If
 
         If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
+
             обратныйПереключательВкладок(TabControlOther)
             e.Handled = True
+
         End If
+
     End Sub
 
     Private Sub СправочникГруппыПО_KeyDown(sender As Object, e As KeyEventArgs) Handles СправочникГруппыПО.KeyDown
+
         If e.KeyValue = 13 Then
+
             Call СправочникГруппыПО_Click(sender, e)
+
         End If
+
         If e.KeyCode = КлавишаПереключенияВкладок Then
+
             переключательВкладок(TabControlOther)
             e.Handled = True
+
         End If
 
         If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
+
             обратныйПереключательВкладок(TabControlOther)
             e.Handled = True
+
         End If
     End Sub
 
     Private Sub КнопкаСоздатьГруппу_KeyDown(sender As Object, e As KeyEventArgs) Handles КнопкаСоздатьГруппу.KeyDown
+
         If e.KeyCode = 13 Then
-            Call КнопкаСоздатьГруппу_Click(sender, e)
+
+            КнопкаСоздатьГруппу_Click(sender, e)
+
         End If
+
         If e.KeyCode = КлавишаПереключенияВкладок Then
+
             переключательВкладок(TabControlOther)
             e.Handled = True
+
         End If
 
         If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
+
             обратныйПереключательВкладок(TabControlOther)
             e.Handled = True
+
         End If
+
     End Sub
 
     Private Sub ДобавитьСлушателя_KeyDown(sender As Object, e As KeyEventArgs) Handles ДобавитьСлушателя.KeyDown
+
         If e.KeyCode = 13 Then
-            Call ДобавитьСлушателя_Click(sender, e)
+
+            ДобавитьСлушателя_Click(sender, e)
+
         End If
+
         If e.KeyCode = КлавишаПереключенияВкладок Then
+
             переключательВкладок(TabControlOther)
             e.Handled = True
+
         End If
 
         If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
+
             обратныйПереключательВкладок(TabControlOther)
             e.Handled = True
+
         End If
     End Sub
     Private Sub СправочникСлушатели_KeyDown(sender As Object, e As KeyEventArgs) Handles СправочникСлушатели.KeyDown
 
         If e.KeyCode = 13 Then
-            Call СправочникСлушатели_Click(sender, e)
+
+            СправочникСлушатели_Click(sender, e)
+
         End If
         If e.KeyCode = КлавишаПереключенияВкладок Then
+
             переключательВкладок(TabControlOther)
             e.Handled = True
+
         End If
 
         If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
+
             обратныйПереключательВкладок(TabControlOther)
             e.Handled = True
+
         End If
 
     End Sub
 
     Private Sub ОтчетРуководителя_KeyDown(sender As Object, e As KeyEventArgs) Handles ОтчетРуководителя.KeyDown
+
         ЧекатьНаИнтер(ОтчетРуководителя, e.KeyCode)
+
     End Sub
 
     Private Sub ChСводПоКурсам_KeyDown(sender As Object, e As KeyEventArgs) Handles ChСводПоКурсам.KeyDown
+
         If e.KeyCode = 13 Then
+
             If ChСводПоКурсам.Checked Then
+
                 ChСводПоКурсам.Checked = False
+
             Else
+
                 ChСводПоКурсам.Checked = True
+
             End If
+
         End If
     End Sub
 
 
     Private Sub СводПоСпец_KeyDown(sender As Object, e As KeyEventArgs) Handles СводПоСпец.KeyDown
+
         ЧекатьНаИнтер(СводПоСпец, e.KeyCode)
+
     End Sub
 
 
     Private Sub СводПоОрганиз_KeyDown(sender As Object, e As KeyEventArgs) Handles СводПоОрганиз.KeyDown
+
         ЧекатьНаИнтер(СводПоОрганиз, e.KeyCode)
+
     End Sub
 
     Private Sub БюджетВбюдж_KeyDown(sender As Object, e As KeyEventArgs) Handles БюджетВбюдж.KeyDown
+
         ЧекатьНаИнтер(БюджетВбюдж, e.KeyCode)
+
     End Sub
 
     Private Sub ОтчетПеднагрузка_KeyDown(sender As Object, e As KeyEventArgs) Handles ОтчетПеднагрузка.KeyDown
+
         ЧекатьНаИнтер(ОтчетПеднагрузка, e.KeyCode)
+
     End Sub
 
     Private Sub CheckBoxРМАНПО_KeyDown(sender As Object, e As KeyEventArgs)
+
         ЧекатьНаИнтер(ChРМАНПО, e.KeyCode)
+
     End Sub
 
     Private Sub СправочникГруппыПП_GotFocus(sender As Object, e As EventArgs) Handles СправочникГруппыПП.GotFocus
+
         увеличитьШрифт(СправочникГруппыПП)
+
     End Sub
 
     Private Sub СправочникГруппыПП_LostFocus(sender As Object, e As EventArgs) Handles СправочникГруппыПП.LostFocus
-        СправочникГруппыПП.Font = New Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular)
+
+        СправочникГруппыПП.Font = New Font("Microsoft YaHei", 12.0F, FontStyle.Regular)
+
     End Sub
 
     Private Sub СправочникГруппыПО_GotFocus(sender As Object, e As EventArgs) Handles СправочникГруппыПО.GotFocus
+
         увеличитьШрифт(СправочникГруппыПО)
+
     End Sub
 
     Private Sub СправочникГруппыПО_LostFocus(sender As Object, e As EventArgs) Handles СправочникГруппыПО.LostFocus
-        СправочникГруппыПО.Font = New Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular)
+        СправочникГруппыПО.Font = New Font("Microsoft YaHei", 12.0F, FontStyle.Regular)
     End Sub
 
     Private Sub ОткрытьСправочникГруппы_GotFocus(sender As Object, e As EventArgs) Handles СправочникГруппыПК.GotFocus
@@ -1384,7 +1469,7 @@ Public Class ААОсновная
     End Sub
 
     Private Sub ОткрытьСправочникГруппы_LostFocus(sender As Object, e As EventArgs) Handles СправочникГруппыПК.LostFocus
-        СправочникГруппыПК.Font = New Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular)
+        СправочникГруппыПК.Font = New Font("Microsoft YaHei", 12.0F, FontStyle.Regular)
     End Sub
 
     Private Sub КнопкаСоздатьГруппу_GotFocus(sender As Object, e As EventArgs) Handles КнопкаСоздатьГруппу.GotFocus
@@ -1393,7 +1478,7 @@ Public Class ААОсновная
 
     Private Sub КнопкаСоздатьГруппу_LostFocus(sender As Object, e As EventArgs) Handles КнопкаСоздатьГруппу.LostFocus
 
-        КнопкаСоздатьГруппу.Font = New Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular)
+        КнопкаСоздатьГруппу.Font = New Font("Microsoft YaHei", 12.0F, FontStyle.Regular)
 
     End Sub
 
@@ -1403,29 +1488,31 @@ Public Class ААОсновная
 
     Private Sub СправочникСлушатели_LostFocus(sender As Object, e As EventArgs) Handles СправочникСлушатели.LostFocus
 
-        СправочникСлушатели.Font = New Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular)
+        СправочникСлушатели.Font = New Font("Microsoft YaHei", 12.0F, FontStyle.Regular)
 
     End Sub
 
 
     Private Sub ДобавитьСлушателя_GotFocus(sender As Object, e As EventArgs) Handles ДобавитьСлушателя.GotFocus
+
         Call увеличитьШрифт(ДобавитьСлушателя)
+
     End Sub
 
     Private Sub ДобавитьСлушателя_LostFocus(sender As Object, e As EventArgs) Handles ДобавитьСлушателя.LostFocus
 
-        ДобавитьСлушателя.Font = New Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular)
+        ДобавитьСлушателя.Font = New Font("Microsoft YaHei", 12.0F, FontStyle.Regular)
 
     End Sub
 
     Sub НормальныйШрифт(контрол As Object)
 
-        контрол.Font = New Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular)
+        контрол.Font = New Font("Microsoft YaHei", 12.0F, FontStyle.Regular)
 
     End Sub
     Sub увеличитьШрифт(контрол As Object)
 
-        контрол.Font = New Font("Microsoft Sans Serif", 14.0F, FontStyle.Regular)
+        контрол.Font = New Font("Microsoft YaHei", 14.0F, FontStyle.Regular)
 
     End Sub
     Private Sub ПриказОЗачислении_Доп_GotFocus(sender As Object, e As EventArgs) Handles ПриказОЗачислении_Доп.GotFocus
@@ -3382,11 +3469,15 @@ Public Class ААОсновная
 
     Private Sub Button1_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs) Handles createOtchet.PreviewKeyDown
         If e.KeyCode = КлавишаПереключенияВкладок Then
+
             e.IsInputKey = True
+
         End If
 
         If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
+
             e.IsInputKey = True
+
         End If
     End Sub
 
