@@ -797,7 +797,21 @@ Module QueryString
 
     End Sub
 
-    Public Function pednagruzkaload(kodGroup As String) As String
+    Public Function pednagruzka__loadProgramm(kodGroup As String) As String
+
+        sqlString = "SELECT
+                      'Программа' As Показатель,
+                      programm.name As Значение
+                    FROM `group`
+                      INNER JOIN programm
+                        ON `group`.kod_programm = programm.kod
+                    WHERE Код= " & kodGroup
+
+        Return sqlString
+
+    End Function
+
+    Public Function pednagruzka__load(kodGroup As String) As String
 
         sqlString = " SELECT
                       sotrudnik.name,

@@ -24,34 +24,37 @@ Partial Class ААОсновная
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(ААОсновная))
-        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle9 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle10 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle11 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle12 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
         Me.ImageList1 = New System.Windows.Forms.ImageList(Me.components)
         Me.pageProgs = New System.Windows.Forms.TabPage()
         Me.password = New System.Windows.Forms.MaskedTextBox()
-        Me.SplitContainer4 = New System.Windows.Forms.SplitContainer()
+        Me.programms__splitMainConteiner = New System.Windows.Forms.SplitContainer()
         Me.programms_tbl_parent = New System.Windows.Forms.Panel()
-        Me.ToolStrip2 = New System.Windows.Forms.ToolStrip()
+        Me.programs__panelProgs = New System.Windows.Forms.Panel()
+        Me.toolStripProgram = New System.Windows.Forms.ToolStrip()
         Me.ToolStripLabel1 = New System.Windows.Forms.ToolStripLabel()
         Me.comboBoxProgramms = New System.Windows.Forms.ToolStripComboBox()
         Me.ToolStripAddProg = New System.Windows.Forms.ToolStripButton()
         Me.progsIndicator = New System.Windows.Forms.ToolStripButton()
         Me.SplitContainer5 = New System.Windows.Forms.SplitContainer()
-        Me.SplitModulsInProg = New System.Windows.Forms.SplitContainer()
-        Me.dataGridModuls = New System.Windows.Forms.DataGridView()
+        Me.programms__SplitContainerModulsType = New System.Windows.Forms.SplitContainer()
+        Me.programms__SplitModulsInProg = New System.Windows.Forms.SplitContainer()
+        Me.dataGridModulsInProgram = New System.Windows.Forms.DataGridView()
         Me.red_moduls = New System.Windows.Forms.TextBox()
-        Me.ToolStrip3 = New System.Windows.Forms.ToolStrip()
+        Me.programs__panelType = New System.Windows.Forms.Panel()
+        Me.toolStripModulsInProg = New System.Windows.Forms.ToolStrip()
         Me.ToolStripTop = New System.Windows.Forms.ToolStripButton()
         Me.ToolStripBottom = New System.Windows.Forms.ToolStripButton()
         Me.addMidulInGroupp = New System.Windows.Forms.ToolStripButton()
         Me.modulInProgsIndicator = New System.Windows.Forms.ToolStripButton()
         Me.tbl_moduls_sum_hours = New System.Windows.Forms.ToolStripTextBox()
-        Me.SplitContainerModuls = New System.Windows.Forms.SplitContainer()
+        Me.programms__SplitContainerModuls = New System.Windows.Forms.SplitContainer()
         Me.DataGridAllModuls = New System.Windows.Forms.DataGridView()
         Me.TableLayoutAddNewModul = New System.Windows.Forms.TableLayoutPanel()
         Me.newModAddHour = New System.Windows.Forms.TextBox()
@@ -179,25 +182,30 @@ Partial Class ААОсновная
         Me.ToolStripButton1 = New System.Windows.Forms.ToolStripButton()
         Me.ImageList40 = New System.Windows.Forms.ImageList(Me.components)
         Me.pageProgs.SuspendLayout()
-        CType(Me.SplitContainer4, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.SplitContainer4.Panel1.SuspendLayout()
-        Me.SplitContainer4.Panel2.SuspendLayout()
-        Me.SplitContainer4.SuspendLayout()
-        Me.ToolStrip2.SuspendLayout()
+        CType(Me.programms__splitMainConteiner, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.programms__splitMainConteiner.Panel1.SuspendLayout()
+        Me.programms__splitMainConteiner.Panel2.SuspendLayout()
+        Me.programms__splitMainConteiner.SuspendLayout()
+        Me.programms_tbl_parent.SuspendLayout()
+        Me.toolStripProgram.SuspendLayout()
         CType(Me.SplitContainer5, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SplitContainer5.Panel1.SuspendLayout()
         Me.SplitContainer5.Panel2.SuspendLayout()
         Me.SplitContainer5.SuspendLayout()
-        CType(Me.SplitModulsInProg, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.SplitModulsInProg.Panel1.SuspendLayout()
-        Me.SplitModulsInProg.Panel2.SuspendLayout()
-        Me.SplitModulsInProg.SuspendLayout()
-        CType(Me.dataGridModuls, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.ToolStrip3.SuspendLayout()
-        CType(Me.SplitContainerModuls, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.SplitContainerModuls.Panel1.SuspendLayout()
-        Me.SplitContainerModuls.Panel2.SuspendLayout()
-        Me.SplitContainerModuls.SuspendLayout()
+        CType(Me.programms__SplitContainerModulsType, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.programms__SplitContainerModulsType.Panel1.SuspendLayout()
+        Me.programms__SplitContainerModulsType.Panel2.SuspendLayout()
+        Me.programms__SplitContainerModulsType.SuspendLayout()
+        CType(Me.programms__SplitModulsInProg, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.programms__SplitModulsInProg.Panel1.SuspendLayout()
+        Me.programms__SplitModulsInProg.Panel2.SuspendLayout()
+        Me.programms__SplitModulsInProg.SuspendLayout()
+        CType(Me.dataGridModulsInProgram, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.toolStripModulsInProg.SuspendLayout()
+        CType(Me.programms__SplitContainerModuls, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.programms__SplitContainerModuls.Panel1.SuspendLayout()
+        Me.programms__SplitContainerModuls.Panel2.SuspendLayout()
+        Me.programms__SplitContainerModuls.SuspendLayout()
         CType(Me.DataGridAllModuls, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TableLayoutAddNewModul.SuspendLayout()
         Me.ToolStrip4.SuspendLayout()
@@ -257,7 +265,7 @@ Partial Class ААОсновная
         'pageProgs
         '
         Me.pageProgs.Controls.Add(Me.password)
-        Me.pageProgs.Controls.Add(Me.SplitContainer4)
+        Me.pageProgs.Controls.Add(Me.programms__splitMainConteiner)
         Me.pageProgs.ImageIndex = 11
         Me.pageProgs.Location = New System.Drawing.Point(4, 29)
         Me.pageProgs.Name = "pageProgs"
@@ -275,41 +283,51 @@ Partial Class ААОсновная
         Me.password.Size = New System.Drawing.Size(556, 26)
         Me.password.TabIndex = 37
         '
-        'SplitContainer4
+        'programms__splitMainConteiner
         '
-        Me.SplitContainer4.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SplitContainer4.Location = New System.Drawing.Point(3, 3)
-        Me.SplitContainer4.Name = "SplitContainer4"
+        Me.programms__splitMainConteiner.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.programms__splitMainConteiner.Location = New System.Drawing.Point(3, 3)
+        Me.programms__splitMainConteiner.Name = "programms__splitMainConteiner"
         '
-        'SplitContainer4.Panel1
+        'programms__splitMainConteiner.Panel1
         '
-        Me.SplitContainer4.Panel1.Controls.Add(Me.programms_tbl_parent)
-        Me.SplitContainer4.Panel1.Controls.Add(Me.ToolStrip2)
+        Me.programms__splitMainConteiner.Panel1.Controls.Add(Me.programms_tbl_parent)
+        Me.programms__splitMainConteiner.Panel1.Controls.Add(Me.toolStripProgram)
         '
-        'SplitContainer4.Panel2
+        'programms__splitMainConteiner.Panel2
         '
-        Me.SplitContainer4.Panel2.Controls.Add(Me.SplitContainer5)
-        Me.SplitContainer4.Size = New System.Drawing.Size(1567, 828)
-        Me.SplitContainer4.SplitterDistance = 649
-        Me.SplitContainer4.TabIndex = 36
-        Me.SplitContainer4.Visible = False
+        Me.programms__splitMainConteiner.Panel2.Controls.Add(Me.SplitContainer5)
+        Me.programms__splitMainConteiner.Size = New System.Drawing.Size(1567, 828)
+        Me.programms__splitMainConteiner.SplitterDistance = 649
+        Me.programms__splitMainConteiner.TabIndex = 36
+        Me.programms__splitMainConteiner.Visible = False
         '
         'programms_tbl_parent
         '
+        Me.programms_tbl_parent.Controls.Add(Me.programs__panelProgs)
         Me.programms_tbl_parent.Dock = System.Windows.Forms.DockStyle.Fill
         Me.programms_tbl_parent.Location = New System.Drawing.Point(0, 48)
         Me.programms_tbl_parent.Name = "programms_tbl_parent"
         Me.programms_tbl_parent.Size = New System.Drawing.Size(649, 780)
         Me.programms_tbl_parent.TabIndex = 2
         '
-        'ToolStrip2
+        'programs__panelProgs
         '
-        Me.ToolStrip2.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripLabel1, Me.comboBoxProgramms, Me.ToolStripAddProg, Me.progsIndicator})
-        Me.ToolStrip2.Location = New System.Drawing.Point(0, 0)
-        Me.ToolStrip2.Name = "ToolStrip2"
-        Me.ToolStrip2.Size = New System.Drawing.Size(649, 48)
-        Me.ToolStrip2.TabIndex = 1
-        Me.ToolStrip2.Text = "ToolStrip2"
+        Me.programs__panelProgs.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.programs__panelProgs.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.programs__panelProgs.Location = New System.Drawing.Point(0, 0)
+        Me.programs__panelProgs.Name = "programs__panelProgs"
+        Me.programs__panelProgs.Size = New System.Drawing.Size(649, 780)
+        Me.programs__panelProgs.TabIndex = 0
+        '
+        'toolStripProgram
+        '
+        Me.toolStripProgram.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripLabel1, Me.comboBoxProgramms, Me.ToolStripAddProg, Me.progsIndicator})
+        Me.toolStripProgram.Location = New System.Drawing.Point(0, 0)
+        Me.toolStripProgram.Name = "toolStripProgram"
+        Me.toolStripProgram.Size = New System.Drawing.Size(649, 48)
+        Me.toolStripProgram.TabIndex = 1
+        Me.toolStripProgram.Text = "ToolStrip2"
         '
         'ToolStripLabel1
         '
@@ -357,72 +375,90 @@ Partial Class ААОсновная
         '
         'SplitContainer5.Panel1
         '
-        Me.SplitContainer5.Panel1.Controls.Add(Me.SplitModulsInProg)
-        Me.SplitContainer5.Panel1.Controls.Add(Me.ToolStrip3)
+        Me.SplitContainer5.Panel1.Controls.Add(Me.programms__SplitContainerModulsType)
+        Me.SplitContainer5.Panel1.Controls.Add(Me.toolStripModulsInProg)
         '
         'SplitContainer5.Panel2
         '
-        Me.SplitContainer5.Panel2.Controls.Add(Me.SplitContainerModuls)
+        Me.SplitContainer5.Panel2.Controls.Add(Me.programms__SplitContainerModuls)
         Me.SplitContainer5.Panel2.Controls.Add(Me.ToolStrip4)
         Me.SplitContainer5.Size = New System.Drawing.Size(914, 828)
         Me.SplitContainer5.SplitterDistance = 506
         Me.SplitContainer5.TabIndex = 37
         '
-        'SplitModulsInProg
+        'programms__SplitContainerModulsType
         '
-        Me.SplitModulsInProg.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SplitModulsInProg.Location = New System.Drawing.Point(0, 0)
-        Me.SplitModulsInProg.Name = "SplitModulsInProg"
-        Me.SplitModulsInProg.Orientation = System.Windows.Forms.Orientation.Horizontal
+        Me.programms__SplitContainerModulsType.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.programms__SplitContainerModulsType.Location = New System.Drawing.Point(0, 0)
+        Me.programms__SplitContainerModulsType.Name = "programms__SplitContainerModulsType"
+        Me.programms__SplitContainerModulsType.Orientation = System.Windows.Forms.Orientation.Horizontal
         '
-        'SplitModulsInProg.Panel1
+        'programms__SplitContainerModulsType.Panel1
         '
-        Me.SplitModulsInProg.Panel1.Controls.Add(Me.dataGridModuls)
+        Me.programms__SplitContainerModulsType.Panel1.Controls.Add(Me.programms__SplitModulsInProg)
         '
-        'SplitModulsInProg.Panel2
+        'programms__SplitContainerModulsType.Panel2
         '
-        Me.SplitModulsInProg.Panel2.Controls.Add(Me.red_moduls)
-        Me.SplitModulsInProg.Panel2Collapsed = True
-        Me.SplitModulsInProg.Size = New System.Drawing.Size(460, 828)
-        Me.SplitModulsInProg.SplitterDistance = 803
-        Me.SplitModulsInProg.TabIndex = 4
+        Me.programms__SplitContainerModulsType.Panel2.Controls.Add(Me.programs__panelType)
+        Me.programms__SplitContainerModulsType.Size = New System.Drawing.Size(460, 828)
+        Me.programms__SplitContainerModulsType.SplitterDistance = 468
+        Me.programms__SplitContainerModulsType.TabIndex = 5
         '
-        'dataGridModuls
+        'programms__SplitModulsInProg
         '
-        Me.dataGridModuls.AllowUserToAddRows = False
-        Me.dataGridModuls.AllowUserToDeleteRows = False
-        Me.dataGridModuls.AllowUserToOrderColumns = True
-        Me.dataGridModuls.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells
-        Me.dataGridModuls.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight
-        DataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle7.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        DataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.WindowText
-        DataGridViewCellStyle7.Padding = New System.Windows.Forms.Padding(10, 3, 3, 3)
-        DataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.ControlLight
-        DataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.dataGridModuls.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle7
-        Me.dataGridModuls.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle8.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        DataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle8.Padding = New System.Windows.Forms.Padding(10, 3, 3, 3)
-        DataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.ControlLight
-        DataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.dataGridModuls.DefaultCellStyle = DataGridViewCellStyle8
-        Me.dataGridModuls.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.dataGridModuls.Location = New System.Drawing.Point(0, 0)
-        Me.dataGridModuls.MultiSelect = False
-        Me.dataGridModuls.Name = "dataGridModuls"
-        Me.dataGridModuls.ReadOnly = True
-        Me.dataGridModuls.RowHeadersVisible = False
-        Me.dataGridModuls.RowHeadersWidth = 53
-        Me.dataGridModuls.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dataGridModuls.Size = New System.Drawing.Size(460, 828)
-        Me.dataGridModuls.TabIndex = 34
+        Me.programms__SplitModulsInProg.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.programms__SplitModulsInProg.Location = New System.Drawing.Point(0, 0)
+        Me.programms__SplitModulsInProg.Name = "programms__SplitModulsInProg"
+        Me.programms__SplitModulsInProg.Orientation = System.Windows.Forms.Orientation.Horizontal
+        '
+        'programms__SplitModulsInProg.Panel1
+        '
+        Me.programms__SplitModulsInProg.Panel1.Controls.Add(Me.dataGridModulsInProgram)
+        '
+        'programms__SplitModulsInProg.Panel2
+        '
+        Me.programms__SplitModulsInProg.Panel2.Controls.Add(Me.red_moduls)
+        Me.programms__SplitModulsInProg.Panel2Collapsed = True
+        Me.programms__SplitModulsInProg.Size = New System.Drawing.Size(460, 468)
+        Me.programms__SplitModulsInProg.SplitterDistance = 286
+        Me.programms__SplitModulsInProg.TabIndex = 4
+        '
+        'dataGridModulsInProgram
+        '
+        Me.dataGridModulsInProgram.AllowUserToAddRows = False
+        Me.dataGridModulsInProgram.AllowUserToDeleteRows = False
+        Me.dataGridModulsInProgram.AllowUserToOrderColumns = True
+        Me.dataGridModulsInProgram.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells
+        Me.dataGridModulsInProgram.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight
+        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle1.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
+        DataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle1.Padding = New System.Windows.Forms.Padding(10, 3, 3, 3)
+        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.ControlLight
+        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.dataGridModulsInProgram.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
+        Me.dataGridModulsInProgram.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle2.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
+        DataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle2.Padding = New System.Windows.Forms.Padding(10, 3, 3, 3)
+        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.ControlLight
+        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.dataGridModulsInProgram.DefaultCellStyle = DataGridViewCellStyle2
+        Me.dataGridModulsInProgram.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.dataGridModulsInProgram.Location = New System.Drawing.Point(0, 0)
+        Me.dataGridModulsInProgram.MultiSelect = False
+        Me.dataGridModulsInProgram.Name = "dataGridModulsInProgram"
+        Me.dataGridModulsInProgram.ReadOnly = True
+        Me.dataGridModulsInProgram.RowHeadersVisible = False
+        Me.dataGridModulsInProgram.RowHeadersWidth = 53
+        Me.dataGridModulsInProgram.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
+        Me.dataGridModulsInProgram.Size = New System.Drawing.Size(460, 468)
+        Me.dataGridModulsInProgram.TabIndex = 34
         '
         'red_moduls
         '
@@ -434,15 +470,24 @@ Partial Class ААОсновная
         Me.red_moduls.Size = New System.Drawing.Size(150, 46)
         Me.red_moduls.TabIndex = 14
         '
-        'ToolStrip3
+        'programs__panelType
         '
-        Me.ToolStrip3.Dock = System.Windows.Forms.DockStyle.Right
-        Me.ToolStrip3.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripTop, Me.ToolStripBottom, Me.addMidulInGroupp, Me.modulInProgsIndicator, Me.tbl_moduls_sum_hours})
-        Me.ToolStrip3.Location = New System.Drawing.Point(460, 0)
-        Me.ToolStrip3.Name = "ToolStrip3"
-        Me.ToolStrip3.Size = New System.Drawing.Size(46, 828)
-        Me.ToolStrip3.TabIndex = 3
-        Me.ToolStrip3.Text = "ToolStrip3"
+        Me.programs__panelType.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.programs__panelType.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.programs__panelType.Location = New System.Drawing.Point(0, 0)
+        Me.programs__panelType.Name = "programs__panelType"
+        Me.programs__panelType.Size = New System.Drawing.Size(460, 356)
+        Me.programs__panelType.TabIndex = 1
+        '
+        'toolStripModulsInProg
+        '
+        Me.toolStripModulsInProg.Dock = System.Windows.Forms.DockStyle.Right
+        Me.toolStripModulsInProg.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripTop, Me.ToolStripBottom, Me.addMidulInGroupp, Me.modulInProgsIndicator, Me.tbl_moduls_sum_hours})
+        Me.toolStripModulsInProg.Location = New System.Drawing.Point(460, 0)
+        Me.toolStripModulsInProg.Name = "toolStripModulsInProg"
+        Me.toolStripModulsInProg.Size = New System.Drawing.Size(46, 828)
+        Me.toolStripModulsInProg.TabIndex = 3
+        Me.toolStripModulsInProg.Text = "ToolStrip3"
         '
         'ToolStripTop
         '
@@ -497,24 +542,24 @@ Partial Class ААОсновная
         Me.tbl_moduls_sum_hours.Size = New System.Drawing.Size(41, 29)
         Me.tbl_moduls_sum_hours.Text = "0"
         '
-        'SplitContainerModuls
+        'programms__SplitContainerModuls
         '
-        Me.SplitContainerModuls.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SplitContainerModuls.Location = New System.Drawing.Point(0, 0)
-        Me.SplitContainerModuls.Name = "SplitContainerModuls"
-        Me.SplitContainerModuls.Orientation = System.Windows.Forms.Orientation.Horizontal
+        Me.programms__SplitContainerModuls.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.programms__SplitContainerModuls.Location = New System.Drawing.Point(0, 0)
+        Me.programms__SplitContainerModuls.Name = "programms__SplitContainerModuls"
+        Me.programms__SplitContainerModuls.Orientation = System.Windows.Forms.Orientation.Horizontal
         '
-        'SplitContainerModuls.Panel1
+        'programms__SplitContainerModuls.Panel1
         '
-        Me.SplitContainerModuls.Panel1.Controls.Add(Me.DataGridAllModuls)
+        Me.programms__SplitContainerModuls.Panel1.Controls.Add(Me.DataGridAllModuls)
         '
-        'SplitContainerModuls.Panel2
+        'programms__SplitContainerModuls.Panel2
         '
-        Me.SplitContainerModuls.Panel2.Controls.Add(Me.TableLayoutAddNewModul)
-        Me.SplitContainerModuls.Panel2Collapsed = True
-        Me.SplitContainerModuls.Size = New System.Drawing.Size(358, 828)
-        Me.SplitContainerModuls.SplitterDistance = 676
-        Me.SplitContainerModuls.TabIndex = 4
+        Me.programms__SplitContainerModuls.Panel2.Controls.Add(Me.TableLayoutAddNewModul)
+        Me.programms__SplitContainerModuls.Panel2Collapsed = True
+        Me.programms__SplitContainerModuls.Size = New System.Drawing.Size(358, 828)
+        Me.programms__SplitContainerModuls.SplitterDistance = 676
+        Me.programms__SplitContainerModuls.TabIndex = 4
         '
         'DataGridAllModuls
         '
@@ -523,25 +568,25 @@ Partial Class ААОсновная
         Me.DataGridAllModuls.AllowUserToOrderColumns = True
         Me.DataGridAllModuls.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells
         Me.DataGridAllModuls.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight
-        DataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle9.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        DataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.WindowText
-        DataGridViewCellStyle9.Padding = New System.Windows.Forms.Padding(10, 3, 3, 3)
-        DataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.ControlLight
-        DataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.DataGridAllModuls.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle9
+        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle3.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
+        DataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle3.Padding = New System.Windows.Forms.Padding(10, 3, 3, 3)
+        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.ControlLight
+        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.DataGridAllModuls.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle3
         Me.DataGridAllModuls.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle10.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle10.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        DataGridViewCellStyle10.ForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle10.Padding = New System.Windows.Forms.Padding(10, 3, 3, 3)
-        DataGridViewCellStyle10.SelectionBackColor = System.Drawing.SystemColors.ControlLight
-        DataGridViewCellStyle10.SelectionForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.DataGridAllModuls.DefaultCellStyle = DataGridViewCellStyle10
+        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle4.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
+        DataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle4.Padding = New System.Windows.Forms.Padding(10, 3, 3, 3)
+        DataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.ControlLight
+        DataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.DataGridAllModuls.DefaultCellStyle = DataGridViewCellStyle4
         Me.DataGridAllModuls.Dock = System.Windows.Forms.DockStyle.Fill
         Me.DataGridAllModuls.Location = New System.Drawing.Point(0, 0)
         Me.DataGridAllModuls.MultiSelect = False
@@ -549,7 +594,7 @@ Partial Class ААОсновная
         Me.DataGridAllModuls.ReadOnly = True
         Me.DataGridAllModuls.RowHeadersVisible = False
         Me.DataGridAllModuls.RowHeadersWidth = 53
-        Me.DataGridAllModuls.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+        Me.DataGridAllModuls.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
         Me.DataGridAllModuls.Size = New System.Drawing.Size(358, 828)
         Me.DataGridAllModuls.TabIndex = 35
         '
@@ -1948,26 +1993,26 @@ Partial Class ААОсновная
         Me.DataGridView_list.AllowUserToOrderColumns = True
         Me.DataGridView_list.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells
         Me.DataGridView_list.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight
-        DataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle11.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle11.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        DataGridViewCellStyle11.ForeColor = System.Drawing.SystemColors.WindowText
-        DataGridViewCellStyle11.Padding = New System.Windows.Forms.Padding(10, 3, 3, 3)
-        DataGridViewCellStyle11.SelectionBackColor = System.Drawing.SystemColors.ControlLight
-        DataGridViewCellStyle11.SelectionForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.DataGridView_list.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle11
+        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle5.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
+        DataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle5.Padding = New System.Windows.Forms.Padding(10, 3, 3, 3)
+        DataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.ControlLight
+        DataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.DataGridView_list.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle5
         Me.DataGridView_list.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.DataGridView_list.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.checkBox, Me.FIO, Me.FIO_full, Me.FIO_pad, Me.Doljnost, Me.type, Me.kod})
-        DataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle12.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle12.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        DataGridViewCellStyle12.ForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle12.Padding = New System.Windows.Forms.Padding(10, 3, 3, 3)
-        DataGridViewCellStyle12.SelectionBackColor = System.Drawing.SystemColors.ControlLight
-        DataGridViewCellStyle12.SelectionForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.DataGridView_list.DefaultCellStyle = DataGridViewCellStyle12
+        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle6.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
+        DataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle6.Padding = New System.Windows.Forms.Padding(10, 3, 3, 3)
+        DataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.ControlLight
+        DataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.DataGridView_list.DefaultCellStyle = DataGridViewCellStyle6
         Me.DataGridView_list.Dock = System.Windows.Forms.DockStyle.Fill
         Me.DataGridView_list.Location = New System.Drawing.Point(0, 0)
         Me.DataGridView_list.MultiSelect = False
@@ -2186,31 +2231,36 @@ Partial Class ААОсновная
         Me.Text = "ФГБУ ДПО ВУНМЦ Минздрава России"
         Me.pageProgs.ResumeLayout(False)
         Me.pageProgs.PerformLayout()
-        Me.SplitContainer4.Panel1.ResumeLayout(False)
-        Me.SplitContainer4.Panel1.PerformLayout()
-        Me.SplitContainer4.Panel2.ResumeLayout(False)
-        CType(Me.SplitContainer4, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.SplitContainer4.ResumeLayout(False)
-        Me.ToolStrip2.ResumeLayout(False)
-        Me.ToolStrip2.PerformLayout()
+        Me.programms__splitMainConteiner.Panel1.ResumeLayout(False)
+        Me.programms__splitMainConteiner.Panel1.PerformLayout()
+        Me.programms__splitMainConteiner.Panel2.ResumeLayout(False)
+        CType(Me.programms__splitMainConteiner, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.programms__splitMainConteiner.ResumeLayout(False)
+        Me.programms_tbl_parent.ResumeLayout(False)
+        Me.toolStripProgram.ResumeLayout(False)
+        Me.toolStripProgram.PerformLayout()
         Me.SplitContainer5.Panel1.ResumeLayout(False)
         Me.SplitContainer5.Panel1.PerformLayout()
         Me.SplitContainer5.Panel2.ResumeLayout(False)
         Me.SplitContainer5.Panel2.PerformLayout()
         CType(Me.SplitContainer5, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SplitContainer5.ResumeLayout(False)
-        Me.SplitModulsInProg.Panel1.ResumeLayout(False)
-        Me.SplitModulsInProg.Panel2.ResumeLayout(False)
-        Me.SplitModulsInProg.Panel2.PerformLayout()
-        CType(Me.SplitModulsInProg, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.SplitModulsInProg.ResumeLayout(False)
-        CType(Me.dataGridModuls, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.ToolStrip3.ResumeLayout(False)
-        Me.ToolStrip3.PerformLayout()
-        Me.SplitContainerModuls.Panel1.ResumeLayout(False)
-        Me.SplitContainerModuls.Panel2.ResumeLayout(False)
-        CType(Me.SplitContainerModuls, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.SplitContainerModuls.ResumeLayout(False)
+        Me.programms__SplitContainerModulsType.Panel1.ResumeLayout(False)
+        Me.programms__SplitContainerModulsType.Panel2.ResumeLayout(False)
+        CType(Me.programms__SplitContainerModulsType, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.programms__SplitContainerModulsType.ResumeLayout(False)
+        Me.programms__SplitModulsInProg.Panel1.ResumeLayout(False)
+        Me.programms__SplitModulsInProg.Panel2.ResumeLayout(False)
+        Me.programms__SplitModulsInProg.Panel2.PerformLayout()
+        CType(Me.programms__SplitModulsInProg, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.programms__SplitModulsInProg.ResumeLayout(False)
+        CType(Me.dataGridModulsInProgram, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.toolStripModulsInProg.ResumeLayout(False)
+        Me.toolStripModulsInProg.PerformLayout()
+        Me.programms__SplitContainerModuls.Panel1.ResumeLayout(False)
+        Me.programms__SplitContainerModuls.Panel2.ResumeLayout(False)
+        CType(Me.programms__SplitContainerModuls, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.programms__SplitContainerModuls.ResumeLayout(False)
         CType(Me.DataGridAllModuls, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TableLayoutAddNewModul.ResumeLayout(False)
         Me.TableLayoutAddNewModul.PerformLayout()
@@ -2249,19 +2299,19 @@ Partial Class ААОсновная
     Friend WithEvents OpenFileDialog1 As OpenFileDialog
     Friend WithEvents ImageList1 As ImageList
     Friend WithEvents pageProgs As TabPage
-    Friend WithEvents SplitContainer4 As SplitContainer
-    Friend WithEvents ToolStrip2 As ToolStrip
+    Friend WithEvents programms__splitMainConteiner As SplitContainer
+    Friend WithEvents toolStripProgram As ToolStrip
     Friend WithEvents ToolStripLabel1 As ToolStripLabel
     Friend WithEvents comboBoxProgramms As ToolStripComboBox
     Private WithEvents ToolStripAddProg As ToolStripButton
     Friend WithEvents SplitContainer5 As SplitContainer
-    Friend WithEvents SplitModulsInProg As SplitContainer
-    Private WithEvents dataGridModuls As DataGridView
-    Friend WithEvents ToolStrip3 As ToolStrip
+    Friend WithEvents programms__SplitModulsInProg As SplitContainer
+    Private WithEvents dataGridModulsInProgram As DataGridView
+    Friend WithEvents toolStripModulsInProg As ToolStrip
     Private WithEvents ToolStripTop As ToolStripButton
     Private WithEvents ToolStripBottom As ToolStripButton
     Private WithEvents addMidulInGroupp As ToolStripButton
-    Friend WithEvents SplitContainerModuls As SplitContainer
+    Friend WithEvents programms__SplitContainerModuls As SplitContainer
     Private WithEvents DataGridAllModuls As DataGridView
     Friend WithEvents ToolStrip4 As ToolStrip
     Private WithEvents ToolStripAddModul As ToolStripButton
@@ -2394,4 +2444,7 @@ Partial Class ААОсновная
     Friend WithEvents programms_tbl_parent As Panel
     Friend WithEvents tbl_moduls_sum_hours As ToolStripTextBox
     Friend WithEvents chPednagrExt As CheckBox
+    Friend WithEvents programms__SplitContainerModulsType As SplitContainer
+    Friend WithEvents programs__panelProgs As Panel
+    Friend WithEvents programs__panelType As Panel
 End Class

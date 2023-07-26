@@ -346,7 +346,7 @@
 
         End If
 
-        If Not ААОсновная.отключитьДиректора Then
+        If Not ААОсновная.directorOff Then
 
             If ААОсновная.ДиректорФИО.Text <> "" Then
                 Утверждает.Text = ААОсновная.ДиректорФИО.Text

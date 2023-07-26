@@ -1,4 +1,4 @@
-﻿Module ДействияСДатаГрид
+﻿Module RedactorDataGrid
 
     Function dataGridViewSearchRow(dataGridViewRows As DataGridViewRowCollection, columnNumber As Integer, value As String) As Integer
         Dim number As Integer
@@ -65,7 +65,8 @@
         СуммаЗначенийВСтроке = Сумма
     End Function
 
-    Sub ЗаписьМассиваВДатаГрид(ДатаГрид As DataGridView, Массив As Object)
+    Sub arrayToDataGrid(ДатаГрид As DataGridView, Массив As Object)
+
         Dim СчетчикСтрок As Integer
 
         ДатаГрид.Rows.Clear()

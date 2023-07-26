@@ -10,11 +10,11 @@ Public Class MySQLConnect
     Public commandBuilder As MySqlCommandBuilder
 
     Sub opdateArgument()
-        mySqlSettings.ИмяБазыДанныхА = "database"
-        mySqlSettings.ИмяПользователя = "admin"
-        mySqlSettings.пароль = "admin"
-        mySqlSettings.ИсточникДанныхODBC = "Dsn=mySQLConnection;uid={admin}"
-        mySqlSettings.НазваниеСервера = "localhost"
+        mySqlSettings.nameFirstDB = "database"
+        mySqlSettings.userName = "admin"
+        mySqlSettings.password = "admin"
+        mySqlSettings.ODBC = "Dsn=mySQLConnection;uid={admin}"
+        mySqlSettings.server = "localhost"
     End Sub
 
 
@@ -32,17 +32,17 @@ Public Class MySQLConnect
         Dim АДОДБКоманда As ADODB.Command = New ADODB.Command()
         Dim Рекордсет As ADODB.Recordset = New ADODB.Recordset()
 
-        If mySqlSettings.НазваниеСервера = "" Then
+        If mySqlSettings.server = "" Then
             opdateArgument()
         End If
 
         If numberBD = 1 Then
-            СтрокаПодключения = "server=" + mySqlSettings.НазваниеСервера + ";" + "User Id=" + mySqlSettings.ИмяПользователя + ";password=" + mySqlSettings.пароль + ";Persist Security Info=True;" + "database=" + mySqlSettings.ИмяБазыДанныхА
+            СтрокаПодключения = "server=" + mySqlSettings.server + ";" + "User Id=" + mySqlSettings.userName + ";password=" + mySqlSettings.password + ";Persist Security Info=True;" + "database=" + mySqlSettings.nameFirstDB
         ElseIf (numberBD = 2) Then
-            СтрокаПодключения = "server=" + mySqlSettings.НазваниеСервера + ";" + "User Id=" + mySqlSettings.ИмяПользователя + ";password=" + mySqlSettings.пароль + ";Persist Security Info=True;" + "database=" + mySqlSettings.ИмяБазыДанныхБ
+            СтрокаПодключения = "server=" + mySqlSettings.server + ";" + "User Id=" + mySqlSettings.userName + ";password=" + mySqlSettings.password + ";Persist Security Info=True;" + "database=" + mySqlSettings.ИмяБазыДанныхБ
         End If
 
-        АДОДБСтрокаПодключения = СтрокаПодключения + ";" + mySqlSettings.ИсточникДанныхODBC + ";Option=3;"
+        АДОДБСтрокаПодключения = СтрокаПодключения + ";" + mySqlSettings.ODBC + ";Option=3;"
 
         АДОДБСоединение.ConnectionString = АДОДБСтрокаПодключения
         АДОДБСоединение.Open()
@@ -69,14 +69,14 @@ Public Class MySQLConnect
         Dim ПодключениеКБД = New MySqlConnection()
         Dim result As Boolean = True
 
-        If mySqlSettings.НазваниеСервера = "" Then
+        If mySqlSettings.server = "" Then
             opdateArgument()
         End If
 
         If numberDB = 1 Then
-            СтрокаПодключения = "server=" + mySqlSettings.НазваниеСервера + ";" + "User Id=" + mySqlSettings.ИмяПользователя + ";password=" + mySqlSettings.пароль + ";Persist Security Info=True;" + "database=" + mySqlSettings.ИмяБазыДанныхА + ";default command timeout=600;"
+            СтрокаПодключения = "server=" + mySqlSettings.server + ";" + "User Id=" + mySqlSettings.userName + ";password=" + mySqlSettings.password + ";Persist Security Info=True;" + "database=" + mySqlSettings.nameFirstDB + ";default command timeout=600;"
         Else
-            СтрокаПодключения = "server=" + mySqlSettings.НазваниеСервера + ";" + "User Id=" + mySqlSettings.ИмяПользователя + ";password=" + mySqlSettings.пароль + ";Persist Security Info=True;" + "database=" + mySqlSettings.ИмяБазыДанныхА + ";default command timeout=600;"
+            СтрокаПодключения = "server=" + mySqlSettings.server + ";" + "User Id=" + mySqlSettings.userName + ";password=" + mySqlSettings.password + ";Persist Security Info=True;" + "database=" + mySqlSettings.nameFirstDB + ";default command timeout=600;"
         End If
 
         ПодключениеКБД.ConnectionString = СтрокаПодключения
@@ -101,14 +101,14 @@ Public Class MySQLConnect
         Dim СтрокаПодключения As String
         Dim ПодключениеКБД = New MySqlConnection()
 
-        If mySqlSettings.НазваниеСервера = "" Then
+        If mySqlSettings.server = "" Then
             opdateArgument()
         End If
 
         If (BazaNumber = 1) Then
-            СтрокаПодключения = "server=" + mySqlSettings.НазваниеСервера + ";" + "User Id=" + mySqlSettings.ИмяПользователя + ";password=" + mySqlSettings.пароль + ";Persist Security Info=True;" + "database=" + mySqlSettings.ИмяБазыДанныхА + ";default command timeout=600;"
+            СтрокаПодключения = "server=" + mySqlSettings.server + ";" + "User Id=" + mySqlSettings.userName + ";password=" + mySqlSettings.password + ";Persist Security Info=True;" + "database=" + mySqlSettings.nameFirstDB + ";default command timeout=600;"
         ElseIf (BazaNumber = 2) Then
-            СтрокаПодключения = "server=" + mySqlSettings.НазваниеСервера + ";" + "User Id=" + mySqlSettings.ИмяПользователя + ";password=" + mySqlSettings.пароль + ";Persist Security Info=True;" + "database=" + mySqlSettings.ИмяБазыДанныхБ + ";default command timeout=600;"
+            СтрокаПодключения = "server=" + mySqlSettings.server + ";" + "User Id=" + mySqlSettings.userName + ";password=" + mySqlSettings.password + ";Persist Security Info=True;" + "database=" + mySqlSettings.ИмяБазыДанныхБ + ";default command timeout=600;"
         End If
         ПодключениеКБД.ConnectionString = СтрокаПодключения
         ПодключениеКБД.Open()
@@ -138,14 +138,14 @@ Public Class MySQLConnect
         Dim Адаптер As MySqlDataAdapter
         Dim DSet As New DataSet
 
-        If mySqlSettings.НазваниеСервера = "" Then
+        If mySqlSettings.server = "" Then
             opdateArgument()
         End If
 
         If numberDB = 1 Then
-            СтрокаПодключения = "server=" + mySqlSettings.НазваниеСервера + ";" + "User Id=" + mySqlSettings.ИмяПользователя + ";password=" + mySqlSettings.пароль + ";Persist Security Info=True;" + "database=" + mySqlSettings.ИмяБазыДанныхА + ";default command timeout=600;"
+            СтрокаПодключения = "server=" + mySqlSettings.server + ";" + "User Id=" + mySqlSettings.userName + ";password=" + mySqlSettings.password + ";Persist Security Info=True;" + "database=" + mySqlSettings.nameFirstDB + ";default command timeout=600;"
         Else
-            СтрокаПодключения = "server=" + mySqlSettings.НазваниеСервера + ";" + "User Id=" + mySqlSettings.ИмяПользователя + ";password=" + mySqlSettings.пароль + ";Persist Security Info=True;" + "database=" + mySqlSettings.ИмяБазыДанныхА + ";default command timeout=600;"
+            СтрокаПодключения = "server=" + mySqlSettings.server + ";" + "User Id=" + mySqlSettings.userName + ";password=" + mySqlSettings.password + ";Persist Security Info=True;" + "database=" + mySqlSettings.nameFirstDB + ";default command timeout=600;"
         End If
 
         ПодключениеКБД.ConnectionString = СтрокаПодключения
@@ -166,14 +166,14 @@ Public Class MySQLConnect
         Dim DSet As New DataSet
         Dim list As List(Of String) = New List(Of String)
 
-        If mySqlSettings.НазваниеСервера = "" Then
+        If mySqlSettings.server = "" Then
             opdateArgument()
         End If
 
         If numberDB = 1 Then
-            СтрокаПодключения = "server=" + mySqlSettings.НазваниеСервера + ";" + "User Id=" + mySqlSettings.ИмяПользователя + ";password=" + mySqlSettings.пароль + ";Persist Security Info=True;" + "database=" + mySqlSettings.ИмяБазыДанныхА + ";default command timeout=600;"
+            СтрокаПодключения = "server=" + mySqlSettings.server + ";" + "User Id=" + mySqlSettings.userName + ";password=" + mySqlSettings.password + ";Persist Security Info=True;" + "database=" + mySqlSettings.nameFirstDB + ";default command timeout=600;"
         Else
-            СтрокаПодключения = "server=" + mySqlSettings.НазваниеСервера + ";" + "User Id=" + mySqlSettings.ИмяПользователя + ";password=" + mySqlSettings.пароль + ";Persist Security Info=True;" + "database=" + mySqlSettings.ИмяБазыДанныхА + ";default command timeout=600;"
+            СтрокаПодключения = "server=" + mySqlSettings.server + ";" + "User Id=" + mySqlSettings.userName + ";password=" + mySqlSettings.password + ";Persist Security Info=True;" + "database=" + mySqlSettings.nameFirstDB + ";default command timeout=600;"
         End If
 
         ПодключениеКБД.ConnectionString = СтрокаПодключения
@@ -202,14 +202,14 @@ Public Class MySQLConnect
         Dim list As New List(Of String)
         Dim listListov As New List(Of List(Of String))
 
-        If mySqlSettings.НазваниеСервера = "" Then
+        If mySqlSettings.server = "" Then
             opdateArgument()
         End If
 
         If numberDB = 1 Then
-            СтрокаПодключения = "server=" + mySqlSettings.НазваниеСервера + ";" + "User Id=" + mySqlSettings.ИмяПользователя + ";password=" + mySqlSettings.пароль + ";Persist Security Info=True;" + "database=" + mySqlSettings.ИмяБазыДанныхА + ";default command timeout=600;"
+            СтрокаПодключения = "server=" + mySqlSettings.server + ";" + "User Id=" + mySqlSettings.userName + ";password=" + mySqlSettings.password + ";Persist Security Info=True;" + "database=" + mySqlSettings.nameFirstDB + ";default command timeout=600;"
         Else
-            СтрокаПодключения = "server=" + mySqlSettings.НазваниеСервера + ";" + "User Id=" + mySqlSettings.ИмяПользователя + ";password=" + mySqlSettings.пароль + ";Persist Security Info=True;" + "database=" + mySqlSettings.ИмяБазыДанныхА + ";default command timeout=600;"
+            СтрокаПодключения = "server=" + mySqlSettings.server + ";" + "User Id=" + mySqlSettings.userName + ";password=" + mySqlSettings.password + ";Persist Security Info=True;" + "database=" + mySqlSettings.nameFirstDB + ";default command timeout=600;"
         End If
 
         ПодключениеКБД.ConnectionString = СтрокаПодключения
@@ -241,14 +241,14 @@ Public Class MySQLConnect
         Dim DSet As New DataSet
         Dim list As New List(Of String)
 
-        If mySqlSettings.НазваниеСервера = "" Then
+        If mySqlSettings.server = "" Then
             opdateArgument()
         End If
 
         If numberDB = 1 Then
-            СтрокаПодключения = "server=" + mySqlSettings.НазваниеСервера + ";" + "User Id=" + mySqlSettings.ИмяПользователя + ";password=" + mySqlSettings.пароль + ";Persist Security Info=True;" + "database=" + mySqlSettings.ИмяБазыДанныхА + ";default command timeout=600;"
+            СтрокаПодключения = "server=" + mySqlSettings.server + ";" + "User Id=" + mySqlSettings.userName + ";password=" + mySqlSettings.password + ";Persist Security Info=True;" + "database=" + mySqlSettings.nameFirstDB + ";default command timeout=600;"
         Else
-            СтрокаПодключения = "server=" + mySqlSettings.НазваниеСервера + ";" + "User Id=" + mySqlSettings.ИмяПользователя + ";password=" + mySqlSettings.пароль + ";Persist Security Info=True;" + "database=" + mySqlSettings.ИмяБазыДанныхА + ";default command timeout=600;"
+            СтрокаПодключения = "server=" + mySqlSettings.server + ";" + "User Id=" + mySqlSettings.userName + ";password=" + mySqlSettings.password + ";Persist Security Info=True;" + "database=" + mySqlSettings.nameFirstDB + ";default command timeout=600;"
         End If
 
         ПодключениеКБД.ConnectionString = СтрокаПодключения
@@ -277,14 +277,14 @@ Public Class MySQLConnect
         Dim DSet As New DataSet
         Dim list As New List(Of String)
 
-        If mySqlSettings.НазваниеСервера = "" Then
+        If mySqlSettings.server = "" Then
             opdateArgument()
         End If
 
         If numberDB = 1 Then
-            СтрокаПодключения = "server=" + mySqlSettings.НазваниеСервера + ";" + "User Id=" + mySqlSettings.ИмяПользователя + ";password=" + mySqlSettings.пароль + ";Persist Security Info=True;" + "database=" + mySqlSettings.ИмяБазыДанныхА + ";default command timeout=600;"
+            СтрокаПодключения = "server=" + mySqlSettings.server + ";" + "User Id=" + mySqlSettings.userName + ";password=" + mySqlSettings.password + ";Persist Security Info=True;" + "database=" + mySqlSettings.nameFirstDB + ";default command timeout=600;"
         Else
-            СтрокаПодключения = "server=" + mySqlSettings.НазваниеСервера + ";" + "User Id=" + mySqlSettings.ИмяПользователя + ";password=" + mySqlSettings.пароль + ";Persist Security Info=True;" + "database=" + mySqlSettings.ИмяБазыДанныхА + ";default command timeout=600;"
+            СтрокаПодключения = "server=" + mySqlSettings.server + ";" + "User Id=" + mySqlSettings.userName + ";password=" + mySqlSettings.password + ";Persist Security Info=True;" + "database=" + mySqlSettings.nameFirstDB + ";default command timeout=600;"
         End If
 
         ПодключениеКБД.ConnectionString = СтрокаПодключения
@@ -309,14 +309,14 @@ Public Class MySQLConnect
         Dim ПодключениеКБД = New MySqlConnection()
         dSet = New DataSet()
 
-        If mySqlSettings.НазваниеСервера = "" Then
+        If mySqlSettings.server = "" Then
             opdateArgument()
         End If
 
         If numberDB = 1 Then
-            СтрокаПодключения = "server=" + mySqlSettings.НазваниеСервера + ";" + "User Id=" + mySqlSettings.ИмяПользователя + ";password=" + mySqlSettings.пароль + ";Persist Security Info=True;" + "database=" + mySqlSettings.ИмяБазыДанныхА + ";default command timeout=600;"
+            СтрокаПодключения = "server=" + mySqlSettings.server + ";" + "User Id=" + mySqlSettings.userName + ";password=" + mySqlSettings.password + ";Persist Security Info=True;" + "database=" + mySqlSettings.nameFirstDB + ";default command timeout=600;"
         Else
-            СтрокаПодключения = "server=" + mySqlSettings.НазваниеСервера + ";" + "User Id=" + mySqlSettings.ИмяПользователя + ";password=" + mySqlSettings.пароль + ";Persist Security Info=True;" + "database=" + mySqlSettings.ИмяБазыДанныхА + ";default command timeout=600;"
+            СтрокаПодключения = "server=" + mySqlSettings.server + ";" + "User Id=" + mySqlSettings.userName + ";password=" + mySqlSettings.password + ";Persist Security Info=True;" + "database=" + mySqlSettings.nameFirstDB + ";default command timeout=600;"
         End If
 
         ПодключениеКБД.ConnectionString = СтрокаПодключения
@@ -334,10 +334,10 @@ Public Class MySQLConnect
 End Class
 Public Structure ArgumentMySqlConnect
 
-    Public НазваниеСервера As String
-    Public ИмяПользователя As String
-    Public пароль As String
-    Public ИмяБазыДанныхА As String
+    Public server As String
+    Public userName As String
+    Public password As String
+    Public nameFirstDB As String
     Public ИмяБазыДанныхБ As String
-    Public ИсточникДанныхODBC As String
+    Public ODBC As String
 End Structure

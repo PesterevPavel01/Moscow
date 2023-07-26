@@ -1,13 +1,15 @@
 ﻿Public Class ВедомостьПеднагрузка
 
     Public kodGroup As Integer
+    Private infoDataTable As DataTable
+    Dim queryString As String
 
     Private Sub НомерГруппы_Click(sender As Object, e As EventArgs) Handles НомерГруппы.Click
 
         ФормаСписок.ListViewСписок.Columns(0).Width = 120
         ФормаСписок.ListViewСписок.Columns.Add("Год", 100)
         ФормаСписок.ListViewСписок.Columns.Add("Код", 100)
-        ФормаСписок.textboxName = Me.ActiveControl.Name
+        ФормаСписок.textboxName = sender.Name
         ФормаСписок.FormName = Me.Name
         ФормаСписок.ShowDialog()
         ФормаСписок.ListViewСписок.Columns.RemoveAt(1)
@@ -16,70 +18,100 @@
         ФормаСписок.ListViewСписок.Columns(1).Width = 620
         ФормаСписок.ListViewСписок.Columns(1).Text = "Наименование"
 
-
-
         loadTables()
 
     End Sub
 
     Private Sub loadTables()
-        Dim СтрокаЗапроса As String
-        Dim Список
+
+        Dim resultList
+
         If Trim(НомерГруппы.Text) = "" Then
+
             Exit Sub
+
         End If
-        ТаблицаВедомость.Rows.Clear()
 
-        СтрокаЗапроса = pednagruzkaload(Convert.ToString(kodGroup))
+        pednagr__mainTable.Rows.Clear()
+        infoDataTable = New DataTable()
 
-        Список = ЗагрузитьИзБазы.ЗагрузитьИзБазы(СтрокаЗапроса)
+        queryString = pednagruzka__load(Convert.ToString(kodGroup))
 
-        If Список(0, 0).ToString = "нет записей" Then
+        resultList = ЗагрузитьИзБазы.ЗагрузитьИзБазы(QueryString)
+
+        If resultList(0, 0).ToString = "нет записей" Then
 
             предупреждение.текст.Text = "Нет данных для отображения"
             ОткрытьФорму(предупреждение)
-            ActiveControl = ТаблицаВедомость
+            ActiveControl = pednagr__mainTable
             Exit Sub
 
         End If
 
-        ДействияСДатаГрид.ЗаписьМассиваВДатаГрид(ТаблицаВедомость, Список)
+        RedactorDataGrid.arrayToDataGrid(pednagr__mainTable, resultList)
+
+        pednagr__loadInfoTables()
 
     End Sub
 
-    Private Sub ТаблицаВедомость_CellValueChanged(sender As Object, e As DataGridViewCellEventArgs) Handles ТаблицаВедомость.CellValueChanged
+    Private Sub pednagr__loadInfoTables()
+
+        infoDataTable = New DataTable()
+
+        queryString = pednagruzka__loadProgramm(Convert.ToString(kodGroup))
+        infoDataTable = ААОсновная.mySqlConnect.ЗагрузитьИзMySQLвDataTable(queryString, 1)
+        pednagr__infoTable.DataSource = infoDataTable
+
+        pednagr__resizeInfoTables()
+
+    End Sub
+
+    Private Sub pednagr__resizeInfoTables()
+
+        If IsNothing(infoDataTable) Then
+            Return
+        ElseIf pednagr__infoTable.Columns.Count < 2 Then
+            Return
+        End If
+
+        pednagr__infoTable.Columns(0).Width = pednagr__infoTable.Width * 1 / 3
+        pednagr__infoTable.Columns(1).Width = pednagr__infoTable.Width * 2 / 3 - 4
+
+    End Sub
+
+    Private Sub ТаблицаВедомость_CellValueChanged(sender As Object, e As DataGridViewCellEventArgs) Handles pednagr__mainTable.CellValueChanged
         Dim Значение As Double
 
 
-        If IsNothing(ТаблицаВедомость.Rows(0).Cells(0).Value) Or Trim(ТаблицаВедомость.Rows(0).Cells(0).Value) = "" Then
+        If IsNothing(pednagr__mainTable.Rows(0).Cells(0).Value) Or Trim(pednagr__mainTable.Rows(0).Cells(0).Value) = "" Then
             Exit Sub
         End If
 
-        ИтогоЛекции.Text = СуммаЗначенийВСтолбце(ТаблицаВедомость, 1)
-        ИтогоПрактические.Text = СуммаЗначенийВСтолбце(ТаблицаВедомость, 2)
-        ИтогоСтимулирующие.Text = СуммаЗначенийВСтолбце(ТаблицаВедомость, 3)
-        ИтогоКонсультация.Text = СуммаЗначенийВСтолбце(ТаблицаВедомость, 4)
-        ИтогоИА.Text = СуммаЗначенийВСтолбце(ТаблицаВедомость, 6)
-        ИтогоПА.Text = СуммаЗначенийВСтолбце(ТаблицаВедомость, 5)
-        ИтогоИтого.Text = СуммаЗначенийВСтолбце(ТаблицаВедомость, 7)
+        ИтогоЛекции.Text = СуммаЗначенийВСтолбце(pednagr__mainTable, 1)
+        ИтогоПрактические.Text = СуммаЗначенийВСтолбце(pednagr__mainTable, 2)
+        ИтогоСтимулирующие.Text = СуммаЗначенийВСтолбце(pednagr__mainTable, 3)
+        ИтогоКонсультация.Text = СуммаЗначенийВСтолбце(pednagr__mainTable, 4)
+        ИтогоИА.Text = СуммаЗначенийВСтолбце(pednagr__mainTable, 6)
+        ИтогоПА.Text = СуммаЗначенийВСтолбце(pednagr__mainTable, 5)
+        ИтогоИтого.Text = СуммаЗначенийВСтолбце(pednagr__mainTable, 7)
         Dim count As Integer
         Dim счетчикСтрок As Integer = 0
-        For Each строка In ТаблицаВедомость.Rows
+        For Each строка In pednagr__mainTable.Rows
 
-            If IsNothing(строка.Cells(0).Value) Or Trim(ТаблицаВедомость.Rows(0).Cells(0).Value) = "" Then
+            If IsNothing(строка.Cells(0).Value) Or Trim(pednagr__mainTable.Rows(0).Cells(0).Value) = "" Then
                 счетчикСтрок += 1
                 Continue For
             End If
 
-            count = ТаблицаВедомость.Columns.Count
-            Значение = СуммаЗначенийВСтроке(ТаблицаВедомость, счетчикСтрок, 1, ТаблицаВедомость.Columns.Count - 2)
+            count = pednagr__mainTable.Columns.Count
+            Значение = СуммаЗначенийВСтроке(pednagr__mainTable, счетчикСтрок, 1, pednagr__mainTable.Columns.Count - 2)
 
             If Значение = -1 Then
                 счетчикСтрок += 1
                 Continue For
             End If
 
-            строка.Cells(ТаблицаВедомость.Columns.Count - 1).Value = Значение
+            строка.Cells(pednagr__mainTable.Columns.Count - 1).Value = Значение
             счетчикСтрок += 1
 
         Next
@@ -110,7 +142,7 @@
         arrayNameAndType(0, 6) = "IA"
         arrayNameAndType(1, 6) = "Double"
 
-        datagridInsertRowIntoDB(ТаблицаВедомость, "pednagruzka", arg, arrayNameAndType, 0, 6)
+        datagridInsertRowIntoDB(pednagr__mainTable, "pednagruzka", arg, arrayNameAndType, 0, 6)
 
     End Sub
 
@@ -118,4 +150,9 @@
         ЗакрытьEsc(Me, e.KeyCode)
     End Sub
 
+    Private Sub pednagr__splitContainerMain_SplitterMoved(sender As Object, e As SplitterEventArgs) Handles pednagr__splitContainerMain.SplitterMoved
+
+        pednagr__resizeInfoTables()
+
+    End Sub
 End Class

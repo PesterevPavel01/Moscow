@@ -113,9 +113,9 @@
 
         If e.KeyChar = Convert.ToChar(Keys.Enter) Then
 
-            If Not ААОсновная.programms_tbl.redactor_element_first.Text.Trim = "" Then
+            If Not ААОсновная.programs__progrs_tbl.redactor_element_first.Text.Trim = "" Then
 
-                ААОсновная.programms_tbl.second_element_pressEnter(e)
+                ААОсновная.programs__progrs_tbl.second_element_pressEnter(e)
                 e.Handled = True
                 Return
 

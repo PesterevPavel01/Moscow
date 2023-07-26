@@ -194,38 +194,42 @@ Public Class ФормаСписок
                 ВедомостьПеднагрузка.kodGroup = ListViewСписок.SelectedItems(0).SubItems(3).Text
             End If
 
-            For Each i In ВедомостьПеднагрузка.Controls
-
-                If i.Name = textboxName Then
-
-                    i.Text = ind
-
-                End If
-
-            Next
+            ВедомостьПеднагрузка.НомерГруппы.Text = ind
 
         End If
 
         If FormName = "ААОсновная" Then
+
             For Each Вкладки In ААОсновная.TabControlOther.Controls
+
                 For Each Элемент In Вкладки.Controls
+
                     If Элемент.Name = textboxName Then
+
                         If Элемент.Name = "ДиректорФИО" Then
                             ind = ind.Trim
                             ind = Strings.Right(ind, 4) & " " & Strings.Left(ind, Strings.Len(ind) - 4)
+
                             If Strings.Right(Strings.Left(ind, 4), 1) = "." And Strings.Right(Strings.Left(ind, 2), 1) = "." Then
                             Else
                                 предупреждение.текст.Text = "Ошибка в ФИО"
                                 ОткрытьФорму(предупреждение)
                                 Exit Sub
                             End If
+
                         End If
+
                         Элемент.Text = ind
                         Me.Close()
+
                         Return
+
                     End If
+
                 Next
+
             Next
+
         End If
 
         If FormName = "АОценкиИА" Then

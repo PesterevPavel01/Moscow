@@ -28,11 +28,11 @@ Module Запуск
         Dim СтрокаЗапроса As String
         Dim mySqlConnector As New MySQLConnect
 
-        mySqlConnector.mySqlSettings.ИмяБазыДанныхА = "database"
-        mySqlConnector.mySqlSettings.ИмяПользователя = "admin"
-        mySqlConnector.mySqlSettings.пароль = "admin"
-        mySqlConnector.mySqlSettings.ИсточникДанныхODBC = "Dsn=mySQLConnection;uid={admin}"
-        mySqlConnector.mySqlSettings.НазваниеСервера = "localhost"
+        mySqlConnector.mySqlSettings.nameFirstDB = "database"
+        mySqlConnector.mySqlSettings.userName = "admin"
+        mySqlConnector.mySqlSettings.password = "admin"
+        mySqlConnector.mySqlSettings.ODBC = "Dsn=mySQLConnection;uid={admin}"
+        mySqlConnector.mySqlSettings.server = "localhost"
 
         СтрокаЗапроса = loadSettings()
         Параметры = mySqlConnector.ЗагрузитьИзБДMySQLвМассив(СтрокаЗапроса, 1)

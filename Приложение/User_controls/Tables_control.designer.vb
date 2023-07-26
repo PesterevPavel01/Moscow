@@ -34,8 +34,8 @@ Partial Class Tables_control
         Me.SplitContainer4 = New System.Windows.Forms.SplitContainer()
         Me.redactor_name_element_second = New System.Windows.Forms.TextBox()
         Me.panel_second_element = New System.Windows.Forms.Panel()
-        Me.comboBox_second_element = New WindowsApp2.user_comboBox()
         Me.redactor_element_second = New System.Windows.Forms.TextBox()
+        Me.comboBox_second_element = New WindowsApp2.user_comboBox()
         CType(Me.SplitContainer_main, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SplitContainer_main.Panel1.SuspendLayout()
         Me.SplitContainer_main.Panel2.SuspendLayout()
@@ -116,7 +116,7 @@ Partial Class Tables_control
         Me.DataGridTablesResult.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
         Me.DataGridTablesResult.RowHeadersVisible = False
         Me.DataGridTablesResult.RowHeadersWidth = 53
-        Me.DataGridTablesResult.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+        Me.DataGridTablesResult.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
         Me.DataGridTablesResult.Size = New System.Drawing.Size(959, 356)
         Me.DataGridTablesResult.TabIndex = 36
         '
@@ -218,15 +218,6 @@ Partial Class Tables_control
         Me.panel_second_element.Size = New System.Drawing.Size(959, 66)
         Me.panel_second_element.TabIndex = 0
         '
-        'comboBox_second_element
-        '
-        Me.comboBox_second_element.BackColor = System.Drawing.SystemColors.Window
-        Me.comboBox_second_element.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.comboBox_second_element.Location = New System.Drawing.Point(3, 20)
-        Me.comboBox_second_element.Name = "comboBox_second_element"
-        Me.comboBox_second_element.Size = New System.Drawing.Size(956, 43)
-        Me.comboBox_second_element.TabIndex = 37
-        '
         'redactor_element_second
         '
         Me.redactor_element_second.BackColor = System.Drawing.SystemColors.Window
@@ -236,6 +227,15 @@ Partial Class Tables_control
         Me.redactor_element_second.Name = "redactor_element_second"
         Me.redactor_element_second.Size = New System.Drawing.Size(959, 66)
         Me.redactor_element_second.TabIndex = 1
+        '
+        'comboBox_second_element
+        '
+        Me.comboBox_second_element.BackColor = System.Drawing.SystemColors.Window
+        Me.comboBox_second_element.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.comboBox_second_element.Location = New System.Drawing.Point(3, 20)
+        Me.comboBox_second_element.Name = "comboBox_second_element"
+        Me.comboBox_second_element.Size = New System.Drawing.Size(956, 43)
+        Me.comboBox_second_element.TabIndex = 37
         '
         'Tables_control
         '

@@ -597,6 +597,34 @@ sotrudnik.in_list,
         Return queryString
 
     End Function
+    Public Function update_typeProgs_update_query(kodProg As String, kodTypeProgs As String, value As String) As String
+
+        Dim queryString As String = ""
+
+        queryString = "UPDATE
+                        progs_type_hours
+                        set hours=" + value + "
+                        WHERE kod_prog=" + kodProg + " 
+                        AND type=" + kodTypeProgs
+
+        Return queryString
+
+    End Function
+
+    Public Function update_typeProgs_check_query(kodProg As String, kodTypeProgs As String, newValues As String) As String
+
+        Dim queryString As String = ""
+
+        queryString = "SELECT
+                          COUNT(progs_type_hours.kod_prog) 
+                        FROM progs_type_hours
+                        WHERE kod_prog=" + kodProg + " 
+                        AND type=" + kodTypeProgs + " 
+                        AND hours=" + newValues
+
+        Return queryString
+
+    End Function
 
     Public Function update_prog_check_query(name_table As String, db_element_first As String, values_element_first As String, db_element_second As String, values_element_second As String, name_prog As String) As String
 
@@ -660,7 +688,7 @@ sotrudnik.in_list,
 
     End Function
 
-    Public Function loadModulKod(name As String) As String
+    Public Function program__loadModulKod(name As String) As String
 
         Dim sqlString As String = ""
         sqlString = "SELECT
@@ -670,19 +698,50 @@ sotrudnik.in_list,
         Return sqlString
 
     End Function
-    Public Function loadModuls() As String
+    Public Function program__loadModuls() As String
 
         Dim sqlString As String = ""
         sqlString = "SELECT
                      moduls.name AS Модуль,
                      moduls.hours AS Часы,
-                     moduls.kod
+                     moduls.kod as Код
                      FROM moduls"
         Return sqlString
 
     End Function
+    Public Function program__loadTypes(kodProgram As String) As String
 
-    Public Function loadHours(kod As String) As String
+        sqlString = ""
+        sqlString = "SELECT
+                      type_class.name AS Тип,
+                      IFNULL(hours.hours,0) AS Часы,
+                      type_class.kod AS Код
+                    FROM type_class
+                      LEFT JOIN 
+                      (SELECT
+                          progs_type_hours.hours,
+                          progs_type_hours.type
+                        FROM progs_type_hours
+                          INNER JOIN programm
+                            ON progs_type_hours.kod_prog = programm.kod
+                          WHERE kod=" + kodProgram + ") AS hours
+                        ON type_class.kod = hours.type"
+        Return sqlString
+
+    End Function
+
+    Public Function program__loadTypeList() As String
+
+        sqlString = ""
+        sqlString = "SELECT 
+                        type_class.name
+                        FROM type_class
+                        ORDER BY type_class.number"
+        Return sqlString
+
+    End Function
+
+    Public Function program__loadHours(kod As String) As String
 
         Dim sqlString As String = ""
         sqlString = "SELECT 
@@ -692,13 +751,13 @@ sotrudnik.in_list,
         Return sqlString
 
     End Function
-    Public Function loadModulsAndHours(kod As String) As String
+    Public Function program__loadModulsAndHours(kod As String) As String
 
         Dim sqlString As String = ""
         sqlString = "SELECT
                      moduls.name as Модуль,
                      progs_mods_hours.hours as Часы,
-                     progs_mods_hours.kod_modul
+                     progs_mods_hours.kod_modul as Код
                      FROM progs_mods_hours
                      INNER JOIN programm
                      ON progs_mods_hours.kod_prog = programm.kod
@@ -726,7 +785,7 @@ sotrudnik.in_list,
 
     End Function
 
-    Public Function loadProgramms(uroven_cval As String) As String
+    Public Function program__loadProgramms(uroven_cval As String) As String
 
         Dim sqlString As String = ""
 

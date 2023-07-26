@@ -6,12 +6,18 @@ Public Class Tables_control
     Public kod_number As Int16
     Private remove_kod As Int64
     Public name_table As String
+
     Public programm_on As Boolean
+    Public type_progs_on As Boolean
+    Public add_on As Boolean = True
 
     Public selected_row As DataGridViewRow
 
     Public flag_active_control As Boolean = False
     Public active_last_element As Boolean = False
+
+    Public numberElementFirst As Int16 = 0
+    Public numberElementSecond As Int16 = 1
 
     Public queryString_load As String
     Private queryString As String
@@ -74,6 +80,8 @@ Public Class Tables_control
         DataGridTablesResult.DataSource = result
 
         load_table()
+
+        'DataGridTablesResult.ClearSelection()
 
     End Sub
 
@@ -395,7 +403,7 @@ Public Class Tables_control
         If e.KeyValue = Keys.Delete Then
 
             Dim curNumber = DataGridTablesResult.CurrentCell.RowIndex
-            ФормаДаНетУдалить.текстДаНет.Text = "Удалить " + DataGridTablesResult.Rows(curNumber).Cells(0).Value + "?"
+            ФормаДаНетУдалить.текстДаНет.Text = "Удалить " + DataGridTablesResult.Rows(curNumber).Cells(numberElementFirst).Value + "?"
             ФормаДаНетУдалить.ShowDialog()
 
             If Not ФормаДаНетУдалить.НажатаКнопкаДа Then
@@ -406,11 +414,11 @@ Public Class Tables_control
 
             remove_kod = Convert.ToInt64(DataGridTablesResult.Rows(curNumber).Cells(kod_number).Value)
 
-            queryString = ААОсновная.sqlQueryString.update_delete_query(programm_on, name_table, ААОсновная.comboBoxProgramms.Text, remove_kod)
+            queryString = ААОсновная.program__sqlQueryString.update_delete_query(programm_on, name_table, ААОсновная.comboBoxProgramms.Text, remove_kod)
 
             mySQLConnector.ОтправитьВбдЗапись(queryString, 1)
 
-            If redactor_element_first.Text.Trim = Convert.ToString(DataGridTablesResult.Rows(curNumber).Cells(0).Value) Then
+            If redactor_element_first.Text.Trim = Convert.ToString(DataGridTablesResult.Rows(curNumber).Cells(numberElementFirst).Value) Then
 
                 SendKeys.Send("{ESC}")
 
@@ -420,13 +428,19 @@ Public Class Tables_control
 
             If (curNumber <> 0) Then
 
-                DataGridTablesResult.CurrentCell = DataGridTablesResult.Rows(curNumber - 1).Cells(0)
+                DataGridTablesResult.CurrentCell = DataGridTablesResult.Rows(curNumber - 1).Cells(numberElementFirst)
 
             End If
 
         ElseIf e.KeyValue = Keys.Add Then
 
-            add_Down()
+            If add_on Then
+
+                add_Down()
+
+            End If
+
+            Return
 
         ElseIf e.KeyValue = Keys.R Then
 
@@ -481,19 +495,7 @@ Public Class Tables_control
 
         End If
 
-    End Sub
-
-    Private Sub redactor_element_first_Enter(sender As Object, e As EventArgs) Handles redactor_element_first.Enter
-
-        'If number_column = 1 Then
-
-        '    If Not SplitContainer_main.Panel2Collapsed Then
-
-        '        active_last_element = True
-
-        '    End If
-
-        'End If
+        DataGridTablesResult.CurrentCell.Selected = True
 
     End Sub
 
@@ -534,7 +536,7 @@ Public Class Tables_control
 
         If DataGridTablesResult.Rows.Count < 0 Then
             Return
-        ElseIf Convert.ToString(DataGridTablesResult.Rows(0).Cells(0).Value) = "" Then
+        ElseIf Convert.ToString(DataGridTablesResult.Rows(0).Cells(numberElementFirst).Value) = "" Then
             Return
         End If
 
@@ -543,8 +545,8 @@ Public Class Tables_control
         If IsNumeric(DataGridTablesResult.Rows(curNumber).Cells(kod_number).Value) Then
 
             values.kod = Convert.ToInt64(DataGridTablesResult.Rows(curNumber).Cells(kod_number).Value)
-            values.element_first = Convert.ToString(DataGridTablesResult.Rows(curNumber).Cells(0).Value)
-            values.element_second = Convert.ToString(DataGridTablesResult.Rows(curNumber).Cells(1).Value)
+            values.element_first = Convert.ToString(DataGridTablesResult.Rows(curNumber).Cells(numberElementFirst).Value)
+            values.element_second = Convert.ToString(DataGridTablesResult.Rows(curNumber).Cells(numberElementSecond).Value)
 
         Else
 
@@ -552,15 +554,15 @@ Public Class Tables_control
 
         End If
 
-        redactor_element_first.Text = DataGridTablesResult.Rows(curNumber).Cells(0).Value
+        redactor_element_first.Text = DataGridTablesResult.Rows(curNumber).Cells(numberElementFirst).Value
 
         If flag_second_control_combo Then
 
-            comboBox_second_element.my_ComboBox.Text = Convert.ToString(DataGridTablesResult.Rows(curNumber).Cells(1).Value)
+            comboBox_second_element.my_ComboBox.Text = Convert.ToString(DataGridTablesResult.Rows(curNumber).Cells(numberElementSecond).Value)
 
         Else
 
-            redactor_element_second.Text = Convert.ToString(DataGridTablesResult.Rows(curNumber).Cells(1).Value)
+            redactor_element_second.Text = Convert.ToString(DataGridTablesResult.Rows(curNumber).Cells(numberElementSecond).Value)
 
         End If
 
@@ -587,11 +589,15 @@ Public Class Tables_control
 
         If programm_on Then
 
-            queryString = ААОсновная.sqlQueryString.update_prog_check_query(name_table, names.db_element_first, values.element_first, names.db_element_second, values.element_second, ААОсновная.comboBoxProgramms.Text)
+            queryString = ААОсновная.program__sqlQueryString.update_prog_check_query(name_table, names.db_element_first, values.element_first, names.db_element_second, values.element_second, ААОсновная.comboBoxProgramms.Text)
+
+        ElseIf type_progs_on Then
+
+            queryString = ААОсновная.program__sqlQueryString.update_typeProgs_check_query(Convert.ToString(ААОсновная.program.struct_progs.program_kod), Convert.ToString(values.kod), values.element_first)
 
         Else
 
-            queryString = ААОсновная.sqlQueryString.update_check_query(number_column, name_table, names.db_element_first, values.element_first, names.db_element_second, values.element_second)
+            queryString = ААОсновная.program__sqlQueryString.update_check_query(number_column, name_table, names.db_element_first, values.element_first, names.db_element_second, values.element_second)
 
         End If
 
@@ -603,11 +609,15 @@ Public Class Tables_control
 
         If programm_on Then
 
-            queryString = ААОсновная.sqlQueryString.update_prog_update_query(name_table, names.db_element_first, values.element_first, names.db_element_second, values.element_second, values.kod)
+            queryString = ААОсновная.program__sqlQueryString.update_prog_update_query(name_table, names.db_element_first, values.element_first, names.db_element_second, values.element_second, values.kod)
+
+        ElseIf type_progs_on Then
+
+            queryString = ААОсновная.program__sqlQueryString.update_typeProgs_update_query(Convert.ToString(ААОсновная.program.struct_progs.program_kod), Convert.ToString(values.kod), Convert.ToString(values.element_first))
 
         Else
 
-            queryString = ААОсновная.sqlQueryString.update_update_query(number_column, name_table, names.db_element_first, values.element_first, names.db_element_second, values.element_second, values.kod)
+            queryString = ААОсновная.program__sqlQueryString.update_update_query(number_column, name_table, names.db_element_first, values.element_first, names.db_element_second, values.element_second, values.kod)
 
         End If
 
@@ -621,11 +631,15 @@ Public Class Tables_control
 
         If programm_on Then
 
-            queryString = ААОсновная.sqlQueryString.update_prog_check_query(name_table, names.db_element_first, values.element_first, names.db_element_second, values.element_second, ААОсновная.comboBoxProgramms.Text)
+            queryString = ААОсновная.program__sqlQueryString.update_prog_check_query(name_table, names.db_element_first, values.element_first, names.db_element_second, values.element_second, ААОсновная.comboBoxProgramms.Text)
+
+        ElseIf type_progs_on Then
+
+            Return
 
         Else
 
-            queryString = ААОсновная.sqlQueryString.update_check_query(number_column, name_table, names.db_element_first, values.element_first, names.db_element_second, values.element_second)
+            queryString = ААОсновная.program__sqlQueryString.update_check_query(number_column, name_table, names.db_element_first, values.element_first, names.db_element_second, values.element_second)
 
         End If
 
@@ -637,11 +651,11 @@ Public Class Tables_control
 
         If programm_on Then
 
-            queryString = ААОсновная.sqlQueryString.update_prog_insert_query(number_column, name_table, names.db_element_first, values.element_first, names.db_element_second, values.element_second, ААОсновная.comboBoxProgramms.Text)
+            queryString = ААОсновная.program__sqlQueryString.update_prog_insert_query(number_column, name_table, names.db_element_first, values.element_first, names.db_element_second, values.element_second, ААОсновная.comboBoxProgramms.Text)
 
         Else
 
-            queryString = ААОсновная.sqlQueryString.update_insert_query(number_column, name_table, names.db_element_first, values.element_first, names.db_element_second, values.element_second)
+            queryString = ААОсновная.program__sqlQueryString.update_insert_query(number_column, name_table, names.db_element_first, values.element_first, names.db_element_second, values.element_second)
 
         End If
 
@@ -650,11 +664,11 @@ Public Class Tables_control
 
         If programm_on Then
 
-            queryString = ААОсновная.sqlQueryString.update_prog_load_kod_query(name_table, names.db_element_first, values.element_first, ААОсновная.comboBoxProgramms.Text)
+            queryString = ААОсновная.program__sqlQueryString.update_prog_load_kod_query(name_table, names.db_element_first, values.element_first, ААОсновная.comboBoxProgramms.Text)
 
         Else
 
-            queryString = ААОсновная.sqlQueryString.update_load_kod_query(number_column, name_table, names.db_element_first, values.element_first, names.db_element_second, values.element_second)
+            queryString = ААОсновная.program__sqlQueryString.update_load_kod_query(number_column, name_table, names.db_element_first, values.element_first, names.db_element_second, values.element_second)
 
         End If
 
@@ -671,8 +685,8 @@ Public Class Tables_control
             Return
         End If
         numberRow = dataGridViewSearchRow(DataGridTablesResult.Rows, columnNumber, Convert.ToString(kod))
-        DataGridTablesResult.CurrentCell = DataGridTablesResult.Rows(numberRow).Cells(0)
-        DataGridTablesResult.Rows(numberRow).Cells(0).Selected = True
+        DataGridTablesResult.CurrentCell = DataGridTablesResult.Rows(numberRow).Cells(numberElementFirst)
+        DataGridTablesResult.Rows(numberRow).Cells(numberElementFirst).Selected = True
 
     End Sub
 
@@ -723,7 +737,7 @@ Public Class Tables_control
 
         If DataGridTablesResult.SelectedRows.Count > 0 Then
 
-            ААОсновная.loadModulsInProgramm()
+            ААОсновная.programs__loadModulsInProgramm()
 
         End If
 
@@ -806,6 +820,39 @@ Public Class Tables_control
 
     End Sub
 
+    'Private Sub DataGridTablesResult_CurrentCellChanged(sender As Object, e As EventArgs) Handles DataGridTablesResult.CurrentCellChanged
+
+    '    Dim currentRow As DataGridViewRow
+
+    '    If IsNothing(DataGridTablesResult.CurrentCell) Then
+
+    '        Return
+
+    '    End If
+
+    '    currentRow = DataGridTablesResult.Rows(DataGridTablesResult.CurrentCell.RowIndex)
+
+    '    For Each cell As DataGridViewCell In currentRow.Cells
+
+    '        DataGridTablesResult.Rows(DataGridTablesResult.CurrentCell.RowIndex).Cells(0).Style.BackColor = SystemColors.ControlLight
+
+    '    Next
+
+    'End Sub
+
+    'Private Sub DataGridTablesResult_CellLeave(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridTablesResult.CellLeave
+
+    '    Dim currentRow As DataGridViewRow
+
+    '    currentRow = DataGridTablesResult.Rows(DataGridTablesResult.CurrentCell.RowIndex)
+
+    '    For Each cell As DataGridViewCell In currentRow.Cells
+
+    '        DataGridTablesResult.Rows(DataGridTablesResult.CurrentCell.RowIndex).Cells(0).Style.BackColor = SystemColors.Window
+
+    '    Next
+
+    'End Sub
 End Class
 
 Public Structure Values

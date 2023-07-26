@@ -13,7 +13,7 @@ Public Class ААОсновная
 
     Private redactor_enter As Boolean
     Public password0 As String
-    Public Запросы
+    Public query
     Public КлавишаПереключенияВкладок As Integer = 39 ' 34
     Public КлавишаОбратногоПереключенияВкладок As Integer = 37 '35
     Public вместоТаб As Integer = 40
@@ -21,38 +21,42 @@ Public Class ААОсновная
     Public НомерОтчета As Integer
     Public ЗагруженСправочникГруппы As Boolean = False
     Public РазрешитьЗапускПриложения As Boolean = True
-    Public отключитьДиректора As Boolean = False
+    Public directorOff As Boolean = False
     Public Стаж_окончание As Boolean = False
     Public mySqlConnect As New MySQLConnect
     Public prikazKodGroup As Integer = 0
     Public activeTables As String = "Не загружено"
     Public settsStatus As Boolean = True
     Public cvalific As UInt16 = 0
+
     Public Const PK = 1
     Public Const PP = 2
     Public Const PO = 3
     Public Const PK_PP_PO = 0
     Public Const PK_PP = 4
+
     Public prikazCvalif As UInt16 = 0
-    Private programm As New Programm
+    Public program As New Programm
     Private worker As New Worker
     Private flag_ToolStrip_name_list As Boolean
     Private flag_worker_dolgnost As Boolean
     Private flag_worker_type As Boolean
     Public tbl_obrazovanie As New Tables_control
-    Public programms_tbl As New Tables_control
-    Public sqlQueryString As New SqlQueryString
+    Public programs__progrs_tbl As New Tables_control
+    Public programs_type_tbl As New Tables_control
+    Public program__sqlQueryString As New SqlQueryString
 
     Private Sub Основная_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
         ЗаписьВListView.массивПуст = False
-        mySqlConnect.mySqlSettings.ИмяБазыДанныхА = "database"
-        mySqlConnect.mySqlSettings.ИмяПользователя = "admin"
-        mySqlConnect.mySqlSettings.пароль = "admin"
-        mySqlConnect.mySqlSettings.ИсточникДанныхODBC = "Dsn=mySQLConnection;uid={admin}"
-        mySqlConnect.mySqlSettings.НазваниеСервера = "localhost"
+        mySqlConnect.mySqlSettings.nameFirstDB = "database"
+        mySqlConnect.mySqlSettings.userName = "admin"
+        mySqlConnect.mySqlSettings.password = "admin"
+        mySqlConnect.mySqlSettings.ODBC = "Dsn=mySQLConnection;uid={admin}"
+        mySqlConnect.mySqlSettings.server = "localhost"
         progsIndicator.Image = ImageList1.Images(8)
-        modulInProgsIndicator.Image = ImageList1.Images(8)
+        modulInProgsIndicatorOn(False)
+        'modulInProgsIndicator.Image = ImageList1.Images(8)
         modulIndicator.Image = ImageList1.Images(8)
         panel_worker.Parent = SplitContainerOtherList.Panel2
 
@@ -62,21 +66,21 @@ Public Class ААОсновная
         DataGridAllModuls.ColumnHeadersDefaultCellStyle.Font = New Font("Microsoft YaHei", 12)
         DataGridAllModuls.DefaultCellStyle.Font = New Font("Microsoft YaHei", 12)
 
-        dataGridModuls.ColumnHeadersDefaultCellStyle.Font = New Font("Microsoft YaHei", 12)
-        dataGridModuls.DefaultCellStyle.Font = New Font("Microsoft YaHei", 12)
+        dataGridModulsInProgram.ColumnHeadersDefaultCellStyle.Font = New Font("Microsoft YaHei", 12)
+        dataGridModulsInProgram.DefaultCellStyle.Font = New Font("Microsoft YaHei", 12)
 
     End Sub
 
     Public Sub prog_DataGridTablesResult_activate()
 
-        ActiveControl = programms_tbl.DataGridTablesResult
+        ActiveControl = programs__progrs_tbl.DataGridTablesResult
 
     End Sub
 
     Public Sub prog_redactor_element_first_activate()
 
-        ActiveControl = programms_tbl.redactor_element_first
-        select_textBox(programms_tbl.redactor_element_first)
+        ActiveControl = programs__progrs_tbl.redactor_element_first
+        select_textBox(programs__progrs_tbl.redactor_element_first)
 
     End Sub
 
@@ -977,113 +981,134 @@ Public Class ААОсновная
 
     End Sub
 
-    Private Sub ААОсновная_KeyDown(sender As Object, e As KeyEventArgs) Handles MyBase.KeyDown
+    Private Sub tabPageOther_KeyDown(sender As Object, e As KeyEventArgs)
 
-        If TabControlOther.SelectedIndex = 6 Then
+        If tbl_obrazovanie.flag_active_control Then
 
-            If tbl_obrazovanie.flag_active_control Then
+            tbl_obrazovanie_keyDown(e)
+            Return
 
-                tbl_obrazovanie_keyDown(e)
-                Return
+        ElseIf DataGridView_list.Visible Then
 
-            ElseIf DataGridView_list.Visible Then
+            If e.KeyValue = Keys.Escape Then
 
-                If e.KeyValue = Keys.Escape Then
+                closeRedactorWorker(sender, e)
+                ActiveControl = DataGridView_list
 
-                    closeRedactorWorker(sender, e)
-                    ActiveControl = DataGridView_list
+            ElseIf e.KeyValue = Keys.Enter Then
 
-                ElseIf e.KeyValue = Keys.Enter Then
+                worker_EnterDown()
 
-                    worker_EnterDown()
+            ElseIf e.KeyValue = Keys.Escape Then
 
-                ElseIf e.KeyValue = Keys.Escape Then
-
-                    closeRedactorWorker(sender, e)
-
-                End If
+                closeRedactorWorker(sender, e)
 
             End If
 
-            If ToolStrip1.Focused() Or ToolStrip_name_list.Focused Then
+        End If
 
-                Return
+        If ToolStrip1.Focused() Or ToolStrip_name_list.Focused Then
 
-            ElseIf (DataGridView_list.Focused Or ActiveControl.Name = "TabControlOther" Or passwordOther.Focused) And SplitContainerOtherList.Panel2Collapsed Then
+            Return
 
-                If e.KeyCode = КлавишаПереключенияВкладок Then
+        ElseIf (DataGridView_list.Focused Or ActiveControl.Name = "TabControlOther" Or passwordOther.Focused) And SplitContainerOtherList.Panel2Collapsed Then
 
-                    переключательВкладок(TabControlOther)
+            If e.KeyCode = КлавишаПереключенияВкладок Then
 
-                End If
-
-                If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
-
-                    обратныйПереключательВкладок(TabControlOther)
-
-                End If
+                переключательВкладок(TabControlOther)
 
             End If
+
+            If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
+
+                обратныйПереключательВкладок(TabControlOther)
+
+            End If
+
+        End If
+
+    End Sub
+
+    Private Sub tabPagePrograms_KeyDown(sender As Object, e As KeyEventArgs)
+
+        If toolStripModulsInProg.Focused() Or toolStripProgram.Focused() Then
 
             Return
 
         End If
 
+        If programs__progrs_tbl.flag_active_control Then
 
+            programms_tbl_keyDown(e)
+            Return
 
-        If TabControlOther.SelectedIndex = 5 And password.Focused = False Then
+        ElseIf programs_type_tbl.flag_active_control Then
 
-            If ToolStrip3.Focused() Or ToolStrip2.Focused() Then
+            progsType_tbl_keyDown(e)
+            Return
+
+        End If
+
+        If e.KeyCode = Keys.Down And dataGridModulsInProgram.Focused() Then
+
+            progsType_tbl()
+            Return
+
+        ElseIf e.KeyCode = КлавишаПереключенияВкладок Then
+
+            If DataGridAllModuls.Focused Or ActiveControl.Name = "TabControlOther" Then
+
+                переключательВкладок(TabControlOther)
+
+            ElseIf dataGridModulsInProgram.Focused Then
+
+                Return
+
+            ElseIf ActiveControl.Name = "SplitContainer4" Or ActiveControl.Name = "dataGridModuls" Or ActiveControl.Name = "ToolStrip3" Then
 
                 Return
 
             End If
 
-            If programms_tbl.flag_active_control Then
+            e.Handled = True
+            Return
 
-                programms_tbl_keyDown(e)
-                Return
+        ElseIf e.KeyCode = Keys.Left Then
 
-            End If
+            If ActiveControl.Name = "TabControlOther" Then
 
-            If e.KeyCode = КлавишаПереключенияВкладок Then
+                обратныйПереключательВкладок(TabControlOther)
 
-                Dim ac As Control = ActiveControl
-                Dim name As String = ac.Name
-
-                If DataGridAllModuls.Focused Or ActiveControl.Name = "TabControlOther" Then
-
-                    переключательВкладок(TabControlOther)
-
-                ElseIf ActiveControl.Name = "SplitContainer4" Or ActiveControl.Name = "dataGridModuls" Or ActiveControl.Name = "ToolStrip3" Then
-
-                    Return
-
-                End If
-
-                e.Handled = True
-                Return
-
-            ElseIf e.KeyCode = 37 Then
-
-                If ActiveControl.Name = "TabControlOther" Then
-
-                    обратныйПереключательВкладок(TabControlOther)
-
-                ElseIf DataGridAllModuls.Focused Or dataGridModuls.Focused Then
-
-                    Return
-
-                End If
-
-                e.Handled = True
-                Return
-
-            ElseIf e.KeyCode = 38 Or e.KeyCode = 40 Then
+            ElseIf DataGridAllModuls.Focused Or dataGridModulsInProgram.Focused Then
 
                 Return
 
             End If
+
+            e.Handled = True
+            Return
+
+        ElseIf e.KeyCode = Keys.Up Or e.KeyCode = Keys.Down Then
+
+            Return
+
+        End If
+
+    End Sub
+
+    Private Sub ААОсновная_KeyDown(sender As Object, e As KeyEventArgs) Handles MyBase.KeyDown
+
+        If TabControlOther.SelectedIndex = 6 Then
+
+            tabPageOther_KeyDown(sender, e)
+
+            Return
+
+        ElseIf TabControlOther.SelectedIndex = 5 And password.Focused = False Then
+
+            tabPagePrograms_KeyDown(sender, e)
+
+            Return
 
         End If
 
@@ -1098,17 +1123,22 @@ Public Class ААОсновная
         End If
 
         If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
+
             If red_moduls.Focused Or newModAddName.Focused Or newModAddHour.Focused Or worker_name.Focused Or worker_name_full.Focused Or worker_name_pad.Focused Then
                 Return
             End If
+
             обратныйПереключательВкладок(TabControlOther)
             e.Handled = True
+
         End If
 
-        If e.KeyCode = 38 Or e.KeyCode = 40 Then
+        If e.KeyCode = Keys.Up Or e.KeyCode = Keys.Down Then
+
             функционалТаб(e.KeyCode, вместоТаб)
-            ААперемещениеВверх(e.KeyCode, 38)
+            ААперемещениеВверх(e.KeyCode, Keys.Up)
             e.Handled = True
+
         End If
 
     End Sub
@@ -1183,29 +1213,99 @@ Public Class ААОсновная
 
     End Sub
 
-    Private Sub programms_tbl_keyDown(e As KeyEventArgs)
+    Private Sub progsType_tbl()
+
+        If dataGridModulsInProgram.CurrentCell.RowIndex = (dataGridModulsInProgram.Rows.Count - 1) Then
+
+
+            programs_type_tbl.Focus()
+
+        End If
+
+    End Sub
+
+    Private Sub progsType_tbl_keyDown(e As KeyEventArgs)
 
         If e.KeyValue = Keys.Tab Then
 
-            If programms_tbl.active_last_element Then
+            If programs_type_tbl.active_last_element Then
 
-                dataGridModuls.Focus()
+                dataGridModulsInProgram.Focus()
                 e.Handled = True
 
             End If
 
         ElseIf e.KeyValue = Keys.Right Then
 
-            If programms_tbl.active_last_element Then
+            If programs_type_tbl.active_last_element Then
 
-                dataGridModuls.Focus()
+                DataGridAllModuls.Focus()
                 e.Handled = True
 
             End If
 
         ElseIf e.KeyValue = Keys.Left Then
 
-            If programms_tbl.active_last_element Then
+            If programs_type_tbl.active_last_element Then
+
+                programs__progrs_tbl.Focus()
+                e.Handled = True
+
+            End If
+
+        ElseIf e.KeyValue = Keys.Escape Then
+
+            programs_type_tbl.redactorClose()
+
+            e.Handled = True
+
+        ElseIf e.KeyValue = Keys.Up Then
+
+            progsType_keyDownUp(e)
+
+        End If
+
+    End Sub
+
+    Private Sub progsType_keyDownUp(e As KeyEventArgs)
+
+        If IsNothing(programs_type_tbl.DataGridTablesResult.CurrentCell) Then
+
+            dataGridModulsInProgram.Focus()
+            e.Handled = True
+
+        ElseIf programs_type_tbl.DataGridTablesResult.CurrentCell.RowIndex < 1 Then
+
+            dataGridModulsInProgram.Focus()
+            e.Handled = True
+
+        End If
+
+    End Sub
+
+    Private Sub programms_tbl_keyDown(e As KeyEventArgs)
+
+        If e.KeyValue = Keys.Tab Then
+
+            If programs__progrs_tbl.active_last_element Then
+
+                dataGridModulsInProgram.Focus()
+                e.Handled = True
+
+            End If
+
+        ElseIf e.KeyValue = Keys.Right Then
+
+            If programs__progrs_tbl.active_last_element Then
+
+                dataGridModulsInProgram.Focus()
+                e.Handled = True
+
+            End If
+
+        ElseIf e.KeyValue = Keys.Left Then
+
+            If programs__progrs_tbl.active_last_element Then
 
                 обратныйПереключательВкладок(TabControlOther)
                 e.Handled = True
@@ -1214,13 +1314,13 @@ Public Class ААОсновная
 
         ElseIf e.KeyValue = Keys.Escape Then
 
-            If Not programms_tbl.comboBox_second_element.my_ComboBox.DroppedDown Then
+            If Not programs__progrs_tbl.comboBox_second_element.my_ComboBox.DroppedDown Then
 
-                programms_tbl.redactorClose()
+                programs__progrs_tbl.redactorClose()
 
             Else
 
-                programms_tbl.comboBox_second_element.my_ComboBox.DroppedDown = False
+                programs__progrs_tbl.comboBox_second_element.my_ComboBox.DroppedDown = False
 
             End If
             e.Handled = True
@@ -2099,10 +2199,10 @@ Public Class ААОсновная
         АСформироватьПриказ.КнопкаСформировать.Location = New Point(135, 107)
         АСформироватьПриказ.КнопкаОчистить.Location = New Point(2, 107)
 
-        отключитьДиректора = True
+        directorOff = True
         ActiveControl = Button2
         АСформироватьПриказ.ShowDialog()
-        отключитьДиректора = False
+        directorOff = False
         АСформироватьПриказ.Label2.Text = "Директор ФИО"
 
     End Sub
@@ -2159,11 +2259,11 @@ Public Class ААОсновная
         АСформироватьПриказ.КнопкаСформировать.Location = New Point(135, 700)
         АСформироватьПриказ.КнопкаОчистить.Location = New Point(2, 700)
 
-        отключитьДиректора = True
+        directorOff = True
         ActiveControl = Button2
         АСформироватьПриказ.ShowDialog()
 
-        отключитьДиректора = False
+        directorOff = False
         АСформироватьПриказ.Label2.Text = "Директор ФИО"
         АСформироватьПриказ.ListViewСписокСлушателей.Visible = False
         АСформироватьПриказ.LabelИзмениПадеж.Visible = False
@@ -2561,10 +2661,13 @@ Public Class ААОсновная
     End Sub
 
     Private Sub Педнагрузка_Click(sender As Object, e As EventArgs) Handles Педнагрузка.Click
+
         Dim Список
         Dim СтрокаЗапроса As String
+
         ActiveControl = Button2
-        ВедомостьПеднагрузка.ТаблицаВедомость.Rows.Clear()
+
+        ВедомостьПеднагрузка.pednagr__mainTable.Rows.Clear()
         ВедомостьПеднагрузка.НомерГруппы.Clear()
 
         ОчиститьПоляФормы.Очиститьформу(ВедомостьПеднагрузка)
@@ -2581,7 +2684,7 @@ Public Class ААОсновная
 
         End If
 
-        ЗагрузитьСписокВКомбоБокс(ВедомостьПеднагрузка.ТаблицаВедомость, Список, "ФИО")
+        ЗагрузитьСписокВКомбоБокс(ВедомостьПеднагрузка.pednagr__mainTable, Список, "ФИО")
         ВедомостьПеднагрузка.ShowDialog()
 
     End Sub
@@ -3545,37 +3648,91 @@ Public Class ААОсновная
 
     End Sub
 
-    Private Sub loadProgramms()
+    Private Sub programs__loadProgramms()
 
-        programms_tbl.Parent = programms_tbl_parent
-        programms_tbl.Dock = DockStyle.Fill
-        programms_tbl.Visible = True
-        programms_tbl.number_column = 2
+        programs__progrs_tbl.Parent = programms_tbl_parent
+        programs__progrs_tbl.Dock = DockStyle.Fill
+        programs__progrs_tbl.Visible = True
+        programs__progrs_tbl.number_column = 2
 
-        programms_tbl.flag_second_control_combo = True
+        programs__progrs_tbl.flag_second_control_combo = True
 
-        programms_tbl.programm_on = True
-
-        programms_tbl.queryString_load = programm.loadProgramms()
-
-        programms_tbl.persent_width_column_0 = 65
-        programms_tbl.persent_width_column_1 = 10
-        programms_tbl.persent_width_column_2 = 0
-        programms_tbl.persent_width_column_3 = 20
+        programs__progrs_tbl.programm_on = True
 
 
-        programms_tbl.names.redactor_element_first = "Наименование"
-        programms_tbl.names.db_element_first = "name"
-        programms_tbl.names.redactor_element_second = "Часы"
-        programms_tbl.names.db_element_second = "hours"
-        programms_tbl.name_table = "programm"
+        programs__progrs_tbl.queryString_load = program.programm__loadProgramms()
 
-        programm.load_hours_list()
+        programs__progrs_tbl.persent_width_column_0 = 65
+        programs__progrs_tbl.persent_width_column_1 = 10
+        programs__progrs_tbl.persent_width_column_2 = 0
+        programs__progrs_tbl.persent_width_column_3 = 20
 
-        programms_tbl.comboBox_second_element.settings.item_list = programm.struct_progs.list_hours
 
-        programms_tbl.kod_number = 2
-        programms_tbl.table_init()
+        programs__progrs_tbl.names.redactor_element_first = "Наименование"
+        programs__progrs_tbl.names.db_element_first = "name"
+        programs__progrs_tbl.names.redactor_element_second = "Часы"
+        programs__progrs_tbl.names.db_element_second = "hours"
+        programs__progrs_tbl.name_table = "programm"
+
+        program.program_loadHoursList()
+
+        programs__progrs_tbl.comboBox_second_element.settings.item_list = program.struct_progs.list_hours
+
+        programs__progrs_tbl.kod_number = 2
+        programs__progrs_tbl.table_init()
+
+    End Sub
+
+    Private Sub programs__loadType()
+
+        programs_type_tbl.Parent = programms__SplitContainerModulsType.Panel2
+        programs_type_tbl.Dock = DockStyle.Fill
+        programs_type_tbl.Visible = True
+        programs_type_tbl.number_column = 1
+        programs_type_tbl.kod_number = 2
+
+        programs_type_tbl.type_progs_on = True
+        programs_type_tbl.add_on = False
+
+        programs_type_tbl.queryString_load = program.program__loadTypes()
+
+        programs_type_tbl.persent_width_column_0 = 78
+        programs_type_tbl.persent_width_column_1 = 20
+        programs_type_tbl.persent_width_column_2 = 0
+
+        programs_type_tbl.numberElementFirst = 1
+        programs_type_tbl.numberElementSecond = 0
+
+        programs_type_tbl.names.redactor_element_first = "Часы"
+        programs_type_tbl.names.db_element_first = "hours"
+        'programms_type_tbl.names.redactor_element_second = ""
+        'programms_type_tbl.names.db_element_second = "name"
+        programs_type_tbl.name_table = "progs_type_hours"
+
+        program.program__loadTypelist()
+
+        programs_type_tbl.comboBox_second_element.settings.item_list = program.struct_progs.list_types
+
+        programs_type_tbl.table_init()
+
+        programs_type_tbl.DataGridTablesResult.ClearSelection()
+
+        AddHandler programs_type_tbl.Enter, AddressOf programs_type_tbl_Enter
+        AddHandler programs_type_tbl.Leave, AddressOf programs_type_tbl_Leave
+
+    End Sub
+
+    Private Sub programs_type_tbl_Leave(sender As Object, e As EventArgs)
+
+        modulInProgsIndicatorOn(False)
+        programs_type_tbl.DataGridTablesResult.ClearSelection()
+
+    End Sub
+
+    Private Sub programs_type_tbl_Enter(sender As Object, e As EventArgs)
+
+        modulInProgsIndicatorOn(True)
+        dataGridModulsInProgram.ClearSelection()
 
     End Sub
 
@@ -3585,13 +3742,13 @@ Public Class ААОсновная
             Return
         End If
 
-        programms_tbl.add_Down()
+        programs__progrs_tbl.add_Down()
 
     End Sub
 
     Private Sub ToolStripUpdate_Click(sender As Object, e As EventArgs)
 
-        SplitModulsInProg.SplitterDistance = 540
+        programms__SplitModulsInProg.SplitterDistance = 540
 
     End Sub
 
@@ -3601,9 +3758,9 @@ Public Class ААОсновная
             Return
         End If
 
-        SplitContainerModuls.Panel2Collapsed = False
-        SplitContainerModuls.SplitterDistance = SplitContainerModuls.Height * 2 / 3
-        programm.struct_progs.flag_update_modul = False
+        programms__SplitContainerModuls.Panel2Collapsed = False
+        programms__SplitContainerModuls.SplitterDistance = programms__SplitContainerModuls.Height * 2 / 3
+        program.struct_progs.flag_update_modul = False
 
         newModAddName.Clear()
         newModAddHour.Clear()
@@ -3614,50 +3771,22 @@ Public Class ААОсновная
 
     End Sub
 
-    Public Sub loadModulsInProgramm()
-
-
-        If IsNothing(programms_tbl.selected_row) Then
-
-            Return
-
-        End If
-        If Convert.ToString(programms_tbl.selected_row.Cells(0).Value).Trim = "" Then
-
-            Return
-
-        End If
-
-        Try
-            programm.struct_progs.program_kod = Convert.ToString(programms_tbl.selected_row.Cells(2).Value)
-        Catch ex As Exception
-            Return
-        End Try
-
-        programm.loadModulAndHours()
-
-        tbl_moduls_sum_hours.Text = programm.struct_progs.sum_hours_programm
-
-        dataGridModuls.DataSource = programm.struct_progs.tbl_modulsInProgs
-        dataGridModuls.Columns(0).Width = dataGridModuls.Width - 70
-        dataGridModuls.Columns(1).Width = 70
-
-    End Sub
-
     Private Sub newProgramm_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs)
+
         If e.KeyValue = Keys.Enter Or e.KeyValue = Keys.Tab Then
 
             e.IsInputKey = True
 
         End If
+
     End Sub
 
     Private Sub dataGridProgs_MouseEnter(sender As Object, e As EventArgs)
-        programm.struct_progs.flagProgTbl = True
+        program.struct_progs.flagProgTbl = True
     End Sub
 
     Private Sub dataGridProgs_MouseLeave(sender As Object, e As EventArgs)
-        programm.struct_progs.flagProgTbl = False
+        program.struct_progs.flagProgTbl = False
     End Sub
 
     Private Sub comboBoxProgramms_SelectedIndexChanged(sender As Object, e As EventArgs) Handles comboBoxProgramms.SelectedIndexChanged
@@ -3666,77 +3795,159 @@ Public Class ААОсновная
             Return
         End If
 
-        programm.uroven_cval = comboBoxProgramms.Text
-
-        loadProgramms()
-
-        loadModul()
-
-        loadModulsInProgramm()
+        programs__loadTables()
 
     End Sub
 
-    Private Sub loadModul()
+    Private Sub programs__loadTables()
 
-        programm.loadModul()
+        program.uroven_cval = comboBoxProgramms.Text
 
-        DataGridAllModuls.DataSource = programm.struct_progs.tbl_moduls
-        DataGridAllModuls.Columns(0).Width = DataGridAllModuls.Width - 70
+        programs__loadProgramms()
+
+        programs__loadModul()
+
+        programs__loadModulsInProgramm()
+
+        programs__loadType()
+
+        programs__panelProgs.Visible = False
+        programs__panelType.Visible = False
+
+    End Sub
+
+    Public Sub programs__loadModulsInProgramm()
+
+
+        If IsNothing(programs__progrs_tbl.selected_row) Then
+
+            Return
+
+        End If
+        If Convert.ToString(programs__progrs_tbl.selected_row.Cells(0).Value).Trim = "" Then
+
+            Return
+
+        End If
+
+        Try
+            program.struct_progs.program_kod = Convert.ToString(programs__progrs_tbl.selected_row.Cells(2).Value)
+        Catch ex As Exception
+            Return
+        End Try
+
+        program.program__loadModulAndHours()
+
+        tbl_moduls_sum_hours.Text = program.struct_progs.sum_hours_programm
+
+        dataGridModulsInProgram.DataSource = program.struct_progs.tbl_modulsInProgs
+
+        programs__tblModulInProgramResize()
+
+    End Sub
+
+    Private Sub programs__tblModulInProgramResize()
+
+        If dataGridModulsInProgram.Columns.Count < 3 Then
+
+            Return
+
+        End If
+
+        dataGridModulsInProgram.Columns(0).Width = dataGridModulsInProgram.Width - 140
+        dataGridModulsInProgram.Columns(1).Width = 70
+        dataGridModulsInProgram.Columns(2).Width = 68
+
+        'dataGridModulsInProgram.ClearSelection()
+
+    End Sub
+
+    Private Sub programs__loadModul()
+
+        program.program__loadModul()
+        DataGridAllModuls.DataSource = program.struct_progs.tbl_moduls
+        programs__tblAllModulsResize()
+
+    End Sub
+
+    Private Sub programs__tblAllModulsResize()
+
+        If DataGridAllModuls.Columns.Count < 3 Then
+
+            Return
+
+        End If
+
+        DataGridAllModuls.Columns(0).Width = DataGridAllModuls.Width - 130
         DataGridAllModuls.Columns(1).Width = 70
         DataGridAllModuls.Columns(2).Width = 70
+
+        'DataGridAllModuls.ClearSelection()
+
+    End Sub
+
+    Private Sub DataGridAllModuls_Resize(sender As Object, e As EventArgs) Handles DataGridAllModuls.Resize
+
+        programs__tblAllModulsResize()
+
+    End Sub
+
+    Private Sub dataGridModuls_Resize(sender As Object, e As EventArgs) Handles dataGridModulsInProgram.Resize
+
+        programs__tblModulInProgramResize()
 
     End Sub
 
     Private Sub ToolStripTop_Click(sender As Object, e As EventArgs) Handles ToolStripTop.Click
 
-        dataGridModuls.Focus()
+        dataGridModulsInProgram.Focus()
 
-        If IsNothing(dataGridModuls.CurrentCell) Then
+        If IsNothing(dataGridModulsInProgram.CurrentCell) Then
             Return
         End If
         Dim selectedRow As Int32
-        selectedRow = dataGridModuls.CurrentCell.RowIndex
+        selectedRow = dataGridModulsInProgram.CurrentCell.RowIndex
         If selectedRow < 1 Then
             Return
         End If
 
-        programm.updateMudulsTop(Convert.ToString(dataGridModuls.Rows(selectedRow).Cells(2).Value))
+        program.program__updateMudulsTop(Convert.ToString(dataGridModulsInProgram.Rows(selectedRow).Cells(2).Value))
 
-        loadModulsInProgramm()
+        programs__loadModulsInProgramm()
 
-        If IsNothing(dataGridModuls.Rows(selectedRow - 1)) Then
+        If IsNothing(dataGridModulsInProgram.Rows(selectedRow - 1)) Then
             Return
         End If
 
-        dataGridModuls.CurrentCell = dataGridModuls.Rows(selectedRow - 1).Cells(0)
+        dataGridModulsInProgram.CurrentCell = dataGridModulsInProgram.Rows(selectedRow - 1).Cells(0)
 
     End Sub
 
     Private Sub ToolStripBottom_Click(sender As Object, e As EventArgs) Handles ToolStripBottom.Click
-        dataGridModuls.Focus()
+        dataGridModulsInProgram.Focus()
         Dim selectedRow As Int32
-        If IsNothing(dataGridModuls.CurrentCell) Then
+        If IsNothing(dataGridModulsInProgram.CurrentCell) Then
             Return
         End If
-        selectedRow = dataGridModuls.CurrentCell.RowIndex
-        If selectedRow >= dataGridModuls.Rows.Count - 1 Then
-            Return
-        End If
-
-        programm.updateMudulsBottom(Convert.ToString(dataGridModuls.Rows(selectedRow).Cells(2).Value))
-
-        loadModulsInProgramm()
-
-        If IsNothing(dataGridModuls.Rows(selectedRow + 1)) Then
+        selectedRow = dataGridModulsInProgram.CurrentCell.RowIndex
+        If selectedRow >= dataGridModulsInProgram.Rows.Count - 1 Then
             Return
         End If
 
-        dataGridModuls.CurrentCell = dataGridModuls.Rows(selectedRow + 1).Cells(0)
+        program.program__updateMudulsBottom(Convert.ToString(dataGridModulsInProgram.Rows(selectedRow).Cells(2).Value))
+
+        programs__loadModulsInProgramm()
+
+        If IsNothing(dataGridModulsInProgram.Rows(selectedRow + 1)) Then
+            Return
+        End If
+
+        dataGridModulsInProgram.CurrentCell = dataGridModulsInProgram.Rows(selectedRow + 1).Cells(0)
 
     End Sub
 
     Private Sub addMidulInGroupp_Click(sender As Object, e As EventArgs) Handles addMidulInGroupp.Click
-        dataGridModuls.Focus()
+        dataGridModulsInProgram.Focus()
 
         If IsNothing(DataGridAllModuls.CurrentCell) Then
             Return
@@ -3748,30 +3959,30 @@ Public Class ААОсновная
         If Not (IsNumeric(DataGridAllModuls.Rows(selectedRow).Cells(2).Value)) Then
             Return
         End If
-        programm.updateMudulsInGroup(Convert.ToString(DataGridAllModuls.Rows(selectedRow).Cells(2).Value))
+        program.program__updateMudulsInGroup(Convert.ToString(DataGridAllModuls.Rows(selectedRow).Cells(2).Value))
 
-        loadModulsInProgramm()
+        programs__loadModulsInProgramm()
 
     End Sub
 
-    Private Sub dataGridModuls_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles dataGridModuls.CellDoubleClick
+    Private Sub dataGridModuls_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles dataGridModulsInProgram.CellDoubleClick
 
-        If dataGridModuls.Rows.Count < 0 Then
+        If dataGridModulsInProgram.Rows.Count < 0 Then
             Return
-        ElseIf Convert.ToString(dataGridModuls.Rows(0).Cells(0).Value) = "" Then
+        ElseIf Convert.ToString(dataGridModulsInProgram.Rows(0).Cells(0).Value) = "" Then
             Return
         End If
 
-        Dim curNumber = dataGridModuls.CurrentCell.RowIndex
+        Dim curNumber = dataGridModulsInProgram.CurrentCell.RowIndex
 
-        red_moduls.Text = Convert.ToString(dataGridModuls.Rows(curNumber).Cells(1).Value)
+        red_moduls.Text = Convert.ToString(dataGridModulsInProgram.Rows(curNumber).Cells(1).Value)
         red_moduls.BackColor = Color.AliceBlue
-        programm.struct_progs.flag_update_modInProg = True
-        programm.struct_progs.name_current_modul = Convert.ToString(dataGridModuls.Rows(curNumber).Cells(0).Value)
-        programm.struct_progs.modul_kod = Convert.ToString(dataGridModuls.Rows(curNumber).Cells(2).Value)
+        program.struct_progs.flag_update_modInProg = True
+        program.struct_progs.name_current_modul = Convert.ToString(dataGridModulsInProgram.Rows(curNumber).Cells(0).Value)
+        program.struct_progs.modul_kod = Convert.ToString(dataGridModulsInProgram.Rows(curNumber).Cells(2).Value)
 
-        SplitModulsInProg.Panel2Collapsed = False
-        SplitModulsInProg.SplitterDistance = SplitModulsInProg.Height * 2 / 3
+        programms__SplitModulsInProg.Panel2Collapsed = False
+        programms__SplitModulsInProg.SplitterDistance = programms__SplitModulsInProg.Height * 2 / 3
         red_moduls.Focus()
 
     End Sub
@@ -3791,48 +4002,48 @@ Public Class ААОсновная
                 Return
             End If
 
-            If programm.struct_progs.flag_update_modInProg Then
-                programm.updateModul(red_moduls.Text)
+            If program.struct_progs.flag_update_modInProg Then
+                program.program__updateModul(red_moduls.Text)
             End If
 
-            loadModulsInProgramm()
+            programs__loadModulsInProgramm()
 
-            numberRow = ДействияСДатаГрид.dataGridViewSearchRow(dataGridModuls.Rows, 2, programm.struct_progs.modul_kod)
-            dataGridModuls.CurrentCell = dataGridModuls.Rows(numberRow).Cells(0)
-            dataGridModuls.Rows(numberRow).Cells(0).Selected = True
+            numberRow = RedactorDataGrid.dataGridViewSearchRow(dataGridModulsInProgram.Rows, 2, program.struct_progs.modul_kod)
+            dataGridModulsInProgram.CurrentCell = dataGridModulsInProgram.Rows(numberRow).Cells(0)
+            dataGridModulsInProgram.Rows(numberRow).Cells(0).Selected = True
 
         End If
 
         If e.KeyValue = Keys.Escape Then
 
-            programm.struct_progs.flagEscape = True
-            programm.struct_progs.flag_update_modInProg = False
+            program.struct_progs.flagEscape = True
+            program.struct_progs.flag_update_modInProg = False
             red_moduls.Clear()
             red_moduls.BackColor = Color.White
-            SplitModulsInProg.Panel2Collapsed = True
-            dataGridModuls.Focus()
+            programms__SplitModulsInProg.Panel2Collapsed = True
+            dataGridModulsInProgram.Focus()
 
         End If
 
     End Sub
 
-    Private Sub dataGridModuls_KeyDown(sender As Object, e As KeyEventArgs) Handles dataGridModuls.KeyDown
+    Private Sub dataGridModuls_KeyDown(sender As Object, e As KeyEventArgs) Handles dataGridModulsInProgram.KeyDown
 
         If e.KeyValue = Keys.Tab Then
 
-            ToolStrip3.Focus()
+            toolStripModulsInProg.Focus()
             ToolStripTop.Select()
             e.Handled = True
 
         ElseIf e.KeyValue = Keys.Right Then
 
-            ToolStrip3.Focus()
+            toolStripModulsInProg.Focus()
             ToolStripTop.Select()
             e.Handled = True
 
         ElseIf e.KeyValue = Keys.Left Then
 
-            programms_tbl.Focus()
+            programs__progrs_tbl.Focus()
             e.Handled = True
 
         ElseIf e.KeyValue = Keys.R Then
@@ -3850,18 +4061,18 @@ Public Class ААОсновная
 
     End Sub
 
-    Private Sub dataGridModuls_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs) Handles dataGridModuls.PreviewKeyDown
+    Private Sub dataGridModuls_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs) Handles dataGridModulsInProgram.PreviewKeyDown
 
         If e.KeyValue = Keys.Delete Then
 
-            Dim curNumber = dataGridModuls.CurrentCell.RowIndex
-            programm.struct_progs.modul_kod = Convert.ToString(dataGridModuls.Rows(curNumber).Cells(2).Value)
+            Dim curNumber = dataGridModulsInProgram.CurrentCell.RowIndex
+            program.struct_progs.modul_kod = Convert.ToString(dataGridModulsInProgram.Rows(curNumber).Cells(2).Value)
 
-            programm.deleteModul_prog()
-            loadModulsInProgramm()
+            program.program__deleteModul_prog()
+            programs__loadModulsInProgramm()
 
             If (curNumber <> 0) Then
-                dataGridModuls.CurrentCell = dataGridModuls.Rows(curNumber - 1).Cells(0)
+                dataGridModulsInProgram.CurrentCell = dataGridModulsInProgram.Rows(curNumber - 1).Cells(0)
             End If
 
         ElseIf e.KeyValue = Keys.Tab Then
@@ -3880,18 +4091,32 @@ Public Class ААОсновная
     End Sub
 
     Public Sub SplitContainerProgs_Leave(sender As Object, e As EventArgs)
+
         progsIndicator.Image = ImageList1.Images(8)
-        programm.struct_progs.flag_update = False
-        programm.struct_progs.flagEscape = True
+        program.struct_progs.flag_update = False
+        program.struct_progs.flagEscape = True
 
     End Sub
 
-    Public Sub SplitModulsInProg_Leave(sender As Object, e As EventArgs) Handles SplitModulsInProg.Leave
-        modulInProgsIndicator.Image = ImageList1.Images(8)
-        programm.struct_progs.flagEscape = True
-        SplitModulsInProg.Panel2Collapsed = True
+    Public Sub SplitModulsInProg_Leave(sender As Object, e As EventArgs) Handles programms__SplitModulsInProg.Leave
+
+        modulInProgsIndicatorOn(False)
+        program.struct_progs.flagEscape = True
+        programms__SplitModulsInProg.Panel2Collapsed = True
         red_moduls.Clear()
         red_moduls.BackColor = Color.White
+        programs_type_tbl.DataGridTablesResult.ClearSelection()
+
+    End Sub
+
+    Private Sub modulInProgsIndicatorOn(val As Boolean)
+
+        If val Then
+            modulInProgsIndicator.Image = ImageList1.Images(9)
+        Else
+            modulInProgsIndicator.Image = ImageList1.Images(8)
+        End If
+
 
     End Sub
 
@@ -3924,16 +4149,16 @@ Public Class ААОсновная
             newModAddName.Select(newModAddName.Text.Length, 0)
             SendKeys.Send("{BACKSPACE}")
 
-            If Not programm.struct_progs.flag_update_modul Then
-                programm.addNewModul(newModAddName.Text, newModAddHour.Text)
-                loadModul()
-                programm.struct_progs.modul_kod_inModuls = programm.loadLastKodModul(newModAddName.Text)
+            If Not program.struct_progs.flag_update_modul Then
+                program.program__addNewModul(newModAddName.Text, newModAddHour.Text)
+                programs__loadModul()
+                program.struct_progs.modul_kod_inModuls = program.program__loadLastKodModul(newModAddName.Text)
             Else
-                programm.updateModuliNModuls(newModAddName.Text, newModAddHour.Text)
-                loadModul()
+                program.program__updateModuliNModuls(newModAddName.Text, newModAddHour.Text)
+                programs__loadModul()
             End If
 
-            Dim numberRow As String = ДействияСДатаГрид.dataGridViewSearchRow(DataGridAllModuls.Rows, 2, programm.struct_progs.modul_kod_inModuls)
+            Dim numberRow As String = RedactorDataGrid.dataGridViewSearchRow(DataGridAllModuls.Rows, 2, program.struct_progs.modul_kod_inModuls)
             DataGridAllModuls.CurrentCell = DataGridAllModuls.Rows(numberRow).Cells(0)
             DataGridAllModuls.Rows(numberRow).Cells(0).Selected = True
 
@@ -3941,15 +4166,15 @@ Public Class ААОсновная
 
         If e.KeyValue = Keys.Escape Then
 
-            programm.struct_progs.flagEscape = True
-            programm.struct_progs.flag_update_modul = False
+            program.struct_progs.flagEscape = True
+            program.struct_progs.flag_update_modul = False
 
             newModAddName.Clear()
             newModAddHour.Clear()
             newModAddName.BackColor = Color.White
             newModAddHour.BackColor = Color.White
 
-            SplitContainerModuls.Panel2Collapsed = True
+            programms__SplitContainerModuls.Panel2Collapsed = True
             DataGridAllModuls.Focus()
 
         End If
@@ -3964,31 +4189,31 @@ Public Class ААОсновная
             newModAddHour.Select(newModAddHour.Text.Length, 0)
             SendKeys.Send("{BACKSPACE}")
 
-            If Not programm.struct_progs.flag_update_modul Then
-                programm.addNewModul(newModAddName.Text, newModAddHour.Text)
-                loadModul()
-                programm.struct_progs.modul_kod_inModuls = programm.loadLastKodModul(newModAddName.Text)
+            If Not program.struct_progs.flag_update_modul Then
+                program.program__addNewModul(newModAddName.Text, newModAddHour.Text)
+                programs__loadModul()
+                program.struct_progs.modul_kod_inModuls = program.program__loadLastKodModul(newModAddName.Text)
             Else
-                programm.updateModuliNModuls(newModAddName.Text, newModAddHour.Text)
-                loadModul()
+                program.program__updateModuliNModuls(newModAddName.Text, newModAddHour.Text)
+                programs__loadModul()
             End If
 
-            numberRow = ДействияСДатаГрид.dataGridViewSearchRow(DataGridAllModuls.Rows, 2, programm.struct_progs.modul_kod_inModuls)
+            numberRow = RedactorDataGrid.dataGridViewSearchRow(DataGridAllModuls.Rows, 2, program.struct_progs.modul_kod_inModuls)
             DataGridAllModuls.CurrentCell = DataGridAllModuls.Rows(numberRow).Cells(0)
             DataGridAllModuls.Rows(numberRow).Cells(0).Selected = True
 
         ElseIf e.KeyValue = Keys.Escape Then
 
-            programm.struct_progs.flagEscape = True
-            programm.struct_progs.flag_update_modul = False
+            program.struct_progs.flagEscape = True
+            program.struct_progs.flag_update_modul = False
 
             newModAddName.Clear()
             newModAddHour.Clear()
             newModAddName.BackColor = Color.White
             newModAddHour.BackColor = Color.White
 
-            SplitContainerModuls.Panel1.Focus()
-            SplitContainerModuls.Panel2Collapsed = True
+            programms__SplitContainerModuls.Panel1.Focus()
+            programms__SplitContainerModuls.Panel2Collapsed = True
 
         ElseIf e.KeyValue = Keys.Tab Then
 
@@ -4012,35 +4237,35 @@ Public Class ААОсновная
             Return
         End If
 
-        programm.struct_progs.modul_kod_inModuls = Convert.ToString(DataGridAllModuls.Rows(curNumber).Cells(2).Value)
+        program.struct_progs.modul_kod_inModuls = Convert.ToString(DataGridAllModuls.Rows(curNumber).Cells(2).Value)
 
         newModAddName.Text = Convert.ToString(DataGridAllModuls.Rows(curNumber).Cells(0).Value)
         newModAddName.BackColor = Color.AliceBlue
         newModAddHour.Text = Convert.ToString(DataGridAllModuls.Rows(curNumber).Cells(1).Value)
         newModAddHour.BackColor = Color.AliceBlue
 
-        programm.struct_progs.flag_update_modul = True
+        program.struct_progs.flag_update_modul = True
 
-        SplitContainerModuls.Panel2Collapsed = False
-        SplitContainerModuls.SplitterDistance = SplitContainerModuls.Height * 2 / 3
+        programms__SplitContainerModuls.Panel2Collapsed = False
+        programms__SplitContainerModuls.SplitterDistance = programms__SplitContainerModuls.Height * 2 / 3
         newModAddName.Focus()
 
     End Sub
 
-    Private Sub SplitContainerModuls_Leave(sender As Object, e As EventArgs) Handles SplitContainerModuls.Leave
+    Private Sub SplitContainerModuls_Leave(sender As Object, e As EventArgs) Handles programms__SplitContainerModuls.Leave
         modulIndicator.Image = ImageList1.Images(8)
-        programm.struct_progs.flag_update_modul = False
+        program.struct_progs.flag_update_modul = False
 
         newModAddName.Clear()
         newModAddHour.Clear()
         newModAddName.BackColor = Color.White
         newModAddHour.BackColor = Color.White
 
-        SplitContainerModuls.Panel2Collapsed = True
+        programms__SplitContainerModuls.Panel2Collapsed = True
 
     End Sub
 
-    Private Sub SplitModulsInProg_KeyDown(sender As Object, e As KeyEventArgs) Handles SplitModulsInProg.KeyDown
+    Private Sub SplitModulsInProg_KeyDown(sender As Object, e As KeyEventArgs) Handles programms__SplitModulsInProg.KeyDown
 
         red_moduls_KeyDown(sender, e)
 
@@ -4069,9 +4294,9 @@ Public Class ААОсновная
 
             ФормаДаНетУдалить.текстДаНет.Text = "Такая запись уже найдена. Заменить информацию в базе?"
 
-            programm.deleteModul(DataGridAllModuls.Rows(curNumber).Cells(2).Value)
-            loadModul()
-            loadModulsInProgramm()
+            program.program__deleteModul(DataGridAllModuls.Rows(curNumber).Cells(2).Value)
+            programs__loadModul()
+            programs__loadModulsInProgramm()
 
             If (curNumber <> 0) Then
                 DataGridAllModuls.CurrentCell = DataGridAllModuls.Rows(curNumber - 1).Cells(0)
@@ -4089,7 +4314,7 @@ Public Class ААОсновная
 
         If password.Text = password0 Then
 
-            SplitContainer4.Visible = True
+            programms__splitMainConteiner.Visible = True
             password.Visible = False
             comboBoxProgramms.Focus()
 
@@ -4099,20 +4324,25 @@ Public Class ААОсновная
 
     Private Sub dataGridProgs_SelectionChanged(sender As Object, e As EventArgs)
 
-        loadModulsInProgramm()
+        programs__loadModulsInProgramm()
 
     End Sub
 
     Private Sub SplitContainerProgs_Enter(sender As Object, e As EventArgs)
+
         progsIndicator.Image = ImageList1.Images(9)
+
     End Sub
 
-    Private Sub SplitContainerModuls_Enter(sender As Object, e As EventArgs) Handles SplitContainerModuls.Enter
+    Private Sub SplitContainerModuls_Enter(sender As Object, e As EventArgs) Handles programms__SplitContainerModuls.Enter
         modulIndicator.Image = ImageList1.Images(9)
     End Sub
 
-    Private Sub SplitModulsInProg_Enter(sender As Object, e As EventArgs) Handles SplitModulsInProg.Enter
-        modulInProgsIndicator.Image = ImageList1.Images(9)
+    Private Sub SplitModulsInProg_Enter(sender As Object, e As EventArgs) Handles programms__SplitModulsInProg.Enter
+
+        modulInProgsIndicatorOn(True)
+        'modulInProgsIndicator.Image = ImageList1.Images(9)
+
     End Sub
 
     Private Sub ДиректорФИО_TextChanged(sender As Object, e As EventArgs) Handles ДиректорФИО.TextChanged
@@ -4261,7 +4491,7 @@ Public Class ААОсновная
         tbl_obrazovanie.Dock = DockStyle.Fill
         tbl_obrazovanie.number_column = 1
 
-        tbl_obrazovanie.queryString_load = sqlQueryString.load_list_doljnosti()
+        tbl_obrazovanie.queryString_load = program__sqlQueryString.load_list_doljnosti()
 
         tbl_obrazovanie.persent_width_column_0 = 100
         tbl_obrazovanie.persent_width_column_1 = 0
@@ -4310,7 +4540,7 @@ Public Class ААОсновная
         tbl_obrazovanie.Dock = DockStyle.Fill
         tbl_obrazovanie.number_column = 2
 
-        tbl_obrazovanie.queryString_load = sqlQueryString.load_list_organization()
+        tbl_obrazovanie.queryString_load = program__sqlQueryString.load_list_organization()
 
         tbl_obrazovanie.persent_width_column_0 = 30
         tbl_obrazovanie.persent_width_column_1 = 70
@@ -4422,7 +4652,7 @@ Public Class ААОсновная
         If worker.worker_struct.kod = -1 Then
             Return
         End If
-        numberRow = ДействияСДатаГрид.dataGridViewSearchRow(DataGridView_list.Rows, 6, Convert.ToString(worker.worker_struct.kod))
+        numberRow = RedactorDataGrid.dataGridViewSearchRow(DataGridView_list.Rows, 6, Convert.ToString(worker.worker_struct.kod))
         DataGridView_list.CurrentCell = DataGridView_list.Rows(numberRow).Cells(0)
         DataGridView_list.Rows(numberRow).Cells(0).Selected = True
     End Sub
@@ -4789,7 +5019,7 @@ Public Class ААОсновная
 
         ElseIf e.KeyValue = Keys.Left Then
 
-            ToolStrip3.Focus()
+            toolStripModulsInProg.Focus()
             addMidulInGroupp.Select()
 
         ElseIf e.KeyValue = Keys.R Then
@@ -4802,7 +5032,7 @@ Public Class ААОсновная
 
     End Sub
 
-    Private Sub ToolStrip2_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs) Handles ToolStrip2.PreviewKeyDown
+    Private Sub ToolStrip2_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs) Handles toolStripProgram.PreviewKeyDown
 
         If e.KeyValue = Keys.Tab Then
 
@@ -4812,11 +5042,11 @@ Public Class ААОсновная
 
     End Sub
 
-    Private Sub ToolStrip2_KeyDown(sender As Object, e As KeyEventArgs) Handles ToolStrip2.KeyDown
+    Private Sub ToolStrip2_KeyDown(sender As Object, e As KeyEventArgs) Handles toolStripProgram.KeyDown
 
         If e.KeyValue = Keys.Tab Then
 
-            ActiveControl = programms_tbl
+            ActiveControl = programs__progrs_tbl
             e.Handled = True
 
         End If
@@ -4835,7 +5065,7 @@ Public Class ААОсновная
 
     End Sub
 
-    Private Sub ToolStrip3_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs) Handles ToolStrip3.PreviewKeyDown
+    Private Sub ToolStrip3_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs) Handles toolStripModulsInProg.PreviewKeyDown
 
         If e.KeyValue = Keys.Tab Then
 
@@ -4854,7 +5084,7 @@ Public Class ААОсновная
 
     End Sub
 
-    Private Sub ToolStrip3_KeyDown(sender As Object, e As KeyEventArgs) Handles ToolStrip3.KeyDown
+    Private Sub ToolStrip3_KeyDown(sender As Object, e As KeyEventArgs) Handles toolStripModulsInProg.KeyDown
 
         If e.KeyValue = Keys.Tab Then
 
@@ -4863,7 +5093,7 @@ Public Class ААОсновная
 
         ElseIf e.KeyValue = Keys.Left Then
 
-            ActiveControl = dataGridModuls
+            ActiveControl = dataGridModulsInProgram
             e.Handled = True
 
         ElseIf e.KeyValue = Keys.Right Then
@@ -5124,7 +5354,32 @@ Public Class ААОсновная
 
     End Sub
 
-    Private Sub programms_tbl_Click(sender As Object, e As EventArgs)
+    Private Sub dataGridModuls_Leave(sender As Object, e As EventArgs) Handles dataGridModulsInProgram.Leave
+
+        'dataGridModulsInProgram.ClearSelection()
 
     End Sub
+
+    Private Sub DataGridAllModuls_Leave(sender As Object, e As EventArgs) Handles DataGridAllModuls.Leave
+
+        'DataGridAllModuls.ClearSelection()
+
+    End Sub
+
+    Private Sub dataGridModuls_Enter(sender As Object, e As EventArgs) Handles dataGridModulsInProgram.Enter
+
+        If Not IsNothing(dataGridModulsInProgram.CurrentCell) Then
+
+            dataGridModulsInProgram.CurrentCell.Selected = True
+
+        End If
+
+    End Sub
+
+    Private Sub DataGridAllModuls_Enter(sender As Object, e As EventArgs) Handles DataGridAllModuls.Enter
+
+        DataGridAllModuls.CurrentCell.Selected = True
+
+    End Sub
+
 End Class

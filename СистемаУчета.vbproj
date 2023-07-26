@@ -186,7 +186,7 @@
     <Compile Include="Приложение\ПриказыКниги\Приказ_Отчисление.vb" />
     <Compile Include="Приложение\ПриказыКниги\Приказ_Зачисление.vb" />
     <Compile Include="Приложение\Отчеты\ПеднагрузкаОтчет.vb" />
-    <Compile Include="Приложение\Интерфейс\ДействияСДатаГрид.vb" />
+    <Compile Include="Приложение\Интерфейс\RedactorDataGrid.vb" />
     <Compile Include="Приложение\ПриказыКниги\Приказ_Практика.vb" />
     <Compile Include="Приложение\Формы\ВедомостьПеднагрузка.Designer.vb">
       <DependentUpon>ВедомостьПеднагрузка.vb</DependentUpon>

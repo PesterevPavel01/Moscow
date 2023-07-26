@@ -24,6 +24,7 @@ Public Class Programm
         Dim tbl_moduls As DataTable
         Dim list_moduls As List(Of modul_struct)
         Dim list_hours As String()
+        Dim list_types As String()
     End Structure
 
     Public Structure modul_struct
@@ -31,26 +32,40 @@ Public Class Programm
         Dim hours As Double
     End Structure
 
-    Public Sub load_hours_list()
+    Public Sub program_loadHoursList()
 
         Dim queryString As String
-        queryString = sqlQueryString.loadHours(struct_progs.program_kod)
+        queryString = sqlQueryString.program__loadHours(struct_progs.program_kod)
         struct_progs.list_hours = mySQLConnector.ЗагрузитьИзMySQLвОдномерныйМассив(queryString, 1, 0)
 
     End Sub
 
-    Public Function loadProgramms() As String
+    Public Sub program__loadTypelist()
+
         Dim queryString As String
-        queryString = sqlQueryString.loadProgramms(uroven_cval)
+        queryString = sqlQueryString.program__loadTypeList()
+        struct_progs.list_types = mySQLConnector.ЗагрузитьИзMySQLвОдномерныйМассив(queryString, 1, 0)
+
+    End Sub
+
+    Public Function program__loadTypes() As String
+        Dim queryString As String
+        queryString = sqlQueryString.program__loadTypes(struct_progs.program_kod)
         Return queryString
     End Function
 
-    Public Sub loadModulAndHours()
+    Public Function programm__loadProgramms() As String
+        Dim queryString As String
+        queryString = sqlQueryString.program__loadProgramms(uroven_cval)
+        Return queryString
+    End Function
+
+    Public Sub program__loadModulAndHours()
 
         Dim result() As String
 
         Dim queryString As String
-        queryString = sqlQueryString.loadModulsAndHours(struct_progs.program_kod)
+        queryString = sqlQueryString.program__loadModulsAndHours(struct_progs.program_kod)
         struct_progs.tbl_modulsInProgs = mySQLConnector.ЗагрузитьИзMySQLвDataTable(queryString, 1)
 
         queryString = sqlQueryString.load_sum_hours(struct_progs.program_kod)
@@ -73,13 +88,15 @@ Public Class Programm
 
     End Sub
 
-    Public Sub loadModul()
+    Public Sub program__loadModul()
+
         Dim queryString As String
-        queryString = sqlQueryString.loadModuls()
+        queryString = sqlQueryString.program__loadModuls()
         struct_progs.tbl_moduls = mySQLConnector.ЗагрузитьИзMySQLвDataTable(queryString, 1)
+
     End Sub
 
-    Public Sub updateModul(hours As String)
+    Public Sub program__updateModul(hours As String)
         Dim queryString As String
         If Not IsNumeric(struct_progs.modul_kod) Then
             Return
@@ -88,13 +105,13 @@ Public Class Programm
         mySQLConnector.ОтправитьВбдЗапись(queryString, 1)
     End Sub
 
-    Public Sub addProgramm(programm As String)
+    Public Sub program__addProgramm(programm As String)
         Dim queryString As String
         queryString = sqlQueryString.addProgramm(programm, uroven_cval)
         mySQLConnector.ОтправитьВбдЗапись(queryString, 1)
     End Sub
 
-    Public Function loadLastKodProgramm(programm As String) As String
+    Public Function program__loadLastKodProgramm(programm As String) As String
         Dim queryString As String
         Dim result As List(Of String)
         Dim kod As String
@@ -106,7 +123,7 @@ Public Class Programm
         Return kod
     End Function
 
-    Public Function loadLastKodModul(modul As String) As String
+    Public Function program__loadLastKodModul(modul As String) As String
         Dim queryString As String
         Dim result As List(Of String)
         Dim kod As String
@@ -118,7 +135,7 @@ Public Class Programm
         Return kod
     End Function
 
-    Public Function loadLastKodModulInProgramm(modul As String) As String
+    Public Function program__loadLastKodModulInProgramm(modul As String) As String
         Dim queryString As String
         Dim result As List(Of String)
         Dim kod As String
@@ -130,7 +147,7 @@ Public Class Programm
         Return kod
     End Function
 
-    Public Sub deleteModul_prog()
+    Public Sub program__deleteModul_prog()
         If Not IsNumeric(struct_progs.program_kod) Then
             Return
         End If
@@ -139,19 +156,20 @@ Public Class Programm
         mySQLConnector.ОтправитьВбдЗапись(queryString, 1)
     End Sub
 
-    Public Sub updateProgramm(programm As String)
+    Public Sub program__updateProgramm(programm As String)
         Dim queryString As String
         queryString = sqlQueryString.updateProgramm(programm, struct_progs.program_kod_update)
         mySQLConnector.ОтправитьВбдЗапись(queryString, 1)
     End Sub
 
-    Public Sub deleteProgramm()
+    Public Sub program__deleteProgramm()
         Dim queryString As String
         queryString = sqlQueryString.deleteProgramm(struct_progs.program_kod)
         mySQLConnector.ОтправитьВбдЗапись(queryString, 1)
     End Sub
 
-    Public Function updateMudulsTop(modul_kod As String) As Boolean
+    Public Function program__updateMudulsTop(modul_kod As String) As Boolean
+
         Dim status As Boolean = False
         Dim number As List(Of List(Of String))
         Dim QueryString As String
@@ -168,7 +186,8 @@ Public Class Programm
         Return True
     End Function
 
-    Public Function updateMudulsBottom(modul_kod As String) As Boolean
+    Public Function program__updateMudulsBottom(modul_kod As String) As Boolean
+
         Dim status As Boolean = False
         Dim number As List(Of List(Of String))
         Dim QueryString As String
@@ -180,36 +199,43 @@ Public Class Programm
         QueryString = sqlQueryString.updateModulnumber(number, struct_progs.program_kod)
         mySQLConnector.ОтправитьВбдЗапись(QueryString, 1)
         Return True
+
     End Function
 
-    Public Sub updateMudulsInGroup(modul_kod As String)
+    Public Sub program__updateMudulsInGroup(modul_kod As String)
         Dim QueryString As String
         QueryString = sqlQueryString.insertModulIntoProg(struct_progs.program_kod, modul_kod)
         mySQLConnector.ОтправитьВбдЗапись(QueryString, 1)
     End Sub
 
-    Public Sub addNewModul(name As String, hours As String)
+    Public Sub program__addNewModul(name As String, hours As String)
+
         Dim QueryString As String
         If Not IsNumeric(hours) Then
             Return
         End If
         QueryString = sqlQueryString.insertModul(name, hours)
         mySQLConnector.ОтправитьВбдЗапись(QueryString, 1)
+
     End Sub
 
-    Public Sub updateModuliNModuls(name As String, hours As String)
-        Dim QueryString As String
+    Public Sub program__updateModuliNModuls(name As String, hours As String)
+
+        Dim queryString As String
         If Not IsNumeric(hours) Then
             Return
         End If
-        QueryString = sqlQueryString.updateModul(name, hours, struct_progs.modul_kod_inModuls)
-        mySQLConnector.ОтправитьВбдЗапись(QueryString, 1)
+        queryString = sqlQueryString.updateModul(name, hours, struct_progs.modul_kod_inModuls)
+        mySQLConnector.ОтправитьВбдЗапись(queryString, 1)
+
     End Sub
 
-    Public Sub deleteModul(kod As String)
+    Public Sub program__deleteModul(kod As String)
+
         Dim queryString As String
         queryString = sqlQueryString.deleteModul(kod)
         mySQLConnector.ОтправитьВбдЗапись(queryString, 1)
+
     End Sub
 
 End Class
