@@ -1274,7 +1274,7 @@ Public Class ААОсновная
             dataGridModulsInProgram.Focus()
             e.Handled = True
 
-        ElseIf programs_type_tbl.DataGridTablesResult.CurrentCell.RowIndex < 1 Then
+        ElseIf programs_type_tbl.DataGridTablesResult.CurrentCell.RowIndex < 1 And programs_type_tbl.active_last_element Then  'Если выделенна первая строчка в таблице и не активен редактор
 
             dataGridModulsInProgram.Focus()
             e.Handled = True
@@ -3694,8 +3694,6 @@ Public Class ААОсновная
         programs_type_tbl.type_progs_on = True
         programs_type_tbl.add_on = False
 
-        programs_type_tbl.queryString_load = program.program__loadTypes()
-
         programs_type_tbl.persent_width_column_0 = 78
         programs_type_tbl.persent_width_column_1 = 20
         programs_type_tbl.persent_width_column_2 = 0
@@ -3705,31 +3703,31 @@ Public Class ААОсновная
 
         programs_type_tbl.names.redactor_element_first = "Часы"
         programs_type_tbl.names.db_element_first = "hours"
-        'programms_type_tbl.names.redactor_element_second = ""
-        'programms_type_tbl.names.db_element_second = "name"
         programs_type_tbl.name_table = "progs_type_hours"
 
-        program.program__loadTypelist()
+        AddHandler programs_type_tbl.Enter, AddressOf programs__type_tbl_Enter
+        AddHandler programs_type_tbl.Leave, AddressOf programs__type_tbl_Leave
 
-        programs_type_tbl.comboBox_second_element.settings.item_list = program.struct_progs.list_types
-
-        programs_type_tbl.table_init()
-
-        programs_type_tbl.DataGridTablesResult.ClearSelection()
-
-        AddHandler programs_type_tbl.Enter, AddressOf programs_type_tbl_Enter
-        AddHandler programs_type_tbl.Leave, AddressOf programs_type_tbl_Leave
+        programs__tblTypeUpdateContent()
 
     End Sub
 
-    Private Sub programs_type_tbl_Leave(sender As Object, e As EventArgs)
+    Public Sub programs__tblTypeUpdateContent()
+
+        programs_type_tbl.queryString_load = program.program__loadTypes()
+        programs_type_tbl.table_init()
+        programs_type_tbl.DataGridTablesResult.ClearSelection()
+
+    End Sub
+
+    Private Sub programs__type_tbl_Leave(sender As Object, e As EventArgs)
 
         modulInProgsIndicatorOn(False)
         programs_type_tbl.DataGridTablesResult.ClearSelection()
 
     End Sub
 
-    Private Sub programs_type_tbl_Enter(sender As Object, e As EventArgs)
+    Private Sub programs__type_tbl_Enter(sender As Object, e As EventArgs)
 
         modulInProgsIndicatorOn(True)
         dataGridModulsInProgram.ClearSelection()
@@ -3819,11 +3817,13 @@ Public Class ААОсновная
     Public Sub programs__loadModulsInProgramm()
 
 
+
         If IsNothing(programs__progrs_tbl.selected_row) Then
 
             Return
 
         End If
+
         If Convert.ToString(programs__progrs_tbl.selected_row.Cells(0).Value).Trim = "" Then
 
             Return
@@ -4543,7 +4543,7 @@ Public Class ААОсновная
         tbl_obrazovanie.queryString_load = program__sqlQueryString.load_list_organization()
 
         tbl_obrazovanie.persent_width_column_0 = 30
-        tbl_obrazovanie.persent_width_column_1 = 70
+        tbl_obrazovanie.persent_width_column_1 = 69
         tbl_obrazovanie.persent_width_column_2 = 0
 
         tbl_obrazovanie.names.redactor_element_first = "Наименование"

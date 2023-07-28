@@ -55,6 +55,7 @@
 
     Private Sub my_ComboBox_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs) Handles my_ComboBox.PreviewKeyDown
 
+
         If e.KeyValue = Keys.Tab Then
 
             e.IsInputKey = True
@@ -75,6 +76,10 @@
 
             e.IsInputKey = True
 
+        ElseIf e.KeyValue = Keys.Enter Then
+
+            e.IsInputKey = True
+
         End If
 
     End Sub
@@ -89,7 +94,14 @@
 
     Private Sub my_ComboBox_KeyDown(sender As Object, e As KeyEventArgs) Handles my_ComboBox.KeyDown
 
-        If my_ComboBox.DroppedDown  Then
+        If my_ComboBox.DroppedDown Then
+
+            If e.KeyCode = Keys.Enter Then
+
+                my_ComboBox.DroppedDown = True
+                e.Handled = True
+
+            End If
 
             Return
 
@@ -113,7 +125,12 @@
 
         If e.KeyChar = Convert.ToChar(Keys.Enter) Then
 
-            If Not ААОсновная.programs__progrs_tbl.redactor_element_first.Text.Trim = "" Then
+            If my_ComboBox.DroppedDown Then
+
+                my_ComboBox.DroppedDown = False
+                Return
+
+            ElseIf Not ААОсновная.programs__progrs_tbl.redactor_element_first.Text.Trim = "" Then
 
                 ААОсновная.programs__progrs_tbl.second_element_pressEnter(e)
                 e.Handled = True

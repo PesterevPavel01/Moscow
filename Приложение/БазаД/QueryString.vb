@@ -805,7 +805,21 @@ Module QueryString
                     FROM `group`
                       INNER JOIN programm
                         ON `group`.kod_programm = programm.kod
-                    WHERE Код= " & kodGroup
+                    WHERE Код= " & kodGroup + "
+                    UNION ALL
+                    SELECT * FROM
+                    (
+                    SELECT
+                      type_class.name,
+                      progs_type_hours.hours
+                    FROM progs_type_hours
+                      INNER JOIN type_class
+                        ON progs_type_hours.type = type_class.kod
+                      INNER JOIN `group`
+                        ON progs_type_hours.kod_prog = `group`.kod_programm
+                    WHERE `group`.Код =" & kodGroup + "
+                    ORDER BY number
+                    ) AS types"
 
         Return sqlString
 
@@ -2292,7 +2306,7 @@ Module QueryString
         Else
             sqlString = " SELECT
                            Programm.name,
-                            MAX(Of Date),
+                            MAX(date),
                             MAX(Programm.kod)
                                  FROM
                          (SELECT 

@@ -331,10 +331,10 @@ Partial Class ААОсновная
         '
         'ToolStripLabel1
         '
-        Me.ToolStripLabel1.Font = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
+        Me.ToolStripLabel1.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
         Me.ToolStripLabel1.ImageAlign = System.Drawing.ContentAlignment.BottomCenter
         Me.ToolStripLabel1.Name = "ToolStripLabel1"
-        Me.ToolStripLabel1.Size = New System.Drawing.Size(147, 45)
+        Me.ToolStripLabel1.Size = New System.Drawing.Size(198, 45)
         Me.ToolStripLabel1.Text = "Уровень квалификации"
         '
         'comboBoxProgramms
@@ -2172,16 +2172,16 @@ Partial Class ААОсновная
         '
         'ToolStripLabel2
         '
-        Me.ToolStripLabel2.Font = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
+        Me.ToolStripLabel2.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
         Me.ToolStripLabel2.ImageAlign = System.Drawing.ContentAlignment.BottomCenter
         Me.ToolStripLabel2.Name = "ToolStripLabel2"
-        Me.ToolStripLabel2.Size = New System.Drawing.Size(56, 45)
+        Me.ToolStripLabel2.Size = New System.Drawing.Size(74, 45)
         Me.ToolStripLabel2.Text = "таблица"
         '
         'ToolStrip_name_list
         '
         Me.ToolStrip_name_list.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.ToolStrip_name_list.Font = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
+        Me.ToolStrip_name_list.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
         Me.ToolStrip_name_list.Items.AddRange(New Object() {"Преподаватели", "Должности", "Организации", "Образование"})
         Me.ToolStrip_name_list.Name = "ToolStrip_name_list"
         Me.ToolStrip_name_list.Size = New System.Drawing.Size(300, 48)

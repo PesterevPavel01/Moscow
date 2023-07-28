@@ -33,6 +33,13 @@ Public Class Tables_control
     Public persent_width_column_2 As Int16 = -1
     Public persent_width_column_3 As Int16 = -1
 
+    Public aligment_column_0 As Int16 = DataGridViewContentAlignment.MiddleLeft
+    Public aligment_column_1 As Int16 = DataGridViewContentAlignment.MiddleLeft
+    Public aligment_column_2 As Int16 = DataGridViewContentAlignment.MiddleLeft
+    Public aligment_column_3 As Int16 = DataGridViewContentAlignment.MiddleLeft
+
+
+
     Public names As New Names
     Public values As New Values
 
@@ -87,54 +94,94 @@ Public Class Tables_control
 
     Private Sub bild_table()
 
-        Dim number_row As Int16 = 0
+        Dim number_col As Int16 = 0
 
         For Each dataGridViewColumn In DataGridTablesResult.Columns
 
-            If number_row = 0 And persent_width_column_0 <> -1 Then
+            If number_col = 0 And persent_width_column_0 <> -1 Then
 
                 dataGridViewColumn.Width = DataGridTablesResult.Width * persent_width_column_0 / 100
+                dataGridViewColumn.DefaultCellStyle.Alignment = aligment_column_0
 
-            ElseIf number_row = 1 And persent_width_column_1 <> -1 Then
+            ElseIf number_col = 1 And persent_width_column_1 <> -1 Then
 
                 If persent_width_column_1 = 0 Then
 
                     dataGridViewColumn.Visible = False
+                    dataGridViewColumn.Width = 0
 
                 Else
 
                     dataGridViewColumn.Width = DataGridTablesResult.Width * persent_width_column_1 / 100
+                    Dim CounterVisibleRows = DataGridTablesResult.DisplayedRowCount(True)
+
+                    If persent_width_column_2 < 1 And persent_width_column_3 < 1 Then
+
+                        If (DataGridTablesResult.DisplayedRowCount(True) = DataGridTablesResult.Rows.Count) Then
+
+                            DataGridTablesResult.Columns(0).Width = DataGridTablesResult.Width - DataGridTablesResult.Columns(1).Width
+
+                        End If
+
+                    End If
+
+                    dataGridViewColumn.DefaultCellStyle.Alignment = aligment_column_1
 
                 End If
 
-
-            ElseIf number_row = 2 And persent_width_column_2 <> -1 Then
+            ElseIf number_col = 2 And persent_width_column_2 <> -1 Then
 
                 If persent_width_column_2 = 0 Then
 
                     dataGridViewColumn.Visible = False
+                    dataGridViewColumn.Width = 0
 
                 Else
 
                     dataGridViewColumn.Width = DataGridTablesResult.Width * persent_width_column_2 / 100
 
+                    If persent_width_column_2 > 0 And persent_width_column_3 < 1 Then
+
+                        If (DataGridTablesResult.DisplayedRowCount(True) = DataGridTablesResult.Rows.Count) Then
+
+                            DataGridTablesResult.Columns(0).Width = DataGridTablesResult.Width - DataGridTablesResult.Columns(1).Width - DataGridTablesResult.Columns(2).Width
+
+                        End If
+
+                    End If
+
+                    dataGridViewColumn.DefaultCellStyle.Alignment = aligment_column_2
+
                 End If
 
-            ElseIf number_row = 3 And persent_width_column_3 <> -1 Then
+            ElseIf number_col = 3 And persent_width_column_3 <> -1 Then
 
                 If persent_width_column_3 = 0 Then
 
                     dataGridViewColumn.Visible = False
+                    dataGridViewColumn.Width = 0
 
                 Else
 
                     dataGridViewColumn.Width = DataGridTablesResult.Width * persent_width_column_3 / 100
 
+                    If persent_width_column_3 > 0 Then
+
+                        If (DataGridTablesResult.DisplayedRowCount(True) = DataGridTablesResult.Rows.Count) Then
+
+                            DataGridTablesResult.Columns(0).Width = DataGridTablesResult.Width - DataGridTablesResult.Columns(1).Width - DataGridTablesResult.Columns(2).Width - DataGridTablesResult.Columns(3).Width
+
+                        End If
+
+                    End If
+
+                    dataGridViewColumn.DefaultCellStyle.Alignment = aligment_column_3
+
                 End If
 
             End If
 
-            number_row += 1
+            number_col += 1
 
         Next
 
@@ -400,6 +447,8 @@ Public Class Tables_control
 
     Private Sub DataGridTables_KeyDown(sender As Object, e As KeyEventArgs) Handles DataGridTablesResult.KeyDown
 
+        Dim result As String()
+
         If e.KeyValue = Keys.Delete Then
 
             Dim curNumber = DataGridTablesResult.CurrentCell.RowIndex
@@ -413,6 +462,20 @@ Public Class Tables_control
             ФормаДаНетУдалить.текстДаНет.Text = "Такая запись уже найдена. Заменить информацию в базе?"
 
             remove_kod = Convert.ToInt64(DataGridTablesResult.Rows(curNumber).Cells(kod_number).Value)
+
+            If programm_on Then
+
+                queryString = ААОсновная.program__sqlQueryString.programs__checkKodGrouppBusy(remove_kod)
+                result = mySQLConnector.ЗагрузитьИзMySQLвОдномерныйМассив(queryString, 1, 0)
+
+                If Convert.ToInt16(result(0)) > 0 Then
+
+                    MsgBox("Программа не может быть удалена, т.к. закреплена за группой", 0, "Ошибка")
+                    Return
+
+                End If
+
+            End If
 
             queryString = ААОсновная.program__sqlQueryString.update_delete_query(programm_on, name_table, ААОсновная.comboBoxProgramms.Text, remove_kod)
 
@@ -646,7 +709,9 @@ Public Class Tables_control
         resAr = mySQLConnector.ЗагрузитьИзMySQLвОдномерныйМассив(queryString, 1, 0)
 
         If Not resAr(0) = "0" Then
+
             Return
+
         End If
 
         If programm_on Then
@@ -658,7 +723,6 @@ Public Class Tables_control
             queryString = ААОсновная.program__sqlQueryString.update_insert_query(number_column, name_table, names.db_element_first, values.element_first, names.db_element_second, values.element_second)
 
         End If
-
 
         mySQLConnector.ОтправитьВбдЗапись(queryString, 1)
 
@@ -735,11 +799,8 @@ Public Class Tables_control
 
     Private Sub response_programms()
 
-        If DataGridTablesResult.SelectedRows.Count > 0 Then
-
-            ААОсновная.programs__loadModulsInProgramm()
-
-        End If
+        ААОсновная.programs__loadModulsInProgramm()
+        ААОсновная.programs__tblTypeUpdateContent()
 
     End Sub
 

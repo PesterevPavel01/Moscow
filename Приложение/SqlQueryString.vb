@@ -592,7 +592,53 @@ sotrudnik.in_list,
 
         queryString = "INSERT INTO " + name_table + " (" + db_element_first + "," + db_element_second + ",uroven_kvalifik)
                        VALUES ('" + values_element_first + "',(SELECT kod FROM kol_chas WHERE name=" + values_element_second + " LIMIT 1)
-                        ,(SELECT kod FROM uroven_kvalifik WHERE name = '" + name_prog + "' LIMIT 1))"
+                        ,(SELECT kod FROM uroven_kvalifik WHERE name = '" + name_prog + "' LIMIT 1));
+                       
+                        INSERT INTO progs_type_hours 
+                        SELECT *
+                        FROM(
+                            SELECT kod,1,0 FROM programm 
+                              WHERE programm.name = '" + values_element_first + "' 
+                              AND programm.uroven_kvalifik = 
+                                (SELECT kod FROM uroven_kvalifik WHERE name = '" + name_prog + "' LIMIT 1) 
+                              AND programm.kod NOT IN (SELECT kod_prog FROM progs_type_hours)
+                            LIMIT 1
+                            ) AS tbl
+                                UNION ALL
+                           (SELECT kod,2,0 FROM programm 
+                            WHERE programm.name = '" + values_element_first + "' 
+                            AND programm.uroven_kvalifik = 
+                                (SELECT kod FROM uroven_kvalifik WHERE name = '" + name_prog + "' LIMIT 1) 
+                            AND programm.kod NOT IN (SELECT kod_prog FROM progs_type_hours)
+                           LIMIT 1)
+                                UNION ALL
+                           (SELECT kod,3,0 FROM programm 
+                            WHERE programm.name = '" + values_element_first + "' 
+                            AND programm.uroven_kvalifik = 
+                                (SELECT kod FROM uroven_kvalifik WHERE name = '" + name_prog + "' LIMIT 1) 
+                            AND programm.kod NOT IN (SELECT kod_prog FROM progs_type_hours)
+                           LIMIT 1)
+                                UNION ALL
+                           (SELECT kod,4,0 FROM programm 
+                            WHERE programm.name = '" + values_element_first + "' 
+                            AND programm.uroven_kvalifik = 
+                                (SELECT kod FROM uroven_kvalifik WHERE name = '" + name_prog + "' LIMIT 1) 
+                            AND programm.kod NOT IN (SELECT kod_prog FROM progs_type_hours)
+                           LIMIT 1)
+                                UNION ALL
+                           (SELECT kod,5,0 FROM programm 
+                            WHERE programm.name = '" + values_element_first + "' 
+                            AND programm.uroven_kvalifik = 
+                                (SELECT kod FROM uroven_kvalifik WHERE name = '" + name_prog + "' LIMIT 1) 
+                            AND programm.kod NOT IN (SELECT kod_prog FROM progs_type_hours)
+                           LIMIT 1)
+                                UNION ALL
+                           (SELECT kod,6,0 FROM programm 
+                            WHERE programm.name = '" + values_element_first + "' 
+                            AND programm.uroven_kvalifik = 
+                                (SELECT kod FROM uroven_kvalifik WHERE name = '" + name_prog + "' LIMIT 1) 
+                            AND programm.kod NOT IN (SELECT kod_prog FROM progs_type_hours)
+                           LIMIT 1)"
 
         Return queryString
 
@@ -668,14 +714,26 @@ sotrudnik.in_list,
 
     End Function
 
+    Public Function programs__checkKodGrouppBusy(remove_kod As Int64) As String
+
+        Dim queryString As String
+
+        queryString = "SELECT COUNT(kod_programm) FROM `group` WHERE kod_programm=" + Convert.ToString(remove_kod)
+
+        Return queryString
+
+    End Function
+
     Public Function update_delete_query(programm_on As Boolean, name_table As String, name_programm As String, remove_kod As Int64) As String
 
         Dim queryString As String = ""
 
         If programm_on Then
 
-            queryString = "DELETE FROM " + name_table + " WHERE kod=" + Convert.ToString(remove_kod) + " 
-                           AND uroven_kvalifik = (SELECT kod FROM uroven_kvalifik WHERE name = '" + name_programm + "' LIMIT 1)"
+            queryString = "DELETE FROM progs_type_hours WHERE kod_prog=" + Convert.ToString(remove_kod) + ";
+                           DELETE FROM progs_mods_hours WHERE kod_prog=" + Convert.ToString(remove_kod) + ";
+                           DELETE FROM " + name_table + " WHERE kod=" + Convert.ToString(remove_kod) + " 
+                           AND uroven_kvalifik = (SELECT kod FROM uroven_kvalifik WHERE name = '" + name_programm + "' LIMIT 1);"
 
         Else
 

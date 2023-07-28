@@ -59,6 +59,7 @@
         infoDataTable = New DataTable()
 
         queryString = pednagruzka__loadProgramm(Convert.ToString(kodGroup))
+
         infoDataTable = ААОсновная.mySqlConnect.ЗагрузитьИзMySQLвDataTable(queryString, 1)
         pednagr__infoTable.DataSource = infoDataTable
 
@@ -76,6 +77,7 @@
 
         pednagr__infoTable.Columns(0).Width = pednagr__infoTable.Width * 1 / 3
         pednagr__infoTable.Columns(1).Width = pednagr__infoTable.Width * 2 / 3 - 4
+        pednagr__infoTable.Columns(1).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
 
     End Sub
 
