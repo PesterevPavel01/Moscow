@@ -1,14 +1,14 @@
 ﻿Module ПО_Свидетельство
-    Sub po_svid(видПриказа As String)
+    Sub po_svid(orderType As String)
 
         Dim WordApp
-        Dim wordDok, table, Координаты, rangeObj
+        Dim wordDok, table, coordinates, rangeObj
         Dim group, students
         Dim number As Int64
-        Dim queryString As String, resorsesPath, ПутьКШаблону As String
+        Dim sqlQuery As String, resorsesPath, samplePath As String
 
-        queryString = poSvid__loadListSvid(ААОсновная.prikazKodGroup)
-        students = ЗагрузитьИзБазы.ЗагрузитьИзБазы(queryString)
+        sqlQuery = poSvid__loadListSvid(MainForm.prikazKodGroup)
+        students = MainForm.mySqlConnect.loadMySqlToArray(sqlQuery, 1)
 
         If students(0, 0) = "нет записей" Then
             предупреждение.текст.Text = "Нет данных для отображения"
@@ -16,8 +16,8 @@
             Exit Sub
         End If
 
-        queryString = selectMassForPrilSvidetelstvo(ААОсновная.prikazKodGroup)
-        group = ЗагрузитьИзБазы.ЗагрузитьИзБазы(queryString)
+        sqlQuery = selectMassForPrilSvidetelstvo(MainForm.prikazKodGroup)
+        group = MainForm.mySqlConnect.loadMySqlToArray(sqlQuery, 1)
 
         If group(0, 0) = "нет записей" Then
             предупреждение.текст.Text = "Нет данных для отображения"
@@ -34,28 +34,21 @@
         End Try
 
         resorsesPath = Запуск.ПутьКФайлуRes
-        ПутьКШаблону = resorsesPath & "Шаблоны\ПК_Окончание\Таблицы_ПО_Св-во.docx"
+        samplePath = resorsesPath & "Шаблоны\ПК_Окончание\Таблицы_ПО_Св-во.docx"
 
         WordApp = CreateObject("Word.Application")
 
-        wordDok = WordApp.Documents.Open(ПутьКШаблону, ReadOnly:=True)
+        wordDok = WordApp.Documents.Open(samplePath, ReadOnly:=True)
 
-        Вспомогательный.savePrikazBlank(wordDok, ААОсновная.prikazKodGroup, видПриказа, resorsesPath, "Приказы")
-
-        'If Вспомогательный.СоздатьПапку(ПутьККаталогуСРесурсами & "Группы\Группа N" & АСформироватьПриказ.НомерГруппы.Text & "\Приказы") Then
-        '    Вспомогательный.сохранить(ДокументВорд, видПриказа, ПутьККаталогуСРесурсами & "Группы\Группа N" & АСформироватьПриказ.НомерГруппы.Text & "\Приказы\")
-        'Else
-        '    Вспомогательный.сохранить(ДокументВорд, видПриказа, ПутьККаталогуСРесурсами & "Группы\Нераспределенное\")
-        'End If
+        Вспомогательный.savePrikazBlank(wordDok, MainForm.prikazKodGroup, orderType, resorsesPath, "Приказы")
 
         WordApp.DisplayAlerts = False
-        ' ПриложениеВорд.Visible = True
 
         table = НайтиТаблицуПоМеткеИлиНеНайдена(wordDok, "$Таблица2$", 1, 1)
 
         Try
             If table(0, 0).ToString = "не найдена" Then
-                предупреждение.текст.Text = "Не найдена таблица с меткой $Таблица2$ в ячейке (1,1). Путь к шаблону: " & ПутьКШаблону
+                предупреждение.текст.Text = "Не найдена таблица с меткой $Таблица2$ в ячейке (1,1). Путь к шаблону: " & samplePath
                 ОткрытьФорму(предупреждение)
                 Exit Sub
             End If
@@ -63,131 +56,136 @@
 
         End Try
 
-        ШаблонТаблицыN2(table, group, ПутьКШаблону)
+        secondTableSample(table, group, samplePath)
 
-        ReDim Координаты(1, UBound(students, 2))
-        Координаты(0, 0) = 1
-        Координаты(1, 0) = wordDok.Paragraphs.Count
+        ReDim coordinates(1, UBound(students, 2))
+        coordinates(0, 0) = 1
+        coordinates(1, 0) = wordDok.Paragraphs.Count
 
         For счетчикСлушателей = 1 To UBound(students, 2)
 
             wordDok.Bookmarks("\EndOfDoc").Range.InsertBreak(2)
 
-            Координаты(0, счетчикСлушателей) = wordDok.Paragraphs().Count - 1
+            coordinates(0, счетчикСлушателей) = wordDok.Paragraphs().Count - 1
 
             rangeObj = wordDok.Paragraphs(1).Range
             rangeObj.SetRange(Start:=rangeObj.Start,
-                                 End:=wordDok.Paragraphs(Координаты(1, 0)).Range.End)
+                                 End:=wordDok.Paragraphs(coordinates(1, 0)).Range.End)
             rangeObj.Copy
             wordDok.Bookmarks("\EndOfDoc").Range.PasteAndFormat(0)
             wordDok.Bookmarks("\EndOfDoc").Range.Delete
-            Координаты(1, счетчикСлушателей) = wordDok.Paragraphs.Count
+            coordinates(1, счетчикСлушателей) = wordDok.Paragraphs.Count
         Next
-        For счетчикСлушателей = 0 To UBound(students, 2)
-            rangeObj = wordDok.Paragraphs(Координаты(0, счетчикСлушателей)).Range
+
+        students = addZerosIntoArray(students, 16, 8)
+
+        For studentsCounter = 0 To UBound(students, 2)
+
+            rangeObj = wordDok.Paragraphs(coordinates(0, studentsCounter)).Range
             rangeObj.SetRange(Start:=rangeObj.Start,
-                                 End:=wordDok.Paragraphs(Координаты(1, счетчикСлушателей)).Range.End)
-            ЗаменитьТекстВДокументеВорд(rangeObj, "$Таблица2$", "")
-            ЗаменитьТекстВДокументеВорд(rangeObj, "$Модуль1$", students(4, счетчикСлушателей))
-            ЗаменитьТекстВДокументеВорд(rangeObj, "$Модуль2$", students(5, счетчикСлушателей))
-            ЗаменитьТекстВДокументеВорд(rangeObj, "$Модуль3$", students(6, счетчикСлушателей))
-            ЗаменитьТекстВДокументеВорд(rangeObj, "$Модуль4$", students(7, счетчикСлушателей))
-            ЗаменитьТекстВДокументеВорд(rangeObj, "$Модуль5$", students(8, счетчикСлушателей))
-            ЗаменитьТекстВДокументеВорд(rangeObj, "$Модуль6$", students(9, счетчикСлушателей))
-            ЗаменитьТекстВДокументеВорд(rangeObj, "$Модуль7$", students(10, счетчикСлушателей))
-            ЗаменитьТекстВДокументеВорд(rangeObj, "$Модуль8$", students(11, счетчикСлушателей))
-            ЗаменитьТекстВДокументеВорд(rangeObj, "$Модуль9$", students(12, счетчикСлушателей))
-            ЗаменитьТекстВДокументеВорд(rangeObj, "$Модуль10$", students(13, счетчикСлушателей))
-            ЗаменитьТекстВДокументеВорд(rangeObj, "$ПП$", students(14, счетчикСлушателей))
-            ЗаменитьТекстВДокументеВорд(rangeObj, "$ИА$", students(15, счетчикСлушателей))
-            ЗаменитьТекстВДокументеВорд(rangeObj, "$Фамилия$", students(0, счетчикСлушателей))
-            ЗаменитьТекстВДокументеВорд(rangeObj, "$Имя$", students(1, счетчикСлушателей))
-            ЗаменитьТекстВДокументеВорд(rangeObj, "$Отчество$", students(2, счетчикСлушателей))
-            ЗаменитьТекстВДокументеВорд(rangeObj, "$ДатаРождения$", students(3, счетчикСлушателей))
-            ЗаменитьТекстВДокументеВорд(rangeObj, "$НаимДОО$", students(19, счетчикСлушателей))
-            ЗаменитьТекстВДокументеВорд(rangeObj, "$НомерСвид$", students(16, счетчикСлушателей))
-            ЗаменитьТекстВДокументеВорд(rangeObj, "$ДКонец$", students(18, счетчикСлушателей))
-            ЗаменитьТекстВДокументеВорд(rangeObj, "$ДатаВ$", students(17, счетчикСлушателей))
-            ЗаменитьТекстВДокументеВорд(rangeObj, "$Квалификация$", students(20, счетчикСлушателей))
-            ЗаменитьТекстВДокументеВорд(rangeObj, "$Часы$", students(21, счетчикСлушателей))
-            ЗаменитьТекстВДокументеВорд(rangeObj, "$ДНачало$", students(22, счетчикСлушателей))
-            ЗаменитьТекстВДокументеВорд(rangeObj, "$Программа$", students(23, счетчикСлушателей))
+                                 End:=wordDok.Paragraphs(coordinates(1, studentsCounter)).Range.End)
+            replaceTextInWordApp(rangeObj, "$Таблица2$", "")
+            replaceTextInWordApp(rangeObj, "$Модуль1$", students(4, studentsCounter))
+            replaceTextInWordApp(rangeObj, "$Модуль2$", students(5, studentsCounter))
+            replaceTextInWordApp(rangeObj, "$Модуль3$", students(6, studentsCounter))
+            replaceTextInWordApp(rangeObj, "$Модуль4$", students(7, studentsCounter))
+            replaceTextInWordApp(rangeObj, "$Модуль5$", students(8, studentsCounter))
+            replaceTextInWordApp(rangeObj, "$Модуль6$", students(9, studentsCounter))
+            replaceTextInWordApp(rangeObj, "$Модуль7$", students(10, studentsCounter))
+            replaceTextInWordApp(rangeObj, "$Модуль8$", students(11, studentsCounter))
+            replaceTextInWordApp(rangeObj, "$Модуль9$", students(12, studentsCounter))
+            replaceTextInWordApp(rangeObj, "$Модуль10$", students(13, studentsCounter))
+            replaceTextInWordApp(rangeObj, "$ПП$", students(14, studentsCounter))
+            replaceTextInWordApp(rangeObj, "$ИА$", students(15, studentsCounter))
+            replaceTextInWordApp(rangeObj, "$Фамилия$", students(0, studentsCounter))
+            replaceTextInWordApp(rangeObj, "$Имя$", students(1, studentsCounter))
+            replaceTextInWordApp(rangeObj, "$Отчество$", students(2, studentsCounter))
+            replaceTextInWordApp(rangeObj, "$ДатаРождения$", students(3, studentsCounter))
+            replaceTextInWordApp(rangeObj, "$НаимДОО$", students(19, studentsCounter))
+            replaceTextInWordApp(rangeObj, "$НомерСвид$", students(16, studentsCounter))
+            replaceTextInWordApp(rangeObj, "$ДКонец$", students(18, studentsCounter))
+            replaceTextInWordApp(rangeObj, "$ДатаВ$", students(17, studentsCounter))
+            replaceTextInWordApp(rangeObj, "$Квалификация$", students(20, studentsCounter))
+            replaceTextInWordApp(rangeObj, "$Часы$", students(21, studentsCounter))
+            replaceTextInWordApp(rangeObj, "$ДНачало$", students(22, studentsCounter))
+            replaceTextInWordApp(rangeObj, "$Программа$", students(23, studentsCounter))
 
         Next
+
         WordApp.Visible = True
         wordDok.Save
     End Sub
 
-    Sub ШаблонТаблицыN2(Таблица As Object, Программа As Object, ПутьКШаблону As String)
+    Sub secondTableSample(table As Object, program As Object, samplePath As String)
 
-        Dim счетчикСтрок, СчетчикЗаписей, НомерСтроки As Integer
-        Dim Координаты, Метка, Значение
-        ReDim Метка(3)
+        Dim rowCounter, entryCounter, numberRow As Integer
+        Dim coordinates, label, value
+        ReDim label(3)
 
-        НомерСтроки = НомерСтрокиТаблицыПоМеткеПереборомЯчеекСтолбцаИли11111(Таблица, "$НачалоСписка$", 2)
-        Метка(0) = "$Номер$"
-        Метка(1) = "$НачалоСписка$"
-        Метка(2) = "$ЧасыМ$"
-        Метка(3) = "$ОценкаМ$"
+        numberRow = НомерСтрокиТаблицыПоМеткеПереборомЯчеекСтолбцаИли11111(table, "$НачалоСписка$", 2)
+        label(0) = "$Номер$"
+        label(1) = "$НачалоСписка$"
+        label(2) = "$ЧасыМ$"
+        label(3) = "$ОценкаМ$"
 
-        Координаты = НомерЯчейкиТаблицыПоМеткеПереборомВсехЯчеекИли11111(Таблица, Метка)
-        Значение = Таблица.Cell(7, 1).Range.Text
-        НомерСтроки = Координаты(1, 1)
+        coordinates = НомерЯчейкиТаблицыПоМеткеПереборомВсехЯчеекИли11111(table, label)
+        value = table.Cell(7, 1).Range.Text
+        numberRow = coordinates(1, 1)
 
-        For Счетчик = 0 To UBound(Координаты, 2)
-            If IsNothing(Координаты(1, Счетчик)) Then
-                предупреждение.текст.Text = "В Таблице2 не обнаружены метка" & Координаты(0, Счетчик) & ". Путь к шаблону: " & ПутьКШаблону
+        For Счетчик = 0 To UBound(coordinates, 2)
+            If IsNothing(coordinates(1, Счетчик)) Then
+                предупреждение.текст.Text = "В Таблице2 не обнаружены метка" & coordinates(0, Счетчик) & ". Путь к шаблону: " & samplePath
                 ОткрытьФорму(предупреждение)
                 Exit Sub
             End If
         Next
-        счетчикСтрок = 0
-        СчетчикЗаписей = UBound(Программа, 2)
+        rowCounter = 0
+        entryCounter = UBound(program, 2)
 
-        While счетчикСтрок <= UBound(Программа, 2)
-            If Not Программа(0, счетчикСтрок).ToString = "" Then
+        While rowCounter <= UBound(program, 2)
+            If Not program(0, rowCounter).ToString = "" Then
 
-                If счетчикСтрок + НомерСтроки > Таблица.Rows.Count Then
+                If rowCounter + numberRow > table.Rows.Count Then
 
-                    Таблица.Rows.add
+                    table.Rows.add
 
                 End If
 
-                If АСформироватьПриказ.CheckBox1.Checked And Программа(0, счетчикСтрок) = "Практическая подготовка" Then
+                If АСформироватьПриказ.CheckBox1.Checked And program(0, rowCounter) = "Практическая подготовка" Then
 
-                    Таблица.Cell(счетчикСтрок + НомерСтроки, Координаты(2, 0)).Range.text = счетчикСтрок + 1 & "."
-                    Таблица.Cell(счетчикСтрок + НомерСтроки, Координаты(2, 1)).Range.text = Программа(0, счетчикСтрок)
-                    Таблица.Cell(счетчикСтрок + НомерСтроки, Координаты(2, 2)).Range.text = АСформироватьПриказ.ПрактическаяПодготовка.Text
-                    Таблица.Cell(счетчикСтрок + НомерСтроки, Координаты(2, 3)).Range.text = "$Модуль" & счетчикСтрок + 1 & "$" '"$ПП$"
-                ElseIf АСформироватьПриказ.CheckBox1.Checked And Программа(0, счетчикСтрок) = "Итоговая аттестация" Then
+                    table.Cell(rowCounter + numberRow, coordinates(2, 0)).Range.text = rowCounter + 1 & "."
+                    table.Cell(rowCounter + numberRow, coordinates(2, 1)).Range.text = program(0, rowCounter)
+                    table.Cell(rowCounter + numberRow, coordinates(2, 2)).Range.text = АСформироватьПриказ.ПрактическаяПодготовка.Text
+                    table.Cell(rowCounter + numberRow, coordinates(2, 3)).Range.text = "$Модуль" & rowCounter + 1 & "$" '"$ПП$"
+                ElseIf АСформироватьПриказ.CheckBox1.Checked And program(0, rowCounter) = "Итоговая аттестация" Then
 
-                    Таблица.Cell(счетчикСтрок + НомерСтроки, Координаты(2, 0)).Range.text = счетчикСтрок + 1 & "."
-                    Таблица.Cell(счетчикСтрок + НомерСтроки, Координаты(2, 1)).Range.text = Программа(0, счетчикСтрок)
-                    Таблица.Cell(счетчикСтрок + НомерСтроки, Координаты(2, 2)).Range.text = АСформироватьПриказ.ИтоговаяАттестация.Text
-                    Таблица.Cell(счетчикСтрок + НомерСтроки, Координаты(2, 3)).Range.text = "$Модуль" & счетчикСтрок + 1 & "$" '"$ИА$"
+                    table.Cell(rowCounter + numberRow, coordinates(2, 0)).Range.text = rowCounter + 1 & "."
+                    table.Cell(rowCounter + numberRow, coordinates(2, 1)).Range.text = program(0, rowCounter)
+                    table.Cell(rowCounter + numberRow, coordinates(2, 2)).Range.text = АСформироватьПриказ.ИтоговаяАттестация.Text
+                    table.Cell(rowCounter + numberRow, coordinates(2, 3)).Range.text = "$Модуль" & rowCounter + 1 & "$" '"$ИА$"
                 Else
 
-                    Таблица.Cell(счетчикСтрок + НомерСтроки, Координаты(2, 0)).Range.text = счетчикСтрок + 1 & "."
-                    If Программа(0, счетчикСтрок) = "Практическая подготовка" Then
+                    table.Cell(rowCounter + numberRow, coordinates(2, 0)).Range.text = rowCounter + 1 & "."
+                    If program(0, rowCounter) = "Практическая подготовка" Then
 
-                        Таблица.Cell(счетчикСтрок + НомерСтроки, Координаты(2, 1)).Range.text = Программа(0, счетчикСтрок)
-                        Таблица.Cell(счетчикСтрок + НомерСтроки, Координаты(2, 3)).Range.text = "$Модуль" & счетчикСтрок + 1 & "$" '"$ПП$"
-                    ElseIf Программа(0, счетчикСтрок) = "Итоговая аттестация" Then
+                        table.Cell(rowCounter + numberRow, coordinates(2, 1)).Range.text = program(0, rowCounter)
+                        table.Cell(rowCounter + numberRow, coordinates(2, 3)).Range.text = "$Модуль" & rowCounter + 1 & "$" '"$ПП$"
+                    ElseIf program(0, rowCounter) = "Итоговая аттестация" Then
 
-                        Таблица.Cell(счетчикСтрок + НомерСтроки, Координаты(2, 1)).Range.text = Программа(0, счетчикСтрок)
-                        Таблица.Cell(счетчикСтрок + НомерСтроки, Координаты(2, 3)).Range.text = "$Модуль" & счетчикСтрок + 1 & "$" '"$ИА$"
+                        table.Cell(rowCounter + numberRow, coordinates(2, 1)).Range.text = program(0, rowCounter)
+                        table.Cell(rowCounter + numberRow, coordinates(2, 3)).Range.text = "$Модуль" & rowCounter + 1 & "$" '"$ИА$"
 
-                    Else Таблица.Cell(счетчикСтрок + НомерСтроки, Координаты(2, 1)).Range.text = "Модуль " & счетчикСтрок + 1 & " «" & Программа(0, счетчикСтрок) & "»"
-                        Таблица.Cell(счетчикСтрок + НомерСтроки, Координаты(2, 3)).Range.text = "$Модуль" & счетчикСтрок + 1 & "$"
+                    Else table.Cell(rowCounter + numberRow, coordinates(2, 1)).Range.text = "Модуль " & rowCounter + 1 & " «" & program(0, rowCounter) & "»"
+                        table.Cell(rowCounter + numberRow, coordinates(2, 3)).Range.text = "$Модуль" & rowCounter + 1 & "$"
                     End If
 
-                    If Not Программа(счетчикСтрок, 1).ToString = "нет записей" Then
+                    If Not program(rowCounter, 1).ToString = "нет записей" Then
 
-                        Таблица.Cell(счетчикСтрок + НомерСтроки, Координаты(2, 2)).Range.text = Программа(1, счетчикСтрок)
+                        table.Cell(rowCounter + numberRow, coordinates(2, 2)).Range.text = program(1, rowCounter)
 
                     Else
 
-                        предупреждение.текст.Text = "Для модуля «" & Программа(0, счетчикСтрок) & "» не указано количество часов"
+                        предупреждение.текст.Text = "Для модуля «" & program(0, rowCounter) & "» не указано количество часов"
                         ОткрытьФорму(предупреждение)
 
                     End If
@@ -195,29 +193,29 @@
                 End If
 
 
-            ElseIf счетчикСтрок > 0 Then
+            ElseIf rowCounter > 0 Then
 
                 Exit While
 
             Else
 
-                предупреждение.текст.Text = "Для программы «" & Программа(4, 0) & "» не указан модуль 1. Приложение сформировано некорректно!!!"
+                предупреждение.текст.Text = "Для программы «" & program(4, 0) & "» не указан модуль 1. Приложение сформировано некорректно!!!"
                 ОткрытьФорму(предупреждение)
                 Exit While
 
             End If
 
-            счетчикСтрок = счетчикСтрок + 1
+            rowCounter = rowCounter + 1
 
         End While
 
-        If счетчикСтрок + НомерСтроки > Таблица.Rows.Count Then
+        If rowCounter + numberRow > table.Rows.Count Then
 
-            Таблица.Rows.add
+            table.Rows.add
 
         End If
 
-        Таблица.Cell(счетчикСтрок + НомерСтроки, Координаты(2, 1)).Range.text = "Итого"
-        Таблица.Cell(счетчикСтрок + НомерСтроки, Координаты(2, 2)).Range.text = Программа(5, 0)
+        table.Cell(rowCounter + numberRow, coordinates(2, 1)).Range.text = "Итого"
+        table.Cell(rowCounter + numberRow, coordinates(2, 2)).Range.text = program(5, 0)
     End Sub
 End Module

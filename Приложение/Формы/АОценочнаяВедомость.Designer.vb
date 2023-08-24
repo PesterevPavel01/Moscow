@@ -27,9 +27,6 @@ Partial Class ОценочнаяВедомость
         Me.Label2 = New System.Windows.Forms.Label()
         Me.НомерГруппы = New System.Windows.Forms.TextBox()
         Me.ТаблицаВедомость = New System.Windows.Forms.DataGridView()
-        Me.Сохранить = New System.Windows.Forms.Button()
-        Me.Button2 = New System.Windows.Forms.Button()
-        Me.Button1 = New System.Windows.Forms.Button()
         Me.Номер = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.ФИО = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Модуль1 = New System.Windows.Forms.DataGridViewComboBoxColumn()
@@ -42,6 +39,9 @@ Partial Class ОценочнаяВедомость
         Me.Модуль8 = New System.Windows.Forms.DataGridViewComboBoxColumn()
         Me.Модуль9 = New System.Windows.Forms.DataGridViewComboBoxColumn()
         Me.Модуль10 = New System.Windows.Forms.DataGridViewComboBoxColumn()
+        Me.Сохранить = New System.Windows.Forms.Button()
+        Me.Button2 = New System.Windows.Forms.Button()
+        Me.Button1 = New System.Windows.Forms.Button()
         CType(Me.ТаблицаВедомость, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -99,49 +99,6 @@ Partial Class ОценочнаяВедомость
         Me.ТаблицаВедомость.RowHeadersVisible = False
         Me.ТаблицаВедомость.Size = New System.Drawing.Size(1722, 780)
         Me.ТаблицаВедомость.TabIndex = 4
-        '
-        'Сохранить
-        '
-        Me.Сохранить.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Сохранить.BackColor = System.Drawing.Color.Transparent
-        Me.Сохранить.FlatAppearance.BorderColor = System.Drawing.Color.WhiteSmoke
-        Me.Сохранить.FlatAppearance.BorderSize = 0
-        Me.Сохранить.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Сохранить.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.Сохранить.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Сохранить.Location = New System.Drawing.Point(1501, 5)
-        Me.Сохранить.Name = "Сохранить"
-        Me.Сохранить.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.Сохранить.Size = New System.Drawing.Size(225, 32)
-        Me.Сохранить.TabIndex = 3
-        Me.Сохранить.Text = "Сохранить"
-        Me.Сохранить.UseVisualStyleBackColor = False
-        '
-        'Button2
-        '
-        Me.Button2.BackColor = System.Drawing.Color.Transparent
-        Me.Button2.FlatAppearance.BorderColor = System.Drawing.Color.WhiteSmoke
-        Me.Button2.FlatAppearance.BorderSize = 0
-        Me.Button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button2.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.Button2.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Button2.Location = New System.Drawing.Point(54, 288)
-        Me.Button2.Name = "Button2"
-        Me.Button2.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.Button2.Size = New System.Drawing.Size(291, 41)
-        Me.Button2.TabIndex = 2
-        Me.Button2.Text = "Загрузить ведомость"
-        Me.Button2.UseVisualStyleBackColor = False
-        '
-        'Button1
-        '
-        Me.Button1.Location = New System.Drawing.Point(459, 14)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(117, 23)
-        Me.Button1.TabIndex = 6
-        Me.Button1.Text = "Button1"
-        Me.Button1.UseVisualStyleBackColor = True
-        Me.Button1.Visible = False
         '
         'Номер
         '
@@ -238,6 +195,49 @@ Partial Class ОценочнаяВедомость
         Me.Модуль10.Items.AddRange(New Object() {"отлично", "хорошо", "удовл.", "неудовл.", " ", "зачтено", "незачтено"})
         Me.Модуль10.Name = "Модуль10"
         Me.Модуль10.Width = 110
+        '
+        'Сохранить
+        '
+        Me.Сохранить.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Сохранить.BackColor = System.Drawing.Color.Transparent
+        Me.Сохранить.FlatAppearance.BorderColor = System.Drawing.Color.WhiteSmoke
+        Me.Сохранить.FlatAppearance.BorderSize = 0
+        Me.Сохранить.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Сохранить.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
+        Me.Сохранить.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.Сохранить.Location = New System.Drawing.Point(1501, 5)
+        Me.Сохранить.Name = "Сохранить"
+        Me.Сохранить.RightToLeft = System.Windows.Forms.RightToLeft.No
+        Me.Сохранить.Size = New System.Drawing.Size(225, 32)
+        Me.Сохранить.TabIndex = 3
+        Me.Сохранить.Text = "Сохранить"
+        Me.Сохранить.UseVisualStyleBackColor = False
+        '
+        'Button2
+        '
+        Me.Button2.BackColor = System.Drawing.Color.Transparent
+        Me.Button2.FlatAppearance.BorderColor = System.Drawing.Color.WhiteSmoke
+        Me.Button2.FlatAppearance.BorderSize = 0
+        Me.Button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button2.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
+        Me.Button2.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.Button2.Location = New System.Drawing.Point(54, 288)
+        Me.Button2.Name = "Button2"
+        Me.Button2.RightToLeft = System.Windows.Forms.RightToLeft.No
+        Me.Button2.Size = New System.Drawing.Size(291, 41)
+        Me.Button2.TabIndex = 2
+        Me.Button2.Text = "Загрузить ведомость"
+        Me.Button2.UseVisualStyleBackColor = False
+        '
+        'Button1
+        '
+        Me.Button1.Location = New System.Drawing.Point(459, 14)
+        Me.Button1.Name = "Button1"
+        Me.Button1.Size = New System.Drawing.Size(117, 23)
+        Me.Button1.TabIndex = 6
+        Me.Button1.Text = "Button1"
+        Me.Button1.UseVisualStyleBackColor = True
+        Me.Button1.Visible = False
         '
         'ОценочнаяВедомость
         '

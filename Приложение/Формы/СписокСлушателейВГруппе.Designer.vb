@@ -22,7 +22,7 @@ Partial Class СписокСлушателейВГруппе
     'Не изменяйте ее в редакторе исходного кода.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Me.ListViewСписокСлушателей = New System.Windows.Forms.ListView()
+        Me.ListViewStudentsList = New System.Windows.Forms.ListView()
         Me.ColumnHeader1 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ColumnHeader2 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ColumnHeader8 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
@@ -49,21 +49,21 @@ Partial Class СписокСлушателейВГруппе
         Me.SplitContainer3.SuspendLayout()
         Me.SuspendLayout()
         '
-        'ListViewСписокСлушателей
+        'ListViewStudentsList
         '
-        Me.ListViewСписокСлушателей.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.ColumnHeader1, Me.ColumnHeader2, Me.ColumnHeader8, Me.ColumnHeader9, Me.ColumnHeader10, Me.ColumnHeader11})
-        Me.ListViewСписокСлушателей.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.ListViewСписокСлушателей.Font = New System.Drawing.Font("Microsoft YaHei", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.ListViewСписокСлушателей.FullRowSelect = True
-        Me.ListViewСписокСлушателей.GridLines = True
-        Me.ListViewСписокСлушателей.HideSelection = False
-        Me.ListViewСписокСлушателей.Location = New System.Drawing.Point(0, 0)
-        Me.ListViewСписокСлушателей.MultiSelect = False
-        Me.ListViewСписокСлушателей.Name = "ListViewСписокСлушателей"
-        Me.ListViewСписокСлушателей.Size = New System.Drawing.Size(1115, 646)
-        Me.ListViewСписокСлушателей.TabIndex = 4
-        Me.ListViewСписокСлушателей.UseCompatibleStateImageBehavior = False
-        Me.ListViewСписокСлушателей.View = System.Windows.Forms.View.Details
+        Me.ListViewStudentsList.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.ColumnHeader1, Me.ColumnHeader2, Me.ColumnHeader8, Me.ColumnHeader9, Me.ColumnHeader10, Me.ColumnHeader11})
+        Me.ListViewStudentsList.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.ListViewStudentsList.Font = New System.Drawing.Font("Microsoft YaHei", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
+        Me.ListViewStudentsList.FullRowSelect = True
+        Me.ListViewStudentsList.GridLines = True
+        Me.ListViewStudentsList.HideSelection = False
+        Me.ListViewStudentsList.Location = New System.Drawing.Point(0, 0)
+        Me.ListViewStudentsList.MultiSelect = False
+        Me.ListViewStudentsList.Name = "ListViewStudentsList"
+        Me.ListViewStudentsList.Size = New System.Drawing.Size(1115, 646)
+        Me.ListViewStudentsList.TabIndex = 4
+        Me.ListViewStudentsList.UseCompatibleStateImageBehavior = False
+        Me.ListViewStudentsList.View = System.Windows.Forms.View.Details
         '
         'ColumnHeader1
         '
@@ -143,6 +143,7 @@ Partial Class СписокСлушателейВГруппе
         'SplitContainer1
         '
         Me.SplitContainer1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.SplitContainer1.FixedPanel = System.Windows.Forms.FixedPanel.Panel1
         Me.SplitContainer1.Location = New System.Drawing.Point(3, 3)
         Me.SplitContainer1.Name = "SplitContainer1"
         Me.SplitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal
@@ -153,7 +154,7 @@ Partial Class СписокСлушателейВГруппе
         '
         'SplitContainer1.Panel2
         '
-        Me.SplitContainer1.Panel2.Controls.Add(Me.ListViewСписокСлушателей)
+        Me.SplitContainer1.Panel2.Controls.Add(Me.ListViewStudentsList)
         Me.SplitContainer1.Size = New System.Drawing.Size(1115, 695)
         Me.SplitContainer1.SplitterDistance = 45
         Me.SplitContainer1.TabIndex = 7
@@ -219,7 +220,7 @@ Partial Class СписокСлушателейВГруппе
 
     End Sub
 
-    Friend WithEvents ListViewСписокСлушателей As ListView
+    Friend WithEvents ListViewStudentsList As ListView
     Friend WithEvents ColumnHeader1 As ColumnHeader
     Friend WithEvents ColumnHeader2 As ColumnHeader
     Friend WithEvents ColumnHeader8 As ColumnHeader

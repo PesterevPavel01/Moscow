@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
-Partial Class ААОсновная
+Partial Class MainForm
     Inherits System.Windows.Forms.Form
 
     'Форма переопределяет dispose для очистки списка компонентов.
@@ -23,7 +23,7 @@ Partial Class ААОсновная
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(ААОсновная))
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(MainForm))
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
@@ -31,7 +31,7 @@ Partial Class ААОсновная
         Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
-        Me.ImageList1 = New System.Windows.Forms.ImageList(Me.components)
+        Me.iconsList = New System.Windows.Forms.ImageList(Me.components)
         Me.pageProgs = New System.Windows.Forms.TabPage()
         Me.password = New System.Windows.Forms.MaskedTextBox()
         Me.programms__splitMainConteiner = New System.Windows.Forms.SplitContainer()
@@ -180,7 +180,7 @@ Partial Class ААОсновная
         Me.ToolStrip_name_list = New System.Windows.Forms.ToolStripComboBox()
         Me.other_add = New System.Windows.Forms.ToolStripButton()
         Me.ToolStripButton1 = New System.Windows.Forms.ToolStripButton()
-        Me.ImageList40 = New System.Windows.Forms.ImageList(Me.components)
+        Me.icons40pxList = New System.Windows.Forms.ImageList(Me.components)
         Me.pageProgs.SuspendLayout()
         CType(Me.programms__splitMainConteiner, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.programms__splitMainConteiner.Panel1.SuspendLayout()
@@ -234,33 +234,33 @@ Partial Class ААОсновная
         '
         Me.OpenFileDialog1.FileName = "OpenFileDialog1"
         '
-        'ImageList1
+        'iconsList
         '
-        Me.ImageList1.ImageStream = CType(resources.GetObject("ImageList1.ImageStream"), System.Windows.Forms.ImageListStreamer)
-        Me.ImageList1.TransparentColor = System.Drawing.Color.Transparent
-        Me.ImageList1.Images.SetKeyName(0, "file_Exel.png")
-        Me.ImageList1.Images.SetKeyName(1, "настройки2.png")
-        Me.ImageList1.Images.SetKeyName(2, "word.png")
-        Me.ImageList1.Images.SetKeyName(3, "icons8-загрузка-обновлений-50.png")
-        Me.ImageList1.Images.SetKeyName(4, "Главная.png")
-        Me.ImageList1.Images.SetKeyName(5, "Бланк!.png")
-        Me.ImageList1.Images.SetKeyName(6, "Сортировка.png")
-        Me.ImageList1.Images.SetKeyName(7, "Лупа.png")
-        Me.ImageList1.Images.SetKeyName(8, "red.png")
-        Me.ImageList1.Images.SetKeyName(9, "зеленый.png")
-        Me.ImageList1.Images.SetKeyName(10, "file_icon_129474.png")
-        Me.ImageList1.Images.SetKeyName(11, "note_list_icon_124054.ico")
-        Me.ImageList1.Images.SetKeyName(12, "black.png")
-        Me.ImageList1.Images.SetKeyName(13, "green.png")
-        Me.ImageList1.Images.SetKeyName(14, "other.png")
-        Me.ImageList1.Images.SetKeyName(15, "other2.png")
-        Me.ImageList1.Images.SetKeyName(16, "other3.png")
-        Me.ImageList1.Images.SetKeyName(17, "Прочее.png")
-        Me.ImageList1.Images.SetKeyName(18, "other.png")
-        Me.ImageList1.Images.SetKeyName(19, "Settings.png")
-        Me.ImageList1.Images.SetKeyName(20, "Home.png")
-        Me.ImageList1.Images.SetKeyName(21, "ok.png")
-        Me.ImageList1.Images.SetKeyName(22, "okGr.png")
+        Me.iconsList.ImageStream = CType(resources.GetObject("iconsList.ImageStream"), System.Windows.Forms.ImageListStreamer)
+        Me.iconsList.TransparentColor = System.Drawing.Color.Transparent
+        Me.iconsList.Images.SetKeyName(0, "file_Exel.png")
+        Me.iconsList.Images.SetKeyName(1, "настройки2.png")
+        Me.iconsList.Images.SetKeyName(2, "word.png")
+        Me.iconsList.Images.SetKeyName(3, "icons8-загрузка-обновлений-50.png")
+        Me.iconsList.Images.SetKeyName(4, "Главная.png")
+        Me.iconsList.Images.SetKeyName(5, "Бланк!.png")
+        Me.iconsList.Images.SetKeyName(6, "Сортировка.png")
+        Me.iconsList.Images.SetKeyName(7, "Лупа.png")
+        Me.iconsList.Images.SetKeyName(8, "red.png")
+        Me.iconsList.Images.SetKeyName(9, "зеленый.png")
+        Me.iconsList.Images.SetKeyName(10, "file_icon_129474.png")
+        Me.iconsList.Images.SetKeyName(11, "note_list_icon_124054.ico")
+        Me.iconsList.Images.SetKeyName(12, "black.png")
+        Me.iconsList.Images.SetKeyName(13, "green.png")
+        Me.iconsList.Images.SetKeyName(14, "other.png")
+        Me.iconsList.Images.SetKeyName(15, "other2.png")
+        Me.iconsList.Images.SetKeyName(16, "other3.png")
+        Me.iconsList.Images.SetKeyName(17, "Прочее.png")
+        Me.iconsList.Images.SetKeyName(18, "other.png")
+        Me.iconsList.Images.SetKeyName(19, "Settings.png")
+        Me.iconsList.Images.SetKeyName(20, "Home.png")
+        Me.iconsList.Images.SetKeyName(21, "ok.png")
+        Me.iconsList.Images.SetKeyName(22, "okGr.png")
         '
         'pageProgs
         '
@@ -1911,7 +1911,7 @@ Partial Class ААОсновная
         Me.TabControlOther.Controls.Add(Me.Other)
         Me.TabControlOther.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TabControlOther.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.TabControlOther.ImageList = Me.ImageList1
+        Me.TabControlOther.ImageList = Me.iconsList
         Me.TabControlOther.ImeMode = System.Windows.Forms.ImeMode.Off
         Me.TabControlOther.Location = New System.Drawing.Point(0, 0)
         Me.TabControlOther.Name = "TabControlOther"
@@ -2209,16 +2209,22 @@ Partial Class ААОсновная
         Me.ToolStripButton1.Size = New System.Drawing.Size(44, 45)
         Me.ToolStripButton1.Text = "Изменить"
         '
-        'ImageList40
+        'icons40pxList
         '
-        Me.ImageList40.ImageStream = CType(resources.GetObject("ImageList40.ImageStream"), System.Windows.Forms.ImageListStreamer)
-        Me.ImageList40.TransparentColor = System.Drawing.Color.Transparent
-        Me.ImageList40.Images.SetKeyName(0, "green.png")
-        Me.ImageList40.Images.SetKeyName(1, "black.png")
-        Me.ImageList40.Images.SetKeyName(2, "ok.png")
-        Me.ImageList40.Images.SetKeyName(3, "okGr.png")
+        Me.icons40pxList.ImageStream = CType(resources.GetObject("icons40pxList.ImageStream"), System.Windows.Forms.ImageListStreamer)
+        Me.icons40pxList.TransparentColor = System.Drawing.Color.Transparent
+        Me.icons40pxList.Images.SetKeyName(0, "green.png")
+        Me.icons40pxList.Images.SetKeyName(1, "black.png")
+        Me.icons40pxList.Images.SetKeyName(2, "ok.png")
+        Me.icons40pxList.Images.SetKeyName(3, "okGr.png")
+        Me.icons40pxList.Images.SetKeyName(4, "PK.png")
+        Me.icons40pxList.Images.SetKeyName(5, "PKGreen.png")
+        Me.icons40pxList.Images.SetKeyName(6, "PP.png")
+        Me.icons40pxList.Images.SetKeyName(7, "PPGreen.png")
+        Me.icons40pxList.Images.SetKeyName(8, "PO.png")
+        Me.icons40pxList.Images.SetKeyName(9, "POGreen.png")
         '
-        'ААОсновная
+        'MainForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
@@ -2226,7 +2232,7 @@ Partial Class ААОсновная
         Me.Controls.Add(Me.TabControlOther)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.KeyPreview = True
-        Me.Name = "ААОсновная"
+        Me.Name = "MainForm"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "ФГБУ ДПО ВУНМЦ Минздрава России"
         Me.pageProgs.ResumeLayout(False)
@@ -2297,7 +2303,7 @@ Partial Class ААОсновная
     End Sub
 
     Friend WithEvents OpenFileDialog1 As OpenFileDialog
-    Friend WithEvents ImageList1 As ImageList
+    Friend WithEvents iconsList As ImageList
     Friend WithEvents pageProgs As TabPage
     Friend WithEvents programms__splitMainConteiner As SplitContainer
     Friend WithEvents toolStripProgram As ToolStrip
@@ -2432,7 +2438,7 @@ Partial Class ААОсновная
     Friend WithEvents Doljnost As DataGridViewTextBoxColumn
     Friend WithEvents type As DataGridViewTextBoxColumn
     Friend WithEvents kod As DataGridViewTextBoxColumn
-    Friend WithEvents ImageList40 As ImageList
+    Friend WithEvents icons40pxList As ImageList
     Friend WithEvents passwrdSetts As MaskedTextBox
     Friend WithEvents PanelSetts As Panel
     Friend WithEvents ToolStrip1 As ToolStrip

@@ -19,42 +19,64 @@ Module Интерфейс
 
     End Sub
 
-    Sub ЗакрытьEsc(Форма As Object, номерКлавиши As Integer)
+    Sub closeEsc(currentForm As Object, keyNumber As Integer)
 
-        If номерКлавиши = 27 Then
+        If keyNumber = Keys.Escape Then
 
-            Форма.Close()
+            currentForm.Close()
 
         End If
 
     End Sub
 
-    Sub функционалТаб(номерНажатойКлавиши As Integer, НомерКлавишиСФункционаломТаб As Integer, Optional controlName As String = "")
+    Sub pressTab(numberPushKey As Integer, requiredKey As Integer, Optional controlName As String = "")
 
-        If номерНажатойКлавиши = НомерКлавишиСФункционаломТаб Then
+        If numberPushKey = requiredKey Then
+
             SendKeys.Send("{tab}")
+
         End If
 
     End Sub
 
-    Sub перемещениеВверх(Форма As Object, номерНажатойКлавиши As Integer, Optional номерКлавишиСФункционаломВверх As Integer = 38)
-        If номерНажатойКлавиши = номерКлавишиСФункционаломВверх Then
+    Sub up(currentForm As Object, currentKey As Integer, Optional waitingKey As Integer = 38)
 
-            If Форма.ActiveControl.TabIndex = 0 Then
-                Exit Sub
+        If currentKey = waitingKey Then
+
+            If currentForm.ActiveControl.TabIndex = 0 Then
+
+                Return
+
             End If
 
-            For Each i In Форма.Controls
+            Dim flag = True
+            Dim currentControl As Control = currentForm.ActiveControl
 
-                If i.tabIndex = Форма.ActiveControl.TabIndex - 1 Then
 
-                    Форма.ActiveControl = i
-                    Exit Sub
+            While flag
+
+                For Each i In currentForm.Controls
+
+                    If i.tabIndex = currentControl.TabIndex - 1 Then
+
+                        currentControl = i
+                        Exit For
+
+                    End If
+                Next
+
+                If (currentControl.Enabled = True And currentControl.Visible = True) Then
+
+                    Exit While
 
                 End If
-            Next
+
+            End While
+
+            currentControl.Focus()
 
         End If
+
     End Sub
 
     Sub comboBoxStepBack(combobox As ComboBox, kodPushButton As Integer, kodButtonExp As Integer)
@@ -126,7 +148,7 @@ Module Интерфейс
 
     End Sub
 
-    Sub переключательВкладок(TabControl1 As Object)
+    Sub openNextPage(TabControl1 As Object)
 
         If TabControl1.SelectedIndex < TabControl1.TabCount - 1 Then
 
@@ -139,7 +161,7 @@ Module Интерфейс
         End If
 
     End Sub
-    Sub обратныйПереключательВкладок(TabControl1 As Object)
+    Sub openPrevPage(TabControl1 As Object)
 
         If TabControl1.SelectedIndex > 0 Then
 
@@ -153,182 +175,38 @@ Module Интерфейс
 
     End Sub
 
-    Sub ЗаписьОшибокВТХТ(МестоВозникновения As String, ex As Object)
-        Dim Path, ПутьКФайлуRes As String, mass As Object, счетчик As Integer = 0
+    Sub enableOneCheckbox(currentForm As Form, activeCheckBox As String)
 
-        Path = Application.StartupPath
-        mass = Path.Split("\")
-        ПутьКФайлуRes = ""
-        While счетчик < UBound(mass)
-
-            If mass(счетчик).ToString = "bin" Then
-
-                Exit While
-
-            End If
-
-            ПутьКФайлуRes = ПутьКФайлуRes & mass(счетчик) & "\"
-            счетчик = счетчик + 1
-
-        End While
-
-        ПутьКФайлуRes = ПутьКФайлуRes & "Resources\"
-
-        счетчик = 0
-
-Переподключиться:
-        If счетчик > 1 Then
-
-            Exit Sub
-
-        End If
-
-        Try
-
-            File.AppendAllText(ПутьКФайлуRes & "СписокОшибок.txt", МестоВозникновения & ", " & ex.HResult & " , Text: " & ex.Message & vbCrLf)
-
-        Catch ex1 As Exception
-            Thread.Sleep(200)
-            счетчик = счетчик + 1
-            GoTo Переподключиться
-        End Try
-
-
-    End Sub
-
-
-    Sub НеперенесенныеЗапросВТХТ(СтрокаЗапроса As String, КоличествоПодключений As Integer)
-        Dim Path, ПутьКФайлуRes As String, mass As Object, счетчик As Integer = 0
-
-        Path = Application.StartupPath
-        mass = Path.Split("\")
-        ПутьКФайлуRes = ""
-        While счетчик < UBound(mass)
-
-            If mass(счетчик).ToString = "bin" Then
-
-                Exit While
-
-            End If
-
-            ПутьКФайлуRes = ПутьКФайлуRes & mass(счетчик) & "\"
-            счетчик = счетчик + 1
-
-        End While
-
-        ПутьКФайлуRes = ПутьКФайлуRes & "Resources\"
-
-        счетчик = 0
-
-Переподключиться:
-        If счетчик > КоличествоПодключений Then
-
-            предупреждение.текст.Text = "Недоступен файл" & ПутьКФайлуRes & "НеперенесенныеЗапросыВОбщуюБазу.txt Невозможно сохранить изменения!!!!"
-
-            Exit Sub
-
-        End If
-
-        Try
-
-            File.AppendAllText(ПутьКФайлуRes & "НеперенесенныеЗапросыВОбщуюБазу.txt", СтрокаЗапроса & "Время Запроса" & DateString & vbCrLf)
-
-        Catch ex1 As Exception
-
-            счетчик = счетчик + 1
-            GoTo Переподключиться
-
-        End Try
-
-
-    End Sub
-
-    Sub НеперенесенныеЗапросыВТХТ(СтрокаЗапроса As Object, КоличествоПодключений As Integer)
-        Dim Path, ПутьКФайлуRes As String, счетчик As Integer = 0, СтрокаДляЗаписи As String
-        Dim mass
-
-        Path = Application.StartupPath
-        mass = Path.Split("\")
-        ПутьКФайлуRes = ""
-        While счетчик < UBound(mass)
-
-            If mass(счетчик).ToString = "bin" Then
-
-                Exit While
-
-            End If
-
-            ПутьКФайлуRes = ПутьКФайлуRes & mass(счетчик) & "\"
-            счетчик += 1
-
-        End While
-
-        ПутьКФайлуRes = ПутьКФайлуRes & "Resources\"
-
-        счетчик = 0
-
-
-Переподключиться:
-        If счетчик > КоличествоПодключений Then
-
-            предупреждение.текст.Text = "Недоступен файл" & ПутьКФайлуRes & "НеперенесенныеЗапросыВОбщуюБазу.txt Невозможно сохранить изменения!!!!"
-
-            Exit Sub
-
-        End If
-
-        For Each item In СтрокаЗапроса
-
-            СтрокаДляЗаписи += item & vbCrLf
-
-        Next
-
-        Try
-
-            File.WriteAllText(ПутьКФайлуRes & "НеперенесенныеЗапросыВОбщуюБазу.txt", СтрокаДляЗаписи)
-
-        Catch ex1 As Exception
-
-            счетчик = счетчик + 1
-            GoTo Переподключиться
-
-        End Try
-
-
-    End Sub
-
-    Sub выключитьОстальныеЧекбоксыНаФорме(Форма As Form, ИмяВключенногоЧекбокса As String)
-
-        For Each элемент In Форма.Controls
+        For Each element In currentForm.Controls.OfType(Of CheckBox)
 
             Try
-                If Not элемент.Name = ИмяВключенногоЧекбокса Then
 
-                    элемент.Checked = False
+                If Not element.Name = activeCheckBox Then
+
+                    element.Checked = False
 
                 End If
+
             Catch ex As Exception
 
             End Try
 
-
-
         Next
 
     End Sub
 
-    Function ИмяВключенногоЧекбоксыНаФорме(Форма As Form) As String
+    Function nameCheckedCheckBox(currentForm As Form) As String
 
-        For Each элемент In Форма.Controls
+        For Each element In currentForm.Controls.OfType(Of CheckBox)
 
             Try
 
+                If element.Checked = True Then
 
-                If элемент.Checked = True Then
-
-                    ИмяВключенногоЧекбоксыНаФорме = элемент.name
+                    Return element.Name
 
                 End If
+
             Catch ex As Exception
 
             End Try
@@ -337,79 +215,48 @@ Module Интерфейс
 
     End Function
 
-    Function ОпроситьЧекбоксыНаФорме(Форма As Form) As Boolean
+    Function statusCheckBoxes(currentForm As Form) As Boolean
 
-        ОпроситьЧекбоксыНаФорме = False
+        statusCheckBoxes = False
 
-        For Each элемент In Форма.Controls
+        For Each element In currentForm.Controls.OfType(Of CheckBox)
 
-            Try
-                If элемент.Checked = True Then
+            If element.Checked = True Then
 
-                    ОпроситьЧекбоксыНаФорме = True
+                Return True
 
-                End If
-            Catch ex As Exception
-
-            End Try
-
+            End If
 
         Next
 
     End Function
 
-    Function ИмяАктивногоЧекбоксыНаФорме(Форма As Form) As String
+    Sub searchInit(currentForm As Form, nameCheckBox As String)
 
-        For Each элемент In Форма.Controls
+        For Each element In currentForm.Controls.OfType(Of CheckBox)
 
-            Try
-                If элемент.Checked = True Then
+            If element.Name = nameCheckBox Then
 
-                    ИмяАктивногоЧекбоксыНаФорме = элемент.Text
+                element.Checked = True
+                Return
 
-                End If
-            Catch ex As Exception
-
-            End Try
-
-
-
-        Next
-
-    End Function
-
-
-    Sub ВключитьНастройкуПоиска(Форма As Form, ИмяЧекбокса As String)
-
-        For Each элемент In Форма.Controls
-            Try
-                If элемент.name = ИмяЧекбокса Then
-
-                    элемент.Checked = True
-
-                End If
-            Catch ex As Exception
-
-            End Try
-
+            End If
 
         Next
 
     End Sub
 
-    Sub ЧекбоксПоведение(Форма As Form, Чекбокс As CheckBox)
+    Sub checkBoxReaction(currentForm As Form, currentCheckBox As CheckBox)
 
-        If Чекбокс.Checked = True Then
+        If currentCheckBox.Checked = True Then
 
-            Интерфейс.выключитьОстальныеЧекбоксыНаФорме(Форма, Чекбокс.Name)
+            Интерфейс.enableOneCheckbox(currentForm, currentCheckBox.Name)
 
-        End If
+        ElseIf currentCheckBox.Checked = False Then
 
-        If Чекбокс.Checked = False Then
+            If Not Интерфейс.statusCheckBoxes(currentForm) Then
 
-            If Not Интерфейс.ОпроситьЧекбоксыНаФорме(Форма) Then
-
-                Чекбокс.Checked = True
+                currentCheckBox.Checked = True
 
             End If
 
@@ -417,62 +264,73 @@ Module Интерфейс
 
     End Sub
 
-    Function ВидСортировки(Форма As Form, Индикатор As Boolean) As String
+    Function sortType(status As Boolean) As String
 
-        For Each элемент In Форма.Controls
-            If элемент.Name = "PictureBox1" Then
+        If status Then
 
-                If Индикатор Then
+            Return " DESC "
 
-                    ВидСортировки = " DESC "
+        Else
 
-                Else
+            Return ""
 
-                    ВидСортировки = ""
-
-                End If
-
-            End If
-        Next
+        End If
 
     End Function
 
-    Function проверкаНомеровГруппы(Значение As Object, имя As String) As Boolean
-        Dim число As Long
-        проверкаНомеровГруппы = True
+    Function validationField(fildName As String)
 
-        Try
-            число = Значение
-        Catch ex As Exception
+        Select Case fildName
 
-            проверкаНомеровГруппы = False
-            предупреждение.текст.Text = имя & " не является числом"
-            предупреждение.ShowDialog()
+            Case "Квалификация"
+                Return False
+            Case "РегНомерСвид"
+                Return False
+            Case "НомерСвид"
+                Return False
+            Case "РегНомерДиплома"
+                Return False
+            Case "НомерДиплома"
+                Return False
+            Case "РегНомерУд"
+                Return False
+            Case "НомерУд"
+                Return False
+            Case "НоваягруппаОтветственныйЗаПрактику"
+                Return False
 
-        End Try
+        End Select
+
+        If Strings.Left(fildName, 6) = "Модуль" Then
+
+            Return False
+
+        End If
+
+        Return True
 
     End Function
 
 
-    Function проверитьЗаполненностьФормыСлушатели(Форма As Form) As Boolean
+    Function formStudentValidation(currentForm As Form) As Boolean
 
         Dim nameControl As String
 
-        проверитьЗаполненностьФормыСлушатели = True
+        formStudentValidation = True
 
-        For Each i In Форма.Controls
+        For Each element In currentForm.Controls
 
-            nameControl = i.Name
+            nameControl = element.Name
 
-            Dim t As String = i.GetType.ToString
+            Dim t As String = element.GetType.ToString
 
-            If i.GetType.ToString <> "System.Windows.Forms.ComboBox" And i.GetType.ToString <> "System.Windows.Forms.TextBox" Then
+            If element.GetType.ToString <> "System.Windows.Forms.ComboBox" And element.GetType.ToString <> "System.Windows.Forms.TextBox" Then
 
                 Continue For
 
             End If
 
-            If i.Visible = True Then
+            If element.Visible = False Then
 
                 Continue For
 
@@ -523,7 +381,7 @@ Module Интерфейс
 
             End Select
 
-            If i.Text = "" Then
+            If element.Text = "" Then
 
                 Return False
 

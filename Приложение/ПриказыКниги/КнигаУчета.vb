@@ -17,13 +17,13 @@
             Название = " свидетельств "
         End If
 
-        Массив = ЗагрузитьСписок(Критерий, ААОсновная.ДатаНачалаОтчета.Value.ToShortDateString, ААОсновная.ДатаКонцаОтчета.Value.ToShortDateString)
+        Массив = ЗагрузитьСписок(Критерий, MainForm.ДатаНачалаОтчета.Value.ToShortDateString, MainForm.ДатаКонцаОтчета.Value.ToShortDateString)
 
         If Массив(0, 0).ToString = "нет записей" Then
             Exit Sub
         End If
 
-        Массив = ДобавитьНулиСпередиМвссив(Массив, 0, 5)
+        Массив = addZerosIntoArray(Массив, 0, 5)
 
         ПутьККаталогуСРесурсами = Вспомогательный.resourcesPath()
         ПутьКШаблону = ПутьККаталогуСРесурсами & "Шаблоны/Книга учёта выданных" & Название & "о повышении квалификации.docx"
@@ -36,30 +36,30 @@
 
         'ПриложениеВорд.Visible = True
         Таблица = ДокументВорд.Tables(1)
-        ЗаполнитьТаблицу(ПриложениеВорд, Таблица, Массив, ААОсновная.ДатаНачалаОтчета.Value.ToShortDateString, ААОсновная.ДатаКонцаОтчета.Value.ToShortDateString)
+        ЗаполнитьТаблицу(ПриложениеВорд, Таблица, Массив, MainForm.ДатаНачалаОтчета.Value.ToShortDateString, MainForm.ДатаКонцаОтчета.Value.ToShortDateString)
         ДокументВорд.Save
         ПриложениеВорд.Visible = True
     End Sub
 
     Function ЗагрузитьСписок(Критерий As String, ДатаНачалаОтчета As String, ДатаКонцаОтчета As String) As Object
         Dim listResult
-        Dim queryString As String
+        Dim sqlQuery As String
 
         If Критерий = "Удостоверение" Then
 
-            queryString = accountingBook__loadListUd(ААОсновная.mySqlConnect.dateToFormatMySQL(Convert.ToDateTime(ДатаНачалаОтчета)), ААОсновная.mySqlConnect.dateToFormatMySQL(Convert.ToDateTime(ДатаКонцаОтчета)))
+            sqlQuery = accountingBook__loadListUd(MainForm.mySqlConnect.dateToFormatMySQL(Convert.ToDateTime(ДатаНачалаОтчета)), MainForm.mySqlConnect.dateToFormatMySQL(Convert.ToDateTime(ДатаКонцаОтчета)))
 
         ElseIf Критерий = "Диплом" Then
 
-            queryString = accountingBook__loadListDip(ААОсновная.mySqlConnect.dateToFormatMySQL(Convert.ToDateTime(ДатаНачалаОтчета)), ААОсновная.mySqlConnect.dateToFormatMySQL(Convert.ToDateTime(ДатаКонцаОтчета)))
+            sqlQuery = accountingBook__loadListDip(MainForm.mySqlConnect.dateToFormatMySQL(Convert.ToDateTime(ДатаНачалаОтчета)), MainForm.mySqlConnect.dateToFormatMySQL(Convert.ToDateTime(ДатаКонцаОтчета)))
 
         ElseIf Критерий = "Свидетельство" Then
 
-            queryString = accountingBook__loadListSvid(ААОсновная.mySqlConnect.dateToFormatMySQL(Convert.ToDateTime(ДатаНачалаОтчета)), ААОсновная.mySqlConnect.dateToFormatMySQL(Convert.ToDateTime(ДатаКонцаОтчета)))
+            sqlQuery = accountingBook__loadListSvid(MainForm.mySqlConnect.dateToFormatMySQL(Convert.ToDateTime(ДатаНачалаОтчета)), MainForm.mySqlConnect.dateToFormatMySQL(Convert.ToDateTime(ДатаКонцаОтчета)))
 
         End If
 
-        listResult = УбратьПустотыВМассиве.УбратьПустотыВМассиве(ЗагрузитьИзБазы.ЗагрузитьИзБазы(queryString))
+        listResult = УбратьПустотыВМассиве.УбратьПустотыВМассиве(MainForm.mySqlConnect.loadMySqlToArray(sqlQuery, 1))
 
         If listResult(0, 0).ToString = "нет записей" Then
 

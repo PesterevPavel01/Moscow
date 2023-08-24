@@ -56,7 +56,7 @@ Public Class НовыйСлушатель
             Exit Sub
         End If
 
-        If Not Интерфейс.проверитьЗаполненностьФормыСлушатели(Me) Then
+        If Not Интерфейс.formStudentValidation(Me) Then
             Try
                 предупреждение.ShowDialog()
             Catch ex As Exception
@@ -77,7 +77,7 @@ Public Class НовыйСлушатель
         slushatel.structSlushatel.фамилия = Фамилия.Text
         slushatel.structSlushatel.имя = Имя.Text
         slushatel.structSlushatel.отчество = Отчество.Text
-        slushatel.structSlushatel.датаР = ААОсновная.mySqlConnect.dateToFormatMySQL(ДатаРождения.Value.ToShortDateString)
+        slushatel.structSlushatel.датаР = MainForm.mySqlConnect.dateToFormatMySQL(ДатаРождения.Value.ToShortDateString)
         slushatel.structSlushatel.пол = Пол.Text
         slushatel.structSlushatel.уровеньОбразования = УровеньОбразования.Text
         slushatel.structSlushatel.образование = Образование.Text
@@ -93,8 +93,8 @@ Public Class НовыйСлушатель
         slushatel.structSlushatel.источникФин = ИсточникФин.Text
         slushatel.structSlushatel.направившаяОрг = НаправившаяОрг.Text
         slushatel.structSlushatel.номерНаправленияРосздравнадзора = НомерНаправленияРосздравнадзора.Text
-        slushatel.structSlushatel.датаНаправленияРосздравнвдзора = ААОсновная.mySqlConnect.dateToFormatMySQL(ДатаНаправленияРосздравнвдзора.Value.ToShortDateString)
-        slushatel.structSlushatel.датаРег = ААОсновная.mySqlConnect.dateToFormatMySQL(Date.Now.ToShortDateString)
+        slushatel.structSlushatel.датаНаправленияРосздравнвдзора = MainForm.mySqlConnect.dateToFormatMySQL(ДатаНаправленияРосздравнвдзора.Value.ToShortDateString)
+        slushatel.structSlushatel.датаРег = MainForm.mySqlConnect.dateToFormatMySQL(Date.Now.ToShortDateString)
         slushatel.structSlushatel.Email = Email.Text
         slushatel.structSlushatel.doo_vid_dok = doo_vid_dok.Text
 
@@ -103,7 +103,7 @@ Public Class НовыйСлушатель
 
             slushatel.structSlushatel.датаВыдачиДУЛ = "null"
         Else
-            slushatel.structSlushatel.датаВыдачиДУЛ = ААОсновная.mySqlConnect.dateToFormatMySQL(ДатаВыдачиДУЛ.Value.ToShortDateString)
+            slushatel.structSlushatel.датаВыдачиДУЛ = MainForm.mySqlConnect.dateToFormatMySQL(ДатаВыдачиДУЛ.Value.ToShortDateString)
         End If
         slushatel.structSlushatel.кемВыданДУЛ = КемВыданДУЛ.Text
         slushatel.structSlushatel.snilsRub = Снилс.Text
@@ -119,7 +119,7 @@ Public Class НовыйСлушатель
         If slushatel.insertSlushatel() Then
 
             SC.Send(AddressOf ЗаписьВСтатус, ДобавитьРубашку.ДобавитьРубашку(slushatel.structSlushatel.snils))
-            SC.Send(AddressOf ЗаполнитьФормуССлушВГруппе.ЗаполнитьФормуССлушВГруппе, slushatel.structSlushatel.kodGroup)
+            SC.Send(AddressOf ЗаполнитьФормуССлушВГруппе.updateFormStudentsList, slushatel.structSlushatel.kodGroup)
 
         End If
 
@@ -177,7 +177,13 @@ Public Class НовыйСлушатель
         Снилс.SelectionStart = Len(Снилс.Text)
         snils = УдалитьРубашку(Снилс.Text)
         If Len(snils) = 11 Then
-            If ЗаписьВБазу.ПроверкаСовпадений("students", "Снилс", snils) Then
+
+            InsertIntoDataBase.argumentClear()
+            InsertIntoDataBase.argument.nameTable = "students"
+            InsertIntoDataBase.argument.firstName = "Снилс"
+            InsertIntoDataBase.argument.firstValue = snils
+
+            If InsertIntoDataBase.checkDuplicates() Then
                 Снилс.BackColor = Color.Pink
             Else
                 Снилс.BackColor = SystemColors.Window
@@ -417,11 +423,11 @@ Public Class НовыйСлушатель
 
     Private Sub НовыйСлушатель_KeyDown(sender As Object, e As KeyEventArgs) Handles MyBase.KeyDown
 
-        ЗакрытьEsc(Me, e.KeyCode)
+        closeEsc(Me, e.KeyCode)
 
         If e.KeyCode = 38 Or e.KeyCode = 40 Then
-            функционалТаб(e.KeyCode, 40)
-            перемещениеВверх(Me, e.KeyCode, 38)
+            pressTab(e.KeyCode, 40)
+            up(Me, e.KeyCode, 38)
             e.Handled = True
         End If
 

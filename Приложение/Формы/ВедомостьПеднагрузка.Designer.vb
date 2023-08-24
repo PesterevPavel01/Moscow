@@ -44,13 +44,13 @@ Partial Class ВедомостьПеднагрузка
         Me.Label1 = New System.Windows.Forms.Label()
         Me.НомерГруппы = New System.Windows.Forms.TextBox()
         Me.ПодписьИтого = New System.Windows.Forms.TextBox()
-        Me.ИтогоЛекции = New System.Windows.Forms.TextBox()
-        Me.ИтогоПрактические = New System.Windows.Forms.TextBox()
-        Me.ИтогоСтимулирующие = New System.Windows.Forms.TextBox()
-        Me.ИтогоКонсультация = New System.Windows.Forms.TextBox()
-        Me.ИтогоПА = New System.Windows.Forms.TextBox()
-        Me.ИтогоИА = New System.Windows.Forms.TextBox()
-        Me.ИтогоИтого = New System.Windows.Forms.TextBox()
+        Me.sumLectures = New System.Windows.Forms.TextBox()
+        Me.sumPracticals = New System.Windows.Forms.TextBox()
+        Me.sumStimul = New System.Windows.Forms.TextBox()
+        Me.sumConsultations = New System.Windows.Forms.TextBox()
+        Me.sumPA = New System.Windows.Forms.TextBox()
+        Me.sumIA = New System.Windows.Forms.TextBox()
+        Me.sumResult = New System.Windows.Forms.TextBox()
         Me.Сохранить = New System.Windows.Forms.Button()
         Me.pednagr__splitContainerMain = New System.Windows.Forms.SplitContainer()
         Me.pednagr_splitContainerInfo = New System.Windows.Forms.SplitContainer()
@@ -225,73 +225,73 @@ Partial Class ВедомостьПеднагрузка
         '
         'ИтогоЛекции
         '
-        Me.ИтогоЛекции.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.ИтогоЛекции.Enabled = False
-        Me.ИтогоЛекции.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.ИтогоЛекции.Location = New System.Drawing.Point(299, 807)
-        Me.ИтогоЛекции.Name = "ИтогоЛекции"
-        Me.ИтогоЛекции.Size = New System.Drawing.Size(120, 29)
-        Me.ИтогоЛекции.TabIndex = 12
+        Me.sumLectures.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.sumLectures.Enabled = False
+        Me.sumLectures.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
+        Me.sumLectures.Location = New System.Drawing.Point(299, 807)
+        Me.sumLectures.Name = "ИтогоЛекции"
+        Me.sumLectures.Size = New System.Drawing.Size(120, 29)
+        Me.sumLectures.TabIndex = 12
         '
         'ИтогоПрактические
         '
-        Me.ИтогоПрактические.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.ИтогоПрактические.Enabled = False
-        Me.ИтогоПрактические.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ИтогоПрактические.Location = New System.Drawing.Point(418, 807)
-        Me.ИтогоПрактические.Name = "ИтогоПрактические"
-        Me.ИтогоПрактические.Size = New System.Drawing.Size(120, 29)
-        Me.ИтогоПрактические.TabIndex = 13
+        Me.sumPracticals.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.sumPracticals.Enabled = False
+        Me.sumPracticals.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.sumPracticals.Location = New System.Drawing.Point(418, 807)
+        Me.sumPracticals.Name = "ИтогоПрактические"
+        Me.sumPracticals.Size = New System.Drawing.Size(120, 29)
+        Me.sumPracticals.TabIndex = 13
         '
         'ИтогоСтимулирующие
         '
-        Me.ИтогоСтимулирующие.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.ИтогоСтимулирующие.Enabled = False
-        Me.ИтогоСтимулирующие.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.ИтогоСтимулирующие.Location = New System.Drawing.Point(537, 807)
-        Me.ИтогоСтимулирующие.Name = "ИтогоСтимулирующие"
-        Me.ИтогоСтимулирующие.Size = New System.Drawing.Size(122, 29)
-        Me.ИтогоСтимулирующие.TabIndex = 14
+        Me.sumStimul.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.sumStimul.Enabled = False
+        Me.sumStimul.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
+        Me.sumStimul.Location = New System.Drawing.Point(537, 807)
+        Me.sumStimul.Name = "ИтогоСтимулирующие"
+        Me.sumStimul.Size = New System.Drawing.Size(122, 29)
+        Me.sumStimul.TabIndex = 14
         '
         'ИтогоКонсультация
         '
-        Me.ИтогоКонсультация.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.ИтогоКонсультация.Enabled = False
-        Me.ИтогоКонсультация.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.ИтогоКонсультация.Location = New System.Drawing.Point(658, 807)
-        Me.ИтогоКонсультация.Name = "ИтогоКонсультация"
-        Me.ИтогоКонсультация.Size = New System.Drawing.Size(144, 29)
-        Me.ИтогоКонсультация.TabIndex = 15
+        Me.sumConsultations.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.sumConsultations.Enabled = False
+        Me.sumConsultations.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
+        Me.sumConsultations.Location = New System.Drawing.Point(658, 807)
+        Me.sumConsultations.Name = "ИтогоКонсультация"
+        Me.sumConsultations.Size = New System.Drawing.Size(144, 29)
+        Me.sumConsultations.TabIndex = 15
         '
         'ИтогоПА
         '
-        Me.ИтогоПА.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.ИтогоПА.Enabled = False
-        Me.ИтогоПА.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.ИтогоПА.Location = New System.Drawing.Point(799, 807)
-        Me.ИтогоПА.Name = "ИтогоПА"
-        Me.ИтогоПА.Size = New System.Drawing.Size(100, 29)
-        Me.ИтогоПА.TabIndex = 16
+        Me.sumPA.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.sumPA.Enabled = False
+        Me.sumPA.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
+        Me.sumPA.Location = New System.Drawing.Point(799, 807)
+        Me.sumPA.Name = "ИтогоПА"
+        Me.sumPA.Size = New System.Drawing.Size(100, 29)
+        Me.sumPA.TabIndex = 16
         '
         'ИтогоИА
         '
-        Me.ИтогоИА.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.ИтогоИА.Enabled = False
-        Me.ИтогоИА.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.ИтогоИА.Location = New System.Drawing.Point(898, 807)
-        Me.ИтогоИА.Name = "ИтогоИА"
-        Me.ИтогоИА.Size = New System.Drawing.Size(100, 29)
-        Me.ИтогоИА.TabIndex = 17
+        Me.sumIA.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.sumIA.Enabled = False
+        Me.sumIA.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
+        Me.sumIA.Location = New System.Drawing.Point(898, 807)
+        Me.sumIA.Name = "ИтогоИА"
+        Me.sumIA.Size = New System.Drawing.Size(100, 29)
+        Me.sumIA.TabIndex = 17
         '
         'ИтогоИтого
         '
-        Me.ИтогоИтого.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.ИтогоИтого.Enabled = False
-        Me.ИтогоИтого.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.ИтогоИтого.Location = New System.Drawing.Point(997, 807)
-        Me.ИтогоИтого.Name = "ИтогоИтого"
-        Me.ИтогоИтого.Size = New System.Drawing.Size(126, 29)
-        Me.ИтогоИтого.TabIndex = 18
+        Me.sumResult.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.sumResult.Enabled = False
+        Me.sumResult.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
+        Me.sumResult.Location = New System.Drawing.Point(997, 807)
+        Me.sumResult.Name = "ИтогоИтого"
+        Me.sumResult.Size = New System.Drawing.Size(126, 29)
+        Me.sumResult.TabIndex = 18
         '
         'Сохранить
         '
@@ -325,14 +325,14 @@ Partial Class ВедомостьПеднагрузка
         Me.pednagr__splitContainerMain.Panel1.Controls.Add(Me.НомерГруппы)
         Me.pednagr__splitContainerMain.Panel1.Controls.Add(Me.Label1)
         Me.pednagr__splitContainerMain.Panel1.Controls.Add(Me.pednagr__mainTable)
-        Me.pednagr__splitContainerMain.Panel1.Controls.Add(Me.ИтогоПА)
+        Me.pednagr__splitContainerMain.Panel1.Controls.Add(Me.sumPA)
         Me.pednagr__splitContainerMain.Panel1.Controls.Add(Me.ПодписьИтого)
-        Me.pednagr__splitContainerMain.Panel1.Controls.Add(Me.ИтогоКонсультация)
-        Me.pednagr__splitContainerMain.Panel1.Controls.Add(Me.ИтогоЛекции)
-        Me.pednagr__splitContainerMain.Panel1.Controls.Add(Me.ИтогоСтимулирующие)
-        Me.pednagr__splitContainerMain.Panel1.Controls.Add(Me.ИтогоПрактические)
-        Me.pednagr__splitContainerMain.Panel1.Controls.Add(Me.ИтогоИА)
-        Me.pednagr__splitContainerMain.Panel1.Controls.Add(Me.ИтогоИтого)
+        Me.pednagr__splitContainerMain.Panel1.Controls.Add(Me.sumConsultations)
+        Me.pednagr__splitContainerMain.Panel1.Controls.Add(Me.sumLectures)
+        Me.pednagr__splitContainerMain.Panel1.Controls.Add(Me.sumStimul)
+        Me.pednagr__splitContainerMain.Panel1.Controls.Add(Me.sumPracticals)
+        Me.pednagr__splitContainerMain.Panel1.Controls.Add(Me.sumIA)
+        Me.pednagr__splitContainerMain.Panel1.Controls.Add(Me.sumResult)
         '
         'pednagr__splitContainerMain.Panel2
         '
@@ -569,13 +569,13 @@ Partial Class ВедомостьПеднагрузка
     Friend WithEvents Label1 As Label
     Friend WithEvents НомерГруппы As TextBox
     Friend WithEvents ПодписьИтого As TextBox
-    Friend WithEvents ИтогоЛекции As TextBox
-    Friend WithEvents ИтогоПрактические As TextBox
-    Friend WithEvents ИтогоСтимулирующие As TextBox
-    Friend WithEvents ИтогоКонсультация As TextBox
-    Friend WithEvents ИтогоПА As TextBox
-    Friend WithEvents ИтогоИА As TextBox
-    Friend WithEvents ИтогоИтого As TextBox
+    Friend WithEvents sumLectures As TextBox
+    Friend WithEvents sumPracticals As TextBox
+    Friend WithEvents sumStimul As TextBox
+    Friend WithEvents sumConsultations As TextBox
+    Friend WithEvents sumPA As TextBox
+    Friend WithEvents sumIA As TextBox
+    Friend WithEvents sumResult As TextBox
     Friend WithEvents Сохранить As Button
     Friend WithEvents ФИО As DataGridViewComboBoxColumn
     Friend WithEvents Лекции As DataGridViewTextBoxColumn

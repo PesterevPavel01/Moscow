@@ -1,114 +1,114 @@
 ﻿Module КнигаУчетаФРДО
 
-    Sub КнигаУчета(Критерий As String)
-        Dim ПриложениеЭксель, ОбъектыЭксель, Шаблон, ФорматированиеСтолбцов
-        Dim КнигаЭксель, Координаты
-        Dim ЛистЭксель, Массив, Obl, mass
-        Dim ПутьКШаблону, ПутьКНовомуФайлу, ПутьККаталогуСРесурсами, Название, ТитульнаяСтрока, Адресс As String
+    Sub КнигаУчета(argument As String)
+        Dim excellApp, excellObject, sample, ColumnSetts
+        Dim excellBook, coordinates
+        Dim excellSheet, array, Obl, mass
+        Dim samplePath, newFilePath, resourcesPath, name, title, adress As String
 
-        If Критерий = "Удостоверение" Then
-            Название = " удостоверений "
-            ТитульнаяСтрока = "Книга учёта выданных удостоверений о повышении квалификации"
+        If argument = "Удостоверение" Then
+            name = " удостоверений "
+            title = "Книга учёта выданных удостоверений о повышении квалификации"
         End If
 
-        If Критерий = "Диплом" Then
-            Название = " дипломов "
-            ТитульнаяСтрока = "Книга учёта выданных дипломов о профессиональной переподготовке"
+        If argument = "Диплом" Then
+            name = " дипломов "
+            title = "Книга учёта выданных дипломов о профессиональной переподготовке"
         End If
 
-        If Критерий = "Свидетельство" Then
-            Название = " свидетельств "
-            ТитульнаяСтрока = "Книга учёта выданных свидетельств о профессии рабочего, должности служащего"
+        If argument = "Свидетельство" Then
+            name = " свидетельств "
+            title = "Книга учёта выданных свидетельств о профессии рабочего, должности служащего"
         End If
 
-        Массив = ЗагрузитьСписок(Критерий, ААОсновная.mySqlConnect.dateToFormatMySQL(ААОсновная.ДатаНачалаОтчета.Value.ToShortDateString), ААОсновная.mySqlConnect.dateToFormatMySQL(ААОсновная.ДатаКонцаОтчета.Value.ToShortDateString))
+        array = ЗагрузитьСписок(argument, MainForm.mySqlConnect.dateToFormatMySQL(MainForm.ДатаНачалаОтчета.Value.ToShortDateString), MainForm.mySqlConnect.dateToFormatMySQL(MainForm.ДатаКонцаОтчета.Value.ToShortDateString))
 
 
-        If Массив(0, 0).ToString = "нет записей" Then
+        If array(0, 0).ToString = "нет записей" Then
             Exit Sub
         End If
 
-        Массив = ДобавитьРубашкуСПробеломВКонцеВМассив(Массив, 16)
+        array = ДобавитьРубашкуСПробеломВКонцеВМассив(array, 16)
 
-        ПутьККаталогуСРесурсами = Вспомогательный.resourcesPath()
-        ПутьКШаблону = ПутьККаталогуСРесурсами & "Шаблоны\Книга учёта выданных" & Название & "ФРДО.xlsx"
-        ПутьКНовомуФайлу = ПутьККаталогуСРесурсами & "Отчеты\Книги Учета"
-        ОбъектыЭксель = Вспомогательный.СозданиеКнигиЭксельИЛИОшибкаВ0(ПутьКНовомуФайлу, "Книга учёта выданных" & Название & " ФРДО")
+        resourcesPath = Вспомогательный.resourcesPath()
+        samplePath = resourcesPath & "Шаблоны\Книга учёта выданных" & name & "ФРДО.xlsx"
+        newFilePath = resourcesPath & "Отчеты\Книги Учета"
+        excellObject = Вспомогательный.СозданиеКнигиЭксельИЛИОшибкаВ0(newFilePath, "Книга учёта выданных" & name & " ФРДО")
 
-        If ОбъектыЭксель(0).ToString = "Ошибка" Then
+        If excellObject(0).ToString = "Ошибка" Then
             Exit Sub
         End If
 
-        ПриложениеЭксель = ОбъектыЭксель(0)
-        КнигаЭксель = ОбъектыЭксель(1)
+        excellApp = excellObject(0)
+        excellBook = excellObject(1)
 
-        Шаблон = ПриложениеЭксель.Workbooks.Open(ПутьКШаблону, ReadOnly:=True)
-        Шаблон.Worksheets(1).copy(before:=КнигаЭксель.Worksheets(1))
-        Шаблон.Close
+        sample = excellApp.Workbooks.Open(samplePath, ReadOnly:=True)
+        sample.Worksheets(1).copy(before:=excellBook.Worksheets(1))
+        sample.Close
 
-        ЛистЭксель = КнигаЭксель.Worksheets(1)
-        ЛистЭксель.name = Критерий
-        ФорматированиеСтолбцов = Вспомогательный.styleColumn(ЛистЭксель, ЛистЭксель.ListObjects("Таблица"))
-        Адресс = ЛистЭксель.ListObjects("Таблица").Range.Address
-        Координаты = Split(Адресс, ":")
-        Массив = ДобавитьНулиСпередиМвссив(Массив, 2, 5)
-        Массив = УбратьПустотыВМассиве.УбратьПустотыВМассиве(rotateArray(Массив))
-        ЛистЭксель.Range("A1") = ТитульнаяСтрока
-        ЛистЭксель.Range("A2") = "за период с " & ААОсновная.ДатаНачалаОтчета.Value.ToShortDateString & " по " & ААОсновная.ДатаКонцаОтчета.Value.ToShortDateString & "г."
+        excellSheet = excellBook.Worksheets(1)
+        excellSheet.name = argument
+        ColumnSetts = Вспомогательный.styleColumn(excellSheet, excellSheet.ListObjects("Таблица"))
+        adress = excellSheet.ListObjects("Таблица").Range.Address
+        coordinates = Split(adress, ":")
+        array = addZerosIntoArray(array, 2, 5)
+        array = УбратьПустотыВМассиве.УбратьПустотыВМассиве(rotateArray(array))
+        excellSheet.Range("A1") = title
+        excellSheet.Range("A2") = "за период с " & MainForm.ДатаНачалаОтчета.Value.ToShortDateString & " по " & MainForm.ДатаКонцаОтчета.Value.ToShortDateString & "г."
 
-        Массив = ЗаменитьДатуНаГод(Массив, 8)
-        Массив = ЗаменитьДатуНаГод(Массив, 9)
+        array = ЗаменитьДатуНаГод(array, 8)
+        array = ЗаменитьДатуНаГод(array, 9)
 
-        Dim i As Integer = UBound(Массив, 1) + 1
-        Dim j As Integer = UBound(Массив, 2) + 1
+        Dim i As Integer = UBound(array, 1) + 1
+        Dim j As Integer = UBound(array, 2) + 1
 
         Dim count As Integer = 0
         Dim flag = True
 
-        Obl = КнигаЭксель.Worksheets(2).Range("C1").Resize(UBound(Массив, 1) + 10, 1)
+        Obl = excellBook.Worksheets(2).Range("C1").Resize(UBound(array, 1) + 10, 1)
         Obl.NumberFormat = "@"
 
-        mass = ВзятьЧастьМассива(Массив, 0, i - 1)
-        КнигаЭксель.Worksheets(2).Range("A1").Resize(i, UBound(Массив, 2) + 1) = mass
-        КнигаЭксель.Worksheets(2).Range("A1").Resize(i, UBound(Массив, 2) + 1).cut(ЛистЭксель.Range("A6"))
+        mass = ВзятьЧастьМассива(array, 0, i - 1)
+        excellBook.Worksheets(2).Range("A1").Resize(i, UBound(array, 2) + 1) = mass
+        excellBook.Worksheets(2).Range("A1").Resize(i, UBound(array, 2) + 1).cut(excellSheet.Range("A6"))
 
-        НастроитьРедактированияСтолбца(ЛистЭксель, ЛистЭксель.ListObjects("Таблица"), ФорматированиеСтолбцов)
+        НастроитьРедактированияСтолбца(excellSheet, excellSheet.ListObjects("Таблица"), ColumnSetts)
 
-        With ЛистЭксель.ListObjects("Таблица").Range
+        With excellSheet.ListObjects("Таблица").Range
             .WrapText = True
             .EntireColumn.AutoFit
             .Borders.LineStyle = True
             .HorizontalAlignment = -4131
         End With
-        ПриложениеЭксель.visible = True
-        Obl = ЛистЭксель.ListObjects("Таблица")
+        excellApp.visible = True
+        Obl = excellSheet.ListObjects("Таблица")
         Obl = Obl.ListColumns(1).Range
         Obl.NumberFormat = "0.00"
         Obl.NumberFormat = "0"
 
-        ПриложениеЭксель.visible = True
-        КнигаЭксель.Save
+        excellApp.visible = True
+        excellBook.Save
     End Sub
 
-    Function ЗагрузитьСписок(Критерий As String, ДатаНачалаОтчета As String, ДатаКонцаОтчета As String) As Object
+    Function ЗагрузитьСписок(Критерий As String, dateStart As String, dateEnd As String) As Object
         Dim listResult
-        Dim queryString As String
+        Dim sqlQuery As String
 
         If Критерий = "Удостоверение" Then
 
-            queryString = accountingBook__loadListUdFRDO(ДатаНачалаОтчета, ДатаКонцаОтчета)
+            sqlQuery = accountingBook__loadListUdFRDO(dateStart, dateEnd)
 
         ElseIf Критерий = "Диплом" Then
 
-            queryString = accountingBook__loadListDipFRDO(ДатаНачалаОтчета, ДатаКонцаОтчета)
+            sqlQuery = accountingBook__loadListDipFRDO(dateStart, dateEnd)
 
         ElseIf Критерий = "Свидетельство" Then
 
-            queryString = accountingBook__loadListSvidFRDO(ДатаНачалаОтчета, ДатаКонцаОтчета)
+            sqlQuery = accountingBook__loadListSvidFRDO(dateStart, dateEnd)
 
         End If
 
-        listResult = ЗагрузитьИзБазы.ЗагрузитьИзБазы(queryString)
+        listResult = MainForm.mySqlConnect.loadMySqlToArray(sqlQuery, 1)
 
         If listResult(0, 0).ToString = "нет записей" Then
 

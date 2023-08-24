@@ -12,7 +12,7 @@
 
         queryString = loadIA(kodGroup)
 
-        list = ЗагрузитьИзБазы.ЗагрузитьИзБазы(queryString)
+        list = MainForm.mySqlConnect.loadMySqlToArray(queryString, 1)
 
         If list(0, 0).ToString = "нет записей" Then
 
@@ -51,6 +51,9 @@
         ФормаСписок.ListViewСписок.Columns.Add("Код", 100)
         ФормаСписок.textboxName = Me.ActiveControl.Name
         ФормаСписок.FormName = Me.Name
+
+        ФормаСписок.headerVisible = True
+
         ФормаСписок.ShowDialog()
         ФормаСписок.ListViewСписок.Columns.RemoveAt(1)
         ФормаСписок.ListViewСписок.Columns.RemoveAt(2)
@@ -65,7 +68,7 @@
 
         ActiveControl = Button1
 
-        If АДействияСОценкиИА.проверка(ТаблицаОценкиИА) Then
+        If АДействияСОценкиИА.check(ТаблицаОценкиИА) Then
 
             Exit Sub
 
@@ -102,7 +105,7 @@
     End Sub
 
     Private Sub АОценкиИА_KeyDown(sender As Object, e As KeyEventArgs) Handles Me.KeyDown
-        ЗакрытьEsc(Me, e.KeyCode)
+        closeEsc(Me, e.KeyCode)
     End Sub
 
 End Class

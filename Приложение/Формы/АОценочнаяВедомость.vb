@@ -15,7 +15,7 @@ Public Class ОценочнаяВедомость
 
         queryString = loadVedomost(kodGroup)
 
-        list = ЗагрузитьИзБазы.ЗагрузитьИзБазы(queryString)
+        list = MainForm.mySqlConnect.loadMySqlToArray(queryString, 1)
 
         If list(0, 0).ToString = "нет записей" Then
 
@@ -28,7 +28,7 @@ Public Class ОценочнаяВедомость
 
         queryString = select_moduls_count(kodGroup)
 
-        result = ААОсновная.mySqlConnect.LoadToListString(queryString, 1, 0)
+        result = MainForm.mySqlConnect.LoadToListString(queryString, 1, 0)
 
         If Not (IsNumeric(result(0)) Or result(0) = "0") Then
 
@@ -80,6 +80,9 @@ Public Class ОценочнаяВедомость
         ФормаСписок.ListViewСписок.Columns.Add("Код", 100)
         ФормаСписок.textboxName = Me.ActiveControl.Name
         ФормаСписок.FormName = Me.Name
+
+        ФормаСписок.headerVisible = True
+
         ФормаСписок.ShowDialog()
         ФормаСписок.ListViewСписок.Columns.RemoveAt(1)
         ФормаСписок.ListViewСписок.Columns.RemoveAt(2)
@@ -122,9 +125,9 @@ Public Class ОценочнаяВедомость
     End Sub
 
     Private Sub ОценочнаяВедомость_KeyDown(sender As Object, e As KeyEventArgs) Handles Me.KeyDown
-        Call функционалТаб(e.KeyCode, 40)
-        Call функционалТаб(e.KeyCode, 39)
-        Call ЗакрытьEsc(Me, e.KeyCode)
+        Call pressTab(e.KeyCode, 40)
+        Call pressTab(e.KeyCode, 39)
+        Call closeEsc(Me, e.KeyCode)
     End Sub
 
     Private Sub Группа_KeyDown(sender As Object, e As KeyEventArgs) Handles НомерГруппы.KeyDown
@@ -154,7 +157,4 @@ Public Class ОценочнаяВедомость
 
     End Sub
 
-    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
-
-    End Sub
 End Class

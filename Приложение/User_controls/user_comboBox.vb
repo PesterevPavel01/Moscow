@@ -109,11 +109,11 @@
 
         If e.KeyCode = Keys.Down Then
 
-            ААОсновная.prog_DataGridTablesResult_activate()
+            MainForm.prog_DataGridTablesResult_activate()
 
         ElseIf e.KeyCode = Keys.Up Then
 
-            ААОсновная.prog_redactor_element_first_activate()
+            MainForm.prog_redactor_element_first_activate()
 
         End If
 
@@ -130,9 +130,9 @@
                 my_ComboBox.DroppedDown = False
                 Return
 
-            ElseIf Not ААОсновная.programs__progrs_tbl.redactor_element_first.Text.Trim = "" Then
+            ElseIf Not MainForm.programs__progrs_tbl.redactor_element_first.Text.Trim = "" Then
 
-                ААОсновная.programs__progrs_tbl.second_element_pressEnter(e)
+                MainForm.programs__progrs_tbl.second_element_pressEnter(e)
                 e.Handled = True
                 Return
 
@@ -140,7 +140,7 @@
 
         ElseIf e.KeyChar = Convert.ToChar(Keys.Tab) Then
 
-            ААОсновная.prog_DataGridTablesResult_activate()
+            MainForm.prog_DataGridTablesResult_activate()
 
         End If
 

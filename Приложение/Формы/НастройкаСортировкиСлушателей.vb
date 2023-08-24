@@ -2,19 +2,19 @@
     Public НажатПБСл As Boolean = False
     Private Sub Имя_CheckedChanged(sender As Object, e As EventArgs) Handles Имя.CheckedChanged
 
-        Интерфейс.ЧекбоксПоведение(Me, Имя)
+        Интерфейс.checkBoxReaction(Me, Имя)
 
     End Sub
 
     Private Sub Снилс_CheckedChanged(sender As Object, e As EventArgs) Handles Снилс.CheckedChanged
 
-        Интерфейс.ЧекбоксПоведение(Me, Снилс)
+        Интерфейс.checkBoxReaction(Me, Снилс)
 
     End Sub
 
     Private Sub Фамилия_CheckedChanged(sender As Object, e As EventArgs) Handles Фамилия.CheckedChanged
 
-        Интерфейс.ЧекбоксПоведение(Me, Фамилия)
+        Интерфейс.checkBoxReaction(Me, Фамилия)
 
     End Sub
 

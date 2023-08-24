@@ -1,25 +1,30 @@
 ﻿Module ЗаполнитьФормуССлушВГруппе
 
-    Sub ЗаполнитьФормуССлушВГруппе(kod As String)
+    Sub updateFormStudentsList(kod As String)
 
-        Dim СписокСлушателей
-        Dim СтрокаЗапроса As String
+        Dim studentsList
+        Dim queryString As String
 
-        If ЗаписьВБазу.ПроверкаСовпаденийЧислоДА_2("group_list", "Kod", kod) = 2 Then
+        InsertIntoDataBase.argumentClear()
+        InsertIntoDataBase.argument.nameTable = "group_list"
+        InsertIntoDataBase.argument.firstName = "Kod"
+        InsertIntoDataBase.argument.firstValue = kod
 
-            СтрокаЗапроса = redactorFormListGroup__loadData(kod)
+        If InsertIntoDataBase.checkUniq_No2() = 2 Then
 
-            СписокСлушателей = ЗагрузитьИзБазы.ЗагрузитьИзБазы(СтрокаЗапроса)
+            queryString = redactorFormListGroup__loadData(kod)
 
-            If СписокСлушателей(0, 0) = "Нет записей" Then
-                СписокСлушателейВГруппе.ListViewСписокСлушателей.Items.Clear()
+            studentsList = MainForm.mySqlConnect.loadMySqlToArray(queryString, 1)
+
+            If studentsList(0, 0) = "Нет записей" Then
+                СписокСлушателейВГруппе.ListViewStudentsList.Items.Clear()
                 Exit Sub
             End If
 
-            ЗаписьВListView.ЗаписьВListView(False, True, СписокСлушателейВГруппе.ListViewСписокСлушателей, ДобавитьРубашку.ДобавитьРубашкуВМассив(СписокСлушателей, 0), 0, 1, 2, 3, 4)
+            UpdateListView.updateListView(False, True, СписокСлушателейВГруппе.ListViewStudentsList, ДобавитьРубашку.ДобавитьРубашкуВМассив(studentsList, 0), 0, 1, 2, 3, 4)
 
         Else
-            СписокСлушателейВГруппе.ListViewСписокСлушателей.Items.Clear()
+            СписокСлушателейВГруппе.ListViewStudentsList.Items.Clear()
         End If
 
     End Sub

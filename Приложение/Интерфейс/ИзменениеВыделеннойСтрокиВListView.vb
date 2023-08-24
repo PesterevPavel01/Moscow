@@ -25,7 +25,7 @@
 
         If indForm = "СписокСлушателейВГруппе" Then
 
-            ListV = СписокСлушателейВГруппе.ListViewСписокСлушателей
+            ListV = СписокСлушателейВГруппе.ListViewStudentsList
 
         End If
         Try

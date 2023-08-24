@@ -18,8 +18,8 @@ Module spravka
         dateVal = АСформироватьПриказ.ДатаПриказа.Value
 
         dateMain = Chr(34) & Format(dateVal, "dd") & Chr(34) & " " & месяцРП(Format(dateVal, "MMMM")) & " " & Format(dateVal, "yyyy")
-        queryString = spravka__groupData(ААОсновная.prikazKodGroup)
-        group = ЗагрузитьИзБазы.ЗагрузитьИзБазы(queryString)
+        queryString = spravka__groupData(MainForm.prikazKodGroup)
+        group = MainForm.mySqlConnect.loadMySqlToArray(queryString, 1)
 
         If group(0, 0) = "нет записей" Then
             предупреждение.текст.Text = "Нет данных для отображения"
@@ -38,7 +38,7 @@ Module spravka
 
             wordDok = wordApp.Documents.Open(ПутьКШаблону, ReadOnly:=True)
 
-            Вспомогательный.savePrikazBlank(wordDok, ААОсновная.prikazKodGroup, type, resourcesPath, "Справки")
+            Вспомогательный.savePrikazBlank(wordDok, MainForm.prikazKodGroup, type, resourcesPath, "Справки")
 
             предупреждение.текст.Visible = False
             предупреждение.TextBox.Visible = True
@@ -57,7 +57,7 @@ Module spravka
             Вспомогательный.ЗаменитьТекстВОбластиДокументаВорд(wordDok.Range, "$ДатаКЗ$", group(4, 0), 2)
             Вспомогательный.ЗаменитьТекстВОбластиДокументаВорд(wordDok.Range, "$Приказ$", АСформироватьПриказ.ПрактическаяПодготовка.Text, 2)
 
-            Вспомогательный.ЗаменитьТекстВОбластиДокументаВорд(wordDok.Range, "$И.О.Ответств$", перевернуть(АСформироватьПриказ.Утверждает.Text), 2)
+            Вспомогательный.ЗаменитьТекстВОбластиДокументаВорд(wordDok.Range, "$И.О.Ответств$", rotate(АСформироватьПриказ.Утверждает.Text), 2)
             Вспомогательный.ЗаменитьТекстВОбластиДокументаВорд(wordDok.Range, "$Дата$", dateMain, 2)
             Вспомогательный.ЗаменитьТекстВОбластиДокументаВорд(wordDok.Range, "$День$", Format(dateVal, "dd"), 2)
             Вспомогательный.ЗаменитьТекстВОбластиДокументаВорд(wordDok.Range, "$Месяц$", месяцРП(Format(dateVal, "MMMM")), 2)

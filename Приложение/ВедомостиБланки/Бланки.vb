@@ -5,11 +5,11 @@
         Dim DOK
         Dim Группа, Слушатели
         Dim НомерАбзаца As Integer, счетчик As Integer
-        Dim Дата As String, СтрокаЗапроса As String, год As String
+        Dim Дата As String, queryString As String, год As String
 
-        СтрокаЗапроса = blanki_loadSlush(ААОсновная.prikazKodGroup)
+        queryString = blanki_loadSlush(MainForm.prikazKodGroup)
 
-        Слушатели = ЗагрузитьИзБазы.ЗагрузитьИзБазы(СтрокаЗапроса)
+        Слушатели = MainForm.mySqlConnect.loadMySqlToArray(queryString, 1)
 
         If Слушатели(0, 0).ToString = "нет записей" Then
 
@@ -19,13 +19,13 @@
 
         End If
 
-        СтрокаЗапроса = blanki_loadProgAndDateTFromGroup(ААОсновная.prikazKodGroup)
+        queryString = blanki_loadProgAndDateTFromGroup(MainForm.prikazKodGroup)
 
-        Группа = ЗагрузитьИзБазы.ЗагрузитьИзБазы(СтрокаЗапроса)
+        Группа = MainForm.mySqlConnect.loadMySqlToArray(queryString, 1)
 
-        СтрокаЗапроса = QueryString.SQLSTring_KartSlushatel(ААОсновная.prikazKodGroup)
+        queryString = WindowsApp2.QueryString.SQLSTring_KartSlushatel(MainForm.prikazKodGroup)
 
-        Слушатели = ЗагрузитьИзБазы.ЗагрузитьИзБазы(СтрокаЗапроса)
+        Слушатели = MainForm.mySqlConnect.loadMySqlToArray(queryString, 1)
 
         If Слушатели(0, 0).ToString = "нет записей" Then
 
@@ -245,7 +245,7 @@
             счетчик = счетчик + 1
         End While
 
-        Вспомогательный.savePrikazBlank(DOK, ААОсновная.prikazKodGroup, видПриказа, resourcesPath, "Карточки")
+        Вспомогательный.savePrikazBlank(DOK, MainForm.prikazKodGroup, видПриказа, resourcesPath, "Карточки")
         MSWord.Visible = True
 
         'Call сохранить(DOK, видПриказа)
@@ -305,11 +305,11 @@
         Dim DOK
         Dim Группа, Слушатели
         Dim НомерАбзаца As Integer, счетчик As Integer
-        Dim Дата As String, СтрокаЗапроса As String
+        Dim Дата As String, sqlQuery As String
 
-        СтрокаЗапроса = blanki_loadSlush(Convert.ToString(ААОсновная.prikazKodGroup))
+        sqlQuery = blanki_loadSlush(Convert.ToString(MainForm.prikazKodGroup))
 
-        Слушатели = ЗагрузитьИзБазы.ЗагрузитьИзБазы(СтрокаЗапроса)
+        Слушатели = MainForm.mySqlConnect.loadMySqlToArray(sqlQuery, 1)
 
         If Слушатели(0, 0).ToString = "нет записей" Then
 
@@ -320,13 +320,13 @@
 
         End If
 
-        СтрокаЗапроса = blanki_loadProgram(ААОсновная.prikazKodGroup)
+        sqlQuery = blanki_loadProgram(MainForm.prikazKodGroup)
 
-        Группа = ЗагрузитьИзБазы.ЗагрузитьИзБазы(СтрокаЗапроса)
+        Группа = MainForm.mySqlConnect.loadMySqlToArray(sqlQuery, 1)
 
-        СтрокаЗапроса = QueryString.SQLSTring_PKZayavlenie(ААОсновная.prikazKodGroup)
+        sqlQuery = QueryString.SQLSTring_PKZayavlenie(MainForm.prikazKodGroup)
 
-        Слушатели = ЗагрузитьИзБазы.ЗагрузитьИзБазы(СтрокаЗапроса)
+        Слушатели = MainForm.mySqlConnect.loadMySqlToArray(sqlQuery, 1)
 
         If Слушатели(0, 0).ToString = "нет записей" Then
 
@@ -534,7 +534,7 @@
             счетчик = счетчик + 1
         End While
 
-        Вспомогательный.savePrikazBlank(DOK, ААОсновная.prikazKodGroup, видПриказа, resourcesPath, "Заявления")
+        Вспомогательный.savePrikazBlank(DOK, MainForm.prikazKodGroup, видПриказа, resourcesPath, "Заявления")
 
         MSWord.Visible = True
 
@@ -550,11 +550,11 @@
         Dim DOK
         Dim Группа, Слушатели
         Dim НомерАбзаца As Integer, счетчик As Integer
-        Dim Дата As String, СтрокаЗапроса As String
+        Dim Дата As String, sqlQuery As String
 
-        СтрокаЗапроса = blanki_loadSlush(ААОсновная.prikazKodGroup)
+        sqlQuery = blanki_loadSlush(MainForm.prikazKodGroup)
 
-        Слушатели = ЗагрузитьИзБазы.ЗагрузитьИзБазы(СтрокаЗапроса)
+        Слушатели = MainForm.mySqlConnect.loadMySqlToArray(sqlQuery, 1)
 
         If Слушатели(0, 0).ToString = "нет записей" Then
 
@@ -565,13 +565,13 @@
 
         End If
 
-        СтрокаЗапроса = blanki_loadSpesh(ААОсновная.prikazKodGroup)
+        sqlQuery = blanki_loadSpesh(MainForm.prikazKodGroup)
 
-        Группа = ЗагрузитьИзБазы.ЗагрузитьИзБазы(СтрокаЗапроса)
+        Группа = MainForm.mySqlConnect.loadMySqlToArray(sqlQuery, 1)
 
-        СтрокаЗапроса = SQLSTring_PKZayavlenie(ААОсновная.prikazKodGroup)
+        sqlQuery = SQLSTring_PKZayavlenie(MainForm.prikazKodGroup)
 
-        Слушатели = ЗагрузитьИзБазы.ЗагрузитьИзБазы(СтрокаЗапроса)
+        Слушатели = MainForm.mySqlConnect.loadMySqlToArray(sqlQuery, 1)
 
         If Слушатели(0, 0).ToString = "нет записей" Then
 
@@ -806,7 +806,7 @@
             счетчик = счетчик + 1
         End While
 
-        Вспомогательный.savePrikazBlank(DOK, ААОсновная.prikazKodGroup, видПриказа, resourcesPath, "Заявления")
+        Вспомогательный.savePrikazBlank(DOK, MainForm.prikazKodGroup, видПриказа, resourcesPath, "Заявления")
         MSWord.Visible = True
 
         'Call сохранить(DOK, видПриказа)

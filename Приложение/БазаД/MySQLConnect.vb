@@ -23,119 +23,126 @@ Public Class MySQLConnect
         resultDate = _date.Year.ToString() + "-" + _date.Month.ToString() + "-" + _date.Day.ToString() + " " + _date.TimeOfDay.ToString()
         Return resultDate
     End Function
-    Public Function ЗагрузитьИзБДMySQLвМассив(СтрокаЗапроса As String, numberBD As Int16) As Object(,)
+    Public Function loadMySqlToArray(СтрокаЗапроса As String, numberBD As Int16) As Object(,)
 
-        Dim СтрокаПодключения = "", АДОДБСтрокаПодключения As String
-        Dim массив As Object(,)
-        Dim КомандаАДОДБ As ADODB.Command = New ADODB.Command()
-        Dim АДОДБСоединение As ADODB.Connection = New ADODB.Connection()
-        Dim АДОДБКоманда As ADODB.Command = New ADODB.Command()
-        Dim Рекордсет As ADODB.Recordset = New ADODB.Recordset()
+        Dim connectionString = "", ADODBConnString As String
+        Dim array As Object(,)
+        Dim AdodbConnection As ADODB.Connection = New ADODB.Connection()
+        Dim recordset As ADODB.Recordset = New ADODB.Recordset()
 
         If mySqlSettings.server = "" Then
             opdateArgument()
         End If
 
         If numberBD = 1 Then
-            СтрокаПодключения = "server=" + mySqlSettings.server + ";" + "User Id=" + mySqlSettings.userName + ";password=" + mySqlSettings.password + ";Persist Security Info=True;" + "database=" + mySqlSettings.nameFirstDB
+            connectionString = "server=" + mySqlSettings.server + ";" + "User Id=" + mySqlSettings.userName + ";password=" + mySqlSettings.password + ";Persist Security Info=True;" + "database=" + mySqlSettings.nameFirstDB
         ElseIf (numberBD = 2) Then
-            СтрокаПодключения = "server=" + mySqlSettings.server + ";" + "User Id=" + mySqlSettings.userName + ";password=" + mySqlSettings.password + ";Persist Security Info=True;" + "database=" + mySqlSettings.ИмяБазыДанныхБ
+            connectionString = "server=" + mySqlSettings.server + ";" + "User Id=" + mySqlSettings.userName + ";password=" + mySqlSettings.password + ";Persist Security Info=True;" + "database=" + mySqlSettings.ИмяБазыДанныхБ
         End If
 
-        АДОДБСтрокаПодключения = СтрокаПодключения + ";" + mySqlSettings.ODBC + ";Option=3;"
+        ADODBConnString = connectionString + ";" + mySqlSettings.ODBC + ";Option=3;"
 
-        АДОДБСоединение.ConnectionString = АДОДБСтрокаПодключения
-        АДОДБСоединение.Open()
-        Рекордсет.ActiveConnection = АДОДБСоединение
-        Рекордсет.Open(СтрокаЗапроса)
-        If (Рекордсет.BOF) Then
-            ReDim массив(1, 1)
-            массив(0, 0) = "нет записей"
-            Рекордсет.Close()
-            АДОДБСоединение.Close()
-            Return массив
+        AdodbConnection.ConnectionString = ADODBConnString
+        AdodbConnection.Open()
+        recordset.ActiveConnection = AdodbConnection
+        recordset.Open(СтрокаЗапроса)
+        If (recordset.BOF) Then
+            ReDim array(1, 1)
+            array(0, 0) = "нет записей"
+            recordset.Close()
+            AdodbConnection.Close()
+            Return array
         End If
-        массив = Рекордсет.GetRows()
-        Рекордсет.Close()
-        АДОДБСоединение.Close()
-        массив = УбратьПустотыВМассиве.УбратьПустотыВМассиве(массив)
+        array = recordset.GetRows()
+        recordset.Close()
+        AdodbConnection.Close()
+        array = УбратьПустотыВМассиве.УбратьПустотыВМассиве(array)
 
-        Return массив
+        Return array
     End Function
 
-    Public Function ОтправитьВбдЗапись(sqlString As String, numberDB As Int16) As Boolean
-        Dim запрос As MySqlCommand
-        Dim СтрокаПодключения As String
-        Dim ПодключениеКБД = New MySqlConnection()
+    Public Function sendQuery(sqlString As String, numberDB As Int16) As Boolean
+        Dim command As MySqlCommand
+        Dim connectionString As String
         Dim result As Boolean = True
 
-        If mySqlSettings.server = "" Then
-            opdateArgument()
-        End If
+        Using mySqlConnection = New MySqlConnection()
 
-        If numberDB = 1 Then
-            СтрокаПодключения = "server=" + mySqlSettings.server + ";" + "User Id=" + mySqlSettings.userName + ";password=" + mySqlSettings.password + ";Persist Security Info=True;" + "database=" + mySqlSettings.nameFirstDB + ";default command timeout=600;"
-        Else
-            СтрокаПодключения = "server=" + mySqlSettings.server + ";" + "User Id=" + mySqlSettings.userName + ";password=" + mySqlSettings.password + ";Persist Security Info=True;" + "database=" + mySqlSettings.nameFirstDB + ";default command timeout=600;"
-        End If
+            If mySqlSettings.server = "" Then
+                opdateArgument()
+            End If
 
-        ПодключениеКБД.ConnectionString = СтрокаПодключения
-        ПодключениеКБД.Open()
-        запрос = New MySqlCommand()
+            If numberDB = 1 Then
+                connectionString = "server=" + mySqlSettings.server + ";" + "User Id=" + mySqlSettings.userName + ";password=" + mySqlSettings.password + ";Persist Security Info=True;" + "database=" + mySqlSettings.nameFirstDB + ";default command timeout=600;"
+            Else
+                connectionString = "server=" + mySqlSettings.server + ";" + "User Id=" + mySqlSettings.userName + ";password=" + mySqlSettings.password + ";Persist Security Info=True;" + "database=" + mySqlSettings.nameFirstDB + ";default command timeout=600;"
+            End If
 
-        запрос.Connection = ПодключениеКБД
-        запрос.CommandText = sqlString
-        Try
-            запрос.ExecuteNonQuery()
-        Catch ex As Exception
-            result = False
-        End Try
+            mySqlConnection.ConnectionString = connectionString
+            mySqlConnection.Open()
+            command = New MySqlCommand()
+
+            command.Connection = mySqlConnection
+            command.CommandText = sqlString
+            Try
+                command.ExecuteNonQuery()
+            Catch ex As Exception
+                result = False
+            End Try
+            mySqlConnection.Close()
+
+        End Using
+
         Return result
+
     End Function
 
 
-    Public Function ОтправитьВбдListЗаписей(list As List(Of String), BazaNumber As Int16) As Boolean
+    Public Function sendListToMySql(list As List(Of String), BazaNumber As Int16) As Boolean
 
         Dim status As Boolean = True
-        Dim запрос As MySqlCommand
-        Dim СтрокаПодключения As String
-        Dim ПодключениеКБД = New MySqlConnection()
+        Dim command As MySqlCommand
+        Dim connectionString As String
 
         If mySqlSettings.server = "" Then
             opdateArgument()
         End If
 
         If (BazaNumber = 1) Then
-            СтрокаПодключения = "server=" + mySqlSettings.server + ";" + "User Id=" + mySqlSettings.userName + ";password=" + mySqlSettings.password + ";Persist Security Info=True;" + "database=" + mySqlSettings.nameFirstDB + ";default command timeout=600;"
+            connectionString = "server=" + mySqlSettings.server + ";" + "User Id=" + mySqlSettings.userName + ";password=" + mySqlSettings.password + ";Persist Security Info=True;" + "database=" + mySqlSettings.nameFirstDB + ";default command timeout=600;"
         ElseIf (BazaNumber = 2) Then
-            СтрокаПодключения = "server=" + mySqlSettings.server + ";" + "User Id=" + mySqlSettings.userName + ";password=" + mySqlSettings.password + ";Persist Security Info=True;" + "database=" + mySqlSettings.ИмяБазыДанныхБ + ";default command timeout=600;"
+            connectionString = "server=" + mySqlSettings.server + ";" + "User Id=" + mySqlSettings.userName + ";password=" + mySqlSettings.password + ";Persist Security Info=True;" + "database=" + mySqlSettings.ИмяБазыДанныхБ + ";default command timeout=600;"
         End If
-        ПодключениеКБД.ConnectionString = СтрокаПодключения
-        ПодключениеКБД.Open()
 
-        запрос = New MySqlCommand()
-        запрос.Connection = ПодключениеКБД
+        Using connection = New MySqlConnection()
 
-        For Each SQLString As String In list
-            запрос.CommandText = SQLString
-            Try
-                запрос.ExecuteNonQuery()
-            Catch ex As Exception
-                status = False
-            End Try
+            connection.ConnectionString = connectionString
+            connection.Open()
 
-        Next
+            command = New MySqlCommand()
+            command.Connection = connection
 
-        ПодключениеКБД.Close()
+            For Each SQLString As String In list
+                command.CommandText = SQLString
+                Try
+                    command.ExecuteNonQuery()
+                Catch ex As Exception
+                    status = False
+                End Try
+
+            Next
+
+            connection.Close()
+
+        End Using
 
         Return status
     End Function
 
-    Public Function ЗагрузитьИзMySQLвDataTable(sqlString As String, numberDB As Int16) As DataTable
-        Dim запрос As MySqlCommand
-        Dim СтрокаПодключения As String
-        Dim ПодключениеКБД = New MySqlConnection()
-        Dim Адаптер As MySqlDataAdapter
+    Public Function mySqlToDataTable(sqlString As String, numberDB As Int16) As DataTable
+        Dim command As MySqlCommand
+        Dim connectionString As String
+        Dim adapter As MySqlDataAdapter
         Dim DSet As New DataSet
 
         If mySqlSettings.server = "" Then
@@ -143,26 +150,29 @@ Public Class MySQLConnect
         End If
 
         If numberDB = 1 Then
-            СтрокаПодключения = "server=" + mySqlSettings.server + ";" + "User Id=" + mySqlSettings.userName + ";password=" + mySqlSettings.password + ";Persist Security Info=True;" + "database=" + mySqlSettings.nameFirstDB + ";default command timeout=600;"
+            connectionString = "server=" + mySqlSettings.server + ";" + "User Id=" + mySqlSettings.userName + ";password=" + mySqlSettings.password + ";Persist Security Info=True;" + "database=" + mySqlSettings.nameFirstDB + ";default command timeout=600;"
         Else
-            СтрокаПодключения = "server=" + mySqlSettings.server + ";" + "User Id=" + mySqlSettings.userName + ";password=" + mySqlSettings.password + ";Persist Security Info=True;" + "database=" + mySqlSettings.nameFirstDB + ";default command timeout=600;"
+            connectionString = "server=" + mySqlSettings.server + ";" + "User Id=" + mySqlSettings.userName + ";password=" + mySqlSettings.password + ";Persist Security Info=True;" + "database=" + mySqlSettings.nameFirstDB + ";default command timeout=600;"
         End If
 
-        ПодключениеКБД.ConnectionString = СтрокаПодключения
-        ПодключениеКБД.Open()
-        запрос = New MySqlCommand(sqlString, ПодключениеКБД)
-        Адаптер = New MySqlDataAdapter(запрос)
-        Адаптер.Fill(DSet, "Result")
-        ПодключениеКБД.Close()
-        ЗагрузитьИзMySQLвDataTable = DSet.Tables(0)
+        Using connection = New MySqlConnection()
+
+            connection.ConnectionString = connectionString
+            connection.Open()
+            command = New MySqlCommand(sqlString, connection)
+            adapter = New MySqlDataAdapter(command)
+            adapter.Fill(DSet, "Result")
+            connection.Close()
+            mySqlToDataTable = DSet.Tables(0)
+
+        End Using
 
     End Function
 
-    Public Function ЗагрузитьИзMySQLвList(sqlString As String, numberDB As Int16, numberColumn As Integer) As List(Of String)
-        Dim запрос As MySqlCommand
-        Dim СтрокаПодключения As String
-        Dim ПодключениеКБД = New MySqlConnection()
-        Dim Адаптер As MySqlDataAdapter
+    Public Function mySqlToList(sqlString As String, numberDB As Int16, numberColumn As Integer) As List(Of String)
+        Dim command As MySqlCommand
+        Dim connectionString As String
+        Dim adapter As MySqlDataAdapter
         Dim DSet As New DataSet
         Dim list As List(Of String) = New List(Of String)
 
@@ -171,17 +181,21 @@ Public Class MySQLConnect
         End If
 
         If numberDB = 1 Then
-            СтрокаПодключения = "server=" + mySqlSettings.server + ";" + "User Id=" + mySqlSettings.userName + ";password=" + mySqlSettings.password + ";Persist Security Info=True;" + "database=" + mySqlSettings.nameFirstDB + ";default command timeout=600;"
+            connectionString = "server=" + mySqlSettings.server + ";" + "User Id=" + mySqlSettings.userName + ";password=" + mySqlSettings.password + ";Persist Security Info=True;" + "database=" + mySqlSettings.nameFirstDB + ";default command timeout=600;"
         Else
-            СтрокаПодключения = "server=" + mySqlSettings.server + ";" + "User Id=" + mySqlSettings.userName + ";password=" + mySqlSettings.password + ";Persist Security Info=True;" + "database=" + mySqlSettings.nameFirstDB + ";default command timeout=600;"
+            connectionString = "server=" + mySqlSettings.server + ";" + "User Id=" + mySqlSettings.userName + ";password=" + mySqlSettings.password + ";Persist Security Info=True;" + "database=" + mySqlSettings.nameFirstDB + ";default command timeout=600;"
         End If
 
-        ПодключениеКБД.ConnectionString = СтрокаПодключения
-        ПодключениеКБД.Open()
-        запрос = New MySqlCommand(sqlString, ПодключениеКБД)
-        Адаптер = New MySqlDataAdapter(запрос)
-        Адаптер.Fill(DSet, "Result")
-        ПодключениеКБД.Close()
+        Using connection = New MySqlConnection()
+
+            connection.ConnectionString = connectionString
+            connection.Open()
+            command = New MySqlCommand(sqlString, connection)
+            adapter = New MySqlDataAdapter(command)
+            adapter.Fill(DSet, "Result")
+            connection.Close()
+
+        End Using
 
         Dim row As DataRow
 
@@ -189,55 +203,57 @@ Public Class MySQLConnect
             list.Add(row.Item(numberColumn))
         Next
 
-        ЗагрузитьИзMySQLвList = list
+        Return list
 
     End Function
 
-    Public Function ЗагрузитьИзMySQLвListAll(sqlString As String, numberDB As Int16) As List(Of List(Of String))
+    Public Function mySqlToListAll(sqlString As String, numberDB As Int16) As List(Of List(Of String))
         Dim запрос As MySqlCommand
-        Dim СтрокаПодключения As String
-        Dim ПодключениеКБД = New MySqlConnection()
-        Dim Адаптер As MySqlDataAdapter
+        Dim connectionString As String
+        Dim adapter As MySqlDataAdapter
         Dim DSet As New DataSet
         Dim list As New List(Of String)
-        Dim listListov As New List(Of List(Of String))
+        Dim resultList As New List(Of List(Of String))
 
         If mySqlSettings.server = "" Then
             opdateArgument()
         End If
 
         If numberDB = 1 Then
-            СтрокаПодключения = "server=" + mySqlSettings.server + ";" + "User Id=" + mySqlSettings.userName + ";password=" + mySqlSettings.password + ";Persist Security Info=True;" + "database=" + mySqlSettings.nameFirstDB + ";default command timeout=600;"
+            connectionString = "server=" + mySqlSettings.server + ";" + "User Id=" + mySqlSettings.userName + ";password=" + mySqlSettings.password + ";Persist Security Info=True;" + "database=" + mySqlSettings.nameFirstDB + ";default command timeout=600;"
         Else
-            СтрокаПодключения = "server=" + mySqlSettings.server + ";" + "User Id=" + mySqlSettings.userName + ";password=" + mySqlSettings.password + ";Persist Security Info=True;" + "database=" + mySqlSettings.nameFirstDB + ";default command timeout=600;"
+            connectionString = "server=" + mySqlSettings.server + ";" + "User Id=" + mySqlSettings.userName + ";password=" + mySqlSettings.password + ";Persist Security Info=True;" + "database=" + mySqlSettings.nameFirstDB + ";default command timeout=600;"
         End If
 
-        ПодключениеКБД.ConnectionString = СтрокаПодключения
-        ПодключениеКБД.Open()
-        запрос = New MySqlCommand(sqlString, ПодключениеКБД)
-        Адаптер = New MySqlDataAdapter(запрос)
-        Адаптер.Fill(DSet, "Result")
-        ПодключениеКБД.Close()
+        Using connection = New MySqlConnection()
+
+            connection.ConnectionString = connectionString
+            connection.Open()
+            запрос = New MySqlCommand(sqlString, connection)
+            adapter = New MySqlDataAdapter(запрос)
+            adapter.Fill(DSet, "Result")
+            connection.Close()
+
+        End Using
 
         Dim row As DataRow
         Dim count As Integer = 0
         For Each row In DSet.Tables(0).Rows
-            listListov.Add(New List(Of String))
+            resultList.Add(New List(Of String))
             For i = 0 To DSet.Tables(0).Columns.Count - 1
-                listListov(count).Add(row.Item(i).ToString)
+                resultList(count).Add(row.Item(i).ToString)
             Next
             count += 1
         Next
 
-        ЗагрузитьИзMySQLвListAll = listListov
+        Return resultList
 
     End Function
 
     Public Function ЗагрузитьИзMySQLвОдномерныйМассив(sqlString As String, numberDB As Int16, numberColumn As Integer) As Object
-        Dim запрос As MySqlCommand
-        Dim СтрокаПодключения As String
-        Dim ПодключениеКБД = New MySqlConnection()
-        Dim Адаптер As MySqlDataAdapter
+        Dim command As MySqlCommand
+        Dim connectionString As String
+        Dim adapter As MySqlDataAdapter
         Dim DSet As New DataSet
         Dim list As New List(Of String)
 
@@ -245,19 +261,24 @@ Public Class MySQLConnect
             opdateArgument()
         End If
 
-        If numberDB = 1 Then
-            СтрокаПодключения = "server=" + mySqlSettings.server + ";" + "User Id=" + mySqlSettings.userName + ";password=" + mySqlSettings.password + ";Persist Security Info=True;" + "database=" + mySqlSettings.nameFirstDB + ";default command timeout=600;"
-        Else
-            СтрокаПодключения = "server=" + mySqlSettings.server + ";" + "User Id=" + mySqlSettings.userName + ";password=" + mySqlSettings.password + ";Persist Security Info=True;" + "database=" + mySqlSettings.nameFirstDB + ";default command timeout=600;"
-        End If
+        Using mySqlCunnection = New MySqlConnection()
 
-        ПодключениеКБД.ConnectionString = СтрокаПодключения
-        ПодключениеКБД.Open()
+            If numberDB = 1 Then
+                connectionString = "server=" + mySqlSettings.server + ";" + "User Id=" + mySqlSettings.userName + ";password=" + mySqlSettings.password + ";Persist Security Info=True;" + "database=" + mySqlSettings.nameFirstDB + ";default command timeout=600;"
+            Else
+                connectionString = "server=" + mySqlSettings.server + ";" + "User Id=" + mySqlSettings.userName + ";password=" + mySqlSettings.password + ";Persist Security Info=True;" + "database=" + mySqlSettings.nameFirstDB + ";default command timeout=600;"
+            End If
 
-        запрос = New MySqlCommand(sqlString, ПодключениеКБД)
-        Адаптер = New MySqlDataAdapter(запрос)
-        Адаптер.Fill(DSet, "Result")
-        ПодключениеКБД.Close()
+            mySqlCunnection.ConnectionString = connectionString
+            mySqlCunnection.Open()
+
+            command = New MySqlCommand(sqlString, mySqlCunnection)
+            adapter = New MySqlDataAdapter(command)
+            adapter.Fill(DSet, "Result")
+            mySqlCunnection.Close()
+
+
+        End Using
 
         Dim row As DataRow
 
@@ -270,10 +291,9 @@ Public Class MySQLConnect
     End Function
 
     Public Function LoadToListString(sqlString As String, numberDB As Int16, numberColumn As Integer) As List(Of String)
-        Dim запрос As MySqlCommand
-        Dim СтрокаПодключения As String
-        Dim ПодключениеКБД = New MySqlConnection()
-        Dim Адаптер As MySqlDataAdapter
+        Dim command As MySqlCommand
+        Dim connectionString As String
+        Dim adapter As MySqlDataAdapter
         Dim DSet As New DataSet
         Dim list As New List(Of String)
 
@@ -282,17 +302,21 @@ Public Class MySQLConnect
         End If
 
         If numberDB = 1 Then
-            СтрокаПодключения = "server=" + mySqlSettings.server + ";" + "User Id=" + mySqlSettings.userName + ";password=" + mySqlSettings.password + ";Persist Security Info=True;" + "database=" + mySqlSettings.nameFirstDB + ";default command timeout=600;"
+            connectionString = "server=" + mySqlSettings.server + ";" + "User Id=" + mySqlSettings.userName + ";password=" + mySqlSettings.password + ";Persist Security Info=True;" + "database=" + mySqlSettings.nameFirstDB + ";default command timeout=600;"
         Else
-            СтрокаПодключения = "server=" + mySqlSettings.server + ";" + "User Id=" + mySqlSettings.userName + ";password=" + mySqlSettings.password + ";Persist Security Info=True;" + "database=" + mySqlSettings.nameFirstDB + ";default command timeout=600;"
+            connectionString = "server=" + mySqlSettings.server + ";" + "User Id=" + mySqlSettings.userName + ";password=" + mySqlSettings.password + ";Persist Security Info=True;" + "database=" + mySqlSettings.nameFirstDB + ";default command timeout=600;"
         End If
 
-        ПодключениеКБД.ConnectionString = СтрокаПодключения
-        ПодключениеКБД.Open()
-        запрос = New MySqlCommand(sqlString, ПодключениеКБД)
-        Адаптер = New MySqlDataAdapter(запрос)
-        Адаптер.Fill(DSet, "Result")
-        ПодключениеКБД.Close()
+        Using connection = New MySqlConnection()
+
+            connection.ConnectionString = connectionString
+            connection.Open()
+            command = New MySqlCommand(sqlString, connection)
+            adapter = New MySqlDataAdapter(command)
+            adapter.Fill(DSet, "Result")
+            connection.Close()
+
+        End Using
 
         Dim row As DataRow
 
@@ -300,35 +324,35 @@ Public Class MySQLConnect
             list.Add(Convert.ToString(row.Item(numberColumn)))
         Next
 
-        LoadToListString = list
+        Return list
 
     End Function
 
-    Public Function ЗагрузитьИзMySQLвDataTablePlAdapter(sqlString As String, numberDB As Int16) As DataTable
-        Dim СтрокаПодключения As String
-        Dim ПодключениеКБД = New MySqlConnection()
-        dSet = New DataSet()
+    'Public Function ЗагрузитьИзMySQLвDataTablePlAdapter(sqlString As String, numberDB As Int16) As DataTable
+    '    Dim connectionString As String
+    '    Dim connection = New MySqlConnection()
+    '    dSet = New DataSet()
 
-        If mySqlSettings.server = "" Then
-            opdateArgument()
-        End If
+    '    If mySqlSettings.server = "" Then
+    '        opdateArgument()
+    '    End If
 
-        If numberDB = 1 Then
-            СтрокаПодключения = "server=" + mySqlSettings.server + ";" + "User Id=" + mySqlSettings.userName + ";password=" + mySqlSettings.password + ";Persist Security Info=True;" + "database=" + mySqlSettings.nameFirstDB + ";default command timeout=600;"
-        Else
-            СтрокаПодключения = "server=" + mySqlSettings.server + ";" + "User Id=" + mySqlSettings.userName + ";password=" + mySqlSettings.password + ";Persist Security Info=True;" + "database=" + mySqlSettings.nameFirstDB + ";default command timeout=600;"
-        End If
+    '    If numberDB = 1 Then
+    '        connectionString = "server=" + mySqlSettings.server + ";" + "User Id=" + mySqlSettings.userName + ";password=" + mySqlSettings.password + ";Persist Security Info=True;" + "database=" + mySqlSettings.nameFirstDB + ";default command timeout=600;"
+    '    Else
+    '        connectionString = "server=" + mySqlSettings.server + ";" + "User Id=" + mySqlSettings.userName + ";password=" + mySqlSettings.password + ";Persist Security Info=True;" + "database=" + mySqlSettings.nameFirstDB + ";default command timeout=600;"
+    '    End If
 
-        ПодключениеКБД.ConnectionString = СтрокаПодключения
-        ПодключениеКБД.Open()
-        mySqlCommand = New MySqlCommand(sqlString, ПодключениеКБД)
-        adapter = New MySqlDataAdapter(mySqlCommand)
-        commandBuilder = New MySqlCommandBuilder(adapter)
-        adapter.Fill(dSet, "Result")
-        ПодключениеКБД.Close()
-        ЗагрузитьИзMySQLвDataTablePlAdapter = dSet.Tables(0)
+    '    connection.ConnectionString = connectionString
+    '    connection.Open()
+    '    mySqlCommand = New MySqlCommand(sqlString, connection)
+    '    adapter = New MySqlDataAdapter(mySqlCommand)
+    '    commandBuilder = New MySqlCommandBuilder(adapter)
+    '    adapter.Fill(dSet, "Result")
+    '    connection.Close()
+    '    ЗагрузитьИзMySQLвDataTablePlAdapter = dSet.Tables(0)
 
-    End Function
+    'End Function
 
 
 End Class

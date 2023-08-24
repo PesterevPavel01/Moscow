@@ -1,7 +1,7 @@
 ﻿Imports System.Threading
 Public Class РедакторГруппы
     Public kodProgramm As Integer = -1
-    Dim gruppa As New Gruppa
+    Dim gruppa As New Group
     Dim secondThread As Thread
     Dim SC As SynchronizationContext
     Public Sub setProgKod(kod As Integer)
@@ -9,7 +9,7 @@ Public Class РедакторГруппы
         gruppa.struct_gruppa.kodProgramm = kod
         gruppa.struct_gruppa.flagAllListProgs = True
 
-        активироватьМодули(Me, НоваяГруппаПрограмма.Text, gruppa.struct_gruppa.kodProgramm)
+        activateModuls(Me, НоваяГруппаПрограмма.Text, gruppa.struct_gruppa.kodProgramm)
 
         gruppa.load_kol_chas()
         НоваяГруппаКоличествоЧасов.Text = gruppa.struct_gruppa.kolChasov
@@ -86,75 +86,28 @@ Public Class РедакторГруппы
     Private Sub Сохранить_Click(sender As Object, e As EventArgs) Handles Сохранить.Click
 
         ActiveControl = BtnFocus
+
         Dim argument
+
         SC = SynchronizationContext.Current
+
         ReDim argument(2)
+
         argument(0) = СправочникГруппы.gruppaData
+
         Сохранить.Enabled = False
 
         Сообщение.Visible = False
 
-        If Not проверитьЗаполненность() Then
-            предупреждение.текст.Text = "Необходимо заполнить обязательные поля"
-            Try
-                предупреждение.ShowDialog()
-            Catch ex As Exception
-                предупреждение.Close()
-                предупреждение.ShowDialog()
-            End Try
+        If Not gruppa.formGroupValidation(Me) Then
             Сохранить.Enabled = True
-            Exit Sub
+            Return
         End If
 
         gruppa.struct_gruppa.Kod = СправочникГруппы.kod
-        gruppa.struct_gruppa.dataNZ = ААОсновная.mySqlConnect.dateToFormatMySQL(Me.НоваяГруппаДатаНачалаЗанятий.Value.ToShortDateString)
-        gruppa.struct_gruppa.dataKZ = ААОсновная.mySqlConnect.dateToFormatMySQL(Me.НоваяГруппаКонецЗанятий.Value.ToShortDateString)
-        gruppa.struct_gruppa.dataVUd = ААОсновная.mySqlConnect.dateToFormatMySQL(Me.ДатаВыдачиУд.Value.ToShortDateString)
-        gruppa.struct_gruppa.dataVD = ААОсновная.mySqlConnect.dateToFormatMySQL(Me.ДатаВДиплома.Value.ToShortDateString)
-        gruppa.struct_gruppa.dataVSv = ААОсновная.mySqlConnect.dateToFormatMySQL(Me.ДатаВСвид.Value.ToShortDateString)
-        gruppa.struct_gruppa.dataSpec = ААОсновная.mySqlConnect.dateToFormatMySQL(Me.ДатаСпецэкзамен.Value.ToShortDateString)
-
-        gruppa.struct_gruppa.number = Me.НоваяГруппаНомер.Text
-        gruppa.struct_gruppa.formaObuch = Me.НоваяГруппаФормаОбучения.Text
-        gruppa.struct_gruppa.specialnost = Me.НоваяГруппаСпециальность.Text
-        gruppa.struct_gruppa.programma = Me.НоваяГруппаПрограмма.Text
-        gruppa.struct_gruppa.kolChasov = Me.НоваяГруппаКоличествоЧасов.Text
-        gruppa.struct_gruppa.kurator = Me.НоваяГруппаОтветственныйКуратор.Text
-        gruppa.struct_gruppa.otvZaPraktiku = Me.НоваягруппаОтветственныйЗаПрактику.Text
-
-        gruppa.struct_gruppa.nomerSvid = Me.НомерСвид.Text
-        gruppa.struct_gruppa.regNomerSvid = Me.РегНомерСвид.Text
-
-        gruppa.struct_gruppa.nomerDiploma = Me.НомерДиплома.Text
-        gruppa.struct_gruppa.regNomerDiploma = Me.РегНомерДиплома.Text
-
-        gruppa.struct_gruppa.nomerUd = Me.НомерУд.Text
-        gruppa.struct_gruppa.regNomerUd = Me.РегНомерУд.Text
-
-        gruppa.struct_gruppa.OsnDocument = Вспомогательный.ОсновнойДокумент(Me)
-        gruppa.struct_gruppa.NumbersUDS = Вспомогательный.ОбнулениеНеактивныхНомеров(gruppa.struct_gruppa.OsnDocument, Me)
-
-        gruppa.struct_gruppa.modul1 = Me.Модуль1.Text
-        gruppa.struct_gruppa.modul2 = Me.Модуль2.Text
-        gruppa.struct_gruppa.modul3 = Me.Модуль3.Text
-        gruppa.struct_gruppa.modul4 = Me.Модуль4.Text
-        gruppa.struct_gruppa.modul5 = Me.Модуль5.Text
-        gruppa.struct_gruppa.modul6 = Me.Модуль6.Text
-        gruppa.struct_gruppa.modul7 = Me.Модуль7.Text
-        gruppa.struct_gruppa.modul8 = Me.Модуль8.Text
-        gruppa.struct_gruppa.modul9 = Me.Модуль9.Text
-        gruppa.struct_gruppa.modul10 = Me.Модуль10.Text
-
-        gruppa.struct_gruppa.urKvalific = Me.НоваяГруппаУровеньКвалификации.Text
-        gruppa.struct_gruppa.osnovnoyDok = Вспомогательный.ОсновнойДокумент(Me)
-
-        gruppa.struct_gruppa.financir = Me.НоваяГруппаФинансирование.Text
-        gruppa.struct_gruppa.nomerProtIA = Me.НомерПротоколаИА.Text
-        gruppa.struct_gruppa.kvalifikaciya = Me.Квалификация.Text
-        gruppa.struct_gruppa.nomerProtokolaSpec = Me.НомерПротоколаСпецэкзамен.Text
+        gruppa.saveParameters(Me)
 
         gruppa.struct_gruppa.oldNumber = СправочникГруппы.numberGr
-        gruppa.struct_gruppa.yearNZ = НоваяГруппаДатаНачалаЗанятий.Value.Year
         gruppa.struct_gruppa.oldYearNZ = СправочникГруппы.year
 
         argument(1) = gruppa.struct_gruppa
@@ -165,13 +118,22 @@ Public Class РедакторГруппы
 
     End Sub
     Sub updateGroup(argument)
-        Dim result
+
         Dim SQLString As String
-        Dim gruppaOld As Gruppa.strGruppa = argument(0)
-        Dim gruppa As Gruppa.strGruppa = argument(1)
+        Dim gruppaOld As Group.strGruppa = argument(0)
+        Dim gruppa As Group.strGruppa = argument(1)
 
         If gruppa.number <> gruppa.oldNumber Or gruppa.yearNZ <> gruppa.oldYearNZ Then
-            If ЗаписьВБазу.ПроверкаСовпадений("`group`", "Номер", gruppa.number, "Year(ДатаНЗ)", gruppa.yearNZ) Then
+
+            InsertIntoDataBase.argumentClear()
+            InsertIntoDataBase.argument.nameTable = "`group`"
+            InsertIntoDataBase.argument.firstName = "Номер"
+            InsertIntoDataBase.argument.firstValue = gruppa.number
+            InsertIntoDataBase.argument.secondName = "Year(ДатаНЗ)"
+            InsertIntoDataBase.argument.secondValue = gruppa.yearNZ
+
+            If InsertIntoDataBase.checkDuplicates() Then
+
                 ФормаДаНетУдалить.текстДаНет.Text = "Группа " + gruppa.number + " уже существует, удалить старую запись?"
                 ФормаДаНетУдалить.ShowDialog()
 
@@ -180,35 +142,46 @@ Public Class РедакторГруппы
                     Exit Sub
                 End If
 
-                SQLString = redactorGroup__deketeGroupInGroupList(gruppa.number, gruppa.yearNZ)
-                ЗаписьВБазу.ЗаписьВБазу(SQLString)
+                SQLString = redactorGroup__deleteGroupInGroupList(gruppa.number, gruppa.yearNZ)
+                MainForm.mySqlConnect.sendQuery(SQLString, 1)
 
                 SQLString = redactorGroup__deketeGroupInGroup(gruppa.number, gruppa.yearNZ)
-                ЗаписьВБазу.ЗаписьВБазу(SQLString)
+                MainForm.mySqlConnect.sendQuery(SQLString, 1)
 
                 SC.Send(AddressOf updateNomberGroup, gruppa)
 
             End If
         End If
 
-        If ЗаписьВБазу.ПроверкаСовпадений("`group`", "Номер", gruppa.oldNumber, "Year(ДатаНЗ)", gruppa.oldYearNZ) Then
+        InsertIntoDataBase.argumentClear()
+        InsertIntoDataBase.argument.nameTable = "`group`"
+        InsertIntoDataBase.argument.firstName = "Номер"
+        InsertIntoDataBase.argument.firstValue = gruppa.oldNumber
+        InsertIntoDataBase.argument.secondName = "Year(ДатаНЗ)"
+        InsertIntoDataBase.argument.secondValue = gruppa.oldYearNZ
+
+        If InsertIntoDataBase.checkDuplicates() Then
+
             SQLString = QueryString.updateGroup(gruppa)
             If SQLString = "" Then
                 SC.Send(AddressOf enabledButton, gruppa.number)
                 Exit Sub
             End If
-            ЗаписьВБазу.УдалитьСовпадения = False  '??????
+            InsertIntoDataBase.removeDuplicates = False  '??????
+
         Else
+
             SQLString = QueryString.insertIntoGroup(gruppa)
             If SQLString = "" Then
                 SC.Send(AddressOf enabledButton, gruppa.number)
                 Exit Sub
             End If
+
         End If
 
-        ЗаписьВБазу.ЗаписьВБазу(SQLString)
+        MainForm.mySqlConnect.sendQuery(SQLString, 1)
 
-        If gruppaOld.regNomerDiploma <> gruppa.regNomerDiploma Or gruppaOld.nomerDiploma <> gruppa.nomerDiploma Or gruppaOld.regNomerSvid <> gruppa.regNomerSvid Or gruppaOld.nomerSvid <> gruppa.nomerSvid Or gruppaOld.regNomerUd <> gruppa.regNomerUd Or gruppaOld.nomerUd <> gruppa.nomerUd Then
+        If gruppaOld.numbersUDS.regNumberD <> gruppa.numbersUDS.regNumberD Or gruppaOld.numbersUDS.numberD <> gruppa.numbersUDS.numberD Or gruppaOld.numbersUDS.regNumberSv <> gruppaOld.numbersUDS.regNumberSv Or gruppaOld.numbersUDS.numberSv <> gruppa.numbersUDS.numberSv Or gruppaOld.numbersUDS.regNumberUd <> gruppa.numbersUDS.regNumberUd Or gruppaOld.numbersUDS.numberUd <> gruppa.numbersUDS.numberUd Then
 
             SQLString = SQLString_UpdateNumbersSGrupp(gruppa.Kod)
 
@@ -218,27 +191,40 @@ Public Class РедакторГруппы
         SC.Send(AddressOf enabledButton, gruppa.number)
     End Sub
 
-    Sub updateSpravGroup(gruppa As Gruppa.strGruppa)
-        Dim СтрокаЗапроса As String
+    Sub updateSpravGroup(gruppa As Group.strGruppa)
+        Dim queryString As String
         Dim DataString As String
         Dim mySqlConnect As New MySQLConnect()
-        If ЗаписьВБазу.ПроверкаСовпадений("`group`", "Номер", gruppa.number, "Year(ДатаНЗ)", gruppa.yearNZ) Then
+
+        InsertIntoDataBase.argumentClear()
+        InsertIntoDataBase.argument.nameTable = "`group`"
+        InsertIntoDataBase.argument.firstName = "Номер"
+        InsertIntoDataBase.argument.firstValue = gruppa.number
+        InsertIntoDataBase.argument.secondName = "Year(ДатаНЗ)"
+        InsertIntoDataBase.argument.secondValue = gruppa.yearNZ
+
+        If InsertIntoDataBase.checkDuplicates() Then
+
             DataString = mySqlConnect.dateToFormatMySQL(Date.Now.ToShortDateString)
             Сообщение.Text = "Группа № " & СправочникГруппы.numberGr & " успешно изменена, дата записи: " & DataString
             Сообщение.Visible = True
-            СправочникГруппы.ОбновитьГруппы()
+            СправочникГруппы.updateGroupList()
             СписокСлушателейВГруппе.Text = "Группа № " & gruppa.number
-            СправочникГруппы.ИнформацияОГруппе(1, 0) = gruppa.number
+            СправочникГруппы.infoAboutGroup(1, 0) = gruppa.number
             Me.Text = "Группа № " & gruppa.number
+
             If gruppa.number <> gruppa.oldNumber Then
-                СтрокаЗапроса = redactorGroup__updateGroupList(gruppa.number, gruppa.yearNZ)
+
+                queryString = redactorGroup__updateGroupList(gruppa.number, gruppa.yearNZ)
                 СправочникГруппы.numberGr = gruppa.number
-                ЗаписьВБазу.ЗаписьВБазу(СтрокаЗапроса)
+
+                MainForm.mySqlConnect.sendQuery(queryString, 1)
+
             End If
         End If
 
     End Sub
-    Sub updateNomberGroup(gruppa As Gruppa.strGruppa)
+    Sub updateNomberGroup(gruppa As Group.strGruppa)
         СправочникГруппы.numberGr = gruppa.number
         СправочникГруппы.year = gruppa.yearNZ
     End Sub
@@ -246,24 +232,6 @@ Public Class РедакторГруппы
     Sub enabledButton(gruppa_number As String)
         Me.Сохранить.Enabled = True
     End Sub
-    Function проверитьЗаполненность() As Boolean
-
-        Dim nameControl As String
-
-        проверитьЗаполненность = True
-
-        For Each i In Me.Controls
-            nameControl = i.Name
-            If Strings.Left(i.Name, 6) <> "Модуль" And Strings.Left(i.Name, 8) <> "GroupBox" And i.Name <> "Квалификация" And i.Name <> "РегНомерСвид" And i.Name <> "НомерСвид" And i.Name <> "РегНомерДиплома" And i.Name <> "НомерДиплома" And i.Name <> "НомерУд" And i.Name <> "РегНомерУд" And i.Name <> "НоваягруппаОтветственныйЗаПрактику" And i.Name <> "НомерПротоколаИА" And i.Name <> "BtnFocus" And i.Name <> "Сохранить" And Strings.Left(i.Name, 5) <> "Label" And Strings.Left(i.Name, 5) <> "label" And Strings.Left(i.Name, 5) <> "Check" Then
-
-                If i.Text = "" And i.Visible = True And i.Enabled = True Then
-                    проверитьЗаполненность = False
-                End If
-            End If
-        Next
-
-
-    End Function
 
     Private Sub РедакторГруппы_Shown(sender As Object, e As EventArgs) Handles MyBase.Shown
 
@@ -419,11 +387,11 @@ Public Class РедакторГруппы
 
     Private Sub РедакторГруппы_KeyDown(sender As Object, e As KeyEventArgs) Handles MyBase.KeyDown
 
-        Call ЗакрытьEsc(Me, e.KeyCode)
+        Call closeEsc(Me, e.KeyCode)
 
         If e.KeyCode = 38 Or e.KeyCode = 40 Then
-            функционалТаб(e.KeyCode, 40)
-            перемещениеВверх(Me, e.KeyCode, 38)
+            pressTab(e.KeyCode, 40)
+            up(Me, e.KeyCode, 38)
             e.Handled = True
         End If
 
@@ -465,10 +433,6 @@ Public Class РедакторГруппы
                 РегНомерСвид.Enabled = True
                 ДатаВСвид.Enabled = True
 
-                НомерПротоколаСпецэкзамен.Enabled = True
-                ДатаСпецэкзамен.Enabled = True
-
-
             End If
 
 
@@ -483,16 +447,12 @@ Public Class РедакторГруппы
             РегНомерСвид.Enabled = False
             ДатаВСвид.Enabled = False
 
-            НомерПротоколаСпецэкзамен.Enabled = False
-            ДатаСпецэкзамен.Enabled = False
-
             НомерДиплома.Clear()
             РегНомерДиплома.Clear()
 
             НомерСвид.Clear()
             РегНомерСвид.Clear()
 
-            НомерПротоколаСпецэкзамен.Clear()
         End If
 
 
@@ -512,9 +472,6 @@ Public Class РедакторГруппы
                 РегНомерСвид.Enabled = True
                 ДатаВСвид.Enabled = True
 
-                НомерПротоколаСпецэкзамен.Enabled = True
-                ДатаСпецэкзамен.Enabled = True
-
                 НоваяГруппаУровеньКвалификации.Text = ""
             End If
         Else
@@ -526,8 +483,6 @@ Public Class РедакторГруппы
             РегНомерСвид.Enabled = False
             ДатаВСвид.Enabled = False
 
-            НомерПротоколаСпецэкзамен.Enabled = False
-            ДатаСпецэкзамен.Enabled = False
             НоваяГруппаУровеньКвалификации.Text = "повышение квалификации"
 
             НомерДиплома.Clear()
@@ -536,11 +491,11 @@ Public Class РедакторГруппы
             НомерСвид.Clear()
             РегНомерСвид.Clear()
 
-            НомерПротоколаСпецэкзамен.Clear()
         End If
     End Sub
 
     Private Sub НомерДиплома_TextChanged(sender As Object, e As EventArgs) Handles НомерДиплома.TextChanged
+
         If НомерДиплома.Text = "" And РегНомерДиплома.Text = "" Then
             If НоваяГруппаУровеньКвалификации.Text = "профессиональная переподготовка" Then
                 НомерУд.Enabled = True
@@ -550,10 +505,6 @@ Public Class РедакторГруппы
                 НомерСвид.Enabled = True
                 РегНомерСвид.Enabled = True
                 ДатаВСвид.Enabled = True
-
-                НомерПротоколаСпецэкзамен.Enabled = True
-                ДатаСпецэкзамен.Enabled = True
-
 
                 НоваяГруппаУровеньКвалификации.Text = ""
             End If
@@ -566,9 +517,6 @@ Public Class РедакторГруппы
             РегНомерСвид.Enabled = False
             ДатаВСвид.Enabled = False
 
-            НомерПротоколаСпецэкзамен.Enabled = False
-            ДатаСпецэкзамен.Enabled = False
-
             НоваяГруппаУровеньКвалификации.Text = "профессиональная переподготовка"
 
             НомерУд.Clear()
@@ -577,11 +525,12 @@ Public Class РедакторГруппы
             НомерСвид.Clear()
             РегНомерСвид.Clear()
 
-            НомерПротоколаСпецэкзамен.Clear()
         End If
+
     End Sub
 
     Private Sub РегНомерДиплома_TextChanged(sender As Object, e As EventArgs) Handles РегНомерДиплома.TextChanged
+
         If НомерДиплома.Text = "" And РегНомерДиплома.Text = "" Then
 
             If НоваяГруппаУровеньКвалификации.Text = "профессиональная переподготовка" Then
@@ -594,9 +543,6 @@ Public Class РедакторГруппы
                 РегНомерСвид.Enabled = True
                 ДатаВСвид.Enabled = True
 
-                НомерПротоколаСпецэкзамен.Enabled = True
-                ДатаСпецэкзамен.Enabled = True
-
                 НоваяГруппаУровеньКвалификации.Text = ""
             End If
         Else
@@ -607,9 +553,6 @@ Public Class РедакторГруппы
             НомерСвид.Enabled = False
             РегНомерСвид.Enabled = False
             ДатаВСвид.Enabled = False
-
-            НомерПротоколаСпецэкзамен.Enabled = False
-            ДатаСпецэкзамен.Enabled = False
 
             НоваяГруппаУровеньКвалификации.Text = "профессиональная переподготовка"
 
@@ -619,11 +562,12 @@ Public Class РедакторГруппы
             НомерСвид.Clear()
             РегНомерСвид.Clear()
 
-            НомерПротоколаСпецэкзамен.Clear()
         End If
+
     End Sub
 
     Private Sub НомерСвид_TextChanged(sender As Object, e As EventArgs) Handles НомерСвид.TextChanged
+
         If НомерСвид.Text = "" And РегНомерСвид.Text = "" Then
 
             If НоваяГруппаУровеньКвалификации.Text = "профессиональное обучение" Then
@@ -634,10 +578,6 @@ Public Class РедакторГруппы
                 НомерДиплома.Enabled = True
                 РегНомерДиплома.Enabled = True
                 ДатаВДиплома.Enabled = True
-
-                НомерПротоколаСпецэкзамен.Enabled = True
-                ДатаСпецэкзамен.Enabled = True
-
 
                 НоваяГруппаУровеньКвалификации.Text = ""
             End If
@@ -650,9 +590,6 @@ Public Class РедакторГруппы
             РегНомерДиплома.Enabled = False
             ДатаВДиплома.Enabled = False
 
-            НомерПротоколаСпецэкзамен.Enabled = False
-            ДатаСпецэкзамен.Enabled = False
-
             НоваяГруппаУровеньКвалификации.Text = "профессиональное обучение"
 
             НомерДиплома.Clear()
@@ -661,11 +598,12 @@ Public Class РедакторГруппы
             НомерУд.Clear()
             РегНомерУд.Clear()
 
-            НомерПротоколаСпецэкзамен.Clear()
         End If
+
     End Sub
 
     Private Sub РегНомерСвид_TextChanged(sender As Object, e As EventArgs) Handles РегНомерСвид.TextChanged
+
         If НомерСвид.Text = "" And РегНомерСвид.Text = "" Then
             If НоваяГруппаУровеньКвалификации.Text = "профессиональное обучение" Then
 
@@ -677,10 +615,6 @@ Public Class РедакторГруппы
                 РегНомерДиплома.Enabled = True
                 ДатаВДиплома.Enabled = True
 
-                НомерПротоколаСпецэкзамен.Enabled = True
-                ДатаСпецэкзамен.Enabled = True
-
-
                 НоваяГруппаУровеньКвалификации.Text = ""
             End If
         Else
@@ -691,9 +625,6 @@ Public Class РедакторГруппы
             НомерДиплома.Enabled = False
             РегНомерДиплома.Enabled = False
             ДатаВДиплома.Enabled = False
-
-            НомерПротоколаСпецэкзамен.Enabled = False
-            ДатаСпецэкзамен.Enabled = False
 
             НоваяГруппаУровеньКвалификации.Text = "профессиональное обучение"
 
@@ -703,55 +634,8 @@ Public Class РедакторГруппы
             НомерУд.Clear()
             РегНомерУд.Clear()
 
-            НомерПротоколаСпецэкзамен.Clear()
         End If
-    End Sub
 
-    Private Sub НомерПротоколаСпецэкзамен_TextChanged(sender As Object, e As EventArgs) Handles НомерПротоколаСпецэкзамен.TextChanged
-        If НомерПротоколаСпецэкзамен.Text = "" Then
-
-            If НоваяГруппаУровеньКвалификации.Text = "специальный экзамен" Then
-
-                НомерУд.Enabled = True
-                РегНомерУд.Enabled = True
-                ДатаВыдачиУд.Enabled = True
-
-                НомерДиплома.Enabled = True
-                РегНомерДиплома.Enabled = True
-                ДатаВДиплома.Enabled = True
-
-                НомерСвид.Enabled = True
-                РегНомерСвид.Enabled = True
-                ДатаВСвид.Enabled = True
-
-                НоваяГруппаУровеньКвалификации.Text = ""
-            End If
-        Else
-
-
-            НомерДиплома.Enabled = False
-            РегНомерДиплома.Enabled = False
-            ДатаВДиплома.Enabled = False
-
-            НомерСвид.Enabled = False
-            РегНомерСвид.Enabled = False
-            ДатаВСвид.Enabled = False
-
-            НомерУд.Enabled = False
-            РегНомерУд.Enabled = False
-            ДатаВыдачиУд.Enabled = False
-
-            НоваяГруппаУровеньКвалификации.Text = "специальный экзамен"
-
-            НомерДиплома.Clear()
-            РегНомерДиплома.Clear()
-
-            НомерУд.Clear()
-            РегНомерУд.Clear()
-
-            НомерСвид.Clear()
-            РегНомерСвид.Clear()
-        End If
     End Sub
 
     Private Sub НоваяГруппаУровеньКвалификации_TextChanged(sender As Object, e As EventArgs) Handles НоваяГруппаУровеньКвалификации.TextChanged
@@ -801,9 +685,6 @@ Public Class РедакторГруппы
             НомерСвид.Clear()
             РегНомерСвид.Clear()
 
-            НомерПротоколаСпецэкзамен.Enabled = True
-            ДатаСпецэкзамен.Enabled = True
-
             НоваяГруппаПрограмма.Text = "Спецэкзамен"
             НоваяГруппаСпециальность.Text = "Без специальности"
 
@@ -844,16 +725,11 @@ Public Class РедакторГруппы
             РегНомерДиплома.Enabled = False
             ДатаВДиплома.Enabled = False
 
-            НомерПротоколаСпецэкзамен.Enabled = False
-            ДатаСпецэкзамен.Enabled = False
-
             НомерДиплома.Clear()
             РегНомерДиплома.Clear()
 
             НомерУд.Clear()
             РегНомерУд.Clear()
-
-            НомерПротоколаСпецэкзамен.Clear()
 
             НоваяГруппаПрограмма.Text = ""
             НоваяГруппаСпециальность.Text = ""
@@ -895,16 +771,11 @@ Public Class РедакторГруппы
             РегНомерСвид.Enabled = False
             ДатаВСвид.Enabled = False
 
-            НомерПротоколаСпецэкзамен.Enabled = False
-            ДатаСпецэкзамен.Enabled = False
-
             НомерДиплома.Clear()
             РегНомерДиплома.Clear()
 
             НомерСвид.Clear()
             РегНомерСвид.Clear()
-
-            НомерПротоколаСпецэкзамен.Clear()
 
             НоваяГруппаПрограмма.Text = ""
             НоваяГруппаСпециальность.Text = ""
@@ -946,16 +817,11 @@ Public Class РедакторГруппы
             РегНомерСвид.Enabled = False
             ДатаВСвид.Enabled = False
 
-            НомерПротоколаСпецэкзамен.Enabled = False
-            ДатаСпецэкзамен.Enabled = False
-
             НомерУд.Clear()
             РегНомерУд.Clear()
 
             НомерСвид.Clear()
             РегНомерСвид.Clear()
-
-            НомерПротоколаСпецэкзамен.Clear()
 
             НоваяГруппаПрограмма.Text = ""
             НоваяГруппаСпециальность.Text = ""
@@ -972,8 +838,6 @@ Public Class РедакторГруппы
             НомерСвид.Clear()
             РегНомерСвид.Clear()
 
-            НомерПротоколаСпецэкзамен.Clear()
-
             НомерДиплома.Enabled = True
             РегНомерДиплома.Enabled = True
             ДатаВДиплома.Enabled = True
@@ -985,9 +849,6 @@ Public Class РедакторГруппы
             НомерСвид.Enabled = True
             РегНомерСвид.Enabled = True
             ДатаВСвид.Enabled = True
-
-            НомерПротоколаСпецэкзамен.Enabled = True
-            ДатаСпецэкзамен.Enabled = True
 
             НоваяГруппаФормаОбучения.Enabled = True
             НоваяГруппаДатаНачалаЗанятий.Enabled = True
@@ -1024,7 +885,7 @@ Public Class РедакторГруппы
 
     Private Sub НоваяГруппаПрограмма_TextChanged(sender As Object, e As EventArgs)
         If Me.НоваяГруппаУровеньКвалификации.Text <> "специальный экзамен" And НоваяГруппаУровеньКвалификации.Text <> "повышение квалификации" Then
-            активироватьМодули(Me, НоваяГруппаПрограмма.Text, gruppa.struct_gruppa.kodProgramm)
+            activateModuls(Me, НоваяГруппаПрограмма.Text, gruppa.struct_gruppa.kodProgramm)
         End If
     End Sub
 
@@ -1498,7 +1359,7 @@ Public Class РедакторГруппы
 
         End If
 
-        активироватьМодули(Me, НоваяГруппаПрограмма.Text, gruppa.struct_gruppa.kodProgramm)
+        activateModuls(Me, НоваяГруппаПрограмма.Text, gruppa.struct_gruppa.kodProgramm)
     End Sub
 
 End Class

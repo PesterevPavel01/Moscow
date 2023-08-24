@@ -5,11 +5,11 @@
         Dim ПриложениеВорд
         Dim ДокументВорд, ДанныеСлушателей, Таблица
         Dim resourcesPath, ПутьКШаблону
-        Dim СтрокаЗапроса, ВидПриказа As String
+        Dim sqlQuery, ВидПриказа As String
 
 
-        СтрокаЗапроса = load_slushatel_and_org(ААОсновная.prikazKodGroup)
-        ДанныеСлушателей = ЗагрузитьИзБазы.ЗагрузитьИзБазы(СтрокаЗапроса)
+        sqlQuery = load_slushatel_and_org(MainForm.prikazKodGroup)
+        ДанныеСлушателей = MainForm.mySqlConnect.loadMySqlToArray(sqlQuery, 1)
 
         If ДанныеСлушателей(0, 0) = "нет записей" Then
             предупреждение.текст.Text = "Нет данных для отображения"
@@ -25,7 +25,7 @@
 
         ДокументВорд = ПриложениеВорд.Documents.Open(ПутьКШаблону, ReadOnly:=True)
 
-        Вспомогательный.savePrikazBlank(ДокументВорд, ААОсновная.prikazKodGroup, "ВедомостьСлушателиИОрганизации", resourcesPath, "Ведомости")
+        Вспомогательный.savePrikazBlank(ДокументВорд, MainForm.prikazKodGroup, "ВедомостьСлушателиИОрганизации", resourcesPath, "Ведомости")
 
         Вспомогательный.ЗаменитьТекстВОбластиДокументаВорд(ДокументВорд.Range, "$НомерГруппы$", АСформироватьПриказ.НомерГруппы.Text, 2)
 

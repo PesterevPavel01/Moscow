@@ -35,8 +35,8 @@
         list = rotateArray(list)
         list = ДобавитьНумерациюВМассив(list)
 
-        titleRow = Strings.Replace(excellSheet.Range("A1").Value, "$ДатаНачала$", ААОсновная.ДатаНачалаОтчета.Value.ToShortDateString)
-        titleRow = Strings.Replace(titleRow, "$ДатаОкончания$", ААОсновная.ДатаКонцаОтчета.Value.ToShortDateString)
+        titleRow = Strings.Replace(excellSheet.Range("A1").Value, "$ДатаНачала$", MainForm.ДатаНачалаОтчета.Value.ToShortDateString)
+        titleRow = Strings.Replace(titleRow, "$ДатаОкончания$", MainForm.ДатаКонцаОтчета.Value.ToShortDateString)
         excellSheet.Range("A1") = titleRow
 
 
@@ -62,17 +62,17 @@
         If arg = "Педнагрузка" Then
 
             queryString = pednagruzkaloadOtchet(DateStart, DateEnd)
-            resultArr = ЗагрузитьИзБазы.ЗагрузитьИзБазы(queryString)
+            resultArr = MainForm.mySqlConnect.loadMySqlToArray(queryString, 1)
 
         ElseIf arg = "listWorker" Then
 
             queryString = pednagrExtended__loadListWorker(DateStart, DateEnd)
-            resultList = ААОсновная.mySqlConnect.ЗагрузитьИзMySQLвListAll(queryString, 1)
+            resultList = MainForm.mySqlConnect.mySqlToListAll(queryString, 1)
 
         ElseIf arg = "listWorkerData" Then
 
             queryString = pednagrExtended__loadListWorkerData(DateStart, DateEnd, kod)
-            resultList = ААОсновная.mySqlConnect.ЗагрузитьИзMySQLвListAll(queryString, 1)
+            resultList = MainForm.mySqlConnect.mySqlToListAll(queryString, 1)
 
         End If
 
@@ -134,8 +134,8 @@
         excellSheet.name = "педнагрузка_расш"
         columnStyle = Вспомогательный.styleColumnRange(excellSheet, excellSheet.Range("firstRow"))
 
-        titleRow = Strings.Replace(excellSheet.Range("title").Value, "$ДатаНачала$", ААОсновная.ДатаНачалаОтчета.Value.ToShortDateString)
-        titleRow = Strings.Replace(titleRow, "$ДатаОкончания$", ААОсновная.ДатаКонцаОтчета.Value.ToShortDateString)
+        titleRow = Strings.Replace(excellSheet.Range("title").Value, "$ДатаНачала$", MainForm.ДатаНачалаОтчета.Value.ToShortDateString)
+        titleRow = Strings.Replace(titleRow, "$ДатаОкончания$", MainForm.ДатаКонцаОтчета.Value.ToShortDateString)
         excellSheet.Range("title") = titleRow
 
         numberRow = excellSheet.Range("title").Row

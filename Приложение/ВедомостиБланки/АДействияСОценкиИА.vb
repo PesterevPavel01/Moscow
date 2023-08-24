@@ -31,11 +31,11 @@
         Next
     End Function
     Sub СохранитьОценки(Ведомость As Object, kod As Integer)
-        Dim ФИО, Проверочный
-        Dim СтрокаЗапроса, Снилс As String
-        Dim СчетчикСтрок As Integer
-        СчетчикСтрок = Ведомость.Rows.Count
-        СтрокаЗапроса = АОценкиИА.ТаблицаОценкиИА.Rows(СчетчикСтрок - 1).Cells(1).Value
+        Dim fio, array
+        Dim queryString, snils As String
+        Dim rowCounter As Integer
+        rowCounter = Ведомость.Rows.Count
+        queryString = АОценкиИА.ТаблицаОценкиИА.Rows(rowCounter - 1).Cells(1).Value
 
 
         For Each row As DataGridViewRow In АОценкиИА.ТаблицаОценкиИА.Rows
@@ -46,11 +46,12 @@
 
             End If
 
-            ФИО = Split(row.Cells(1).Value, " ")
-            Снилс = ОпределитьСНИЛС(CDbl(row.Cells(0).Value))
+            fio = Split(row.Cells(1).Value, " ")
+            snils = ОпределитьСНИЛС(CDbl(row.Cells(0).Value))
+
             Try
 
-                СтрокаЗапроса = "SELECT group_list.Слушатель FROM group_list WHERE group_list.Слушатель = " & Chr(39) & Снилс & Chr(39) & " AND group_list.Kod = " & kod
+                queryString = oVedom__checkStudent(Convert.ToString(kod), snils)
 
             Catch ex As Exception
 
@@ -59,10 +60,10 @@
             End Try
 
 
-            Проверочный = ЗагрузитьИзБазы.ЗагрузитьИзБазы(СтрокаЗапроса)
+            array = MainForm.mySqlConnect.loadMySqlToArray(queryString, 1)
 
 
-            If Проверочный(0, 0) = "нет записей" Then
+            If array(0, 0) = "нет записей" Then
 
                 Continue For
 
@@ -70,7 +71,7 @@
 
             Try
 
-                СтрокаЗапроса = "UPDATE group_list SET ИАТестирование= " & Chr(39) & row.Cells(2).Value & Chr(39) & ",ИАПрактическиеНавыки= " & Chr(39) & row.Cells(3).Value & Chr(39) & ",ИАИтог= " & Chr(39) & row.Cells(4).Value & Chr(39) & " WHERE group_list.Слушатель = " & Chr(39) & Снилс & Chr(39) & "  AND group_list.Kod = " & kod
+                queryString = ia__updateResult(kod, snils, row.Cells(2).Value & Chr(39), row.Cells(3).Value, row.Cells(4).Value)
 
             Catch ex As Exception
 
@@ -81,22 +82,25 @@
 
             End Try
 
-            ЗаписьВБазу.ЗаписьВБазу(СтрокаЗапроса)
+            MainForm.mySqlConnect.sendQuery(queryString, 1)
+
         Next
 
     End Sub
 
-    Function проверка(Ведомость As Object) As Boolean
+    Function check(Ведомость As Object) As Boolean
 
         If Ведомость.Rows.Count = 1 Then
 
-            проверка = True
+            Return True
 
         ElseIf Ведомость.Rows(0).Cells(1).Value = "" Then
 
-            проверка = True
+            Return True
 
-        Else проверка = False
+        Else
+
+            Return False
 
         End If
 

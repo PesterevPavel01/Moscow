@@ -2,7 +2,7 @@
 
     Sub ShowForm2()
 
-        ААОсновная.Show()
+        MainForm.Show()
 
     End Sub
 

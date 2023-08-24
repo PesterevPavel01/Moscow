@@ -1,20 +1,11 @@
 ﻿Imports System.ComponentModel
-Imports System.Reflection.Emit
-Imports System.Threading
-Imports System.Windows.Forms.VisualStyles.VisualStyleElement.Button
-Imports System.Windows.Forms.VisualStyles.VisualStyleElement.ToolBar
-Imports Google.Protobuf.WellKnownTypes
-Imports Org.BouncyCastle.Asn1.X509
-Imports System.Text.RegularExpressions
-Imports System.Data.SqlTypes
-Imports System.Xml
 
-Public Class ААОсновная
+Public Class MainForm
 
     Private redactor_enter As Boolean
     Public password0 As String
     Public query
-    Public КлавишаПереключенияВкладок As Integer = 39 ' 34
+    Public КлавишаПереключенияВкладок As Integer = 39  ' 34
     Public КлавишаОбратногоПереключенияВкладок As Integer = 37 '35
     Public вместоТаб As Integer = 40
     Public вместоТаб2 As Integer = 39
@@ -46,18 +37,20 @@ Public Class ААОсновная
     Public programs_type_tbl As New Tables_control
     Public program__sqlQueryString As New SqlQueryString
 
-    Private Sub Основная_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    Private Sub mainForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
-        ЗаписьВListView.массивПуст = False
+        UpdateListView.arrayEmpty = False
+
         mySqlConnect.mySqlSettings.nameFirstDB = "database"
         mySqlConnect.mySqlSettings.userName = "admin"
         mySqlConnect.mySqlSettings.password = "admin"
         mySqlConnect.mySqlSettings.ODBC = "Dsn=mySQLConnection;uid={admin}"
         mySqlConnect.mySqlSettings.server = "localhost"
-        progsIndicator.Image = ImageList1.Images(8)
+        progsIndicator.Image = iconsList.Images(8)
+
         modulInProgsIndicatorOn(False)
-        'modulInProgsIndicator.Image = ImageList1.Images(8)
-        modulIndicator.Image = ImageList1.Images(8)
+
+        modulIndicator.Image = iconsList.Images(8)
         panel_worker.Parent = SplitContainerOtherList.Panel2
 
         DataGridView_list.ColumnHeadersDefaultCellStyle.Font = New Font("Microsoft YaHei", 12)
@@ -104,7 +97,7 @@ Public Class ААОсновная
 
     End Sub
 
-    Private Sub ОткрытьСправочникГруппы_Click(sender As Object, e As EventArgs)
+    Private Sub ОткрытьСправочникГруппы_Click(sender As Object, e As EventArgs) Handles СправочникГруппыПК.Click
 
         cvalific = PK
         ActiveControl = Button2
@@ -112,7 +105,7 @@ Public Class ААОсновная
 
     End Sub
 
-    Private Sub СправочникГруппыПП_Click(sender As Object, e As EventArgs) Handles СправочникГруппыПП.Click, СправочникГруппыПК.Click
+    Private Sub СправочникГруппыПП_Click(sender As Object, e As EventArgs) Handles СправочникГруппыПП.Click
 
         cvalific = PP
         ActiveControl = Button2
@@ -120,7 +113,7 @@ Public Class ААОсновная
 
     End Sub
 
-    Private Sub СправочникГруппыПО_Click(sender As Object, e As EventArgs) Handles СправочникГруппыПО.Click
+    Private Sub studentListPO_Click(sender As Object, e As EventArgs) Handles СправочникГруппыПО.Click
 
         cvalific = PO
         ActiveControl = Button2
@@ -146,21 +139,14 @@ Public Class ААОсновная
 
     End Sub
 
-    Private Sub ДобавитьСлушателя_Click(sender As Object, e As EventArgs)
-
-        ActiveControl = Button2
-        НовыйСлушатель.ShowDialog()
-
-    End Sub
-
-    Private Sub КнопкаСоздатьГруппу_Click(sender As Object, e As EventArgs) Handles КнопкаСоздатьГруппу.Click
+    Private Sub createGroup_Click(sender As Object, e As EventArgs) Handles КнопкаСоздатьГруппу.Click
 
         ActiveControl = Button2
         НоваяГруппа.ShowDialog()
 
     End Sub
 
-    Private Sub СправочникСлушатели_Click(sender As Object, e As EventArgs) Handles СправочникСлушатели.Click
+    Private Sub studentList_Click(sender As Object, e As EventArgs) Handles СправочникСлушатели.Click
 
         If ПоискСлушателейПоУм.Text = "" Then
 
@@ -175,7 +161,7 @@ Public Class ААОсновная
 
     End Sub
 
-    Private Sub ДобавитьСлушателя_Click_1(sender As Object, e As EventArgs) Handles ДобавитьСлушателя.Click
+    Private Sub addStudent_Click(sender As Object, e As EventArgs) Handles ДобавитьСлушателя.Click
 
         ActiveControl = Button2
         НовыйСлушатель.ShowDialog()
@@ -190,26 +176,11 @@ Public Class ААОсновная
 
     End Sub
 
-    Sub waitResponse(n As Integer)
-
-        Dim counter As Integer
-Повтор:
-        counter = 0
-        Thread.Sleep(50)
-        counter = counter + 1
-        If counter < n Then
-            GoTo Повтор
-        Else
-            Exit Sub
-        End If
-
-    End Sub
-
     Private Sub ПриказОЗачислении_Доп_Click(sender As Object, e As EventArgs) Handles ПриказОЗачислении_Доп.Click
 
         prikazCvalif = PK
         АСформироватьПриказ.Text = "ПК_Зачисление_Доп"
-        АСформироватьПриказ.ВидПриказа = "ПК_Зачисление_Доп"
+        АСформироватьПриказ.orderType = "ПК_Зачисление_Доп"
 
         АСформироватьПриказ.ListViewСписокСлушателей.Visible = True
         АСформироватьПриказ.ListViewСписокСлушателей.Location = New Point(9, 320)
@@ -284,7 +255,7 @@ Public Class ААОсновная
 
         prikazCvalif = PK
         АСформироватьПриказ.Text = "ПК_Зачисление"
-        АСформироватьПриказ.ВидПриказа = "ПК_Зачисление"
+        АСформироватьПриказ.orderType = "ПК_Зачисление"
 
         АСформироватьПриказ.ListViewСписокСлушателей.Visible = True
         АСформироватьПриказ.ListViewСписокСлушателей.Location = New Point(9, 350)
@@ -328,7 +299,7 @@ Public Class ААОсновная
     Private Sub ППЗачисление_Click(sender As Object, e As EventArgs) Handles ППЗачисление.Click
         prikazCvalif = PP
         АСформироватьПриказ.Text = "ПП_Зачисление"
-        АСформироватьПриказ.ВидПриказа = "ПП_Зачисление"
+        АСформироватьПриказ.orderType = "ПП_Зачисление"
 
         ОтветственныйЗаАттестацию(False)
         чекбоксы(True, "иной приносящей доход деятельности", "федерального бюджета", "за счет средств")
@@ -364,7 +335,7 @@ Public Class ААОсновная
     Private Sub ПО_Зачисление_Click(sender As Object, e As EventArgs) Handles ПО_Зачисление.Click
         prikazCvalif = PO
         АСформироватьПриказ.Text = "ПО_Зачисление"
-        АСформироватьПриказ.ВидПриказа = "ПО_Зачисление"
+        АСформироватьПриказ.orderType = "ПО_Зачисление"
 
         Call ОтветственныйЗаАттестацию(False)
         Call чекбоксы(True, "иной приносящей доход деятельности", "федерального бюджета", "за счет средств")
@@ -400,7 +371,7 @@ Public Class ААОсновная
     Private Sub ПП_Практика_Click(sender As Object, e As EventArgs) Handles ПП_Практика.Click
         prikazCvalif = PP
         АСформироватьПриказ.Text = "ПП_Практика"
-        АСформироватьПриказ.ВидПриказа = "ПП_Практика"
+        АСформироватьПриказ.orderType = "ПП_Практика"
 
         Call ОтветственныйЗаАттестацию(True, "Руководитель ПП")
         Call чекбоксы(False, "", "", "")
@@ -437,7 +408,7 @@ Public Class ААОсновная
 
         prikazCvalif = PO
         АСформироватьПриказ.Text = "ПО_Практика"
-        АСформироватьПриказ.ВидПриказа = "ПО_Практика"
+        АСформироватьПриказ.orderType = "ПО_Практика"
 
         ОтветственныйЗаАттестацию(True, "Руководитель ПО")
         АСформироватьПриказ.praktika = True
@@ -478,7 +449,7 @@ Public Class ААОсновная
 
         prikazCvalif = PK
         АСформироватьПриказ.Text = "ПК_Отчисление"
-        АСформироватьПриказ.ВидПриказа = "ПК_Отчисление"
+        АСформироватьПриказ.orderType = "ПК_Отчисление"
 
         Call ОтветственныйЗаАттестацию(False)
         Call чекбоксы(False, "", "", "")
@@ -518,7 +489,7 @@ Public Class ААОсновная
 
         prikazCvalif = PO
         АСформироватьПриказ.Text = "ПО_Допуск к ИА"
-        АСформироватьПриказ.ВидПриказа = ActiveControl.Name
+        АСформироватьПриказ.orderType = ActiveControl.Name
 
         ОтветственныйЗаАттестацию(True, "Председатель комиссии")
         чекбоксы(True, "ММС", "санитар", "должность слушателей")
@@ -564,7 +535,7 @@ Public Class ААОсновная
 
         prikazCvalif = PP
         АСформироватьПриказ.Text = "ПП_Допуск к ИА"
-        АСформироватьПриказ.ВидПриказа = ActiveControl.Name
+        АСформироватьПриказ.orderType = ActiveControl.Name
 
         АСформироватьПриказ.komissiya = True
         ОтветственныйЗаАттестацию(True, "Председатель комиссии")
@@ -609,7 +580,7 @@ Public Class ААОсновная
 
         prikazCvalif = PK
         АСформироватьПриказ.Text = "ПК_Заявление"
-        АСформироватьПриказ.ВидПриказа = ActiveControl.Name
+        АСформироватьПриказ.orderType = ActiveControl.Name
 
         АСформироватьПриказ.Утверждает.Visible = False
         АСформироватьПриказ.УтверждаетДолжность.Visible = False
@@ -650,7 +621,7 @@ Public Class ААОсновная
 
         prikazCvalif = PP
         АСформироватьПриказ.Text = "ПП_Заявление"
-        АСформироватьПриказ.ВидПриказа = ActiveControl.Name
+        АСформироватьПриказ.orderType = ActiveControl.Name
 
         АСформироватьПриказ.Утверждает.Visible = False
         АСформироватьПриказ.УтверждаетДолжность.Visible = False
@@ -689,13 +660,12 @@ Public Class ААОсновная
 
         prikazCvalif = PK_PP_PO
         АСформироватьПриказ.Text = "Карточка слушателя"
-        АСформироватьПриказ.ВидПриказа = ActiveControl.Name
+        АСформироватьПриказ.orderType = ActiveControl.Name
 
         АСформироватьПриказ.Утверждает.Visible = False
         АСформироватьПриказ.УтверждаетДолжность.Visible = False
         АСформироватьПриказ.Label2.Visible = False
         АСформироватьПриказ.Label14.Visible = False
-
 
         ОтветственныйЗаАттестацию(False)
         чекбоксы(False, "ММС", "санитар", "должность слушателей")
@@ -737,7 +707,7 @@ Public Class ААОсновная
 
         АСформироватьПриказ.Label2.Visible = True
         АСформироватьПриказ.Label14.Visible = True
-        АСформироватьПриказ.ВидПриказа = "ПК_Окончание"
+        АСформироватьПриказ.orderType = "ПК_Окончание"
 
         ОтветственныйЗаАттестацию(False)
         чекбоксы(False, "", "", "")
@@ -1015,13 +985,13 @@ Public Class ААОсновная
 
             If e.KeyCode = КлавишаПереключенияВкладок Then
 
-                переключательВкладок(TabControlOther)
+                openNextPage(TabControlOther)
 
             End If
 
             If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
 
-                обратныйПереключательВкладок(TabControlOther)
+                openPrevPage(TabControlOther)
 
             End If
 
@@ -1058,7 +1028,7 @@ Public Class ААОсновная
 
             If DataGridAllModuls.Focused Or ActiveControl.Name = "TabControlOther" Then
 
-                переключательВкладок(TabControlOther)
+                openNextPage(TabControlOther)
 
             ElseIf dataGridModulsInProgram.Focused Then
 
@@ -1077,7 +1047,7 @@ Public Class ААОсновная
 
             If ActiveControl.Name = "TabControlOther" Then
 
-                обратныйПереключательВкладок(TabControlOther)
+                openPrevPage(TabControlOther)
 
             ElseIf DataGridAllModuls.Focused Or dataGridModulsInProgram.Focused Then
 
@@ -1096,7 +1066,7 @@ Public Class ААОсновная
 
     End Sub
 
-    Private Sub ААОсновная_KeyDown(sender As Object, e As KeyEventArgs) Handles MyBase.KeyDown
+    Private Sub MainForm_KeyDown(sender As Object, e As KeyEventArgs) Handles MyBase.KeyDown
 
         If TabControlOther.SelectedIndex = 6 Then
 
@@ -1117,7 +1087,7 @@ Public Class ААОсновная
             If red_moduls.Focused Or newModAddName.Focused Or newModAddHour.Focused Or worker_name.Focused Or worker_name_full.Focused Or worker_name_pad.Focused Then
                 Return
             End If
-            переключательВкладок(TabControlOther)
+            openNextPage(TabControlOther)
             e.Handled = True
 
         End If
@@ -1128,14 +1098,14 @@ Public Class ААОсновная
                 Return
             End If
 
-            обратныйПереключательВкладок(TabControlOther)
+            openPrevPage(TabControlOther)
             e.Handled = True
 
         End If
 
         If e.KeyCode = Keys.Up Or e.KeyCode = Keys.Down Then
 
-            функционалТаб(e.KeyCode, вместоТаб)
+            pressTab(e.KeyCode, вместоТаб)
             ААперемещениеВверх(e.KeyCode, Keys.Up)
             e.Handled = True
 
@@ -1161,7 +1131,7 @@ Public Class ААОсновная
 
     End Sub
 
-    Private Sub ААОсновная_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs) Handles MyBase.PreviewKeyDown
+    Private Sub MainForm_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs) Handles MyBase.PreviewKeyDown
 
         If tbl_obrazovanie.Focused Then
 
@@ -1190,7 +1160,7 @@ Public Class ААОсновная
 
             If tbl_obrazovanie.active_last_element Then
 
-                переключательВкладок(TabControlOther)
+                openNextPage(TabControlOther)
                 e.Handled = True
 
             End If
@@ -1199,7 +1169,7 @@ Public Class ААОсновная
 
             If tbl_obrazovanie.active_last_element Then
 
-                обратныйПереключательВкладок(TabControlOther)
+                openPrevPage(TabControlOther)
                 e.Handled = True
 
             End If
@@ -1307,7 +1277,7 @@ Public Class ААОсновная
 
             If programs__progrs_tbl.active_last_element Then
 
-                обратныйПереключательВкладок(TabControlOther)
+                openPrevPage(TabControlOther)
                 e.Handled = True
 
             End If
@@ -1357,14 +1327,14 @@ Public Class ААОсновная
         End If
         If e.KeyCode = КлавишаПереключенияВкладок Then
 
-            переключательВкладок(TabControlOther)
+            openNextPage(TabControlOther)
             e.Handled = True
 
         End If
 
         If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
 
-            обратныйПереключательВкладок(TabControlOther)
+            openPrevPage(TabControlOther)
             e.Handled = True
 
         End If
@@ -1381,14 +1351,14 @@ Public Class ААОсновная
 
         If e.KeyCode = КлавишаПереключенияВкладок Then
 
-            переключательВкладок(TabControlOther)
+            openNextPage(TabControlOther)
             e.Handled = True
 
         End If
 
         If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
 
-            обратныйПереключательВкладок(TabControlOther)
+            openPrevPage(TabControlOther)
             e.Handled = True
 
         End If
@@ -1399,20 +1369,20 @@ Public Class ААОсновная
 
         If e.KeyValue = 13 Then
 
-            Call СправочникГруппыПО_Click(sender, e)
+            Call studentListPO_Click(sender, e)
 
         End If
 
         If e.KeyCode = КлавишаПереключенияВкладок Then
 
-            переключательВкладок(TabControlOther)
+            openNextPage(TabControlOther)
             e.Handled = True
 
         End If
 
         If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
 
-            обратныйПереключательВкладок(TabControlOther)
+            openPrevPage(TabControlOther)
             e.Handled = True
 
         End If
@@ -1422,20 +1392,20 @@ Public Class ААОсновная
 
         If e.KeyCode = 13 Then
 
-            КнопкаСоздатьГруппу_Click(sender, e)
+            createGroup_Click(sender, e)
 
         End If
 
         If e.KeyCode = КлавишаПереключенияВкладок Then
 
-            переключательВкладок(TabControlOther)
+            openNextPage(TabControlOther)
             e.Handled = True
 
         End If
 
         If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
 
-            обратныйПереключательВкладок(TabControlOther)
+            openPrevPage(TabControlOther)
             e.Handled = True
 
         End If
@@ -1446,20 +1416,20 @@ Public Class ААОсновная
 
         If e.KeyCode = 13 Then
 
-            ДобавитьСлушателя_Click(sender, e)
+            addStudent_Click(sender, e)
 
         End If
 
         If e.KeyCode = КлавишаПереключенияВкладок Then
 
-            переключательВкладок(TabControlOther)
+            openNextPage(TabControlOther)
             e.Handled = True
 
         End If
 
         If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
 
-            обратныйПереключательВкладок(TabControlOther)
+            openPrevPage(TabControlOther)
             e.Handled = True
 
         End If
@@ -1468,19 +1438,19 @@ Public Class ААОсновная
 
         If e.KeyCode = 13 Then
 
-            СправочникСлушатели_Click(sender, e)
+            studentList_Click(sender, e)
 
         End If
         If e.KeyCode = КлавишаПереключенияВкладок Then
 
-            переключательВкладок(TabControlOther)
+            openNextPage(TabControlOther)
             e.Handled = True
 
         End If
 
         If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
 
-            обратныйПереключательВкладок(TabControlOther)
+            openPrevPage(TabControlOther)
             e.Handled = True
 
         End If
@@ -1814,7 +1784,7 @@ Public Class ААОсновная
     Private Sub ПП_Окончание_Click(sender As Object, e As EventArgs) Handles ПП_Окончание.Click
         prikazCvalif = PP
         АСформироватьПриказ.Text = "ПП_Окончание"
-        АСформироватьПриказ.ВидПриказа = "ПП_Окончание"
+        АСформироватьПриказ.orderType = "ПП_Окончание"
 
         ОтветственныйЗаАттестацию(False)
         чекбоксы(False, "", "", "")
@@ -1858,7 +1828,7 @@ Public Class ААОсновная
 
         prikazCvalif = PP
         АСформироватьПриказ.Text = "ПП_Приложение к диплому"
-        АСформироватьПриказ.ВидПриказа = "ПП_ПриложениеКдиплому"
+        АСформироватьПриказ.orderType = "ПП_ПриложениеКдиплому"
 
         АСформироватьПриказ.Label24.Text = "Производственная практика"
 
@@ -1919,7 +1889,7 @@ Public Class ААОсновная
 
         prikazCvalif = PO
         АСформироватьПриказ.Text = "ПО_Окончание"
-        АСформироватьПриказ.ВидПриказа = "ПО_Окончание"
+        АСформироватьПриказ.orderType = "ПО_Окончание"
 
         ОтветственныйЗаАттестацию(False)
         чекбоксы(False, "", "", "")
@@ -1963,7 +1933,7 @@ Public Class ААОсновная
 
         prikazCvalif = PO
         АСформироватьПриказ.Text = "ПО_Свидетельство"
-        АСформироватьПриказ.ВидПриказа = "ПО_Свидетельство"
+        АСформироватьПриказ.orderType = "ПО_Свидетельство"
 
         АСформироватьПриказ.Label24.Text = "Практическая подготовка"
 
@@ -2020,7 +1990,7 @@ Public Class ААОсновная
     End Sub
 
 
-    Private Sub ААОсновная_Shown(sender As Object, e As EventArgs) Handles MyBase.Shown
+    Private Sub MainForm_Shown(sender As Object, e As EventArgs) Handles MyBase.Shown
         If Запуск.Открыть Then
 
             Запуск.Открыть = False
@@ -2037,13 +2007,14 @@ Public Class ААОсновная
 
     End Sub
 
-    Private Sub ААОсновная_Closing(sender As Object, e As CancelEventArgs) Handles MyBase.Closing
+    Private Sub MainForm_Closing(sender As Object, e As CancelEventArgs) Handles MyBase.Closing
     End Sub
 
     Private Sub ДиректорФИО_Click(sender As Object, e As EventArgs) Handles ДиректорФИО.Click
 
         ФормаСписок.textboxName = Me.ActiveControl.Name
         ФормаСписок.FormName = Me.Name
+        ФормаСписок.currentControl = ДиректорФИО
         ФормаСписок.ShowDialog()
 
     End Sub
@@ -2052,6 +2023,7 @@ Public Class ААОсновная
 
         ФормаСписок.textboxName = Me.ActiveControl.Name
         ФормаСписок.FormName = Me.Name
+        ФормаСписок.currentControl = ДиректорДолжность
         ФормаСписок.ShowDialog()
 
     End Sub
@@ -2060,6 +2032,7 @@ Public Class ААОсновная
 
         ФормаСписок.textboxName = Me.ActiveControl.Name
         ФормаСписок.FormName = Me.Name
+        ФормаСписок.currentControl = Согласовано1ДолжностьПУ
         ФормаСписок.ShowDialog()
 
     End Sub
@@ -2068,6 +2041,7 @@ Public Class ААОсновная
 
         ФормаСписок.textboxName = Me.ActiveControl.Name
         ФормаСписок.FormName = Me.Name
+        ФормаСписок.currentControl = Согласовано2ДолжностьПУ
         ФормаСписок.ShowDialog()
 
     End Sub
@@ -2076,6 +2050,7 @@ Public Class ААОсновная
 
         ФормаСписок.textboxName = Me.ActiveControl.Name
         ФормаСписок.FormName = Me.Name
+        ФормаСписок.currentControl = Согласовано1ПУ
         ФормаСписок.ShowDialog()
 
     End Sub
@@ -2084,6 +2059,7 @@ Public Class ААОсновная
 
         ФормаСписок.textboxName = Me.ActiveControl.Name
         ФормаСписок.FormName = Me.Name
+        ФормаСписок.currentControl = Согласовано2ПУ
         ФормаСписок.ShowDialog()
 
     End Sub
@@ -2129,7 +2105,7 @@ Public Class ААОсновная
 
         prikazCvalif = PK_PP
         АСформироватьПриказ.Text = "Ведомость слушатели и организации"
-        АСформироватьПриказ.ВидПриказа = ActiveControl.Name
+        АСформироватьПриказ.orderType = ActiveControl.Name
         ActiveControl = Button2
 
         АСформироватьПриказ.Утверждает.Visible = False
@@ -2168,7 +2144,7 @@ Public Class ААОсновная
 
         prikazCvalif = PK_PP_PO
         АСформироватьПриказ.Text = "Доверенность получения бланков на группу"
-        АСформироватьПриказ.ВидПриказа = ActiveControl.Name
+        АСформироватьПриказ.orderType = ActiveControl.Name
 
         АСформироватьПриказ.Утверждает.Visible = True
         АСформироватьПриказ.УтверждаетДолжность.Visible = False
@@ -2211,7 +2187,7 @@ Public Class ААОсновная
 
         prikazCvalif = PK_PP_PO
         АСформироватьПриказ.Text = "Доверенность получения бланков на слушателя"
-        АСформироватьПриказ.ВидПриказа = ActiveControl.Name
+        АСформироватьПриказ.orderType = ActiveControl.Name
 
         АСформироватьПриказ.ListViewСписокСлушателей.Visible = True
         АСформироватьПриказ.ListViewСписокСлушателей.Location = New Point(9, 120)
@@ -2273,7 +2249,7 @@ Public Class ААОсновная
 
         prikazCvalif = PO
         АСформироватьПриказ.Text = "Ведомость промежуточной аттестации"
-        АСформироватьПриказ.ВидПриказа = ActiveControl.Name
+        АСформироватьПриказ.orderType = ActiveControl.Name
 
         While АСформироватьПриказ.ListViewСписокСлушателей.Columns.Count < 3
             АСформироватьПриказ.ListViewСписокСлушателей.Columns.Add("Преподаватель", 200)
@@ -2306,7 +2282,7 @@ Public Class ААОсновная
         Call СекретарьКомиссии(False)
         Call ЗаместительРПК(False)
 
-        Call ОчиститьПоляФормы.Очиститьформу(АСформироватьПриказ)
+        ОчиститьПоляФормы.Очиститьформу(АСформироватьПриказ)
 
         АСформироватьПриказ.Button1.Visible = False
         АСформироватьПриказ.Size = New Size(840, 790)
@@ -2324,7 +2300,7 @@ Public Class ААОсновная
 
         prikazCvalif = PP
         АСформироватьПриказ.Text = "ПП Ведомость промежуточной аттестации"
-        АСформироватьПриказ.ВидПриказа = ActiveControl.Name
+        АСформироватьПриказ.orderType = ActiveControl.Name
 
         While АСформироватьПриказ.ListViewСписокСлушателей.Columns.Count < 3
             АСформироватьПриказ.ListViewСписокСлушателей.Columns.Add("Преподаватель", 200)
@@ -2374,7 +2350,7 @@ Public Class ААОсновная
     Private Sub ПК_Окончание_уд_Click(sender As Object, e As EventArgs) Handles ПК_Окончание_уд.Click
 
         prikazCvalif = PK
-        АСформироватьПриказ.ВидПриказа = "ПК_Окончание_уд"
+        АСформироватьПриказ.orderType = "ПК_Окончание_уд"
         АСформироватьПриказ.Text = "ПК_Окончание_уд"
         ActiveControl = Button2
 
@@ -2421,7 +2397,7 @@ Public Class ААОсновная
 
         prikazCvalif = PK_PP_PO
         АСформироватьПриказ.Text = "СправкаОбОбучении"
-        АСформироватьПриказ.ВидПриказа = ActiveControl.Name
+        АСформироватьПриказ.orderType = ActiveControl.Name
 
         АСформироватьПриказ.LabelИзмениПадеж.Visible = True
         АСформироватьПриказ.ListViewСписокСлушателей.Visible = True
@@ -2511,7 +2487,7 @@ Public Class ААОсновная
 
         prikazCvalif = PK_PP_PO
         АСформироватьПриказ.Text = "Справка об окончании без ИА"
-        АСформироватьПриказ.ВидПриказа = ActiveControl.Name
+        АСформироватьПриказ.orderType = ActiveControl.Name
 
         АСформироватьПриказ.LabelИзмениПадеж.Visible = True
         АСформироватьПриказ.ListViewСписокСлушателей.Visible = True
@@ -2663,7 +2639,7 @@ Public Class ААОсновная
     Private Sub Педнагрузка_Click(sender As Object, e As EventArgs) Handles Педнагрузка.Click
 
         Dim Список
-        Dim СтрокаЗапроса As String
+        Dim queryString As String
 
         ActiveControl = Button2
 
@@ -2672,8 +2648,8 @@ Public Class ААОсновная
 
         ОчиститьПоляФормы.Очиститьформу(ВедомостьПеднагрузка)
 
-        СтрокаЗапроса = load_prepod()
-        Список = ЗагрузитьИзБазы.ЗагрузитьИзБазы(СтрокаЗапроса)
+        queryString = load_prepod()
+        Список = mySqlConnect.loadMySqlToArray(queryString, 1)
 
         If Список(0, 0).ToString = "нет записей" Then
 
@@ -2702,168 +2678,168 @@ Public Class ААОсновная
 
     Private Sub Ведомость_KeyDown(sender As Object, e As KeyEventArgs) Handles Ведомость.KeyDown
         If e.KeyCode = КлавишаПереключенияВкладок Then
-            переключательВкладок(TabControlOther)
+            openNextPage(TabControlOther)
             e.Handled = True
         End If
 
         If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
-            обратныйПереключательВкладок(TabControlOther)
+            openPrevPage(TabControlOther)
             e.Handled = True
         End If
     End Sub
 
     Private Sub ИтоговаяАттествцияОценки_KeyDown(sender As Object, e As KeyEventArgs) Handles ИтоговаяАттествцияОценки.KeyDown
         If e.KeyCode = КлавишаПереключенияВкладок Then
-            переключательВкладок(TabControlOther)
+            openNextPage(TabControlOther)
             e.Handled = True
         End If
 
         If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
-            обратныйПереключательВкладок(TabControlOther)
+            openPrevPage(TabControlOther)
             e.Handled = True
         End If
     End Sub
 
     Private Sub Педнагрузка_KeyDown(sender As Object, e As KeyEventArgs) Handles Педнагрузка.KeyDown
         If e.KeyCode = КлавишаПереключенияВкладок Then
-            переключательВкладок(TabControlOther)
+            openNextPage(TabControlOther)
             e.Handled = True
         End If
 
         If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
-            обратныйПереключательВкладок(TabControlOther)
+            openPrevPage(TabControlOther)
             e.Handled = True
         End If
     End Sub
 
     Private Sub ПриказОЗачислении_KeyDown(sender As Object, e As KeyEventArgs) Handles ПриказОЗачислении.KeyDown
         If e.KeyCode = КлавишаПереключенияВкладок Then
-            переключательВкладок(TabControlOther)
+            openNextPage(TabControlOther)
             e.Handled = True
         End If
 
         If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
-            обратныйПереключательВкладок(TabControlOther)
+            openPrevPage(TabControlOther)
             e.Handled = True
         End If
     End Sub
 
     Private Sub ПК_Отчисление_KeyDown(sender As Object, e As KeyEventArgs) Handles ПК_Отчисление.KeyDown
         If e.KeyCode = КлавишаПереключенияВкладок Then
-            переключательВкладок(TabControlOther)
+            openNextPage(TabControlOther)
             e.Handled = True
         End If
 
         If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
-            обратныйПереключательВкладок(TabControlOther)
+            openPrevPage(TabControlOther)
             e.Handled = True
         End If
     End Sub
 
     Private Sub ПК_Окончание_KeyDown(sender As Object, e As KeyEventArgs) Handles ПК_Окончание.KeyDown
         If e.KeyCode = КлавишаПереключенияВкладок Then
-            переключательВкладок(TabControlOther)
+            openNextPage(TabControlOther)
             e.Handled = True
         End If
 
         If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
-            обратныйПереключательВкладок(TabControlOther)
+            openPrevPage(TabControlOther)
             e.Handled = True
         End If
     End Sub
 
     Private Sub ППЗачисление_KeyDown(sender As Object, e As KeyEventArgs) Handles ППЗачисление.KeyDown
         If e.KeyCode = КлавишаПереключенияВкладок Then
-            переключательВкладок(TabControlOther)
+            openNextPage(TabControlOther)
             e.Handled = True
         End If
 
         If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
-            обратныйПереключательВкладок(TabControlOther)
+            openPrevPage(TabControlOther)
             e.Handled = True
         End If
     End Sub
 
     Private Sub ПП_Практика_KeyDown(sender As Object, e As KeyEventArgs) Handles ПП_Практика.KeyDown
         If e.KeyCode = КлавишаПереключенияВкладок Then
-            переключательВкладок(TabControlOther)
+            openNextPage(TabControlOther)
             e.Handled = True
         End If
 
         If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
-            обратныйПереключательВкладок(TabControlOther)
+            openPrevPage(TabControlOther)
             e.Handled = True
         End If
     End Sub
 
     Private Sub ПП_ДопускКИА_KeyDown(sender As Object, e As KeyEventArgs) Handles ПП_ДопускКИА.KeyDown
         If e.KeyCode = КлавишаПереключенияВкладок Then
-            переключательВкладок(TabControlOther)
+            openNextPage(TabControlOther)
             e.Handled = True
         End If
 
         If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
-            обратныйПереключательВкладок(TabControlOther)
+            openPrevPage(TabControlOther)
             e.Handled = True
         End If
     End Sub
 
     Private Sub ПП_Окончание_KeyDown(sender As Object, e As KeyEventArgs) Handles ПП_Окончание.KeyDown
         If e.KeyCode = КлавишаПереключенияВкладок Then
-            переключательВкладок(TabControlOther)
+            openNextPage(TabControlOther)
             e.Handled = True
         End If
 
         If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
-            обратныйПереключательВкладок(TabControlOther)
+            openPrevPage(TabControlOther)
             e.Handled = True
         End If
     End Sub
 
     Private Sub ПО_Зачисление_KeyDown(sender As Object, e As KeyEventArgs) Handles ПО_Зачисление.KeyDown
         If e.KeyCode = КлавишаПереключенияВкладок Then
-            переключательВкладок(TabControlOther)
+            openNextPage(TabControlOther)
             e.Handled = True
         End If
 
         If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
-            обратныйПереключательВкладок(TabControlOther)
+            openPrevPage(TabControlOther)
             e.Handled = True
         End If
     End Sub
 
     Private Sub ПО_Практика_KeyDown(sender As Object, e As KeyEventArgs) Handles ПО_Практика.KeyDown
         If e.KeyCode = КлавишаПереключенияВкладок Then
-            переключательВкладок(TabControlOther)
+            openNextPage(TabControlOther)
             e.Handled = True
         End If
 
         If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
-            обратныйПереключательВкладок(TabControlOther)
+            openPrevPage(TabControlOther)
             e.Handled = True
         End If
     End Sub
 
     Private Sub ПО_ДопускКИА_KeyDown(sender As Object, e As KeyEventArgs) Handles ПО_ДопускКИА.KeyDown
         If e.KeyCode = КлавишаПереключенияВкладок Then
-            переключательВкладок(TabControlOther)
+            openNextPage(TabControlOther)
             e.Handled = True
         End If
 
         If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
-            обратныйПереключательВкладок(TabControlOther)
+            openPrevPage(TabControlOther)
             e.Handled = True
         End If
     End Sub
 
     Private Sub ПО_Окончание_KeyDown(sender As Object, e As KeyEventArgs) Handles ПО_Окончание.KeyDown
         If e.KeyCode = КлавишаПереключенияВкладок Then
-            переключательВкладок(TabControlOther)
+            openNextPage(TabControlOther)
             e.Handled = True
         End If
 
         If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
-            обратныйПереключательВкладок(TabControlOther)
+            openPrevPage(TabControlOther)
             e.Handled = True
         End If
     End Sub
@@ -2882,300 +2858,300 @@ Public Class ААОсновная
 
     Private Sub Стаж_ДопускКИА_KeyDown(sender As Object, e As KeyEventArgs)
         If e.KeyCode = КлавишаПереключенияВкладок Then
-            переключательВкладок(TabControlOther)
+            openNextPage(TabControlOther)
             e.Handled = True
         End If
 
         If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
-            обратныйПереключательВкладок(TabControlOther)
+            openPrevPage(TabControlOther)
             e.Handled = True
         End If
     End Sub
 
     Private Sub СтажОкончание_KeyDown(sender As Object, e As KeyEventArgs)
         If e.KeyCode = КлавишаПереключенияВкладок Then
-            переключательВкладок(TabControlOther)
+            openNextPage(TabControlOther)
             e.Handled = True
         End If
 
         If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
-            обратныйПереключательВкладок(TabControlOther)
+            openPrevPage(TabControlOther)
             e.Handled = True
         End If
     End Sub
 
     Private Sub ПК_Окончание_уд_KeyDown(sender As Object, e As KeyEventArgs) Handles ПК_Окончание_уд.KeyDown
         If e.KeyCode = КлавишаПереключенияВкладок Then
-            переключательВкладок(TabControlOther)
+            openNextPage(TabControlOther)
             e.Handled = True
         End If
 
         If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
-            обратныйПереключательВкладок(TabControlOther)
+            openPrevPage(TabControlOther)
             e.Handled = True
         End If
     End Sub
 
     Private Sub Спецэкзамен_KeyDown(sender As Object, e As KeyEventArgs)
         If e.KeyCode = КлавишаПереключенияВкладок Then
-            переключательВкладок(TabControlOther)
+            openNextPage(TabControlOther)
             e.Handled = True
         End If
 
         If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
-            обратныйПереключательВкладок(TabControlOther)
+            openPrevPage(TabControlOther)
             e.Handled = True
         End If
     End Sub
 
     Private Sub ПП_ПриложениеКдиплому_KeyDown(sender As Object, e As KeyEventArgs) Handles ПП_ПриложениеКдиплому.KeyDown
         If e.KeyCode = КлавишаПереключенияВкладок Then
-            переключательВкладок(TabControlOther)
+            openNextPage(TabControlOther)
             e.Handled = True
         End If
 
         If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
-            обратныйПереключательВкладок(TabControlOther)
+            openPrevPage(TabControlOther)
             e.Handled = True
         End If
     End Sub
 
     Private Sub ПО_Свидетельство_KeyDown(sender As Object, e As KeyEventArgs) Handles ПО_Свидетельство.KeyDown
         If e.KeyCode = КлавишаПереключенияВкладок Then
-            переключательВкладок(TabControlOther)
+            openNextPage(TabControlOther)
             e.Handled = True
         End If
 
         If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
-            обратныйПереключательВкладок(TabControlOther)
+            openPrevPage(TabControlOther)
             e.Handled = True
         End If
     End Sub
 
     Private Sub ПК_Заявление_KeyDown(sender As Object, e As KeyEventArgs) Handles ПК_Заявление.KeyDown
         If e.KeyCode = КлавишаПереключенияВкладок Then
-            переключательВкладок(TabControlOther)
+            openNextPage(TabControlOther)
             e.Handled = True
         End If
 
         If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
-            обратныйПереключательВкладок(TabControlOther)
+            openPrevPage(TabControlOther)
             e.Handled = True
         End If
     End Sub
 
     Private Sub ПП_Заявление_KeyDown(sender As Object, e As KeyEventArgs) Handles ПП_Заявление.KeyDown
         If e.KeyCode = КлавишаПереключенияВкладок Then
-            переключательВкладок(TabControlOther)
+            openNextPage(TabControlOther)
             e.Handled = True
         End If
 
         If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
-            обратныйПереключательВкладок(TabControlOther)
+            openPrevPage(TabControlOther)
             e.Handled = True
         End If
     End Sub
 
     Private Sub Карточка_слушателя_KeyDown(sender As Object, e As KeyEventArgs) Handles Карточка_слушателя.KeyDown
         If e.KeyCode = КлавишаПереключенияВкладок Then
-            переключательВкладок(TabControlOther)
+            openNextPage(TabControlOther)
             e.Handled = True
         End If
 
         If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
-            обратныйПереключательВкладок(TabControlOther)
+            openPrevPage(TabControlOther)
             e.Handled = True
         End If
     End Sub
 
     Private Sub Спецэкзамен_договор_KeyDown(sender As Object, e As KeyEventArgs)
         If e.KeyCode = КлавишаПереключенияВкладок Then
-            переключательВкладок(TabControlOther)
+            openNextPage(TabControlOther)
             e.Handled = True
         End If
 
         If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
-            обратныйПереключательВкладок(TabControlOther)
+            openPrevPage(TabControlOther)
             e.Handled = True
         End If
     End Sub
 
     Private Sub Спецэкзамен_протокол_KeyDown(sender As Object, e As KeyEventArgs)
         If e.KeyCode = КлавишаПереключенияВкладок Then
-            переключательВкладок(TabControlOther)
+            openNextPage(TabControlOther)
             e.Handled = True
         End If
 
         If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
-            обратныйПереключательВкладок(TabControlOther)
+            openPrevPage(TabControlOther)
             e.Handled = True
         End If
     End Sub
 
     Private Sub Ведомость_слушателиИорганизации_KeyDown(sender As Object, e As KeyEventArgs) Handles Ведомость_слушателиИорганизации.KeyDown
         If e.KeyCode = КлавишаПереключенияВкладок Then
-            переключательВкладок(TabControlOther)
+            openNextPage(TabControlOther)
             e.Handled = True
         End If
 
         If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
-            обратныйПереключательВкладок(TabControlOther)
+            openPrevPage(TabControlOther)
             e.Handled = True
         End If
     End Sub
 
     Private Sub ДоверенностьПолученияБланков_KeyDown(sender As Object, e As KeyEventArgs) Handles ДоверенностьПолученияБланков.KeyDown
         If e.KeyCode = КлавишаПереключенияВкладок Then
-            переключательВкладок(TabControlOther)
+            openNextPage(TabControlOther)
             e.Handled = True
         End If
 
         If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
-            обратныйПереключательВкладок(TabControlOther)
+            openPrevPage(TabControlOther)
             e.Handled = True
         End If
     End Sub
 
     Private Sub ДоверенностьПолученияБланковСлушателей_KeyDown(sender As Object, e As KeyEventArgs) Handles ДоверенностьПолученияБланковСлушателей.KeyDown
         If e.KeyCode = КлавишаПереключенияВкладок Then
-            переключательВкладок(TabControlOther)
+            openNextPage(TabControlOther)
             e.Handled = True
         End If
 
         If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
-            обратныйПереключательВкладок(TabControlOther)
+            openPrevPage(TabControlOther)
             e.Handled = True
         End If
     End Sub
 
     Private Sub ВедомостьПромежуточнойАттестации_KeyDown(sender As Object, e As KeyEventArgs) Handles ВедомостьПромежуточнойАттестации.KeyDown
         If e.KeyCode = КлавишаПереключенияВкладок Then
-            переключательВкладок(TabControlOther)
+            openNextPage(TabControlOther)
             e.Handled = True
         End If
 
         If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
-            обратныйПереключательВкладок(TabControlOther)
+            openPrevPage(TabControlOther)
             e.Handled = True
         End If
     End Sub
 
     Private Sub ПП_Ведомость_KeyDown(sender As Object, e As KeyEventArgs) Handles ПП_Ведомость.KeyDown
         If e.KeyCode = КлавишаПереключенияВкладок Then
-            переключательВкладок(TabControlOther)
+            openNextPage(TabControlOther)
             e.Handled = True
         End If
 
         If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
-            обратныйПереключательВкладок(TabControlOther)
+            openPrevPage(TabControlOther)
             e.Handled = True
         End If
     End Sub
 
     Private Sub СправкаОбОбучении_KeyDown(sender As Object, e As KeyEventArgs) Handles СправкаОбОбучении.KeyDown
         If e.KeyCode = КлавишаПереключенияВкладок Then
-            переключательВкладок(TabControlOther)
+            openNextPage(TabControlOther)
             e.Handled = True
         End If
 
         If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
-            обратныйПереключательВкладок(TabControlOther)
+            openPrevPage(TabControlOther)
             e.Handled = True
         End If
     End Sub
 
     Private Sub СправкаОбОкончании_KeyDown(sender As Object, e As KeyEventArgs) Handles СправкаОбОкончании.KeyDown
         If e.KeyCode = КлавишаПереключенияВкладок Then
-            переключательВкладок(TabControlOther)
+            openNextPage(TabControlOther)
             e.Handled = True
         End If
 
         If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
-            обратныйПереключательВкладок(TabControlOther)
+            openPrevPage(TabControlOther)
             e.Handled = True
         End If
     End Sub
 
     Private Sub КнигаУчетаУдостоверений_KeyDown(sender As Object, e As KeyEventArgs) Handles КнигаУчетаУдостоверений.KeyDown
         If e.KeyCode = КлавишаПереключенияВкладок Then
-            переключательВкладок(TabControlOther)
+            openNextPage(TabControlOther)
             e.Handled = True
         End If
 
         If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
-            обратныйПереключательВкладок(TabControlOther)
+            openPrevPage(TabControlOther)
             e.Handled = True
         End If
     End Sub
 
     Private Sub КнигаУчетаДипломов_KeyDown(sender As Object, e As KeyEventArgs) Handles КнигаУчетаДипломов.KeyDown
         If e.KeyCode = КлавишаПереключенияВкладок Then
-            переключательВкладок(TabControlOther)
+            openNextPage(TabControlOther)
             e.Handled = True
         End If
 
         If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
-            обратныйПереключательВкладок(TabControlOther)
+            openPrevPage(TabControlOther)
             e.Handled = True
         End If
     End Sub
 
     Private Sub КнигаУчетаСвидетельств_KeyDown(sender As Object, e As KeyEventArgs) Handles КнигаУчетаСвидетельств.KeyDown
         If e.KeyCode = КлавишаПереключенияВкладок Then
-            переключательВкладок(TabControlOther)
+            openNextPage(TabControlOther)
             e.Handled = True
         End If
 
         If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
-            обратныйПереключательВкладок(TabControlOther)
+            openPrevPage(TabControlOther)
             e.Handled = True
         End If
     End Sub
 
     Private Sub КнигаУчетаУдостоверенийФРДО_KeyDown(sender As Object, e As KeyEventArgs) Handles КнигаУчетаУдостоверенийФРДО.KeyDown
         If e.KeyCode = КлавишаПереключенияВкладок Then
-            переключательВкладок(TabControlOther)
+            openNextPage(TabControlOther)
             e.Handled = True
         End If
 
         If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
-            обратныйПереключательВкладок(TabControlOther)
+            openPrevPage(TabControlOther)
             e.Handled = True
         End If
     End Sub
 
     Private Sub КнигаДипломовФРДО_KeyDown(sender As Object, e As KeyEventArgs) Handles КнигаДипломовФРДО.KeyDown
         If e.KeyCode = КлавишаПереключенияВкладок Then
-            переключательВкладок(TabControlOther)
+            openNextPage(TabControlOther)
             e.Handled = True
         End If
 
         If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
-            обратныйПереключательВкладок(TabControlOther)
+            openPrevPage(TabControlOther)
             e.Handled = True
         End If
     End Sub
 
     Private Sub КнигаСвидетельствФРДО_KeyDown(sender As Object, e As KeyEventArgs) Handles КнигаСвидетельствФРДО.KeyDown
         If e.KeyCode = КлавишаПереключенияВкладок Then
-            переключательВкладок(TabControlOther)
+            openNextPage(TabControlOther)
             e.Handled = True
         End If
 
         If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
-            обратныйПереключательВкладок(TabControlOther)
+            openPrevPage(TabControlOther)
             e.Handled = True
         End If
     End Sub
 
     Private Sub Button2_KeyDown(sender As Object, e As KeyEventArgs) Handles Button2.KeyDown
         If e.KeyCode = КлавишаПереключенияВкладок Then
-            переключательВкладок(TabControlOther)
+            openNextPage(TabControlOther)
             e.Handled = True
         End If
 
         If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
-            обратныйПереключательВкладок(TabControlOther)
+            openPrevPage(TabControlOther)
             e.Handled = True
         End If
     End Sub
@@ -4092,7 +4068,7 @@ Public Class ААОсновная
 
     Public Sub SplitContainerProgs_Leave(sender As Object, e As EventArgs)
 
-        progsIndicator.Image = ImageList1.Images(8)
+        progsIndicator.Image = iconsList.Images(8)
         program.struct_progs.flag_update = False
         program.struct_progs.flagEscape = True
 
@@ -4112,9 +4088,9 @@ Public Class ААОсновная
     Private Sub modulInProgsIndicatorOn(val As Boolean)
 
         If val Then
-            modulInProgsIndicator.Image = ImageList1.Images(9)
+            modulInProgsIndicator.Image = iconsList.Images(9)
         Else
-            modulInProgsIndicator.Image = ImageList1.Images(8)
+            modulInProgsIndicator.Image = iconsList.Images(8)
         End If
 
 
@@ -4253,7 +4229,7 @@ Public Class ААОсновная
     End Sub
 
     Private Sub SplitContainerModuls_Leave(sender As Object, e As EventArgs) Handles programms__SplitContainerModuls.Leave
-        modulIndicator.Image = ImageList1.Images(8)
+        modulIndicator.Image = iconsList.Images(8)
         program.struct_progs.flag_update_modul = False
 
         newModAddName.Clear()
@@ -4330,12 +4306,12 @@ Public Class ААОсновная
 
     Private Sub SplitContainerProgs_Enter(sender As Object, e As EventArgs)
 
-        progsIndicator.Image = ImageList1.Images(9)
+        progsIndicator.Image = iconsList.Images(9)
 
     End Sub
 
     Private Sub SplitContainerModuls_Enter(sender As Object, e As EventArgs) Handles programms__SplitContainerModuls.Enter
-        modulIndicator.Image = ImageList1.Images(9)
+        modulIndicator.Image = iconsList.Images(9)
     End Sub
 
     Private Sub SplitModulsInProg_Enter(sender As Object, e As EventArgs) Handles programms__SplitModulsInProg.Enter
@@ -4348,50 +4324,50 @@ Public Class ААОсновная
     Private Sub ДиректорФИО_TextChanged(sender As Object, e As EventArgs) Handles ДиректорФИО.TextChanged
         Dim queryString As String = ""
         queryString = updateSettings("ДиректорФИО", ДиректорФИО.Text)
-        mySqlConnect.ОтправитьВбдЗапись(queryString, 1)
+        mySqlConnect.sendQuery(queryString, 1)
     End Sub
 
     Private Sub ДиректорДолжность_TextChanged(sender As Object, e As EventArgs) Handles ДиректорДолжность.TextChanged
         Dim queryString As String = ""
         queryString = updateSettings("ДиректорДолжность", ДиректорДолжность.Text)
-        mySqlConnect.ОтправитьВбдЗапись(queryString, 1)
+        mySqlConnect.sendQuery(queryString, 1)
     End Sub
 
     Private Sub Согласовано1ПУ_TextChanged(sender As Object, e As EventArgs) Handles Согласовано1ПУ.TextChanged
         Dim queryString As String = ""
         queryString = updateSettings("Согласовано1ПУ", Согласовано1ПУ.Text)
-        mySqlConnect.ОтправитьВбдЗапись(queryString, 1)
+        mySqlConnect.sendQuery(queryString, 1)
     End Sub
 
     Private Sub Согласовано1ДолжностьПУ_TextChanged(sender As Object, e As EventArgs) Handles Согласовано1ДолжностьПУ.TextChanged
         Dim queryString As String = ""
         queryString = updateSettings("Согласовано1ДолжностьПУ", Согласовано1ДолжностьПУ.Text)
-        mySqlConnect.ОтправитьВбдЗапись(queryString, 1)
+        mySqlConnect.sendQuery(queryString, 1)
     End Sub
 
     Private Sub Согласовано2ПУ_TextChanged(sender As Object, e As EventArgs) Handles Согласовано2ПУ.TextChanged
         Dim queryString As String = ""
         queryString = updateSettings("Согласовано2ПУ", Согласовано2ПУ.Text)
-        mySqlConnect.ОтправитьВбдЗапись(queryString, 1)
+        mySqlConnect.sendQuery(queryString, 1)
     End Sub
 
     Private Sub Согласовано2ДолжностьПУ_TextChanged(sender As Object, e As EventArgs) Handles Согласовано2ДолжностьПУ.TextChanged
         Dim queryString As String = ""
         queryString = updateSettings("Согласовано2ДолжностьПУ", Согласовано2ДолжностьПУ.Text)
-        mySqlConnect.ОтправитьВбдЗапись(queryString, 1)
+        mySqlConnect.sendQuery(queryString, 1)
     End Sub
 
     Private Sub КоличествоСтрокВТаблице_TextChanged(sender As Object, e As EventArgs) Handles КоличествоСтрокВТаблице.TextChanged
         Dim queryString As String = ""
         queryString = updateSettings("КоличествоСтрокВТаблице", КоличествоСтрокВТаблице.Text)
-        mySqlConnect.ОтправитьВбдЗапись(queryString, 1)
+        mySqlConnect.sendQuery(queryString, 1)
     End Sub
 
     Private Sub ПоискСлушателейПоУм_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ПоискСлушателейПоУм.SelectedIndexChanged
 
         Dim queryString As String = ""
         queryString = updateSettings("ПоискСлушателейПоУм", ПоискСлушателейПоУм.Text)
-        mySqlConnect.ОтправитьВбдЗапись(queryString, 1)
+        mySqlConnect.sendQuery(queryString, 1)
         If ПоискСлушателейПоУм.Text <> "" Then
             НастройкаПоискаСлушателей.checkedAnyValue(ПоискСлушателейПоУм.Text)
         End If
@@ -4402,7 +4378,7 @@ Public Class ААОсновная
 
         Dim queryString As String = ""
         queryString = updateSettings("ПоискГруппПоУм", ПоискГруппПоУм.Text)
-        mySqlConnect.ОтправитьВбдЗапись(queryString, 1)
+        mySqlConnect.sendQuery(queryString, 1)
         If ПоискГруппПоУм.Text <> "" Then
             НастройкаПоискаГрупп.checkedAnyValue(ПоискГруппПоУм.Text)
         End If
@@ -4413,7 +4389,7 @@ Public Class ААОсновная
 
         Dim queryString As String = ""
         queryString = updateSettings("НастройкаСортировкиСлушателей", НастройкаСортировкиСлушателей.Text)
-        mySqlConnect.ОтправитьВбдЗапись(queryString, 1)
+        mySqlConnect.sendQuery(queryString, 1)
         If НастройкаСортировкиСлушателей.Text <> "" Then
             WindowsApp2.НастройкаСортировкиСлушателей.checkedAnyValue(НастройкаСортировкиСлушателей.Text)
         End If
@@ -4423,9 +4399,9 @@ Public Class ААОсновная
     Private Sub НастройкаСортировкиГрупп_SelectedIndexChanged(sender As Object, e As EventArgs) Handles НастройкаСортировкиГрупп.SelectedIndexChanged
         Dim queryString As String = ""
         queryString = updateSettings("НастройкаСортировкиГрупп", НастройкаСортировкиГрупп.Text)
-        mySqlConnect.ОтправитьВбдЗапись(queryString, 1)
+        mySqlConnect.sendQuery(queryString, 1)
         If НастройкаСортировкиГрупп.Text <> "" Then
-            WindowsApp2.НастройкаСортировкиГрупп.checkedAnyValue(НастройкаСортировкиГрупп.Text)
+            sortSetts.checkedAnyValue(НастройкаСортировкиГрупп.Text)
         End If
 
     End Sub
@@ -4913,14 +4889,14 @@ Public Class ААОсновная
         If DataGridView_list.ReadOnly Then
 
             DataGridView_list.ReadOnly = False
-            ToolStripButton1.Image = ImageList40.Images(3)
+            ToolStripButton1.Image = icons40pxList.Images(3)
             worker.flagRedactor = True
             ActiveControl = DataGridView_list
 
         Else
 
             DataGridView_list.ReadOnly = True
-            ToolStripButton1.Image = ImageList40.Images(2)
+            ToolStripButton1.Image = icons40pxList.Images(2)
             worker.flagRedactor = False
             ActiveControl = DataGridView_list
 

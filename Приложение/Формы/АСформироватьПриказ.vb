@@ -1,7 +1,7 @@
 ﻿Public Class АСформироватьПриказ
     Public prikaz As New Prikaz
     Public flagLoad As Boolean = False
-    Public ВидПриказа As String
+    Public orderType As String
     Public kodGroup As Integer
     Public path As String
     Public flagCheck As Boolean = False
@@ -18,6 +18,13 @@
         ФормаСписок.ListViewСписок.Columns.Add("Код", 100)
         ФормаСписок.textboxName = Me.ActiveControl.Name
         ФормаСписок.FormName = Me.Name
+
+        If MainForm.prikazCvalif = MainForm.PK_PP_PO Then
+
+            ФормаСписок.headerVisible = True
+
+        End If
+
         ФормаСписок.ShowDialog()
         ФормаСписок.ListViewСписок.Columns.RemoveAt(1)
         ФормаСписок.ListViewСписок.Columns.RemoveAt(2)
@@ -124,13 +131,14 @@
 
     Private Sub Сформировать_Click(sender As Object, e As EventArgs) Handles КнопкаСформировать.Click
 
-        Dim ЗаполненыВсеПоля As Boolean
-        Dim ЧекнутыеСлушатели
+        Dim checkContent As Boolean
+        Dim selectedStudents
+        Dim selectedModuls
         ActiveControl = Button1
 
-        ЗаполненыВсеПоля = checkSuff()
+        checkContent = checkSuff()
 
-        If Not ЗаполненыВсеПоля Then
+        If Not checkContent Then
             Try
                 предупреждение.текст.Text = "Необходимо заполнить все обязательные поля!"
                 ОткрытьФорму(предупреждение)
@@ -142,116 +150,121 @@
             Exit Sub
         End If
 
+        Select Case orderType
 
+            Case "Ведомость_слушателиИорганизации"
 
-        If ВидПриказа = "Ведомость_слушателиИорганизации" Then
+                ВедомостьСлушателиИОрганизации()
 
-            ВедомостьСлушателиИОрганизации()
+            Case "ВедомостьПромежуточнойАттестации"
 
-        ElseIf ВидПриказа = "ВедомостьПромежуточнойАттестации" Or ВидПриказа = "ПП_Ведомость" Then
+                selectedModuls = ЗаписатьЧекнутыеСтроки(ListViewСписокСлушателей, 1, 2)
+                ВедомостьПромежуточнойАттестации.ВедомостьПромежуточнойАттестации(selectedModuls, orderType)
 
-            Dim ЧекнутыеМодули
+            Case "ПП_Ведомость"
 
-            ЧекнутыеМодули = ЗаписатьЧекнутыеСтроки(ListViewСписокСлушателей, 1, 2)
+                selectedModuls = ЗаписатьЧекнутыеСтроки(ListViewСписокСлушателей, 1, 2)
+                ВедомостьПромежуточнойАттестации.ВедомостьПромежуточнойАттестации(selectedModuls, orderType)
 
-            ВедомостьПромежуточнойАттестации.ВедомостьПромежуточнойАттестации(ЧекнутыеМодули, ВидПриказа)
+            Case "СправкаОбОкончании"
 
-        ElseIf ВидПриказа = "СправкаОбОкончании" Then
+                selectedStudents = ЗаписатьЧекнутыеСтроки(ListViewСписокСлушателей, 0)
 
-            ЧекнутыеСлушатели = ЗаписатьЧекнутыеСтроки(ListViewСписокСлушателей, 0)
+                СправкаОбОкончании.СправкаОбОкончании(selectedStudents)
 
-            СправкаОбОкончании.СправкаОбОкончании(ЧекнутыеСлушатели)
+            Case "СправкаОбОбучении"
 
-        ElseIf ВидПриказа = "СправкаОбОбучении" Then
+                selectedStudents = ЗаписатьЧекнутыеСтроки(ListViewСписокСлушателей, 0)
 
-            ЧекнутыеСлушатели = ЗаписатьЧекнутыеСтроки(ListViewСписокСлушателей, 0)
+                spravka.spravka(selectedStudents)
 
-            spravka.spravka(ЧекнутыеСлушатели)
+            Case "ДоверенностьПолученияБланковСлушателей"
 
-        ElseIf ВидПриказа = "ДоверенностьПолученияБланковСлушателей" Then
+                selectedStudents = ЗаписатьЧекнутыеСтроки(ListViewСписокСлушателей, 0)
 
-            ЧекнутыеСлушатели = ЗаписатьЧекнутыеСтроки(ListViewСписокСлушателей, 0)
+                ДоверенностьПолученияБланковНаСлушателя(selectedStudents)
 
-            ДоверенностьПолученияБланковНаСлушателя(ЧекнутыеСлушатели)
+            Case "ДоверенностьПолученияБланков"
 
-        ElseIf ВидПриказа = "ДоверенностьПолученияБланков" Then
+                ДоверенностьПолученияБланковНаГруппу.ДоверенностьПолученияБланковНаГруппу()
 
-            ДоверенностьПолученияБланковНаГруппу.ДоверенностьПолученияБланковНаГруппу()
+            Case "ПО_Свидетельство"
 
-        ElseIf ВидПриказа = "ПО_Свидетельство" Then
+                ПО_Свидетельство.po_svid(orderType)
 
-            ПО_Свидетельство.po_svid(ВидПриказа)
+            Case "ПП_ПриложениеКдиплому"
 
-        ElseIf ВидПриказа = "ПП_ПриложениеКдиплому" Then
+                ПП_ПриложениеКДиплому.ПП_ПриложениеКДиплому(orderType)
 
-            ПП_ПриложениеКДиплому.ПП_ПриложениеКДиплому(ВидПриказа)
+            Case "ПП_Практика"
 
-        ElseIf ВидПриказа = "ПП_Практика" Or ВидПриказа = "ПО_Практика" Then
+                Приказ_Практика.Приказ_Практика(orderType)
 
-            Приказ_Практика.Приказ_Практика(ВидПриказа)
+            Case "ПО_Практика"
 
-        ElseIf ВидПриказа = "ПК_Заявление" Then
+                Приказ_Практика.Приказ_Практика(orderType)
 
-            Бланки.ПК_Заявление(ВидПриказа)
+            Case "ПК_Заявление"
 
-        ElseIf ВидПриказа = "ПП_Заявление" Then
+                Бланки.ПК_Заявление(orderType)
 
-            Бланки.ПП_Заявление(ВидПриказа)
+            Case "ПП_Заявление"
 
-        ElseIf ВидПриказа = "Карточка_слушателя" Then
+                Бланки.ПП_Заявление(orderType)
 
-            Бланки.Карточка_Слушателя(ВидПриказа)
+            Case "Карточка_слушателя"
 
-        ElseIf ВидПриказа = "ПК_Отчисление" Then
+                Бланки.Карточка_Слушателя(orderType)
 
-            Приказ_Отчисление.Приказ_Отчисление(ВидПриказа)
+            Case "ПК_Отчисление"
 
-        ElseIf ВидПриказа = "ПО_ДопускКИА" Then
+                Приказ_Отчисление.Приказ_Отчисление(orderType)
 
-            Приказ_ДопускКИА.Приказ_ДопускКИА(ВидПриказа)
+            Case "ПО_ДопускКИА"
 
-        ElseIf ВидПриказа = "ПП_ДопускКИА" Then
+                Приказ_ДопускКИА.Приказ_ДопускКИА(orderType)
 
-            Приказ_ДопускКИА.Приказ_ДопускКИА(ВидПриказа)
+            Case "ПП_ДопускКИА"
 
-        ElseIf ВидПриказа = "ПК_Окончание" Then
+                Приказ_ДопускКИА.Приказ_ДопускКИА(orderType)
 
-            Приказ_Окончание.Приказ_Окончание(ВидПриказа)
+            Case "ПК_Окончание"
 
-        ElseIf ВидПриказа = "ПК_Окончание_уд" Then
+                Приказ_Окончание.Приказ_Окончание(orderType)
 
-            ЧекнутыеСлушатели = ЗаписатьЧекнутыеСтроки(ListViewСписокСлушателей, 0)
+            Case "ПК_Окончание_уд"
 
-            ПК_Окончание.ПК_Окончание_уд(ЧекнутыеСлушатели, ВидПриказа)
+                selectedStudents = ЗаписатьЧекнутыеСтроки(ListViewСписокСлушателей, 0)
 
-        ElseIf ВидПриказа = "ПП_Окончание" Then
+                ПК_Окончание.ПК_Окончание_уд(selectedStudents, orderType)
 
-            Приказ_Окончание.Приказ_Окончание(ВидПриказа)
+            Case "ПП_Окончание"
 
-        ElseIf ВидПриказа = "ПО_Окончание" Then
+                Приказ_Окончание.Приказ_Окончание(orderType)
 
-            Приказ_Окончание.Приказ_Окончание(ВидПриказа)
+            Case "ПО_Окончание"
 
-        ElseIf ВидПриказа = "ПК_Зачисление_Доп" Then
+                Приказ_Окончание.Приказ_Окончание(orderType)
 
-            ЧекнутыеСлушатели = ЗаписатьЧекнутыеСтроки(ListViewСписокСлушателей, 0)
-            Приказ_Зачисление.Приказ_Зачисление(ВидПриказа, ЧекнутыеСлушатели)
+            Case "ПК_Зачисление_Доп"
 
-        ElseIf ВидПриказа = "ПК_Зачисление" Then
+                selectedStudents = ЗаписатьЧекнутыеСтроки(ListViewСписокСлушателей, 0)
+                Приказ_Зачисление.Приказ_Зачисление(orderType, selectedStudents)
 
-            ЧекнутыеСлушатели = ЗаписатьЧекнутыеСтроки(ListViewСписокСлушателей, 0)
-            Приказ_Зачисление.Приказ_Зачисление(ВидПриказа, ЧекнутыеСлушатели)
+            Case "ПК_Зачисление"
 
-        ElseIf ВидПриказа = "ПП_Зачисление" Then
+                selectedStudents = ЗаписатьЧекнутыеСтроки(ListViewСписокСлушателей, 0)
+                Приказ_Зачисление.Приказ_Зачисление(orderType, selectedStudents)
 
-            Приказ_Зачисление.Приказ_Зачисление(ВидПриказа)
+            Case "ПП_Зачисление"
 
-        ElseIf ВидПриказа = "ПО_Зачисление" Then
+                Приказ_Зачисление.Приказ_Зачисление(orderType)
 
-            Приказ_Зачисление.Приказ_Зачисление(ВидПриказа)
+            Case "ПО_Зачисление"
 
-        End If
+                Приказ_Зачисление.Приказ_Зачисление(orderType)
 
+        End Select
     End Sub
 
     Private Sub Очистить_Click(sender As Object, e As EventArgs) Handles КнопкаОчистить.Click
@@ -274,28 +287,28 @@
 
         ActiveControl = Button1
 
-        If ВидПриказа = "Спецэкзамен_протокол" Then
+        If orderType = "Спецэкзамен_протокол" Then
             Exit Sub
         End If
 
-        If ААОсновная.ДиректорДолжность.Text <> "" Then
-            УтверждаетДолжность.Text = ААОсновная.ДиректорДолжность.Text
+        If MainForm.ДиректорДолжность.Text <> "" Then
+            УтверждаетДолжность.Text = MainForm.ДиректорДолжность.Text
         End If
 
-        If ААОсновная.Согласовано1ПУ.Text <> "" Then
-            Согласовано1.Text = ААОсновная.Согласовано1ПУ.Text
+        If MainForm.Согласовано1ПУ.Text <> "" Then
+            Согласовано1.Text = MainForm.Согласовано1ПУ.Text
         End If
 
-        If ААОсновная.Согласовано2ПУ.Text <> "" Then
-            Согласовано2.Text = ААОсновная.Согласовано2ПУ.Text
+        If MainForm.Согласовано2ПУ.Text <> "" Then
+            Согласовано2.Text = MainForm.Согласовано2ПУ.Text
         End If
 
-        If ААОсновная.Согласовано1ДолжностьПУ.Text <> "" Then
-            Согласовано1Должность.Text = ААОсновная.Согласовано1ДолжностьПУ.Text
+        If MainForm.Согласовано1ДолжностьПУ.Text <> "" Then
+            Согласовано1Должность.Text = MainForm.Согласовано1ДолжностьПУ.Text
         End If
 
-        If ААОсновная.Согласовано2ДолжностьПУ.Text <> "" Then
-            Согласовано2Должность.Text = ААОсновная.Согласовано2ДолжностьПУ.Text
+        If MainForm.Согласовано2ДолжностьПУ.Text <> "" Then
+            Согласовано2Должность.Text = MainForm.Согласовано2ДолжностьПУ.Text
         End If
 
         If komissiya Then
@@ -346,10 +359,10 @@
 
         End If
 
-        If Not ААОсновная.directorOff Then
+        If Not MainForm.directorOff Then
 
-            If ААОсновная.ДиректорФИО.Text <> "" Then
-                Утверждает.Text = ААОсновная.ДиректорФИО.Text
+            If MainForm.ДиректорФИО.Text <> "" Then
+                Утверждает.Text = MainForm.ДиректорФИО.Text
             End If
 
         End If
@@ -360,7 +373,7 @@
 
         Me.ListViewСписокСлушателей.Items.Clear()
 
-        If ВидПриказа = "ПК_Отчисление" Then
+        If orderType = "ПК_Отчисление" Then
 
             If Not НомерГруппы.Text = "" Then
                 Label4.Visible = True
@@ -372,19 +385,19 @@
 
         End If
 
-        If ВидПриказа = "ПК_Окончание_уд" Or ВидПриказа = "СправкаОбОкончании" Or ВидПриказа = "ДоверенностьПолученияБланковСлушателей" Or ВидПриказа = "СправкаОбОбучении" Or ВидПриказа = "СправкаОбОкончании" Then
+        If orderType = "ПК_Окончание_уд" Or orderType = "СправкаОбОкончании" Or orderType = "ДоверенностьПолученияБланковСлушателей" Or orderType = "СправкаОбОбучении" Or orderType = "СправкаОбОкончании" Then
 
             If Not НомерГруппы.Text = "" Then
                 loadStudentsList()
             End If
 
-            If ВидПриказа = "СправкаОбОбучении" Then
+            If orderType = "СправкаОбОбучении" Then
                 ListViewСписокСлушателей.Items.Insert(0, New ListViewItem("Выделить всех"))
             End If
 
         End If
 
-        If ВидПриказа = "ВедомостьПромежуточнойАттестации" Or ВидПриказа = "ПП_Ведомость" Then
+        If orderType = "ВедомостьПромежуточнойАттестации" Or orderType = "ПП_Ведомость" Then
 
             If Not НомерГруппы.Text = "" Then
                 loadModuls()
@@ -392,7 +405,7 @@
 
         End If
 
-        If ВидПриказа = "ПК_Зачисление" Or ВидПриказа = "ПК_Зачисление_Доп" Then
+        If orderType = "ПК_Зачисление" Or orderType = "ПК_Зачисление_Доп" Then
 
             If Not НомерГруппы.Text = "" Then
                 loadStudentsList()
@@ -406,18 +419,18 @@
 
     Sub loadModuls()
 
-        Dim sqlString As String
+        Dim queryString As String
         Dim progs, teachers, result
 
-        sqlString = loadListModul(ААОсновная.prikazKodGroup)
-        progs = ЗагрузитьИзБазы.ЗагрузитьИзБазы(sqlString)
+        queryString = loadListModul(MainForm.prikazKodGroup)
+        progs = MainForm.mySqlConnect.loadMySqlToArray(queryString, 1)
 
         If progs(0, 0) = "нет записей" Then
             Exit Sub
         End If
 
-        sqlString = loadListSotrudnicModul(ААОсновная.prikazKodGroup)
-        teachers = ЗагрузитьИзБазы.ЗагрузитьИзБазы(sqlString)
+        queryString = loadListSotrudnicModul(MainForm.prikazKodGroup)
+        teachers = MainForm.mySqlConnect.loadMySqlToArray(queryString, 1)
 
         If teachers(0, 0) = "нет записей" Then
             Exit Sub
@@ -436,7 +449,7 @@
             ListViewСписокСлушателей.Columns.Add("Преподаватель", 200)
         End If
 
-        ЗаписьВListView.ЗаписьВListView(False, True, ListViewСписокСлушателей, result, 0, 1)
+        UpdateListView.updateListView(False, True, ListViewСписокСлушателей, result, 0, 1)
 
         Try
             ListViewСписокСлушателей.Items(0).Selected = True
@@ -451,15 +464,15 @@
         Dim queryString As String
         Dim students
 
-        queryString = formOrder__loadStudentsList(ААОсновная.prikazKodGroup)
+        queryString = formOrder__loadStudentsList(MainForm.prikazKodGroup)
 
-        students = ЗагрузитьИзБазы.ЗагрузитьИзБазы(queryString)
+        students = MainForm.mySqlConnect.loadMySqlToArray(queryString, 1)
 
         If students(0, 0) = "нет записей" Then
             Exit Sub
         End If
 
-        ЗаписьВListView.ЗаписьВListView(True, False, ListViewСписокСлушателей, students, 0)
+        UpdateListView.updateListView(True, False, ListViewСписокСлушателей, students, 0)
 
         Try
             ListViewСписокСлушателей.Items(0).Selected = True
@@ -528,11 +541,11 @@
     End Function
     Private Sub АСформироватьПриказ_KeyDown(sender As Object, e As KeyEventArgs) Handles MyBase.KeyDown
 
-        Call ЗакрытьEsc(Me, e.KeyCode)
+        Call closeEsc(Me, e.KeyCode)
 
         If e.KeyCode = 38 Or e.KeyCode = 40 Then
-            функционалТаб(e.KeyCode, 40)
-            перемещениеВверх(Me, e.KeyCode, 38)
+            pressTab(e.KeyCode, 40)
+            up(Me, e.KeyCode, 38)
             e.Handled = True
         End If
 
@@ -881,7 +894,7 @@
     End Sub
 
     Private Sub АСформироватьПриказ_FormClosed(sender As Object, e As FormClosedEventArgs) Handles MyBase.FormClosed
-        ААОсновная.prikazCvalif = 0
+        MainForm.prikazCvalif = 0
     End Sub
 
     Public Sub reload_lists()
@@ -1190,7 +1203,7 @@
 
     Private Sub ListViewСписокСлушателей_ItemChecked(sender As Object, e As ItemCheckedEventArgs) Handles ListViewСписокСлушателей.ItemChecked
 
-        If ВидПриказа = "СправкаОбОбучении" Or ВидПриказа = "ПК_Зачисление" Or ВидПриказа = "ПК_Зачисление_Доп" Then
+        If orderType = "СправкаОбОбучении" Or orderType = "ПК_Зачисление" Or orderType = "ПК_Зачисление_Доп" Then
             If Not flagCheck Then
                 flagCheck = True
                 Return
@@ -1202,7 +1215,7 @@
 
     Sub loadDolj(FIO As ComboBox, dolj As ComboBox)
 
-        Dim quaryString As String
+        Dim queryString As String
         Dim quaryResult As Object
 
         Try
@@ -1214,9 +1227,9 @@
         End Try
 
 
-        quaryString = formOrder__loadKodDolj(FIO.SelectedItem)
+        queryString = formOrder__loadKodDolj(FIO.SelectedItem)
 
-        quaryResult = ЗагрузитьИзБазы.ЗагрузитьИзБазы(quaryString)
+        quaryResult = MainForm.mySqlConnect.loadMySqlToArray(queryString, 1)
 
         If quaryResult(0, 0).ToString = "нет записей" Or quaryResult(0, 0).ToString = "" Then
 
@@ -1232,13 +1245,13 @@
 
         End If
 
-        quaryString = formOrder__loadNameDolj(quaryResult(0, 0).ToString)
-        quaryResult = ЗагрузитьИзБазы.ЗагрузитьИзБазы(quaryString)
+        queryString = formOrder__loadNameDolj(quaryResult(0, 0).ToString)
+        quaryResult = MainForm.mySqlConnect.loadMySqlToArray(queryString, 1)
 
         If quaryResult(0, 0).ToString = "нет записей" Or quaryResult(0, 0).ToString = "" Then
 
             FIO.SelectedItem = ""
-            предупреждение.текст.Text = "Ошибка. Строка запроса " + quaryString
+            предупреждение.текст.Text = "Ошибка. Строка запроса " + queryString
             ОткрытьФорму(предупреждение)
             Return
         Else

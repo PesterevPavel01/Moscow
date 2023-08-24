@@ -2,7 +2,7 @@
 Imports System.Threading
 Public Class РедакторСлушателя
     Public Press As Boolean
-    Public СтарыйСнилс As String
+    Public oldSnils As String
     'Public prevFormSpisSlushVGr As Boolean = False
     Dim slushatel As New Slushatel
     Private Sub Сохранить_Click(sender As Object, e As EventArgs) Handles Сохранить.Click
@@ -11,7 +11,7 @@ Public Class РедакторСлушателя
         Сообщение.Visible = False
         slushatel.clearStructSlushatel()
         slushatel.structSlushatel.snils = ДобавитьРубашку.УдалитьРубашку(Снилс.Text)
-        slushatel.structSlushatel.старыйСнилс = СтарыйСнилс
+        slushatel.structSlushatel.старыйСнилс = oldSnils
         slushatel.structSlushatel.фамилия = Фамилия.Text
         slushatel.structSlushatel.имя = Имя.Text
         slushatel.structSlushatel.отчество = Отчество.Text
@@ -38,7 +38,7 @@ Public Class РедакторСлушателя
         slushatel.structSlushatel.пол = Пол.Text
         slushatel.structSlushatel.doo_vid_dok = doo_vid_dok.Text
 
-        If Not ПроверитьЗаполненностьРедСлушателя() Then
+        If Not formStudentsValidation() Then
 
             Exit Sub
 
@@ -54,28 +54,32 @@ Public Class РедакторСлушателя
 
         End If
 
-        If ЗаписьВБазу.ПроверкаСовпадений("students", "Снилс", slushatel.structSlushatel.snils) Then
+        InsertIntoDataBase.argumentClear()
+        InsertIntoDataBase.argument.nameTable = "students"
+        InsertIntoDataBase.argument.firstName = "Снилс"
+        InsertIntoDataBase.argument.firstValue = slushatel.structSlushatel.snils
+
+        If InsertIntoDataBase.checkDuplicates() Then
 
             ФормаДаНет.ShowDialog()
 
-            If Not ЗаписьВБазу.УдалитьСовпадения Then
+            If Not InsertIntoDataBase.removeDuplicates Then
 
                 Exit Sub
 
             End If
 
-            ЗаписьВБазу.УдалитьСовпадения = False
+            InsertIntoDataBase.removeDuplicates = False
 
         End If
 
-        'prevFormSpisSlushVGr = False
-        СтарыйСнилс = slushatel.structSlushatel.snils
+        oldSnils = slushatel.structSlushatel.snils
 
         If slushatel.insertSlushatelRedactor() Then
 
             Сообщение.Text = "Слушатель " & slushatel.structSlushatel.snils & " успешно зарегистрирован, дата записи: " & slushatel.structSlushatel.датаРег
             Сообщение.Visible = True
-            СтарыйСнилс = slushatel.structSlushatel.snils
+            oldSnils = slushatel.structSlushatel.snils
             Me.Text = slushatel.structSlushatel.фамилия & " " & slushatel.structSlushatel.имя & " " & slushatel.structSlushatel.отчество
 
             ИзменениеВыделеннойСтрокиВListView.ИзменениеВыделеннойСтрокиВListView("СправочникСлушатели", 1, ДобавитьРубашку.ДобавитьРубашку(slushatel.structSlushatel.snils), 2, slushatel.structSlushatel.фамилия, 3, slushatel.structSlushatel.имя, 4, slushatel.structSlushatel.отчество)
@@ -137,6 +141,7 @@ Public Class РедакторСлушателя
     End Sub
 
     Private Sub Снилс_TextChanged(sender As Object, e As EventArgs) Handles Снилс.TextChanged
+
         Dim snils As String
 
         If Not Press Then
@@ -150,7 +155,12 @@ Public Class РедакторСлушателя
         snils = УдалитьРубашку(Снилс.Text)
         If Len(snils) = 11 Then
 
-            If ЗаписьВБазу.ПроверкаСовпадений("students", "Снилс", snils) And СтарыйСнилс <> snils Then
+            InsertIntoDataBase.argumentClear()
+            InsertIntoDataBase.argument.nameTable = "students"
+            InsertIntoDataBase.argument.firstName = "Снилс"
+            InsertIntoDataBase.argument.firstValue = snils
+
+            If InsertIntoDataBase.checkDuplicates() And oldSnils <> snils Then
 
                 Снилс.BackColor = Color.Pink
             Else
@@ -268,7 +278,7 @@ Public Class РедакторСлушателя
 
         Else
 
-            СтарыйСнилс = УдалитьРубашку(ФормаСправочникСлушатели.ИнформацияОСлушателе(1, 0))
+            oldSnils = УдалитьРубашку(ФормаСправочникСлушатели.ИнформацияОСлушателе(1, 0))
             Сообщение.Visible = False
             ActiveControl = BtnFocus
 
@@ -351,10 +361,10 @@ Public Class РедакторСлушателя
 
     Private Sub РедакторСлушателя_KeyDown(sender As Object, e As KeyEventArgs) Handles Me.KeyDown
 
-        ЗакрытьEsc(Me, e.KeyCode)
+        closeEsc(Me, e.KeyCode)
         If e.KeyCode = 38 Or e.KeyCode = 40 Then
-            функционалТаб(e.KeyCode, 40)
-            перемещениеВверх(Me, e.KeyCode, 38)
+            pressTab(e.KeyCode, 40)
+            up(Me, e.KeyCode, 38)
             e.Handled = True
         End If
 

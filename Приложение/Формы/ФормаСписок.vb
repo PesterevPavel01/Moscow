@@ -1,46 +1,67 @@
-﻿Imports Org.BouncyCastle.Crypto
+﻿Imports System.IO
+Imports System.Xml
+Imports Org.BouncyCastle.Crypto
 
 Public Class ФормаСписок
+    Public currentControl As Control
+    Public headerVisible As Boolean
+    Dim queryString As String
     Public textboxName As String
     Public FormName As String
-    Public massiv
+    Public resultArray
     Public onCheckboxes As String
     Public sort As UInt16 = 0
     Public sortColumn As Integer = -1
-    Public Const PoVozr = 1
-    Public Const PoUb = 2
+    Public Const poVozr = 1
+    Public Const poUb = 2
+    Public images As imagesStruct
+    Dim path As String
 
-    Private Sub Список_Shown(sender As Object, e As EventArgs) Handles Me.Shown
+    Private Sub FormList_Shown(sender As Object, e As EventArgs) Handles Me.Shown
 
         Dim nameTbl As String
-        Dim СтрокаЗапроса As String
         Dim prikaz As String = ""
 
         ListViewСписок.Sorting = SortOrder.None
+        header.Visible = False
 
         If Strings.Left(textboxName, 7) = "CheckBox" Or textboxName = "НоваяГруппаДатаНачалаЗанятий" Or textboxName = "НоваяГруппаКонецЗанятий" Or Strings.Left(textboxName, 4) = "Дата" Or Strings.Left(textboxName, 4) = "дата" Then
             Me.Close()
         End If
 
-        СтрокаПоиска.Text = ""
+        searchValue.Text = ""
 
         nameTbl = ИдентифицироватьБазу.ИдентифицироватьБазу(textboxName)
 
-        Text = textboxName
+        If textboxName = "НомерГруппы" Then
 
-        If textboxName = "НоваяГруппаПрограмма" Or textboxName = "versProgs" Then
+            If headerVisible Then
 
-            If FormName = "НоваяГруппа" And НоваяГруппа.НоваяГруппаУровеньКвалификации.Text <> "" Then
-
-                СтрокаЗапроса = ProgrammPoUKvalifik(НоваяГруппа.НоваяГруппаУровеньКвалификации.Text)
-
-            ElseIf FormName = "РедакторГруппы" And РедакторГруппы.НоваяГруппаУровеньКвалификации.Text <> "" Then
-
-                СтрокаЗапроса = ProgrammPoUKvalifik(РедакторГруппы.НоваяГруппаУровеньКвалификации.Text)
+                header.Visible = True
+                pkOn_Click(sender, e)
 
             Else
 
-                СтрокаЗапроса = formList__loadProgramms()
+                header.Visible = False
+                loadListGroup()
+
+            End If
+
+            Return
+
+        ElseIf textboxName = "НоваяГруппаПрограмма" Or textboxName = "versProgs" Then
+
+            If FormName = "НоваяГруппа" And НоваяГруппа.НоваяГруппаУровеньКвалификации.Text <> "" Then
+
+                queryString = ProgrammPoUKvalifik(НоваяГруппа.НоваяГруппаУровеньКвалификации.Text)
+
+            ElseIf FormName = "РедакторГруппы" And РедакторГруппы.НоваяГруппаУровеньКвалификации.Text <> "" Then
+
+                queryString = ProgrammPoUKvalifik(РедакторГруппы.НоваяГруппаУровеньКвалификации.Text)
+
+            Else
+
+                queryString = formList__loadProgramms()
 
             End If
 
@@ -53,73 +74,55 @@ Public Class ФормаСписок
 
         ElseIf textboxName = "НоваяГруппаУровеньКвалификации" Then
 
-            СтрокаЗапроса = formList__loadProfLevel(nameTbl)
+            queryString = formList__loadProfLevel(nameTbl)
 
         Else
 
-            If (nameTbl = "`group`") Then
-
-                СтрокаЗапроса = formList__loadKodGroup(ААОсновная.mySqlConnect.dateToFormatMySQL(Date.Now.AddMonths(-6)))
-            Else
-
-                СтрокаЗапроса = "SELECT * FROM " & nameTbl
-
-            End If
-
-        End If
-
-        If textboxName = "ПОЗачисленииНомерГруппы" Or textboxName = "НомерГруппы" Or textboxName = "ГруппаОценочнаяВедомость" Or textboxName = "ГруппаОценкиИА" Then
-
-            СтрокаЗапроса = SQLString_loadGruppa()
+            queryString = "SELECT * FROM " & nameTbl
 
         End If
 
         If textboxName = "Ответственный" And АСформироватьПриказ.Label4.Text = "Слушатель(ФИО)" Then
 
-            СтрокаЗапроса = formList__loadOtvOrSlush(Convert.ToString(ААОсновная.prikazKodGroup))
+            queryString = formList__loadOtvOrSlush(Convert.ToString(MainForm.prikazKodGroup))
 
         End If
 
-        If СтрокаЗапроса = "SELECT * FROM " Then
+        If queryString = "SELECT * FROM " Then
 
             Return
 
         End If
 
-        massiv = ЗагрузитьИзБазы.ЗагрузитьИзБазы(СтрокаЗапроса)
+        resultArray = MainForm.mySqlConnect.loadMySqlToArray(queryString, 1)
 
-        If Not massiv(0, 0).ToString = "ошибка" Then
-
-            If textboxName = "ПОЗачисленииНомерГруппы" Or textboxName = "НомерГруппы" Or textboxName = "ГруппаОценочнаяВедомость" Or textboxName = "ГруппаОценкиИА" Then
-
-                ЗаписьВListView.ЗаписьВListView(False, False, ListViewСписок, massiv, 0, 1, 2, 3)
-                Dim QueryString As String
-                QueryString = formList__loadKodGroupPP()
-                listViewColoriz(ListViewСписок, ЗагрузитьИзБазы.ЗагрузитьИзБазы(QueryString))
-
-            ElseIf textboxName = "versProgs" Then
-
-                ЗаписьВListView.ЗаписьВListView(False, False, ListViewСписок, massiv, 0, 1, 2)
-
-            Else
-
-                ЗаписьВListView.ЗаписьВListView(False, True, ListViewСписок, massiv, 1)
-
-            End If
-
-        Else
+        If resultArray(0, 0).ToString = "ошибка" Then
 
             MsgBox("ошибка, повторите последнее действие")
             Exit Sub
 
         End If
 
+        If textboxName = "versProgs" Then
+
+            UpdateListView.updateListView(False, False, ListViewСписок, resultArray, 0, 1, 2)
+
+        Else
+
+            UpdateListView.updateListView(False, True, ListViewСписок, resultArray, 1)
+
+        End If
+
         ActiveControl = ListViewСписок
 
         Try
+
             ListViewСписок.Items(0).Selected = True
+
         Catch ex1 As Exception
+
             Exit Sub
+
         End Try
 
         If textboxName = "versProgs" And FormName = "НоваяГруппа" Then
@@ -136,7 +139,24 @@ Public Class ФормаСписок
 
 
     End Sub
-    Private Sub НаименованиеФормы(textboxName As String, prikaz As String)
+
+    Private Sub loadListGroup()
+
+        changeType()
+
+        queryString = SQLString_loadGruppa()
+
+        resultArray = MainForm.mySqlConnect.loadMySqlToArray(queryString, 1)
+
+        UpdateListView.updateListView(False, False, ListViewСписок, resultArray, 0, 1, 2, 3)
+
+        queryString = formList__loadKodGroupPP()
+
+        listViewColoriz(ListViewСписок, MainForm.mySqlConnect.loadMySqlToArray(queryString, 1))
+
+    End Sub
+
+    Private Sub updateFormName(textboxName As String, prikaz As String)
         If textboxName = "Ответственный" And АСформироватьПриказ.Label4.Text = "Слушатель(ФИО)" Then
             Me.Text = "Список слушателей группы"
         End If
@@ -198,15 +218,33 @@ Public Class ФормаСписок
 
         End If
 
-        If FormName = "ААОсновная" Then
+        If FormName = "MainForm" Then
 
-            For Each Вкладки In ААОсновная.TabControlOther.Controls
+            If currentControl.Name = "ДиректорФИО" Then
+                ind = ind.Trim
+                ind = Strings.Right(ind, 4) & " " & Strings.Left(ind, Strings.Len(ind) - 4)
 
-                For Each Элемент In Вкладки.Controls
+                If Strings.Right(Strings.Left(ind, 4), 1) = "." And Strings.Right(Strings.Left(ind, 2), 1) = "." Then
+                Else
+                    предупреждение.текст.Text = "Ошибка в ФИО"
+                    ОткрытьФорму(предупреждение)
+                    Exit Sub
+                End If
 
-                    If Элемент.Name = textboxName Then
+            End If
 
-                        If Элемент.Name = "ДиректорФИО" Then
+            currentControl.Text = ind
+            Me.Close()
+
+            Return
+
+            For Each page In MainForm.TabControlOther.Controls
+
+                For Each element In page.Controls
+
+                    If element.Name = textboxName Then
+
+                        If element.Name = "ДиректорФИО" Then
                             ind = ind.Trim
                             ind = Strings.Right(ind, 4) & " " & Strings.Left(ind, Strings.Len(ind) - 4)
 
@@ -219,7 +257,7 @@ Public Class ФормаСписок
 
                         End If
 
-                        Элемент.Text = ind
+                        element.Text = ind
                         Me.Close()
 
                         Return
@@ -265,7 +303,6 @@ Public Class ФормаСписок
                 НоваяГруппа.РегНомерСвид.Clear()
                 НоваяГруппа.НомерУд.Clear()
                 НоваяГруппа.РегНомерУд.Clear()
-                НоваяГруппа.НомерПротоколаСпецэкзамен.Clear()
             End If
 
             If (textboxName = "НоваяГруппаПрограмма") Then
@@ -291,7 +328,6 @@ Public Class ФормаСписок
                 РедакторГруппы.РегНомерСвид.Clear()
                 РедакторГруппы.НомерУд.Clear()
                 РедакторГруппы.РегНомерУд.Clear()
-                РедакторГруппы.НомерПротоколаСпецэкзамен.Clear()
 
             End If
 
@@ -326,7 +362,7 @@ Public Class ФормаСписок
 
         If FormName = "АСформироватьПриказ" Then
             If textboxName = "НомерГруппы" Then
-                ААОсновная.prikazKodGroup = ListViewСписок.SelectedItems(0).SubItems(3).Text
+                MainForm.prikazKodGroup = ListViewСписок.SelectedItems(0).SubItems(3).Text
             End If
             For Each i In АСформироватьПриказ.Controls
                 If i.Name = textboxName Then
@@ -342,7 +378,7 @@ Public Class ФормаСписок
                     End If
                     i.Text = ind
                     If i.name = "ПОЗачисленииНомерГруппы" Then
-                        проверитьГруппу()
+                        checkGroup()
                     End If
                 End If
             Next
@@ -352,33 +388,43 @@ Public Class ФормаСписок
 
     End Sub
 
-    Private Sub TextBox1_TextChanged(sender As Object, e As EventArgs) Handles СтрокаПоиска.TextChanged
-        Dim mass
+    Private Sub searchValue_TextChanged(sender As Object, e As EventArgs) Handles searchValue.TextChanged
 
-        If СтрокаПоиска.Text = "" Then
+        Dim queryString As String
 
+        If searchValue.Text = "" Then
 
             If textboxName = "ПОЗачисленииНомерГруппы" Then
-                ЗаписьВListView.ЗаписьВListView(False, True, ListViewСписок, massiv, 0)
-            Else ЗаписьВListView.ЗаписьВListView(False, True, ListViewСписок, massiv, 0)
+                UpdateListView.updateListView(False, True, ListViewСписок, resultArray, 0)
+            Else
+                FormList_Shown(sender, e)
             End If
+
         Else
-            If textboxName = "ПОЗачисленииНомерГруппы" Then
-                mass = SQLПоиск(СтрокаПоиска.Text, "`group`", "Номер", "Номер", "Номер")
-                ЗаписьВListView.ЗаписьВListView(False, True, ListViewСписок, mass, 0)
-            Else mass = Поиск.Поиск(СтрокаПоиска.Text, massiv, 1)
-                ЗаписьВListView.ЗаписьВListView(False, True, ListViewСписок, mass, 1)
-            End If
 
+            If textboxName.IndexOf("НомерГруппы") >= 0 Then
+
+                queryString = SQLString_loadGruppa(True, "Номер", searchValue.Text, True)
+                resultArray = MainForm.mySqlConnect.loadMySqlToArray(queryString, 1)
+                UpdateListView.updateListView(False, False, ListViewСписок, resultArray, 0, 1, 2, 3)
+                queryString = formList__loadKodGroupPP()
+                listViewColoriz(ListViewСписок, MainForm.mySqlConnect.loadMySqlToArray(queryString, 1))
+
+            Else resultArray = Поиск.Поиск(searchValue.Text, resultArray, 1)
+
+                UpdateListView.updateListView(False, True, ListViewСписок, resultArray, 1)
+
+            End If
 
         End If
     End Sub
 
-    Sub проверитьГруппу()
-        Dim строкаЗапроса, Слушатели
-        строкаЗапроса = formList__checkGroup(ААОсновная.prikazKodGroup)
-        Слушатели = ЗагрузитьИзБазы.ЗагрузитьИзБазы(строкаЗапроса)
-        If Слушатели(0, 0).ToString = "нет записей" Then
+    Sub checkGroup()
+
+        Dim sqlQuery, students
+        sqlQuery = formList__checkGroup(MainForm.prikazKodGroup)
+        students = MainForm.mySqlConnect.loadMySqlToArray(sqlQuery, 1)
+        If students(0, 0).ToString = "нет записей" Then
             предупреждение.текст.Text = "В выбранной группе нет слушателей"
             ОткрытьФорму(предупреждение)
             If АСформироватьПриказ.Label4.Text = "Слушатель(ФИО)" Then
@@ -391,20 +437,20 @@ Public Class ФормаСписок
 
     Private Sub ФормаСписок_KeyDown(sender As Object, e As KeyEventArgs) Handles Me.KeyDown
         Dim str As String
-        Call ЗакрытьEsc(Me, e.KeyCode)
+        Call closeEsc(Me, e.KeyCode)
         If e.KeyCode = 40 Then
             If ActiveControl.Name = "ListViewСписок" Then
                 Try
                     str = ListViewСписок.SelectedItems.Item(0).SubItems(1).Text
                 Catch ex As Exception
-                    Call функционалТаб(e.KeyCode, 40)
+                    Call pressTab(e.KeyCode, 40)
                 End Try
                 Exit Sub
-            Else Call функционалТаб(e.KeyCode, 40)
+            Else Call pressTab(e.KeyCode, 40)
             End If
         End If
 
-        функционалТаб(e.KeyCode, 39)
+        pressTab(e.KeyCode, 39)
 
         If e.KeyCode = 13 Then
             Try
@@ -420,23 +466,23 @@ Public Class ФормаСписок
 
     Private Sub ListViewСписок_ColumnClick(sender As Object, e As ColumnClickEventArgs) Handles ListViewСписок.ColumnClick
 
-        If (Me.Text = "Группа" Or Me.Text = "ГруппаНомер" Or Me.Text = "НомерГруппы") And ListViewСписок.Columns(e.Column).Text = "Номер" And ААОсновная.prikazCvalif = ААОсновная.PK Then
+        If (Me.Text = "Группа" Or Me.Text = "ГруппаНомер" Or Me.Text = "НомерГруппы") And ListViewСписок.Columns(e.Column).Text = "Номер" And MainForm.prikazCvalif = MainForm.PK Then
             If e.Column <> sortColumn Then
-                sort = PoUb
+                sort = poUb
             Else
-                If sort = PoUb Then
-                    sort = PoVozr
+                If sort = poUb Then
+                    sort = poVozr
                 Else
-                    sort = PoUb
+                    sort = poUb
                 End If
             End If
             sortColumn = e.Column
 
-            Список_Shown(sender, e)
+            FormList_Shown(sender, e)
 
-            Dim QueryString As String
-            QueryString = formList__loadKodGroupPP()
-            listViewColoriz(ListViewСписок, ЗагрузитьИзБазы.ЗагрузитьИзБазы(QueryString))
+            Dim sqlQuery As String
+            sqlQuery = formList__loadKodGroupPP()
+            listViewColoriz(ListViewСписок, MainForm.mySqlConnect.loadMySqlToArray(sqlQuery, 1))
 
             Return
 
@@ -475,6 +521,9 @@ Public Class ФормаСписок
             ListViewСписок.Columns.RemoveAt(2)
         End If
 
+        headerVisible = False
+        header.Visible = False
+
     End Sub
 
     Private Sub SelectedRow(numberColumns As Int16, value As String)
@@ -487,4 +536,68 @@ Public Class ФормаСписок
         Next
 
     End Sub
+
+    Private Sub ФормаСписок_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+        path = Вспомогательный.resourcesPath + "images//"
+        images.PK = Image.FromFile(path + "PK.png")
+        images.PP = Image.FromFile(path + "PP.png")
+        images.PO = Image.FromFile(path + "PO.png")
+        images.PKGreen = Image.FromFile(path + "PKGreen.png")
+        images.PPGreen = Image.FromFile(path + "PPGreen.png")
+        images.POGreen = Image.FromFile(path + "POGreen.png")
+
+    End Sub
+
+    Private Sub changeType()
+
+        Select Case images.activType
+            Case 0
+                ppOn.Image = images.PP
+                poOn.Image = images.PO
+                pkOn.Image = images.PKGreen
+            Case 1
+                pkOn.Image = images.PK
+                ppOn.Image = images.PPGreen
+                poOn.Image = images.PO
+            Case 2
+                pkOn.Image = images.PK
+                ppOn.Image = images.PP
+                poOn.Image = images.POGreen
+        End Select
+
+    End Sub
+
+    Private Sub pkOn_Click(sender As Object, e As EventArgs) Handles pkOn.Click
+        images.activType = 0
+        MainForm.prikazCvalif = MainForm.PK
+        loadListGroup()
+    End Sub
+
+    Private Sub poOn_Click(sender As Object, e As EventArgs) Handles poOn.Click
+        images.activType = 2
+        MainForm.prikazCvalif = MainForm.PO
+        loadListGroup()
+    End Sub
+
+    Private Sub ppOn_Click(sender As Object, e As EventArgs) Handles ppOn.Click
+        images.activType = 1
+        MainForm.prikazCvalif = MainForm.PP
+        loadListGroup()
+    End Sub
+
 End Class
+
+Public Structure imagesStruct
+
+    Dim PK As Image
+    Dim PP As Image
+    Dim PO As Image
+    Dim PKGreen As Image
+    Dim PPGreen As Image
+    Dim POGreen As Image
+    Dim activType As Int16
+
+End Structure
+
+

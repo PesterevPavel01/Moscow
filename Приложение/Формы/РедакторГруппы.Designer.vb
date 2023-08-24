@@ -56,11 +56,6 @@ Partial Class РедакторГруппы
         Me.GroupBox3 = New System.Windows.Forms.GroupBox()
         Me.GroupBox7 = New System.Windows.Forms.GroupBox()
         Me.GroupBox8 = New System.Windows.Forms.GroupBox()
-        Me.ДатаСпецэкзамен = New System.Windows.Forms.DateTimePicker()
-        Me.НомерПротоколаСпецэкзамен = New System.Windows.Forms.TextBox()
-        Me.Label32 = New System.Windows.Forms.Label()
-        Me.Label33 = New System.Windows.Forms.Label()
-        Me.GroupBox5 = New System.Windows.Forms.GroupBox()
         Me.Label31 = New System.Windows.Forms.Label()
         Me.ДатаВСвид = New System.Windows.Forms.DateTimePicker()
         Me.РегНомерСвид = New System.Windows.Forms.TextBox()
@@ -413,50 +408,6 @@ Partial Class РедакторГруппы
         Me.GroupBox8.Size = New System.Drawing.Size(893, 10)
         Me.GroupBox8.TabIndex = 127
         Me.GroupBox8.TabStop = False
-        '
-        'ДатаСпецэкзамен
-        '
-        Me.ДатаСпецэкзамен.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
-        Me.ДатаСпецэкзамен.Location = New System.Drawing.Point(337, 535)
-        Me.ДатаСпецэкзамен.Name = "ДатаСпецэкзамен"
-        Me.ДатаСпецэкзамен.Size = New System.Drawing.Size(546, 20)
-        Me.ДатаСпецэкзамен.TabIndex = 21
-        Me.ДатаСпецэкзамен.Value = New Date(1753, 1, 1, 0, 0, 0, 0)
-        '
-        'НомерПротоколаСпецэкзамен
-        '
-        Me.НомерПротоколаСпецэкзамен.Location = New System.Drawing.Point(337, 514)
-        Me.НомерПротоколаСпецэкзамен.Name = "НомерПротоколаСпецэкзамен"
-        Me.НомерПротоколаСпецэкзамен.Size = New System.Drawing.Size(546, 20)
-        Me.НомерПротоколаСпецэкзамен.TabIndex = 20
-        '
-        'Label32
-        '
-        Me.Label32.AutoSize = True
-        Me.Label32.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.Label32.Location = New System.Drawing.Point(12, 537)
-        Me.Label32.Name = "Label32"
-        Me.Label32.Size = New System.Drawing.Size(146, 18)
-        Me.Label32.TabIndex = 164
-        Me.Label32.Text = "Дата спецэкзамена"
-        '
-        'Label33
-        '
-        Me.Label33.AutoSize = True
-        Me.Label33.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.Label33.Location = New System.Drawing.Point(12, 516)
-        Me.Label33.Name = "Label33"
-        Me.Label33.Size = New System.Drawing.Size(237, 18)
-        Me.Label33.TabIndex = 163
-        Me.Label33.Text = "Номер протокола спецэкзамена"
-        '
-        'GroupBox5
-        '
-        Me.GroupBox5.Location = New System.Drawing.Point(2, 553)
-        Me.GroupBox5.Name = "GroupBox5"
-        Me.GroupBox5.Size = New System.Drawing.Size(893, 10)
-        Me.GroupBox5.TabIndex = 165
-        Me.GroupBox5.TabStop = False
         '
         'Label31
         '
@@ -879,11 +830,6 @@ Partial Class РедакторГруппы
         Me.Controls.Add(Me.НоваяГруппаПрограмма)
         Me.Controls.Add(Me.НоваяГруппаФормаОбучения)
         Me.Controls.Add(Me.НоваяГруппаУровеньКвалификации)
-        Me.Controls.Add(Me.ДатаСпецэкзамен)
-        Me.Controls.Add(Me.НомерПротоколаСпецэкзамен)
-        Me.Controls.Add(Me.Label32)
-        Me.Controls.Add(Me.Label33)
-        Me.Controls.Add(Me.GroupBox5)
         Me.Controls.Add(Me.Label31)
         Me.Controls.Add(Me.ДатаВСвид)
         Me.Controls.Add(Me.РегНомерСвид)
@@ -981,11 +927,6 @@ Partial Class РедакторГруппы
     Friend WithEvents GroupBox3 As GroupBox
     Friend WithEvents GroupBox7 As GroupBox
     Friend WithEvents GroupBox8 As GroupBox
-    Friend WithEvents ДатаСпецэкзамен As DateTimePicker
-    Friend WithEvents НомерПротоколаСпецэкзамен As TextBox
-    Friend WithEvents Label32 As Label
-    Friend WithEvents Label33 As Label
-    Friend WithEvents GroupBox5 As GroupBox
     Friend WithEvents Label31 As Label
     Friend WithEvents ДатаВСвид As DateTimePicker
     Friend WithEvents РегНомерСвид As TextBox

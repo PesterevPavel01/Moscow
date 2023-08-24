@@ -22,16 +22,16 @@ Public Class СписокСлушателейВГруппе
         Dim argument
         ReDim argument(2)
         argument(0) = СправочникГруппы.kod
-        argument(1) = ААОсновная.mySqlConnect.mySqlSettings
+        argument(1) = MainForm.mySqlConnect.mySqlSettings
 
         secondThread = New Thread(AddressOf studentListInGroup)
         secondThread.IsBackground = True
         secondThread.Start(argument)
 
-        ActiveControl = ListViewСписокСлушателей
+        ActiveControl = ListViewStudentsList
 
         Try
-            ListViewСписокСлушателей.Items(0).Selected = True
+            ListViewStudentsList.Items(0).Selected = True
         Catch ex1 As Exception
             ActiveControl = ДобавитьВГруппу
             Exit Sub
@@ -50,7 +50,7 @@ Public Class СписокСлушателейВГруппе
 
         queryStr = studentList__studentListInGroup(argument(0))
 
-        studentList = mySqlConn.ЗагрузитьИзБДMySQLвМассив(queryStr, 1)
+        studentList = mySqlConn.loadMySqlToArray(queryStr, 1)
 
         If studentList(0, 0) = "Нет записей" Then
 
@@ -62,7 +62,7 @@ Public Class СписокСлушателейВГруппе
 
         ReDim params(7)
         params(0) = Me
-        params(1) = ListViewСписокСлушателей
+        params(1) = ListViewStudentsList
         params(2) = ДобавитьРубашку.ДобавитьРубашкуВМассив(studentList, 0)
         params(3) = 0
         params(4) = 1
@@ -70,7 +70,7 @@ Public Class СписокСлушателейВГруппе
         params(6) = 3
         params(7) = 4
 
-        SC.Send(AddressOf ЗаписьВListView.ЗаписьВListView2Поток, params)
+        SC.Send(AddressOf UpdateListView.ЗаписьВListView2Поток, params)
 
     End Sub
 
@@ -82,11 +82,11 @@ Public Class СписокСлушателейВГруппе
 
     End Sub
 
-    Private Sub ListViewСписокСлушателей_KeyDown(sender As Object, e As KeyEventArgs) Handles ListViewСписокСлушателей.KeyDown
+    Private Sub ListViewСписокСлушателей_KeyDown(sender As Object, e As KeyEventArgs) Handles ListViewStudentsList.KeyDown
 
-        If e.KeyCode = 46 Then
+        If e.KeyCode = Keys.Delete Then
 
-            ФормаДаНетУдалить.текстДаНет.Text = "Вы хотите удалить слушателя " + ListViewСписокСлушателей.SelectedItems.Item(0).SubItems(2).Text + " из группы?"
+            ФормаДаНетУдалить.текстДаНет.Text = "Вы хотите удалить слушателя " + ListViewStudentsList.SelectedItems.Item(0).SubItems(2).Text + " из группы?"
 
             ФормаДаНетУдалить.ShowDialog()
 
@@ -103,7 +103,7 @@ Public Class СписокСлушателейВГруппе
 
             Try
 
-                snils = ListViewСписокСлушателей.SelectedItems.Item(0).SubItems(1).Text
+                snils = ListViewStudentsList.SelectedItems.Item(0).SubItems(1).Text
 
             Catch ex As Exception
 
@@ -113,9 +113,16 @@ Public Class СписокСлушателейВГруппе
 
             snils = УдалитьРубашку(snils)
 
-            If ЗаписьВБазу.ПроверкаСовпаденийЧислоДА_2("group_list", "Kod", СправочникГруппы.kod, "Слушатель", snils) = 2 Then
-                ЗаписьВБазу.УдалитьЗаписиСЧислом("group_list", "Kod", СправочникГруппы.kod, "Слушатель", snils)
-                ЗаполнитьФормуССлушВГруппе.ЗаполнитьФормуССлушВГруппе(СправочникГруппы.kod)
+            InsertIntoDataBase.argumentClear()
+            InsertIntoDataBase.argument.nameTable = "group_list"
+            InsertIntoDataBase.argument.firstName = "Kod"
+            InsertIntoDataBase.argument.firstValue = СправочникГруппы.kod
+            InsertIntoDataBase.argument.secondName = "students"
+            InsertIntoDataBase.argument.secondValue = snils
+
+            If InsertIntoDataBase.checkUniq_No2() = 2 Then
+                InsertIntoDataBase.deleteFromDB_NumberArg()
+                ЗаполнитьФормуССлушВГруппе.updateFormStudentsList(СправочникГруппы.kod)
             End If
 
 
@@ -126,22 +133,22 @@ Public Class СписокСлушателейВГруппе
     End Sub
 
 
-    Private Sub ListViewСписокСлушателей_DoubleClick(sender As Object, e As EventArgs) Handles ListViewСписокСлушателей.DoubleClick
+    Private Sub ListViewСписокСлушателей_DoubleClick(sender As Object, e As EventArgs) Handles ListViewStudentsList.DoubleClick
 
         Dim queryString As String
         Dim snils As String
 
         Try
 
-            If Not ListViewСписокСлушателей.SelectedItems.Item(0).SubItems(1).Text = "удалено" Then
+            If Not ListViewStudentsList.SelectedItems.Item(0).SubItems(1).Text = "удалено" Then
 
-                snils = ДобавитьРубашку.УдалитьРубашку(ListViewСписокСлушателей.SelectedItems.Item(0).SubItems(1).Text)
+                snils = ДобавитьРубашку.УдалитьРубашку(ListViewStudentsList.SelectedItems.Item(0).SubItems(1).Text)
 
-                РедакторСлушателя.Text = ListViewСписокСлушателей.SelectedItems.Item(0).SubItems(2).Text & " " & ListViewСписокСлушателей.SelectedItems.Item(0).SubItems(3).Text & " " & ListViewСписокСлушателей.SelectedItems.Item(0).SubItems(4).Text & " "
+                РедакторСлушателя.Text = ListViewStudentsList.SelectedItems.Item(0).SubItems(2).Text & " " & ListViewStudentsList.SelectedItems.Item(0).SubItems(3).Text & " " & ListViewStudentsList.SelectedItems.Item(0).SubItems(4).Text & " "
 
                 queryString = load_slushatel(snils)
 
-                ФормаСправочникСлушатели.ИнформацияОСлушателе = УбратьПустотыВМассиве.УбратьПустотыВМассиве(ААОсновная.mySqlConnect.ЗагрузитьИзБДMySQLвМассив(queryString, 1))
+                ФормаСправочникСлушатели.ИнформацияОСлушателе = УбратьПустотыВМассиве.УбратьПустотыВМассиве(MainForm.mySqlConnect.loadMySqlToArray(queryString, 1))
 
                 '                РедакторСлушателя.prevFormSpisSlushVGr = True
 
@@ -158,7 +165,7 @@ Public Class СписокСлушателейВГруппе
 
     End Sub
 
-    Private Sub ListViewСписокСлушателей_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ListViewСписокСлушателей.SelectedIndexChanged
+    Private Sub ListViewСписокСлушателей_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ListViewStudentsList.SelectedIndexChanged
 
     End Sub
 
@@ -170,34 +177,34 @@ Public Class СписокСлушателейВГруппе
     End Sub
 
     Private Sub ДобавитьВГруппу_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs) Handles ДобавитьВГруппу.PreviewKeyDown
-        функционалТаб(e.KeyCode, 39)
+        pressTab(e.KeyCode, 39)
     End Sub
 
     Private Sub ДобавитьВгруппуНового_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs) Handles ДобавитьВгруппуНового.PreviewKeyDown
-        функционалТаб(e.KeyCode, 39)
+        pressTab(e.KeyCode, 39)
     End Sub
 
     Private Sub Прочее_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs) Handles Прочее.PreviewKeyDown
-        функционалТаб(e.KeyCode, 39)
+        pressTab(e.KeyCode, 39)
     End Sub
 
-    Private Sub ListViewСписокСлушателей_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs) Handles ListViewСписокСлушателей.PreviewKeyDown
-        функционалТаб(e.KeyCode, 39)
+    Private Sub ListViewСписокСлушателей_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs) Handles ListViewStudentsList.PreviewKeyDown
+        pressTab(e.KeyCode, 39)
     End Sub
 
     Private Sub SplitContainer1_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs) Handles SplitContainer1.PreviewKeyDown
-        функционалТаб(e.KeyCode, 39)
+        pressTab(e.KeyCode, 39)
     End Sub
 
     Private Sub SplitContainer2_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs) Handles SplitContainer2.PreviewKeyDown
-        функционалТаб(e.KeyCode, 39)
+        pressTab(e.KeyCode, 39)
     End Sub
 
     Private Sub SplitContainer3_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs) Handles SplitContainer3.PreviewKeyDown
-        функционалТаб(e.KeyCode, 39)
+        pressTab(e.KeyCode, 39)
     End Sub
 
     Private Sub СписокСлушателейВГруппе_KeyDown(sender As Object, e As KeyEventArgs) Handles MyBase.KeyDown
-        ЗакрытьEsc(Me, e.KeyCode)
+        closeEsc(Me, e.KeyCode)
     End Sub
 End Class

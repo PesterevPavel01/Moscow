@@ -11,6 +11,9 @@
         ФормаСписок.ListViewСписок.Columns.Add("Код", 100)
         ФормаСписок.textboxName = sender.Name
         ФормаСписок.FormName = Me.Name
+
+        ФормаСписок.headerVisible = True
+
         ФормаСписок.ShowDialog()
         ФормаСписок.ListViewСписок.Columns.RemoveAt(1)
         ФормаСписок.ListViewСписок.Columns.RemoveAt(2)
@@ -32,12 +35,21 @@
 
         End If
 
+        sumLectures.Clear()
+        sumPracticals.Clear()
+        sumStimul.Clear()
+        sumConsultations.Clear()
+        sumPA.Clear()
+        sumIA.Clear()
+        sumResult.Clear()
+
+
         pednagr__mainTable.Rows.Clear()
         infoDataTable = New DataTable()
 
         queryString = pednagruzka__load(Convert.ToString(kodGroup))
 
-        resultList = ЗагрузитьИзБазы.ЗагрузитьИзБазы(QueryString)
+        resultList = MainForm.mySqlConnect.loadMySqlToArray(queryString, 1)
 
         If resultList(0, 0).ToString = "нет записей" Then
 
@@ -60,7 +72,7 @@
 
         queryString = pednagruzka__loadProgramm(Convert.ToString(kodGroup))
 
-        infoDataTable = ААОсновная.mySqlConnect.ЗагрузитьИзMySQLвDataTable(queryString, 1)
+        infoDataTable = MainForm.mySqlConnect.mySqlToDataTable(queryString, 1)
         pednagr__infoTable.DataSource = infoDataTable
 
         pednagr__resizeInfoTables()
@@ -89,13 +101,13 @@
             Exit Sub
         End If
 
-        ИтогоЛекции.Text = СуммаЗначенийВСтолбце(pednagr__mainTable, 1)
-        ИтогоПрактические.Text = СуммаЗначенийВСтолбце(pednagr__mainTable, 2)
-        ИтогоСтимулирующие.Text = СуммаЗначенийВСтолбце(pednagr__mainTable, 3)
-        ИтогоКонсультация.Text = СуммаЗначенийВСтолбце(pednagr__mainTable, 4)
-        ИтогоИА.Text = СуммаЗначенийВСтолбце(pednagr__mainTable, 6)
-        ИтогоПА.Text = СуммаЗначенийВСтолбце(pednagr__mainTable, 5)
-        ИтогоИтого.Text = СуммаЗначенийВСтолбце(pednagr__mainTable, 7)
+        sumLectures.Text = СуммаЗначенийВСтолбце(pednagr__mainTable, 1)
+        sumPracticals.Text = СуммаЗначенийВСтолбце(pednagr__mainTable, 2)
+        sumStimul.Text = СуммаЗначенийВСтолбце(pednagr__mainTable, 3)
+        sumConsultations.Text = СуммаЗначенийВСтолбце(pednagr__mainTable, 4)
+        sumIA.Text = СуммаЗначенийВСтолбце(pednagr__mainTable, 6)
+        sumPA.Text = СуммаЗначенийВСтолбце(pednagr__mainTable, 5)
+        sumResult.Text = СуммаЗначенийВСтолбце(pednagr__mainTable, 7)
         Dim count As Integer
         Dim счетчикСтрок As Integer = 0
         For Each строка In pednagr__mainTable.Rows
@@ -149,7 +161,7 @@
     End Sub
 
     Private Sub ВедомостьПеднагрузка_KeyDown(sender As Object, e As KeyEventArgs) Handles Me.KeyDown
-        ЗакрытьEsc(Me, e.KeyCode)
+        closeEsc(Me, e.KeyCode)
     End Sub
 
     Private Sub pednagr__splitContainerMain_SplitterMoved(sender As Object, e As SplitterEventArgs) Handles pednagr__splitContainerMain.SplitterMoved

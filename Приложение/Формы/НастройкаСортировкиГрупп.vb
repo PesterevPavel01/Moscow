@@ -1,23 +1,23 @@
-﻿Public Class НастройкаСортировкиГрупп
+﻿Public Class sortSetts
 
     Public НажатПБГр As Boolean = False
 
     Private Sub Программа_CheckedChanged(sender As Object, e As EventArgs) Handles Программа.CheckedChanged
 
-        Интерфейс.ЧекбоксПоведение(Me, Программа)
+        Интерфейс.checkBoxReaction(Me, Программа)
 
     End Sub
 
     Private Sub Спец_CheckedChanged(sender As Object, e As EventArgs) Handles Спец.CheckedChanged
 
-        Интерфейс.ЧекбоксПоведение(Me, Спец)
+        Интерфейс.checkBoxReaction(Me, Спец)
 
     End Sub
 
 
     Private Sub Номер_CheckedChanged(sender As Object, e As EventArgs) Handles Номер.CheckedChanged
 
-        Интерфейс.ЧекбоксПоведение(Me, Номер)
+        Интерфейс.checkBoxReaction(Me, Номер)
 
     End Sub
 
@@ -46,12 +46,12 @@
 
     Private Sub НастройкаСортировкиГрупп_Closed(sender As Object, e As EventArgs) Handles Me.Closed
 
-        СправочникГруппы.ПоискПоСтрокеПоиска()
+        СправочникГруппы.search()
 
     End Sub
 
     Private Sub Куратор_CheckedChanged(sender As Object, e As EventArgs) Handles Куратор.CheckedChanged
-        Интерфейс.ЧекбоксПоведение(Me, Куратор)
+        Интерфейс.checkBoxReaction(Me, Куратор)
     End Sub
 
     Public Sub checkedAnyValue(value As String)

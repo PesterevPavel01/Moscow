@@ -40,13 +40,13 @@
 
         If schet3 = 1 Then
             ReDim ChMass(UBound(mass, 1), schet3 - 1)
-            ЗаписьВListView.массивПуст = False
+            UpdateListView.arrayEmpty = False
         ElseIf schet3 = 0 Then
             ReDim ChMass(1, 1)
             ChMass(0, 0) = "нет записей"
-            ЗаписьВListView.массивПуст = True
+            UpdateListView.arrayEmpty = True
         Else ReDim ChMass(UBound(mass, 1), schet3 - 1)
-            ЗаписьВListView.массивПуст = False
+            UpdateListView.arrayEmpty = False
         End If
 
         schet3 = 0

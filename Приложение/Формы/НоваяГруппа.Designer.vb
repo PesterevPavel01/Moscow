@@ -75,11 +75,6 @@ Partial Class НоваяГруппа
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
         Me.GroupBox3 = New System.Windows.Forms.GroupBox()
         Me.GroupBox4 = New System.Windows.Forms.GroupBox()
-        Me.ДатаСпецэкзамен = New System.Windows.Forms.DateTimePicker()
-        Me.НомерПротоколаСпецэкзамен = New System.Windows.Forms.TextBox()
-        Me.Label32 = New System.Windows.Forms.Label()
-        Me.Label33 = New System.Windows.Forms.Label()
-        Me.GroupBox5 = New System.Windows.Forms.GroupBox()
         Me.GroupBox6 = New System.Windows.Forms.GroupBox()
         Me.GroupBox7 = New System.Windows.Forms.GroupBox()
         Me.GroupBox8 = New System.Windows.Forms.GroupBox()
@@ -109,10 +104,11 @@ Partial Class НоваяГруппа
         '
         Me.Сохранить.BackColor = System.Drawing.SystemColors.MenuBar
         Me.Сохранить.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.Сохранить.Location = New System.Drawing.Point(202, 823)
+        Me.Сохранить.Location = New System.Drawing.Point(272, 980)
+        Me.Сохранить.Margin = New System.Windows.Forms.Padding(5, 4, 5, 4)
         Me.Сохранить.Name = "Сохранить"
-        Me.Сохранить.Size = New System.Drawing.Size(681, 34)
-        Me.Сохранить.TabIndex = 34
+        Me.Сохранить.Size = New System.Drawing.Size(907, 41)
+        Me.Сохранить.TabIndex = 33
         Me.Сохранить.Text = "Сохранить"
         Me.Сохранить.UseVisualStyleBackColor = False
         '
@@ -120,7 +116,8 @@ Partial Class НоваяГруппа
         '
         Me.Label9.AutoSize = True
         Me.Label9.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.Label9.Location = New System.Drawing.Point(12, 249)
+        Me.Label9.Location = New System.Drawing.Point(16, 317)
+        Me.Label9.Margin = New System.Windows.Forms.Padding(5, 0, 5, 0)
         Me.Label9.Name = "Label9"
         Me.Label9.Size = New System.Drawing.Size(202, 18)
         Me.Label9.TabIndex = 38
@@ -130,7 +127,8 @@ Partial Class НоваяГруппа
         '
         Me.Label8.AutoSize = True
         Me.Label8.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.Label8.Location = New System.Drawing.Point(12, 229)
+        Me.Label8.Location = New System.Drawing.Point(16, 291)
+        Me.Label8.Margin = New System.Windows.Forms.Padding(5, 0, 5, 0)
         Me.Label8.Name = "Label8"
         Me.Label8.Size = New System.Drawing.Size(175, 18)
         Me.Label8.TabIndex = 37
@@ -140,7 +138,8 @@ Partial Class НоваяГруппа
         '
         Me.Label7.AutoSize = True
         Me.Label7.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.Label7.Location = New System.Drawing.Point(12, 207)
+        Me.Label7.Location = New System.Drawing.Point(16, 265)
+        Me.Label7.Margin = New System.Windows.Forms.Padding(5, 0, 5, 0)
         Me.Label7.Name = "Label7"
         Me.Label7.Size = New System.Drawing.Size(137, 18)
         Me.Label7.TabIndex = 36
@@ -150,7 +149,8 @@ Partial Class НоваяГруппа
         '
         Me.Label6.AutoSize = True
         Me.Label6.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.Label6.Location = New System.Drawing.Point(12, 183)
+        Me.Label6.Location = New System.Drawing.Point(16, 236)
+        Me.Label6.Margin = New System.Windows.Forms.Padding(5, 0, 5, 0)
         Me.Label6.Name = "Label6"
         Me.Label6.Size = New System.Drawing.Size(116, 18)
         Me.Label6.TabIndex = 35
@@ -160,7 +160,8 @@ Partial Class НоваяГруппа
         '
         Me.Label5.AutoSize = True
         Me.Label5.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.Label5.Location = New System.Drawing.Point(12, 161)
+        Me.Label5.Location = New System.Drawing.Point(16, 209)
+        Me.Label5.Margin = New System.Windows.Forms.Padding(5, 0, 5, 0)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(88, 18)
         Me.Label5.TabIndex = 33
@@ -170,7 +171,8 @@ Partial Class НоваяГруппа
         '
         Me.Label4.AutoSize = True
         Me.Label4.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.Label4.Location = New System.Drawing.Point(12, 108)
+        Me.Label4.Location = New System.Drawing.Point(16, 143)
+        Me.Label4.Margin = New System.Windows.Forms.Padding(5, 0, 5, 0)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(180, 18)
         Me.Label4.TabIndex = 29
@@ -179,9 +181,10 @@ Partial Class НоваяГруппа
         'НоваяГруппаКонецЗанятий
         '
         Me.НоваяГруппаКонецЗанятий.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
-        Me.НоваяГруппаКонецЗанятий.Location = New System.Drawing.Point(337, 106)
+        Me.НоваяГруппаКонецЗанятий.Location = New System.Drawing.Point(450, 140)
+        Me.НоваяГруппаКонецЗанятий.Margin = New System.Windows.Forms.Padding(5, 4, 5, 4)
         Me.НоваяГруппаКонецЗанятий.Name = "НоваяГруппаКонецЗанятий"
-        Me.НоваяГруппаКонецЗанятий.Size = New System.Drawing.Size(546, 20)
+        Me.НоваяГруппаКонецЗанятий.Size = New System.Drawing.Size(729, 22)
         Me.НоваяГруппаКонецЗанятий.TabIndex = 4
         Me.НоваяГруппаКонецЗанятий.Value = New Date(1753, 1, 1, 0, 0, 0, 0)
         '
@@ -189,7 +192,8 @@ Partial Class НоваяГруппа
         '
         Me.Label3.AutoSize = True
         Me.Label3.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.Label3.Location = New System.Drawing.Point(12, 86)
+        Me.Label3.Location = New System.Drawing.Point(16, 115)
+        Me.Label3.Margin = New System.Windows.Forms.Padding(5, 0, 5, 0)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(155, 18)
         Me.Label3.TabIndex = 29
@@ -199,7 +203,8 @@ Partial Class НоваяГруппа
         '
         Me.Label2.AutoSize = True
         Me.Label2.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.Label2.Location = New System.Drawing.Point(12, 56)
+        Me.Label2.Location = New System.Drawing.Point(16, 83)
+        Me.Label2.Margin = New System.Windows.Forms.Padding(5, 0, 5, 0)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(126, 18)
         Me.Label2.TabIndex = 29
@@ -209,7 +214,8 @@ Partial Class НоваяГруппа
         '
         Me.Label1.AutoSize = True
         Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.Label1.Location = New System.Drawing.Point(12, 34)
+        Me.Label1.Location = New System.Drawing.Point(16, 55)
+        Me.Label1.Margin = New System.Windows.Forms.Padding(5, 0, 5, 0)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(55, 18)
         Me.Label1.TabIndex = 29
@@ -217,16 +223,18 @@ Partial Class НоваяГруппа
         '
         'НоваяГруппаНомер
         '
-        Me.НоваяГруппаНомер.Location = New System.Drawing.Point(337, 32)
+        Me.НоваяГруппаНомер.Location = New System.Drawing.Point(450, 49)
+        Me.НоваяГруппаНомер.Margin = New System.Windows.Forms.Padding(5, 4, 5, 4)
         Me.НоваяГруппаНомер.Name = "НоваяГруппаНомер"
-        Me.НоваяГруппаНомер.Size = New System.Drawing.Size(546, 20)
+        Me.НоваяГруппаНомер.Size = New System.Drawing.Size(729, 22)
         Me.НоваяГруппаНомер.TabIndex = 1
         '
         'LabelМодуль10
         '
         Me.LabelМодуль10.AutoSize = True
         Me.LabelМодуль10.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.LabelМодуль10.Location = New System.Drawing.Point(12, 742)
+        Me.LabelМодуль10.Location = New System.Drawing.Point(16, 862)
+        Me.LabelМодуль10.Margin = New System.Windows.Forms.Padding(5, 0, 5, 0)
         Me.LabelМодуль10.Name = "LabelМодуль10"
         Me.LabelМодуль10.Size = New System.Drawing.Size(83, 18)
         Me.LabelМодуль10.TabIndex = 29
@@ -236,7 +244,8 @@ Partial Class НоваяГруппа
         '
         Me.LabelМодуль9.AutoSize = True
         Me.LabelМодуль9.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.LabelМодуль9.Location = New System.Drawing.Point(12, 721)
+        Me.LabelМодуль9.Location = New System.Drawing.Point(16, 836)
+        Me.LabelМодуль9.Margin = New System.Windows.Forms.Padding(5, 0, 5, 0)
         Me.LabelМодуль9.Name = "LabelМодуль9"
         Me.LabelМодуль9.Size = New System.Drawing.Size(75, 18)
         Me.LabelМодуль9.TabIndex = 29
@@ -246,7 +255,8 @@ Partial Class НоваяГруппа
         '
         Me.LabelМодуль8.AutoSize = True
         Me.LabelМодуль8.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.LabelМодуль8.Location = New System.Drawing.Point(12, 700)
+        Me.LabelМодуль8.Location = New System.Drawing.Point(16, 809)
+        Me.LabelМодуль8.Margin = New System.Windows.Forms.Padding(5, 0, 5, 0)
         Me.LabelМодуль8.Name = "LabelМодуль8"
         Me.LabelМодуль8.Size = New System.Drawing.Size(75, 18)
         Me.LabelМодуль8.TabIndex = 29
@@ -256,7 +266,8 @@ Partial Class НоваяГруппа
         '
         Me.LabelМодуль7.AutoSize = True
         Me.LabelМодуль7.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.LabelМодуль7.Location = New System.Drawing.Point(12, 679)
+        Me.LabelМодуль7.Location = New System.Drawing.Point(16, 784)
+        Me.LabelМодуль7.Margin = New System.Windows.Forms.Padding(5, 0, 5, 0)
         Me.LabelМодуль7.Name = "LabelМодуль7"
         Me.LabelМодуль7.Size = New System.Drawing.Size(75, 18)
         Me.LabelМодуль7.TabIndex = 29
@@ -266,7 +277,8 @@ Partial Class НоваяГруппа
         '
         Me.LabelМодуль6.AutoSize = True
         Me.LabelМодуль6.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.LabelМодуль6.Location = New System.Drawing.Point(12, 658)
+        Me.LabelМодуль6.Location = New System.Drawing.Point(16, 757)
+        Me.LabelМодуль6.Margin = New System.Windows.Forms.Padding(5, 0, 5, 0)
         Me.LabelМодуль6.Name = "LabelМодуль6"
         Me.LabelМодуль6.Size = New System.Drawing.Size(75, 18)
         Me.LabelМодуль6.TabIndex = 49
@@ -276,7 +288,8 @@ Partial Class НоваяГруппа
         '
         Me.LabelМодуль5.AutoSize = True
         Me.LabelМодуль5.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.LabelМодуль5.Location = New System.Drawing.Point(12, 637)
+        Me.LabelМодуль5.Location = New System.Drawing.Point(16, 732)
+        Me.LabelМодуль5.Margin = New System.Windows.Forms.Padding(5, 0, 5, 0)
         Me.LabelМодуль5.Name = "LabelМодуль5"
         Me.LabelМодуль5.Size = New System.Drawing.Size(75, 18)
         Me.LabelМодуль5.TabIndex = 48
@@ -286,7 +299,8 @@ Partial Class НоваяГруппа
         '
         Me.LabelМодуль4.AutoSize = True
         Me.LabelМодуль4.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.LabelМодуль4.Location = New System.Drawing.Point(12, 616)
+        Me.LabelМодуль4.Location = New System.Drawing.Point(16, 707)
+        Me.LabelМодуль4.Margin = New System.Windows.Forms.Padding(5, 0, 5, 0)
         Me.LabelМодуль4.Name = "LabelМодуль4"
         Me.LabelМодуль4.Size = New System.Drawing.Size(75, 18)
         Me.LabelМодуль4.TabIndex = 47
@@ -296,10 +310,11 @@ Partial Class НоваяГруппа
         '
         Me.Очистить.BackColor = System.Drawing.SystemColors.MenuBar
         Me.Очистить.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.Очистить.Location = New System.Drawing.Point(5, 823)
+        Me.Очистить.Location = New System.Drawing.Point(10, 980)
+        Me.Очистить.Margin = New System.Windows.Forms.Padding(5, 4, 5, 4)
         Me.Очистить.Name = "Очистить"
-        Me.Очистить.Size = New System.Drawing.Size(198, 34)
-        Me.Очистить.TabIndex = 35
+        Me.Очистить.Size = New System.Drawing.Size(264, 41)
+        Me.Очистить.TabIndex = 34
         Me.Очистить.Text = "Очистить"
         Me.Очистить.UseVisualStyleBackColor = False
         '
@@ -307,18 +322,20 @@ Partial Class НоваяГруппа
         '
         Me.Сообщение.AutoSize = True
         Me.Сообщение.ForeColor = System.Drawing.SystemColors.MenuHighlight
-        Me.Сообщение.Location = New System.Drawing.Point(12, 1)
+        Me.Сообщение.Location = New System.Drawing.Point(16, -1)
+        Me.Сообщение.Margin = New System.Windows.Forms.Padding(5, 0, 5, 0)
         Me.Сообщение.Name = "Сообщение"
-        Me.Сообщение.Size = New System.Drawing.Size(45, 13)
+        Me.Сообщение.Size = New System.Drawing.Size(55, 16)
         Me.Сообщение.TabIndex = 29
         Me.Сообщение.Text = "Label20"
         Me.Сообщение.Visible = False
         '
         'BtnFocus
         '
-        Me.BtnFocus.Location = New System.Drawing.Point(202, 46)
+        Me.BtnFocus.Location = New System.Drawing.Point(267, 66)
+        Me.BtnFocus.Margin = New System.Windows.Forms.Padding(5, 4, 5, 4)
         Me.BtnFocus.Name = "BtnFocus"
-        Me.BtnFocus.Size = New System.Drawing.Size(75, 23)
+        Me.BtnFocus.Size = New System.Drawing.Size(101, 28)
         Me.BtnFocus.TabIndex = 66
         Me.BtnFocus.Text = "Button1"
         Me.BtnFocus.UseVisualStyleBackColor = True
@@ -328,7 +345,8 @@ Partial Class НоваяГруппа
         '
         Me.Label20.AutoSize = True
         Me.Label20.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.Label20.Location = New System.Drawing.Point(12, 14)
+        Me.Label20.Location = New System.Drawing.Point(16, 27)
+        Me.Label20.Margin = New System.Windows.Forms.Padding(5, 0, 5, 0)
         Me.Label20.Name = "Label20"
         Me.Label20.Size = New System.Drawing.Size(173, 18)
         Me.Label20.TabIndex = 28
@@ -338,7 +356,8 @@ Partial Class НоваяГруппа
         '
         Me.LabelФинансирование.AutoSize = True
         Me.LabelФинансирование.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.LabelФинансирование.Location = New System.Drawing.Point(12, 782)
+        Me.LabelФинансирование.Location = New System.Drawing.Point(16, 913)
+        Me.LabelФинансирование.Margin = New System.Windows.Forms.Padding(5, 0, 5, 0)
         Me.LabelФинансирование.Name = "LabelФинансирование"
         Me.LabelФинансирование.Size = New System.Drawing.Size(126, 18)
         Me.LabelФинансирование.TabIndex = 27
@@ -348,7 +367,8 @@ Partial Class НоваяГруппа
         '
         Me.Label21.AutoSize = True
         Me.Label21.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.Label21.Location = New System.Drawing.Point(12, 139)
+        Me.Label21.Location = New System.Drawing.Point(16, 181)
+        Me.Label21.Margin = New System.Windows.Forms.Padding(5, 0, 5, 0)
         Me.Label21.Name = "Label21"
         Me.Label21.Size = New System.Drawing.Size(158, 18)
         Me.Label21.TabIndex = 29
@@ -356,16 +376,18 @@ Partial Class НоваяГруппа
         '
         'НоваяГруппаНомерПротоколаИА
         '
-        Me.НоваяГруппаНомерПротоколаИА.Location = New System.Drawing.Point(337, 137)
+        Me.НоваяГруппаНомерПротоколаИА.Location = New System.Drawing.Point(450, 177)
+        Me.НоваяГруппаНомерПротоколаИА.Margin = New System.Windows.Forms.Padding(5, 4, 5, 4)
         Me.НоваяГруппаНомерПротоколаИА.Name = "НоваяГруппаНомерПротоколаИА"
-        Me.НоваяГруппаНомерПротоколаИА.Size = New System.Drawing.Size(546, 20)
+        Me.НоваяГруппаНомерПротоколаИА.Size = New System.Drawing.Size(729, 22)
         Me.НоваяГруппаНомерПротоколаИА.TabIndex = 5
         '
         'LabelМодуль1
         '
         Me.LabelМодуль1.AutoSize = True
         Me.LabelМодуль1.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.LabelМодуль1.Location = New System.Drawing.Point(12, 553)
+        Me.LabelМодуль1.Location = New System.Drawing.Point(16, 628)
+        Me.LabelМодуль1.Margin = New System.Windows.Forms.Padding(5, 0, 5, 0)
         Me.LabelМодуль1.Name = "LabelМодуль1"
         Me.LabelМодуль1.Size = New System.Drawing.Size(75, 18)
         Me.LabelМодуль1.TabIndex = 44
@@ -375,7 +397,8 @@ Partial Class НоваяГруппа
         '
         Me.LabelМодуль2.AutoSize = True
         Me.LabelМодуль2.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.LabelМодуль2.Location = New System.Drawing.Point(12, 574)
+        Me.LabelМодуль2.Location = New System.Drawing.Point(16, 655)
+        Me.LabelМодуль2.Margin = New System.Windows.Forms.Padding(5, 0, 5, 0)
         Me.LabelМодуль2.Name = "LabelМодуль2"
         Me.LabelМодуль2.Size = New System.Drawing.Size(75, 18)
         Me.LabelМодуль2.TabIndex = 45
@@ -385,7 +408,8 @@ Partial Class НоваяГруппа
         '
         Me.LabelМодуль3.AutoSize = True
         Me.LabelМодуль3.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.LabelМодуль3.Location = New System.Drawing.Point(12, 595)
+        Me.LabelМодуль3.Location = New System.Drawing.Point(16, 680)
+        Me.LabelМодуль3.Margin = New System.Windows.Forms.Padding(5, 0, 5, 0)
         Me.LabelМодуль3.Name = "LabelМодуль3"
         Me.LabelМодуль3.Size = New System.Drawing.Size(75, 18)
         Me.LabelМодуль3.TabIndex = 46
@@ -393,16 +417,18 @@ Partial Class НоваяГруппа
         '
         'РегНомерУд
         '
-        Me.РегНомерУд.Location = New System.Drawing.Point(337, 299)
+        Me.РегНомерУд.Location = New System.Drawing.Point(450, 377)
+        Me.РегНомерУд.Margin = New System.Windows.Forms.Padding(5, 4, 5, 4)
         Me.РегНомерУд.Name = "РегНомерУд"
-        Me.РегНомерУд.Size = New System.Drawing.Size(546, 20)
-        Me.РегНомерУд.TabIndex = 12
+        Me.РегНомерУд.Size = New System.Drawing.Size(729, 22)
+        Me.РегНомерУд.TabIndex = 13
         '
         'Label22
         '
         Me.Label22.AutoSize = True
         Me.Label22.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.Label22.Location = New System.Drawing.Point(12, 325)
+        Me.Label22.Location = New System.Drawing.Point(16, 410)
+        Me.Label22.Margin = New System.Windows.Forms.Padding(5, 0, 5, 0)
         Me.Label22.Name = "Label22"
         Me.Label22.Size = New System.Drawing.Size(208, 18)
         Me.Label22.TabIndex = 72
@@ -412,7 +438,8 @@ Partial Class НоваяГруппа
         '
         Me.Label23.AutoSize = True
         Me.Label23.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.Label23.Location = New System.Drawing.Point(12, 303)
+        Me.Label23.Location = New System.Drawing.Point(16, 383)
+        Me.Label23.Margin = New System.Windows.Forms.Padding(5, 0, 5, 0)
         Me.Label23.Name = "Label23"
         Me.Label23.Size = New System.Drawing.Size(288, 18)
         Me.Label23.TabIndex = 71
@@ -422,7 +449,8 @@ Partial Class НоваяГруппа
         '
         Me.Label24.AutoSize = True
         Me.Label24.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.Label24.Location = New System.Drawing.Point(12, 279)
+        Me.Label24.Location = New System.Drawing.Point(16, 354)
+        Me.Label24.Margin = New System.Windows.Forms.Padding(5, 0, 5, 0)
         Me.Label24.Name = "Label24"
         Me.Label24.Size = New System.Drawing.Size(220, 18)
         Me.Label24.TabIndex = 70
@@ -430,23 +458,26 @@ Partial Class НоваяГруппа
         '
         'РегНомерДиплома
         '
-        Me.РегНомерДиплома.Location = New System.Drawing.Point(337, 374)
+        Me.РегНомерДиплома.Location = New System.Drawing.Point(450, 470)
+        Me.РегНомерДиплома.Margin = New System.Windows.Forms.Padding(5, 4, 5, 4)
         Me.РегНомерДиплома.Name = "РегНомерДиплома"
-        Me.РегНомерДиплома.Size = New System.Drawing.Size(546, 20)
-        Me.РегНомерДиплома.TabIndex = 15
+        Me.РегНомерДиплома.Size = New System.Drawing.Size(729, 22)
+        Me.РегНомерДиплома.TabIndex = 16
         '
         'НомерДиплома
         '
-        Me.НомерДиплома.Location = New System.Drawing.Point(337, 352)
+        Me.НомерДиплома.Location = New System.Drawing.Point(450, 444)
+        Me.НомерДиплома.Margin = New System.Windows.Forms.Padding(5, 4, 5, 4)
         Me.НомерДиплома.Name = "НомерДиплома"
-        Me.НомерДиплома.Size = New System.Drawing.Size(546, 20)
-        Me.НомерДиплома.TabIndex = 14
+        Me.НомерДиплома.Size = New System.Drawing.Size(729, 22)
+        Me.НомерДиплома.TabIndex = 15
         '
         'Label25
         '
         Me.Label25.AutoSize = True
         Me.Label25.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.Label25.Location = New System.Drawing.Point(12, 471)
+        Me.Label25.Location = New System.Drawing.Point(16, 590)
+        Me.Label25.Margin = New System.Windows.Forms.Padding(5, 0, 5, 0)
         Me.Label25.Name = "Label25"
         Me.Label25.Size = New System.Drawing.Size(207, 18)
         Me.Label25.TabIndex = 78
@@ -456,7 +487,8 @@ Partial Class НоваяГруппа
         '
         Me.Label26.AutoSize = True
         Me.Label26.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.Label26.Location = New System.Drawing.Point(12, 450)
+        Me.Label26.Location = New System.Drawing.Point(16, 563)
+        Me.Label26.Margin = New System.Windows.Forms.Padding(5, 0, 5, 0)
         Me.Label26.Name = "Label26"
         Me.Label26.Size = New System.Drawing.Size(287, 18)
         Me.Label26.TabIndex = 77
@@ -466,7 +498,8 @@ Partial Class НоваяГруппа
         '
         Me.Label27.AutoSize = True
         Me.Label27.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.Label27.Location = New System.Drawing.Point(12, 428)
+        Me.Label27.Location = New System.Drawing.Point(16, 535)
+        Me.Label27.Margin = New System.Windows.Forms.Padding(5, 0, 5, 0)
         Me.Label27.Name = "Label27"
         Me.Label27.Size = New System.Drawing.Size(219, 18)
         Me.Label27.TabIndex = 76
@@ -474,23 +507,26 @@ Partial Class НоваяГруппа
         '
         'РегНомерСвид
         '
-        Me.РегНомерСвид.Location = New System.Drawing.Point(337, 448)
+        Me.РегНомерСвид.Location = New System.Drawing.Point(450, 562)
+        Me.РегНомерСвид.Margin = New System.Windows.Forms.Padding(5, 4, 5, 4)
         Me.РегНомерСвид.Name = "РегНомерСвид"
-        Me.РегНомерСвид.Size = New System.Drawing.Size(546, 20)
-        Me.РегНомерСвид.TabIndex = 18
+        Me.РегНомерСвид.Size = New System.Drawing.Size(729, 22)
+        Me.РегНомерСвид.TabIndex = 19
         '
         'НомерСвид
         '
-        Me.НомерСвид.Location = New System.Drawing.Point(337, 426)
+        Me.НомерСвид.Location = New System.Drawing.Point(450, 536)
+        Me.НомерСвид.Margin = New System.Windows.Forms.Padding(5, 4, 5, 4)
         Me.НомерСвид.Name = "НомерСвид"
-        Me.НомерСвид.Size = New System.Drawing.Size(546, 20)
-        Me.НомерСвид.TabIndex = 17
+        Me.НомерСвид.Size = New System.Drawing.Size(729, 22)
+        Me.НомерСвид.TabIndex = 18
         '
         'Label28
         '
         Me.Label28.AutoSize = True
         Me.Label28.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.Label28.Location = New System.Drawing.Point(12, 398)
+        Me.Label28.Location = New System.Drawing.Point(16, 499)
+        Me.Label28.Margin = New System.Windows.Forms.Padding(5, 0, 5, 0)
         Me.Label28.Name = "Label28"
         Me.Label28.Size = New System.Drawing.Size(165, 18)
         Me.Label28.TabIndex = 84
@@ -500,7 +536,8 @@ Partial Class НоваяГруппа
         '
         Me.Label29.AutoSize = True
         Me.Label29.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.Label29.Location = New System.Drawing.Point(12, 376)
+        Me.Label29.Location = New System.Drawing.Point(16, 471)
+        Me.Label29.Margin = New System.Windows.Forms.Padding(5, 0, 5, 0)
         Me.Label29.Name = "Label29"
         Me.Label29.Size = New System.Drawing.Size(245, 18)
         Me.Label29.TabIndex = 83
@@ -510,7 +547,8 @@ Partial Class НоваяГруппа
         '
         Me.Label30.AutoSize = True
         Me.Label30.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.Label30.Location = New System.Drawing.Point(12, 354)
+        Me.Label30.Location = New System.Drawing.Point(16, 446)
+        Me.Label30.Margin = New System.Windows.Forms.Padding(5, 0, 5, 0)
         Me.Label30.Name = "Label30"
         Me.Label30.Size = New System.Drawing.Size(177, 18)
         Me.Label30.TabIndex = 82
@@ -519,42 +557,47 @@ Partial Class НоваяГруппа
         'ДатаВыдачиУд
         '
         Me.ДатаВыдачиУд.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
-        Me.ДатаВыдачиУд.Location = New System.Drawing.Point(337, 321)
+        Me.ДатаВыдачиУд.Location = New System.Drawing.Point(450, 403)
+        Me.ДатаВыдачиУд.Margin = New System.Windows.Forms.Padding(5, 4, 5, 4)
         Me.ДатаВыдачиУд.Name = "ДатаВыдачиУд"
-        Me.ДатаВыдачиУд.Size = New System.Drawing.Size(546, 20)
-        Me.ДатаВыдачиУд.TabIndex = 13
+        Me.ДатаВыдачиУд.Size = New System.Drawing.Size(729, 22)
+        Me.ДатаВыдачиУд.TabIndex = 14
         Me.ДатаВыдачиУд.Value = New Date(1753, 1, 1, 0, 0, 0, 0)
         '
         'ДатаВДиплома
         '
         Me.ДатаВДиплома.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
-        Me.ДатаВДиплома.Location = New System.Drawing.Point(337, 396)
+        Me.ДатаВДиплома.Location = New System.Drawing.Point(450, 496)
+        Me.ДатаВДиплома.Margin = New System.Windows.Forms.Padding(5, 4, 5, 4)
         Me.ДатаВДиплома.Name = "ДатаВДиплома"
-        Me.ДатаВДиплома.Size = New System.Drawing.Size(546, 20)
-        Me.ДатаВДиплома.TabIndex = 16
+        Me.ДатаВДиплома.Size = New System.Drawing.Size(729, 22)
+        Me.ДатаВДиплома.TabIndex = 17
         Me.ДатаВДиплома.Value = New Date(1753, 1, 1, 0, 0, 0, 0)
         '
         'ДатаВСвид
         '
         Me.ДатаВСвид.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
-        Me.ДатаВСвид.Location = New System.Drawing.Point(337, 469)
+        Me.ДатаВСвид.Location = New System.Drawing.Point(450, 588)
+        Me.ДатаВСвид.Margin = New System.Windows.Forms.Padding(5, 4, 5, 4)
         Me.ДатаВСвид.Name = "ДатаВСвид"
-        Me.ДатаВСвид.Size = New System.Drawing.Size(546, 20)
-        Me.ДатаВСвид.TabIndex = 19
+        Me.ДатаВСвид.Size = New System.Drawing.Size(729, 22)
+        Me.ДатаВСвид.TabIndex = 20
         Me.ДатаВСвид.Value = New Date(1753, 1, 1, 0, 0, 0, 0)
         '
         'НомерУд
         '
-        Me.НомерУд.Location = New System.Drawing.Point(337, 277)
+        Me.НомерУд.Location = New System.Drawing.Point(450, 351)
+        Me.НомерУд.Margin = New System.Windows.Forms.Padding(5, 4, 5, 4)
         Me.НомерУд.Name = "НомерУд"
-        Me.НомерУд.Size = New System.Drawing.Size(546, 20)
-        Me.НомерУд.TabIndex = 11
+        Me.НомерУд.Size = New System.Drawing.Size(729, 22)
+        Me.НомерУд.TabIndex = 12
         '
         'Label31
         '
         Me.Label31.AutoSize = True
         Me.Label31.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.Label31.Location = New System.Drawing.Point(12, 803)
+        Me.Label31.Location = New System.Drawing.Point(16, 938)
+        Me.Label31.Margin = New System.Windows.Forms.Padding(5, 0, 5, 0)
         Me.Label31.Name = "Label31"
         Me.Label31.Size = New System.Drawing.Size(112, 18)
         Me.Label31.TabIndex = 85
@@ -562,315 +605,308 @@ Partial Class НоваяГруппа
         '
         'НоваяГруппаДатаНачалаЗанятий
         '
+        Me.НоваяГруппаДатаНачалаЗанятий.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
         Me.НоваяГруппаДатаНачалаЗанятий.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
-        Me.НоваяГруппаДатаНачалаЗанятий.Location = New System.Drawing.Point(337, 84)
+        Me.НоваяГруппаДатаНачалаЗанятий.Location = New System.Drawing.Point(450, 114)
+        Me.НоваяГруппаДатаНачалаЗанятий.Margin = New System.Windows.Forms.Padding(5, 4, 5, 4)
         Me.НоваяГруппаДатаНачалаЗанятий.Name = "НоваяГруппаДатаНачалаЗанятий"
-        Me.НоваяГруппаДатаНачалаЗанятий.Size = New System.Drawing.Size(546, 20)
+        Me.НоваяГруппаДатаНачалаЗанятий.Size = New System.Drawing.Size(729, 22)
         Me.НоваяГруппаДатаНачалаЗанятий.TabIndex = 3
         Me.НоваяГруппаДатаНачалаЗанятий.Value = New Date(1753, 1, 1, 0, 0, 0, 0)
         '
         'GroupBox1
         '
-        Me.GroupBox1.Location = New System.Drawing.Point(2, 265)
+        Me.GroupBox1.Location = New System.Drawing.Point(5, 334)
+        Me.GroupBox1.Margin = New System.Windows.Forms.Padding(5, 4, 5, 4)
         Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(893, 10)
+        Me.GroupBox1.Padding = New System.Windows.Forms.Padding(5, 4, 5, 4)
+        Me.GroupBox1.Size = New System.Drawing.Size(1191, 12)
         Me.GroupBox1.TabIndex = 86
         Me.GroupBox1.TabStop = False
         '
         'GroupBox2
         '
-        Me.GroupBox2.Location = New System.Drawing.Point(2, 339)
+        Me.GroupBox2.Location = New System.Drawing.Point(7, 425)
+        Me.GroupBox2.Margin = New System.Windows.Forms.Padding(5, 4, 5, 4)
         Me.GroupBox2.Name = "GroupBox2"
-        Me.GroupBox2.Size = New System.Drawing.Size(893, 10)
+        Me.GroupBox2.Padding = New System.Windows.Forms.Padding(5, 4, 5, 4)
+        Me.GroupBox2.Size = New System.Drawing.Size(1191, 12)
         Me.GroupBox2.TabIndex = 87
         Me.GroupBox2.TabStop = False
         '
         'GroupBox3
         '
-        Me.GroupBox3.Location = New System.Drawing.Point(2, 414)
+        Me.GroupBox3.Location = New System.Drawing.Point(5, 519)
+        Me.GroupBox3.Margin = New System.Windows.Forms.Padding(5, 4, 5, 4)
         Me.GroupBox3.Name = "GroupBox3"
-        Me.GroupBox3.Size = New System.Drawing.Size(893, 10)
+        Me.GroupBox3.Padding = New System.Windows.Forms.Padding(5, 4, 5, 4)
+        Me.GroupBox3.Size = New System.Drawing.Size(1191, 12)
         Me.GroupBox3.TabIndex = 88
         Me.GroupBox3.TabStop = False
         '
         'GroupBox4
         '
-        Me.GroupBox4.Location = New System.Drawing.Point(2, 487)
+        Me.GroupBox4.Location = New System.Drawing.Point(5, 610)
+        Me.GroupBox4.Margin = New System.Windows.Forms.Padding(5, 4, 5, 4)
         Me.GroupBox4.Name = "GroupBox4"
-        Me.GroupBox4.Size = New System.Drawing.Size(893, 10)
+        Me.GroupBox4.Padding = New System.Windows.Forms.Padding(5, 4, 5, 4)
+        Me.GroupBox4.Size = New System.Drawing.Size(1191, 12)
         Me.GroupBox4.TabIndex = 89
         Me.GroupBox4.TabStop = False
         '
-        'ДатаСпецэкзамен
-        '
-        Me.ДатаСпецэкзамен.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
-        Me.ДатаСпецэкзамен.Location = New System.Drawing.Point(337, 521)
-        Me.ДатаСпецэкзамен.Name = "ДатаСпецэкзамен"
-        Me.ДатаСпецэкзамен.Size = New System.Drawing.Size(546, 20)
-        Me.ДатаСпецэкзамен.TabIndex = 21
-        Me.ДатаСпецэкзамен.Value = New Date(1753, 1, 1, 0, 0, 0, 0)
-        '
-        'НомерПротоколаСпецэкзамен
-        '
-        Me.НомерПротоколаСпецэкзамен.Location = New System.Drawing.Point(337, 500)
-        Me.НомерПротоколаСпецэкзамен.Name = "НомерПротоколаСпецэкзамен"
-        Me.НомерПротоколаСпецэкзамен.Size = New System.Drawing.Size(546, 20)
-        Me.НомерПротоколаСпецэкзамен.TabIndex = 20
-        '
-        'Label32
-        '
-        Me.Label32.AutoSize = True
-        Me.Label32.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.Label32.Location = New System.Drawing.Point(12, 523)
-        Me.Label32.Name = "Label32"
-        Me.Label32.Size = New System.Drawing.Size(146, 18)
-        Me.Label32.TabIndex = 93
-        Me.Label32.Text = "Дата спецэкзамена"
-        '
-        'Label33
-        '
-        Me.Label33.AutoSize = True
-        Me.Label33.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.Label33.Location = New System.Drawing.Point(12, 502)
-        Me.Label33.Name = "Label33"
-        Me.Label33.Size = New System.Drawing.Size(237, 18)
-        Me.Label33.TabIndex = 92
-        Me.Label33.Text = "Номер протокола спецэкзамена"
-        '
-        'GroupBox5
-        '
-        Me.GroupBox5.Location = New System.Drawing.Point(2, 539)
-        Me.GroupBox5.Name = "GroupBox5"
-        Me.GroupBox5.Size = New System.Drawing.Size(893, 10)
-        Me.GroupBox5.TabIndex = 94
-        Me.GroupBox5.TabStop = False
-        '
         'GroupBox6
         '
-        Me.GroupBox6.Location = New System.Drawing.Point(2, 764)
+        Me.GroupBox6.Location = New System.Drawing.Point(5, 895)
+        Me.GroupBox6.Margin = New System.Windows.Forms.Padding(5, 4, 5, 4)
         Me.GroupBox6.Name = "GroupBox6"
-        Me.GroupBox6.Size = New System.Drawing.Size(893, 10)
+        Me.GroupBox6.Padding = New System.Windows.Forms.Padding(5, 4, 5, 4)
+        Me.GroupBox6.Size = New System.Drawing.Size(1191, 12)
         Me.GroupBox6.TabIndex = 95
         Me.GroupBox6.TabStop = False
         '
         'GroupBox7
         '
-        Me.GroupBox7.Location = New System.Drawing.Point(2, 124)
+        Me.GroupBox7.Location = New System.Drawing.Point(5, 162)
+        Me.GroupBox7.Margin = New System.Windows.Forms.Padding(5, 4, 5, 4)
         Me.GroupBox7.Name = "GroupBox7"
-        Me.GroupBox7.Size = New System.Drawing.Size(893, 10)
+        Me.GroupBox7.Padding = New System.Windows.Forms.Padding(5, 4, 5, 4)
+        Me.GroupBox7.Size = New System.Drawing.Size(1191, 12)
         Me.GroupBox7.TabIndex = 87
         Me.GroupBox7.TabStop = False
         '
         'GroupBox8
         '
-        Me.GroupBox8.Location = New System.Drawing.Point(2, 72)
+        Me.GroupBox8.Location = New System.Drawing.Point(5, 98)
+        Me.GroupBox8.Margin = New System.Windows.Forms.Padding(5, 4, 5, 4)
         Me.GroupBox8.Name = "GroupBox8"
-        Me.GroupBox8.Size = New System.Drawing.Size(893, 10)
+        Me.GroupBox8.Padding = New System.Windows.Forms.Padding(5, 4, 5, 4)
+        Me.GroupBox8.Size = New System.Drawing.Size(1191, 12)
         Me.GroupBox8.TabIndex = 88
         Me.GroupBox8.TabStop = False
         '
         'НоваяГруппаУровеньКвалификации
         '
         Me.НоваяГруппаУровеньКвалификации.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.НоваяГруппаУровеньКвалификации.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
         Me.НоваяГруппаУровеньКвалификации.FormattingEnabled = True
-        Me.НоваяГруппаУровеньКвалификации.ItemHeight = 13
-        Me.НоваяГруппаУровеньКвалификации.Location = New System.Drawing.Point(337, 9)
+        Me.НоваяГруппаУровеньКвалификации.ItemHeight = 16
+        Me.НоваяГруппаУровеньКвалификации.Location = New System.Drawing.Point(450, 21)
+        Me.НоваяГруппаУровеньКвалификации.Margin = New System.Windows.Forms.Padding(5, 4, 5, 4)
         Me.НоваяГруппаУровеньКвалификации.Name = "НоваяГруппаУровеньКвалификации"
-        Me.НоваяГруппаУровеньКвалификации.Size = New System.Drawing.Size(546, 21)
+        Me.НоваяГруппаУровеньКвалификации.Size = New System.Drawing.Size(729, 24)
         Me.НоваяГруппаУровеньКвалификации.TabIndex = 0
         '
         'НоваяГруппаФормаОбучения
         '
         Me.НоваяГруппаФормаОбучения.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.НоваяГруппаФормаОбучения.FormattingEnabled = True
-        Me.НоваяГруппаФормаОбучения.ItemHeight = 13
-        Me.НоваяГруппаФормаОбучения.Location = New System.Drawing.Point(337, 53)
+        Me.НоваяГруппаФормаОбучения.ItemHeight = 16
+        Me.НоваяГруппаФормаОбучения.Location = New System.Drawing.Point(450, 74)
+        Me.НоваяГруппаФормаОбучения.Margin = New System.Windows.Forms.Padding(5, 4, 5, 4)
         Me.НоваяГруппаФормаОбучения.Name = "НоваяГруппаФормаОбучения"
-        Me.НоваяГруппаФормаОбучения.Size = New System.Drawing.Size(546, 21)
+        Me.НоваяГруппаФормаОбучения.Size = New System.Drawing.Size(729, 24)
         Me.НоваяГруппаФормаОбучения.TabIndex = 2
         '
         'НоваяГруппаПрограмма
         '
         Me.НоваяГруппаПрограмма.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.НоваяГруппаПрограмма.FormattingEnabled = True
-        Me.НоваяГруппаПрограмма.ItemHeight = 13
-        Me.НоваяГруппаПрограмма.Location = New System.Drawing.Point(337, 158)
+        Me.НоваяГруппаПрограмма.ItemHeight = 16
+        Me.НоваяГруппаПрограмма.Location = New System.Drawing.Point(450, 203)
+        Me.НоваяГруппаПрограмма.Margin = New System.Windows.Forms.Padding(5, 4, 5, 4)
         Me.НоваяГруппаПрограмма.Name = "НоваяГруппаПрограмма"
-        Me.НоваяГруппаПрограмма.Size = New System.Drawing.Size(546, 21)
+        Me.НоваяГруппаПрограмма.Size = New System.Drawing.Size(729, 24)
         Me.НоваяГруппаПрограмма.TabIndex = 6
         '
         'НоваяГруппаСпециальность
         '
         Me.НоваяГруппаСпециальность.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.НоваяГруппаСпециальность.FormattingEnabled = True
-        Me.НоваяГруппаСпециальность.ItemHeight = 13
-        Me.НоваяГруппаСпециальность.Location = New System.Drawing.Point(337, 180)
+        Me.НоваяГруппаСпециальность.ItemHeight = 16
+        Me.НоваяГруппаСпециальность.Location = New System.Drawing.Point(450, 231)
+        Me.НоваяГруппаСпециальность.Margin = New System.Windows.Forms.Padding(5, 4, 5, 4)
         Me.НоваяГруппаСпециальность.Name = "НоваяГруппаСпециальность"
-        Me.НоваяГруппаСпециальность.Size = New System.Drawing.Size(546, 21)
-        Me.НоваяГруппаСпециальность.TabIndex = 7
+        Me.НоваяГруппаСпециальность.Size = New System.Drawing.Size(729, 24)
+        Me.НоваяГруппаСпециальность.TabIndex = 8
         '
         'НоваяГруппаОтветственныйКуратор
         '
         Me.НоваяГруппаОтветственныйКуратор.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.НоваяГруппаОтветственныйКуратор.FormattingEnabled = True
-        Me.НоваяГруппаОтветственныйКуратор.ItemHeight = 13
-        Me.НоваяГруппаОтветственныйКуратор.Location = New System.Drawing.Point(337, 224)
+        Me.НоваяГруппаОтветственныйКуратор.ItemHeight = 16
+        Me.НоваяГруппаОтветственныйКуратор.Location = New System.Drawing.Point(450, 285)
+        Me.НоваяГруппаОтветственныйКуратор.Margin = New System.Windows.Forms.Padding(5, 4, 5, 4)
         Me.НоваяГруппаОтветственныйКуратор.Name = "НоваяГруппаОтветственныйКуратор"
-        Me.НоваяГруппаОтветственныйКуратор.Size = New System.Drawing.Size(546, 21)
-        Me.НоваяГруппаОтветственныйКуратор.TabIndex = 9
+        Me.НоваяГруппаОтветственныйКуратор.Size = New System.Drawing.Size(729, 24)
+        Me.НоваяГруппаОтветственныйКуратор.TabIndex = 10
         '
         'НоваягруппаОтветственныйЗаПрактику
         '
         Me.НоваягруппаОтветственныйЗаПрактику.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.НоваягруппаОтветственныйЗаПрактику.FormattingEnabled = True
-        Me.НоваягруппаОтветственныйЗаПрактику.ItemHeight = 13
-        Me.НоваягруппаОтветственныйЗаПрактику.Location = New System.Drawing.Point(337, 246)
+        Me.НоваягруппаОтветственныйЗаПрактику.ItemHeight = 16
+        Me.НоваягруппаОтветственныйЗаПрактику.Location = New System.Drawing.Point(450, 313)
+        Me.НоваягруппаОтветственныйЗаПрактику.Margin = New System.Windows.Forms.Padding(5, 4, 5, 4)
         Me.НоваягруппаОтветственныйЗаПрактику.Name = "НоваягруппаОтветственныйЗаПрактику"
-        Me.НоваягруппаОтветственныйЗаПрактику.Size = New System.Drawing.Size(546, 21)
-        Me.НоваягруппаОтветственныйЗаПрактику.TabIndex = 10
+        Me.НоваягруппаОтветственныйЗаПрактику.Size = New System.Drawing.Size(729, 24)
+        Me.НоваягруппаОтветственныйЗаПрактику.TabIndex = 11
         '
         'Модуль1
         '
         Me.Модуль1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.Модуль1.FormattingEnabled = True
-        Me.Модуль1.ItemHeight = 13
-        Me.Модуль1.Location = New System.Drawing.Point(337, 549)
+        Me.Модуль1.ItemHeight = 16
+        Me.Модуль1.Location = New System.Drawing.Point(450, 629)
+        Me.Модуль1.Margin = New System.Windows.Forms.Padding(5, 4, 5, 4)
         Me.Модуль1.Name = "Модуль1"
-        Me.Модуль1.Size = New System.Drawing.Size(546, 21)
-        Me.Модуль1.TabIndex = 22
+        Me.Модуль1.Size = New System.Drawing.Size(729, 24)
+        Me.Модуль1.TabIndex = 21
         '
         'Модуль2
         '
         Me.Модуль2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.Модуль2.FormattingEnabled = True
-        Me.Модуль2.ItemHeight = 13
-        Me.Модуль2.Location = New System.Drawing.Point(337, 571)
+        Me.Модуль2.ItemHeight = 16
+        Me.Модуль2.Location = New System.Drawing.Point(450, 656)
+        Me.Модуль2.Margin = New System.Windows.Forms.Padding(5, 4, 5, 4)
         Me.Модуль2.Name = "Модуль2"
-        Me.Модуль2.Size = New System.Drawing.Size(546, 21)
-        Me.Модуль2.TabIndex = 23
+        Me.Модуль2.Size = New System.Drawing.Size(729, 24)
+        Me.Модуль2.TabIndex = 22
         '
         'Модуль3
         '
         Me.Модуль3.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.Модуль3.FormattingEnabled = True
-        Me.Модуль3.ItemHeight = 13
-        Me.Модуль3.Location = New System.Drawing.Point(337, 593)
+        Me.Модуль3.ItemHeight = 16
+        Me.Модуль3.Location = New System.Drawing.Point(450, 682)
+        Me.Модуль3.Margin = New System.Windows.Forms.Padding(5, 4, 5, 4)
         Me.Модуль3.Name = "Модуль3"
-        Me.Модуль3.Size = New System.Drawing.Size(546, 21)
-        Me.Модуль3.TabIndex = 24
+        Me.Модуль3.Size = New System.Drawing.Size(729, 24)
+        Me.Модуль3.TabIndex = 23
         '
         'Модуль4
         '
         Me.Модуль4.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.Модуль4.FormattingEnabled = True
-        Me.Модуль4.ItemHeight = 13
-        Me.Модуль4.Location = New System.Drawing.Point(337, 615)
+        Me.Модуль4.ItemHeight = 16
+        Me.Модуль4.Location = New System.Drawing.Point(450, 710)
+        Me.Модуль4.Margin = New System.Windows.Forms.Padding(5, 4, 5, 4)
         Me.Модуль4.Name = "Модуль4"
-        Me.Модуль4.Size = New System.Drawing.Size(546, 21)
-        Me.Модуль4.TabIndex = 25
+        Me.Модуль4.Size = New System.Drawing.Size(729, 24)
+        Me.Модуль4.TabIndex = 24
         '
         'Модуль5
         '
         Me.Модуль5.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.Модуль5.FormattingEnabled = True
-        Me.Модуль5.ItemHeight = 13
-        Me.Модуль5.Location = New System.Drawing.Point(337, 637)
+        Me.Модуль5.ItemHeight = 16
+        Me.Модуль5.Location = New System.Drawing.Point(450, 737)
+        Me.Модуль5.Margin = New System.Windows.Forms.Padding(5, 4, 5, 4)
         Me.Модуль5.Name = "Модуль5"
-        Me.Модуль5.Size = New System.Drawing.Size(546, 21)
-        Me.Модуль5.TabIndex = 26
+        Me.Модуль5.Size = New System.Drawing.Size(729, 24)
+        Me.Модуль5.TabIndex = 25
         '
         'Модуль6
         '
         Me.Модуль6.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.Модуль6.FormattingEnabled = True
-        Me.Модуль6.ItemHeight = 13
-        Me.Модуль6.Location = New System.Drawing.Point(337, 659)
+        Me.Модуль6.ItemHeight = 16
+        Me.Модуль6.Location = New System.Drawing.Point(450, 764)
+        Me.Модуль6.Margin = New System.Windows.Forms.Padding(5, 4, 5, 4)
         Me.Модуль6.Name = "Модуль6"
-        Me.Модуль6.Size = New System.Drawing.Size(546, 21)
-        Me.Модуль6.TabIndex = 27
+        Me.Модуль6.Size = New System.Drawing.Size(729, 24)
+        Me.Модуль6.TabIndex = 26
         '
         'Модуль7
         '
         Me.Модуль7.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.Модуль7.FormattingEnabled = True
-        Me.Модуль7.ItemHeight = 13
-        Me.Модуль7.Location = New System.Drawing.Point(337, 681)
+        Me.Модуль7.ItemHeight = 16
+        Me.Модуль7.Location = New System.Drawing.Point(450, 792)
+        Me.Модуль7.Margin = New System.Windows.Forms.Padding(5, 4, 5, 4)
         Me.Модуль7.Name = "Модуль7"
-        Me.Модуль7.Size = New System.Drawing.Size(546, 21)
-        Me.Модуль7.TabIndex = 28
+        Me.Модуль7.Size = New System.Drawing.Size(729, 24)
+        Me.Модуль7.TabIndex = 27
         '
         'Модуль8
         '
         Me.Модуль8.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.Модуль8.FormattingEnabled = True
-        Me.Модуль8.ItemHeight = 13
-        Me.Модуль8.Location = New System.Drawing.Point(337, 703)
+        Me.Модуль8.ItemHeight = 16
+        Me.Модуль8.Location = New System.Drawing.Point(450, 819)
+        Me.Модуль8.Margin = New System.Windows.Forms.Padding(5, 4, 5, 4)
         Me.Модуль8.Name = "Модуль8"
-        Me.Модуль8.Size = New System.Drawing.Size(546, 21)
-        Me.Модуль8.TabIndex = 29
+        Me.Модуль8.Size = New System.Drawing.Size(729, 24)
+        Me.Модуль8.TabIndex = 28
         '
         'Модуль9
         '
         Me.Модуль9.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.Модуль9.FormattingEnabled = True
-        Me.Модуль9.ItemHeight = 13
-        Me.Модуль9.Location = New System.Drawing.Point(337, 725)
+        Me.Модуль9.ItemHeight = 16
+        Me.Модуль9.Location = New System.Drawing.Point(450, 845)
+        Me.Модуль9.Margin = New System.Windows.Forms.Padding(5, 4, 5, 4)
         Me.Модуль9.Name = "Модуль9"
-        Me.Модуль9.Size = New System.Drawing.Size(546, 21)
-        Me.Модуль9.TabIndex = 30
+        Me.Модуль9.Size = New System.Drawing.Size(729, 24)
+        Me.Модуль9.TabIndex = 29
         '
         'Модуль10
         '
         Me.Модуль10.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.Модуль10.FormattingEnabled = True
-        Me.Модуль10.ItemHeight = 13
-        Me.Модуль10.Location = New System.Drawing.Point(337, 747)
+        Me.Модуль10.ItemHeight = 16
+        Me.Модуль10.Location = New System.Drawing.Point(450, 873)
+        Me.Модуль10.Margin = New System.Windows.Forms.Padding(5, 4, 5, 4)
         Me.Модуль10.Name = "Модуль10"
-        Me.Модуль10.Size = New System.Drawing.Size(546, 21)
-        Me.Модуль10.TabIndex = 31
+        Me.Модуль10.Size = New System.Drawing.Size(729, 24)
+        Me.Модуль10.TabIndex = 30
         '
         'НоваяГруппаФинансирование
         '
         Me.НоваяГруппаФинансирование.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.НоваяГруппаФинансирование.FormattingEnabled = True
-        Me.НоваяГруппаФинансирование.ItemHeight = 13
-        Me.НоваяГруппаФинансирование.Location = New System.Drawing.Point(337, 776)
+        Me.НоваяГруппаФинансирование.ItemHeight = 16
+        Me.НоваяГруппаФинансирование.Location = New System.Drawing.Point(450, 912)
+        Me.НоваяГруппаФинансирование.Margin = New System.Windows.Forms.Padding(5, 4, 5, 4)
         Me.НоваяГруппаФинансирование.Name = "НоваяГруппаФинансирование"
-        Me.НоваяГруппаФинансирование.Size = New System.Drawing.Size(546, 21)
-        Me.НоваяГруппаФинансирование.TabIndex = 32
+        Me.НоваяГруппаФинансирование.Size = New System.Drawing.Size(729, 24)
+        Me.НоваяГруппаФинансирование.TabIndex = 31
         '
         'Квалификация
         '
         Me.Квалификация.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.Квалификация.FormattingEnabled = True
-        Me.Квалификация.ItemHeight = 13
-        Me.Квалификация.Location = New System.Drawing.Point(337, 798)
+        Me.Квалификация.ItemHeight = 16
+        Me.Квалификация.Location = New System.Drawing.Point(450, 940)
+        Me.Квалификация.Margin = New System.Windows.Forms.Padding(5, 4, 5, 4)
         Me.Квалификация.Name = "Квалификация"
-        Me.Квалификация.Size = New System.Drawing.Size(546, 21)
-        Me.Квалификация.TabIndex = 33
+        Me.Квалификация.Size = New System.Drawing.Size(729, 24)
+        Me.Квалификация.TabIndex = 32
         '
         'versProgs
         '
-        Me.versProgs.Location = New System.Drawing.Point(227, 158)
+        Me.versProgs.Location = New System.Drawing.Point(302, 205)
+        Me.versProgs.Margin = New System.Windows.Forms.Padding(5, 4, 5, 4)
         Me.versProgs.Name = "versProgs"
-        Me.versProgs.Size = New System.Drawing.Size(104, 21)
-        Me.versProgs.TabIndex = 96
+        Me.versProgs.Size = New System.Drawing.Size(139, 25)
+        Me.versProgs.TabIndex = 7
         Me.versProgs.Text = "расширенный"
         Me.versProgs.UseVisualStyleBackColor = True
         '
         'НоваяГруппаКоличествоЧасов
         '
-        Me.НоваяГруппаКоличествоЧасов.Location = New System.Drawing.Point(337, 203)
+        Me.НоваяГруппаКоличествоЧасов.Location = New System.Drawing.Point(450, 259)
+        Me.НоваяГруппаКоличествоЧасов.Margin = New System.Windows.Forms.Padding(5, 4, 5, 4)
         Me.НоваяГруппаКоличествоЧасов.Name = "НоваяГруппаКоличествоЧасов"
         Me.НоваяГруппаКоличествоЧасов.ReadOnly = True
-        Me.НоваяГруппаКоличествоЧасов.Size = New System.Drawing.Size(546, 20)
-        Me.НоваяГруппаКоличествоЧасов.TabIndex = 97
+        Me.НоваяГруппаКоличествоЧасов.Size = New System.Drawing.Size(729, 22)
+        Me.НоваяГруппаКоличествоЧасов.TabIndex = 9
         '
         'НоваяГруппа
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(888, 862)
+        Me.ClientSize = New System.Drawing.Size(1191, 1027)
         Me.Controls.Add(Me.НоваяГруппаКоличествоЧасов)
         Me.Controls.Add(Me.versProgs)
         Me.Controls.Add(Me.Квалификация)
@@ -891,11 +927,6 @@ Partial Class НоваяГруппа
         Me.Controls.Add(Me.НоваяГруппаПрограмма)
         Me.Controls.Add(Me.НоваяГруппаФормаОбучения)
         Me.Controls.Add(Me.НоваяГруппаУровеньКвалификации)
-        Me.Controls.Add(Me.ДатаСпецэкзамен)
-        Me.Controls.Add(Me.НомерПротоколаСпецэкзамен)
-        Me.Controls.Add(Me.Label32)
-        Me.Controls.Add(Me.Label33)
-        Me.Controls.Add(Me.GroupBox5)
         Me.Controls.Add(Me.НоваяГруппаДатаНачалаЗанятий)
         Me.Controls.Add(Me.Label31)
         Me.Controls.Add(Me.ДатаВСвид)
@@ -952,8 +983,10 @@ Partial Class НоваяГруппа
         Me.Controls.Add(Me.GroupBox7)
         Me.Controls.Add(Me.GroupBox8)
         Me.Controls.Add(Me.Label20)
+        Me.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
         Me.ForeColor = System.Drawing.SystemColors.ControlText
         Me.KeyPreview = True
+        Me.Margin = New System.Windows.Forms.Padding(5, 4, 5, 4)
         Me.Name = "НоваяГруппа"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Новая Группа"
@@ -1014,11 +1047,6 @@ Partial Class НоваяГруппа
     Friend WithEvents GroupBox2 As GroupBox
     Friend WithEvents GroupBox3 As GroupBox
     Friend WithEvents GroupBox4 As GroupBox
-    Friend WithEvents ДатаСпецэкзамен As DateTimePicker
-    Friend WithEvents НомерПротоколаСпецэкзамен As TextBox
-    Friend WithEvents Label32 As Label
-    Friend WithEvents Label33 As Label
-    Friend WithEvents GroupBox5 As GroupBox
     Friend WithEvents GroupBox6 As GroupBox
     Friend WithEvents GroupBox7 As GroupBox
     Friend WithEvents GroupBox8 As GroupBox

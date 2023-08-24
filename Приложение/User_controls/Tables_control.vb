@@ -189,7 +189,7 @@ Public Class Tables_control
 
     Public Sub load_table()
 
-        result = mySQLConnector.ЗагрузитьИзMySQLвDataTable(queryString_load, 1)
+        result = mySQLConnector.mySqlToDataTable(queryString_load, 1)
 
         DataGridTablesResult.DataSource = result
 
@@ -465,7 +465,7 @@ Public Class Tables_control
 
             If programm_on Then
 
-                queryString = ААОсновная.program__sqlQueryString.programs__checkKodGrouppBusy(remove_kod)
+                queryString = MainForm.program__sqlQueryString.programs__checkKodGrouppBusy(remove_kod)
                 result = mySQLConnector.ЗагрузитьИзMySQLвОдномерныйМассив(queryString, 1, 0)
 
                 If Convert.ToInt16(result(0)) > 0 Then
@@ -477,9 +477,9 @@ Public Class Tables_control
 
             End If
 
-            queryString = ААОсновная.program__sqlQueryString.update_delete_query(programm_on, name_table, ААОсновная.comboBoxProgramms.Text, remove_kod)
+            queryString = MainForm.program__sqlQueryString.update_delete_query(programm_on, name_table, MainForm.comboBoxProgramms.Text, remove_kod)
 
-            mySQLConnector.ОтправитьВбдЗапись(queryString, 1)
+            mySQLConnector.sendQuery(queryString, 1)
 
             If redactor_element_first.Text.Trim = Convert.ToString(DataGridTablesResult.Rows(curNumber).Cells(numberElementFirst).Value) Then
 
@@ -652,15 +652,15 @@ Public Class Tables_control
 
         If programm_on Then
 
-            queryString = ААОсновная.program__sqlQueryString.update_prog_check_query(name_table, names.db_element_first, values.element_first, names.db_element_second, values.element_second, ААОсновная.comboBoxProgramms.Text)
+            queryString = MainForm.program__sqlQueryString.update_prog_check_query(name_table, names.db_element_first, values.element_first, names.db_element_second, values.element_second, MainForm.comboBoxProgramms.Text)
 
         ElseIf type_progs_on Then
 
-            queryString = ААОсновная.program__sqlQueryString.update_typeProgs_check_query(Convert.ToString(ААОсновная.program.struct_progs.program_kod), Convert.ToString(values.kod), values.element_first)
+            queryString = MainForm.program__sqlQueryString.update_typeProgs_check_query(Convert.ToString(MainForm.program.struct_progs.program_kod), Convert.ToString(values.kod), values.element_first)
 
         Else
 
-            queryString = ААОсновная.program__sqlQueryString.update_check_query(number_column, name_table, names.db_element_first, values.element_first, names.db_element_second, values.element_second)
+            queryString = MainForm.program__sqlQueryString.update_check_query(number_column, name_table, names.db_element_first, values.element_first, names.db_element_second, values.element_second)
 
         End If
 
@@ -672,19 +672,19 @@ Public Class Tables_control
 
         If programm_on Then
 
-            queryString = ААОсновная.program__sqlQueryString.update_prog_update_query(name_table, names.db_element_first, values.element_first, names.db_element_second, values.element_second, values.kod)
+            queryString = MainForm.program__sqlQueryString.update_prog_update_query(name_table, names.db_element_first, values.element_first, names.db_element_second, values.element_second, values.kod)
 
         ElseIf type_progs_on Then
 
-            queryString = ААОсновная.program__sqlQueryString.update_typeProgs_update_query(Convert.ToString(ААОсновная.program.struct_progs.program_kod), Convert.ToString(values.kod), Convert.ToString(values.element_first))
+            queryString = MainForm.program__sqlQueryString.update_typeProgs_update_query(Convert.ToString(MainForm.program.struct_progs.program_kod), Convert.ToString(values.kod), Convert.ToString(values.element_first))
 
         Else
 
-            queryString = ААОсновная.program__sqlQueryString.update_update_query(number_column, name_table, names.db_element_first, values.element_first, names.db_element_second, values.element_second, values.kod)
+            queryString = MainForm.program__sqlQueryString.update_update_query(number_column, name_table, names.db_element_first, values.element_first, names.db_element_second, values.element_second, values.kod)
 
         End If
 
-        mySQLConnector.ОтправитьВбдЗапись(queryString, 1)
+        mySQLConnector.sendQuery(queryString, 1)
 
     End Sub
 
@@ -694,7 +694,7 @@ Public Class Tables_control
 
         If programm_on Then
 
-            queryString = ААОсновная.program__sqlQueryString.update_prog_check_query(name_table, names.db_element_first, values.element_first, names.db_element_second, values.element_second, ААОсновная.comboBoxProgramms.Text)
+            queryString = MainForm.program__sqlQueryString.update_prog_check_query(name_table, names.db_element_first, values.element_first, names.db_element_second, values.element_second, MainForm.comboBoxProgramms.Text)
 
         ElseIf type_progs_on Then
 
@@ -702,7 +702,7 @@ Public Class Tables_control
 
         Else
 
-            queryString = ААОсновная.program__sqlQueryString.update_check_query(number_column, name_table, names.db_element_first, values.element_first, names.db_element_second, values.element_second)
+            queryString = MainForm.program__sqlQueryString.update_check_query(number_column, name_table, names.db_element_first, values.element_first, names.db_element_second, values.element_second)
 
         End If
 
@@ -716,23 +716,23 @@ Public Class Tables_control
 
         If programm_on Then
 
-            queryString = ААОсновная.program__sqlQueryString.update_prog_insert_query(number_column, name_table, names.db_element_first, values.element_first, names.db_element_second, values.element_second, ААОсновная.comboBoxProgramms.Text)
+            queryString = MainForm.program__sqlQueryString.update_prog_insert_query(number_column, name_table, names.db_element_first, values.element_first, names.db_element_second, values.element_second, MainForm.comboBoxProgramms.Text)
 
         Else
 
-            queryString = ААОсновная.program__sqlQueryString.update_insert_query(number_column, name_table, names.db_element_first, values.element_first, names.db_element_second, values.element_second)
+            queryString = MainForm.program__sqlQueryString.update_insert_query(number_column, name_table, names.db_element_first, values.element_first, names.db_element_second, values.element_second)
 
         End If
 
-        mySQLConnector.ОтправитьВбдЗапись(queryString, 1)
+        mySQLConnector.sendQuery(queryString, 1)
 
         If programm_on Then
 
-            queryString = ААОсновная.program__sqlQueryString.update_prog_load_kod_query(name_table, names.db_element_first, values.element_first, ААОсновная.comboBoxProgramms.Text)
+            queryString = MainForm.program__sqlQueryString.update_prog_load_kod_query(name_table, names.db_element_first, values.element_first, MainForm.comboBoxProgramms.Text)
 
         Else
 
-            queryString = ААОсновная.program__sqlQueryString.update_load_kod_query(number_column, name_table, names.db_element_first, values.element_first, names.db_element_second, values.element_second)
+            queryString = MainForm.program__sqlQueryString.update_load_kod_query(number_column, name_table, names.db_element_first, values.element_first, names.db_element_second, values.element_second)
 
         End If
 
@@ -779,7 +779,7 @@ Public Class Tables_control
 
         If programm_on Then
 
-            ААОсновная.progsIndicator.Image = ААОсновная.ImageList1.Images(9)
+            MainForm.progsIndicator.Image = MainForm.iconsList.Images(9)
 
         End If
 
@@ -791,7 +791,7 @@ Public Class Tables_control
 
         If programm_on Then
 
-            ААОсновная.progsIndicator.Image = ААОсновная.ImageList1.Images(8)
+            MainForm.progsIndicator.Image = MainForm.iconsList.Images(8)
 
         End If
 
@@ -799,8 +799,8 @@ Public Class Tables_control
 
     Private Sub response_programms()
 
-        ААОсновная.programs__loadModulsInProgramm()
-        ААОсновная.programs__tblTypeUpdateContent()
+        MainForm.programs__loadModulsInProgramm()
+        MainForm.programs__tblTypeUpdateContent()
 
     End Sub
 
@@ -879,6 +879,21 @@ Public Class Tables_control
 
         End If
 
+    End Sub
+
+    Private Sub redactor_element_second_KeyPress(sender As Object, e As KeyPressEventArgs) Handles redactor_element_second.KeyPress
+        If e.KeyChar = Convert.ToChar(Keys.Enter) Then
+
+            second_element_pressEnter(e)
+
+        ElseIf e.KeyChar = Convert.ToChar(Keys.Tab) Then
+
+
+            ActiveControl = DataGridTablesResult
+
+            e.Handled = True
+
+        End If
     End Sub
 
     'Private Sub DataGridTablesResult_CurrentCellChanged(sender As Object, e As EventArgs) Handles DataGridTablesResult.CurrentCellChanged

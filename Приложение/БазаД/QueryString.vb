@@ -470,7 +470,7 @@ Module QueryString
 
     End Function
 
-    Public Function redactorGroup__deketeGroupInGroupList(gruppaNumber As String, gruppaYearNZ As String) As String
+    Public Function redactorGroup__deleteGroupInGroupList(gruppaNumber As String, gruppaYearNZ As String) As String
 
         sqlString = " DELETE FROM group_list WHERE Kod = (SELECT Код FROM `group` WHERE Номер= " & Chr(39) & gruppaNumber & Chr(39) & " AND Year(ДатаНЗ)=" & gruppaYearNZ & " LIMIT 1)"
 
@@ -513,9 +513,17 @@ Module QueryString
 
     End Function
 
-    Public Function oVedom__checkSlush(kodGroup As String, snils As String) As String
+    Public Function oVedom__checkStudent(kodGroup As String, snils As String) As String
 
         sqlString = "SELECT group_list.students FROM group_list WHERE group_list.students = " & Chr(39) & snils & Chr(39) & " AND group_list.Kod = " & kodGroup
+
+        Return sqlString
+
+    End Function
+
+    Public Function ia__updateResult(kodGroup As String, snils As String, testVal As String, practicVal As String, resultVal As String) As String
+
+        sqlString = "UPDATE group_list SET ИАТестирование= " & Chr(39) & testVal & ",ИАПрактическиеНавыки= " & Chr(39) & practicVal & Chr(39) & ",ИАИтог= " & Chr(39) & resultVal & Chr(39) & " WHERE group_list.students = " & Chr(39) & snils & Chr(39) & "  AND group_list.Kod = " & kodGroup
 
         Return sqlString
 
@@ -744,7 +752,13 @@ Module QueryString
             Exit Sub
         End If
 
-        ЗаписьВБазу.УдалитьЗаписиСЧислом(nameTbl, massValues(0), massValues(1))
+        InsertIntoDataBase.argumentClear()
+        InsertIntoDataBase.argument.nameTable = nameTbl
+        InsertIntoDataBase.argument.firstName = massValues(0)
+        InsertIntoDataBase.argument.firstValue = Convert.ToString(massValues(1))
+
+        InsertIntoDataBase.deleteFromDB_NumberArg()
+
         fio = dataGridTbl.Rows.Count - 1
         ReDim tranzitMass(dataGridTbl.Rows.Count - 1)
 
@@ -790,8 +804,10 @@ Module QueryString
                     End If
                 End If
             Next
+
             sqlString = Strings.Left(sqlString, Strings.Len(sqlString) - 2) & ") VALUES ( " & Chr(39) & massValues(1) & Chr(39) & " , " & Strings.Left(sqlStringSecondPart, Strings.Len(sqlStringSecondPart) - 2) & ")"
-            ЗаписьВБазу.ЗаписьВБазу(sqlString)
+
+            MainForm.mySqlConnect.sendQuery(sqlString, 1)
 
         Next
 
@@ -1213,6 +1229,8 @@ Module QueryString
 
     Public Function load_spr_group(ur_kval As String, sort As String, Optional year As String = "0") As String
 
+        sort = sort.Replace("Программа", "programm.name")
+
         sqlString = ""
 
         sqlString = "SELECT
@@ -1228,7 +1246,8 @@ Module QueryString
                         `group`.kod_programm AS prog,
                         `group`.Куратор,
                         `group`.ДатаНЗ,
-                        `group`.ДатаКЗ
+                        `group`.ДатаКЗ,
+                        `group`.Спец
                       FROM `group`
                       WHERE `group`.УровеньКвалификации = '" + ur_kval + "'"
 
@@ -1247,7 +1266,9 @@ Module QueryString
 
     End Function
 
-    Public Function load_spr_group_search(ur_kval As String, sort As String, col_search As String, text As String, Optional year As String = "0") As String
+    Public Function formList__loadGroup(ur_kval As String, sort As String, col_search As String, text As String, Optional year As String = "0") As String
+
+        col_search = col_search.Replace("Программа", "programm.name")
 
         sqlString = ""
 
@@ -1255,7 +1276,7 @@ Module QueryString
                     tbl1.Код,
                     tbl1.Номер,
                     tbl1.Программа,
-                    name,
+                    Куратор,
                     tbl1.ДатаНЗ,
                     tbl1.ДатаКЗ
                     FROM
@@ -1263,29 +1284,69 @@ Module QueryString
                       Код,
                       Номер,
                       programm.name AS Программа,
-                      Куратор,
+                      sotrudnik.name As Куратор,
                       ДатаНЗ,
-                      ДатаКЗ
+                      ДатаКЗ,
+                      Спец
                     FROM `group`
                     LEFT JOIN programm
                       ON `group`.kod_programm=programm.kod
+                    LEFT JOIN
+                        sotrudnik
+                    ON Куратор=sotrudnik.kod
                     WHERE УровеньКвалификации = '" + ur_kval + "'"
 
         If year <> "0" Then
             sqlString += " AND YEAR(`group`.ДатаНЗ) = '" + year + "'"
         End If
-
-        sqlString += "AND " & col_search & " LIKE " & Chr(39) & text & "%" & Chr(39)
         sqlString += ") AS tbl1
-                    LEFT JOIN
-                    sotrudnik
-                    ON Куратор=kod
-                    ORDER BY " + sort
+                    WHERE " & col_search & " LIKE " & Chr(39) & text & "%" & Chr(39) &
+                    " ORDER BY " + sort
 
         Return sqlString
 
     End Function
 
+    Public Function load_spr_group_search(ur_kval As String, sort As String, col_search As String, text As String, Optional year As String = "0") As String
+
+        col_search = col_search.Replace("Программа", "programm.name")
+
+        sqlString = ""
+
+        sqlString = "SELECT
+                    tbl1.Код,
+                    tbl1.Номер,
+                    tbl1.Программа,
+                    Куратор,
+                    tbl1.ДатаНЗ,
+                    tbl1.ДатаКЗ
+                    FROM
+                    (SELECT
+                      Код,
+                      Номер,
+                      programm.name AS Программа,
+                      sotrudnik.name As Куратор,
+                      ДатаНЗ,
+                      ДатаКЗ,
+                      Спец
+                    FROM `group`
+                    LEFT JOIN programm
+                      ON `group`.kod_programm=programm.kod
+                    LEFT JOIN
+                        sotrudnik
+                    ON Куратор=sotrudnik.kod
+                    WHERE УровеньКвалификации = '" + ur_kval + "'"
+
+        If year <> "0" Then
+            sqlString += " AND YEAR(`group`.ДатаНЗ) = '" + year + "'"
+        End If
+        sqlString += ") AS tbl1
+                    WHERE " & col_search & " LIKE " & Chr(39) & text & "%" & Chr(39) &
+                    " ORDER BY " + sort
+
+        Return sqlString
+
+    End Function
 
     Public Function select_moduls_ocenka(kod_group As String, modul_name As String) As String
 
@@ -2215,29 +2276,33 @@ Module QueryString
 
 
 
-    Function SQLПоиск(str As String, Таблица As String, НазванияСтолбцов As String, СтолбецДляПоиска As String, СтолбецДляСортировки As String) As Object
+    Function sqlSearch(searchValue As String, nameTable As String, nameColumns As String, searchColumn As String, sortColumn As String, Optional includeUK As Boolean = False) As Object
 
         Dim ChMass As Object
         Dim Dlina As Integer
         Dim counter As Integer
-        Dlina = Len(str)
+        Dlina = Len(searchValue)
 
         counter = 0
 
-        If Таблица = "Группа" Or Таблица = "`group`" Then
+        If nameTable = "Группа" Or nameTable = "`group`" Then
 
-            sqlString = load_spr_group_search(СправочникГруппы.СГУровеньКвалификации.Text, СтолбецДляСортировки, СтолбецДляПоиска, str, СправочникГруппы.yearSpravochnikGr.Text)
+            If includeUK Then
+                sqlString = load_spr_group_search(СправочникГруппы.СГУровеньКвалификации.Text, sortColumn, searchColumn, searchValue, СправочникГруппы.yearSpravochnikGr.Text)
+            Else
+                sqlString = formList__loadGroup(СправочникГруппы.СГУровеньКвалификации.Text, sortColumn, searchColumn, searchValue, СправочникГруппы.yearSpravochnikGr.Text)
+            End If
 
         Else
 
-            sqlString = "SELECT " & НазванияСтолбцов & " FROM " & Таблица & " WHERE  (((" & СтолбецДляПоиска & ") LIKE " & Chr(39) & str & "%" & Chr(39) & " )) ORDER BY " & СтолбецДляСортировки
+            sqlString = "SELECT " & nameColumns & " FROM " & nameTable & " WHERE  (((" & searchColumn & ") LIKE " & Chr(39) & searchValue & "%" & Chr(39) & " )) ORDER BY " & sortColumn
 
         End If
 
-        ChMass = ААОсновная.mySqlConnect.ЗагрузитьИзБДMySQLвМассив(sqlString, 1)
+        ChMass = MainForm.mySqlConnect.loadMySqlToArray(sqlString, 1)
         ChMass = УбратьПустотыВМассиве.УбратьПустотыВМассиве(ChMass)
 
-        SQLПоиск = ChMass
+        sqlSearch = ChMass
 
     End Function
 
@@ -2251,34 +2316,50 @@ Module QueryString
 
     End Function
 
-    Public Function SQLString_loadGruppa()
+    Public Function SQLString_loadGruppa(Optional includeUK As Boolean = True, Optional nameSearchColumn As String = "None", Optional searchValue As String = "None", Optional valInApostrophes As Boolean = True)
 
         sqlString = ""
         sqlString = "SELECT
                       Номер,
-                      programm.name,
+                      programm.name as Программа,
                       YEAR(ДатаНЗ),
                       Код
                     FROM `group`
                     LEFT JOIN 
                     programm ON `group`.kod_programm = programm.kod
                     WHERE Номер <> ''
-                    AND ДатаКЗ >'" & ААОсновная.mySqlConnect.dateToFormatMySQL(Date.Now.AddMonths(-6)) & "'"
+                    AND ДатаКЗ >'" & MainForm.mySqlConnect.dateToFormatMySQL(Date.Now.AddMonths(-6)) & "'"
 
-        If ААОсновная.prikazCvalif = ААОсновная.PP Then
-            sqlString &= " AND УровеньКвалификации = 'профессиональная переподготовка'"
-        ElseIf ААОсновная.prikazCvalif = ААОсновная.PK Then
-            sqlString &= " AND УровеньКвалификации = 'повышение квалификации'"
-        ElseIf ААОсновная.prikazCvalif = ААОсновная.PO Then
-            sqlString &= " AND УровеньКвалификации = 'профессиональное обучение'"
-        ElseIf ААОсновная.prikazCvalif = ААОсновная.PK_PP Then
-            sqlString &= " AND (УровеньКвалификации = 'профессиональная переподготовка' OR УровеньКвалификации = 'повышение квалификации')"
+        If includeUK Then
+
+            If MainForm.prikazCvalif = MainForm.PP Then
+                sqlString &= " AND УровеньКвалификации = 'профессиональная переподготовка'"
+            ElseIf MainForm.prikazCvalif = MainForm.PK Then
+                sqlString &= " AND УровеньКвалификации = 'повышение квалификации'"
+            ElseIf MainForm.prikazCvalif = MainForm.PO Then
+                sqlString &= " AND УровеньКвалификации = 'профессиональное обучение'"
+            ElseIf MainForm.prikazCvalif = MainForm.PK_PP Then
+                sqlString &= " AND (УровеньКвалификации = 'профессиональная переподготовка' OR УровеньКвалификации = 'повышение квалификации')"
+            End If
+
         End If
+
+        If Not nameSearchColumn = "None" Then
+
+            sqlString &= " AND " + nameSearchColumn + " LIKE "
+            If valInApostrophes Then
+                sqlString += "'%" + searchValue + "%'"
+            Else
+                sqlString += searchValue
+            End If
+
+        End If
+
         If ФормаСписок.sortColumn <> -1 Then
 
-            If (ФормаСписок.ListViewСписок.Columns(ФормаСписок.sortColumn).Text = "Группа" Or ФормаСписок.ListViewСписок.Columns(ФормаСписок.sortColumn).Text = "Номер") And ААОсновная.prikazCvalif = ААОсновная.PK Then
+            If (ФормаСписок.ListViewСписок.Columns(ФормаСписок.sortColumn).Text = "Группа" Or ФормаСписок.ListViewСписок.Columns(ФормаСписок.sortColumn).Text = "Номер") And MainForm.prikazCvalif = MainForm.PK Then
                 sqlString &= " ORDER BY Номер"
-                If ФормаСписок.sort = ФормаСписок.PoUb Then
+                If ФормаСписок.sort = ФормаСписок.poUb Then
                     sqlString &= " DESC"
                 End If
             Else
@@ -2287,6 +2368,9 @@ Module QueryString
         Else
             sqlString &= " ORDER BY programm.name"
         End If
+
+
+
         Return sqlString
 
     End Function
@@ -2437,17 +2521,17 @@ Module QueryString
 
         sqlString = ""
         sqlString = "Select" +
-  " students.Фамилия," +
-  " students.Имя," +
-  " students.Отчество," +
-  " students.АРег," +
-  " students.Телефон," +
-  " students.Почта" +
-" FROM students" +
-  " INNER JOIN group_list" +
-    " On students.Снилс = group_list.students" +
-    " WHERE group_list.Kod = " & kod & "" +
-      " ORDER BY Фамилия"
+                  " students.Фамилия," +
+                  " students.Имя," +
+                  " students.Отчество," +
+                  " students.АРег," +
+                  " students.Телефон," +
+                  " students.Почта" +
+                " FROM students" +
+                  " INNER JOIN group_list" +
+                    " On students.Снилс = group_list.students" +
+                    " WHERE group_list.Kod = " & kod & "" +
+                      " ORDER BY Фамилия"
 
         Return sqlString
 
@@ -2458,26 +2542,25 @@ Module QueryString
         sqlString = ""
 
         sqlString = "SELECT" +
-  " students.Фамилия," +
-  " students.Имя," +
-  " students.Отчество," +
-  " students.ДатаРождения," +
-  " students.НаимДОО," +
-  " students.ДатаОкончанияОбразованияПоДОО," +
-  " students.СерияДОО," +
-  " students.НомерДОО" +
-" FROM students" +
-  " INNER JOIN group_list" +
-    " ON students.Снилс = group_list.students" +
-    " WHERE group_list.Kod = " & kod & "" +
-      " ORDER BY Фамилия"
+                  " students.Фамилия," +
+                  " students.Имя," +
+                  " students.Отчество," +
+                  " students.ДатаРождения," +
+                  " students.НаимДОО," +
+                  " students.ДатаОкончанияОбразованияПоДОО," +
+                  " students.СерияДОО," +
+                  " students.НомерДОО" +
+                " FROM students" +
+                  " INNER JOIN group_list" +
+                    " ON students.Снилс = group_list.students" +
+                    " WHERE group_list.Kod = " & kod & "" +
+                      " ORDER BY Фамилия"
 
         Return sqlString
 
     End Function
 
-
-    Public Function updateGroup(gruppa As Gruppa.strGruppa) As String
+    Public Function updateGroup(gruppa As Group.strGruppa) As String
 
         Dim numberHours,
             dataString,
@@ -2489,7 +2572,7 @@ Module QueryString
         sqlString = ""
         numberHours = gruppa.kolChasov
 
-        dataString = ААОсновная.mySqlConnect.dateToFormatMySQL(Date.Now.ToShortDateString)
+        dataString = MainForm.mySqlConnect.dateToFormatMySQL(Date.Now.ToShortDateString)
 
         part1 = "Номер=" & Chr(39) & gruppa.number & Chr(39) &
             ", ФормаО=" & Chr(39) & gruppa.formaObuch & Chr(39) &
@@ -2509,30 +2592,28 @@ Module QueryString
 
         part3 = ", УровеньКвалификации=" & Chr(39) & gruppa.urKvalific & Chr(39) &
             ", Финансирование=" & Chr(39) & gruppa.financir & Chr(39) &
-            ", НомерПротоколаИА=" & Chr(39) & gruppa.nomerProtIA & Chr(39) &
-            ",НомерУд=" & gruppa.NumbersUDS(0, 0) &
-            ", РегНомерУд=" & gruppa.NumbersUDS(0, 1) &
+            ", НомерПротоколаИА=" & Chr(39) & gruppa.numbersUDS.numberIA & Chr(39) &
+            ",НомерУд=" & gruppa.numbersUDS.numberUd &
+            ", РегНомерУд=" & gruppa.numbersUDS.regNumberUd &
             ",ДатаВыдачиУд=" & Chr(39) & gruppa.dataVUd & Chr(39) &
-            ",НомерДиплома=" & gruppa.NumbersUDS(0, 2) & ", РегНомерДиплома=" & gruppa.NumbersUDS(0, 3)
+            ",НомерДиплома=" & gruppa.numbersUDS.numberD & ", РегНомерДиплома=" & gruppa.numbersUDS.regNumberD
 
         part4 = ", ДатаВыдачиДиплома=" & Chr(39) & gruppa.dataVD & Chr(39) &
-            ", НомерСвид=" & gruppa.NumbersUDS(0, 4) & ", РегНомерСвид=" & gruppa.NumbersUDS(0, 5) &
+            ", НомерСвид=" & gruppa.numbersUDS.numberSv & ", РегНомерСвид=" & gruppa.numbersUDS.regNumberSv &
             ", ДатаВыдачиСвид=" & Chr(39) & gruppa.dataVSv & Chr(39) &
-            ", Квалификация=" & Chr(39) & gruppa.kvalifikaciya & Chr(39) & ", ОсновнойДокумент=" & Chr(39) & gruppa.osnovnoyDok & Chr(39) &
-            ", НомерПротоколаСпецэкзамен=" & Chr(39) & gruppa.nomerProtokolaSpec & Chr(39) &
-            ",ДатаСпецЭкзамен=" & Chr(39) & gruppa.dataSpec & Chr(39)
+            ", Квалификация=" & Chr(39) & gruppa.kvalifikaciya & Chr(39) & ", ОсновнойДокумент=" & Chr(39) & gruppa.mainDocument & Chr(39)
 
         Return "UPDATE `group` SET " & part1 & part2 & part3 & part4 & " WHERE Код =" & gruppa.Kod
 
     End Function
 
 
-    Public Function insertIntoGroup(gruppa As Gruppa.strGruppa) As String
+    Public Function insertIntoGroup(gruppa As Group.strGruppa) As String
 
         Dim numberHours, DataString, part1, part2 As String
 
         sqlString = ""
-        DataString = ААОсновная.mySqlConnect.dateToFormatMySQL(Date.Now.ToShortDateString)
+        DataString = MainForm.mySqlConnect.dateToFormatMySQL(Date.Now.ToShortDateString)
 
         If gruppa.urKvalific = "специальный экзамен" Then
             numberHours = "null"
@@ -2566,22 +2647,19 @@ Module QueryString
         part2 = part2 & " , " & Chr(39) & gruppa.urKvalific & Chr(39)
 
         part1 = part1 & "Финансирование, НомерПротоколаИА,"
-        part2 = part2 & " , " & Chr(39) & gruppa.financir & Chr(39) & " , " & Chr(39) & gruppa.nomerProtIA & Chr(39)
+        part2 = part2 & " , " & Chr(39) & gruppa.financir & Chr(39) & " , " & Chr(39) & gruppa.numbersUDS.numberIA & Chr(39)
 
         part1 = part1 & "НомерУд, РегНомерУд, ДатаВыдачиУд,"
-        part2 = part2 & " , " & gruppa.NumbersUDS(0, 0) & " , " & gruppa.NumbersUDS(0, 1) & " , " & Chr(39) & gruppa.dataVUd & Chr(39)
+        part2 = part2 & " , " & gruppa.numbersUDS.numberUd & " , " & gruppa.numbersUDS.regNumberUd & " , " & Chr(39) & gruppa.dataVUd & Chr(39)
 
         part1 = part1 & "НомерДиплома, РегНомерДиплома,ДатаВыдачиДиплома,"
-        part2 &= " , " & gruppa.NumbersUDS(0, 2) & " , " & gruppa.NumbersUDS(0, 3) & " , " & Chr(39) & gruppa.dataVD & Chr(39)
+        part2 &= " , " & gruppa.numbersUDS.numberD & " , " & gruppa.numbersUDS.regNumberD & " , " & Chr(39) & gruppa.dataVD & Chr(39)
 
         part1 = part1 & " НомерСвид,РегНомерСвид, ДатаВыдачиСвид,"
-        part2 &= " , " & gruppa.NumbersUDS(0, 4) & " , " & gruppa.NumbersUDS(0, 5) & " , " & Chr(39) & gruppa.dataVSv & Chr(39)
+        part2 &= " , " & gruppa.numbersUDS.numberSv & " , " & gruppa.numbersUDS.regNumberSv & " , " & Chr(39) & gruppa.dataVSv & Chr(39)
 
-        part1 = part1 & "Квалификация, ОсновнойДокумент,"
-        part2 &= " , " & Chr(39) & gruppa.kvalifikaciya & Chr(39) & " , " & Chr(39) & gruppa.osnovnoyDok & Chr(39)
-
-        part1 = part1 & "ДатаСпецЭкзамен,НомерПротоколаСпецэкзамен)"
-        part2 &= " , " & Chr(39) & gruppa.dataSpec & Chr(39) & " , " & Chr(39) & gruppa.nomerProtIA & Chr(39) & " )"
+        part1 = part1 & "Квалификация, ОсновнойДокумент)"
+        part2 &= " , " & Chr(39) & gruppa.kvalifikaciya & Chr(39) & " , " & Chr(39) & gruppa.mainDocument & Chr(39) + ")"
 
         sqlString = "INSERT INTO `group` " & part1 & "  VALUES " & part2
 
@@ -2597,7 +2675,7 @@ Module QueryString
             ", Фамилия=" & Chr(39) & slushatel.фамилия & Chr(39) &
             ", Имя=" & Chr(39) & slushatel.имя & Chr(39) &
             ", Отчество=" & Chr(39) & slushatel.отчество & Chr(39) &
-            ", ДатаРождения=" & Chr(39) & ААОсновная.mySqlConnect.dateToFormatMySQL(slushatel.датаР) & Chr(39) &
+            ", ДатаРождения=" & Chr(39) & MainForm.mySqlConnect.dateToFormatMySQL(slushatel.датаР) & Chr(39) &
             ", Пол=" & Chr(39) & slushatel.пол & Chr(39) &
             ", УОбразования=" & Chr(39) & slushatel.уровеньОбразования & Chr(39) &
             ", НаимДОО=" & Chr(39) & slushatel.образование & Chr(39) &
@@ -2613,13 +2691,12 @@ Module QueryString
             ",ИФин=" & Chr(39) & slushatel.источникФин & Chr(39) &
             ", НОрг=(SELECT kod FROM napr_organization WHERE name=" & Chr(39) & slushatel.направившаяОрг & Chr(39) & ")" &
             ", НомерНапрРосздрав=" & Chr(39) & slushatel.номерНаправленияРосздравнадзора & Chr(39) &
-            ", ДатаНапрРосздрав=" & Chr(39) & ААОсновная.mySqlConnect.dateToFormatMySQL(slushatel.датаНаправленияРосздравнвдзора) & Chr(39) &
+            ", ДатаНапрРосздрав=" & Chr(39) & MainForm.mySqlConnect.dateToFormatMySQL(slushatel.датаНаправленияРосздравнвдзора) & Chr(39) &
             ", Специальность=" & Chr(39) & slushatel.специальностьСлушателя & Chr(39) &
-            ", ДатаРегистрации=" & Chr(39) & ААОсновная.mySqlConnect.dateToFormatMySQL(slushatel.датаРег) & Chr(39) &
+            ", ДатаРегистрации=" & Chr(39) & MainForm.mySqlConnect.dateToFormatMySQL(slushatel.датаРег) & Chr(39) &
             ", Почта=" & Chr(39) & slushatel.Email & Chr(39) &
             ", ДУЛКемВыдан=" & Chr(39) & slushatel.кемВыданДУЛ & Chr(39) &
             ", doo_vid_dok=(SELECT kod FROM doo_vid_dok WHERE name = '" & slushatel.doo_vid_dok & "' LIMIT 1)"
-
 
 
         sqlString = "UPDATE students SET " & sqlString & " WHERE Снилс =" & Chr(39) & slushatel.старыйСнилс & Chr(39)
@@ -2642,7 +2719,7 @@ Module QueryString
         part1 = +"Фамилия, Имя, Отчество,"
         part2 = +"," & Chr(39) & slushatel.фамилия & Chr(39) & "," & Chr(39) & slushatel.имя & Chr(39) & "," & Chr(39) & slushatel.отчество & Chr(39)
         part1 = +"ДатаРождения, Пол, УОбразования,"
-        part2 = +"," & Chr(39) & ААОсновная.mySqlConnect.dateToFormatMySQL(slushatel.датаР) & Chr(39) & "," & Chr(39) & slushatel.пол & Chr(39) & "," & Chr(39) & slushatel.уровеньОбразования & Chr(39)
+        part2 = +"," & Chr(39) & MainForm.mySqlConnect.dateToFormatMySQL(slushatel.датаР) & Chr(39) & "," & Chr(39) & slushatel.пол & Chr(39) & "," & Chr(39) & slushatel.уровеньОбразования & Chr(39)
         part1 = +"НаимДОО, СерияДОО, НомерДОО,"
         part2 = +"," & Chr(39) & slushatel.образование & Chr(39) & "," & Chr(39) & slushatel.серияДокументаООбразовании & Chr(39) & "," & Chr(39) & slushatel.номерДокументаООбразовании & Chr(39) &
         part1 = +"ФамилияДОО, АРег, Телефон,"
@@ -2652,15 +2729,15 @@ Module QueryString
         part1 = +"ИФин, НОрг, НомерНапрРосздрав,"
         part2 = +"," & Chr(39) & slushatel.источникФин & Chr(39) & ",(SELECT kod FROM napr_organization WHERE name=" & Chr(39) & slushatel.направившаяОрг & Chr(39) & ") , " & Chr(39) & slushatel.номерНаправленияРосздравнадзора & Chr(39)
         part1 = +" ДатаНапрРосздрав,"
-        part2 = +" , " & Chr(39) & ААОсновная.mySqlConnect.dateToFormatMySQL(slushatel.датаНаправленияРосздравнвдзора) & Chr(39) &
+        part2 = +" , " & Chr(39) & MainForm.mySqlConnect.dateToFormatMySQL(slushatel.датаНаправленияРосздравнвдзора) & Chr(39) &
         part1 = +"Специальность, ДатаРегистрации, Почта,"
-        part2 = +" , " & Chr(39) & slushatel.специальностьСлушателя & Chr(39) & " , " & Chr(39) & ААОсновная.mySqlConnect.dateToFormatMySQL(slushatel.датаРег) & Chr(39) & " , " & Chr(39) & slushatel.Email & Chr(39) &
+        part2 = +" , " & Chr(39) & slushatel.специальностьСлушателя & Chr(39) & " , " & Chr(39) & MainForm.mySqlConnect.dateToFormatMySQL(slushatel.датаРег) & Chr(39) & " , " & Chr(39) & slushatel.Email & Chr(39) &
         part1 = +"ДУЛКемВыдан,ДУЛДатаВыдачи ) "
         part2 = +", " & Chr(39) & slushatel.кемВыданДУЛ & Chr(39) & ", "
 
         If slushatel.датаВыдачиДУЛ = "null" Then
             part2 += ДатаВыдачиДул & " ) "
-        Else part2 += Chr(39) & ААОсновная.mySqlConnect.dateToFormatMySQL(slushatel.датаВыдачиДУЛ) & Chr(39) & " ) "
+        Else part2 += Chr(39) & MainForm.mySqlConnect.dateToFormatMySQL(slushatel.датаВыдачиДУЛ) & Chr(39) & " ) "
         End If
 
 

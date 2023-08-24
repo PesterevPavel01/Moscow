@@ -1,8 +1,9 @@
-﻿Module ЗаписьВListView
+﻿Module UpdateListView
 
-    Public массивПуст As Boolean
+    Public arrayEmpty As Boolean
 
     Sub listViewColoriz(ЛистВью As ListView, mass As Object)
+
         Dim count As Integer = 0
         For Each item In ЛистВью.Items
             For Each elem As String In mass
@@ -13,10 +14,9 @@
             Next
         Next
 
-
     End Sub
 
-    Sub ЗаписьВListView(ВключитьLabelEdit As Boolean, ВключитьНумерацию As Boolean, ЛистВью As ListView, список As Object, Optional индексСТ1 As Integer = 11111111, Optional индексСТ2 As Integer = 11111111, Optional индексСТ3 As Integer = 11111111, Optional индексСТ4 As Integer = 11111111, Optional индексСТ5 As Integer = 11111111, Optional индексСТ6 As Integer = 11111111, Optional индексСТ7 As Integer = 11111111)
+    Sub updateListView(ВключитьLabelEdit As Boolean, ВключитьНумерацию As Boolean, ЛистВью As ListView, список As Object, Optional индексСТ1 As Integer = 11111111, Optional индексСТ2 As Integer = 11111111, Optional индексСТ3 As Integer = 11111111, Optional индексСТ4 As Integer = 11111111, Optional индексСТ5 As Integer = 11111111, Optional индексСТ6 As Integer = 11111111, Optional индексСТ7 As Integer = 11111111)
         Dim y As Long
         Dim x As Long, число As Long
 
@@ -24,13 +24,13 @@
         ЛистВью.LabelEdit = ВключитьLabelEdit
 
         Try
-            If массивПуст Or список(0, 0).ToString = "нет записей" Or список(0, 0).ToString = "нет- за-пис-ей" Then
-                массивПуст = False
+            If arrayEmpty Or список(0, 0).ToString = "нет записей" Or список(0, 0).ToString = "нет- за-пис-ей" Then
+                arrayEmpty = False
                 Exit Sub
             End If
 
         Catch ex As Exception
-            массивПуст = False
+            arrayEmpty = False
             Exit Sub
         End Try
 
@@ -39,7 +39,7 @@
         x = 0
 
         Try
-            число = ААОсновная.КоличествоСтрокВТаблице.Text
+            число = MainForm.КоличествоСтрокВТаблице.Text
         Catch ex As Exception
 
             предупреждение.текст.Text = "Настройки. Количество отображаемых строк в справочнике должно быть числом"
@@ -48,7 +48,7 @@
 
         End Try
 
-        If y > ААОсновная.КоличествоСтрокВТаблице.Text Then y = ААОсновная.КоличествоСтрокВТаблице.Text
+        If y > MainForm.КоличествоСтрокВТаблице.Text Then y = MainForm.КоличествоСтрокВТаблице.Text
 
 
         While x <= y
@@ -82,7 +82,7 @@
 
         End While
 
-        массивПуст = False
+        arrayEmpty = False
 
     End Sub
 
@@ -208,13 +208,13 @@
         ListV.Items.Clear()
 
         Try
-            If массивПуст Or список(0, 0).ToString = "нет записей" Or список(0, 0).ToString = "нет- за-пис-ей" Then
-                массивПуст = False
+            If arrayEmpty Or список(0, 0).ToString = "нет записей" Or список(0, 0).ToString = "нет- за-пис-ей" Then
+                arrayEmpty = False
                 Exit Sub
             End If
 
         Catch ex As Exception
-            массивПуст = False
+            arrayEmpty = False
             Exit Sub
         End Try
 
@@ -223,7 +223,7 @@
         x = 0
 
         Try
-            число = ААОсновная.КоличествоСтрокВТаблице.Text
+            число = MainForm.КоличествоСтрокВТаблице.Text
         Catch ex As Exception
 
             предупреждение.текст.Text = "Настройки. Количество отображаемых строк в справочнике должно быть числом"
@@ -232,7 +232,7 @@
 
         End Try
 
-        If y > ААОсновная.КоличествоСтрокВТаблице.Text Then y = ААОсновная.КоличествоСтрокВТаблице.Text
+        If y > MainForm.КоличествоСтрокВТаблице.Text Then y = MainForm.КоличествоСтрокВТаблице.Text
 
 
         While x <= y
@@ -259,7 +259,7 @@
         End While
 
 Konec:
-        массивПуст = False
+        arrayEmpty = False
 
     End Sub
 

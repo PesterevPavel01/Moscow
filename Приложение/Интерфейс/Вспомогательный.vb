@@ -1,11 +1,7 @@
 ﻿Imports System.IO
-Imports System.Reflection.Emit
 Imports System.Threading
-Imports System.Windows.Forms.VisualStyles.VisualStyleElement.ProgressBar
 
 Module Вспомогательный
-
-    Public массивЗапросов(0)
 
     Function month(nomber As String)
         If nomber = "01" Or nomber = "1" Then month = "января"
@@ -22,143 +18,52 @@ Module Вспомогательный
         If nomber = "12" Then month = "декабря"
     End Function
 
-    Function перевернуть(строка As String) As String
-        Dim часть As String
-        If Len(строка) < 4 Then
-            перевернуть = ""
-            Exit Function
-        End If
-        часть = Right(строка, 4)
-        строка = Left(строка, Len(строка) - 4)
-        строка = часть & " " & строка
-        строка = Left(строка, Len(строка) - 1)
-        перевернуть = строка
+    Public Function checkNumber(value As String, Optional name As String = "non", Optional showMessage As Boolean = True) As Boolean
 
-    End Function
+        If value.Trim = "" Then
 
-
-    Function новаяГруппаЗаполненность() As Boolean
-        новаяГруппаЗаполненность = False
-        Dim ОсновнойДокумент As String
-        Dim НомераУДС
-
-        НомераУДС = Вспомогательный.ОбнулениеНеактивныхНомеров(ОсновнойДокумент, НоваяГруппа)
-
-        If Not НоваяГруппа.НоваяГруппаУровеньКвалификации.Text = "специальный экзамен" Then
-
-            If НоваяГруппа.НоваяГруппаКоличествоЧасов.Text = "" Then
-
-                MsgBox("Заполните поле 'количество часов'")
-                Exit Function
-
-            End If
-
-            If НоваяГруппа.НоваяГруппаДатаНачалаЗанятий.Value.ToShortDateString = "01.01.1753" Then
-
-                MsgBox("Установите дату в поле Дата начала занятий")
-                Exit Function
-
-            End If
-
-            If НоваяГруппа.НоваяГруппаКонецЗанятий.Value.ToShortDateString = "01.01.1753" Then
-
-                MsgBox("Установите дату в поле Дата окончания звнятий")
-                Exit Function
-
-            End If
-
-            If Not Интерфейс.проверкаНомеровГруппы(НоваяГруппа.НоваяГруппаКоличествоЧасов.Text, "Количество часов") Then
-                Exit Function
-            End If
+            Return False
 
         End If
 
-        If НоваяГруппа.НоваяГруппаНомер.Text = "" Then
-            MsgBox("Укажите номер групппы")
-            Exit Function
-        End If
+        If Not IsNumeric(value) Then
 
-        If Not Вспомогательный.проверитьЗаполненность(НоваяГруппа) Then
-            предупреждение.текст.Text = "Необходимо заполнить обязательные поля"
-            Try
+            If showMessage Then
+                предупреждение.текст.Text = name & " не является числом"
                 предупреждение.ShowDialog()
-            Catch ex As Exception
-                предупреждение.Close()
-                предупреждение.ShowDialog()
-            End Try
+            End If
 
+            Return False
+
+        End If
+
+        Return True
+
+    End Function
+
+    Function rotate(text As String) As String
+
+        Dim parth As String
+        If Len(text) < 4 Then
+            rotate = ""
             Exit Function
         End If
-        If НоваяГруппа.НоваяГруппаУровеньКвалификации.Text = "профессиональная переподготовка" Or НоваяГруппа.НоваяГруппаУровеньКвалификации.Text = "профессиональное обучение" Then
-            If Not Интерфейс.проверкаНомеровГруппы(НоваяГруппа.НоваяГруппаНомерПротоколаИА.Text, "Номер протокола ИА") Then
-                Exit Function
-            End If
-        End If
-
-        If НоваяГруппа.НоваяГруппаУровеньКвалификации.Text = "повышение квалификации" Then
-            If Not Интерфейс.проверкаНомеровГруппы(НомераУДС(0, 0), "Серия и номер удостоверения") Then
-                Exit Function
-            End If
-            If Not Интерфейс.проверкаНомеровГруппы(НомераУДС(0, 1), "Регистрационный номер удостоверения") Then
-                Exit Function
-            End If
-        End If
-
-        If НоваяГруппа.НоваяГруппаУровеньКвалификации.Text = "профессиональная переподготовка" Then
-            If Not Интерфейс.проверкаНомеровГруппы(НомераУДС(0, 2), "Серия и номер диплома") Then
-                Exit Function
-            End If
-            If Not Интерфейс.проверкаНомеровГруппы(НомераУДС(0, 3), "Регистрационный номер диплома") Then
-                Exit Function
-            End If
-        End If
-
-        If НоваяГруппа.НоваяГруппаУровеньКвалификации.Text = "профессиональное обучение" Then
-            If Not Интерфейс.проверкаНомеровГруппы(НомераУДС(0, 4), "Серия и номер свидетельства") Then
-                Exit Function
-            End If
-            If Not Интерфейс.проверкаНомеровГруппы(НомераУДС(0, 5), "Регистрационный номер свидетельства") Then
-                Exit Function
-            End If
-        End If
-
-        If НоваяГруппа.НоваяГруппаУровеньКвалификации.Text = "специальный экзамен" Then
-            If Not Интерфейс.проверкаНомеровГруппы(НоваяГруппа.НомерПротоколаСпецэкзамен.Text, "Номер протокола спецэкзамена") Then
-                Exit Function
-            End If
-        End If
-
-        новаяГруппаЗаполненность = True
-    End Function
-
-
-    Function проверитьЗаполненность(Форма As Form) As Boolean
-
-        Dim nameControl As String
-
-        проверитьЗаполненность = True
-
-        For Each i In Форма.Controls
-            nameControl = i.Name
-            If Strings.Left(i.Name, 6) <> "Модуль" And i.Name <> "Квалификация" And i.Name <> "РегНомерСвид" And i.Name <> "НомерСвид" And i.Name <> "РегНомерДиплома" And i.Name <> "НомерДиплома" And i.Name <> "НомерУд" And i.Name <> "РегНомерУд" And i.Name <> "НоваягруппаОтветственныйЗаПрактику" And i.Name <> "НоваяГруппаНомерПротоколаИА" And i.Name <> "BtnFocus" And i.Name <> "Сохранить" And i.Name <> "Очистить" And Strings.Left(i.Name, 5) <> "Label" And Strings.Left(i.Name, 5) <> "label" And Strings.Left(i.Name, 5) <> "Check" And Strings.Left(i.Name, 8) <> "GroupBox" Then
-
-                If i.Text = "" And i.Visible = True And i.Enabled = True Then
-                    проверитьЗаполненность = False
-                End If
-            End If
-        Next
-
+        parth = Right(text, 4)
+        text = Left(text, Len(text) - 4)
+        text = parth & " " & text
+        text = Left(text, Len(text) - 1)
+        rotate = text
 
     End Function
 
-    Function ПроверитьЗаполненностьРедСлушателя() As Boolean
-        Dim ДлинаСнилс As Integer
-        Dim ДанныеСлушателя
-        Dim СнилсЧисло As Long
-        ДлинаСнилс = Len(РедакторСлушателя.Снилс.Text)
+    Function formStudentsValidation() As Boolean
+
+        Dim snilsLen As Integer
+        Dim snilsNumber As Long
+        snilsLen = Len(РедакторСлушателя.Снилс.Text)
 
 
-        If ДлинаСнилс <> 14 Then
+        If snilsLen <> 14 Then
 
             MsgBox("Снилс введен некорректно")
 
@@ -167,8 +72,7 @@ Module Вспомогательный
         End If
 
         Try
-            ДанныеСлушателя = ДобавитьРубашку.УдалитьРубашку(РедакторСлушателя.Снилс.Text)
-            СнилсЧисло = ДанныеСлушателя
+            snilsNumber = ДобавитьРубашку.УдалитьРубашку(РедакторСлушателя.Снилс.Text)
         Catch ex As Exception
 
             MsgBox("Снилс введен некорректно")
@@ -208,7 +112,7 @@ Module Вспомогательный
             Return False
         End If
 
-        If Not Интерфейс.проверитьЗаполненностьФормыСлушатели(РедакторСлушателя) Then
+        If Not Интерфейс.formStudentValidation(РедакторСлушателя) Then
 
             предупреждение.текст.Text = "Заполните все обязательные поля"
             ОткрытьФорму(предупреждение)
@@ -221,128 +125,166 @@ Module Вспомогательный
 
     End Function
 
-    Function ДобавитьНулиСпереди(номер As Integer, длина As Integer) As String
+    Function addZeros(value As Integer, length As Integer) As String
         Dim Result As String
-        Result = номер.ToString
+        Result = value.ToString
         Dim count As Integer
-        count = длина - Strings.Len(Result)
-        If Strings.Len(номер) < длина Then
+        count = length - Strings.Len(Result)
+        If Strings.Len(value) < length Then
             For i = 1 To count
                 Result = 0 & Result
             Next
         End If
-        ДобавитьНулиСпереди = Result
+        addZeros = Result
     End Function
 
-    Function ДобавитьНулиСпередиМвссив(массив As Object, номерСтолбца As Integer, длина As Integer) As Object
+    Function addZerosIntoArray(array As Object, rowNumber As Integer, length As Integer) As Object
 
-        Dim Result = массив
+        Dim Result = array
         Dim ResultElement As String
 
         For Row = 0 To UBound(Result, 2)
-            ResultElement = Result(номерСтолбца, Row).ToString
+            ResultElement = Result(rowNumber, Row).ToString
             Dim count As Integer
-            count = длина - Strings.Len(ResultElement)
-            If Strings.Len(ResultElement) < длина Then
+            count = length - Strings.Len(ResultElement)
+            If Strings.Len(ResultElement) < length Then
                 For i = 1 To count
                     ResultElement = 0 & ResultElement
-                    Result(номерСтолбца, Row) = ResultElement
+                    Result(rowNumber, Row) = ResultElement
                 Next
             End If
         Next
-        ДобавитьНулиСпередиМвссив = Result
+        addZerosIntoArray = Result
     End Function
 
 
-    Function активироватьМодули(Форма As Form, Программа As String, Kod As String) As Object
-        Dim СтрокаЗапроса As String
-        Dim Модули
-        Dim счетчикСтрок As Integer = 0
+    Function activateModuls(currentForm As Form, programName As String, kod As String) As Object
+        Dim sqlQuery As String
+        Dim moduls
+        Dim rowsCounter As Integer = 0
         Dim queryString As New SqlQueryString()
 
-        счетчикСтрок = 0
+        rowsCounter = 0
 
-        If Kod = -1 Then
-            While счетчикСтрок <= 9
-                For Each контрол In Форма.Controls
-                    If контрол.name = "LabelМодуль" & счетчикСтрок + 1 Or контрол.name = "Модуль" & счетчикСтрок + 1 Then
-                        контрол.Enabled = False
-                        'контрол.Visible = False
-                        If контрол.name = "Модуль" & счетчикСтрок + 1 Then
-                            контрол.Text = ""
+        If kod = -1 Then
+
+            While rowsCounter <= 9
+                For Each element In currentForm.Controls.OfType(Of System.Windows.Forms.Label)
+
+                    If element.Name = "LabelМодуль" & rowsCounter + 1 Then
+                        element.Enabled = False
+                        If element.Name = "Модуль" & rowsCounter + 1 Then
+                            element.Text = ""
                         End If
                     End If
+
                 Next
-                счетчикСтрок += 1
-            End While
-            Exit Function
-        End If
 
-        While счетчикСтрок <= 9
-            For Each контрол In Форма.Controls
-                If контрол.name = "LabelМодуль" & счетчикСтрок + 1 Or контрол.name = "Модуль" & счетчикСтрок + 1 Then
-                    контрол.Enabled = True
-                    'контрол.Visible = True
-                    'If контрол.name = "LabelМодуль" & счетчикСтрок + 1 Then
-                    '    контрол.Text = "Модуль " & счетчикСтрок + 1
-                    'End If
-                End If
-            Next
-            счетчикСтрок += 1
-        End While
+                For Each element In currentForm.Controls.OfType(Of ComboBox)
 
-        СтрокаЗапроса = queryString.selectModulInProg(Kod)
-        Модули = ЗагрузитьИзБазы.ЗагрузитьИзБазы(СтрокаЗапроса)
-
-        If Модули(0, 0).ToString = "нет записей" Or Модули(0, 0).ToString = "" Then
-            счетчикСтрок = 0
-        Else
-            счетчикСтрок = Модули(0, 0)
-        End If
-
-        If Not (Программа.Trim = "" Or Программа.Trim = "Спецэкзамен" Or Программа.Trim = "спецэкзамен") Then
-            If Модули(0, 0).ToString = "нет записей" Then
-                'предупреждение.текст.Text = "Не указаны модули для выбранной программы"
-                'ОткрытьФорму(предупреждение)
-                активироватьМодули = Модули
-                Exit Function
-            End If
-        Else
-            активироватьМодули = Модули
-            Exit Function
-        End If
-
-        While счетчикСтрок <= 9
-            For Each контрол In Форма.Controls
-
-                If контрол.name = "LabelМодуль" & счетчикСтрок + 1 Or контрол.name = "Модуль" & счетчикСтрок + 1 Then
-                    контрол.Enabled = False
-                    If контрол.name = "Модуль" & счетчикСтрок + 1 Then
-                        контрол.Text = ""
+                    If element.Name = "Модуль" & rowsCounter + 1 Then
+                        element.Enabled = False
+                        If element.Name = "Модуль" & rowsCounter + 1 Then
+                            element.Text = ""
+                        End If
                     End If
-                End If
 
+                Next
+
+                rowsCounter += 1
+
+            End While
+
+            Exit Function
+
+        End If
+
+
+        While rowsCounter <= 9
+
+            For Each element In currentForm.Controls.OfType(Of System.Windows.Forms.Label)
+                If element.Name = "LabelМодуль" & rowsCounter + 1 Then
+                    element.Enabled = True
+                End If
             Next
-            счетчикСтрок += 1
+
+            For Each element In currentForm.Controls.OfType(Of ComboBox)
+                If element.Name = "Модуль" & rowsCounter + 1 Then
+                    element.Enabled = True
+                End If
+            Next
+
+            rowsCounter += 1
+
         End While
-        активироватьМодули = Модули
+
+        sqlQuery = queryString.selectModulInProg(kod)
+        moduls = MainForm.mySqlConnect.loadMySqlToArray(sqlQuery, 1)
+
+        If moduls(0, 0).ToString = "нет записей" Or moduls(0, 0).ToString = "" Then
+            rowsCounter = 0
+        Else
+            rowsCounter = moduls(0, 0)
+        End If
+
+        If Not (programName.Trim = "") Then
+
+            If moduls(0, 0).ToString = "нет записей" Then
+
+                Return moduls
+
+            End If
+
+        Else
+
+            Return moduls
+
+        End If
+
+        While rowsCounter <= 9
+
+            For Each element In currentForm.Controls.OfType(Of System.Windows.Forms.Label)
+                If element.Name = "LabelМодуль" & rowsCounter + 1 Then
+                    element.Enabled = False
+                End If
+            Next
+
+            For Each element In currentForm.Controls.OfType(Of ComboBox)
+                If element.Name = "Модуль" & rowsCounter + 1 Then
+                    element.Enabled = False
+                    element.Text = ""
+                End If
+            Next
+
+            rowsCounter += 1
+        End While
+
+        Return moduls
+
     End Function
 
-    Sub ДобавитьВГруппу(Снилс As String)
+    Sub ДобавитьВГруппу(snils As String)
 
-        Dim queryStr As String
+        Dim queryString As String
 
         ФормаСправочникСлушатели.Label2.Visible = False
 
-        Снилс = ДобавитьРубашку.УдалитьРубашку(Снилс)
+        snils = ДобавитьРубашку.УдалитьРубашку(snils)
 
-        queryStr = "INSERT INTO group_list (students, Kod ) VALUES ( " & Chr(39) & Снилс & Chr(39) & " , " & СправочникГруппы.kod & ")"
+        queryString = "INSERT INTO group_list (students, Kod ) VALUES ( " & Chr(39) & snils & Chr(39) & " , " & СправочникГруппы.kod & ")"
 
-        If Not ЗаписьВБазу.ПроверкаСовпаденийЧислоДА_2("group_list", "Kod", СправочникГруппы.kod, "students", Снилс) = 2 Then
+        InsertIntoDataBase.argumentClear()
+        InsertIntoDataBase.argument.nameTable = "group_list"
+        InsertIntoDataBase.argument.firstName = "Kod"
+        InsertIntoDataBase.argument.firstValue = Convert.ToString(СправочникГруппы.kod)
+        InsertIntoDataBase.argument.secondName = "students"
+        InsertIntoDataBase.argument.secondValue = snils
 
-            ЗаписьВБазу.ЗаписьВБазу(queryStr)
+        If Not InsertIntoDataBase.checkUniq_No2() = 2 Then
 
-            ЗаполнитьФормуССлушВГруппе.ЗаполнитьФормуССлушВГруппе(СправочникГруппы.kod)
+            MainForm.mySqlConnect.sendQuery(queryString, 1)
+
+            ЗаполнитьФормуССлушВГруппе.updateFormStudentsList(СправочникГруппы.kod)
 
         Else MsgBox("Слушатель уже добавлен в группу")
 
@@ -442,7 +384,7 @@ Module Вспомогательный
 
     End Function
 
-    Sub ЗаменитьТекстВДокументеВорд(ВесьТекст As Object, ЗаменяемыйТекст As String, ТекстНаКоторыйМеняем As String, Optional КоличествоЗамен As Integer = 2)
+    Sub replaceTextInWordApp(ВесьТекст As Object, ЗаменяемыйТекст As String, ТекстНаКоторыйМеняем As String, Optional КоличествоЗамен As Integer = 2)
 
         ВесьТекст.Find.Execute(FindText:=ЗаменяемыйТекст, ReplaceWith:=ТекстНаКоторыйМеняем, Replace:=КоличествоЗамен)
 
@@ -475,135 +417,6 @@ Module Вспомогательный
         Область.Find.Execute(Replace:=КоличествоЗамен)
     End Sub
 
-    Function ОсновнойДокумент(Форма As Form) As String
-
-        ОсновнойДокумент = "Не указан"
-
-        For Each Элемент In Форма.Controls
-
-            If Элемент.name = "НомерДиплома" Then
-                If Элемент.text <> "" Then
-                    ОсновнойДокумент = "Диплом"
-                End If
-            End If
-            If Элемент.name = "РегНомерДиплома" Then
-                If Элемент.text <> "" Then
-                    ОсновнойДокумент = "Диплом"
-                End If
-            End If
-
-            If Элемент.name = "НомерСвид" Then
-                If Элемент.text <> "" Then
-                    ОсновнойДокумент = "Свидетельство"
-                End If
-            End If
-            If Элемент.name = "РегНомерСвид" Then
-                If Элемент.text <> "" Then
-                    ОсновнойДокумент = "Свидетельство"
-                End If
-            End If
-
-            If Элемент.name = "НомерУд" Then
-                If Элемент.text <> "" Then
-                    ОсновнойДокумент = "Удостоверение"
-                End If
-            End If
-            If Элемент.name = "РегНомерУд" Then
-                If Элемент.text <> "" Then
-                    ОсновнойДокумент = "Удостоверение"
-                End If
-            End If
-            If Элемент.name = "НомерПротоколаСпецэкзамен" Then
-                If Элемент.text <> "" Then
-                    ОсновнойДокумент = "Спецэкзамен"
-                End If
-            End If
-
-            If Not ОсновнойДокумент = "Не указан" Then
-                Exit Function
-            End If
-
-        Next
-
-    End Function
-
-    Function ОбнулениеНеактивныхНомеров(ОсновнойДокумент As String, Форма As Form) As Object
-        Dim Значения
-        ReDim Значения(0, 6)
-
-        If ОсновнойДокумент = "Не указан" Then
-            Значения(0, 0) = 0
-            Значения(0, 1) = 0
-            Значения(0, 2) = 0
-            Значения(0, 3) = 0
-            Значения(0, 4) = 0
-            Значения(0, 5) = 0
-            Значения(0, 6) = 0
-        Else
-
-            If ОсновнойДокумент = "Удостоверение" Then
-                For Each Контрол In Форма.Controls
-                    If Контрол.name = "НомерУд" Then
-                        Значения(0, 0) = Контрол.text
-                    End If
-                    If Контрол.name = "РегНомерУд" Then
-                        Значения(0, 1) = Контрол.text
-                    End If
-                    Значения(0, 2) = 0
-                    Значения(0, 3) = 0
-                    Значения(0, 4) = 0
-                    Значения(0, 5) = 0
-                    Значения(0, 6) = 0
-                Next
-            End If
-            If ОсновнойДокумент = "Диплом" Then
-                For Each Контрол In Форма.Controls
-                    If Контрол.name = "НомерДиплома" Then
-                        Значения(0, 2) = Контрол.text
-                    End If
-                    If Контрол.name = "РегНомерДиплома" Then
-                        Значения(0, 3) = Контрол.text
-                    End If
-                    Значения(0, 0) = 0
-                    Значения(0, 1) = 0
-                    Значения(0, 4) = 0
-                    Значения(0, 5) = 0
-                    Значения(0, 6) = 0
-                Next
-            End If
-            If ОсновнойДокумент = "Свидетельство" Then
-                For Each Контрол In Форма.Controls
-                    If Контрол.name = "НомерСвид" Then
-                        Значения(0, 4) = Контрол.text
-                    End If
-                    If Контрол.name = "РегНомерСвид" Then
-                        Значения(0, 5) = Контрол.text
-                    End If
-                    Значения(0, 0) = 0
-                    Значения(0, 1) = 0
-                    Значения(0, 2) = 0
-                    Значения(0, 3) = 0
-                    Значения(0, 6) = 0
-                Next
-            End If
-            If ОсновнойДокумент = "Спецэкзамен" Then
-                For Each Контрол In Форма.Controls
-                    If Контрол.name = "НомерПротоколаСпецэкзамен" Then
-                        Значения(0, 6) = Контрол.text
-                    End If
-                    Значения(0, 0) = 0
-                    Значения(0, 1) = 0
-                    Значения(0, 2) = 0
-                    Значения(0, 3) = 0
-                    Значения(0, 4) = 0
-                    Значения(0, 5) = 0
-                Next
-            End If
-
-        End If
-        ОбнулениеНеактивныхНомеров = Значения
-
-    End Function
     Sub ОткрытьФорму(Form As Form)
 
         Try
@@ -878,12 +691,12 @@ Module Вспомогательный
     End Sub
 
     Sub saveKniga(DOK As Object, vidDok As String, resourcesPath As String)
-        Dim queryStr As String = ""
+        Dim sqlQuery As String = ""
         Dim listFolder As List(Of String) = New List(Of String)
-        Dim Gruppa
+        Dim gruppa
 
-        queryStr = QueryString.SQLString_SELECT_dateAndKvalGrupp(ААОсновная.prikazKodGroup)
-        Gruppa = ЗагрузитьИзБазы.ЗагрузитьИзБазы(queryStr)
+        sqlQuery = QueryString.SQLString_SELECT_dateAndKvalGrupp(MainForm.prikazKodGroup)
+        gruppa = MainForm.mySqlConnect.loadMySqlToArray(sqlQuery, 1)
 
         listFolder.Add("Отчеты")
         listFolder.Add("Книги")
@@ -896,16 +709,16 @@ Module Вспомогательный
 
     End Sub
     Sub savePrikazBlank(DOK As Object, kodGroupp As String, vidDok As String, resourcesPath As String, grouppDok As String)
-        Dim queryStr As String = ""
+        Dim sqlQuery As String = ""
         Dim listFolder As List(Of String) = New List(Of String)
-        Dim Gruppa
+        Dim gruppa
 
-        queryStr = QueryString.SQLString_SELECT_dateAndKvalGrupp(ААОсновная.prikazKodGroup)
-        Gruppa = ЗагрузитьИзБазы.ЗагрузитьИзБазы(queryStr)
+        sqlQuery = QueryString.SQLString_SELECT_dateAndKvalGrupp(MainForm.prikazKodGroup)
+        gruppa = MainForm.mySqlConnect.loadMySqlToArray(sqlQuery, 1)
 
         listFolder.Add("Приказы")
-        listFolder.Add(Gruppa(0, 0))
-        listFolder.Add(Gruppa(1, 0))
+        listFolder.Add(gruppa(0, 0))
+        listFolder.Add(gruppa(1, 0))
         listFolder.Add("Группа N" & checkName(АСформироватьПриказ.НомерГруппы.Text))
         listFolder.Add(grouppDok)
 
@@ -1304,7 +1117,6 @@ Module Вспомогательный
         Next
 
     End Function
-
 
 
 End Module

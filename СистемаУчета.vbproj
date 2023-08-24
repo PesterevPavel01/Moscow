@@ -172,7 +172,7 @@
     <Compile Include="Приложение\Programm.vb" />
     <Compile Include="Приложение\SqlQueryString.vb" />
     <Compile Include="Приложение\Worker.vb" />
-    <Compile Include="Приложение\Gruppa.vb" />
+    <Compile Include="Приложение\Group.vb" />
     <Compile Include="Приложение\Prikaz.vb" />
     <Compile Include="Приложение\Slushatel.vb" />
     <Compile Include="Приложение\БазаД\MySQLConnect.vb" />
@@ -331,7 +331,7 @@
     <Compile Include="Приложение\Формы\НоваяГруппа.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Приложение\БазаД\ЗаписьВБазу.vb" />
+    <Compile Include="Приложение\БазаД\InsertIntoDataBase.vb" />
     <Compile Include="Приложение\Интерфейс\ДобавитьРубашку.vb" />
     <Compile Include="Приложение\Формы\СправочникГруппы.Designer.vb">
       <DependentUpon>СправочникГруппы.vb</DependentUpon>
@@ -339,11 +339,11 @@
     <Compile Include="Приложение\Формы\СправочникГруппы.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Приложение\Интерфейс\ЗаписьВListView.vb" />
-    <Compile Include="Приложение\Формы\ААОсновная.Designer.vb">
-      <DependentUpon>ААОсновная.vb</DependentUpon>
+    <Compile Include="Приложение\Интерфейс\UpdateListView.vb" />
+    <Compile Include="Приложение\Формы\MainForm.Designer.vb">
+      <DependentUpon>MainForm.vb</DependentUpon>
     </Compile>
-    <Compile Include="Приложение\Формы\ААОсновная.vb">
+    <Compile Include="Приложение\Формы\MainForm.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Приложение\Интерфейс\Запуск.vb" />
@@ -355,7 +355,6 @@
     </Compile>
     <Compile Include="Приложение\Интерфейс\АнализСнилс.vb" />
     <Compile Include="Приложение\БазаД\Поиск.vb" />
-    <Compile Include="Приложение\БазаД\ЗагрузитьИзБазы.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -435,8 +434,8 @@
     <EmbeddedResource Include="Приложение\Формы\СправочникГруппы.resx">
       <DependentUpon>СправочникГруппы.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Приложение\Формы\ААОсновная.resx">
-      <DependentUpon>ААОсновная.vb</DependentUpon>
+    <EmbeddedResource Include="Приложение\Формы\MainForm.resx">
+      <DependentUpon>MainForm.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Приложение\Формы\СправочникСлушатели.resx">
       <DependentUpon>СправочникСлушатели.vb</DependentUpon>

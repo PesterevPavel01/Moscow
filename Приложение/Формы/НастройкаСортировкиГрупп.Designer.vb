@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
-Partial Class НастройкаСортировкиГрупп
+Partial Class sortSetts
     Inherits System.Windows.Forms.Form
 
     'Форма переопределяет dispose для очистки списка компонентов.
@@ -22,7 +22,7 @@ Partial Class НастройкаСортировкиГрупп
     'Не изменяйте ее в редакторе исходного кода.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(НастройкаСортировкиГрупп))
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(sortSetts))
         Me.Программа = New System.Windows.Forms.CheckBox()
         Me.Спец = New System.Windows.Forms.CheckBox()
         Me.Номер = New System.Windows.Forms.CheckBox()
@@ -100,7 +100,7 @@ Partial Class НастройкаСортировкиГрупп
         Me.Куратор.Text = "Куратор"
         Me.Куратор.UseVisualStyleBackColor = True
         '
-        'НастройкаСортировкиГрупп
+        'sortSetts
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
@@ -111,7 +111,7 @@ Partial Class НастройкаСортировкиГрупп
         Me.Controls.Add(Me.Программа)
         Me.Controls.Add(Me.Спец)
         Me.Controls.Add(Me.Номер)
-        Me.Name = "НастройкаСортировкиГрупп"
+        Me.Name = "sortSetts"
         Me.Text = "Выбор поля для сортировки"
         CType(Me.ПоВозростанию, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()

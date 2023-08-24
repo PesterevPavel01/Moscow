@@ -66,7 +66,7 @@ Public Class Programm
 
         Dim queryString As String
         queryString = sqlQueryString.program__loadModulsAndHours(struct_progs.program_kod)
-        struct_progs.tbl_modulsInProgs = mySQLConnector.ЗагрузитьИзMySQLвDataTable(queryString, 1)
+        struct_progs.tbl_modulsInProgs = mySQLConnector.mySqlToDataTable(queryString, 1)
 
         queryString = sqlQueryString.load_sum_hours(struct_progs.program_kod)
         result = mySQLConnector.ЗагрузитьИзMySQLвОдномерныйМассив(queryString, 1, 0)
@@ -92,7 +92,7 @@ Public Class Programm
 
         Dim queryString As String
         queryString = sqlQueryString.program__loadModuls()
-        struct_progs.tbl_moduls = mySQLConnector.ЗагрузитьИзMySQLвDataTable(queryString, 1)
+        struct_progs.tbl_moduls = mySQLConnector.mySqlToDataTable(queryString, 1)
 
     End Sub
 
@@ -102,13 +102,13 @@ Public Class Programm
             Return
         End If
         queryString = sqlQueryString.updateModulHours(hours, struct_progs.modul_kod, struct_progs.program_kod)
-        mySQLConnector.ОтправитьВбдЗапись(queryString, 1)
+        mySQLConnector.sendQuery(queryString, 1)
     End Sub
 
     Public Sub program__addProgramm(programm As String)
         Dim queryString As String
         queryString = sqlQueryString.addProgramm(programm, uroven_cval)
-        mySQLConnector.ОтправитьВбдЗапись(queryString, 1)
+        mySQLConnector.sendQuery(queryString, 1)
     End Sub
 
     Public Function program__loadLastKodProgramm(programm As String) As String
@@ -116,7 +116,7 @@ Public Class Programm
         Dim result As List(Of String)
         Dim kod As String
         queryString = sqlQueryString.loadLastKodProgramm(programm, uroven_cval)
-        result = mySQLConnector.ЗагрузитьИзMySQLвList(queryString, 1, 0)
+        result = mySQLConnector.mySqlToList(queryString, 1, 0)
         If result.Count = 1 Then
             kod = result(0)
         End If
@@ -128,7 +128,7 @@ Public Class Programm
         Dim result As List(Of String)
         Dim kod As String
         queryString = sqlQueryString.loadLastKodModul(modul)
-        result = mySQLConnector.ЗагрузитьИзMySQLвList(queryString, 1, 0)
+        result = mySQLConnector.mySqlToList(queryString, 1, 0)
         If result.Count = 1 Then
             kod = result(0)
         End If
@@ -140,7 +140,7 @@ Public Class Programm
         Dim result As List(Of String)
         Dim kod As String
         queryString = sqlQueryString.loadLastKodModul(modul)
-        result = mySQLConnector.ЗагрузитьИзMySQLвList(queryString, 1, 0)
+        result = mySQLConnector.mySqlToList(queryString, 1, 0)
         If result.Count = 1 Then
             kod = result(0)
         End If
@@ -153,19 +153,19 @@ Public Class Programm
         End If
         Dim queryString As String
         queryString = sqlQueryString.deleteModul_prog(struct_progs.modul_kod, struct_progs.program_kod)
-        mySQLConnector.ОтправитьВбдЗапись(queryString, 1)
+        mySQLConnector.sendQuery(queryString, 1)
     End Sub
 
     Public Sub program__updateProgramm(programm As String)
         Dim queryString As String
         queryString = sqlQueryString.updateProgramm(programm, struct_progs.program_kod_update)
-        mySQLConnector.ОтправитьВбдЗапись(queryString, 1)
+        mySQLConnector.sendQuery(queryString, 1)
     End Sub
 
     Public Sub program__deleteProgramm()
         Dim queryString As String
         queryString = sqlQueryString.deleteProgramm(struct_progs.program_kod)
-        mySQLConnector.ОтправитьВбдЗапись(queryString, 1)
+        mySQLConnector.sendQuery(queryString, 1)
     End Sub
 
     Public Function program__updateMudulsTop(modul_kod As String) As Boolean
@@ -174,14 +174,14 @@ Public Class Programm
         Dim number As List(Of List(Of String))
         Dim QueryString As String
         QueryString = sqlQueryString.selectNumberModulTop(struct_progs.program_kod, modul_kod)
-        number = mySQLConnector.ЗагрузитьИзMySQLвListAll(QueryString, 1)
+        number = mySQLConnector.mySqlToListAll(QueryString, 1)
 
         If Not number.Count = 2 Then
             Return status
         End If
 
         QueryString = sqlQueryString.updateModulnumber(number, struct_progs.program_kod)
-        mySQLConnector.ОтправитьВбдЗапись(QueryString, 1)
+        mySQLConnector.sendQuery(QueryString, 1)
 
         Return True
     End Function
@@ -192,12 +192,12 @@ Public Class Programm
         Dim number As List(Of List(Of String))
         Dim QueryString As String
         QueryString = sqlQueryString.selectNumberModulButtom(struct_progs.program_kod, modul_kod)
-        number = mySQLConnector.ЗагрузитьИзMySQLвListAll(QueryString, 1)
+        number = mySQLConnector.mySqlToListAll(QueryString, 1)
         If Not number.Count = 2 Then
             Return status
         End If
         QueryString = sqlQueryString.updateModulnumber(number, struct_progs.program_kod)
-        mySQLConnector.ОтправитьВбдЗапись(QueryString, 1)
+        mySQLConnector.sendQuery(QueryString, 1)
         Return True
 
     End Function
@@ -205,7 +205,7 @@ Public Class Programm
     Public Sub program__updateMudulsInGroup(modul_kod As String)
         Dim QueryString As String
         QueryString = sqlQueryString.insertModulIntoProg(struct_progs.program_kod, modul_kod)
-        mySQLConnector.ОтправитьВбдЗапись(QueryString, 1)
+        mySQLConnector.sendQuery(QueryString, 1)
     End Sub
 
     Public Sub program__addNewModul(name As String, hours As String)
@@ -215,7 +215,7 @@ Public Class Programm
             Return
         End If
         QueryString = sqlQueryString.insertModul(name, hours)
-        mySQLConnector.ОтправитьВбдЗапись(QueryString, 1)
+        mySQLConnector.sendQuery(QueryString, 1)
 
     End Sub
 
@@ -226,7 +226,7 @@ Public Class Programm
             Return
         End If
         queryString = sqlQueryString.updateModul(name, hours, struct_progs.modul_kod_inModuls)
-        mySQLConnector.ОтправитьВбдЗапись(queryString, 1)
+        mySQLConnector.sendQuery(queryString, 1)
 
     End Sub
 
@@ -234,7 +234,7 @@ Public Class Programm
 
         Dim queryString As String
         queryString = sqlQueryString.deleteModul(kod)
-        mySQLConnector.ОтправитьВбдЗапись(queryString, 1)
+        mySQLConnector.sendQuery(queryString, 1)
 
     End Sub
 

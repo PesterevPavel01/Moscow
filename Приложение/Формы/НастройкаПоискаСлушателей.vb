@@ -5,12 +5,12 @@ Public Class НастройкаПоискаСлушателей
 
         If Снилс.Checked = True Then
 
-            Интерфейс.выключитьОстальныеЧекбоксыНаФорме(Me, Снилс.Name)
+            Интерфейс.enableOneCheckbox(Me, Снилс.Name)
 
         End If
         If Снилс.Checked = False Then
 
-            If Not Интерфейс.ОпроситьЧекбоксыНаФорме(Me) Then
+            If Not Интерфейс.statusCheckBoxes(Me) Then
 
                 Снилс.Checked = True
 
@@ -25,13 +25,13 @@ Public Class НастройкаПоискаСлушателей
 
         If Имя.Checked = True Then
 
-            Интерфейс.выключитьОстальныеЧекбоксыНаФорме(Me, Имя.Name)
+            Интерфейс.enableOneCheckbox(Me, Имя.Name)
 
         End If
 
         If Имя.Checked = False Then
 
-            If Not Интерфейс.ОпроситьЧекбоксыНаФорме(Me) Then
+            If Not Интерфейс.statusCheckBoxes(Me) Then
 
                 Имя.Checked = True
 
@@ -47,13 +47,13 @@ Public Class НастройкаПоискаСлушателей
 
         If Отчество.Checked = True Then
 
-            Интерфейс.выключитьОстальныеЧекбоксыНаФорме(Me, Отчество.Name)
+            Интерфейс.enableOneCheckbox(Me, Отчество.Name)
 
         End If
 
         If Отчество.Checked = False Then
 
-            If Not Интерфейс.ОпроситьЧекбоксыНаФорме(Me) Then
+            If Not Интерфейс.statusCheckBoxes(Me) Then
 
                 Отчество.Checked = True
 
@@ -67,13 +67,13 @@ Public Class НастройкаПоискаСлушателей
 
         If Фамилия.Checked = True Then
 
-            Интерфейс.выключитьОстальныеЧекбоксыНаФорме(Me, Фамилия.Name)
+            Интерфейс.enableOneCheckbox(Me, Фамилия.Name)
 
         End If
 
         If Фамилия.Checked = False Then
 
-            If Not Интерфейс.ОпроситьЧекбоксыНаФорме(Me) Then
+            If Not Интерфейс.statusCheckBoxes(Me) Then
 
                 Фамилия.Checked = True
 

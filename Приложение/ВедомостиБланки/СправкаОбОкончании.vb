@@ -16,8 +16,8 @@
         dateVal = АСформироватьПриказ.ДатаПриказа.Value
 
         dateString = Chr(34) & Format(dateVal, "dd") & Chr(34) & " " & месяцРП(Format(dateVal, "MMMM")) & " " & Format(dateVal, "yyyy")
-        queryString = selectSpravkaIA_group(ААОсновная.prikazKodGroup)
-        group = ЗагрузитьИзБазы.ЗагрузитьИзБазы(queryString)
+        queryString = selectSpravkaIA_group(MainForm.prikazKodGroup)
+        group = MainForm.mySqlConnect.loadMySqlToArray(queryString, 1)
 
         If group(0, 0) = "нет записей" Then
             предупреждение.текст.Text = "Нет данных для отображения"
@@ -25,8 +25,8 @@
             Exit Sub
         End If
 
-        queryString = selectSpravka_moduls_hours(ААОсновная.prikazKodGroup)
-        moduls = ЗагрузитьИзБазы.ЗагрузитьИзБазы(queryString)
+        queryString = selectSpravka_moduls_hours(MainForm.prikazKodGroup)
+        moduls = MainForm.mySqlConnect.loadMySqlToArray(queryString, 1)
 
         If moduls(0, 0) = "нет записей" Then
             предупреждение.текст.Text = "Отсутствуют модули в программе!"
@@ -46,7 +46,7 @@
 
             wordDoc = wordApp.Documents.Open(ПутьКШаблону, ReadOnly:=True)
 
-            Вспомогательный.savePrikazBlank(wordDoc, ААОсновная.prikazKodGroup, type, resourcesPath, "Справки")
+            Вспомогательный.savePrikazBlank(wordDoc, MainForm.prikazKodGroup, type, resourcesPath, "Справки")
 
             предупреждение.текст.Visible = False
             предупреждение.TextBox.Visible = True
@@ -65,7 +65,7 @@
             Вспомогательный.ЗаменитьТекстВОбластиДокументаВорд(wordDoc.Range, "$ДатаКЗ$", group(4, 0), 2)
             Вспомогательный.ЗаменитьТекстВОбластиДокументаВорд(wordDoc.Range, "$ГруппаЧасы$", group(5, 0), 2)
 
-            Вспомогательный.ЗаменитьТекстВОбластиДокументаВорд(wordDoc.Range, "$И.О.Ответств$", перевернуть(АСформироватьПриказ.Утверждает.Text), 2)
+            Вспомогательный.ЗаменитьТекстВОбластиДокументаВорд(wordDoc.Range, "$И.О.Ответств$", rotate(АСформироватьПриказ.Утверждает.Text), 2)
             Вспомогательный.ЗаменитьТекстВОбластиДокументаВорд(wordDoc.Range, "$Дата$", dateString, 2)
             Вспомогательный.ЗаменитьТекстВОбластиДокументаВорд(wordDoc.Range, "$День$", Format(dateVal, "dd"), 2)
             Вспомогательный.ЗаменитьТекстВОбластиДокументаВорд(wordDoc.Range, "$Месяц$", месяцРП(Format(dateVal, "MMMM")), 2)

@@ -151,16 +151,21 @@ Public Class Slushatel
 
         listQuery(3) = SqlString__insertSlush(structSlushatel)
 
-        If ЗаписьВБазу.ПроверкаСовпадений("students", "Снилс", structSlushatel.snils) Then
+        InsertIntoDataBase.argumentClear()
+        InsertIntoDataBase.argument.nameTable = "students"
+        InsertIntoDataBase.argument.firstName = "Снилс"
+        InsertIntoDataBase.argument.firstValue = structSlushatel.snils
+
+        If InsertIntoDataBase.checkDuplicates() Then
 
             ФормаДаНет.ShowDialog()
 
-            If Not ЗаписьВБазу.УдалитьСовпадения Then
+            If Not InsertIntoDataBase.removeDuplicates Then
                 Return False
             End If
 
             queryString = listQuery(2)
-            ЗаписьВБазу.УдалитьСовпадения = False
+            InsertIntoDataBase.removeDuplicates = False
 
         Else
 
@@ -168,11 +173,11 @@ Public Class Slushatel
 
         End If
 
-        ЗаписьВБазу.ЗаписьВБазу(queryString)
+        MainForm.mySqlConnect.sendQuery(queryString, 1)
 
         queryString = SqlString__deleteSlushFromGrouppList(structSlushatel.snils)
 
-        ААОсновная.mySqlConnect.ОтправитьВбдЗапись(queryString, 1)
+        MainForm.mySqlConnect.sendQuery(queryString, 1)
 
         If structSlushatel.kodGroup <> -1 Then
             addToGroupp(structSlushatel)
@@ -189,20 +194,27 @@ Public Class Slushatel
         If Not structSlushatel.snils = structSlushatel.старыйСнилс Then
 
             queryString = SqlString__deleteSlush(structSlushatel.snils)
-            ААОсновная.mySqlConnect.ОтправитьВбдЗапись(queryString, 1)
+            MainForm.mySqlConnect.sendQuery(queryString, 1)
             queryString = SqlString__deleteSlushFromGrouppList(structSlushatel.snils)
-            ААОсновная.mySqlConnect.ОтправитьВбдЗапись(queryString, 1)
+            MainForm.mySqlConnect.sendQuery(queryString, 1)
 
         End If
 
         queryString = updateSlushatel(structSlushatel)
 
-        ААОсновная.mySqlConnect.ОтправитьВбдЗапись(queryString, 1)
+        MainForm.mySqlConnect.sendQuery(queryString, 1)
 
-        If ЗаписьВБазу.ПроверкаСовпадений("students", "Снилс", structSlushatel.snils, "ДатаРегистрации", ААОсновная.mySqlConnect.dateToFormatMySQL(structSlushatel.датаРег)) Then
+        InsertIntoDataBase.argumentClear()
+        InsertIntoDataBase.argument.nameTable = "students"
+        InsertIntoDataBase.argument.firstName = "Снилс"
+        InsertIntoDataBase.argument.firstValue = structSlushatel.snils
+        InsertIntoDataBase.argument.secondName = "ДатаРегистрации"
+        InsertIntoDataBase.argument.secondValue = MainForm.mySqlConnect.dateToFormatMySQL(structSlushatel.датаРег)
+
+        If InsertIntoDataBase.checkDuplicates() Then
 
             queryString = SqlString__updateSlushInListSlGroupp(structSlushatel.snils, structSlushatel.старыйСнилс)
-            ААОсновная.mySqlConnect.ОтправитьВбдЗапись(queryString, 1)
+            MainForm.mySqlConnect.sendQuery(queryString, 1)
             Return True
 
         Else
@@ -215,13 +227,20 @@ Public Class Slushatel
 
     Sub addToGroupp(slushatel As Slushatel.strSlushatel)
 
-        Dim queryStr As String
+        Dim queryString As String
 
-        queryStr = SqlString__insertIntoListGroupp(slushatel.snils, Convert.ToString(slushatel.kodGroup))
+        queryString = SqlString__insertIntoListGroupp(slushatel.snils, Convert.ToString(slushatel.kodGroup))
 
-        If Not ЗаписьВБазу.ПроверкаСовпаденийЧислоДА_2("group_list", "Kod", slushatel.kodGroup, "Слушатель", slushatel.snils) = 2 Then
+        InsertIntoDataBase.argumentClear()
+        InsertIntoDataBase.argument.nameTable = "group_list"
+        InsertIntoDataBase.argument.firstName = "Kod"
+        InsertIntoDataBase.argument.firstValue = slushatel.kodGroup
+        InsertIntoDataBase.argument.secondName = "students"
+        InsertIntoDataBase.argument.secondValue = slushatel.snils
 
-            ЗаписьВБазу.ЗаписьВБазу(queryStr)
+        If Not InsertIntoDataBase.checkUniq_No2() = 2 Then
+
+            MainForm.mySqlConnect.sendQuery(queryString, 1)
 
         Else
 

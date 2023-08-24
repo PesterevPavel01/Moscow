@@ -11,8 +11,8 @@
 
         ListViewСписокСлушателей.Visible = False
 
-        columnSort = Интерфейс.ИмяВключенногоЧекбоксыНаФорме(НастройкаСортировкиСлушателей)
-        columnSearch = Интерфейс.ИмяВключенногоЧекбоксыНаФорме(НастройкаПоискаСлушателей)
+        columnSort = Интерфейс.nameCheckedCheckBox(НастройкаСортировкиСлушателей)
+        columnSearch = Интерфейс.nameCheckedCheckBox(НастройкаПоискаСлушателей)
 
         Label2.Visible = False
 
@@ -20,13 +20,13 @@
         Label1.Visible = True
         PictureBox1.Visible = True
 
-        queryString = studentsList__loadStudentsList(columnSort, Интерфейс.ВидСортировки(Me, НастройкаСортировкиСлушателей.НажатПБСл))
+        queryString = studentsList__loadStudentsList(columnSort, Интерфейс.sortType(НастройкаСортировкиСлушателей.НажатПБСл))
 
-        massiv = ААОсновная.mySqlConnect.ЗагрузитьИзБДMySQLвМассив(queryString, 1)
+        massiv = MainForm.mySqlConnect.loadMySqlToArray(queryString, 1)
         massiv = УбратьПустотыВМассиве.УбратьПустотыВМассиве(massiv)
         massiv = ДобавитьРубашку.ДобавитьРубашкуВМассив(massiv)
 
-        Call ЗаписьВListView.ЗаписьВListView(False, True, ListViewСписокСлушателей, massiv, 1, 2, 3, 4)
+        Call UpdateListView.updateListView(False, True, ListViewСписокСлушателей, massiv, 1, 2, 3, 4)
         СтрокаПоиска.Text = ""
         ActiveControl = ListViewСписокСлушателей
         Try
@@ -57,7 +57,7 @@
 
             queryString = load_slushatel(snils)
 
-            ИнформацияОСлушателе = ААОсновная.mySqlConnect.ЗагрузитьИзБДMySQLвМассив(queryString, 1)
+            ИнформацияОСлушателе = MainForm.mySqlConnect.loadMySqlToArray(queryString, 1)
             ИнформацияОСлушателе = УбратьПустотыВМассиве.УбратьПустотыВМассиве(ИнформацияОСлушателе)
 
             РедакторСлушателя.Show()
@@ -81,13 +81,13 @@
         Label2.Visible = False
         Dim ПолеДляПоиска As String, ПолеДляСортировки As String
 
-        ПолеДляСортировки = Интерфейс.ИмяВключенногоЧекбоксыНаФорме(НастройкаСортировкиСлушателей)
-        ПолеДляПоиска = Интерфейс.ИмяВключенногоЧекбоксыНаФорме(НастройкаПоискаСлушателей)
+        ПолеДляСортировки = Интерфейс.nameCheckedCheckBox(НастройкаСортировкиСлушателей)
+        ПолеДляПоиска = Интерфейс.nameCheckedCheckBox(НастройкаПоискаСлушателей)
 
 
         If ПолеДляПоиска = "Снилс" Then
 
-            massiv = SQLПоиск(ДобавитьРубашку.УдалитьРубашку(СтрокаПоиска.Text), "students", "Снилс, Фамилия, Имя, Отчество, ДатаРождения", ПолеДляПоиска, ПолеДляСортировки & Интерфейс.ВидСортировки(НастройкаСортировкиСлушателей, НастройкаСортировкиСлушателей.НажатПБСл))
+            massiv = sqlSearch(ДобавитьРубашку.УдалитьРубашку(СтрокаПоиска.Text), "students", "Снилс, Фамилия, Имя, Отчество, ДатаРождения", ПолеДляПоиска, ПолеДляСортировки & Интерфейс.sortType(НастройкаСортировкиСлушателей.НажатПБСл))
 
             If Not Press Then
 
@@ -106,12 +106,12 @@
 
         Else
 
-            massiv = SQLПоиск(СтрокаПоиска.Text, "students", "Снилс, Фамилия, Имя, Отчество, ДатаРождения", ПолеДляПоиска, ПолеДляСортировки)
+            massiv = sqlSearch(СтрокаПоиска.Text, "students", "Снилс, Фамилия, Имя, Отчество, ДатаРождения", ПолеДляПоиска, ПолеДляСортировки)
             massiv = ДобавитьРубашкуВМассив(massiv, 0)
 
         End If
 
-        Call ЗаписьВListView.ЗаписьВListView(False, True, ListViewСписокСлушателей, massiv, 0, 1, 2, 3, 4)
+        Call UpdateListView.updateListView(False, True, ListViewСписокСлушателей, massiv, 0, 1, 2, 3, 4)
 
         СтрокаПоиска.SelectionStart = Len(СтрокаПоиска.Text)
 
@@ -160,7 +160,12 @@
             ind = УдалитьРубашку(ListViewСписокСлушателей.SelectedItems.Item(0).SubItems(1).Text)
             nomer = ListViewСписокСлушателей.SelectedItems.Item(0).SubItems(0).Text
 
-            If Not ЗаписьВБазу.ПроверкаСовпадений("students", "СНИЛС", ind) Then
+            InsertIntoDataBase.argumentClear()
+            InsertIntoDataBase.argument.nameTable = "students"
+            InsertIntoDataBase.argument.firstName = "СНИЛС"
+            InsertIntoDataBase.argument.firstValue = ind
+
+            If Not InsertIntoDataBase.checkDuplicates() Then
 
                 MsgBox("Ошибка. Запись уже удалена. Нажмите кнопку Загрузить из базы, чтобы обновить список")
                 GoTo Конец
@@ -173,15 +178,23 @@
 
             If ФормаДаНетУдалить.НажатаКнопкаДа Then
 
-                If ЗаписьВБазу.ПроверкаСовпадений("group_list", "students", ind) Then
+                InsertIntoDataBase.argument.nameTable = "group_list"
+                InsertIntoDataBase.argument.firstName = "students"
+                InsertIntoDataBase.argument.firstValue = ind
 
-                    ЗаписьВБазу.УдалитьЗаписи("group_list", "students", ind)
+                If InsertIntoDataBase.checkDuplicates() Then
+
+                    InsertIntoDataBase.deleteFromDB()
 
                 End If
 
-                ЗаписьВБазу.УдалитьЗаписи("students", "СНИЛС", ind)
+                InsertIntoDataBase.argument.nameTable = "students"
+                InsertIntoDataBase.argument.firstName = "СНИЛС"
+                InsertIntoDataBase.argument.firstValue = ind
 
-                If Not ЗаписьВБазу.ПроверкаСовпадений("students", "СНИЛС", ind) Then
+                InsertIntoDataBase.deleteFromDB()
+
+                If Not InsertIntoDataBase.checkDuplicates() Then
 
                     Label2.Visible = True
                     Label2.Text = "Слушатель: Снилс №" & ind & " был удален."
@@ -356,7 +369,7 @@
         End Try
 
         SqlString = sprSlushTblGroup(Snils)
-        Dtable = ААОсновная.mySqlConnect.ЗагрузитьИзMySQLвDataTable(SqlString, 1)
+        Dtable = MainForm.mySqlConnect.mySqlToDataTable(SqlString, 1)
         ССлушТаблицаИнфСлушателя.DataSource = Dtable
 
         ''ССлушТаблицаИнфСлушателя.AutoResizeColumn(0)

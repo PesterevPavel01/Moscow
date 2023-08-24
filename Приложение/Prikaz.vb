@@ -1,4 +1,4 @@
-﻿Imports WindowsApp2.Gruppa
+﻿Imports WindowsApp2.Group
 
 Public Class Prikaz
 

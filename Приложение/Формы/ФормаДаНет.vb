@@ -1,6 +1,6 @@
 ﻿Public Class ФормаДаНет
     Private Sub КнопкаДа_Click(sender As Object, e As EventArgs) Handles КнопкаДа.Click
-        ЗаписьВБазу.УдалитьСовпадения = True
+        InsertIntoDataBase.removeDuplicates = True
         Me.Close()
     End Sub
 
@@ -9,10 +9,10 @@
     End Sub
 
     Private Sub ФормаДаНет_KeyDown(sender As Object, e As KeyEventArgs) Handles MyBase.KeyDown
-        Call ЗакрытьEsc(Me, e.KeyCode)
-        Call функционалТаб(e.KeyCode, 40)
-        Call функционалТаб(e.KeyCode, 39)
-        Call перемещениеВверх(Me, e.KeyCode)
+        Call closeEsc(Me, e.KeyCode)
+        Call pressTab(e.KeyCode, 40)
+        Call pressTab(e.KeyCode, 39)
+        Call up(Me, e.KeyCode)
     End Sub
 
     Private Sub КнопкаДа_GotFocus(sender As Object, e As EventArgs) Handles КнопкаДа.GotFocus

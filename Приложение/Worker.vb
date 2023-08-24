@@ -45,7 +45,7 @@ Public Class Worker
 
         queryString = ""
         queryString = sqlQueryString.update_status_list(Convert.ToString(worker_struct.kod), Convert.ToString(worker_struct.worker_check))
-        mySQLConnector.ОтправитьВбдЗапись(queryString, 1)
+        mySQLConnector.sendQuery(queryString, 1)
 
     End Sub
 
@@ -67,7 +67,7 @@ Public Class Worker
         mySQLConnector.opdateArgument()
         queryString = ""
         queryString = sqlQueryString.loadWorker()
-        listWorkers = mySQLConnector.ЗагрузитьИзMySQLвListAll(queryString, 1)
+        listWorkers = mySQLConnector.mySqlToListAll(queryString, 1)
 
     End Sub
 
@@ -81,7 +81,7 @@ Public Class Worker
             Return False
         End If
         queryString = sqlQueryString.removeWorker(Convert.ToString(worker_struct.kod))
-        mySQLConnector.ОтправитьВбдЗапись(queryString, 1)
+        mySQLConnector.sendQuery(queryString, 1)
         Return True
 
     End Function
@@ -111,7 +111,7 @@ Public Class Worker
         'End If
         queryString = ""
         queryString = sqlQueryString.addWorker(worker_struct, worker_struct.worker_type)
-        mySQLConnector.ОтправитьВбдЗапись(queryString, 1)
+        mySQLConnector.sendQuery(queryString, 1)
 
         queryString = sqlQueryString.loadKodWorker(worker_struct.name)
         result = mySQLConnector.ЗагрузитьИзMySQLвОдномерныйМассив(queryString, 1, 0)
@@ -132,7 +132,7 @@ Public Class Worker
         'End If
         queryString = ""
         queryString = sqlQueryString.updateWorker(worker_struct, worker_struct.worker_type)
-        mySQLConnector.ОтправитьВбдЗапись(queryString, 1)
+        mySQLConnector.sendQuery(queryString, 1)
 
     End Sub
 

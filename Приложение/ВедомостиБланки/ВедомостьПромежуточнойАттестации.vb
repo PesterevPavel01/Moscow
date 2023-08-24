@@ -12,15 +12,15 @@
         Dim ДокументВорд, ДанныеСлушателей, Группа, Таблица
         Dim ПутьККаталогуСРесурсами, ПутьКШаблону
         Dim Дата As Date, ДатаВПриказ As String
-        Dim СтрокаЗапроса As String
+        Dim queryString As String
 
         Дата = АСформироватьПриказ.ДатаПриказа.Value
 
         ДатаВПриказ = Chr(34) & Format(Дата, "dd") & Chr(34) & " " & месяцРП(Format(Дата, "MMMM")) & " " & Format(Дата, "yyyy")
 
-        СтрокаЗапроса = vedomPromAtt__loadListSlush(ААОсновная.prikazKodGroup)
+        queryString = vedomPromAtt__loadListSlush(MainForm.prikazKodGroup)
 
-        ДанныеСлушателей = ЗагрузитьИзБазы.ЗагрузитьИзБазы(СтрокаЗапроса)
+        ДанныеСлушателей = MainForm.mySqlConnect.loadMySqlToArray(queryString, 1)
 
         If ДанныеСлушателей(0, 0) = "нет записей" Then
             предупреждение.текст.Text = "Нет данных для отображения"
@@ -28,8 +28,8 @@
             Exit Sub
         End If
 
-        СтрокаЗапроса = load_prog_kurator(ААОсновная.prikazKodGroup)
-        Группа = ЗагрузитьИзБазы.ЗагрузитьИзБазы(СтрокаЗапроса)
+        queryString = load_prog_kurator(MainForm.prikazKodGroup)
+        Группа = MainForm.mySqlConnect.loadMySqlToArray(queryString, 1)
 
         If Группа(0, 0) = "нет записей" Then
             предупреждение.текст.Text = "Нет данных для отображения"
@@ -55,13 +55,13 @@
 
         For i = 0 To UBound(ЧекнутыеМодули, 2)
             Dim ocenka
-            СтрокаЗапроса = select_moduls_ocenka(ААОсновная.prikazKodGroup, ЧекнутыеМодули(0, i))
+            queryString = select_moduls_ocenka(MainForm.prikazKodGroup, ЧекнутыеМодули(0, i))
 
-            ocenka = ЗагрузитьИзБазы.ЗагрузитьИзБазы(СтрокаЗапроса)
+            ocenka = MainForm.mySqlConnect.loadMySqlToArray(queryString, 1)
 
             ДокументВорд = ПриложениеВорд.Documents.Open(ПутьКШаблону, ReadOnly:=True)
 
-            Вспомогательный.savePrikazBlank(ДокументВорд, ААОсновная.prikazKodGroup, ВидПриказа & " " & ЧекнутыеМодули(0, i), ПутьККаталогуСРесурсами, "Ведомости")
+            Вспомогательный.savePrikazBlank(ДокументВорд, MainForm.prikazKodGroup, ВидПриказа & " " & ЧекнутыеМодули(0, i), ПутьККаталогуСРесурсами, "Ведомости")
 
             предупреждение.текст.Visible = False
             предупреждение.TextBox.Visible = True
@@ -88,7 +88,7 @@
             Вспомогательный.ЗаменитьТекстВОбластиДокументаВорд(ДокументВорд.Range, "$Программа$", Группа(0, 0), 2)
 
             If Not Len(ЧекнутыеМодули(1, i)) < 5 Then
-                Вспомогательный.ЗаменитьТекстВОбластиДокументаВорд(ДокументВорд.Range, "$И.О.Ответств$", перевернуть(ЧекнутыеМодули(1, i)), 2)
+                Вспомогательный.ЗаменитьТекстВОбластиДокументаВорд(ДокументВорд.Range, "$И.О.Ответств$", rotate(ЧекнутыеМодули(1, i)), 2)
             End If
 
             Вспомогательный.ЗаменитьТекстВОбластиДокументаВорд(ДокументВорд.Range, "$Модуль$", ЧекнутыеМодули(0, i), 2)

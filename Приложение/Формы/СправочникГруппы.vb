@@ -4,33 +4,33 @@
     Public numberGr As String
     Public kod As Integer
     Public year As Integer
-    Public ИнформацияОГруппе
+    Public infoAboutGroup
 
-    Public gruppaData As New Gruppa.strGruppa
+    Public gruppaData As New Group.strGruppa
 
 
-    Private Sub СтрокаПоиска_TextChanged(sender As Object, e As EventArgs) Handles СтрокаПоиска.TextChanged
+    Private Sub searchRow_TextChanged(sender As Object, e As EventArgs) Handles СтрокаПоиска.TextChanged
 
-        Me.ПоискПоСтрокеПоиска()
+        search()
 
     End Sub
 
-    Sub ПоискПоСтрокеПоиска()
+    Sub search()
 
         Label2.Visible = False
-        Dim ПолеДляПоиска As String, ПолеДляСортировки As String
+        Dim serchCol As String, sortCol As String
 
-        ПолеДляСортировки = Интерфейс.ИмяВключенногоЧекбоксыНаФорме(НастройкаСортировкиГрупп)
+        sortCol = Интерфейс.nameCheckedCheckBox(sortSetts)
 
-        ПолеДляПоиска = Интерфейс.ИмяВключенногоЧекбоксыНаФорме(НастройкаПоискаГрупп)
+        serchCol = Интерфейс.nameCheckedCheckBox(НастройкаПоискаГрупп)
 
         If СтрокаПоиска.Text = "" Then
             ListViewСписокГрупп.Items.Clear()
-            ОбновитьГруппы()
+            updateGroupList()
         Else
             Label3.Visible = False
-            massiv = SQLПоиск(СтрокаПоиска.Text, "`group`", "Код, Номер, Программа, Куратор, ДатаНЗ, ДатаКЗ", ПолеДляПоиска, ПолеДляСортировки & Интерфейс.ВидСортировки(Me, НастройкаСортировкиГрупп.НажатПБГр))
-            Call ЗаписьВListView.ЗаписьВListView(False, False, ListViewСписокГрупп, massiv, 0, 1, 2, 3, 4, 5)
+            massiv = sqlSearch(СтрокаПоиска.Text, "`group`", "Код, Номер, Программа, Куратор, ДатаНЗ, ДатаКЗ", serchCol, sortCol & Интерфейс.sortType(sortSetts.НажатПБГр))
+            Call UpdateListView.updateListView(False, False, ListViewСписокГрупп, massiv, 0, 1, 2, 3, 4, 5)
         End If
 
         СтрокаПоиска.TabIndex = Len(СтрокаПоиска.Text)
@@ -49,49 +49,68 @@
 
 
         '_________________________________________делит
-        If e.KeyCode = 46 Then
+        If e.KeyCode = Keys.Delete Then
 
             element = ListViewСписокГрупп.SelectedItems.Count
 
             ind = ListViewСписокГрупп.SelectedItems.Item(0).SubItems(1).Text
             kod = ListViewСписокГрупп.SelectedItems.Item(0).SubItems(0).Text
 
-            If Not ЗаписьВБазу.ПроверкаСовпаденийЧислоДА_2("`group`", "Код", kod) = 2 Then
+            InsertIntoDataBase.argumentClear()
+            InsertIntoDataBase.argument.nameTable = "`group`"
+            InsertIntoDataBase.argument.firstName = "Код"
+            InsertIntoDataBase.argument.firstValue = kod
+
+            If Not InsertIntoDataBase.checkUniq_No2() = 2 Then
 
                 MsgBox("Ошибка. Запись уже удалена. Нажмите кнопку Загрузить из базы, чтобы обновить список")
                 GoTo Конец
 
             End If
 
-            'ФормаДаНетУдалить.Label1.Text = "`group` № " & ind
             ФормаДаНетУдалить.текстДаНет.Text = "Удалить запись?"
             ФормаДаНетУдалить.ShowDialog()
 
 
             If ФормаДаНетУдалить.НажатаКнопкаДа Then
 
-                If ЗаписьВБазу.ПроверкаСовпаденийЧислоДА_2("педнагрузка", "Kod", kod) = 2 Then
+                InsertIntoDataBase.argumentClear()
+                InsertIntoDataBase.argument.nameTable = "pednagruzka"
+                InsertIntoDataBase.argument.firstName = "Kod"
+                InsertIntoDataBase.argument.firstValue = kod
 
-                    ЗаписьВБазу.УдалитьЗаписиСЧислом("педнагрузка", "Kod", kod)
+                If InsertIntoDataBase.checkUniq_No2() = 2 Then
+
+                    InsertIntoDataBase.deleteFromDB_NumberArg()
 
                 End If
 
-                If ЗаписьВБазу.ПроверкаСовпаденийЧислоДА_2("group_list", "Kod", kod) = 2 Then
+                InsertIntoDataBase.argumentClear()
+                InsertIntoDataBase.argument.nameTable = "group_list"
+                InsertIntoDataBase.argument.firstName = "Kod"
+                InsertIntoDataBase.argument.firstValue = kod
 
-                    ЗаписьВБазу.УдалитьЗаписиСЧислом("group_list", "Kod", kod)
+                If InsertIntoDataBase.checkUniq_No2() = 2 Then
+
+                    InsertIntoDataBase.deleteFromDB_NumberArg()
 
                 End If
 
-                ЗаписьВБазу.УдалитьЗаписиСЧислом("`group`", "Код", kod)
+                InsertIntoDataBase.argumentClear()
+                InsertIntoDataBase.argument.nameTable = "`group`"
+                InsertIntoDataBase.argument.firstName = "Код"
+                InsertIntoDataBase.argument.firstValue = kod
 
-                If Not ЗаписьВБазу.ПроверкаСовпаденийЧислоДА_2("`group`", "Код", kod) = 2 Then
+                InsertIntoDataBase.deleteFromDB_NumberArg()
+
+                If Not InsertIntoDataBase.checkUniq_No2() = 2 Then
 
                     Label2.Visible = True
                     Label2.Text = "Группа № " & ind & " была удалена"
 
                 End If
 
-                ОбновитьГруппы()
+                updateGroupList()
 
 
             End If
@@ -125,7 +144,7 @@
 
         If Not ListViewСписокГрупп.SelectedItems.Item(0).SubItems(1).Text = "удалено" Then
 
-            СписокСлушателейВГруппе.ListViewСписокСлушателей.Items.Clear()
+            СписокСлушателейВГруппе.ListViewStudentsList.Items.Clear()
 
             numberGr = ListViewСписокГрупп.SelectedItems.Item(0).SubItems(1).Text
 
@@ -144,8 +163,8 @@
 
             Label2.Visible = False
 
-            ИнформацияОГруппе = ААОсновная.mySqlConnect.ЗагрузитьИзБДMySQLвМассив(СтрокаЗапроса, 1)
-            If CStr(ИнформацияОГруппе(0, 0)) = "нет записей" Then
+            infoAboutGroup = MainForm.mySqlConnect.loadMySqlToArray(СтрокаЗапроса, 1)
+            If CStr(infoAboutGroup(0, 0)) = "нет записей" Then
                 MsgBox("Группа была изменена, обновите данные нажатием кнопки 'Загрузить из базы' ")
                 Exit Sub
             End If
@@ -247,7 +266,7 @@
 
     Private Sub СправочникГруппы_Shown(sender As Object, e As EventArgs) Handles Me.Shown
         openFormGroupp()
-        ОбновитьГруппы()
+        updateGroupList()
     End Sub
 
     Private Sub PictureBox1_Click(sender As Object, e As EventArgs) Handles PictureBox1.Click
@@ -258,34 +277,34 @@
 
     Private Sub PictureBox2_Click(sender As Object, e As EventArgs) Handles PictureBox2.Click
 
-        НастройкаСортировкиГрупп.ShowDialog()
+        sortSetts.ShowDialog()
 
     End Sub
 
     Private Sub СГУровеньКвалификации_SelectedIndexChanged(sender As Object, e As EventArgs) Handles СГУровеньКвалификации.SelectedIndexChanged
         If СГУровеньКвалификации.Text = "повышение квалификации" Then
-            ААОсновная.cvalific = ААОсновная.PK
+            MainForm.cvalific = MainForm.PK
         ElseIf СГУровеньКвалификации.Text = "профессиональное обучение" Then
-            ААОсновная.cvalific = ААОсновная.PO
+            MainForm.cvalific = MainForm.PO
         ElseIf СГУровеньКвалификации.Text = "профессиональная переподготовка" Then
-            ААОсновная.cvalific = ААОсновная.PP
+            MainForm.cvalific = MainForm.PP
         End If
         openFormGroupp()
-        ОбновитьГруппы()
+        updateGroupList()
     End Sub
 
-    Public Sub ОбновитьГруппы()
+    Public Sub updateGroupList()
 
         Dim Str As String, ПолеДляПоиска, ПолеДляСортировки As String
 
-        ПолеДляСортировки = Интерфейс.ИмяВключенногоЧекбоксыНаФорме(НастройкаСортировкиГрупп)
-        ПолеДляПоиска = Интерфейс.ИмяВключенногоЧекбоксыНаФорме(НастройкаПоискаГрупп)
+        ПолеДляСортировки = Интерфейс.nameCheckedCheckBox(sortSetts)
+        ПолеДляПоиска = Интерфейс.nameCheckedCheckBox(НастройкаПоискаГрупп)
 
-        If ААОсновная.cvalific = ААОсновная.PK Then
+        If MainForm.cvalific = MainForm.PK Then
             Me.СГУровеньКвалификации.Text = "повышение квалификации"
-        ElseIf ААОсновная.cvalific = ААОсновная.PO Then
+        ElseIf MainForm.cvalific = MainForm.PO Then
             Me.СГУровеньКвалификации.Text = "профессиональное обучение"
-        ElseIf ААОсновная.cvalific = ААОсновная.PP Then
+        ElseIf MainForm.cvalific = MainForm.PP Then
             Me.СГУровеньКвалификации.Text = "профессиональная переподготовка"
         End If
 
@@ -293,15 +312,15 @@
         Me.СтрокаПоиска.Visible = True
         Me.Label1.Visible = True
 
-        If ААОсновная.cvalific = ААОсновная.PK Or ААОсновная.cvalific = ААОсновная.PP Then
-            Str = load_spr_group(Me.СГУровеньКвалификации.Text, ПолеДляСортировки & Интерфейс.ВидСортировки(Me, НастройкаСортировкиГрупп.НажатПБГр), Me.yearSpravochnikGr.Text)
+        If MainForm.cvalific = MainForm.PK Or MainForm.cvalific = MainForm.PP Then
+            Str = load_spr_group(Me.СГУровеньКвалификации.Text, ПолеДляСортировки & Интерфейс.sortType(sortSetts.НажатПБГр), Me.yearSpravochnikGr.Text)
         Else
-            Str = load_spr_group(Me.СГУровеньКвалификации.Text, ПолеДляСортировки & Интерфейс.ВидСортировки(Me, НастройкаСортировкиГрупп.НажатПБГр))
+            Str = load_spr_group(Me.СГУровеньКвалификации.Text, ПолеДляСортировки & Интерфейс.sortType(sortSetts.НажатПБГр))
         End If
 
-        Me.massiv = ААОсновная.mySqlConnect.ЗагрузитьИзБДMySQLвМассив(Str, 1)
+        massiv = MainForm.mySqlConnect.loadMySqlToArray(Str, 1)
 
-        ЗаписьВListView.ЗаписьВListView(False, False, Me.ListViewСписокГрупп, Me.massiv, 0, 1, 2, 3, 4, 5)
+        UpdateListView.updateListView(False, False, Me.ListViewСписокГрупп, Me.massiv, 0, 1, 2, 3, 4, 5)
         Me.СтрокаПоиска.Text = ""
 
         Try
@@ -312,7 +331,7 @@
 
     End Sub
     Sub openFormGroupp()
-        If ААОсновная.cvalific = ААОсновная.PO Then
+        If MainForm.cvalific = MainForm.PO Then
             Me.yearSpravochnikGr.Visible = False
         Else
             Me.yearSpravochnikGr.Visible = True
@@ -321,10 +340,10 @@
     End Sub
 
     Private Sub yearSpravochnikGr_SelectedIndexChanged(sender As Object, e As EventArgs) Handles yearSpravochnikGr.SelectedIndexChanged
-        ОбновитьГруппы()
+        updateGroupList()
     End Sub
 
     Private Sub yearSpravochnikGr_TextChanged(sender As Object, e As EventArgs) Handles yearSpravochnikGr.TextChanged
-        ОбновитьГруппы()
+        updateGroupList()
     End Sub
 End Class

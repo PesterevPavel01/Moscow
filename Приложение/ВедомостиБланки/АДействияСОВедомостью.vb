@@ -17,56 +17,57 @@ Module АДействияСОВедомостью
         Next
 
     End Sub
-    Function ОпределитьСНИЛС(номер As Integer) As String
+    Function loadSnils(номер As Integer) As String
         For СчетчикСтрок = 0 To UBound(СписокСлушателей, 2)
             If CDbl(СписокСлушателей(UBound(СписокСлушателей, 1), СчетчикСтрок)) = номер Then
-                ОпределитьСНИЛС = СписокСлушателей(UBound(СписокСлушателей, 1) - 1, СчетчикСтрок)
+                loadSnils = СписокСлушателей(UBound(СписокСлушателей, 1) - 1, СчетчикСтрок)
                 Exit For
             End If
         Next
     End Function
     Sub СохранитьОценки(Ведомость As Object, kod As Integer)
-        Dim Запросы, ФИО, Проверочный
-        Dim СтрокаЗапроса, Снилс As String
-        Dim Счетчик As Integer = 0, СчетчикСтрок As Integer
-        ReDim Запросы(3)
+        Dim querys, fio, checkArray
+        Dim queryString, snils As String
+        Dim counter As Integer = 0, rowsCounter As Integer
+        ReDim querys(3)
         Dim argument As String()
         ReDim argument(12)
 
-        СчетчикСтрок = Ведомость.Rows.Count
-        For Счетчик = 0 To СчетчикСтрок - 1
-            If IsNothing(ОценочнаяВедомость.ТаблицаВедомость.Rows(Счетчик).Cells(1).Value) Then
+        rowsCounter = Ведомость.Rows.Count
+
+        For counter = 0 To rowsCounter - 1
+            If IsNothing(ОценочнаяВедомость.ТаблицаВедомость.Rows(counter).Cells(1).Value) Then
                 Exit For
             End If
-            Снилс = ОпределитьСНИЛС(CDbl(ОценочнаяВедомость.ТаблицаВедомость.Rows(Счетчик).Cells(0).Value))
-            ФИО = Split(ОценочнаяВедомость.ТаблицаВедомость.Rows(Счетчик).Cells(1).Value, " ")
+            snils = loadSnils(CDbl(ОценочнаяВедомость.ТаблицаВедомость.Rows(counter).Cells(0).Value))
+            fio = Split(ОценочнаяВедомость.ТаблицаВедомость.Rows(counter).Cells(1).Value, " ")
             Try
-                СтрокаЗапроса = oVedom__checkSlush(Снилс, Convert.ToString(kod))
+                queryString = oVedom__checkStudent(Convert.ToString(kod), snils)
             Catch ex As Exception
                 Continue For
             End Try
-            Проверочный = ЗагрузитьИзБазы.ЗагрузитьИзБазы(СтрокаЗапроса)
-            If Проверочный(0, 0) = "нет записей" Then
+            checkArray = MainForm.mySqlConnect.loadMySqlToArray(queryString, 1)
+            If checkArray(0, 0) = "нет записей" Then
                 Continue For
             End If
 
             For count As Int16 = 0 To 9
 
-                argument(count) = Convert.ToString(ОценочнаяВедомость.ТаблицаВедомость.Rows(Счетчик).Cells(count + 2).Value)
+                argument(count) = Convert.ToString(ОценочнаяВедомость.ТаблицаВедомость.Rows(counter).Cells(count + 2).Value)
 
             Next
 
-            argument(10) = Снилс
+            argument(10) = snils
             argument(11) = Convert.ToString(kod)
 
             Try
-                СтрокаЗапроса = oVedom__updateOcenki(argument)
+                queryString = oVedom__updateOcenki(argument)
             Catch ex As Exception
                 предупреждение.текст.Text = "Информация не была сохранена"
                 ОткрытьФорму(предупреждение)
                 Exit Sub
             End Try
-            ЗаписьВБазу.ЗаписьВБазу(СтрокаЗапроса)
+            MainForm.mySqlConnect.sendQuery(queryString, 1)
         Next
 
 

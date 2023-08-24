@@ -24,20 +24,20 @@ Module OtchetExcell
         Dim listData As List(Of List(Of String))
         Dim hours
         Dim counter, counter2, counter3, СчетчикПр As Integer
-        Dim queryString, DateStart, DateEnd, path As String
+        Dim sqlQuery, DateStart, DateEnd, path As String
 
-        DateStart = ААОсновная.mySqlConnect.dateToFormatMySQL(ААОсновная.ДатаНачалаОтчета.Value.ToShortDateString)
-        DateEnd = ААОсновная.mySqlConnect.dateToFormatMySQL(ААОсновная.ДатаКонцаОтчета.Value.ToShortDateString)
+        DateStart = MainForm.mySqlConnect.dateToFormatMySQL(MainForm.ДатаНачалаОтчета.Value.ToShortDateString)
+        DateEnd = MainForm.mySqlConnect.dateToFormatMySQL(MainForm.ДатаКонцаОтчета.Value.ToShortDateString)
 
-        queryString = selectCol_otchet_info(DateStart, DateEnd)
-        groupsArray = ЗагрузитьИзБазы.ЗагрузитьИзБазы(queryString)
+        sqlQuery = selectCol_otchet_info(DateStart, DateEnd)
+        groupsArray = MainForm.mySqlConnect.loadMySqlToArray(sqlQuery, 1)
 
-        queryString = selectCol_chas()
-        hours = ЗагрузитьИзБазы.ЗагрузитьИзБазы(queryString)
+        sqlQuery = selectCol_chas()
+        hours = MainForm.mySqlConnect.loadMySqlToArray(sqlQuery, 1)
 
 
-        queryString = SQLString_OtchetMassSlush(DateStart, DateEnd)
-        list = ЗагрузитьИзБазы.ЗагрузитьИзБазы(queryString)
+        sqlQuery = SQLString_OtchetMassSlush(DateStart, DateEnd)
+        list = MainForm.mySqlConnect.loadMySqlToArray(sqlQuery, 1)
 
         '------------------------------------------------------------------------------------------------------
 
@@ -45,9 +45,9 @@ Module OtchetExcell
             MsgBox("Не найденно групп с зарегистрированными слушателями")
             Exit Sub
         End If
-        queryString = SQLString_OtchetMassDataSlush(DateStart, DateEnd)
+        sqlQuery = SQLString_OtchetMassDataSlush(DateStart, DateEnd)
 
-        studentList = ЗагрузитьИзБазы.ЗагрузитьИзБазы(queryString)
+        studentList = MainForm.mySqlConnect.loadMySqlToArray(sqlQuery, 1)
 
         counter = 0
 
@@ -110,11 +110,11 @@ Module OtchetExcell
 
         resultList = УбратьПустотыВМассиве.УбратьПустотыВМассиве(resultList)
 
-        ААОсновная.Name = "Отчет" & Date.Now.ToShortDateString & "_" & ААОсновная.НомерОтчета.ToString & ".xlsx"
+        MainForm.Name = "Отчет" & Date.Now.ToShortDateString & "_" & MainForm.НомерОтчета.ToString & ".xlsx"
         path = Вспомогательный.resourcesPath
         path = path & "Отчеты\"
 
-        excellObjects = Вспомогательный.СозданиеКнигиЭксельИЛИОшибкаВ0(path, ААОсновная.Name, ААОсновная.НомерОтчета)
+        excellObjects = Вспомогательный.СозданиеКнигиЭксельИЛИОшибкаВ0(path, MainForm.Name, MainForm.НомерОтчета)
 
         If excellObjects(0).ToString = "Ошибка" Then
             Exit Sub
@@ -124,13 +124,13 @@ Module OtchetExcell
 
 ПослеСохранения:
 
-        ААОсновная.НомерОтчета = ААОсновная.НомерОтчета + 1
+        MainForm.НомерОтчета = MainForm.НомерОтчета + 1
 
-        If ААОсновная.ОтчетРуководителя.Checked Then
+        If MainForm.ОтчетРуководителя.Checked Then
             excellSheet = excellWorkBook.Worksheets.Add
             excellSheet.Name = "ОтчетРуководителя"
-            queryString = WindowsApp2.SQLString_OtchetRuk(DateStart, DateEnd)
-            listData = ААОсновная.mySqlConnect.ЗагрузитьИзMySQLвListAll(queryString, 1)
+            sqlQuery = WindowsApp2.SQLString_OtchetRuk(DateStart, DateEnd)
+            listData = MainForm.mySqlConnect.mySqlToListAll(sqlQuery, 1)
 
             If Not listData.Count = 0 Then
                 createORuk(excellSheet, listData, resultList, groupsArray)
@@ -141,23 +141,23 @@ Module OtchetExcell
 
         End If
 
-        If ААОсновная.ChРМАНПО.Checked Then
-            queryString = WindowsApp2.SQLString_OtchetRMANPO(DateStart, DateEnd)
-            listData = ААОсновная.mySqlConnect.ЗагрузитьИзMySQLвListAll(queryString, 1)
+        If MainForm.ChРМАНПО.Checked Then
+            sqlQuery = WindowsApp2.SQLString_OtchetRMANPO(DateStart, DateEnd)
+            listData = MainForm.mySqlConnect.mySqlToListAll(sqlQuery, 1)
 
             If Not listData.Count = 0 Then
-                CreateRMANPO(excellApp, excellWorkBook, listData, resultList, groupsArray, MonthName(ААОсновная.ДатаКонцаОтчета.Value.Month))
+                CreateRMANPO(excellApp, excellWorkBook, listData, resultList, groupsArray, MonthName(MainForm.ДатаКонцаОтчета.Value.Month))
             Else
                 предупреждение.текст.Text = "Нет информации отвечающей условиям отбора для отчета руководителя"
                 предупреждение.ShowDialog()
             End If
         End If
 
-        If ААОсновная.ChСводПоКурсам.Checked Then
+        If MainForm.ChСводПоКурсам.Checked Then
             excellSheet = excellWorkBook.Worksheets.Add
             excellSheet.Name = "СводПоКурсам"
-            queryString = WindowsApp2.SQLString_OtchetKurs(DateStart, DateEnd, "курс")
-            otchetList = ААОсновная.mySqlConnect.ЗагрузитьИзБДMySQLвМассив(queryString, 1)
+            sqlQuery = WindowsApp2.SQLString_OtchetKurs(DateStart, DateEnd, "курс")
+            otchetList = MainForm.mySqlConnect.loadMySqlToArray(sqlQuery, 1)
 
             If Not otchetList(0, 0).ToString = "нет записей" Then
                 createSPK(excellSheet, rotateArray(otchetList), "СводПоКурсам")
@@ -167,11 +167,11 @@ Module OtchetExcell
             End If
         End If
 
-        If ААОсновная.СводПоСпец.Checked Then
+        If MainForm.СводПоСпец.Checked Then
             excellSheet = excellWorkBook.Worksheets.Add
             excellSheet.Name = "СводПоСпециальностям"
-            queryString = WindowsApp2.SQLString_OtchetKurs(DateStart, DateEnd, "специальность")
-            otchetList = ААОсновная.mySqlConnect.ЗагрузитьИзБДMySQLвМассив(queryString, 1)
+            sqlQuery = WindowsApp2.SQLString_OtchetKurs(DateStart, DateEnd, "специальность")
+            otchetList = MainForm.mySqlConnect.loadMySqlToArray(sqlQuery, 1)
 
             If Not otchetList.ToString = "нет записей" Then
                 createSPK(excellSheet, rotateArray(otchetList), "СводПоСпециальностям")
@@ -181,11 +181,11 @@ Module OtchetExcell
             End If
         End If
 
-        If ААОсновная.СводПоОрганиз.Checked Then
+        If MainForm.СводПоОрганиз.Checked Then
             excellSheet = excellWorkBook.Worksheets.Add
             excellSheet.Name = "ПереченьОрганизаций"
-            queryString = SQLString_OtchetOrg(DateStart, DateEnd)
-            otchetList = ААОсновная.mySqlConnect.ЗагрузитьИзБДMySQLвМассив(queryString, 1)
+            sqlQuery = SQLString_OtchetOrg(DateStart, DateEnd)
+            otchetList = MainForm.mySqlConnect.loadMySqlToArray(sqlQuery, 1)
 
             If Not otchetList.ToString = "нет записей" Then
                 createSPO(excellSheet, otchetList)
@@ -195,20 +195,20 @@ Module OtchetExcell
             End If
         End If
 
-        If ААОсновная.БюджетВбюдж.Checked Then
+        If MainForm.БюджетВбюдж.Checked Then
             excellSheet = excellWorkBook.Worksheets.Add
             excellSheet.Name = "БюджетВнебюджет"
 
             ReDim otchetList(2)
-            queryString = SQLString_OtchetBud_Vbud(DateStart, DateEnd, "полный")
-            listData = ААОсновная.mySqlConnect.ЗагрузитьИзMySQLвListAll(queryString, 1)
+            sqlQuery = SQLString_OtchetBud_Vbud(DateStart, DateEnd, "полный")
+            listData = MainForm.mySqlConnect.mySqlToListAll(sqlQuery, 1)
             otchetList(0) = listData
 
-            queryString = SQLString_OtchetBud_Vbud(DateStart, DateEnd, "бюджет")
-            otchetList(1) = ААОсновная.mySqlConnect.ЗагрузитьИзMySQLвListAll(queryString, 1)
+            sqlQuery = SQLString_OtchetBud_Vbud(DateStart, DateEnd, "бюджет")
+            otchetList(1) = MainForm.mySqlConnect.mySqlToListAll(sqlQuery, 1)
 
-            queryString = SQLString_OtchetBud_Vbud(DateStart, DateEnd, "внебюджет")
-            otchetList(2) = ААОсновная.mySqlConnect.ЗагрузитьИзMySQLвListAll(queryString, 1)
+            sqlQuery = SQLString_OtchetBud_Vbud(DateStart, DateEnd, "внебюджет")
+            otchetList(2) = MainForm.mySqlConnect.mySqlToListAll(sqlQuery, 1)
 
             If Not listData.Count = 0 Then
                 createBVB(excellSheet, otchetList, hours)
@@ -218,13 +218,13 @@ Module OtchetExcell
             End If
         End If
 
-        If ААОсновная.ОтчетПеднагрузка.Checked Then
+        If MainForm.ОтчетПеднагрузка.Checked Then
 
             ПеднагрузкаОтчет.pednagruzka("Педнагрузка", excellApp, excellWorkBook, DateStart, DateEnd)
 
         End If
 
-        If ААОсновная.chPednagrExt.Checked Then
+        If MainForm.chPednagrExt.Checked Then
 
             ПеднагрузкаОтчет.pednagrExtended(excellApp, excellWorkBook, DateStart, DateEnd)
 
