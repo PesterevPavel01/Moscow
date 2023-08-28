@@ -157,6 +157,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationEvents.vb" />
+    <Compile Include="SwichNumbers.vb" />
+    <Compile Include="Приложение\SorterSetts.vb" />
+    <Compile Include="Приложение\SwitchCvalification.vb" />
     <Compile Include="Приложение\User_controls\user_comboBox.Designer.vb">
       <DependentUpon>user_comboBox.vb</DependentUpon>
     </Compile>
@@ -175,8 +178,8 @@
     <Compile Include="Приложение\Group.vb" />
     <Compile Include="Приложение\Prikaz.vb" />
     <Compile Include="Приложение\Slushatel.vb" />
-    <Compile Include="Приложение\БазаД\MySQLConnect.vb" />
-    <Compile Include="Приложение\БазаД\QueryString.vb" />
+    <Compile Include="Приложение\dataBase\MySQLConnect.vb" />
+    <Compile Include="Приложение\dataBase\QueryString.vb" />
     <Compile Include="Приложение\Интерфейс\ListViewItemComparer.vb" />
     <Compile Include="Приложение\Интерфейс\ListViewLib.vb" />
     <Compile Include="Приложение\ПриказыКниги\ПП_ПриложениеКДиплому.vb" />
@@ -228,10 +231,10 @@
     <Compile Include="Приложение\Формы\НастройкаСортировкиГрупп.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Приложение\Формы\НастройкаПоискаГрупп.Designer.vb">
-      <DependentUpon>НастройкаПоискаГрупп.vb</DependentUpon>
+    <Compile Include="Приложение\Формы\group__serchSettings.Designer.vb">
+      <DependentUpon>group__serchSettings.vb</DependentUpon>
     </Compile>
-    <Compile Include="Приложение\Формы\НастройкаПоискаГрупп.vb">
+    <Compile Include="Приложение\Формы\group__serchSettings.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Приложение\Формы\НастройкаПоискаСлушателей.Designer.vb">
@@ -260,7 +263,7 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Приложение\ВедомостиБланки\Бланки.vb" />
-    <Compile Include="Приложение\Интерфейс\Интерфейс.vb" />
+    <Compile Include="Приложение\Интерфейс\interfaceMod.vb" />
     <Compile Include="Приложение\Интерфейс\Вспомогательный.vb" />
     <Compile Include="Приложение\Формы\Предупреждение.Designer.vb">
       <DependentUpon>Предупреждение.vb</DependentUpon>
@@ -318,7 +321,7 @@
     <Compile Include="Приложение\Формы\ФормаДаНет.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Приложение\БазаД\ИдентифицироватьБазу.vb" />
+    <Compile Include="Приложение\dataBase\ИдентифицироватьБазу.vb" />
     <Compile Include="Приложение\Формы\ФормаСписок.Designer.vb">
       <DependentUpon>ФормаСписок.vb</DependentUpon>
     </Compile>
@@ -331,8 +334,8 @@
     <Compile Include="Приложение\Формы\НоваяГруппа.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Приложение\БазаД\InsertIntoDataBase.vb" />
-    <Compile Include="Приложение\Интерфейс\ДобавитьРубашку.vb" />
+    <Compile Include="Приложение\dataBase\InsertIntoDataBase.vb" />
+    <Compile Include="Приложение\Интерфейс\addMask.vb" />
     <Compile Include="Приложение\Формы\СправочникГруппы.Designer.vb">
       <DependentUpon>СправочникГруппы.vb</DependentUpon>
     </Compile>
@@ -354,7 +357,7 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Приложение\Интерфейс\АнализСнилс.vb" />
-    <Compile Include="Приложение\БазаД\Поиск.vb" />
+    <Compile Include="Приложение\dataBase\Search.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -386,8 +389,8 @@
     <EmbeddedResource Include="Приложение\Формы\НастройкаСортировкиГрупп.resx">
       <DependentUpon>НастройкаСортировкиГрупп.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Приложение\Формы\НастройкаПоискаГрупп.resx">
-      <DependentUpon>НастройкаПоискаГрупп.vb</DependentUpon>
+    <EmbeddedResource Include="Приложение\Формы\group__serchSettings.resx">
+      <DependentUpon>group__serchSettings.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Приложение\Формы\НастройкаПоискаСлушателей.resx">
       <DependentUpon>НастройкаПоискаСлушателей.vb</DependentUpon>

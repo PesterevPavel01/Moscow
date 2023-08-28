@@ -110,11 +110,11 @@ Module OtchetExcell
 
         resultList = УбратьПустотыВМассиве.УбратьПустотыВМассиве(resultList)
 
-        MainForm.Name = "Отчет" & Date.Now.ToShortDateString & "_" & MainForm.НомерОтчета.ToString & ".xlsx"
+        MainForm.Name = "Отчет" & Date.Now.ToShortDateString & "_" & MainForm.orderNumber.ToString & ".xlsx"
         path = Вспомогательный.resourcesPath
         path = path & "Отчеты\"
 
-        excellObjects = Вспомогательный.СозданиеКнигиЭксельИЛИОшибкаВ0(path, MainForm.Name, MainForm.НомерОтчета)
+        excellObjects = Вспомогательный.СозданиеКнигиЭксельИЛИОшибкаВ0(path, MainForm.Name, MainForm.orderNumber)
 
         If excellObjects(0).ToString = "Ошибка" Then
             Exit Sub
@@ -124,7 +124,7 @@ Module OtchetExcell
 
 ПослеСохранения:
 
-        MainForm.НомерОтчета = MainForm.НомерОтчета + 1
+        MainForm.orderNumber = MainForm.orderNumber + 1
 
         If MainForm.ОтчетРуководителя.Checked Then
             excellSheet = excellWorkBook.Worksheets.Add

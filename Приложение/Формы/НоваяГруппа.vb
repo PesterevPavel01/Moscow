@@ -1,155 +1,161 @@
-﻿Imports System.Threading
+﻿Imports System.Reflection.Emit
+Imports System.Threading
+Imports Google.Protobuf.Reflection.FieldDescriptorProto.Types
+
 Public Class НоваяГруппа
 
-    Dim gruppa As New Group
+    Dim grup As New Group
     Public zakr As Boolean = False
-    Public вместоТаб As Integer = Keys.Down
-    Public вместоТаб2 As Integer = Keys.Up
+    Public alternateTab As Integer = Keys.Down
+    Public alternateTab2 As Integer = Keys.Up
     Dim SC As SynchronizationContext
     Dim secondThread As Thread
+    Public swichCvalification As SwitchCvalification
+    Public swichNumbers As SwichNumbers
 
     Public Sub setProgKod(kod As Integer)
 
-        gruppa.struct_gruppa.kodProgramm = kod
+        grup.struct_grup.kodProgram = kod
 
-        gruppa.struct_gruppa.flagAllListProgs = True
+        grup.struct_grup.flagAllListProgs = True
 
-        activateModuls(Me, НоваяГруппаПрограмма.Text, gruppa.struct_gruppa.kodProgramm)
+        activateModuls(Me, НоваяГруппаПрограмма.Text, grup.struct_grup.kodProgram)
 
-        gruppa.load_kol_chas()
+        grup.load_kol_chas()
 
-        НоваяГруппаКоличествоЧасов.Text = gruppa.struct_gruppa.kolChasov
+        НоваяГруппаКоличествоЧасов.Text = grup.struct_grup.kolChasov
 
     End Sub
 
     Public Function getProgKod() As Int16
 
-        Return gruppa.struct_gruppa.kodProgramm
+        Return grup.struct_grup.kodProgram
 
     End Function
 
     Private Sub qualification_Click(sender As Object, e As EventArgs) Handles Квалификация.Click
 
-        Сообщение.Visible = False
+        message.Visible = False
 
     End Sub
 
     Private Sub modul1_Click(sender As Object, e As EventArgs)
 
-        Сообщение.Visible = False
+        message.Visible = False
 
     End Sub
     Private Sub modul2_Click(sender As Object, e As EventArgs)
 
-        Сообщение.Visible = False
+        message.Visible = False
 
     End Sub
     Private Sub modul3_Click(sender As Object, e As EventArgs)
 
-        Сообщение.Visible = False
+        message.Visible = False
 
     End Sub
 
     Private Sub modul4_Click(sender As Object, e As EventArgs)
 
-        Сообщение.Visible = False
+        message.Visible = False
 
     End Sub
     Private Sub modul5_Click(sender As Object, e As EventArgs)
 
-        Сообщение.Visible = False
+        message.Visible = False
 
     End Sub
     Private Sub modul6_Click(sender As Object, e As EventArgs)
 
-        Сообщение.Visible = False
+        message.Visible = False
 
     End Sub
     Private Sub modul7_Click(sender As Object, e As EventArgs)
 
-        Сообщение.Visible = False
+        message.Visible = False
 
     End Sub
     Private Sub modul8_Click(sender As Object, e As EventArgs)
 
-        Сообщение.Visible = False
+        message.Visible = False
 
     End Sub
     Private Sub modul9_Click(sender As Object, e As EventArgs)
 
-        Сообщение.Visible = False
+        message.Visible = False
 
     End Sub
     Private Sub modul10_Click(sender As Object, e As EventArgs)
 
-        Сообщение.Visible = False
+        message.Visible = False
 
     End Sub
 
     Private Sub numbersHourse_Click(sender As Object, e As EventArgs) Handles НоваяГруппаКоличествоЧасов.Click
 
-        Сообщение.Visible = False
+        message.Visible = False
 
     End Sub
 
 
     Private Sub kurator_Click(sender As Object, e As EventArgs) Handles НоваяГруппаОтветственныйКуратор.Click
 
-        Сообщение.Visible = False
+        message.Visible = False
 
     End Sub
 
     Private Sub НоваягруппаОтветственныйЗаПрактику_Click(sender As Object, e As EventArgs) Handles НоваягруппаОтветственныйЗаПрактику.Click
 
-        Сообщение.Visible = False
+        message.Visible = False
 
     End Sub
 
     Private Sub speciality_Click(sender As Object, e As EventArgs) Handles НоваяГруппаСпециальность.Click
 
-        Сообщение.Visible = False
+        message.Visible = False
 
     End Sub
 
 
     Private Sub program_Click(sender As Object, e As EventArgs) Handles НоваяГруппаПрограмма.Click
 
-        Сообщение.Visible = False
+        message.Visible = False
 
     End Sub
 
 
     Private Sub formEducation_click(sender As Object, e As EventArgs) Handles НоваяГруппаФормаОбучения.Click
 
-        Сообщение.Visible = False
+        message.Visible = False
 
     End Sub
 
-    Private Sub save_Click(sender As Object, e As EventArgs) Handles Сохранить.Click
+    Private Sub save_Click(sender As Object, e As EventArgs) Handles saveButton.Click
 
         SC = SynchronizationContext.Current
 
-        Сохранить.Enabled = False
+        saveButton.Enabled = False
 
         ActiveControl = BtnFocus
-        Сообщение.Visible = False
+        message.Visible = False
 
-        If Not gruppa.formGroupValidation(Me) Then
-            Сохранить.Enabled = True
+        If Not grup.formGroupValidation(Me) Then
+            saveButton.Enabled = True
             Return
         End If
 
-        gruppa.struct_gruppa.nameForma = "НоваяГруппа"
+        grup.struct_grup.nameForm = "НоваяГруппа"
 
-        gruppa.saveParameters(Me)
+        grup.saveParameters(Me)
 
         secondThread = New Thread(AddressOf addGroup)
         secondThread.IsBackground = True
-        secondThread.Start(gruppa.struct_gruppa)
+        secondThread.Start(grup.struct_grup)
 
     End Sub
 
-    Sub addGroup(gruppa As Group.strGruppa)
+    Sub addGroup(grup As Group.strGruppa)
+
         Dim queryString As String
         Dim result
         Dim queryResult As Int16 = 0
@@ -157,9 +163,9 @@ Public Class НоваяГруппа
         InsertIntoDataBase.argumentClear()
         InsertIntoDataBase.argument.nameTable = "`group`"
         InsertIntoDataBase.argument.firstName = "Year(ДатаНЗ)"
-        InsertIntoDataBase.argument.firstValue = gruppa.yearNZ
+        InsertIntoDataBase.argument.firstValue = grup.yearNZ
         InsertIntoDataBase.argument.secondName = "Номер"
-        InsertIntoDataBase.argument.secondValue = gruppa.number
+        InsertIntoDataBase.argument.secondValue = grup.number
 
         queryResult = InsertIntoDataBase.checkUniq_No2()
 
@@ -169,25 +175,25 @@ Public Class НоваяГруппа
 
             If Not InsertIntoDataBase.removeDuplicates Then
 
-                SC.Send(AddressOf enabledButton, gruppa.number)
+                SC.Send(AddressOf enabledButton, grup.number)
                 Return
 
             End If
 
-            queryString = "SELECT Код FROM `group` WHERE Номер='" & gruppa.number & "' AND Year(ДатаНЗ) = " & gruppa.yearNZ
+            queryString = group__loadKodGroup(grup.number, Convert.ToString(grup.yearNZ))
             result = MainForm.mySqlConnect.loadMySqlToArray(queryString, 1)
 
-            gruppa.Kod = result(0, 0)
+            grup.Kod = result(0, 0)
 
-            queryString = "DELETE FROM group_list WHERE Kod = " & gruppa.Kod
+            queryString = "DELETE FROM group_list WHERE Kod = " & grup.Kod
 
             MainForm.mySqlConnect.sendQuery(queryString, 1)
 
-            queryString = WindowsApp2.updateGroup(gruppa)
+            queryString = updateGroup(grup)
 
             If queryString = "" Then
 
-                SC.Send(AddressOf enabledButton, gruppa.number)
+                SC.Send(AddressOf enabledButton, grup.number)
                 Exit Sub
 
             End If
@@ -196,19 +202,19 @@ Public Class НоваяГруппа
 
         ElseIf queryResult = 1 Then
 
-            queryString = WindowsApp2.insertIntoGroup(gruppa)
+            queryString = insertIntoGroup(grup)
 
             If queryString = "" Then
 
-                SC.Send(AddressOf enabledButton, gruppa.number)
+                SC.Send(AddressOf enabledButton, grup.number)
                 Exit Sub
 
             End If
 
         Else
 
-            SC.Send(AddressOf enabledButton, gruppa.number)
-            SC.Send(AddressOf endTreadErr, gruppa.number)
+            SC.Send(AddressOf enabledButton, grup.number)
+            SC.Send(AddressOf endTreadErr, grup.number)
 
         End If
 
@@ -217,183 +223,168 @@ Public Class НоваяГруппа
         InsertIntoDataBase.argumentClear()
         InsertIntoDataBase.argument.nameTable = "`group`"
         InsertIntoDataBase.argument.firstName = "Номер"
-        InsertIntoDataBase.argument.firstValue = gruppa.number
+        InsertIntoDataBase.argument.firstValue = grup.number
         InsertIntoDataBase.argument.secondName = "датаСоздания"
         InsertIntoDataBase.argument.secondValue = MainForm.mySqlConnect.dateToFormatMySQL(Date.Now.ToShortDateString)
         InsertIntoDataBase.argument.thirdName = "Year(ДатаНЗ)"
-        InsertIntoDataBase.argument.thirdValue = gruppa.yearNZ
+        InsertIntoDataBase.argument.thirdValue = grup.yearNZ
 
 
         If InsertIntoDataBase.checkDuplicates() Then
 
-            SC.Send(AddressOf endTread, gruppa.number)
+            SC.Send(AddressOf endTread, grup.number)
 
         End If
 
-        SC.Send(AddressOf enabledButton, gruppa.number)
+        SC.Send(AddressOf enabledButton, grup.number)
 
     End Sub
 
     Sub endTread(gruppa_number As String)
-        Me.Сообщение.Text = "Группа № " & gruppa_number & " успешно создана, дата записи: " & Date.Now.ToShortDateString
-        Me.Сообщение.Visible = True
-        СправочникГруппы.Label2.Text = "В базу внесена информация, неотображенная в таблице. Обновите данные"
-        СправочникГруппы.Label2.Visible = True
+        Me.message.Text = "Группа № " & gruppa_number & " успешно создана, дата записи: " & Date.Now.ToShortDateString
+        Me.message.Visible = True
     End Sub
 
     Sub endTreadErr(gruppa_number As String)
-        Me.Сообщение.Text = "Ошибка. Повторите операцию"
-        Me.Сообщение.Visible = True
+        Me.message.Text = "Ошибка. Повторите операцию"
+        Me.message.Visible = True
     End Sub
 
     Sub enabledButton(gruppa_number As String)
-        Me.Сохранить.Enabled = True
+        saveButton.Enabled = True
     End Sub
 
-    Private Sub clean_Click(sender As Object, e As EventArgs) Handles Очистить.Click
-        Dim nameControl As String
+    Private Sub clear_Click(sender As Object, e As EventArgs) Handles clear.Click
         ActiveControl = BtnFocus
-        Сообщение.Visible = False
-        For Each i In Me.Controls
-            nameControl = i.Name
-            nameControl = Strings.Left(nameControl, 5)
-            If i.Name <> "Сохранить" And i.Name <> "Очистить" And Strings.Left(nameControl, 5) <> "Label" And i.Name <> "versProgs" Then
-
-                If i.Name = "НоваяГруппаДатаНачалаЗанятий" Or i.Name = "НоваяГруппаКонецЗанятий" Or i.Name = "ДатаСпецэкзамен" Or Strings.Left(i.Name, 4) = "Дата" Then
-                    i.Text = "01.01.1753"
-                Else
-                    i.Text = ""
-                End If
-            End If
-        Next
-        Сообщение.Visible = False
+        message.Visible = False
+        grup.cleaкForm(Me)
+        message.Visible = False
     End Sub
 
-    Private Sub newGroup_Shown(sender As Object, e As EventArgs) Handles Me.Shown
-        Сообщение.Visible = False
-        clean_Click(sender, e)
-        ActiveControl = BtnFocus
+    Private Sub newGroup_Shown(sender As Object, e As EventArgs) Handles MyBase.Shown
+
+        newGroup_Load(sender, e)
     End Sub
 
 
     Private Sub formEducation_KeyDown(sender As Object, e As KeyEventArgs) Handles НоваяГруппаФормаОбучения.KeyDown
-        If e.KeyCode = 13 Then
+        If e.KeyCode = Keys.Enter Then
             formEducation_click(sender, e)
         End If
     End Sub
 
     Private Sub program_KeyDown(sender As Object, e As KeyEventArgs) Handles НоваяГруппаПрограмма.KeyDown
-        If e.KeyCode = 13 Then
+        If e.KeyCode = Keys.Enter Then
             program_Click(sender, e)
         End If
     End Sub
 
     Private Sub speciality_KeyDown(sender As Object, e As KeyEventArgs) Handles НоваяГруппаСпециальность.KeyDown
-        If e.KeyCode = 13 Then
+        If e.KeyCode = Keys.Enter Then
             speciality_Click(sender, e)
         End If
     End Sub
 
     Private Sub numbersHours_KeyDown(sender As Object, e As KeyEventArgs) Handles НоваяГруппаКоличествоЧасов.KeyDown
-        If e.KeyCode = 13 Then
+        If e.KeyCode = Keys.Enter Then
             numbersHourse_Click(sender, e)
         End If
     End Sub
 
     Private Sub kurator_KeyDown(sender As Object, e As KeyEventArgs) Handles НоваяГруппаОтветственныйКуратор.KeyDown
-        If e.KeyCode = 13 Then
+        If e.KeyCode = Keys.Enter Then
             kurator_Click(sender, e)
         End If
     End Sub
 
     Private Sub НоваягруппаОтветственныйЗаПрактику_KeyDown(sender As Object, e As KeyEventArgs) Handles НоваягруппаОтветственныйЗаПрактику.KeyDown
-        If e.KeyCode = 13 Then
+        If e.KeyCode = Keys.Enter Then
             НоваягруппаОтветственныйЗаПрактику_Click(sender, e)
         End If
     End Sub
 
     Private Sub modul1_KeyDown(sender As Object, e As KeyEventArgs)
-        If e.KeyCode = 13 Then
+        If e.KeyCode = Keys.Enter Then
             modul1_Click(sender, e)
         End If
     End Sub
 
     Private Sub modul2_KeyDown(sender As Object, e As KeyEventArgs)
-        If e.KeyCode = 13 Then
+        If e.KeyCode = Keys.Enter Then
             modul2_Click(sender, e)
         End If
     End Sub
 
     Private Sub modul3_KeyDown(sender As Object, e As KeyEventArgs)
-        If e.KeyCode = 13 Then
+        If e.KeyCode = Keys.Enter Then
             modul3_Click(sender, e)
         End If
     End Sub
 
     Private Sub modul4_KeyDown(sender As Object, e As KeyEventArgs)
-        If e.KeyCode = 13 Then
+        If e.KeyCode = Keys.Enter Then
             modul4_Click(sender, e)
         End If
     End Sub
 
     Private Sub modul5_KeyDown(sender As Object, e As KeyEventArgs)
-        If e.KeyCode = 13 Then
+        If e.KeyCode = Keys.Enter Then
             modul5_Click(sender, e)
         End If
     End Sub
     Private Sub modul6_KeyDown(sender As Object, e As KeyEventArgs)
-        If e.KeyCode = 13 Then
+        If e.KeyCode = Keys.Enter Then
             Call modul6_Click(sender, e)
         End If
     End Sub
 
     Private Sub modul7_KeyDown(sender As Object, e As KeyEventArgs)
-        If e.KeyCode = 13 Then
+        If e.KeyCode = Keys.Enter Then
             modul7_Click(sender, e)
         End If
     End Sub
 
     Private Sub modul8_KeyDown(sender As Object, e As KeyEventArgs)
-        If e.KeyCode = 13 Then
+        If e.KeyCode = Keys.Enter Then
             Call modul8_Click(sender, e)
         End If
     End Sub
     Private Sub modul9_KeyDown(sender As Object, e As KeyEventArgs)
-        If e.KeyCode = 13 Then
+        If e.KeyCode = Keys.Enter Then
             modul9_Click(sender, e)
         End If
     End Sub
 
     Private Sub modul10_KeyDown(sender As Object, e As KeyEventArgs)
-        If e.KeyCode = 13 Then
+        If e.KeyCode = Keys.Enter Then
             modul10_Click(sender, e)
         End If
     End Sub
 
     Private Sub qualificationLevel_KeyDown(sender As Object, e As KeyEventArgs) Handles НоваяГруппаУровеньКвалификации.KeyDown
-        If e.KeyCode = 13 Then
+        If e.KeyCode = Keys.Enter Then
             qualificationLevel_Click(sender, e)
         End If
     End Sub
 
     Private Sub financing_KeyDown(sender As Object, e As KeyEventArgs) Handles НоваяГруппаФинансирование.KeyDown
-        If e.KeyCode = 13 Then
+        If e.KeyCode = Keys.Enter Then
             financing_Click(sender, e)
         End If
     End Sub
 
     Private Sub qualification_KeyDown(sender As Object, e As KeyEventArgs) Handles Квалификация.KeyDown
-        If e.KeyCode = 13 Then
+        If e.KeyCode = Keys.Enter Then
             Call qualification_Click(sender, e)
         End If
     End Sub
 
     Private Sub qualificationLevel_Click(sender As Object, e As EventArgs) Handles НоваяГруппаУровеньКвалификации.Click
-        Сообщение.Visible = False
+        message.Visible = False
     End Sub
 
     Private Sub financing_Click(sender As Object, e As EventArgs) Handles НоваяГруппаФинансирование.Click
-        Сообщение.Visible = False
+        message.Visible = False
     End Sub
 
     Private Sub newGroup_KeyDown(sender As Object, e As KeyEventArgs) Handles MyBase.KeyDown
@@ -403,17 +394,17 @@ Public Class НоваяГруппа
         If e.KeyCode = Keys.Up Or e.KeyCode = Keys.Down Then
 
             pressTab(e.KeyCode, Keys.Down)
-            up(Me, e.KeyCode, Keys.Up)
+            'up(Me, e.KeyCode, Keys.Up)
             e.Handled = True
 
         End If
 
         If e.KeyCode = Keys.Delete Then
-            For Each контрол In Me.Controls
-                If ActiveControl.Name = контрол.name Then
-                    If контрол.ReadOnly Then
+            For Each element In Me.Controls
+                If ActiveControl.Name = element.name Then
+                    If element.ReadOnly Then
                         Try
-                            контрол.Text = ""
+                            element.Text = ""
                         Catch ex As Exception
 
                         End Try
@@ -429,541 +420,152 @@ Public Class НоваяГруппа
 
         If НомерУд.Text = "" And РегНомерУд.Text = "" Then
 
-            If НоваяГруппаУровеньКвалификации.Text = "повышение квалификации" Then
-                НоваяГруппаУровеньКвалификации.Text = ""
-                НомерДиплома.Enabled = True
-                РегНомерДиплома.Enabled = True
-                ДатаВДиплома.Enabled = True
-
-                НомерСвид.Enabled = True
-                РегНомерСвид.Enabled = True
-                ДатаВСвид.Enabled = True
-
-            End If
+            activateAllType()
 
         Else
 
-            НоваяГруппаУровеньКвалификации.Text = "повышение квалификации"
-
-            НомерДиплома.Enabled = False
-            РегНомерДиплома.Enabled = False
-            ДатаВДиплома.Enabled = False
-
-            НомерСвид.Enabled = False
-            РегНомерСвид.Enabled = False
-            ДатаВСвид.Enabled = False
-
-            НомерДиплома.Clear()
-            РегНомерДиплома.Clear()
-
-            НомерСвид.Clear()
-            РегНомерСвид.Clear()
+            swichNumbers.activeType = "pk"
+            activateLavel("pk")
 
         End If
 
     End Sub
 
     Private Sub regNumberUd_TextChanged(sender As Object, e As EventArgs) Handles РегНомерУд.TextChanged
+
         If НомерУд.Text = "" And РегНомерУд.Text = "" Then
 
-            If НоваяГруппаУровеньКвалификации.Text = "повышение квалификации" Then
+            activateAllType()
 
-                НомерДиплома.Enabled = True
-                РегНомерДиплома.Enabled = True
-                ДатаВДиплома.Enabled = True
-
-                НомерСвид.Enabled = True
-                РегНомерСвид.Enabled = True
-                ДатаВСвид.Enabled = True
-
-                НоваяГруппаУровеньКвалификации.Text = ""
-            End If
         Else
-            НомерДиплома.Enabled = False
-            РегНомерДиплома.Enabled = False
-            ДатаВДиплома.Enabled = False
 
-            НомерСвид.Enabled = False
-            РегНомерСвид.Enabled = False
-            ДатаВСвид.Enabled = False
-
-            НоваяГруппаУровеньКвалификации.Text = "повышение квалификации"
-
-            НомерДиплома.Clear()
-            РегНомерДиплома.Clear()
-
-            НомерСвид.Clear()
-            РегНомерСвид.Clear()
+            swichNumbers.activeType = "pk"
+            activateLavel("pk")
 
         End If
+
     End Sub
 
     Private Sub numberD_TextChanged(sender As Object, e As EventArgs) Handles НомерДиплома.TextChanged
 
         If НомерДиплома.Text = "" And РегНомерДиплома.Text = "" Then
-            If НоваяГруппаУровеньКвалификации.Text = "профессиональная переподготовка" Then
-                НомерУд.Enabled = True
-                РегНомерУд.Enabled = True
-                ДатаВыдачиУд.Enabled = True
 
-                НомерСвид.Enabled = True
-                РегНомерСвид.Enabled = True
-                ДатаВСвид.Enabled = True
+            activateAllType()
 
-                НоваяГруппаУровеньКвалификации.Text = ""
-            End If
         Else
-            НомерУд.Enabled = False
-            РегНомерУд.Enabled = False
-            ДатаВыдачиУд.Enabled = False
 
-            НомерСвид.Enabled = False
-            РегНомерСвид.Enabled = False
-            ДатаВСвид.Enabled = False
-
-            НоваяГруппаУровеньКвалификации.Text = "профессиональная переподготовка"
-
-            НомерУд.Clear()
-            РегНомерУд.Clear()
-
-            НомерСвид.Clear()
-            РегНомерСвид.Clear()
+            swichNumbers.activeType = "pp"
+            activateLavel("pp")
 
         End If
+
     End Sub
 
     Private Sub regNumberD_TextChanged(sender As Object, e As EventArgs) Handles РегНомерДиплома.TextChanged
+
         If НомерДиплома.Text = "" And РегНомерДиплома.Text = "" Then
 
-            If НоваяГруппаУровеньКвалификации.Text = "профессиональная переподготовка" Then
+            activateAllType()
 
-                НомерУд.Enabled = True
-                РегНомерУд.Enabled = True
-                ДатаВыдачиУд.Enabled = True
-
-                НомерСвид.Enabled = True
-                РегНомерСвид.Enabled = True
-                ДатаВСвид.Enabled = True
-
-                НоваяГруппаУровеньКвалификации.Text = ""
-            End If
         Else
-            НомерУд.Enabled = False
-            РегНомерУд.Enabled = False
-            ДатаВыдачиУд.Enabled = False
 
-            НомерСвид.Enabled = False
-            РегНомерСвид.Enabled = False
-            ДатаВСвид.Enabled = False
-
-            НоваяГруппаУровеньКвалификации.Text = "профессиональная переподготовка"
-
-            НомерУд.Clear()
-            РегНомерУд.Clear()
-
-            НомерСвид.Clear()
-            РегНомерСвид.Clear()
+            swichNumbers.activeType = "pp"
+            activateLavel("pp")
 
         End If
+
     End Sub
 
     Private Sub numberSv_TextChanged(sender As Object, e As EventArgs) Handles НомерСвид.TextChanged
+
         If НомерСвид.Text = "" And РегНомерСвид.Text = "" Then
 
-            If НоваяГруппаУровеньКвалификации.Text = "профессиональное обучение" Then
-                НомерУд.Enabled = True
-                РегНомерУд.Enabled = True
-                ДатаВыдачиУд.Enabled = True
+            activateAllType()
 
-                НомерДиплома.Enabled = True
-                РегНомерДиплома.Enabled = True
-                ДатаВДиплома.Enabled = True
-
-                НоваяГруппаУровеньКвалификации.Text = ""
-            End If
         Else
-            НомерУд.Enabled = False
-            РегНомерУд.Enabled = False
-            ДатаВыдачиУд.Enabled = False
 
-            НомерДиплома.Enabled = False
-            РегНомерДиплома.Enabled = False
-            ДатаВДиплома.Enabled = False
-
-            НоваяГруппаУровеньКвалификации.Text = "профессиональное обучение"
-
-            НомерДиплома.Clear()
-            РегНомерДиплома.Clear()
-
-            НомерУд.Clear()
-            РегНомерУд.Clear()
+            swichNumbers.activeType = "pp"
+            activateLavel("po")
 
         End If
+
     End Sub
 
     Private Sub regNumberSv_TextChanged(sender As Object, e As EventArgs) Handles РегНомерСвид.TextChanged
+
         If НомерСвид.Text = "" And РегНомерСвид.Text = "" Then
-            If НоваяГруппаУровеньКвалификации.Text = "профессиональное обучение" Then
 
-                НомерУд.Enabled = True
-                РегНомерУд.Enabled = True
-                ДатаВыдачиУд.Enabled = True
+            activateAllType()
 
-                НомерДиплома.Enabled = True
-                РегНомерДиплома.Enabled = True
-                ДатаВДиплома.Enabled = True
-
-                НоваяГруппаУровеньКвалификации.Text = ""
-            End If
         Else
-            НомерУд.Enabled = False
-            РегНомерУд.Enabled = False
-            ДатаВыдачиУд.Enabled = False
 
-            НомерДиплома.Enabled = False
-            РегНомерДиплома.Enabled = False
-            ДатаВДиплома.Enabled = False
-
-            НоваяГруппаУровеньКвалификации.Text = "профессиональное обучение"
-
-            НомерДиплома.Clear()
-            РегНомерДиплома.Clear()
-
-            НомерУд.Clear()
-            РегНомерУд.Clear()
+            swichNumbers.activeType = "pp"
+            activateLavel("po")
 
         End If
+
     End Sub
 
     Private Sub qualificationLevel_TextChanged(sender As Object, e As EventArgs) Handles НоваяГруппаУровеньКвалификации.TextChanged
 
-        If НоваяГруппаУровеньКвалификации.Text = "специальный экзамен" Then
+        If НоваяГруппаУровеньКвалификации.Text = "профессиональное обучение" Then
 
-            gruppa.struct_gruppa.urKvalific = "специальный экзамен"
+            grup.struct_grup.urKvalific = "профессиональное обучение"
 
-            НомерДиплома.Enabled = False
-            РегНомерДиплома.Enabled = False
-            ДатаВДиплома.Enabled = False
-
-            НомерСвид.Enabled = False
-            РегНомерСвид.Enabled = False
-            ДатаВСвид.Enabled = False
-
-            НомерУд.Enabled = False
-            РегНомерУд.Enabled = False
-            ДатаВыдачиУд.Enabled = False
-
-
-            НоваяГруппаФормаОбучения.Enabled = False
-            НоваяГруппаДатаНачалаЗанятий.Enabled = False
-            НоваяГруппаКонецЗанятий.Enabled = False
-            НоваяГруппаНомерПротоколаИА.Enabled = False
-            НоваяГруппаПрограмма.Enabled = False
-            НоваяГруппаСпециальность.Enabled = False
-            НоваяГруппаКоличествоЧасов.Enabled = False
-            НоваяГруппаОтветственныйКуратор.Enabled = False
-            НоваягруппаОтветственныйЗаПрактику.Enabled = False
-            Модуль1.Enabled = False
-            Модуль2.Enabled = False
-            Модуль3.Enabled = False
-            Модуль4.Enabled = False
-            Модуль5.Enabled = False
-            Модуль6.Enabled = False
-            Модуль7.Enabled = False
-            Модуль8.Enabled = False
-            Модуль9.Enabled = False
-            Модуль10.Enabled = False
-            Квалификация.Enabled = False
-
-            НомерДиплома.Clear()
-            РегНомерДиплома.Clear()
-
-            НомерУд.Clear()
-            РегНомерУд.Clear()
-
-            НомерСвид.Clear()
-            РегНомерСвид.Clear()
-
-            НоваяГруппаПрограмма.Text = "Спецэкзамен"
-            НоваяГруппаСпециальность.Text = "Без специальности"
-
-        ElseIf НоваяГруппаУровеньКвалификации.Text = "профессиональное обучение" Then
-
-            gruppa.struct_gruppa.urKvalific = "профессиональное обучение"
-
-            НомерСвид.Enabled = True
-            РегНомерСвид.Enabled = True
-            ДатаВСвид.Enabled = True
-
-            НомерУд.Enabled = False
-            РегНомерУд.Enabled = False
-            ДатаВыдачиУд.Enabled = False
-
-            НомерДиплома.Enabled = False
-            РегНомерДиплома.Enabled = False
-            ДатаВДиплома.Enabled = False
-
-            НоваяГруппаФормаОбучения.Enabled = True
-            НоваяГруппаДатаНачалаЗанятий.Enabled = True
-            НоваяГруппаКонецЗанятий.Enabled = True
-            НоваяГруппаНомерПротоколаИА.Enabled = True
-            НоваяГруппаПрограмма.Enabled = True
-            НоваяГруппаСпециальность.Enabled = True
-            НоваяГруппаКоличествоЧасов.Enabled = True
-            НоваяГруппаОтветственныйКуратор.Enabled = True
-            НоваягруппаОтветственныйЗаПрактику.Enabled = True
-            Модуль1.Enabled = True
-            Модуль2.Enabled = True
-            Модуль3.Enabled = True
-            Модуль4.Enabled = True
-            Модуль5.Enabled = True
-            Модуль6.Enabled = True
-            Модуль7.Enabled = True
-            Модуль8.Enabled = True
-            Модуль9.Enabled = True
-            Модуль10.Enabled = True
-            Квалификация.Enabled = True
-
-
-            НомерДиплома.Clear()
-            РегНомерДиплома.Clear()
-
-            НомерУд.Clear()
-            РегНомерУд.Clear()
-
-            НоваяГруппаПрограмма.Text = ""
-            НоваяГруппаСпециальность.Text = ""
+            activateLavel("po")
 
         ElseIf НоваяГруппаУровеньКвалификации.Text = "повышение квалификации" Then
 
-            gruppa.struct_gruppa.urKvalific = "повышение квалификации"
+            grup.struct_grup.urKvalific = "повышение квалификации"
 
-            НомерУд.Enabled = True
-            РегНомерУд.Enabled = True
-            ДатаВыдачиУд.Enabled = True
-
-            НомерДиплома.Enabled = False
-            РегНомерДиплома.Enabled = False
-            ДатаВДиплома.Enabled = False
-
-            НомерСвид.Enabled = False
-            РегНомерСвид.Enabled = False
-            ДатаВСвид.Enabled = False
-
-            НоваяГруппаФормаОбучения.Enabled = True
-            НоваяГруппаДатаНачалаЗанятий.Enabled = True
-            НоваяГруппаКонецЗанятий.Enabled = True
-            НоваяГруппаНомерПротоколаИА.Enabled = False
-            НоваяГруппаПрограмма.Enabled = True
-            НоваяГруппаСпециальность.Enabled = True
-            НоваяГруппаКоличествоЧасов.Enabled = True
-            НоваяГруппаОтветственныйКуратор.Enabled = True
-            НоваягруппаОтветственныйЗаПрактику.Enabled = False
-            Модуль1.Enabled = False
-            Модуль2.Enabled = False
-            Модуль3.Enabled = False
-            Модуль4.Enabled = False
-            Модуль5.Enabled = False
-            Модуль6.Enabled = False
-            Модуль7.Enabled = False
-            Модуль8.Enabled = False
-            Модуль9.Enabled = False
-            Модуль10.Enabled = False
-            Квалификация.Enabled = False
-
-            НомерДиплома.Clear()
-            РегНомерДиплома.Clear()
-
-            НомерСвид.Clear()
-            РегНомерСвид.Clear()
-
-            НоваяГруппаПрограмма.Text = ""
-            НоваяГруппаСпециальность.Text = ""
+            activateLavel("pk")
 
         ElseIf НоваяГруппаУровеньКвалификации.Text = "профессиональная переподготовка" Then
 
-            gruppa.struct_gruppa.urKvalific = "профессиональная переподготовка"
+            grup.struct_grup.urKvalific = "профессиональная переподготовка"
 
-            НоваяГруппаФормаОбучения.Enabled = True
-            НоваяГруппаДатаНачалаЗанятий.Enabled = True
-            НоваяГруппаКонецЗанятий.Enabled = True
-            НоваяГруппаНомерПротоколаИА.Enabled = True
-            НоваяГруппаПрограмма.Enabled = True
-            НоваяГруппаСпециальность.Enabled = True
-            НоваяГруппаКоличествоЧасов.Enabled = True
-            НоваяГруппаОтветственныйКуратор.Enabled = True
-            НоваягруппаОтветственныйЗаПрактику.Enabled = True
-            Модуль1.Enabled = True
-            Модуль2.Enabled = True
-            Модуль3.Enabled = True
-            Модуль4.Enabled = True
-            Модуль5.Enabled = True
-            Модуль6.Enabled = True
-            Модуль7.Enabled = True
-            Модуль8.Enabled = True
-            Модуль9.Enabled = True
-            Модуль10.Enabled = True
-            Квалификация.Enabled = True
-
-            НомерДиплома.Enabled = True
-            РегНомерДиплома.Enabled = True
-            ДатаВДиплома.Enabled = True
-
-            НомерУд.Enabled = False
-            РегНомерУд.Enabled = False
-            ДатаВыдачиУд.Enabled = False
-
-            НомерСвид.Enabled = False
-            РегНомерСвид.Enabled = False
-            ДатаВСвид.Enabled = False
-
-            НомерУд.Clear()
-            РегНомерУд.Clear()
-
-            НомерСвид.Clear()
-            РегНомерСвид.Clear()
-
-            НоваяГруппаПрограмма.Text = ""
-            НоваяГруппаСпециальность.Text = ""
-        Else
-
-            gruppa.struct_gruppa.urKvalific = ""
-
-            НомерДиплома.Clear()
-            РегНомерДиплома.Clear()
-
-            НомерУд.Clear()
-            РегНомерУд.Clear()
-
-            НомерСвид.Clear()
-            РегНомерСвид.Clear()
-
-            НомерДиплома.Enabled = True
-            РегНомерДиплома.Enabled = True
-            ДатаВДиплома.Enabled = True
-
-            НомерУд.Enabled = True
-            РегНомерУд.Enabled = True
-            ДатаВыдачиУд.Enabled = True
-
-            НомерСвид.Enabled = True
-            РегНомерСвид.Enabled = True
-            ДатаВСвид.Enabled = True
-
-            НоваяГруппаФормаОбучения.Enabled = True
-            НоваяГруппаДатаНачалаЗанятий.Enabled = True
-            НоваяГруппаКонецЗанятий.Enabled = True
-            НоваяГруппаНомерПротоколаИА.Enabled = True
-            НоваяГруппаПрограмма.Enabled = True
-            НоваяГруппаСпециальность.Enabled = True
-            НоваяГруппаКоличествоЧасов.Enabled = True
-            НоваяГруппаОтветственныйКуратор.Enabled = True
-            НоваягруппаОтветственныйЗаПрактику.Enabled = True
-            Модуль1.Enabled = False
-            Модуль2.Enabled = False
-            Модуль3.Enabled = False
-            Модуль4.Enabled = False
-            Модуль5.Enabled = False
-            Модуль6.Enabled = False
-            Модуль7.Enabled = False
-            Модуль8.Enabled = False
-            Модуль9.Enabled = False
-            Модуль10.Enabled = False
-            Квалификация.Enabled = True
-
-            НоваяГруппаПрограмма.Text = ""
-            НоваяГруппаСпециальность.Text = ""
+            activateLavel("pp")
 
         End If
 
-        НоваяГруппаПрограмма.Items.Clear()
-        НоваяГруппаПрограмма.Items.Add("")
-        gruppa.updateProgramma()
-        НоваяГруппаПрограмма.Items.AddRange(gruppa.formGrouppLists.programma)
+        НоваяГруппаСпециальность.Text = ""
+        НоваяГруппаКоличествоЧасов.Clear()
+        НоваяГруппаПрограмма.Text = ""
+        grup.updateProgramma()
 
     End Sub
 
     Private Sub program_TextChanged(sender As Object, e As EventArgs) Handles НоваяГруппаПрограмма.TextChanged
 
-        activateModuls(Me, НоваяГруппаПрограмма.Text, gruppa.struct_gruppa.kodProgramm)
-
-    End Sub
-
-    Private Sub newGroup_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-
-        ActiveControl = BtnFocus
-        gruppa.struct_gruppa.nameForma = "НоваяГруппа"
-        gruppa.struct_gruppa.kodProgramm = -1
-        gruppa.loadFormGrouppLists()
-
-        НоваяГруппаУровеньКвалификации.Items.Clear()
-        НоваяГруппаУровеньКвалификации.Items.Add("")
-        НоваяГруппаУровеньКвалификации.Items.AddRange(gruppa.formGrouppLists.ur_cvalifik)
-
-        НоваяГруппаФормаОбучения.Items.Clear()
-        НоваяГруппаФормаОбучения.Items.Add("")
-        НоваяГруппаФормаОбучения.Items.AddRange(gruppa.formGrouppLists.forma_obuch)
-
-        НоваяГруппаПрограмма.Items.Clear()
-        НоваяГруппаПрограмма.Items.Add("")
-        НоваяГруппаПрограмма.Items.AddRange(gruppa.formGrouppLists.programma)
-
-        НоваяГруппаСпециальность.Items.Clear()
-        НоваяГруппаСпециальность.Items.Add("")
-        НоваяГруппаСпециальность.Items.AddRange(gruppa.formGrouppLists.specialnost)
-
-        НоваяГруппаОтветственныйКуратор.Items.Clear()
-        НоваяГруппаОтветственныйКуратор.Items.Add("")
-        НоваяГруппаОтветственныйКуратор.Items.AddRange(gruppa.formGrouppLists.kurator)
-
-        НоваягруппаОтветственныйЗаПрактику.Items.Clear()
-        НоваягруппаОтветственныйЗаПрактику.Items.Add("")
-        НоваягруппаОтветственныйЗаПрактику.Items.AddRange(gruppa.formGrouppLists.otvetstv_praktika)
-
-        For Each element As Control In Me.Controls
-            If Strings.Left(element.Name, 6) = "Модуль" Then
-                Dim com As ComboBox = element
-                com.Items.Clear()
-                com.Items.Add("")
-                com.Items.AddRange(gruppa.formGrouppLists.otvetstv_praktika)
-            End If
-        Next
-
-        НоваяГруппаФинансирование.Items.Clear()
-        НоваяГруппаФинансирование.Items.Add("")
-        НоваяГруппаФинансирование.Items.AddRange(gruppa.formGrouppLists.finansirovanie)
-
-        Квалификация.Items.Clear()
-        Квалификация.Items.Add("")
-        Квалификация.Items.AddRange(gruppa.formGrouppLists.kvalifikaciya)
+        activateModuls(Me, НоваяГруппаПрограмма.Text, grup.struct_grup.kodProgram)
 
     End Sub
 
     Private Sub qualificationLevel_MouseLeave(sender As Object, e As EventArgs) Handles НоваяГруппаУровеньКвалификации.MouseLeave
-        gruppa.flagGrouppForm.ur_cvalifik = False
+        grup.flagGrouppForm.ur_cvalifik = False
     End Sub
 
     Private Sub qualificationLevel_MouseMove(sender As Object, e As MouseEventArgs) Handles НоваяГруппаУровеньКвалификации.MouseMove
-        gruppa.flagGrouppForm.ur_cvalifik = True
+        grup.flagGrouppForm.ur_cvalifik = True
     End Sub
 
     Private Sub qualificationLevel_Enter(sender As Object, e As EventArgs) Handles НоваяГруппаУровеньКвалификации.Enter
 
-        comboBoxDrop(НоваяГруппаУровеньКвалификации, gruppa.flagGrouppForm.ur_cvalifik)
+        comboBoxDrop(НоваяГруппаУровеньКвалификации, grup.flagGrouppForm.ur_cvalifik)
 
     End Sub
 
     Private Sub formEducation_MouseLeave(sender As Object, e As EventArgs) Handles НоваяГруппаФормаОбучения.MouseLeave
-        gruppa.flagGrouppForm.forma_obuch = False
+        grup.flagGrouppForm.forma_obuch = False
     End Sub
 
     Private Sub formEducation_MouseMove(sender As Object, e As MouseEventArgs) Handles НоваяГруппаФормаОбучения.MouseMove
-        gruppa.flagGrouppForm.forma_obuch = True
+        grup.flagGrouppForm.forma_obuch = True
     End Sub
 
     Private Sub formEducation_Enter(sender As Object, e As EventArgs) Handles НоваяГруппаФормаОбучения.Enter
 
-        comboBoxDrop(НоваяГруппаФормаОбучения, gruppa.flagGrouppForm.forma_obuch)
+        comboBoxDrop(НоваяГруппаФормаОбучения, grup.flagGrouppForm.forma_obuch)
 
     End Sub
 
@@ -974,16 +576,16 @@ Public Class НоваяГруппа
     End Sub
 
     Private Sub program_MouseLeave(sender As Object, e As EventArgs) Handles НоваяГруппаПрограмма.MouseLeave
-        gruppa.flagGrouppForm.programma = False
+        grup.flagGrouppForm.programma = False
     End Sub
 
     Private Sub program_MouseMove(sender As Object, e As MouseEventArgs) Handles НоваяГруппаПрограмма.MouseMove
-        gruppa.flagGrouppForm.programma = True
+        grup.flagGrouppForm.programma = True
     End Sub
 
     Private Sub program_Enter(sender As Object, e As EventArgs) Handles НоваяГруппаПрограмма.Enter
 
-        comboBoxDrop(НоваяГруппаПрограмма, gruppa.flagGrouppForm.programma)
+        comboBoxDrop(НоваяГруппаПрограмма, grup.flagGrouppForm.programma)
 
     End Sub
 
@@ -994,16 +596,16 @@ Public Class НоваяГруппа
     End Sub
 
     Private Sub speciality_MouseLeave(sender As Object, e As EventArgs) Handles НоваяГруппаСпециальность.MouseLeave
-        gruppa.flagGrouppForm.specialnost = False
+        grup.flagGrouppForm.specialnost = False
     End Sub
 
     Private Sub speciality_MouseMove(sender As Object, e As MouseEventArgs) Handles НоваяГруппаСпециальность.MouseMove
-        gruppa.flagGrouppForm.specialnost = True
+        grup.flagGrouppForm.specialnost = True
     End Sub
 
     Private Sub speciality_Enter(sender As Object, e As EventArgs) Handles НоваяГруппаСпециальность.Enter
 
-        comboBoxDrop(НоваяГруппаСпециальность, gruppa.flagGrouppForm.specialnost)
+        comboBoxDrop(НоваяГруппаСпециальность, grup.flagGrouppForm.specialnost)
 
     End Sub
 
@@ -1014,16 +616,16 @@ Public Class НоваяГруппа
     End Sub
 
     Private Sub kurator_MouseLeave(sender As Object, e As EventArgs) Handles НоваяГруппаОтветственныйКуратор.MouseLeave
-        gruppa.flagGrouppForm.kurator = False
+        grup.flagGrouppForm.kurator = False
     End Sub
 
     Private Sub kurator_MouseMove(sender As Object, e As MouseEventArgs) Handles НоваяГруппаОтветственныйКуратор.MouseMove
-        gruppa.flagGrouppForm.kurator = True
+        grup.flagGrouppForm.kurator = True
     End Sub
 
     Private Sub kurator_Enter(sender As Object, e As EventArgs) Handles НоваяГруппаОтветственныйКуратор.Enter
 
-        comboBoxDrop(НоваяГруппаОтветственныйКуратор, gruppa.flagGrouppForm.kurator)
+        comboBoxDrop(НоваяГруппаОтветственныйКуратор, grup.flagGrouppForm.kurator)
 
     End Sub
 
@@ -1034,16 +636,16 @@ Public Class НоваяГруппа
     End Sub
 
     Private Sub НоваягруппаОтветственныйЗаПрактику_MouseLeave(sender As Object, e As EventArgs) Handles НоваягруппаОтветственныйЗаПрактику.MouseLeave
-        gruppa.flagGrouppForm.otvetstv_praktika = False
+        grup.flagGrouppForm.otvetstv_praktika = False
     End Sub
 
     Private Sub НоваягруппаОтветственныйЗаПрактику_MouseMove(sender As Object, e As MouseEventArgs) Handles НоваягруппаОтветственныйЗаПрактику.MouseMove
-        gruppa.flagGrouppForm.otvetstv_praktika = True
+        grup.flagGrouppForm.otvetstv_praktika = True
     End Sub
 
     Private Sub НоваягруппаОтветственныйЗаПрактику_Enter(sender As Object, e As EventArgs) Handles НоваягруппаОтветственныйЗаПрактику.Enter
 
-        comboBoxDrop(НоваягруппаОтветственныйЗаПрактику, gruppa.flagGrouppForm.otvetstv_praktika)
+        comboBoxDrop(НоваягруппаОтветственныйЗаПрактику, grup.flagGrouppForm.otvetstv_praktika)
 
     End Sub
 
@@ -1054,16 +656,16 @@ Public Class НоваяГруппа
     End Sub
 
     Private Sub modul1_MouseLeave(sender As Object, e As EventArgs) Handles Модуль1.MouseLeave
-        gruppa.flagGrouppForm.modul_1 = False
+        grup.flagGrouppForm.modul_1 = False
     End Sub
 
     Private Sub modul1_MouseMove(sender As Object, e As MouseEventArgs) Handles Модуль1.MouseMove
-        gruppa.flagGrouppForm.modul_1 = True
+        grup.flagGrouppForm.modul_1 = True
     End Sub
 
     Private Sub modul1_Enter(sender As Object, e As EventArgs) Handles Модуль1.Enter
 
-        comboBoxDrop(Модуль1, gruppa.flagGrouppForm.modul_1)
+        comboBoxDrop(Модуль1, grup.flagGrouppForm.modul_1)
 
     End Sub
 
@@ -1077,19 +679,19 @@ Public Class НоваяГруппа
 
     Private Sub modul2_MouseLeave(sender As Object, e As EventArgs) Handles Модуль2.MouseLeave
 
-        gruppa.flagGrouppForm.modul_2 = False
+        grup.flagGrouppForm.modul_2 = False
 
     End Sub
 
     Private Sub modul2_MouseMove(sender As Object, e As MouseEventArgs) Handles Модуль2.MouseMove
 
-        gruppa.flagGrouppForm.modul_2 = True
+        grup.flagGrouppForm.modul_2 = True
 
     End Sub
 
     Private Sub modul2_Enter(sender As Object, e As EventArgs) Handles Модуль2.Enter
 
-        comboBoxDrop(Модуль2, gruppa.flagGrouppForm.modul_2)
+        comboBoxDrop(Модуль2, grup.flagGrouppForm.modul_2)
 
     End Sub
 
@@ -1102,18 +704,18 @@ Public Class НоваяГруппа
     End Sub
 
     Private Sub modul3_MouseLeave(sender As Object, e As EventArgs) Handles Модуль3.MouseLeave
-        gruppa.flagGrouppForm.modul_3 = False
+        grup.flagGrouppForm.modul_3 = False
     End Sub
 
     Private Sub modul3_MouseMove(sender As Object, e As MouseEventArgs) Handles Модуль3.MouseMove
 
-        gruppa.flagGrouppForm.modul_3 = True
+        grup.flagGrouppForm.modul_3 = True
 
     End Sub
 
     Private Sub modul3_Enter(sender As Object, e As EventArgs) Handles Модуль3.Enter
 
-        comboBoxDrop(Модуль3, gruppa.flagGrouppForm.modul_3)
+        comboBoxDrop(Модуль3, grup.flagGrouppForm.modul_3)
 
     End Sub
 
@@ -1124,16 +726,16 @@ Public Class НоваяГруппа
     End Sub
 
     Private Sub modul4_MouseLeave(sender As Object, e As EventArgs) Handles Модуль4.MouseLeave
-        gruppa.flagGrouppForm.modul_4 = False
+        grup.flagGrouppForm.modul_4 = False
     End Sub
 
     Private Sub modul4_MouseMove(sender As Object, e As MouseEventArgs) Handles Модуль4.MouseMove
-        gruppa.flagGrouppForm.modul_4 = True
+        grup.flagGrouppForm.modul_4 = True
     End Sub
 
     Private Sub modul4_Enter(sender As Object, e As EventArgs) Handles Модуль4.Enter
 
-        comboBoxDrop(Модуль4, gruppa.flagGrouppForm.modul_4)
+        comboBoxDrop(Модуль4, grup.flagGrouppForm.modul_4)
 
     End Sub
 
@@ -1144,16 +746,16 @@ Public Class НоваяГруппа
     End Sub
 
     Private Sub modul5_MouseLeave(sender As Object, e As EventArgs) Handles Модуль5.MouseLeave
-        gruppa.flagGrouppForm.modul_5 = False
+        grup.flagGrouppForm.modul_5 = False
     End Sub
 
     Private Sub modul5_MouseMove(sender As Object, e As MouseEventArgs) Handles Модуль5.MouseMove
-        gruppa.flagGrouppForm.modul_5 = True
+        grup.flagGrouppForm.modul_5 = True
     End Sub
 
     Private Sub modul5_Enter(sender As Object, e As EventArgs) Handles Модуль5.Enter
 
-        comboBoxDrop(Модуль5, gruppa.flagGrouppForm.modul_5)
+        comboBoxDrop(Модуль5, grup.flagGrouppForm.modul_5)
 
     End Sub
 
@@ -1164,16 +766,16 @@ Public Class НоваяГруппа
     End Sub
 
     Private Sub modul6_MouseLeave(sender As Object, e As EventArgs) Handles Модуль6.MouseLeave
-        gruppa.flagGrouppForm.modul_6 = False
+        grup.flagGrouppForm.modul_6 = False
     End Sub
 
     Private Sub modul6_MouseMove(sender As Object, e As MouseEventArgs) Handles Модуль6.MouseMove
-        gruppa.flagGrouppForm.modul_3 = True
+        grup.flagGrouppForm.modul_3 = True
     End Sub
 
     Private Sub modul6_Enter(sender As Object, e As EventArgs) Handles Модуль6.Enter
 
-        comboBoxDrop(Модуль6, gruppa.flagGrouppForm.modul_6)
+        comboBoxDrop(Модуль6, grup.flagGrouppForm.modul_6)
 
     End Sub
 
@@ -1184,16 +786,16 @@ Public Class НоваяГруппа
     End Sub
 
     Private Sub modul7_MouseLeave(sender As Object, e As EventArgs) Handles Модуль7.MouseLeave
-        gruppa.flagGrouppForm.modul_7 = False
+        grup.flagGrouppForm.modul_7 = False
     End Sub
 
     Private Sub modul7_MouseMove(sender As Object, e As MouseEventArgs) Handles Модуль7.MouseMove
-        gruppa.flagGrouppForm.modul_7 = True
+        grup.flagGrouppForm.modul_7 = True
     End Sub
 
     Private Sub modul7_Enter(sender As Object, e As EventArgs) Handles Модуль7.Enter
 
-        comboBoxDrop(Модуль7, gruppa.flagGrouppForm.modul_7)
+        comboBoxDrop(Модуль7, grup.flagGrouppForm.modul_7)
 
     End Sub
 
@@ -1204,16 +806,16 @@ Public Class НоваяГруппа
     End Sub
 
     Private Sub modul8_MouseLeave(sender As Object, e As EventArgs) Handles Модуль8.MouseLeave
-        gruppa.flagGrouppForm.modul_8 = False
+        grup.flagGrouppForm.modul_8 = False
     End Sub
 
     Private Sub modul8_MouseMove(sender As Object, e As MouseEventArgs) Handles Модуль8.MouseMove
-        gruppa.flagGrouppForm.modul_8 = True
+        grup.flagGrouppForm.modul_8 = True
     End Sub
 
     Private Sub modul8_Enter(sender As Object, e As EventArgs) Handles Модуль8.Enter
 
-        comboBoxDrop(Модуль8, gruppa.flagGrouppForm.modul_8)
+        comboBoxDrop(Модуль8, grup.flagGrouppForm.modul_8)
 
     End Sub
 
@@ -1224,16 +826,16 @@ Public Class НоваяГруппа
     End Sub
 
     Private Sub modul9_MouseLeave(sender As Object, e As EventArgs) Handles Модуль9.MouseLeave
-        gruppa.flagGrouppForm.modul_9 = False
+        grup.flagGrouppForm.modul_9 = False
     End Sub
 
     Private Sub modul9_MouseMove(sender As Object, e As MouseEventArgs) Handles Модуль9.MouseMove
-        gruppa.flagGrouppForm.modul_9 = True
+        grup.flagGrouppForm.modul_9 = True
     End Sub
 
     Private Sub modul9_Enter(sender As Object, e As EventArgs) Handles Модуль9.Enter
 
-        comboBoxDrop(Модуль9, gruppa.flagGrouppForm.modul_9)
+        comboBoxDrop(Модуль9, grup.flagGrouppForm.modul_9)
 
     End Sub
 
@@ -1244,16 +846,16 @@ Public Class НоваяГруппа
     End Sub
 
     Private Sub modul10_MouseLeave(sender As Object, e As EventArgs) Handles Модуль10.MouseLeave
-        gruppa.flagGrouppForm.modul_10 = False
+        grup.flagGrouppForm.modul_10 = False
     End Sub
 
     Private Sub modul10_MouseMove(sender As Object, e As MouseEventArgs) Handles Модуль10.MouseMove
-        gruppa.flagGrouppForm.modul_10 = True
+        grup.flagGrouppForm.modul_10 = True
     End Sub
 
     Private Sub modul10_Enter(sender As Object, e As EventArgs) Handles Модуль10.Enter
 
-        comboBoxDrop(Модуль10, gruppa.flagGrouppForm.modul_10)
+        comboBoxDrop(Модуль10, grup.flagGrouppForm.modul_10)
 
     End Sub
 
@@ -1264,16 +866,16 @@ Public Class НоваяГруппа
     End Sub
 
     Private Sub financing_MouseLeave(sender As Object, e As EventArgs) Handles НоваяГруппаФинансирование.MouseLeave
-        gruppa.flagGrouppForm.finansirovanie = False
+        grup.flagGrouppForm.finansirovanie = False
     End Sub
 
     Private Sub financing_MouseMove(sender As Object, e As MouseEventArgs) Handles НоваяГруппаФинансирование.MouseMove
-        gruppa.flagGrouppForm.finansirovanie = True
+        grup.flagGrouppForm.finansirovanie = True
     End Sub
 
     Private Sub financing_Enter(sender As Object, e As EventArgs) Handles НоваяГруппаФинансирование.Enter
 
-        comboBoxDrop(НоваяГруппаФинансирование, gruppa.flagGrouppForm.finansirovanie)
+        comboBoxDrop(НоваяГруппаФинансирование, grup.flagGrouppForm.finansirovanie)
 
     End Sub
 
@@ -1284,16 +886,16 @@ Public Class НоваяГруппа
     End Sub
 
     Private Sub qualification_MouseLeave(sender As Object, e As EventArgs) Handles Квалификация.MouseLeave
-        gruppa.flagGrouppForm.kvalifikaciya = False
+        grup.flagGrouppForm.kvalifikaciya = False
     End Sub
 
     Private Sub qualification_MouseMove(sender As Object, e As MouseEventArgs) Handles Квалификация.MouseMove
-        gruppa.flagGrouppForm.kvalifikaciya = True
+        grup.flagGrouppForm.kvalifikaciya = True
     End Sub
 
     Private Sub qualification_Enter(sender As Object, e As EventArgs) Handles Квалификация.Enter
 
-        comboBoxDrop(Квалификация, gruppa.flagGrouppForm.kvalifikaciya)
+        comboBoxDrop(Квалификация, grup.flagGrouppForm.kvalifikaciya)
 
     End Sub
 
@@ -1315,27 +917,28 @@ Public Class НоваяГруппа
 
     Private Sub program_SelectedIndexChanged(sender As Object, e As EventArgs) Handles НоваяГруппаПрограмма.SelectedIndexChanged
 
-        gruppa.struct_gruppa.programma = НоваяГруппаПрограмма.Text
+        grup.struct_grup.programma = НоваяГруппаПрограмма.Text
 
         If НоваяГруппаПрограмма.Text = "" Then
 
-            gruppa.struct_gruppa.kodProgramm = -1
+            grup.struct_grup.kodProgram = -1
+            НоваяГруппаКоличествоЧасов.Clear()
 
         Else
 
-            If gruppa.struct_gruppa.flagAllListProgs Then
+            If grup.struct_grup.flagAllListProgs Then
 
-                gruppa.struct_gruppa.flagAllListProgs = False
+                grup.struct_grup.flagAllListProgs = False
                 Return
 
             End If
 
-            gruppa.updateKodProg()
-            НоваяГруппаКоличествоЧасов.Text = gruppa.struct_gruppa.kolChasov
+            grup.updateKodProg()
+            НоваяГруппаКоличествоЧасов.Text = grup.struct_grup.kolChasov
 
         End If
 
-        activateModuls(Me, НоваяГруппаПрограмма.Text, gruppa.struct_gruppa.kodProgramm)
+        activateModuls(Me, НоваяГруппаПрограмма.Text, grup.struct_grup.kodProgram)
 
     End Sub
 
@@ -1372,6 +975,252 @@ Public Class НоваяГруппа
                 End If
 
             Next
+
+        End If
+
+    End Sub
+
+    Private Sub poOn_Click_1(sender As Object, e As EventArgs)
+        message.Visible = False
+    End Sub
+
+    Private Sub pkOn_Click_1(sender As Object, e As EventArgs)
+        message.Visible = False
+    End Sub
+
+    Private Sub ppOn_Click_1(sender As Object, e As EventArgs)
+        message.Visible = False
+    End Sub
+
+    Private Sub ppOn_Click(sender As Object, e As EventArgs) Handles ppOn.Click, poOn.Click
+
+        message.Visible = False
+        MainForm.cvalific = swichCvalification.type("pp") + 1
+        swichNumbers.activeType = "pp"
+        updateCvalification()
+
+    End Sub
+
+    Private Sub poOn_Click(sender As Object, e As EventArgs) Handles poOn.Click
+
+        message.Visible = False
+        MainForm.cvalific = swichCvalification.type("po") + 1
+        swichNumbers.activeType = "po"
+        updateCvalification()
+
+    End Sub
+
+    Private Sub pkOn_Click(sender As Object, e As EventArgs) Handles pkOn.Click
+
+        swichNumbers.activeType = "pk"
+        activateLavel("pk")
+        message.Visible = False
+
+    End Sub
+
+    Private Sub НоваяГруппа_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
+
+        activateAllType()
+
+    End Sub
+
+    Private Sub newGroup_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+        swichNumbers = New SwichNumbers
+        swichNumbersInit()
+
+        ActiveControl = BtnFocus
+        grup.struct_grup.nameForm = "НоваяГруппа"
+        grup.struct_grup.kodProgram = -1
+
+        loadLists()
+
+        swichCvalification = New SwitchCvalification
+        swichCvalificationInit()
+
+        updateCvalification()
+
+        activateField(False)
+
+
+
+    End Sub
+
+    Private Sub updateCvalification()
+
+        swichCvalification.activate(MainForm.cvalific - 1)
+        НоваяГруппаУровеньКвалификации.Text = swichCvalification.activeType
+        НоваяГруппаПрограмма.Items.Clear()
+        НоваяГруппаПрограмма.Items.Add("")
+        НоваяГруппаПрограмма.Items.AddRange(grup.formGrouppLists.programma)
+
+    End Sub
+
+    Private Sub loadLists()
+
+        grup.loadFormGrouppLists()
+
+        НоваяГруппаУровеньКвалификации.Items.Clear()
+        НоваяГруппаУровеньКвалификации.Items.Add("")
+        НоваяГруппаУровеньКвалификации.Items.AddRange(grup.formGrouppLists.ur_cvalifik)
+
+        НоваяГруппаФормаОбучения.Items.Clear()
+        НоваяГруппаФормаОбучения.Items.Add("")
+        НоваяГруппаФормаОбучения.Items.AddRange(grup.formGrouppLists.forma_obuch)
+
+        НоваяГруппаПрограмма.Items.Clear()
+        НоваяГруппаПрограмма.Items.Add("")
+        НоваяГруппаПрограмма.Items.AddRange(grup.formGrouppLists.programma)
+
+        НоваяГруппаСпециальность.Items.Clear()
+        НоваяГруппаСпециальность.Items.Add("")
+        НоваяГруппаСпециальность.Items.AddRange(grup.formGrouppLists.specialnost)
+
+        НоваяГруппаОтветственныйКуратор.Items.Clear()
+        НоваяГруппаОтветственныйКуратор.Items.Add("")
+        НоваяГруппаОтветственныйКуратор.Items.AddRange(grup.formGrouppLists.kurator)
+
+        НоваягруппаОтветственныйЗаПрактику.Items.Clear()
+        НоваягруппаОтветственныйЗаПрактику.Items.Add("")
+        НоваягруппаОтветственныйЗаПрактику.Items.AddRange(grup.formGrouppLists.otvetstv_praktika)
+
+        For Each element As ComboBox In Controls.OfType(Of ComboBox)
+            If Strings.Left(element.Name, 6) = "Модуль" Then
+                element.Items.Clear()
+                element.Items.Add("")
+                element.Items.AddRange(grup.formGrouppLists.otvetstv_praktika)
+            End If
+        Next
+
+        НоваяГруппаФинансирование.Items.Clear()
+        НоваяГруппаФинансирование.Items.Add("")
+        НоваяГруппаФинансирование.Items.AddRange(grup.formGrouppLists.finansirovanie)
+
+        Квалификация.Items.Clear()
+        Квалификация.Items.Add("")
+        Квалификация.Items.AddRange(grup.formGrouppLists.kvalifikaciya)
+
+    End Sub
+
+    Private Sub swichNumbersInit()
+
+        swichNumbers.init()
+        swichNumbers.activeType = "null"
+
+        swichNumbers.pkList.Add(НомерУд)
+        swichNumbers.pkList.Add(РегНомерУд)
+        swichNumbers.pkList.Add(ДатаВыдачиУд)
+        swichNumbers.pkList.Add(lblNumberUd)
+        swichNumbers.pkList.Add(lblRegNumberUd)
+        swichNumbers.pkList.Add(lblDateUd)
+
+        swichNumbers.poList.Add(НомерСвид)
+        swichNumbers.poList.Add(РегНомерСвид)
+        swichNumbers.poList.Add(ДатаВСвид)
+        swichNumbers.poList.Add(lblNumberSv)
+        swichNumbers.poList.Add(lblRegNumberSv)
+        swichNumbers.poList.Add(lblDateSv)
+
+        swichNumbers.ppList.Add(НомерДиплома)
+        swichNumbers.ppList.Add(РегНомерДиплома)
+        swichNumbers.ppList.Add(ДатаВДиплома)
+        swichNumbers.ppList.Add(lblNumberD)
+        swichNumbers.ppList.Add(lblRegNumberD)
+        swichNumbers.ppList.Add(lblDateD)
+
+    End Sub
+
+    Private Sub swichCvalificationInit()
+
+        swichCvalification.pp = ppOn
+        swichCvalification.po = poOn
+        swichCvalification.pk = pkOn
+        swichCvalification.init()
+        MainForm.cvalific = 0
+
+    End Sub
+
+    Private Sub activateAllType()
+
+        If swichNumbers.activeType = "null" Then
+            Return
+        End If
+
+
+        swichNumbers.activateAll()
+        MainForm.cvalific = swichCvalification.type("not") + 1
+        updateCvalification()
+        НоваяГруппаУровеньКвалификации.Text = ""
+        activateField(False)
+
+    End Sub
+
+    Private Sub activateLavel(level As String)
+
+        If swichNumbers.activeType = "null" Then
+
+            Return
+
+        End If
+
+        activateField(True)
+        MainForm.cvalific = swichCvalification.type(level) + 1
+        updateCvalification()
+        swichNumbers.activeType = level
+        swichNumbers.activateLevel()
+
+    End Sub
+
+    Private Sub activateField(enabled As Boolean)
+
+        If enabled Then
+
+            НоваяГруппаПрограмма.Enabled = True
+            lblProgram.Enabled = True
+            НоваяГруппаСпециальность.Enabled = True
+            lblSpeciality.Enabled = True
+            versProgs.Enabled = True
+            НоваяГруппаКоличествоЧасов.Enabled = True
+            lblNumbersHours.Enabled = True
+            statusType.Text = swichCvalification.activeType
+
+            If swichNumbers.activeType <> "pk" Then
+
+                НоваяГруппаНомерПротоколаИА.Enabled = True
+                LblNumberIA.Enabled = True
+                НоваягруппаОтветственныйЗаПрактику.Enabled = True
+                lblPracticResponsible.Enabled = True
+                Квалификация.Enabled = True
+                lblCval.Enabled = True
+
+            Else
+
+                НоваяГруппаНомерПротоколаИА.Enabled = False
+                LblNumberIA.Enabled = False
+                НоваягруппаОтветственныйЗаПрактику.Enabled = False
+                lblPracticResponsible.Enabled = False
+                Квалификация.Enabled = False
+                lblCval.Enabled = False
+
+
+            End If
+
+        Else
+
+            НоваяГруппаПрограмма.Enabled = False
+            lblProgram.Enabled = False
+            НоваяГруппаСпециальность.Enabled = False
+            lblSpeciality.Enabled = False
+            versProgs.Enabled = False
+            НоваяГруппаКоличествоЧасов.Enabled = False
+            lblNumbersHours.Enabled = False
+            НоваяГруппаНомерПротоколаИА.Enabled = False
+            LblNumberIA.Enabled = False
+            НоваягруппаОтветственныйЗаПрактику.Enabled = False
+            lblPracticResponsible.Enabled = False
+            Квалификация.Enabled = False
+            lblCval.Enabled = False
+            statusType.Text = "Необходимо выбрать уровень квалификации"
 
         End If
 

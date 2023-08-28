@@ -1,60 +1,48 @@
-﻿Public Class СправочникГруппы
+﻿Imports System.Net.Mime.MediaTypeNames
+
+Public Class СправочникГруппы
 
     Public massiv
     Public numberGr As String
     Public kod As Integer
     Public year As Integer
     Public infoAboutGroup
+    Public swichCvalification As SwitchCvalification
 
     Public gruppaData As New Group.strGruppa
 
-
-    Private Sub searchRow_TextChanged(sender As Object, e As EventArgs) Handles СтрокаПоиска.TextChanged
-
-        search()
-
-    End Sub
-
     Sub search()
 
-        Label2.Visible = False
         Dim serchCol As String, sortCol As String
 
-        sortCol = Интерфейс.nameCheckedCheckBox(sortSetts)
+        sortCol = interfaceMod.nameCheckedCheckBox(sortSettsGroup)
 
-        serchCol = Интерфейс.nameCheckedCheckBox(НастройкаПоискаГрупп)
+        serchCol = interfaceMod.nameCheckedCheckBox(group__serchSettings)
 
-        If СтрокаПоиска.Text = "" Then
-            ListViewСписокГрупп.Items.Clear()
+        If searchRow.Text = "" Then
+            groupListTable.Items.Clear()
             updateGroupList()
         Else
-            Label3.Visible = False
-            massiv = sqlSearch(СтрокаПоиска.Text, "`group`", "Код, Номер, Программа, Куратор, ДатаНЗ, ДатаКЗ", serchCol, sortCol & Интерфейс.sortType(sortSetts.НажатПБГр))
-            Call UpdateListView.updateListView(False, False, ListViewСписокГрупп, massiv, 0, 1, 2, 3, 4, 5)
+            massiv = sqlSearch(searchRow.Text, "`group`", "Код, Номер, Программа, Куратор, ДатаНЗ, ДатаКЗ", serchCol, sortCol & interfaceMod.sortType(sortSettsGroup.sortSetts.flagSortUp))
+            UpdateListView.updateListView(False, False, groupListTable, massiv, 0, 1, 2, 3, 4, 5)
         End If
-
-        СтрокаПоиска.TabIndex = Len(СтрокаПоиска.Text)
-
-
 
     End Sub
 
 
-    Private Sub ListViewСписокГрупп_KeyDown(sender As Object, e As KeyEventArgs) Handles ListViewСписокГрупп.KeyDown
+    Private Sub groupListTable_KeyDown(sender As Object, e As KeyEventArgs) Handles groupListTable.KeyDown
         Dim element
         Dim ind As String
-        Dim kod As Integer, счетчик As Integer
-
-        Label2.Visible = False
+        Dim kod As Integer
 
 
         '_________________________________________делит
         If e.KeyCode = Keys.Delete Then
 
-            element = ListViewСписокГрупп.SelectedItems.Count
+            element = groupListTable.SelectedItems.Count
 
-            ind = ListViewСписокГрупп.SelectedItems.Item(0).SubItems(1).Text
-            kod = ListViewСписокГрупп.SelectedItems.Item(0).SubItems(0).Text
+            ind = groupListTable.SelectedItems.Item(0).SubItems(1).Text
+            kod = groupListTable.SelectedItems.Item(0).SubItems(0).Text
 
             InsertIntoDataBase.argumentClear()
             InsertIntoDataBase.argument.nameTable = "`group`"
@@ -64,7 +52,7 @@
             If Not InsertIntoDataBase.checkUniq_No2() = 2 Then
 
                 MsgBox("Ошибка. Запись уже удалена. Нажмите кнопку Загрузить из базы, чтобы обновить список")
-                GoTo Конец
+                Return
 
             End If
 
@@ -103,15 +91,7 @@
 
                 InsertIntoDataBase.deleteFromDB_NumberArg()
 
-                If Not InsertIntoDataBase.checkUniq_No2() = 2 Then
-
-                    Label2.Visible = True
-                    Label2.Text = "Группа № " & ind & " была удалена"
-
-                End If
-
                 updateGroupList()
-
 
             End If
 
@@ -128,222 +108,234 @@
 
         End If
 
-
-Конец:
     End Sub
+    Private Sub groupListTable_DoubleClick(sender As Object, e As EventArgs) Handles groupListTable.DoubleClick
 
-    Private Sub СтрокаПоиска_Click(sender As Object, e As EventArgs) Handles СтрокаПоиска.Click
-        Label2.Visible = False
-    End Sub
+        Dim sqiQuery As String
 
-    Private Sub ListViewСписокГрупп_DoubleClick(sender As Object, e As EventArgs) Handles ListViewСписокГрупп.DoubleClick
+        If Not groupListTable.SelectedItems.Item(0).SubItems(1).Text = "удалено" Then
 
-        Dim СтрокаЗапроса As String
+            StudentList.ListViewStudentsList.Items.Clear()
 
-        Label2.Visible = False
+            numberGr = groupListTable.SelectedItems.Item(0).SubItems(1).Text
 
-        If Not ListViewСписокГрупп.SelectedItems.Item(0).SubItems(1).Text = "удалено" Then
-
-            СписокСлушателейВГруппе.ListViewStudentsList.Items.Clear()
-
-            numberGr = ListViewСписокГрупп.SelectedItems.Item(0).SubItems(1).Text
-
-            If ListViewСписокГрупп.SelectedItems.Item(0).SubItems(0).Text = "" Then
+            If groupListTable.SelectedItems.Item(0).SubItems(0).Text = "" Then
                 Exit Sub
             End If
 
-            kod = ListViewСписокГрупп.SelectedItems.Item(0).SubItems(0).Text
+            kod = groupListTable.SelectedItems.Item(0).SubItems(0).Text
             Try
-                year = Convert.ToDateTime(ListViewСписокГрупп.SelectedItems.Item(0).SubItems(4).Text).Year
+                year = Convert.ToDateTime(groupListTable.SelectedItems.Item(0).SubItems(4).Text).Year
             Catch ex As Exception
                 Exit Sub
             End Try
 
-            СтрокаЗапроса = checkGroup(kod)
+            sqiQuery = checkGroup(kod)
 
-            Label2.Visible = False
-
-            infoAboutGroup = MainForm.mySqlConnect.loadMySqlToArray(СтрокаЗапроса, 1)
+            infoAboutGroup = MainForm.mySqlConnect.loadMySqlToArray(sqiQuery, 1)
             If CStr(infoAboutGroup(0, 0)) = "нет записей" Then
                 MsgBox("Группа была изменена, обновите данные нажатием кнопки 'Загрузить из базы' ")
                 Exit Sub
             End If
-            СписокСлушателейВГруппе.Text = "Группа № " & numberGr
+            StudentList.Text = "Группа № " & numberGr
             РедакторГруппы.Text = "Группа № " & numberGr
-            СписокСлушателейВГруппе.ShowDialog()
+            StudentList.ShowDialog()
 
         Else MsgBox("информация удалена")
         End If
 
     End Sub
 
-    Private Sub BtnFocus_Click(sender As Object, e As EventArgs) Handles BtnFocus.Click
-        Dim ind As Integer
-        Dim yas As Boolean
-        For Each item In ListViewСписокГрупп.Items
+    Private Sub groupList_KeyDown(sender As Object, e As KeyEventArgs) Handles Me.KeyDown
 
-            yas = item.Equals(ListViewСписокГрупп.SelectedItems(0))
+        Select Case e.KeyCode
 
-        Next
+            Case Keys.Escape
 
-        ind = ListViewСписокГрупп.Items.Count
-        ind = ListViewСписокГрупп.SelectedItems.IndexOfKey(ind)
-        ListViewСписокГрупп.Items(0).SubItems.Item(1).Text = "Вова"
+                Close()
+
+            Case Keys.Down
+
+                dounPressed()
+
+            Case Keys.Right
+
+                rigthPressed()
+
+            Case Keys.Enter
+
+                enterPressed(sender, e)
+
+        End Select
+
     End Sub
 
-    Private Sub ListViewСписокГрупп_Click(sender As Object, e As EventArgs) Handles ListViewСписокГрупп.Click
-        Label2.Visible = False
+    Private Sub enterPressed(sender As Object, e As KeyEventArgs)
+
+        Dim Str As String
+
+        Try
+            Str = groupListTable.SelectedItems.Item(0).SubItems(1).Text
+
+        Catch ex As Exception
+
+            Exit Sub
+
+        End Try
+
+
+        groupListTable_DoubleClick(sender, e)
+
     End Sub
 
-    Private Sub СправочникГруппы_KeyDown(sender As Object, e As KeyEventArgs) Handles Me.KeyDown
-        Dim name As String
-        Dim str As String
+    Private Sub rigthPressed()
 
-        '_________________________________________Esc
-        If e.KeyCode = 27 Then
-
-            Me.Close()
-
+        If Not ActiveControl.Name = "groupListTable" Then
+            SendKeys.Send("{tab}")
         End If
 
+    End Sub
 
-        '_________________________________________вниз
-        If e.KeyCode = 40 Then
+    Private Sub dounPressed()
 
-            name = ActiveControl.Name
-            If Not ActiveControl.Name = "ListViewСписокГрупп" Then
+        Dim Str As String
+        Name = ActiveControl.Name
 
-                SendKeys.Send("{tab}")
-            Else
-
-
-                Try
-                    str = ListViewСписокГрупп.SelectedItems.Item(0).SubItems(1).Text
-                Catch ex As Exception
-
-                    Try
-                        ListViewСписокГрупп.Items(0).Selected = True
-                    Catch ex1 As Exception
-                        SendKeys.Send("{tab}")
-                    End Try
-
-                End Try
-
-
-            End If
-
-        End If
-        '_________________________________________вправо
-        If e.KeyCode = 39 Then
-
-            If Not ActiveControl.Name = "ListViewСписокГрупп" Then
-
-                SendKeys.Send("{tab}")
-            End If
-
-        End If
-
-        '_________________________________________энтер
-
-        If e.KeyCode = 13 Then
-
+        If Not ActiveControl.Name = "groupListTable" Then
+            SendKeys.Send("{tab}")
+        Else
             Try
-                str = ListViewСписокГрупп.SelectedItems.Item(0).SubItems(1).Text
-
+                Str = groupListTable.SelectedItems.Item(0).SubItems(1).Text
             Catch ex As Exception
 
-                Exit Sub
+                Try
+                    groupListTable.Items(0).Selected = True
+                Catch ex1 As Exception
+                    SendKeys.Send("{tab}")
+                End Try
 
             End Try
-
-
-            ListViewСписокГрупп_DoubleClick(sender, e)
-
         End If
-
 
     End Sub
 
     Private Sub СправочникГруппы_Shown(sender As Object, e As EventArgs) Handles Me.Shown
+
         openFormGroupp()
-        updateGroupList()
-    End Sub
+        updateCvalification()
 
-    Private Sub PictureBox1_Click(sender As Object, e As EventArgs) Handles PictureBox1.Click
-        Me.СтрокаПоиска.Clear()
-        НастройкаПоискаГрупп.ShowDialog()
-    End Sub
-
-
-    Private Sub PictureBox2_Click(sender As Object, e As EventArgs) Handles PictureBox2.Click
-
-        sortSetts.ShowDialog()
-
-    End Sub
-
-    Private Sub СГУровеньКвалификации_SelectedIndexChanged(sender As Object, e As EventArgs) Handles СГУровеньКвалификации.SelectedIndexChanged
-        If СГУровеньКвалификации.Text = "повышение квалификации" Then
-            MainForm.cvalific = MainForm.PK
-        ElseIf СГУровеньКвалификации.Text = "профессиональное обучение" Then
-            MainForm.cvalific = MainForm.PO
-        ElseIf СГУровеньКвалификации.Text = "профессиональная переподготовка" Then
-            MainForm.cvalific = MainForm.PP
-        End If
-        openFormGroupp()
-        updateGroupList()
     End Sub
 
     Public Sub updateGroupList()
 
-        Dim Str As String, ПолеДляПоиска, ПолеДляСортировки As String
+        Dim Str As String, searchField, sortField As String
 
-        ПолеДляСортировки = Интерфейс.nameCheckedCheckBox(sortSetts)
-        ПолеДляПоиска = Интерфейс.nameCheckedCheckBox(НастройкаПоискаГрупп)
+        sortField = interfaceMod.nameCheckedCheckBox(sortSettsGroup)
+        searchField = interfaceMod.nameCheckedCheckBox(group__serchSettings)
 
-        If MainForm.cvalific = MainForm.PK Then
-            Me.СГУровеньКвалификации.Text = "повышение квалификации"
-        ElseIf MainForm.cvalific = MainForm.PO Then
-            Me.СГУровеньКвалификации.Text = "профессиональное обучение"
-        ElseIf MainForm.cvalific = MainForm.PP Then
-            Me.СГУровеньКвалификации.Text = "профессиональная переподготовка"
-        End If
-
-        Me.Label2.Visible = False
-        Me.СтрокаПоиска.Visible = True
-        Me.Label1.Visible = True
+        searchRow.Visible = True
 
         If MainForm.cvalific = MainForm.PK Or MainForm.cvalific = MainForm.PP Then
-            Str = load_spr_group(Me.СГУровеньКвалификации.Text, ПолеДляСортировки & Интерфейс.sortType(sortSetts.НажатПБГр), Me.yearSpravochnikGr.Text)
+            Str = load_spr_group(swichCvalification.activeType, sortField & interfaceMod.sortType(sortSettsGroup.sortSetts.flagSortUp), yearSpravochnikGr.Text)
         Else
-            Str = load_spr_group(Me.СГУровеньКвалификации.Text, ПолеДляСортировки & Интерфейс.sortType(sortSetts.НажатПБГр))
+            Str = load_spr_group(swichCvalification.activeType, sortField & interfaceMod.sortType(sortSettsGroup.sortSetts.flagSortUp))
         End If
 
         massiv = MainForm.mySqlConnect.loadMySqlToArray(Str, 1)
 
-        UpdateListView.updateListView(False, False, Me.ListViewСписокГрупп, Me.massiv, 0, 1, 2, 3, 4, 5)
-        Me.СтрокаПоиска.Text = ""
+        UpdateListView.updateListView(False, False, Me.groupListTable, Me.massiv, 0, 1, 2, 3, 4, 5)
+        Me.searchRow.Text = ""
 
         Try
-            Me.ListViewСписокГрупп.Items(0).Selected = True
+            Me.groupListTable.Items(0).Selected = True
         Catch ex1 As Exception
             Exit Sub
         End Try
 
     End Sub
     Sub openFormGroupp()
+
         If MainForm.cvalific = MainForm.PO Then
-            Me.yearSpravochnikGr.Visible = False
+
+            yearSpravochnikGr.Visible = False
+
         Else
-            Me.yearSpravochnikGr.Visible = True
-            Me.yearSpravochnikGr.Text = DateAndTime.Year(Date.Now())
+
+            yearSpravochnikGr.Visible = True
+            yearSpravochnikGr.Text = DateAndTime.Year(Date.Now())
+
         End If
+
     End Sub
 
-    Private Sub yearSpravochnikGr_SelectedIndexChanged(sender As Object, e As EventArgs) Handles yearSpravochnikGr.SelectedIndexChanged
-        updateGroupList()
+    Private Sub searchSettings_Click(sender As Object, e As EventArgs) Handles searchSettings.Click
+
+        searchRow.Clear()
+        group__serchSettings.ShowDialog()
+
     End Sub
 
-    Private Sub yearSpravochnikGr_TextChanged(sender As Object, e As EventArgs) Handles yearSpravochnikGr.TextChanged
-        updateGroupList()
+    Private Sub sortSettings_Click(sender As Object, e As EventArgs) Handles sortSettings.Click
+
+        sortSettsGroup.ShowDialog()
+
     End Sub
+
+    Private Sub searchRow_TextChanged(sender As Object, e As EventArgs) Handles searchRow.TextChanged
+
+        search()
+
+    End Sub
+
+    Private Sub yearSpravochnikGr_SelectedIndexChanged_1(sender As Object, e As EventArgs) Handles yearSpravochnikGr.SelectedIndexChanged
+
+        updateGroupList()
+
+    End Sub
+
+    Private Sub yearSpravochnikGr_TextUpdate(sender As Object, e As EventArgs) Handles yearSpravochnikGr.TextUpdate
+
+        updateGroupList()
+
+    End Sub
+
+    Private Sub СправочникГруппы_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+        swichCvalification = New SwitchCvalification
+        swichCvalification.pp = ppOn
+        swichCvalification.po = poOn
+        swichCvalification.pk = pkOn
+        swichCvalification.init()
+
+    End Sub
+
+    Private Sub ppOn_Click(sender As Object, e As EventArgs) Handles ppOn.Click
+
+        MainForm.cvalific = swichCvalification.type("pp") + 1
+        updateCvalification()
+
+    End Sub
+
+    Private Sub poOn_Click(sender As Object, e As EventArgs) Handles poOn.Click
+
+        MainForm.cvalific = swichCvalification.type("po") + 1
+        updateCvalification()
+
+    End Sub
+
+    Private Sub pkOn_Click(sender As Object, e As EventArgs) Handles pkOn.Click
+
+        MainForm.cvalific = swichCvalification.type("pk") + 1
+        updateCvalification()
+
+    End Sub
+
+    Private Sub updateCvalification()
+
+        swichCvalification.activate(MainForm.cvalific - 1)
+        openFormGroupp()
+        updateGroupList()
+
+    End Sub
+
 End Class

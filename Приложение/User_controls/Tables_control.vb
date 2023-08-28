@@ -465,7 +465,7 @@ Public Class Tables_control
 
             If programm_on Then
 
-                queryString = MainForm.program__sqlQueryString.programs__checkKodGrouppBusy(remove_kod)
+                queryString = MainForm.sqlQueryString.programs__checkKodGrouppBusy(remove_kod)
                 result = mySQLConnector.ЗагрузитьИзMySQLвОдномерныйМассив(queryString, 1, 0)
 
                 If Convert.ToInt16(result(0)) > 0 Then
@@ -477,7 +477,7 @@ Public Class Tables_control
 
             End If
 
-            queryString = MainForm.program__sqlQueryString.update_delete_query(programm_on, name_table, MainForm.comboBoxProgramms.Text, remove_kod)
+            queryString = MainForm.sqlQueryString.update_delete_query(programm_on, name_table, MainForm.comboBoxProgramms.Text, remove_kod)
 
             mySQLConnector.sendQuery(queryString, 1)
 
@@ -652,15 +652,15 @@ Public Class Tables_control
 
         If programm_on Then
 
-            queryString = MainForm.program__sqlQueryString.update_prog_check_query(name_table, names.db_element_first, values.element_first, names.db_element_second, values.element_second, MainForm.comboBoxProgramms.Text)
+            queryString = MainForm.sqlQueryString.update_prog_check_query(name_table, names.db_element_first, values.element_first, names.db_element_second, values.element_second, MainForm.comboBoxProgramms.Text)
 
         ElseIf type_progs_on Then
 
-            queryString = MainForm.program__sqlQueryString.update_typeProgs_check_query(Convert.ToString(MainForm.program.struct_progs.program_kod), Convert.ToString(values.kod), values.element_first)
+            queryString = MainForm.sqlQueryString.update_typeProgs_check_query(Convert.ToString(MainForm.program.struct_progs.program_kod), Convert.ToString(values.kod), values.element_first)
 
         Else
 
-            queryString = MainForm.program__sqlQueryString.update_check_query(number_column, name_table, names.db_element_first, values.element_first, names.db_element_second, values.element_second)
+            queryString = MainForm.sqlQueryString.update_check_query(number_column, name_table, names.db_element_first, values.element_first, names.db_element_second, values.element_second)
 
         End If
 
@@ -672,15 +672,15 @@ Public Class Tables_control
 
         If programm_on Then
 
-            queryString = MainForm.program__sqlQueryString.update_prog_update_query(name_table, names.db_element_first, values.element_first, names.db_element_second, values.element_second, values.kod)
+            queryString = MainForm.sqlQueryString.update_prog_update_query(name_table, names.db_element_first, values.element_first, names.db_element_second, values.element_second, values.kod)
 
         ElseIf type_progs_on Then
 
-            queryString = MainForm.program__sqlQueryString.update_typeProgs_update_query(Convert.ToString(MainForm.program.struct_progs.program_kod), Convert.ToString(values.kod), Convert.ToString(values.element_first))
+            queryString = MainForm.sqlQueryString.update_typeProgs_update_query(Convert.ToString(MainForm.program.struct_progs.program_kod), Convert.ToString(values.kod), Convert.ToString(values.element_first))
 
         Else
 
-            queryString = MainForm.program__sqlQueryString.update_update_query(number_column, name_table, names.db_element_first, values.element_first, names.db_element_second, values.element_second, values.kod)
+            queryString = MainForm.sqlQueryString.update_update_query(number_column, name_table, names.db_element_first, values.element_first, names.db_element_second, values.element_second, values.kod)
 
         End If
 
@@ -694,7 +694,7 @@ Public Class Tables_control
 
         If programm_on Then
 
-            queryString = MainForm.program__sqlQueryString.update_prog_check_query(name_table, names.db_element_first, values.element_first, names.db_element_second, values.element_second, MainForm.comboBoxProgramms.Text)
+            queryString = MainForm.sqlQueryString.update_prog_check_query(name_table, names.db_element_first, values.element_first, names.db_element_second, values.element_second, MainForm.comboBoxProgramms.Text)
 
         ElseIf type_progs_on Then
 
@@ -702,7 +702,7 @@ Public Class Tables_control
 
         Else
 
-            queryString = MainForm.program__sqlQueryString.update_check_query(number_column, name_table, names.db_element_first, values.element_first, names.db_element_second, values.element_second)
+            queryString = MainForm.sqlQueryString.update_check_query(number_column, name_table, names.db_element_first, values.element_first, names.db_element_second, values.element_second)
 
         End If
 
@@ -716,11 +716,11 @@ Public Class Tables_control
 
         If programm_on Then
 
-            queryString = MainForm.program__sqlQueryString.update_prog_insert_query(number_column, name_table, names.db_element_first, values.element_first, names.db_element_second, values.element_second, MainForm.comboBoxProgramms.Text)
+            queryString = MainForm.sqlQueryString.update_prog_insert_query(number_column, name_table, names.db_element_first, values.element_first, names.db_element_second, values.element_second, MainForm.comboBoxProgramms.Text)
 
         Else
 
-            queryString = MainForm.program__sqlQueryString.update_insert_query(number_column, name_table, names.db_element_first, values.element_first, names.db_element_second, values.element_second)
+            queryString = MainForm.sqlQueryString.update_insert_query(number_column, name_table, names.db_element_first, values.element_first, names.db_element_second, values.element_second)
 
         End If
 
@@ -728,11 +728,11 @@ Public Class Tables_control
 
         If programm_on Then
 
-            queryString = MainForm.program__sqlQueryString.update_prog_load_kod_query(name_table, names.db_element_first, values.element_first, MainForm.comboBoxProgramms.Text)
+            queryString = MainForm.sqlQueryString.update_prog_load_kod_query(name_table, names.db_element_first, values.element_first, MainForm.comboBoxProgramms.Text)
 
         Else
 
-            queryString = MainForm.program__sqlQueryString.update_load_kod_query(number_column, name_table, names.db_element_first, values.element_first, names.db_element_second, values.element_second)
+            queryString = MainForm.sqlQueryString.update_load_kod_query(number_column, name_table, names.db_element_first, values.element_first, names.db_element_second, values.element_second)
 
         End If
 

@@ -36,11 +36,11 @@ Module АДействияСОВедомостью
         rowsCounter = Ведомость.Rows.Count
 
         For counter = 0 To rowsCounter - 1
-            If IsNothing(ОценочнаяВедомость.ТаблицаВедомость.Rows(counter).Cells(1).Value) Then
+            If IsNothing(ОценочнаяВедомость.resultTable.Rows(counter).Cells(1).Value) Then
                 Exit For
             End If
-            snils = loadSnils(CDbl(ОценочнаяВедомость.ТаблицаВедомость.Rows(counter).Cells(0).Value))
-            fio = Split(ОценочнаяВедомость.ТаблицаВедомость.Rows(counter).Cells(1).Value, " ")
+            snils = loadSnils(CDbl(ОценочнаяВедомость.resultTable.Rows(counter).Cells(0).Value))
+            fio = Split(ОценочнаяВедомость.resultTable.Rows(counter).Cells(1).Value, " ")
             Try
                 queryString = oVedom__checkStudent(Convert.ToString(kod), snils)
             Catch ex As Exception
@@ -53,7 +53,7 @@ Module АДействияСОВедомостью
 
             For count As Int16 = 0 To 9
 
-                argument(count) = Convert.ToString(ОценочнаяВедомость.ТаблицаВедомость.Rows(counter).Cells(count + 2).Value)
+                argument(count) = Convert.ToString(ОценочнаяВедомость.resultTable.Rows(counter).Cells(count + 2).Value)
 
             Next
 
@@ -64,7 +64,7 @@ Module АДействияСОВедомостью
                 queryString = oVedom__updateOcenki(argument)
             Catch ex As Exception
                 предупреждение.текст.Text = "Информация не была сохранена"
-                ОткрытьФорму(предупреждение)
+                openForm(предупреждение)
                 Exit Sub
             End Try
             MainForm.mySqlConnect.sendQuery(queryString, 1)

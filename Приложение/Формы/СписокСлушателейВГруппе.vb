@@ -1,14 +1,8 @@
 ﻿Imports System.Threading
 Imports System.IO
-Public Class СписокСлушателейВГруппе
+Public Class StudentList
 
     Dim SC As SynchronizationContext
-
-    Private Sub Прочее_Click(sender As Object, e As EventArgs) Handles Прочее.Click
-        ЗагрузитьРедакторГруппы()
-        РедакторГруппы.ShowDialog()
-        Очиститьформу(РедакторГруппы)
-    End Sub
 
     Sub ЗагрузитьРедакторГруппы()
         РедакторГруппы.loadFormGruppa()
@@ -29,13 +23,6 @@ Public Class СписокСлушателейВГруппе
         secondThread.Start(argument)
 
         ActiveControl = ListViewStudentsList
-
-        Try
-            ListViewStudentsList.Items(0).Selected = True
-        Catch ex1 As Exception
-            ActiveControl = ДобавитьВГруппу
-            Exit Sub
-        End Try
 
     End Sub
 
@@ -63,22 +50,14 @@ Public Class СписокСлушателейВГруппе
         ReDim params(7)
         params(0) = Me
         params(1) = ListViewStudentsList
-        params(2) = ДобавитьРубашку.ДобавитьРубашкуВМассив(studentList, 0)
+        params(2) = addMask.addMask(studentList, 0)
         params(3) = 0
         params(4) = 1
         params(5) = 2
         params(6) = 3
         params(7) = 4
 
-        SC.Send(AddressOf UpdateListView.ЗаписьВListView2Поток, params)
-
-    End Sub
-
-    Private Sub ДобавитьВГруппу_Click(sender As Object, e As EventArgs) Handles ДобавитьВГруппу.Click
-
-        ФормаСправочникСлушатели.showStudentsList()
-        ФормаСправочникСлушатели.ДобавитьВГруппу.Visible = True
-        ФормаСправочникСлушатели.ShowDialog()
+        SC.Send(AddressOf UpdateListView.updateListV, params)
 
     End Sub
 
@@ -111,7 +90,7 @@ Public Class СписокСлушателейВГруппе
 
             End Try
 
-            snils = УдалитьРубашку(snils)
+            snils = deleteMasck(snils)
 
             InsertIntoDataBase.argumentClear()
             InsertIntoDataBase.argument.nameTable = "group_list"
@@ -142,13 +121,13 @@ Public Class СписокСлушателейВГруппе
 
             If Not ListViewStudentsList.SelectedItems.Item(0).SubItems(1).Text = "удалено" Then
 
-                snils = ДобавитьРубашку.УдалитьРубашку(ListViewStudentsList.SelectedItems.Item(0).SubItems(1).Text)
+                snils = addMask.deleteMasck(ListViewStudentsList.SelectedItems.Item(0).SubItems(1).Text)
 
                 РедакторСлушателя.Text = ListViewStudentsList.SelectedItems.Item(0).SubItems(2).Text & " " & ListViewStudentsList.SelectedItems.Item(0).SubItems(3).Text & " " & ListViewStudentsList.SelectedItems.Item(0).SubItems(4).Text & " "
 
                 queryString = load_slushatel(snils)
 
-                ФормаСправочникСлушатели.ИнформацияОСлушателе = УбратьПустотыВМассиве.УбратьПустотыВМассиве(MainForm.mySqlConnect.loadMySqlToArray(queryString, 1))
+                ФормаСправочникСлушатели.studentsInfo = УбратьПустотыВМассиве.УбратьПустотыВМассиве(MainForm.mySqlConnect.loadMySqlToArray(queryString, 1))
 
                 '                РедакторСлушателя.prevFormSpisSlushVGr = True
 
@@ -165,26 +144,15 @@ Public Class СписокСлушателейВГруппе
 
     End Sub
 
-    Private Sub ListViewСписокСлушателей_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ListViewStudentsList.SelectedIndexChanged
-
-    End Sub
-
-    Private Sub ДобавитьВгруппуНового_Click(sender As Object, e As EventArgs) Handles ДобавитьВгруппуНового.Click
-
-        НовыйСлушатель.ВызваноСФормыСписокСлушателей = True
-        НовыйСлушатель.ShowDialog()
-
-    End Sub
-
-    Private Sub ДобавитьВГруппу_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs) Handles ДобавитьВГруппу.PreviewKeyDown
+    Private Sub ДобавитьВГруппу_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs)
         pressTab(e.KeyCode, 39)
     End Sub
 
-    Private Sub ДобавитьВгруппуНового_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs) Handles ДобавитьВгруппуНового.PreviewKeyDown
+    Private Sub ДобавитьВгруппуНового_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs)
         pressTab(e.KeyCode, 39)
     End Sub
 
-    Private Sub Прочее_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs) Handles Прочее.PreviewKeyDown
+    Private Sub Прочее_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs)
         pressTab(e.KeyCode, 39)
     End Sub
 
@@ -196,15 +164,34 @@ Public Class СписокСлушателейВГруппе
         pressTab(e.KeyCode, 39)
     End Sub
 
-    Private Sub SplitContainer2_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs) Handles SplitContainer2.PreviewKeyDown
+    Private Sub SplitContainer2_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs)
         pressTab(e.KeyCode, 39)
     End Sub
 
-    Private Sub SplitContainer3_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs) Handles SplitContainer3.PreviewKeyDown
+    Private Sub SplitContainer3_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs)
         pressTab(e.KeyCode, 39)
     End Sub
 
     Private Sub СписокСлушателейВГруппе_KeyDown(sender As Object, e As KeyEventArgs) Handles MyBase.KeyDown
         closeEsc(Me, e.KeyCode)
+    End Sub
+
+    Private Sub studentsList_Click(sender As Object, e As EventArgs) Handles studentsList.Click
+
+        ФормаСправочникСлушатели.showStudentsList()
+        ФормаСправочникСлушатели.insertIntoGroupList.Visible = True
+        ФормаСправочникСлушатели.ShowDialog()
+
+    End Sub
+
+    Private Sub newStudent_Click(sender As Object, e As EventArgs) Handles newStudent.Click
+        НовыйСлушатель.ВызваноСФормыСписокСлушателей = True
+        НовыйСлушатель.ShowDialog()
+    End Sub
+
+    Private Sub allInfo_Click(sender As Object, e As EventArgs) Handles allInfo.Click
+        ЗагрузитьРедакторГруппы()
+        РедакторГруппы.ShowDialog()
+        Очиститьформу(РедакторГруппы)
     End Sub
 End Class

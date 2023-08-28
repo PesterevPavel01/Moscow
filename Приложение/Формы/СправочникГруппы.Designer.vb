@@ -24,45 +24,42 @@ Partial Class СправочникГруппы
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(СправочникГруппы))
-        Me.ListViewСписокГрупп = New System.Windows.Forms.ListView()
+        Me.groupListTable = New System.Windows.Forms.ListView()
         Me.Номер = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.Группа = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.Программа = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.Куратор = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.Начало = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.Конец = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
-        Me.Label1 = New System.Windows.Forms.Label()
-        Me.СтрокаПоиска = New System.Windows.Forms.TextBox()
         Me.BtnFocus = New System.Windows.Forms.Button()
         Me.ImageList1 = New System.Windows.Forms.ImageList(Me.components)
-        Me.Label2 = New System.Windows.Forms.Label()
-        Me.Label3 = New System.Windows.Forms.Label()
         Me.ImageList2 = New System.Windows.Forms.ImageList(Me.components)
-        Me.PictureBox1 = New System.Windows.Forms.PictureBox()
-        Me.PictureBox2 = New System.Windows.Forms.PictureBox()
-        Me.СГУровеньКвалификации = New System.Windows.Forms.ComboBox()
-        Me.yearSpravochnikGr = New System.Windows.Forms.ComboBox()
-        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.header = New System.Windows.Forms.ToolStrip()
+        Me.sortSettings = New System.Windows.Forms.ToolStripButton()
+        Me.searchSettings = New System.Windows.Forms.ToolStripButton()
+        Me.searchRow = New System.Windows.Forms.ToolStripTextBox()
+        Me.poOn = New System.Windows.Forms.ToolStripButton()
+        Me.pkOn = New System.Windows.Forms.ToolStripButton()
+        Me.ppOn = New System.Windows.Forms.ToolStripButton()
+        Me.yearSpravochnikGr = New System.Windows.Forms.ToolStripComboBox()
+        Me.header.SuspendLayout()
         Me.SuspendLayout()
         '
         'ListViewСписокГрупп
         '
-        Me.ListViewСписокГрупп.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.ListViewСписокГрупп.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.ListViewСписокГрупп.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.Номер, Me.Группа, Me.Программа, Me.Куратор, Me.Начало, Me.Конец})
-        Me.ListViewСписокГрупп.Font = New System.Drawing.Font("Microsoft YaHei", 11.0!)
-        Me.ListViewСписокГрупп.FullRowSelect = True
-        Me.ListViewСписокГрупп.GridLines = True
-        Me.ListViewСписокГрупп.HideSelection = False
-        Me.ListViewСписокГрупп.Location = New System.Drawing.Point(3, 66)
-        Me.ListViewСписокГрупп.Name = "ListViewСписокГрупп"
-        Me.ListViewСписокГрупп.Size = New System.Drawing.Size(1311, 879)
-        Me.ListViewСписокГрупп.TabIndex = 1
-        Me.ListViewСписокГрупп.UseCompatibleStateImageBehavior = False
-        Me.ListViewСписокГрупп.View = System.Windows.Forms.View.Details
+        Me.groupListTable.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.groupListTable.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.Номер, Me.Группа, Me.Программа, Me.Куратор, Me.Начало, Me.Конец})
+        Me.groupListTable.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.groupListTable.Font = New System.Drawing.Font("Microsoft YaHei", 11.0!)
+        Me.groupListTable.FullRowSelect = True
+        Me.groupListTable.GridLines = True
+        Me.groupListTable.HideSelection = False
+        Me.groupListTable.Location = New System.Drawing.Point(5, 52)
+        Me.groupListTable.Name = "ListViewСписокГрупп"
+        Me.groupListTable.Size = New System.Drawing.Size(1305, 890)
+        Me.groupListTable.TabIndex = 1
+        Me.groupListTable.UseCompatibleStateImageBehavior = False
+        Me.groupListTable.View = System.Windows.Forms.View.Details
         '
         'Номер
         '
@@ -94,28 +91,10 @@ Partial Class СправочникГруппы
         Me.Конец.Text = "Дата окончания"
         Me.Конец.Width = 140
         '
-        'Label1
-        '
-        Me.Label1.AutoSize = True
-        Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.Label1.Location = New System.Drawing.Point(46, 18)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(39, 13)
-        Me.Label1.TabIndex = 12
-        Me.Label1.Text = "Поиск"
-        '
-        'СтрокаПоиска
-        '
-        Me.СтрокаПоиска.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.СтрокаПоиска.Location = New System.Drawing.Point(44, 31)
-        Me.СтрокаПоиска.Name = "СтрокаПоиска"
-        Me.СтрокаПоиска.Size = New System.Drawing.Size(690, 29)
-        Me.СтрокаПоиска.TabIndex = 2
-        '
         'BtnFocus
         '
         Me.BtnFocus.ImageList = Me.ImageList1
-        Me.BtnFocus.Location = New System.Drawing.Point(627, 147)
+        Me.BtnFocus.Location = New System.Drawing.Point(599, 111)
         Me.BtnFocus.Name = "BtnFocus"
         Me.BtnFocus.Size = New System.Drawing.Size(75, 23)
         Me.BtnFocus.TabIndex = 13
@@ -135,78 +114,91 @@ Partial Class СправочникГруппы
         Me.ImageList1.Images.SetKeyName(6, "Лупа.png")
         Me.ImageList1.Images.SetKeyName(7, "Сортировка35.png")
         '
-        'Label2
-        '
-        Me.Label2.AutoSize = True
-        Me.Label2.ForeColor = System.Drawing.SystemColors.MenuHighlight
-        Me.Label2.Location = New System.Drawing.Point(12, 6)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(39, 13)
-        Me.Label2.TabIndex = 14
-        Me.Label2.Text = "Label2"
-        Me.Label2.Visible = False
-        '
-        'Label3
-        '
-        Me.Label3.AutoSize = True
-        Me.Label3.BackColor = System.Drawing.SystemColors.ButtonFace
-        Me.Label3.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.Label3.ForeColor = System.Drawing.SystemColors.MenuHighlight
-        Me.Label3.Location = New System.Drawing.Point(100, 6)
-        Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(39, 13)
-        Me.Label3.TabIndex = 15
-        Me.Label3.Text = "Label3"
-        Me.Label3.Visible = False
-        '
         'ImageList2
         '
         Me.ImageList2.ImageStream = CType(resources.GetObject("ImageList2.ImageStream"), System.Windows.Forms.ImageListStreamer)
         Me.ImageList2.TransparentColor = System.Drawing.Color.Transparent
         Me.ImageList2.Images.SetKeyName(0, "Сортировка35.png")
         '
-        'PictureBox1
+        'header
         '
-        Me.PictureBox1.ErrorImage = Nothing
-        Me.PictureBox1.Image = CType(resources.GetObject("PictureBox1.Image"), System.Drawing.Image)
-        Me.PictureBox1.InitialImage = Nothing
-        Me.PictureBox1.Location = New System.Drawing.Point(5, 25)
-        Me.PictureBox1.Name = "PictureBox1"
-        Me.PictureBox1.Size = New System.Drawing.Size(35, 35)
-        Me.PictureBox1.TabIndex = 16
-        Me.PictureBox1.TabStop = False
+        Me.header.BackColor = System.Drawing.SystemColors.MenuBar
+        Me.header.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.sortSettings, Me.searchSettings, Me.searchRow, Me.poOn, Me.pkOn, Me.ppOn, Me.yearSpravochnikGr})
+        Me.header.Location = New System.Drawing.Point(5, 5)
+        Me.header.Name = "header"
+        Me.header.Size = New System.Drawing.Size(1305, 47)
+        Me.header.TabIndex = 20
+        Me.header.Text = "ToolStrip1"
         '
-        'PictureBox2
+        'sortSettings
         '
-        Me.PictureBox2.ErrorImage = Nothing
-        Me.PictureBox2.Image = CType(resources.GetObject("PictureBox2.Image"), System.Drawing.Image)
-        Me.PictureBox2.InitialImage = Nothing
-        Me.PictureBox2.Location = New System.Drawing.Point(740, 31)
-        Me.PictureBox2.Name = "PictureBox2"
-        Me.PictureBox2.Size = New System.Drawing.Size(28, 28)
-        Me.PictureBox2.TabIndex = 17
-        Me.PictureBox2.TabStop = False
+        Me.sortSettings.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.sortSettings.Image = CType(resources.GetObject("sortSettings.Image"), System.Drawing.Image)
+        Me.sortSettings.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
+        Me.sortSettings.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.sortSettings.Name = "sortSettings"
+        Me.sortSettings.Size = New System.Drawing.Size(44, 44)
+        Me.sortSettings.Text = "Настройка сортировки"
         '
-        'СГУровеньКвалификации
+        'searchSettings
         '
-        Me.СГУровеньКвалификации.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.СГУровеньКвалификации.FormattingEnabled = True
-        Me.СГУровеньКвалификации.Items.AddRange(New Object() {"профессиональная переподготовка", "профессиональное обучение", "повышение квалификации"})
-        Me.СГУровеньКвалификации.Location = New System.Drawing.Point(774, 31)
-        Me.СГУровеньКвалификации.Name = "СГУровеньКвалификации"
-        Me.СГУровеньКвалификации.Size = New System.Drawing.Size(378, 29)
-        Me.СГУровеньКвалификации.TabIndex = 18
+        Me.searchSettings.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.searchSettings.Image = CType(resources.GetObject("searchSettings.Image"), System.Drawing.Image)
+        Me.searchSettings.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
+        Me.searchSettings.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.searchSettings.Name = "searchSettings"
+        Me.searchSettings.Size = New System.Drawing.Size(44, 44)
+        Me.searchSettings.Text = "Настройка поиска"
+        '
+        'searchRow
+        '
+        Me.searchRow.BackColor = System.Drawing.SystemColors.Window
+        Me.searchRow.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.searchRow.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
+        Me.searchRow.Name = "searchRow"
+        Me.searchRow.Size = New System.Drawing.Size(400, 47)
+        '
+        'poOn
+        '
+        Me.poOn.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
+        Me.poOn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.poOn.Image = CType(resources.GetObject("poOn.Image"), System.Drawing.Image)
+        Me.poOn.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
+        Me.poOn.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.poOn.Name = "poOn"
+        Me.poOn.Size = New System.Drawing.Size(44, 44)
+        Me.poOn.Text = "Настройка поиска"
+        '
+        'pkOn
+        '
+        Me.pkOn.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
+        Me.pkOn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.pkOn.Image = CType(resources.GetObject("pkOn.Image"), System.Drawing.Image)
+        Me.pkOn.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
+        Me.pkOn.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.pkOn.Name = "pkOn"
+        Me.pkOn.Size = New System.Drawing.Size(44, 44)
+        Me.pkOn.Text = "Настройка поиска"
+        '
+        'ppOn
+        '
+        Me.ppOn.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
+        Me.ppOn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.ppOn.Image = CType(resources.GetObject("ppOn.Image"), System.Drawing.Image)
+        Me.ppOn.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
+        Me.ppOn.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.ppOn.Name = "ppOn"
+        Me.ppOn.Size = New System.Drawing.Size(44, 44)
+        Me.ppOn.Text = "Настройка поиска"
         '
         'yearSpravochnikGr
         '
+        Me.yearSpravochnikGr.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
+        Me.yearSpravochnikGr.FlatStyle = System.Windows.Forms.FlatStyle.Standard
         Me.yearSpravochnikGr.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.yearSpravochnikGr.FormattingEnabled = True
-        Me.yearSpravochnikGr.Items.AddRange(New Object() {"2021", "2022", "2023", "2024"})
-        Me.yearSpravochnikGr.Location = New System.Drawing.Point(1158, 31)
+        Me.yearSpravochnikGr.Items.AddRange(New Object() {"2021", "2022", "2023", "2024", "2025", "2026"})
         Me.yearSpravochnikGr.Name = "yearSpravochnikGr"
-        Me.yearSpravochnikGr.Size = New System.Drawing.Size(113, 29)
-        Me.yearSpravochnikGr.TabIndex = 19
-        Me.yearSpravochnikGr.Text = "2023"
+        Me.yearSpravochnikGr.Size = New System.Drawing.Size(121, 47)
         '
         'СправочникГруппы
         '
@@ -214,44 +206,38 @@ Partial Class СправочникГруппы
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1315, 947)
-        Me.Controls.Add(Me.yearSpravochnikGr)
-        Me.Controls.Add(Me.ListViewСписокГрупп)
-        Me.Controls.Add(Me.СГУровеньКвалификации)
-        Me.Controls.Add(Me.PictureBox2)
-        Me.Controls.Add(Me.PictureBox1)
-        Me.Controls.Add(Me.Label3)
-        Me.Controls.Add(Me.Label2)
-        Me.Controls.Add(Me.Label1)
+        Me.Controls.Add(Me.groupListTable)
         Me.Controls.Add(Me.BtnFocus)
-        Me.Controls.Add(Me.СтрокаПоиска)
+        Me.Controls.Add(Me.header)
         Me.KeyPreview = True
         Me.Location = New System.Drawing.Point(12, 80)
         Me.Name = "СправочникГруппы"
+        Me.Padding = New System.Windows.Forms.Padding(5)
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
         Me.Text = "Справочник Группы"
-        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.header.ResumeLayout(False)
+        Me.header.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
     End Sub
 
-    Friend WithEvents ListViewСписокГрупп As ListView
+    Friend WithEvents groupListTable As ListView
     Friend WithEvents Номер As ColumnHeader
-    Friend WithEvents Label1 As Label
-    Friend WithEvents СтрокаПоиска As TextBox
     Friend WithEvents BtnFocus As Button
-    Friend WithEvents Label2 As Label
-    Friend WithEvents Label3 As Label
     Friend WithEvents ImageList1 As ImageList
     Friend WithEvents ImageList2 As ImageList
-    Friend WithEvents PictureBox1 As PictureBox
-    Friend WithEvents PictureBox2 As PictureBox
     Friend WithEvents Группа As ColumnHeader
     Friend WithEvents Программа As ColumnHeader
     Friend WithEvents Куратор As ColumnHeader
     Friend WithEvents Начало As ColumnHeader
     Friend WithEvents Конец As ColumnHeader
-    Friend WithEvents СГУровеньКвалификации As ComboBox
-    Friend WithEvents yearSpravochnikGr As ComboBox
+    Friend WithEvents header As ToolStrip
+    Friend WithEvents sortSettings As ToolStripButton
+    Friend WithEvents searchSettings As ToolStripButton
+    Friend WithEvents searchRow As ToolStripTextBox
+    Friend WithEvents pkOn As ToolStripButton
+    Friend WithEvents poOn As ToolStripButton
+    Friend WithEvents ppOn As ToolStripButton
+    Friend WithEvents yearSpravochnikGr As ToolStripComboBox
 End Class

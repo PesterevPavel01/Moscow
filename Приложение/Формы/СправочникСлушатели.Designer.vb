@@ -24,31 +24,27 @@ Partial Class ФормаСправочникСлушатели
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(ФормаСправочникСлушатели))
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.ListViewСписокСлушателей = New System.Windows.Forms.ListView()
         Me.ColumnHeader5 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ColumnHeader6 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ColumnHeader1 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ColumnHeader2 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ColumnHeader3 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
-        Me.СтрокаПоиска = New System.Windows.Forms.TextBox()
-        Me.Label1 = New System.Windows.Forms.Label()
         Me.BtnFocus = New System.Windows.Forms.Button()
-        Me.Label2 = New System.Windows.Forms.Label()
-        Me.ДобавитьВГруппу = New System.Windows.Forms.Button()
-        Me.PictureBox1 = New System.Windows.Forms.PictureBox()
-        Me.Button1 = New System.Windows.Forms.Button()
-        Me.Label3 = New System.Windows.Forms.Label()
         Me.ImageList2 = New System.Windows.Forms.ImageList(Me.components)
-        Me.PictureBox2 = New System.Windows.Forms.PictureBox()
         Me.SplitContainer1 = New System.Windows.Forms.SplitContainer()
+        Me.ToolStrip1 = New System.Windows.Forms.ToolStrip()
+        Me.insertIntoGroupList = New System.Windows.Forms.ToolStripButton()
+        Me.sortSetts = New System.Windows.Forms.ToolStripButton()
+        Me.searchSetts = New System.Windows.Forms.ToolStripButton()
+        Me.searchRow = New System.Windows.Forms.ToolStripTextBox()
         Me.ССлушТаблицаИнфСлушателя = New System.Windows.Forms.DataGridView()
-        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SplitContainer1.Panel1.SuspendLayout()
         Me.SplitContainer1.Panel2.SuspendLayout()
         Me.SplitContainer1.SuspendLayout()
+        Me.ToolStrip1.SuspendLayout()
         CType(Me.ССлушТаблицаИнфСлушателя, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -60,9 +56,9 @@ Partial Class ФормаСправочникСлушатели
         Me.ListViewСписокСлушателей.FullRowSelect = True
         Me.ListViewСписокСлушателей.GridLines = True
         Me.ListViewСписокСлушателей.HideSelection = False
-        Me.ListViewСписокСлушателей.Location = New System.Drawing.Point(0, 0)
+        Me.ListViewСписокСлушателей.Location = New System.Drawing.Point(0, 47)
         Me.ListViewСписокСлушателей.Name = "ListViewСписокСлушателей"
-        Me.ListViewСписокСлушателей.Size = New System.Drawing.Size(1320, 879)
+        Me.ListViewСписокСлушателей.Size = New System.Drawing.Size(1317, 893)
         Me.ListViewСписокСлушателей.TabIndex = 1
         Me.ListViewСписокСлушателей.UseCompatibleStateImageBehavior = False
         Me.ListViewСписокСлушателей.View = System.Windows.Forms.View.Details
@@ -92,23 +88,6 @@ Partial Class ФормаСправочникСлушатели
         Me.ColumnHeader3.Text = "Отчество"
         Me.ColumnHeader3.Width = 300
         '
-        'СтрокаПоиска
-        '
-        Me.СтрокаПоиска.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.СтрокаПоиска.Location = New System.Drawing.Point(41, 34)
-        Me.СтрокаПоиска.Name = "СтрокаПоиска"
-        Me.СтрокаПоиска.Size = New System.Drawing.Size(648, 29)
-        Me.СтрокаПоиска.TabIndex = 2
-        '
-        'Label1
-        '
-        Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(38, 20)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(39, 13)
-        Me.Label1.TabIndex = 10
-        Me.Label1.Text = "Поиск"
-        '
         'BtnFocus
         '
         Me.BtnFocus.Location = New System.Drawing.Point(1032, 2)
@@ -119,111 +98,78 @@ Partial Class ФормаСправочникСлушатели
         Me.BtnFocus.UseVisualStyleBackColor = True
         Me.BtnFocus.Visible = False
         '
-        'Label2
-        '
-        Me.Label2.AutoSize = True
-        Me.Label2.ForeColor = System.Drawing.SystemColors.MenuHighlight
-        Me.Label2.Location = New System.Drawing.Point(12, 7)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(39, 13)
-        Me.Label2.TabIndex = 12
-        Me.Label2.Text = "Label2"
-        Me.Label2.Visible = False
-        '
-        'ДобавитьВГруппу
-        '
-        Me.ДобавитьВГруппу.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.ДобавитьВГруппу.BackColor = System.Drawing.Color.Transparent
-        Me.ДобавитьВГруппу.FlatAppearance.BorderColor = System.Drawing.Color.WhiteSmoke
-        Me.ДобавитьВГруппу.FlatAppearance.BorderSize = 0
-        Me.ДобавитьВГруппу.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.ДобавитьВГруппу.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.ДобавитьВГруппу.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.ДобавитьВГруппу.Location = New System.Drawing.Point(1692, 4)
-        Me.ДобавитьВГруппу.Name = "ДобавитьВГруппу"
-        Me.ДобавитьВГруппу.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.ДобавитьВГруппу.Size = New System.Drawing.Size(230, 64)
-        Me.ДобавитьВГруппу.TabIndex = 15
-        Me.ДобавитьВГруппу.Text = "Добавить в группу"
-        Me.ДобавитьВГруппу.UseVisualStyleBackColor = False
-        Me.ДобавитьВГруппу.Visible = False
-        '
-        'PictureBox1
-        '
-        Me.PictureBox1.ErrorImage = Nothing
-        Me.PictureBox1.Image = CType(resources.GetObject("PictureBox1.Image"), System.Drawing.Image)
-        Me.PictureBox1.InitialImage = Nothing
-        Me.PictureBox1.Location = New System.Drawing.Point(5, 28)
-        Me.PictureBox1.Name = "PictureBox1"
-        Me.PictureBox1.Size = New System.Drawing.Size(35, 35)
-        Me.PictureBox1.TabIndex = 14
-        Me.PictureBox1.TabStop = False
-        '
-        'Button1
-        '
-        Me.Button1.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Button1.BackColor = System.Drawing.Color.Transparent
-        Me.Button1.Enabled = False
-        Me.Button1.FlatAppearance.BorderColor = System.Drawing.Color.WhiteSmoke
-        Me.Button1.FlatAppearance.BorderSize = 0
-        Me.Button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button1.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.Button1.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.Button1.Location = New System.Drawing.Point(923, 4)
-        Me.Button1.Name = "Button1"
-        Me.Button1.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.Button1.Size = New System.Drawing.Size(402, 64)
-        Me.Button1.TabIndex = 13
-        Me.Button1.Text = "Загрузить все записи"
-        Me.Button1.UseVisualStyleBackColor = False
-        Me.Button1.Visible = False
-        '
-        'Label3
-        '
-        Me.Label3.AutoSize = True
-        Me.Label3.ForeColor = System.Drawing.SystemColors.MenuHighlight
-        Me.Label3.Location = New System.Drawing.Point(104, 4)
-        Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(349, 13)
-        Me.Label3.TabIndex = 16
-        Me.Label3.Text = "Для отображения слушателей начните вводить данные для поиска"
-        Me.Label3.Visible = False
-        '
         'ImageList2
         '
         Me.ImageList2.ImageStream = CType(resources.GetObject("ImageList2.ImageStream"), System.Windows.Forms.ImageListStreamer)
         Me.ImageList2.TransparentColor = System.Drawing.Color.Transparent
         Me.ImageList2.Images.SetKeyName(0, "Сортировка35.png")
         '
-        'PictureBox2
-        '
-        Me.PictureBox2.ErrorImage = Nothing
-        Me.PictureBox2.Image = CType(resources.GetObject("PictureBox2.Image"), System.Drawing.Image)
-        Me.PictureBox2.InitialImage = Nothing
-        Me.PictureBox2.Location = New System.Drawing.Point(695, 34)
-        Me.PictureBox2.Name = "PictureBox2"
-        Me.PictureBox2.Size = New System.Drawing.Size(29, 28)
-        Me.PictureBox2.TabIndex = 18
-        Me.PictureBox2.TabStop = False
-        '
         'SplitContainer1
         '
-        Me.SplitContainer1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.SplitContainer1.Location = New System.Drawing.Point(5, 69)
+        Me.SplitContainer1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.SplitContainer1.Location = New System.Drawing.Point(5, 5)
         Me.SplitContainer1.Name = "SplitContainer1"
         '
         'SplitContainer1.Panel1
         '
         Me.SplitContainer1.Panel1.Controls.Add(Me.ListViewСписокСлушателей)
+        Me.SplitContainer1.Panel1.Controls.Add(Me.ToolStrip1)
         '
         'SplitContainer1.Panel2
         '
         Me.SplitContainer1.Panel2.Controls.Add(Me.ССлушТаблицаИнфСлушателя)
-        Me.SplitContainer1.Size = New System.Drawing.Size(1917, 879)
-        Me.SplitContainer1.SplitterDistance = 1320
+        Me.SplitContainer1.Size = New System.Drawing.Size(1914, 940)
+        Me.SplitContainer1.SplitterDistance = 1317
         Me.SplitContainer1.TabIndex = 20
+        '
+        'ToolStrip1
+        '
+        Me.ToolStrip1.BackColor = System.Drawing.SystemColors.ButtonFace
+        Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.insertIntoGroupList, Me.sortSetts, Me.searchSetts, Me.searchRow})
+        Me.ToolStrip1.Location = New System.Drawing.Point(0, 0)
+        Me.ToolStrip1.Name = "ToolStrip1"
+        Me.ToolStrip1.Size = New System.Drawing.Size(1317, 47)
+        Me.ToolStrip1.TabIndex = 4
+        Me.ToolStrip1.Text = "ToolStrip1"
+        '
+        'insertIntoGroupList
+        '
+        Me.insertIntoGroupList.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
+        Me.insertIntoGroupList.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.insertIntoGroupList.Image = CType(resources.GetObject("insertIntoGroupList.Image"), System.Drawing.Image)
+        Me.insertIntoGroupList.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
+        Me.insertIntoGroupList.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.insertIntoGroupList.Name = "insertIntoGroupList"
+        Me.insertIntoGroupList.Size = New System.Drawing.Size(44, 44)
+        Me.insertIntoGroupList.Text = "Добавить"
+        Me.insertIntoGroupList.Visible = False
+        '
+        'sortSetts
+        '
+        Me.sortSetts.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.sortSetts.Image = CType(resources.GetObject("sortSetts.Image"), System.Drawing.Image)
+        Me.sortSetts.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
+        Me.sortSetts.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.sortSetts.Name = "sortSetts"
+        Me.sortSetts.Size = New System.Drawing.Size(44, 44)
+        Me.sortSetts.Text = "Настройка сортировки"
+        '
+        'searchSetts
+        '
+        Me.searchSetts.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.searchSetts.Image = CType(resources.GetObject("searchSetts.Image"), System.Drawing.Image)
+        Me.searchSetts.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
+        Me.searchSetts.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.searchSetts.Name = "searchSetts"
+        Me.searchSetts.Size = New System.Drawing.Size(44, 44)
+        Me.searchSetts.Text = "Настройка поиска"
+        '
+        'searchRow
+        '
+        Me.searchRow.BackColor = System.Drawing.SystemColors.Window
+        Me.searchRow.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
+        Me.searchRow.Name = "searchRow"
+        Me.searchRow.Size = New System.Drawing.Size(400, 47)
         '
         'ССлушТаблицаИнфСлушателя
         '
@@ -237,9 +183,9 @@ Partial Class ФормаСправочникСлушатели
         Me.ССлушТаблицаИнфСлушателя.Name = "ССлушТаблицаИнфСлушателя"
         Me.ССлушТаблицаИнфСлушателя.ReadOnly = True
         Me.ССлушТаблицаИнфСлушателя.RowHeadersVisible = False
-        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.ССлушТаблицаИнфСлушателя.RowsDefaultCellStyle = DataGridViewCellStyle1
-        Me.ССлушТаблицаИнфСлушателя.Size = New System.Drawing.Size(593, 879)
+        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.ССлушТаблицаИнфСлушателя.RowsDefaultCellStyle = DataGridViewCellStyle2
+        Me.ССлушТаблицаИнфСлушателя.Size = New System.Drawing.Size(593, 940)
         Me.ССлушТаблицаИнфСлушателя.TabIndex = 1
         '
         'ФормаСправочникСлушатели
@@ -248,47 +194,37 @@ Partial Class ФормаСправочникСлушатели
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1924, 950)
         Me.Controls.Add(Me.SplitContainer1)
-        Me.Controls.Add(Me.PictureBox2)
-        Me.Controls.Add(Me.Button1)
-        Me.Controls.Add(Me.Label3)
-        Me.Controls.Add(Me.ДобавитьВГруппу)
-        Me.Controls.Add(Me.PictureBox1)
-        Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.BtnFocus)
-        Me.Controls.Add(Me.Label1)
-        Me.Controls.Add(Me.СтрокаПоиска)
         Me.KeyPreview = True
         Me.Name = "ФормаСправочникСлушатели"
+        Me.Padding = New System.Windows.Forms.Padding(5)
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
         Me.Text = "Справочник ""Слушатели"""
-        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SplitContainer1.Panel1.ResumeLayout(False)
+        Me.SplitContainer1.Panel1.PerformLayout()
         Me.SplitContainer1.Panel2.ResumeLayout(False)
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SplitContainer1.ResumeLayout(False)
+        Me.ToolStrip1.ResumeLayout(False)
+        Me.ToolStrip1.PerformLayout()
         CType(Me.ССлушТаблицаИнфСлушателя, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
-        Me.PerformLayout()
 
     End Sub
 
     Friend WithEvents ListViewСписокСлушателей As ListView
-    Friend WithEvents СтрокаПоиска As TextBox
-    Friend WithEvents Label1 As Label
     Friend WithEvents ColumnHeader5 As ColumnHeader
     Friend WithEvents ColumnHeader6 As ColumnHeader
     Friend WithEvents ColumnHeader1 As ColumnHeader
     Friend WithEvents ColumnHeader2 As ColumnHeader
     Friend WithEvents ColumnHeader3 As ColumnHeader
     Friend WithEvents BtnFocus As Button
-    Friend WithEvents Label2 As Label
-    Friend WithEvents Button1 As Button
-    Friend WithEvents PictureBox1 As PictureBox
-    Friend WithEvents ДобавитьВГруппу As Button
-    Friend WithEvents Label3 As Label
     Friend WithEvents ImageList2 As ImageList
-    Friend WithEvents PictureBox2 As PictureBox
     Friend WithEvents SplitContainer1 As SplitContainer
     Friend WithEvents ССлушТаблицаИнфСлушателя As DataGridView
+    Friend WithEvents ToolStrip1 As ToolStrip
+    Friend WithEvents searchSetts As ToolStripButton
+    Friend WithEvents searchRow As ToolStripTextBox
+    Friend WithEvents insertIntoGroupList As ToolStripButton
+    Friend WithEvents sortSetts As ToolStripButton
 End Class

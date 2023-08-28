@@ -1,7 +1,4 @@
-﻿Imports MySql.Data.MySqlClient.X.XDevAPI.Common
-Imports Mysqlx.XDevAPI.Common
-
-Public Class ОценочнаяВедомость
+﻿Public Class ОценочнаяВедомость
 
     Public kodGroup As Integer
     Private Sub loadTables()
@@ -11,7 +8,7 @@ Public Class ОценочнаяВедомость
         Dim counter As Integer = 0, counterRows As Integer
         Dim result As List(Of String)
 
-        ТаблицаВедомость.Rows.Clear()
+        resultTable.Rows.Clear()
 
         queryString = loadVedomost(kodGroup)
 
@@ -20,8 +17,8 @@ Public Class ОценочнаяВедомость
         If list(0, 0).ToString = "нет записей" Then
 
             предупреждение.текст.Text = "Нет данных для отображения"
-            ОткрытьФорму(предупреждение)
-            ActiveControl = ТаблицаВедомость
+            openForm(предупреждение)
+            ActiveControl = resultTable
             Exit Sub
 
         End If
@@ -33,8 +30,8 @@ Public Class ОценочнаяВедомость
         If Not (IsNumeric(result(0)) Or result(0) = "0") Then
 
             предупреждение.текст.Text = "Нет данных для отображения"
-            ОткрытьФорму(предупреждение)
-            ActiveControl = ТаблицаВедомость
+            openForm(предупреждение)
+            ActiveControl = resultTable
             Return
 
         End If
@@ -47,33 +44,33 @@ Public Class ОценочнаяВедомость
 
         counterRows = UBound(list, 2)
 
-        ТаблицаВедомость.Rows.Add(UBound(list, 2) + 1)
+        resultTable.Rows.Add(UBound(list, 2) + 1)
 
 
         While counter <= UBound(list, 2)
 
-            ТаблицаВедомость.Rows(counter).Cells(0).Value = CStr(counter + 1)
-            ТаблицаВедомость.Rows(counter).Cells(1).Value = CStr(list(0, counter))
+            resultTable.Rows(counter).Cells(0).Value = CStr(counter + 1)
+            resultTable.Rows(counter).Cells(1).Value = CStr(list(0, counter))
 
-            ТаблицаВедомость.Rows(counter).Cells(2).Value = CStr(list(1, counter))
-            ТаблицаВедомость.Rows(counter).Cells(3).Value = CStr(list(2, counter))
-            ТаблицаВедомость.Rows(counter).Cells(4).Value = CStr(list(3, counter))
-            ТаблицаВедомость.Rows(counter).Cells(5).Value = CStr(list(4, counter))
-            ТаблицаВедомость.Rows(counter).Cells(6).Value = CStr(list(5, counter))
-            ТаблицаВедомость.Rows(counter).Cells(7).Value = CStr(list(6, counter))
-            ТаблицаВедомость.Rows(counter).Cells(8).Value = CStr(list(7, counter))
-            ТаблицаВедомость.Rows(counter).Cells(9).Value = CStr(list(8, counter))
-            ТаблицаВедомость.Rows(counter).Cells(10).Value = CStr(list(9, counter))
-            ТаблицаВедомость.Rows(counter).Cells(11).Value = CStr(list(10, counter))
+            resultTable.Rows(counter).Cells(2).Value = CStr(list(1, counter))
+            resultTable.Rows(counter).Cells(3).Value = CStr(list(2, counter))
+            resultTable.Rows(counter).Cells(4).Value = CStr(list(3, counter))
+            resultTable.Rows(counter).Cells(5).Value = CStr(list(4, counter))
+            resultTable.Rows(counter).Cells(6).Value = CStr(list(5, counter))
+            resultTable.Rows(counter).Cells(7).Value = CStr(list(6, counter))
+            resultTable.Rows(counter).Cells(8).Value = CStr(list(7, counter))
+            resultTable.Rows(counter).Cells(9).Value = CStr(list(8, counter))
+            resultTable.Rows(counter).Cells(10).Value = CStr(list(9, counter))
+            resultTable.Rows(counter).Cells(11).Value = CStr(list(10, counter))
             counter = counter + 1
 
         End While
 
-        ActiveControl = ТаблицаВедомость
+        ActiveControl = resultTable
 
     End Sub
 
-    Private Sub Группа_Click(sender As Object, e As EventArgs) Handles НомерГруппы.Click
+    Private Sub groupNumber_Click(sender As Object, e As EventArgs) Handles groupNumber.Click
 
         ФормаСписок.ListViewСписок.Columns(0).Width = 120
         ФормаСписок.ListViewСписок.Columns.Add("Год", 100)
@@ -82,6 +79,7 @@ Public Class ОценочнаяВедомость
         ФормаСписок.FormName = Me.Name
 
         ФормаСписок.headerVisible = True
+        kodGroup = -1
 
         ФормаСписок.ShowDialog()
         ФормаСписок.ListViewСписок.Columns.RemoveAt(1)
@@ -90,38 +88,40 @@ Public Class ОценочнаяВедомость
         ФормаСписок.ListViewСписок.Columns(1).Width = 620
         ФормаСписок.ListViewСписок.Columns(1).Text = "Наименование"
 
-        loadTables()
+        If kodGroup <> -1 Then
+            loadTables()
+        End If
 
     End Sub
 
-    Private Sub Сохранить_Click(sender As Object, e As EventArgs) Handles Сохранить.Click
+    Private Sub save_Click(sender As Object, e As EventArgs) Handles Сохранить.Click
 
         ActiveControl = Button2
 
-        If АДействияСОВедомостью.проверка(ТаблицаВедомость) Then
+        If АДействияСОВедомостью.проверка(resultTable) Then
 
             Exit Sub
 
         End If
 
-        АДействияСОВедомостью.СохранитьОценки(ТаблицаВедомость, kodGroup)
+        АДействияСОВедомостью.СохранитьОценки(resultTable, kodGroup)
 
     End Sub
 
-    Private Sub Сохранить_GotFocus(sender As Object, e As EventArgs) Handles Сохранить.GotFocus
-        Call Интерфейс.ШрифтКонтрола(Сохранить, 14.0F)
+    Private Sub save_GotFocus(sender As Object, e As EventArgs) Handles Сохранить.GotFocus
+        Call interfaceMod.controlFont(Сохранить, 14.0F)
     End Sub
 
-    Private Sub Сохранить_LostFocus(sender As Object, e As EventArgs) Handles Сохранить.LostFocus
-        Интерфейс.ШрифтКонтрола(Сохранить, 11.0F)
+    Private Sub save_LostFocus(sender As Object, e As EventArgs) Handles Сохранить.LostFocus
+        interfaceMod.controlFont(Сохранить, 11.0F)
     End Sub
 
     Private Sub Button2_GotFocus(sender As Object, e As EventArgs) Handles Button2.GotFocus
-        Call Интерфейс.ШрифтКонтрола(Button2, 14.0F)
+        Call interfaceMod.controlFont(Button2, 14.0F)
     End Sub
 
     Private Sub Button2_LostFocus(sender As Object, e As EventArgs) Handles Button2.LostFocus
-        Интерфейс.ШрифтКонтрола(Button2, 11.0F)
+        interfaceMod.controlFont(Button2, 11.0F)
     End Sub
 
     Private Sub ОценочнаяВедомость_KeyDown(sender As Object, e As KeyEventArgs) Handles Me.KeyDown
@@ -130,11 +130,11 @@ Public Class ОценочнаяВедомость
         Call closeEsc(Me, e.KeyCode)
     End Sub
 
-    Private Sub Группа_KeyDown(sender As Object, e As KeyEventArgs) Handles НомерГруппы.KeyDown
+    Private Sub Группа_KeyDown(sender As Object, e As KeyEventArgs) Handles groupNumber.KeyDown
 
         If e.KeyCode = 13 Then
 
-            Call Группа_Click(sender, e)
+            Call groupNumber_Click(sender, e)
 
         End If
 
@@ -146,11 +146,11 @@ Public Class ОценочнаяВедомость
         For number As Int16 = 2 To 11
 
             If number <= numberColumns + 1 Then
-                ТаблицаВедомость.Columns(number).ReadOnly = False
-                ТаблицаВедомость.Columns(number).DefaultCellStyle.BackColor = Color.White
+                resultTable.Columns(number).ReadOnly = False
+                resultTable.Columns(number).DefaultCellStyle.BackColor = Color.White
             Else
-                ТаблицаВедомость.Columns(number).ReadOnly = True
-                ТаблицаВедомость.Columns(number).DefaultCellStyle.BackColor = Color.Gray
+                resultTable.Columns(number).ReadOnly = True
+                resultTable.Columns(number).DefaultCellStyle.BackColor = Color.Gray
             End If
 
         Next

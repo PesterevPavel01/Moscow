@@ -1,7 +1,4 @@
-﻿Imports System.IO
-Imports System.Xml
-Imports Org.BouncyCastle.Crypto
-
+﻿
 Public Class ФормаСписок
     Public currentControl As Control
     Public headerVisible As Boolean
@@ -16,6 +13,7 @@ Public Class ФормаСписок
     Public Const poUb = 2
     Public images As imagesStruct
     Dim path As String
+    Dim swichKvalification As SwitchCvalification
 
     Private Sub FormList_Shown(sender As Object, e As EventArgs) Handles Me.Shown
 
@@ -33,7 +31,7 @@ Public Class ФормаСписок
 
         nameTbl = ИдентифицироватьБазу.ИдентифицироватьБазу(textboxName)
 
-        If textboxName = "НомерГруппы" Then
+        If textboxName = "НомерГруппы" Or textboxName = "groupNumber" Then
 
             If headerVisible Then
 
@@ -51,13 +49,13 @@ Public Class ФормаСписок
 
         ElseIf textboxName = "НоваяГруппаПрограмма" Or textboxName = "versProgs" Then
 
-            If FormName = "НоваяГруппа" And НоваяГруппа.НоваяГруппаУровеньКвалификации.Text <> "" Then
+            If FormName = "НоваяГруппа" And MainForm.cvalific > 0 Then
 
-                queryString = ProgrammPoUKvalifik(НоваяГруппа.НоваяГруппаУровеньКвалификации.Text)
+                queryString = ProgramPoUKvalifik(НоваяГруппа.swichCvalification.activeType)
 
             ElseIf FormName = "РедакторГруппы" And РедакторГруппы.НоваяГруппаУровеньКвалификации.Text <> "" Then
 
-                queryString = ProgrammPoUKvalifik(РедакторГруппы.НоваяГруппаУровеньКвалификации.Text)
+                queryString = ProgramPoUKvalifik(РедакторГруппы.НоваяГруппаУровеньКвалификации.Text)
 
             Else
 
@@ -65,12 +63,12 @@ Public Class ФормаСписок
 
             End If
 
-            ListViewСписок.Columns(0).Width = 500
-            ListViewСписок.Columns(1).Width = 100
+            ListViewСписок.Columns(0).Width = ListViewСписок.Width - 150
+            ListViewСписок.Columns(1).Width = 150
             ListViewСписок.Columns(0).Text = "Программа"
             ListViewСписок.Columns(1).Text = "Дата"
             ListViewСписок.Columns.Add("Код", 1)
-            Me.Text = "Программа. Расширенный список"
+            Text = "Программа. Расширенный список"
 
         ElseIf textboxName = "НоваяГруппаУровеньКвалификации" Then
 
@@ -142,8 +140,6 @@ Public Class ФормаСписок
 
     Private Sub loadListGroup()
 
-        changeType()
-
         queryString = SQLString_loadGruppa()
 
         resultArray = MainForm.mySqlConnect.loadMySqlToArray(queryString, 1)
@@ -157,9 +153,11 @@ Public Class ФормаСписок
     End Sub
 
     Private Sub updateFormName(textboxName As String, prikaz As String)
+
         If textboxName = "Ответственный" And АСформироватьПриказ.Label4.Text = "Слушатель(ФИО)" Then
             Me.Text = "Список слушателей группы"
         End If
+
         If prikaz = "спецэкзамен" Then
 
             If textboxName = "ПОЗачисленииНомерГруппы" Then
@@ -197,7 +195,7 @@ Public Class ФормаСписок
 
         Dim ind As String
 
-        If textboxName = "НомерГруппы" Or textboxName = "НоваяГруппаПрограмма" Then
+        If textboxName = "НомерГруппы" Or textboxName = "НоваяГруппаПрограмма" Or textboxName = "GroupNumber" Then
 
             ind = ListViewСписок.SelectedItems(0).SubItems(0).Text
 
@@ -210,11 +208,11 @@ Public Class ФормаСписок
 
         If FormName = "ВедомостьПеднагрузка" Then
 
-            If textboxName = "НомерГруппы" Then
+            If textboxName = "groupNumber" Then
                 ВедомостьПеднагрузка.kodGroup = ListViewСписок.SelectedItems(0).SubItems(3).Text
             End If
 
-            ВедомостьПеднагрузка.НомерГруппы.Text = ind
+            ВедомостьПеднагрузка.groupNumber.Text = ind
 
         End If
 
@@ -227,7 +225,7 @@ Public Class ФормаСписок
                 If Strings.Right(Strings.Left(ind, 4), 1) = "." And Strings.Right(Strings.Left(ind, 2), 1) = "." Then
                 Else
                     предупреждение.текст.Text = "Ошибка в ФИО"
-                    ОткрытьФорму(предупреждение)
+                    openForm(предупреждение)
                     Exit Sub
                 End If
 
@@ -251,7 +249,7 @@ Public Class ФормаСписок
                             If Strings.Right(Strings.Left(ind, 4), 1) = "." And Strings.Right(Strings.Left(ind, 2), 1) = "." Then
                             Else
                                 предупреждение.текст.Text = "Ошибка в ФИО"
-                                ОткрытьФорму(предупреждение)
+                                openForm(предупреждение)
                                 Exit Sub
                             End If
 
@@ -372,7 +370,7 @@ Public Class ФормаСписок
                         If Strings.Right(Strings.Left(ind, 4), 1) = "." And Strings.Right(Strings.Left(ind, 2), 1) = "." Then
                         Else
                             предупреждение.текст.Text = "Ошибка в ФИО"
-                            ОткрытьФорму(предупреждение)
+                            openForm(предупреждение)
                             Exit Sub
                         End If
                     End If
@@ -410,7 +408,7 @@ Public Class ФормаСписок
                 queryString = formList__loadKodGroupPP()
                 listViewColoriz(ListViewСписок, MainForm.mySqlConnect.loadMySqlToArray(queryString, 1))
 
-            Else resultArray = Поиск.Поиск(searchValue.Text, resultArray, 1)
+            Else resultArray = Search.search(searchValue.Text, resultArray, 1)
 
                 UpdateListView.updateListView(False, True, ListViewСписок, resultArray, 1)
 
@@ -426,7 +424,7 @@ Public Class ФормаСписок
         students = MainForm.mySqlConnect.loadMySqlToArray(sqlQuery, 1)
         If students(0, 0).ToString = "нет записей" Then
             предупреждение.текст.Text = "В выбранной группе нет слушателей"
-            ОткрытьФорму(предупреждение)
+            openForm(предупреждение)
             If АСформироватьПриказ.Label4.Text = "Слушатель(ФИО)" Then
                 АСформироватьПриказ.Ответственный.Text = ""
             End If
@@ -539,65 +537,33 @@ Public Class ФормаСписок
 
     Private Sub ФормаСписок_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
-        path = Вспомогательный.resourcesPath + "images//"
-        images.PK = Image.FromFile(path + "PK.png")
-        images.PP = Image.FromFile(path + "PP.png")
-        images.PO = Image.FromFile(path + "PO.png")
-        images.PKGreen = Image.FromFile(path + "PKGreen.png")
-        images.PPGreen = Image.FromFile(path + "PPGreen.png")
-        images.POGreen = Image.FromFile(path + "POGreen.png")
-
-    End Sub
-
-    Private Sub changeType()
-
-        Select Case images.activType
-            Case 0
-                ppOn.Image = images.PP
-                poOn.Image = images.PO
-                pkOn.Image = images.PKGreen
-            Case 1
-                pkOn.Image = images.PK
-                ppOn.Image = images.PPGreen
-                poOn.Image = images.PO
-            Case 2
-                pkOn.Image = images.PK
-                ppOn.Image = images.PP
-                poOn.Image = images.POGreen
-        End Select
+        swichKvalification = New SwitchCvalification
+        swichKvalification.pp = ppOn
+        swichKvalification.po = poOn
+        swichKvalification.pk = pkOn
+        swichKvalification.init()
 
     End Sub
 
     Private Sub pkOn_Click(sender As Object, e As EventArgs) Handles pkOn.Click
-        images.activType = 0
+
+        swichKvalification.activate(swichKvalification.type("pk"))
         MainForm.prikazCvalif = MainForm.PK
         loadListGroup()
     End Sub
 
     Private Sub poOn_Click(sender As Object, e As EventArgs) Handles poOn.Click
-        images.activType = 2
+        swichKvalification.activate(swichKvalification.type("po"))
         MainForm.prikazCvalif = MainForm.PO
         loadListGroup()
     End Sub
 
     Private Sub ppOn_Click(sender As Object, e As EventArgs) Handles ppOn.Click
-        images.activType = 1
+        swichKvalification.activate(swichKvalification.type("pp"))
         MainForm.prikazCvalif = MainForm.PP
         loadListGroup()
     End Sub
 
 End Class
-
-Public Structure imagesStruct
-
-    Dim PK As Image
-    Dim PP As Image
-    Dim PO As Image
-    Dim PKGreen As Image
-    Dim PPGreen As Image
-    Dim POGreen As Image
-    Dim activType As Int16
-
-End Structure
 
 

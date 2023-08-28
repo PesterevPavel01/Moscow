@@ -1,46 +1,37 @@
-﻿Public Class sortSetts
+﻿Imports System.IO
 
-    Public НажатПБГр As Boolean = False
+Public Class sortSettsGroup
+
+    Public sortSetts = New SorterSetts()
 
     Private Sub Программа_CheckedChanged(sender As Object, e As EventArgs) Handles Программа.CheckedChanged
 
-        Интерфейс.checkBoxReaction(Me, Программа)
+        interfaceMod.checkBoxReaction(Me, Программа)
 
     End Sub
 
     Private Sub Спец_CheckedChanged(sender As Object, e As EventArgs) Handles Спец.CheckedChanged
 
-        Интерфейс.checkBoxReaction(Me, Спец)
+        interfaceMod.checkBoxReaction(Me, Спец)
 
     End Sub
 
 
     Private Sub Номер_CheckedChanged(sender As Object, e As EventArgs) Handles Номер.CheckedChanged
 
-        Интерфейс.checkBoxReaction(Me, Номер)
+        interfaceMod.checkBoxReaction(Me, Номер)
 
     End Sub
 
-    Private Sub ПоУбыванию_Click(sender As Object, e As EventArgs)
+    Private Sub sortUp_Click(sender As Object, e As EventArgs) Handles sortDown.Click
 
-        PictureBox1.BorderStyle = 1
-        ПоВозростанию.BorderStyle = 0
-
-    End Sub
-
-    Private Sub ПоВозростанию_Click(sender As Object, e As EventArgs) Handles ПоВозростанию.Click
-
-        PictureBox1.BorderStyle = 0
-        НажатПБГр = False
-        ПоВозростанию.BorderStyle = 1
+        sortSetts.sort("sortUp", "sortDownGr", False)
 
     End Sub
 
-    Private Sub ПоУбыванию_Click_1(sender As Object, e As EventArgs) Handles PictureBox1.Click
+    Private Sub sortDown_Click(sender As Object, e As EventArgs) Handles sortUp.Click
 
-        PictureBox1.BorderStyle = 1
-        НажатПБГр = True
-        ПоВозростанию.BorderStyle = 0
+        sortSetts.sort("sortUpGr", "sortDown", True)
 
     End Sub
 
@@ -51,10 +42,13 @@
     End Sub
 
     Private Sub Куратор_CheckedChanged(sender As Object, e As EventArgs) Handles Куратор.CheckedChanged
-        Интерфейс.checkBoxReaction(Me, Куратор)
+
+        interfaceMod.checkBoxReaction(Me, Куратор)
+
     End Sub
 
     Public Sub checkedAnyValue(value As String)
+
         Select Case value
             Case "Номер"
                 Номер.Checked = True
@@ -65,6 +59,12 @@
             Case "Куратор"
                 Куратор.Checked = True
         End Select
+
     End Sub
 
+    Private Sub sortSettsGroup_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+        sortSetts.init(sortUp, sortDown)
+
+    End Sub
 End Class

@@ -1,14 +1,28 @@
 ﻿
-Imports MySql.Data.Authentication
 Imports WindowsApp2.Slushatel
 
 Module QueryString
 
     Dim sqlString As String
-
+    Public Function group__loadKodGroup(numberGroup As String, year As String)
+        Dim sqlQuery As String
+        sqlQuery = "SELECT Код FROM `group` WHERE Номер='" & numberGroup & "' AND Year(ДатаНЗ) = " & year
+    End Function
     Public Function studentsList__loadStudentsList(columnSort As String, arg As String) As String
 
-        sqlString = "SELECT Код, Снилс, Фамилия, Имя, Отчество FROM students ORDER BY " & columnSort & arg
+        Dim mameSortCol As String = ""
+
+        Select Case columnSort
+            Case "snils"
+                mameSortCol = "Снилс"
+            Case "nameStudent"
+                mameSortCol = "Имя"
+            Case "secName"
+                mameSortCol = "Фамилия"
+
+        End Select
+
+        sqlString = "SELECT Код, Снилс, Фамилия, Имя, Отчество FROM students ORDER BY " & mameSortCol & arg
 
         Return sqlString
 
@@ -1268,23 +1282,23 @@ Module QueryString
 
     Public Function formList__loadGroup(ur_kval As String, sort As String, col_search As String, text As String, Optional year As String = "0") As String
 
-        col_search = col_search.Replace("Программа", "programm.name")
+        col_search = col_search.Replace("Программа", "tbl1.program")
 
         sqlString = ""
 
         sqlString = "SELECT
                     tbl1.Код,
                     tbl1.Номер,
-                    tbl1.Программа,
-                    Куратор,
+                    tbl1.program AS Программа,
+                    name As Куратор,
                     tbl1.ДатаНЗ,
                     tbl1.ДатаКЗ
                     FROM
                     (SELECT
                       Код,
                       Номер,
-                      programm.name AS Программа,
-                      sotrudnik.name As Куратор,
+                      programm.name as program,
+                      sotrudnik.name,
                       ДатаНЗ,
                       ДатаКЗ,
                       Спец
@@ -2274,8 +2288,6 @@ Module QueryString
 
     End Function
 
-
-
     Function sqlSearch(searchValue As String, nameTable As String, nameColumns As String, searchColumn As String, sortColumn As String, Optional includeUK As Boolean = False) As Object
 
         Dim ChMass As Object
@@ -2285,12 +2297,27 @@ Module QueryString
 
         counter = 0
 
+        Select Case sortColumn
+
+            Case "snils"
+                sortColumn = "Снилс"
+
+            Case "nameStudent"
+                sortColumn = "Имя"
+
+            Case "secName"
+                sortColumn = "Фамилия"
+
+        End Select
+
+        sortColumn += interfaceMod.sortType(sortSettsStudents.sortSetts.flagSortUp)
+
         If nameTable = "Группа" Or nameTable = "`group`" Then
 
             If includeUK Then
-                sqlString = load_spr_group_search(СправочникГруппы.СГУровеньКвалификации.Text, sortColumn, searchColumn, searchValue, СправочникГруппы.yearSpravochnikGr.Text)
+                sqlString = load_spr_group_search(СправочникГруппы.swichCvalification.activeType, sortColumn, searchColumn, searchValue, СправочникГруппы.yearSpravochnikGr.Text)
             Else
-                sqlString = formList__loadGroup(СправочникГруппы.СГУровеньКвалификации.Text, sortColumn, searchColumn, searchValue, СправочникГруппы.yearSpravochnikGr.Text)
+                sqlString = formList__loadGroup(СправочникГруппы.swichCvalification.activeType, sortColumn, searchColumn, searchValue, СправочникГруппы.yearSpravochnikGr.Text)
             End If
 
         Else
@@ -2408,7 +2435,7 @@ Module QueryString
 
     End Function
 
-    Public Function ProgrammPoUKvalifik(UrovenKvalifik As String)
+    Public Function ProgramPoUKvalifik(UrovenKvalifik As String)
 
         sqlString = ""
 
@@ -2579,7 +2606,7 @@ Module QueryString
             ", ДатаНЗ=" & Chr(39) & gruppa.dataNZ & Chr(39) &
             ", ДатаКЗ=" & Chr(39) & gruppa.dataKZ & Chr(39) &
             ", Спец=" & Chr(39) & gruppa.specialnost & Chr(39) &
-            ",kod_programm=" & gruppa.kodProgramm &
+            ",kod_programm=" & gruppa.kodProgram &
             ",КолЧас=" & numberHours & ", Куратор=(SELECT sotrudnik.kod FROM sotrudnik WHERE name=" & Chr(39) & gruppa.kurator & Chr(39) & " LIMIT 1)" &
             ", ОтвЗаПракт=(SELECT sotrudnik.kod FROM sotrudnik WHERE name=" & Chr(39) & gruppa.otvZaPraktiku & Chr(39) & " LIMIT 1)" &
             ", датаСоздания=" & Chr(39) & dataString & Chr(39)
@@ -2629,7 +2656,7 @@ Module QueryString
         part2 = part2 & " , " & Chr(39) & gruppa.dataKZ & Chr(39) & " , " & Chr(39) & gruppa.specialnost & Chr(39)
 
         part1 = part1 & "kod_programm,КолЧас,"
-        part2 = part2 & " , " & gruppa.kodProgramm & " , " & gruppa.kolChasov
+        part2 = part2 & " , " & gruppa.kodProgram & " , " & gruppa.kolChasov
 
         part1 = part1 & "Куратор,ОтвЗаПракт,"
         part2 = part2 & " , (SELECT sotrudnik.kod FROM sotrudnik WHERE name=" & Chr(39) & gruppa.kurator & Chr(39) & " LIMIT 1) ,(SELECT sotrudnik.kod FROM sotrudnik WHERE name=" & Chr(39) & gruppa.otvZaPraktiku & Chr(39) & "  LIMIT 1)"
@@ -2715,7 +2742,7 @@ Module QueryString
 
 
         part1 = "(Снилс,"
-        part2 = "(" & Chr(39) & ДобавитьРубашку.УдалитьРубашку(slushatel.snils) & Chr(39)
+        part2 = "(" & Chr(39) & addMask.deleteMasck(slushatel.snils) & Chr(39)
         part1 = +"Фамилия, Имя, Отчество,"
         part2 = +"," & Chr(39) & slushatel.фамилия & Chr(39) & "," & Chr(39) & slushatel.имя & Chr(39) & "," & Chr(39) & slushatel.отчество & Chr(39)
         part1 = +"ДатаРождения, Пол, УОбразования,"

@@ -141,11 +141,11 @@
         If Not checkContent Then
             Try
                 предупреждение.текст.Text = "Необходимо заполнить все обязательные поля!"
-                ОткрытьФорму(предупреждение)
+                openForm(предупреждение)
             Catch ex As Exception
                 предупреждение.Close()
                 предупреждение.текст.Text = "Необходимо заполнить все обязательные поля!"
-                ОткрытьФорму(предупреждение)
+                openForm(предупреждение)
             End Try
             Exit Sub
         End If
@@ -551,18 +551,18 @@
 
     End Sub
     Private Sub CheckBoxСанитар_GotFocus(sender As Object, e As EventArgs) Handles CheckBoxСанитар.GotFocus
-        Call ШрифтКонтрола(ActiveControl, 10.0F)
+        Call controlFont(ActiveControl, 10.0F)
     End Sub
 
     Private Sub CheckBoxСанитар_LostFocus(sender As Object, e As EventArgs) Handles CheckBoxСанитар.LostFocus
-        Call ШрифтКонтрола(CheckBoxСанитар, 8.25F)
+        Call controlFont(CheckBoxСанитар, 8.25F)
     End Sub
     Private Sub CheckBoxММС_GotFocus(sender As Object, e As EventArgs) Handles CheckBoxММС.GotFocus
-        Call ШрифтКонтрола(ActiveControl, 10.0F)
+        Call controlFont(ActiveControl, 10.0F)
     End Sub
 
     Private Sub CheckBoxММС_LostFocus(sender As Object, e As EventArgs) Handles CheckBoxММС.LostFocus
-        Call ШрифтКонтрола(CheckBoxММС, 8.25F)
+        Call controlFont(CheckBoxММС, 8.25F)
     End Sub
 
     Private Sub CheckBoxММС_KeyDown(sender As Object, e As KeyEventArgs) Handles CheckBoxММС.KeyDown
@@ -1240,7 +1240,7 @@
             End Try
 
             предупреждение.текст.Text = "Необходимо указать должность для этого сотрудника в БД!"
-            ОткрытьФорму(предупреждение)
+            openForm(предупреждение)
             Return
 
         End If
@@ -1252,7 +1252,7 @@
 
             FIO.SelectedItem = ""
             предупреждение.текст.Text = "Ошибка. Строка запроса " + queryString
-            ОткрытьФорму(предупреждение)
+            openForm(предупреждение)
             Return
         Else
             dolj.Text = quaryResult(0, 0)

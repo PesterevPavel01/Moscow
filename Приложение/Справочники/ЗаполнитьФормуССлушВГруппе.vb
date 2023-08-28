@@ -17,14 +17,14 @@
             studentsList = MainForm.mySqlConnect.loadMySqlToArray(queryString, 1)
 
             If studentsList(0, 0) = "Нет записей" Then
-                СписокСлушателейВГруппе.ListViewStudentsList.Items.Clear()
+                StudentList.ListViewStudentsList.Items.Clear()
                 Exit Sub
             End If
 
-            UpdateListView.updateListView(False, True, СписокСлушателейВГруппе.ListViewStudentsList, ДобавитьРубашку.ДобавитьРубашкуВМассив(studentsList, 0), 0, 1, 2, 3, 4)
+            UpdateListView.updateListView(False, True, StudentList.ListViewStudentsList, addMask.addMask(studentsList, 0), 0, 1, 2, 3, 4)
 
         Else
-            СписокСлушателейВГруппе.ListViewStudentsList.Items.Clear()
+            StudentList.ListViewStudentsList.Items.Clear()
         End If
 
     End Sub

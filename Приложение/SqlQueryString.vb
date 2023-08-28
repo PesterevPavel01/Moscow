@@ -5,6 +5,12 @@ Imports WindowsApp2.Worker
 Public Class SqlQueryString
     Dim sqlString As String = ""
 
+
+    Public Function insertIntoGroupList(snils As String, kodGroup As String) As String
+        sqlString = "INSERT INTO group_list (students, Kod ) VALUES ( " & Chr(39) & snils & Chr(39) & " , " & kodGroup & ")"
+        Return sqlString
+    End Function
+
     Public Function delete_organization(kod As String) As String
 
         sqlString = "DELETE FROM napr_organization WHERE kod=" + kod

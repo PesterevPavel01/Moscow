@@ -1,4 +1,4 @@
-﻿Module ДобавитьРубашку
+﻿Module addMask
     Function ДобавитьРубашку(str As String) As String
 
         Dim Строка As String
@@ -24,7 +24,7 @@
     Function РубашкаНаВвод(str As String, ch1 As Integer, ch2 As Integer, ch3 As Integer, dl As Integer) As String
         Dim длина As Integer
 
-        str = УдалитьРубашку(str)
+        str = deleteMasck(str)
 
         If Len(str) >= ch1 Then
 
@@ -55,7 +55,7 @@
 
     End Function
 
-    Function УдалитьРубашку(str As String) As String
+    Function deleteMasck(str As String) As String
 
         Dim sc As Integer
         Dim rez As String, т As String
@@ -75,7 +75,7 @@ NextIteration:
             sc = sc + 1
         End While
 
-        УдалитьРубашку = rez
+        deleteMasck = rez
 
     End Function
 
@@ -92,7 +92,7 @@ NextIteration:
     End Function
 
 
-    Function ДобавитьРубашкуВМассив(massiv As Object, Optional номерСтолбца As Integer = 1) As Object
+    Function addMask(massiv As Object, Optional номерСтолбца As Integer = 1) As Object
 
         Dim massivListView
         Dim column As Integer, row As Byte
@@ -120,7 +120,7 @@ NextIteration:
             row = row + 1
         End While
 
-        ДобавитьРубашкуВМассив = massivListView
+        addMask = massivListView
 
     End Function
 

@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
-Partial Class СписокСлушателейВГруппе
+Partial Class StudentList
     Inherits System.Windows.Forms.Form
 
     'Форма переопределяет dispose для очистки списка компонентов.
@@ -22,6 +22,7 @@ Partial Class СписокСлушателейВГруппе
     'Не изменяйте ее в редакторе исходного кода.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(StudentList))
         Me.ListViewStudentsList = New System.Windows.Forms.ListView()
         Me.ColumnHeader1 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ColumnHeader2 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
@@ -29,24 +30,15 @@ Partial Class СписокСлушателейВГруппе
         Me.ColumnHeader9 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ColumnHeader10 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ColumnHeader11 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
-        Me.Прочее = New System.Windows.Forms.Button()
-        Me.ДобавитьВГруппу = New System.Windows.Forms.Button()
-        Me.ДобавитьВгруппуНового = New System.Windows.Forms.Button()
         Me.SplitContainer1 = New System.Windows.Forms.SplitContainer()
-        Me.SplitContainer2 = New System.Windows.Forms.SplitContainer()
-        Me.SplitContainer3 = New System.Windows.Forms.SplitContainer()
+        Me.ToolStrip1 = New System.Windows.Forms.ToolStrip()
+        Me.newStudent = New System.Windows.Forms.ToolStripButton()
+        Me.studentsList = New System.Windows.Forms.ToolStripButton()
+        Me.allInfo = New System.Windows.Forms.ToolStripButton()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.SplitContainer1.Panel1.SuspendLayout()
         Me.SplitContainer1.Panel2.SuspendLayout()
         Me.SplitContainer1.SuspendLayout()
-        CType(Me.SplitContainer2, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.SplitContainer2.Panel1.SuspendLayout()
-        Me.SplitContainer2.Panel2.SuspendLayout()
-        Me.SplitContainer2.SuspendLayout()
-        CType(Me.SplitContainer3, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.SplitContainer3.Panel1.SuspendLayout()
-        Me.SplitContainer3.Panel2.SuspendLayout()
-        Me.SplitContainer3.SuspendLayout()
+        Me.ToolStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
         'ListViewStudentsList
@@ -57,10 +49,10 @@ Partial Class СписокСлушателейВГруппе
         Me.ListViewStudentsList.FullRowSelect = True
         Me.ListViewStudentsList.GridLines = True
         Me.ListViewStudentsList.HideSelection = False
-        Me.ListViewStudentsList.Location = New System.Drawing.Point(0, 0)
+        Me.ListViewStudentsList.Location = New System.Drawing.Point(0, 47)
         Me.ListViewStudentsList.MultiSelect = False
         Me.ListViewStudentsList.Name = "ListViewStudentsList"
-        Me.ListViewStudentsList.Size = New System.Drawing.Size(1115, 646)
+        Me.ListViewStudentsList.Size = New System.Drawing.Size(1115, 648)
         Me.ListViewStudentsList.TabIndex = 4
         Me.ListViewStudentsList.UseCompatibleStateImageBehavior = False
         Me.ListViewStudentsList.View = System.Windows.Forms.View.Details
@@ -95,51 +87,6 @@ Partial Class СписокСлушателейВГруппе
         Me.ColumnHeader11.Text = "Дата рождения"
         Me.ColumnHeader11.Width = 131
         '
-        'Прочее
-        '
-        Me.Прочее.BackColor = System.Drawing.Color.Transparent
-        Me.Прочее.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Прочее.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Прочее.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.Прочее.Location = New System.Drawing.Point(0, 0)
-        Me.Прочее.Name = "Прочее"
-        Me.Прочее.Size = New System.Drawing.Size(437, 45)
-        Me.Прочее.TabIndex = 5
-        Me.Прочее.Text = "Прочее"
-        Me.Прочее.UseVisualStyleBackColor = False
-        '
-        'ДобавитьВГруппу
-        '
-        Me.ДобавитьВГруппу.BackColor = System.Drawing.Color.Transparent
-        Me.ДобавитьВГруппу.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.ДобавитьВГруппу.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.ДобавитьВГруппу.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.ДобавитьВГруппу.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.ДобавитьВГруппу.Location = New System.Drawing.Point(0, 0)
-        Me.ДобавитьВГруппу.Name = "ДобавитьВГруппу"
-        Me.ДобавитьВГруппу.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.ДобавитьВГруппу.Size = New System.Drawing.Size(338, 45)
-        Me.ДобавитьВГруппу.TabIndex = 1
-        Me.ДобавитьВГруппу.Text = "Добавить из списка"
-        Me.ДобавитьВГруппу.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.ДобавитьВГруппу.UseVisualStyleBackColor = False
-        '
-        'ДобавитьВгруппуНового
-        '
-        Me.ДобавитьВгруппуНового.BackColor = System.Drawing.Color.Transparent
-        Me.ДобавитьВгруппуНового.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.ДобавитьВгруппуНового.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.ДобавитьВгруппуНового.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.ДобавитьВгруппуНового.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.ДобавитьВгруппуНового.Location = New System.Drawing.Point(0, 0)
-        Me.ДобавитьВгруппуНового.Name = "ДобавитьВгруппуНового"
-        Me.ДобавитьВгруппуНового.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.ДобавитьВгруппуНового.Size = New System.Drawing.Size(332, 45)
-        Me.ДобавитьВгруппуНового.TabIndex = 3
-        Me.ДобавитьВгруппуНового.Text = "Добавить нового"
-        Me.ДобавитьВгруппуНового.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.ДобавитьВгруппуНового.UseVisualStyleBackColor = False
-        '
         'SplitContainer1
         '
         Me.SplitContainer1.Dock = System.Windows.Forms.DockStyle.Fill
@@ -147,75 +94,73 @@ Partial Class СписокСлушателейВГруппе
         Me.SplitContainer1.Location = New System.Drawing.Point(3, 3)
         Me.SplitContainer1.Name = "SplitContainer1"
         Me.SplitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal
-        '
-        'SplitContainer1.Panel1
-        '
-        Me.SplitContainer1.Panel1.Controls.Add(Me.SplitContainer2)
+        Me.SplitContainer1.Panel1Collapsed = True
         '
         'SplitContainer1.Panel2
         '
         Me.SplitContainer1.Panel2.Controls.Add(Me.ListViewStudentsList)
+        Me.SplitContainer1.Panel2.Controls.Add(Me.ToolStrip1)
         Me.SplitContainer1.Size = New System.Drawing.Size(1115, 695)
         Me.SplitContainer1.SplitterDistance = 45
         Me.SplitContainer1.TabIndex = 7
         '
-        'SplitContainer2
+        'ToolStrip1
         '
-        Me.SplitContainer2.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SplitContainer2.Location = New System.Drawing.Point(0, 0)
-        Me.SplitContainer2.Name = "SplitContainer2"
+        Me.ToolStrip1.BackColor = System.Drawing.SystemColors.ButtonFace
+        Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.newStudent, Me.studentsList, Me.allInfo})
+        Me.ToolStrip1.Location = New System.Drawing.Point(0, 0)
+        Me.ToolStrip1.Name = "ToolStrip1"
+        Me.ToolStrip1.Size = New System.Drawing.Size(1115, 47)
+        Me.ToolStrip1.TabIndex = 6
+        Me.ToolStrip1.Text = "ToolStrip1"
         '
-        'SplitContainer2.Panel1
+        'newStudent
         '
-        Me.SplitContainer2.Panel1.Controls.Add(Me.ДобавитьВГруппу)
+        Me.newStudent.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.newStudent.Image = CType(resources.GetObject("newStudent.Image"), System.Drawing.Image)
+        Me.newStudent.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
+        Me.newStudent.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.newStudent.Name = "newStudent"
+        Me.newStudent.Size = New System.Drawing.Size(44, 44)
+        Me.newStudent.Text = "Новый"
         '
-        'SplitContainer2.Panel2
+        'studentsList
         '
-        Me.SplitContainer2.Panel2.Controls.Add(Me.SplitContainer3)
-        Me.SplitContainer2.Size = New System.Drawing.Size(1115, 45)
-        Me.SplitContainer2.SplitterDistance = 338
-        Me.SplitContainer2.TabIndex = 4
+        Me.studentsList.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.studentsList.Image = CType(resources.GetObject("studentsList.Image"), System.Drawing.Image)
+        Me.studentsList.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
+        Me.studentsList.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.studentsList.Name = "studentsList"
+        Me.studentsList.Size = New System.Drawing.Size(44, 44)
+        Me.studentsList.Text = "Слушатели"
         '
-        'SplitContainer3
+        'allInfo
         '
-        Me.SplitContainer3.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SplitContainer3.Location = New System.Drawing.Point(0, 0)
-        Me.SplitContainer3.Name = "SplitContainer3"
+        Me.allInfo.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.allInfo.Image = CType(resources.GetObject("allInfo.Image"), System.Drawing.Image)
+        Me.allInfo.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
+        Me.allInfo.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.allInfo.Name = "allInfo"
+        Me.allInfo.Size = New System.Drawing.Size(44, 44)
+        Me.allInfo.Text = "Прочее"
         '
-        'SplitContainer3.Panel1
-        '
-        Me.SplitContainer3.Panel1.Controls.Add(Me.ДобавитьВгруппуНового)
-        '
-        'SplitContainer3.Panel2
-        '
-        Me.SplitContainer3.Panel2.Controls.Add(Me.Прочее)
-        Me.SplitContainer3.Size = New System.Drawing.Size(773, 45)
-        Me.SplitContainer3.SplitterDistance = 332
-        Me.SplitContainer3.TabIndex = 2
-        '
-        'СписокСлушателейВГруппе
+        'StudentList
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1121, 701)
         Me.Controls.Add(Me.SplitContainer1)
         Me.KeyPreview = True
-        Me.Name = "СписокСлушателейВГруппе"
+        Me.Name = "StudentList"
         Me.Padding = New System.Windows.Forms.Padding(3)
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
         Me.Text = "Form2"
-        Me.SplitContainer1.Panel1.ResumeLayout(False)
         Me.SplitContainer1.Panel2.ResumeLayout(False)
+        Me.SplitContainer1.Panel2.PerformLayout()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SplitContainer1.ResumeLayout(False)
-        Me.SplitContainer2.Panel1.ResumeLayout(False)
-        Me.SplitContainer2.Panel2.ResumeLayout(False)
-        CType(Me.SplitContainer2, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.SplitContainer2.ResumeLayout(False)
-        Me.SplitContainer3.Panel1.ResumeLayout(False)
-        Me.SplitContainer3.Panel2.ResumeLayout(False)
-        CType(Me.SplitContainer3, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.SplitContainer3.ResumeLayout(False)
+        Me.ToolStrip1.ResumeLayout(False)
+        Me.ToolStrip1.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub
@@ -227,10 +172,9 @@ Partial Class СписокСлушателейВГруппе
     Friend WithEvents ColumnHeader9 As ColumnHeader
     Friend WithEvents ColumnHeader10 As ColumnHeader
     Friend WithEvents ColumnHeader11 As ColumnHeader
-    Friend WithEvents Прочее As Button
-    Friend WithEvents ДобавитьВГруппу As Button
-    Friend WithEvents ДобавитьВгруппуНового As Button
     Friend WithEvents SplitContainer1 As SplitContainer
-    Friend WithEvents SplitContainer2 As SplitContainer
-    Friend WithEvents SplitContainer3 As SplitContainer
+    Friend WithEvents ToolStrip1 As ToolStrip
+    Friend WithEvents allInfo As ToolStripButton
+    Friend WithEvents studentsList As ToolStripButton
+    Friend WithEvents newStudent As ToolStripButton
 End Class

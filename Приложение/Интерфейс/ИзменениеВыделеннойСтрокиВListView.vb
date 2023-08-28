@@ -7,7 +7,7 @@
 
         If indForm = "СправочникГруппы" Then
 
-            ListV = СправочникГруппы.ListViewСписокГрупп
+            ListV = СправочникГруппы.groupListTable
 
         End If
 
@@ -25,7 +25,7 @@
 
         If indForm = "СписокСлушателейВГруппе" Then
 
-            ListV = СписокСлушателейВГруппе.ListViewStudentsList
+            ListV = StudentList.ListViewStudentsList
 
         End If
         Try

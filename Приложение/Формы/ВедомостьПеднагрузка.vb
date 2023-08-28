@@ -4,34 +4,13 @@
     Private infoDataTable As DataTable
     Dim queryString As String
 
-    Private Sub НомерГруппы_Click(sender As Object, e As EventArgs) Handles НомерГруппы.Click
-
-        ФормаСписок.ListViewСписок.Columns(0).Width = 120
-        ФормаСписок.ListViewСписок.Columns.Add("Год", 100)
-        ФормаСписок.ListViewСписок.Columns.Add("Код", 100)
-        ФормаСписок.textboxName = sender.Name
-        ФормаСписок.FormName = Me.Name
-
-        ФормаСписок.headerVisible = True
-
-        ФормаСписок.ShowDialog()
-        ФормаСписок.ListViewСписок.Columns.RemoveAt(1)
-        ФормаСписок.ListViewСписок.Columns.RemoveAt(2)
-        ФормаСписок.ListViewСписок.Columns(1).Width = 50
-        ФормаСписок.ListViewСписок.Columns(1).Width = 620
-        ФормаСписок.ListViewСписок.Columns(1).Text = "Наименование"
-
-        loadTables()
-
-    End Sub
-
     Private Sub loadTables()
 
         Dim resultList
 
-        If Trim(НомерГруппы.Text) = "" Then
+        If Trim(groupNumber.Text) = "" Then
 
-            Exit Sub
+            Return
 
         End If
 
@@ -54,7 +33,7 @@
         If resultList(0, 0).ToString = "нет записей" Then
 
             предупреждение.текст.Text = "Нет данных для отображения"
-            ОткрытьФорму(предупреждение)
+            openForm(предупреждение)
             ActiveControl = pednagr__mainTable
             Exit Sub
 
@@ -132,8 +111,7 @@
 
     End Sub
 
-    Private Sub Сохранить_Click(sender As Object, e As EventArgs) Handles Сохранить.Click
-
+    Private Sub save_Click(sender As Object, e As EventArgs) Handles save.Click
         Dim arg, arrayNameAndType
         ReDim arg(1)
         ReDim arrayNameAndType(1, 6)
@@ -157,10 +135,9 @@
         arrayNameAndType(1, 6) = "Double"
 
         datagridInsertRowIntoDB(pednagr__mainTable, "pednagruzka", arg, arrayNameAndType, 0, 6)
-
     End Sub
 
-    Private Sub ВедомостьПеднагрузка_KeyDown(sender As Object, e As KeyEventArgs) Handles Me.KeyDown
+    Private Sub ВедомостьПеднагрузка_KeyDown(sender As Object, e As KeyEventArgs) Handles MyBase.KeyDown
         closeEsc(Me, e.KeyCode)
     End Sub
 
@@ -169,4 +146,26 @@
         pednagr__resizeInfoTables()
 
     End Sub
+
+    Private Sub groupNumber_Click(sender As Object, e As EventArgs) Handles groupNumber.Click
+
+        ФормаСписок.ListViewСписок.Columns(0).Width = 120
+        ФормаСписок.ListViewСписок.Columns.Add("Год", 100)
+        ФормаСписок.ListViewСписок.Columns.Add("Код", 100)
+        ФормаСписок.textboxName = sender.Name
+        ФормаСписок.FormName = Name
+
+        ФормаСписок.headerVisible = True
+
+        ФормаСписок.ShowDialog()
+        ФормаСписок.ListViewСписок.Columns.RemoveAt(1)
+        ФормаСписок.ListViewСписок.Columns.RemoveAt(2)
+        ФормаСписок.ListViewСписок.Columns(1).Width = 50
+        ФормаСписок.ListViewСписок.Columns(1).Width = 620
+        ФормаСписок.ListViewСписок.Columns(1).Text = "Наименование"
+
+        loadTables()
+
+    End Sub
+
 End Class

@@ -3,7 +3,8 @@
     Public Press As Boolean
     Public DelitMask As Boolean
     Public str As String
-    Public РубашкаДобавлена = False
+    Public masckAdded = False
+    Public studentsInfo
 
     Public Sub showStudentsList()
 
@@ -11,23 +12,20 @@
 
         ListViewСписокСлушателей.Visible = False
 
-        columnSort = Интерфейс.nameCheckedCheckBox(НастройкаСортировкиСлушателей)
-        columnSearch = Интерфейс.nameCheckedCheckBox(НастройкаПоискаСлушателей)
+        columnSort = interfaceMod.nameCheckedCheckBox(sortSettsStudents)
+        columnSearch = interfaceMod.nameCheckedCheckBox(НастройкаПоискаСлушателей)
 
-        Label2.Visible = False
+        searchRow.Visible = True
+        searchSetts.Visible = True
 
-        СтрокаПоиска.Visible = True
-        Label1.Visible = True
-        PictureBox1.Visible = True
-
-        queryString = studentsList__loadStudentsList(columnSort, Интерфейс.sortType(НастройкаСортировкиСлушателей.НажатПБСл))
+        queryString = studentsList__loadStudentsList(columnSort, interfaceMod.sortType(sortSettsStudents.sortSetts.flagSortUp))
 
         massiv = MainForm.mySqlConnect.loadMySqlToArray(queryString, 1)
         massiv = УбратьПустотыВМассиве.УбратьПустотыВМассиве(massiv)
-        massiv = ДобавитьРубашку.ДобавитьРубашкуВМассив(massiv)
+        massiv = addMask.addMask(massiv)
 
         Call UpdateListView.updateListView(False, True, ListViewСписокСлушателей, massiv, 1, 2, 3, 4)
-        СтрокаПоиска.Text = ""
+        searchRow.Text = ""
         ActiveControl = ListViewСписокСлушателей
         Try
             ListViewСписокСлушателей.Items(0).Selected = True
@@ -38,61 +36,59 @@
 
     End Sub
 
-    Public ИнформацияОСлушателе
-
     Private Sub ListViewСписокСлушателей_DoubleClick(sender As Object, e As EventArgs) Handles ListViewСписокСлушателей.DoubleClick
 
         Dim queryString As String
         Dim snils As String
 
-        Label2.Visible = False
-
         If Not ListViewСписокСлушателей.SelectedItems.Item(0).SubItems(1).Text = "удалено" Then
 
-            Label2.Visible = False
-
-            snils = ДобавитьРубашку.УдалитьРубашку(ListViewСписокСлушателей.SelectedItems.Item(0).SubItems(1).Text)
+            snils = addMask.deleteMasck(ListViewСписокСлушателей.SelectedItems.Item(0).SubItems(1).Text)
 
             РедакторСлушателя.Text = ListViewСписокСлушателей.SelectedItems.Item(0).SubItems(2).Text & " " & ListViewСписокСлушателей.SelectedItems.Item(0).SubItems(3).Text & " " & ListViewСписокСлушателей.SelectedItems.Item(0).SubItems(4).Text & " "
 
             queryString = load_slushatel(snils)
 
-            ИнформацияОСлушателе = MainForm.mySqlConnect.loadMySqlToArray(queryString, 1)
-            ИнформацияОСлушателе = УбратьПустотыВМассиве.УбратьПустотыВМассиве(ИнформацияОСлушателе)
+            studentsInfo = MainForm.mySqlConnect.loadMySqlToArray(queryString, 1)
+            studentsInfo = УбратьПустотыВМассиве.УбратьПустотыВМассиве(studentsInfo)
 
             РедакторСлушателя.Show()
 
         Else MsgBox("информация удалена")
 
         End If
+
     End Sub
 
-    Private Sub СтрокаПоиска_TextChanged(sender As Object, e As EventArgs) Handles СтрокаПоиска.TextChanged
+    Private Sub СтрокаПоиска_TextChanged(sender As Object, e As EventArgs) Handles searchRow.TextChanged
 
-        If РубашкаДобавлена Then
-            СтрокаПоиска.SelectionStart = Len(СтрокаПоиска.Text)
+        If masckAdded Then
+
+            searchRow.SelectionStart = Len(searchRow.Text)
             Exit Sub
+
         End If
-        Me.ПоискПоСтрокеПоиска()
+
+        search()
 
     End Sub
 
-    Sub ПоискПоСтрокеПоиска()
-        Label2.Visible = False
-        Dim ПолеДляПоиска As String, ПолеДляСортировки As String
+    Sub search()
 
-        ПолеДляСортировки = Интерфейс.nameCheckedCheckBox(НастройкаСортировкиСлушателей)
-        ПолеДляПоиска = Интерфейс.nameCheckedCheckBox(НастройкаПоискаСлушателей)
+        Dim searchField As String, sortField As String
+
+        sortField = interfaceMod.nameCheckedCheckBox(sortSettsStudents)
+        searchField = interfaceMod.nameCheckedCheckBox(НастройкаПоискаСлушателей)
 
 
-        If ПолеДляПоиска = "Снилс" Then
+        If searchField = "Снилс" Then
 
-            massiv = sqlSearch(ДобавитьРубашку.УдалитьРубашку(СтрокаПоиска.Text), "students", "Снилс, Фамилия, Имя, Отчество, ДатаРождения", ПолеДляПоиска, ПолеДляСортировки & Интерфейс.sortType(НастройкаСортировкиСлушателей.НажатПБСл))
+            massiv = sqlSearch(addMask.deleteMasck(searchRow.Text), "students", "Снилс, Фамилия, Имя, Отчество, ДатаРождения", searchField, sortField & interfaceMod.sortType(sortSettsStudents.sortSetts.flagSortUp))
 
             If Not Press Then
 
-                РубашкаДобавлена = True
-                СтрокаПоиска.Text = ДобавитьРубашку.РубашкаНаВвод(СтрокаПоиска.Text, 3, 3, 3, 14)
+                masckAdded = True
+                searchRow.Text = addMask.РубашкаНаВвод(searchRow.Text, 3, 3, 3, 14)
 
 
             End If
@@ -100,48 +96,46 @@
 
             If Not massiv(0, 0) = "нет записей" Then
 
-                massiv = ДобавитьРубашкуВМассив(massiv, 0)
+                massiv = addMask.addMask(massiv, 0)
 
             End If
 
         Else
 
-            massiv = sqlSearch(СтрокаПоиска.Text, "students", "Снилс, Фамилия, Имя, Отчество, ДатаРождения", ПолеДляПоиска, ПолеДляСортировки)
-            massiv = ДобавитьРубашкуВМассив(massiv, 0)
+            massiv = sqlSearch(searchRow.Text, "students", "Снилс, Фамилия, Имя, Отчество, ДатаРождения", searchField, sortField)
+            massiv = addMask.addMask(massiv, 0)
 
         End If
 
-        Call UpdateListView.updateListView(False, True, ListViewСписокСлушателей, massiv, 0, 1, 2, 3, 4)
+        UpdateListView.updateListView(False, True, ListViewСписокСлушателей, massiv, 0, 1, 2, 3, 4)
 
-        СтрокаПоиска.SelectionStart = Len(СтрокаПоиска.Text)
+        searchRow.SelectionStart = Len(searchRow.Text)
 
     End Sub
 
     Private Sub ФормаСправочникСлушатели_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
-        СтрокаПоиска.Visible = True
-        Label1.Visible = False
-        Label2.Visible = False
+        searchRow.Visible = True
 
     End Sub
 
-    Private Sub СтрокаПоиска_KeyDown(sender As Object, e As KeyEventArgs) Handles СтрокаПоиска.KeyDown
+    Private Sub СтрокаПоиска_KeyDown(sender As Object, e As KeyEventArgs) Handles searchRow.KeyDown
 
         Dim str As String
 
 
-        str = СтрокаПоиска.Text
+        str = searchRow.Text
 
 
         If e.KeyCode = 8 Then
 
             Press = True
-            СтрокаПоиска.Text = ДобавитьРубашку.УдалитьДефисВРубашке(str)
+            searchRow.Text = addMask.УдалитьДефисВРубашке(str)
 
         End If
 
         Press = False
-        РубашкаДобавлена = False
+        masckAdded = False
 
     End Sub
 
@@ -150,14 +144,14 @@
         Dim ind As String
         Dim nomer As Integer, счетчик As Integer
 
-        Label2.Visible = False
+        'Label2.Visible = False
 
 
         If e.KeyCode = Keys.Delete Then
 
             element = ListViewСписокСлушателей.SelectedItems.Count
 
-            ind = УдалитьРубашку(ListViewСписокСлушателей.SelectedItems.Item(0).SubItems(1).Text)
+            ind = deleteMasck(ListViewСписокСлушателей.SelectedItems.Item(0).SubItems(1).Text)
             nomer = ListViewСписокСлушателей.SelectedItems.Item(0).SubItems(0).Text
 
             InsertIntoDataBase.argumentClear()
@@ -196,8 +190,8 @@
 
                 If Not InsertIntoDataBase.checkDuplicates() Then
 
-                    Label2.Visible = True
-                    Label2.Text = "Слушатель: Снилс №" & ind & " был удален."
+                    'Label2.Visible = True
+                    'Label2.Text = "Слушатель: Снилс №" & ind & " был удален."
                     Call ИзменениеВыделеннойСтрокиВListView.ИзменениеВыделеннойСтрокиВListView("СправочникСлушатели", 1, "удалено", 2, "удалено", 3, "удалено", 4, "удалено")
                     счетчик = 0
                     While счетчик < UBound(massiv, 1)
@@ -219,34 +213,6 @@
 Конец:
     End Sub
 
-    Private Sub СтрокаПоиска_Click(sender As Object, e As EventArgs) Handles СтрокаПоиска.Click
-        Label2.Visible = False
-    End Sub
-
-
-    Private Sub ListViewСписокСлушателей_Click(sender As Object, e As EventArgs) Handles ListViewСписокСлушателей.Click
-
-        Label2.Visible = False
-
-    End Sub
-
-    Private Sub ДобавитьВГруппу_Click(sender As Object, e As EventArgs) Handles ДобавитьВГруппу.Click
-        Dim Снилс As String, СтрокаЗапроса As String
-        Dim Запросы
-        Label2.Visible = False
-        Try
-            Снилс = ListViewСписокСлушателей.SelectedItems.Item(0).SubItems(1).Text
-        Catch ex As Exception
-            MsgBox("Слушатель не выбран")
-            Exit Sub
-        End Try
-
-        Снилс = ДобавитьРубашку.УдалитьРубашку(Снилс)
-
-        Вспомогательный.ДобавитьВГруппу(Снилс)
-        ActiveControl = BtnFocus
-    End Sub
-
     Private Sub ListViewСписокСлушателей_GotFocus(sender As Object, e As EventArgs) Handles ListViewСписокСлушателей.GotFocus
         Dim str As String
         Try
@@ -263,7 +229,7 @@
 
     End Sub
 
-    Private Sub ФормаСправочникСлушатели_KeyDown(sender As Object, e As KeyEventArgs) Handles Me.KeyDown
+    Private Sub ФормаСправочникСлушатели_KeyDown(sender As Object, e As KeyEventArgs) Handles MyBase.KeyDown
 
         '_________________________________________Esc
         If e.KeyCode = Keys.Escape Then
@@ -323,7 +289,7 @@
             End Try
 
 
-            Call ListViewСписокСлушателей_DoubleClick(sender, e)
+            ListViewСписокСлушателей_DoubleClick(sender, e)
 
         End If
 
@@ -331,52 +297,48 @@
 
     End Sub
 
-    Private Sub Button1_GotFocus(sender As Object, e As EventArgs) Handles Button1.GotFocus
-        Интерфейс.ШрифтКонтрола(Button1, 14.0F)
+    Private Sub ДобавитьВГруппу_GotFocus(sender As Object, e As EventArgs)
+
+        interfaceMod.controlFont(searchSetts, 14.0F)
+
     End Sub
 
-    Private Sub Button1_LostFocus(sender As Object, e As EventArgs) Handles Button1.LostFocus
-        Интерфейс.ШрифтКонтрола(Button1, 11.0F)
+    Private Sub ДобавитьВГруппу_LostFocus(sender As Object, e As EventArgs)
+
+        interfaceMod.controlFont(searchSetts, 11.0F)
+
     End Sub
 
-    Private Sub ДобавитьВГруппу_GotFocus(sender As Object, e As EventArgs) Handles ДобавитьВГруппу.GotFocus
-        Интерфейс.ШрифтКонтрола(ДобавитьВГруппу, 14.0F)
-    End Sub
+    Private Sub searchSetts_Click(sender As Object, e As EventArgs) Handles searchSetts.Click
 
-    Private Sub ДобавитьВГруппу_LostFocus(sender As Object, e As EventArgs) Handles ДобавитьВГруппу.LostFocus
-        Интерфейс.ШрифтКонтрола(ДобавитьВГруппу, 11.0F)
-    End Sub
-
-    Private Sub PictureBox1_Click(sender As Object, e As EventArgs) Handles PictureBox1.Click
-        Me.СтрокаПоиска.Clear()
+        searchRow.Clear()
         НастройкаПоискаСлушателей.ShowDialog()
+
     End Sub
 
-
-    Private Sub PictureBox2_Click_1(sender As Object, e As EventArgs) Handles PictureBox2.Click
-        НастройкаСортировкиСлушателей.ShowDialog()
-    End Sub
-
-    Private Sub ListViewСписокСлушателей_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ListViewСписокСлушателей.SelectedIndexChanged
+    Private Sub studentList_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ListViewСписокСлушателей.SelectedIndexChanged
 
         Dim Dtable As DataTable
         Dim Snils, SqlString As String
 
         Try
-            Snils = ДобавитьРубашку.УдалитьРубашку(ListViewСписокСлушателей.SelectedItems.Item(0).SubItems(1).Text)
+
+            Snils = addMask.deleteMasck(ListViewСписокСлушателей.SelectedItems.Item(0).SubItems(1).Text)
+
         Catch ex As Exception
+
             Exit Sub
+
         End Try
 
         SqlString = sprSlushTblGroup(Snils)
         Dtable = MainForm.mySqlConnect.mySqlToDataTable(SqlString, 1)
         ССлушТаблицаИнфСлушателя.DataSource = Dtable
 
-        ''ССлушТаблицаИнфСлушателя.AutoResizeColumn(0)
-        'ССлушТаблицаИнфСлушателя.AutoResizeColumn(1)
-
         If ССлушТаблицаИнфСлушателя.Columns.Count <> 5 Then
+
             Return
+
         End If
 
         ССлушТаблицаИнфСлушателя.Columns(0).Width = ССлушТаблицаИнфСлушателя.Width * 0.1
@@ -386,6 +348,29 @@
         ССлушТаблицаИнфСлушателя.Columns(4).Width = ССлушТаблицаИнфСлушателя.Width * 0.125
 
         ССлушТаблицаИнфСлушателя.DefaultCellStyle.Font = New Font("Microsoft YaHei", 10)
+
+    End Sub
+
+    Private Sub insertIntoGroupList_Click(sender As Object, e As EventArgs) Handles insertIntoGroupList.Click
+
+        Dim snils As String
+
+        Try
+            snils = ListViewСписокСлушателей.SelectedItems.Item(0).SubItems(1).Text
+        Catch ex As Exception
+            MsgBox("Слушатель не выбран")
+            Exit Sub
+        End Try
+
+        snils = addMask.deleteMasck(snils)
+
+        Вспомогательный.insertIntoGroupList(snils)
+        ActiveControl = BtnFocus
+    End Sub
+
+    Private Sub sortSetts_Click(sender As Object, e As EventArgs) Handles sortSetts.Click
+
+        sortSettsStudents.ShowDialog()
 
     End Sub
 End Class

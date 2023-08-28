@@ -26,7 +26,7 @@ Partial Class АОценкиИА
         Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.ЗагрузитьИнформацию = New System.Windows.Forms.Button()
         Me.Label2 = New System.Windows.Forms.Label()
-        Me.НомерГруппы = New System.Windows.Forms.TextBox()
+        Me.groupNumber = New System.Windows.Forms.TextBox()
         Me.ТаблицаОценкиИА = New System.Windows.Forms.DataGridView()
         Me.Сохранить = New System.Windows.Forms.Button()
         Me.Button1 = New System.Windows.Forms.Button()
@@ -67,12 +67,12 @@ Partial Class АОценкиИА
         '
         'НомерГруппы
         '
-        Me.НомерГруппы.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.НомерГруппы.Location = New System.Drawing.Point(69, 18)
-        Me.НомерГруппы.Name = "НомерГруппы"
-        Me.НомерГруппы.ReadOnly = True
-        Me.НомерГруппы.Size = New System.Drawing.Size(406, 29)
-        Me.НомерГруппы.TabIndex = 6
+        Me.groupNumber.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
+        Me.groupNumber.Location = New System.Drawing.Point(69, 18)
+        Me.groupNumber.Name = "НомерГруппы"
+        Me.groupNumber.ReadOnly = True
+        Me.groupNumber.Size = New System.Drawing.Size(406, 29)
+        Me.groupNumber.TabIndex = 6
         '
         'ТаблицаОценкиИА
         '
@@ -188,7 +188,7 @@ Partial Class АОценкиИА
         Me.Controls.Add(Me.ТаблицаОценкиИА)
         Me.Controls.Add(Me.ЗагрузитьИнформацию)
         Me.Controls.Add(Me.Label2)
-        Me.Controls.Add(Me.НомерГруппы)
+        Me.Controls.Add(Me.groupNumber)
         Me.KeyPreview = True
         Me.Name = "АОценкиИА"
         Me.Text = "Оценки ИА"
@@ -200,7 +200,7 @@ Partial Class АОценкиИА
 
     Friend WithEvents ЗагрузитьИнформацию As Button
     Friend WithEvents Label2 As Label
-    Friend WithEvents НомерГруппы As TextBox
+    Friend WithEvents groupNumber As TextBox
     Friend WithEvents ТаблицаОценкиИА As DataGridView
     Friend WithEvents Сохранить As Button
     Friend WithEvents Button1 As Button

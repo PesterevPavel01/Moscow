@@ -72,7 +72,7 @@ Module Вспомогательный
         End If
 
         Try
-            snilsNumber = ДобавитьРубашку.УдалитьРубашку(РедакторСлушателя.Снилс.Text)
+            snilsNumber = addMask.deleteMasck(РедакторСлушателя.Снилс.Text)
         Catch ex As Exception
 
             MsgBox("Снилс введен некорректно")
@@ -81,7 +81,7 @@ Module Вспомогательный
         End Try
 
         If РедакторСлушателя.ValidOn.Checked Then
-            If Not АнализСнилс.ПроверкаСнилс(ДобавитьРубашку.УдалитьРубашку(РедакторСлушателя.Снилс.Text)) Then
+            If Not АнализСнилс.ПроверкаСнилс(addMask.deleteMasck(РедакторСлушателя.Снилс.Text)) Then
                 MsgBox("Снилс не прошел проверку")
                 Return False
             End If
@@ -112,10 +112,10 @@ Module Вспомогательный
             Return False
         End If
 
-        If Not Интерфейс.formStudentValidation(РедакторСлушателя) Then
+        If Not interfaceMod.formStudentValidation(РедакторСлушателя) Then
 
             предупреждение.текст.Text = "Заполните все обязательные поля"
-            ОткрытьФорму(предупреждение)
+            openForm(предупреждение)
 
             Return False
 
@@ -263,15 +263,13 @@ Module Вспомогательный
 
     End Function
 
-    Sub ДобавитьВГруппу(snils As String)
+    Sub insertIntoGroupList(snils As String)
 
         Dim queryString As String
 
-        ФормаСправочникСлушатели.Label2.Visible = False
+        'ФормаСправочникСлушатели.Label2.Visible = False
 
-        snils = ДобавитьРубашку.УдалитьРубашку(snils)
-
-        queryString = "INSERT INTO group_list (students, Kod ) VALUES ( " & Chr(39) & snils & Chr(39) & " , " & СправочникГруппы.kod & ")"
+        queryString = MainForm.sqlQueryString.insertIntoGroupList(snils, СправочникГруппы.kod)
 
         InsertIntoDataBase.argumentClear()
         InsertIntoDataBase.argument.nameTable = "group_list"
@@ -417,7 +415,7 @@ Module Вспомогательный
         Область.Find.Execute(Replace:=КоличествоЗамен)
     End Sub
 
-    Sub ОткрытьФорму(Form As Form)
+    Sub openForm(Form As Form)
 
         Try
             Form.ShowDialog()

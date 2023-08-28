@@ -5,17 +5,15 @@ Public Class MainForm
     Private redactor_enter As Boolean
     Public password0 As String
     Public query
-    Public КлавишаПереключенияВкладок As Integer = 39  ' 34
-    Public КлавишаОбратногоПереключенияВкладок As Integer = 37 '35
-    Public вместоТаб As Integer = 40
-    Public вместоТаб2 As Integer = 39
-    Public НомерОтчета As Integer
-    Public ЗагруженСправочникГруппы As Boolean = False
-    Public РазрешитьЗапускПриложения As Boolean = True
+    Public switchPageKey As Integer = Keys.Right
+    Public seitchPageKey_Inverse As Integer = Keys.Left
+    Public alternativeTab As Integer = Keys.Down
+    Public alternativeTabSecond As Integer = Keys.Right
+    Public orderNumber As Integer
     Public directorOff As Boolean = False
-    Public Стаж_окончание As Boolean = False
+    Public internshipEnding As Boolean = False
     Public mySqlConnect As New MySQLConnect
-    Public prikazKodGroup As Integer = 0
+    Public prikazKodGroup As Int64 = 0
     Public activeTables As String = "Не загружено"
     Public settsStatus As Boolean = True
     Public cvalific As UInt16 = 0
@@ -35,7 +33,7 @@ Public Class MainForm
     Public tbl_obrazovanie As New Tables_control
     Public programs__progrs_tbl As New Tables_control
     Public programs_type_tbl As New Tables_control
-    Public program__sqlQueryString As New SqlQueryString
+    Public sqlQueryString As New SqlQueryString
 
     Private Sub mainForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
@@ -92,7 +90,7 @@ Public Class MainForm
     Private Sub Button1_Click(sender As Object, e As EventArgs)
 
         ActiveControl = Button2
-        ФормаСправочникСлушатели.ДобавитьВГруппу.Visible = False
+        ФормаСправочникСлушатели.searchSetts.Visible = False
         ФормаСправочникСлушатели.ShowDialog()
 
     End Sub
@@ -124,7 +122,7 @@ Public Class MainForm
     Private Sub ИтоговаяАттествцияОценки_Click(sender As Object, e As EventArgs) Handles ИтоговаяАттествцияОценки.Click
 
         ActiveControl = Button2
-        АОценкиИА.НомерГруппы.Clear()
+        АОценкиИА.groupNumber.Clear()
         АОценкиИА.ТаблицаОценкиИА.Rows.Clear()
         АОценкиИА.ShowDialog()
 
@@ -133,8 +131,8 @@ Public Class MainForm
     Private Sub Ведомость_Click(sender As Object, e As EventArgs) Handles Ведомость.Click
 
         ActiveControl = Button2
-        ОценочнаяВедомость.НомерГруппы.Clear()
-        ОценочнаяВедомость.ТаблицаВедомость.Rows.Clear()
+        ОценочнаяВедомость.groupNumber.Clear()
+        ОценочнаяВедомость.resultTable.Rows.Clear()
         ОценочнаяВедомость.ShowDialog()
 
     End Sub
@@ -148,14 +146,14 @@ Public Class MainForm
 
     Private Sub studentList_Click(sender As Object, e As EventArgs) Handles СправочникСлушатели.Click
 
-        If ПоискСлушателейПоУм.Text = "" Then
+        If students__defaultSearchSetts.Text = "" Then
 
             НастройкаПоискаСлушателей.Снилс.Checked = True
 
         End If
-
+        ФормаСправочникСлушатели.insertIntoGroupList.Visible = False
         ActiveControl = Button2
-        ФормаСправочникСлушатели.ДобавитьВГруппу.Visible = False
+        ФормаСправочникСлушатели.searchSetts.Visible = False
         ФормаСправочникСлушатели.showStudentsList()
         ФормаСправочникСлушатели.ShowDialog()
 
@@ -697,7 +695,7 @@ Public Class MainForm
 
     Private Sub ПК_Окончание_Click(sender As Object, e As EventArgs) Handles ПК_Окончание.Click
 
-        If Стаж_окончание Then
+        If internshipEnding Then
             prikazCvalif = PK
             АСформироватьПриказ.Text = "Стаж_окончание"
         Else
@@ -983,13 +981,13 @@ Public Class MainForm
 
         ElseIf (DataGridView_list.Focused Or ActiveControl.Name = "TabControlOther" Or passwordOther.Focused) And SplitContainerOtherList.Panel2Collapsed Then
 
-            If e.KeyCode = КлавишаПереключенияВкладок Then
+            If e.KeyCode = switchPageKey Then
 
                 openNextPage(TabControlOther)
 
             End If
 
-            If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
+            If e.KeyCode = seitchPageKey_Inverse Then
 
                 openPrevPage(TabControlOther)
 
@@ -1024,7 +1022,7 @@ Public Class MainForm
             progsType_tbl()
             Return
 
-        ElseIf e.KeyCode = КлавишаПереключенияВкладок Then
+        ElseIf e.KeyCode = switchPageKey Then
 
             If DataGridAllModuls.Focused Or ActiveControl.Name = "TabControlOther" Then
 
@@ -1082,7 +1080,7 @@ Public Class MainForm
 
         End If
 
-        If e.KeyCode = КлавишаПереключенияВкладок Then
+        If e.KeyCode = switchPageKey Then
 
             If red_moduls.Focused Or newModAddName.Focused Or newModAddHour.Focused Or worker_name.Focused Or worker_name_full.Focused Or worker_name_pad.Focused Then
                 Return
@@ -1092,7 +1090,7 @@ Public Class MainForm
 
         End If
 
-        If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
+        If e.KeyCode = seitchPageKey_Inverse Then
 
             If red_moduls.Focused Or newModAddName.Focused Or newModAddHour.Focused Or worker_name.Focused Or worker_name_full.Focused Or worker_name_pad.Focused Then
                 Return
@@ -1105,7 +1103,7 @@ Public Class MainForm
 
         If e.KeyCode = Keys.Up Or e.KeyCode = Keys.Down Then
 
-            pressTab(e.KeyCode, вместоТаб)
+            pressTab(e.KeyCode, alternativeTab)
             ААперемещениеВверх(e.KeyCode, Keys.Up)
             e.Handled = True
 
@@ -1325,14 +1323,14 @@ Public Class MainForm
             ОткрытьСправочникГруппы_Click(sender, e)
 
         End If
-        If e.KeyCode = КлавишаПереключенияВкладок Then
+        If e.KeyCode = switchPageKey Then
 
             openNextPage(TabControlOther)
             e.Handled = True
 
         End If
 
-        If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
+        If e.KeyCode = seitchPageKey_Inverse Then
 
             openPrevPage(TabControlOther)
             e.Handled = True
@@ -1349,14 +1347,14 @@ Public Class MainForm
 
         End If
 
-        If e.KeyCode = КлавишаПереключенияВкладок Then
+        If e.KeyCode = switchPageKey Then
 
             openNextPage(TabControlOther)
             e.Handled = True
 
         End If
 
-        If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
+        If e.KeyCode = seitchPageKey_Inverse Then
 
             openPrevPage(TabControlOther)
             e.Handled = True
@@ -1373,14 +1371,14 @@ Public Class MainForm
 
         End If
 
-        If e.KeyCode = КлавишаПереключенияВкладок Then
+        If e.KeyCode = switchPageKey Then
 
             openNextPage(TabControlOther)
             e.Handled = True
 
         End If
 
-        If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
+        If e.KeyCode = seitchPageKey_Inverse Then
 
             openPrevPage(TabControlOther)
             e.Handled = True
@@ -1396,14 +1394,14 @@ Public Class MainForm
 
         End If
 
-        If e.KeyCode = КлавишаПереключенияВкладок Then
+        If e.KeyCode = switchPageKey Then
 
             openNextPage(TabControlOther)
             e.Handled = True
 
         End If
 
-        If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
+        If e.KeyCode = seitchPageKey_Inverse Then
 
             openPrevPage(TabControlOther)
             e.Handled = True
@@ -1420,14 +1418,14 @@ Public Class MainForm
 
         End If
 
-        If e.KeyCode = КлавишаПереключенияВкладок Then
+        If e.KeyCode = switchPageKey Then
 
             openNextPage(TabControlOther)
             e.Handled = True
 
         End If
 
-        If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
+        If e.KeyCode = seitchPageKey_Inverse Then
 
             openPrevPage(TabControlOther)
             e.Handled = True
@@ -1441,14 +1439,14 @@ Public Class MainForm
             studentList_Click(sender, e)
 
         End If
-        If e.KeyCode = КлавишаПереключенияВкладок Then
+        If e.KeyCode = switchPageKey Then
 
             openNextPage(TabControlOther)
             e.Handled = True
 
         End If
 
-        If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
+        If e.KeyCode = seitchPageKey_Inverse Then
 
             openPrevPage(TabControlOther)
             e.Handled = True
@@ -2644,7 +2642,7 @@ Public Class MainForm
         ActiveControl = Button2
 
         ВедомостьПеднагрузка.pednagr__mainTable.Rows.Clear()
-        ВедомостьПеднагрузка.НомерГруппы.Clear()
+        ВедомостьПеднагрузка.groupNumber.Clear()
 
         ОчиститьПоляФормы.Очиститьформу(ВедомостьПеднагрузка)
 
@@ -2654,9 +2652,9 @@ Public Class MainForm
         If Список(0, 0).ToString = "нет записей" Then
 
             предупреждение.текст.Text = "Не удалось загрузить список преподавателей"
-            ОткрытьФорму(предупреждение)
+            openForm(предупреждение)
 
-            Exit Sub
+            Return
 
         End If
 
@@ -2667,178 +2665,178 @@ Public Class MainForm
 
 
     Private Sub СправочникГруппыПК_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs) Handles СправочникГруппыПК.PreviewKeyDown
-        If e.KeyCode = КлавишаПереключенияВкладок Then
+        If e.KeyCode = switchPageKey Then
             e.IsInputKey = True
         End If
 
-        If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
+        If e.KeyCode = seitchPageKey_Inverse Then
             e.IsInputKey = True
         End If
     End Sub
 
     Private Sub Ведомость_KeyDown(sender As Object, e As KeyEventArgs) Handles Ведомость.KeyDown
-        If e.KeyCode = КлавишаПереключенияВкладок Then
+        If e.KeyCode = switchPageKey Then
             openNextPage(TabControlOther)
             e.Handled = True
         End If
 
-        If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
+        If e.KeyCode = seitchPageKey_Inverse Then
             openPrevPage(TabControlOther)
             e.Handled = True
         End If
     End Sub
 
     Private Sub ИтоговаяАттествцияОценки_KeyDown(sender As Object, e As KeyEventArgs) Handles ИтоговаяАттествцияОценки.KeyDown
-        If e.KeyCode = КлавишаПереключенияВкладок Then
+        If e.KeyCode = switchPageKey Then
             openNextPage(TabControlOther)
             e.Handled = True
         End If
 
-        If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
+        If e.KeyCode = seitchPageKey_Inverse Then
             openPrevPage(TabControlOther)
             e.Handled = True
         End If
     End Sub
 
     Private Sub Педнагрузка_KeyDown(sender As Object, e As KeyEventArgs) Handles Педнагрузка.KeyDown
-        If e.KeyCode = КлавишаПереключенияВкладок Then
+        If e.KeyCode = switchPageKey Then
             openNextPage(TabControlOther)
             e.Handled = True
         End If
 
-        If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
+        If e.KeyCode = seitchPageKey_Inverse Then
             openPrevPage(TabControlOther)
             e.Handled = True
         End If
     End Sub
 
     Private Sub ПриказОЗачислении_KeyDown(sender As Object, e As KeyEventArgs) Handles ПриказОЗачислении.KeyDown
-        If e.KeyCode = КлавишаПереключенияВкладок Then
+        If e.KeyCode = switchPageKey Then
             openNextPage(TabControlOther)
             e.Handled = True
         End If
 
-        If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
+        If e.KeyCode = seitchPageKey_Inverse Then
             openPrevPage(TabControlOther)
             e.Handled = True
         End If
     End Sub
 
     Private Sub ПК_Отчисление_KeyDown(sender As Object, e As KeyEventArgs) Handles ПК_Отчисление.KeyDown
-        If e.KeyCode = КлавишаПереключенияВкладок Then
+        If e.KeyCode = switchPageKey Then
             openNextPage(TabControlOther)
             e.Handled = True
         End If
 
-        If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
+        If e.KeyCode = seitchPageKey_Inverse Then
             openPrevPage(TabControlOther)
             e.Handled = True
         End If
     End Sub
 
     Private Sub ПК_Окончание_KeyDown(sender As Object, e As KeyEventArgs) Handles ПК_Окончание.KeyDown
-        If e.KeyCode = КлавишаПереключенияВкладок Then
+        If e.KeyCode = switchPageKey Then
             openNextPage(TabControlOther)
             e.Handled = True
         End If
 
-        If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
+        If e.KeyCode = seitchPageKey_Inverse Then
             openPrevPage(TabControlOther)
             e.Handled = True
         End If
     End Sub
 
     Private Sub ППЗачисление_KeyDown(sender As Object, e As KeyEventArgs) Handles ППЗачисление.KeyDown
-        If e.KeyCode = КлавишаПереключенияВкладок Then
+        If e.KeyCode = switchPageKey Then
             openNextPage(TabControlOther)
             e.Handled = True
         End If
 
-        If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
+        If e.KeyCode = seitchPageKey_Inverse Then
             openPrevPage(TabControlOther)
             e.Handled = True
         End If
     End Sub
 
     Private Sub ПП_Практика_KeyDown(sender As Object, e As KeyEventArgs) Handles ПП_Практика.KeyDown
-        If e.KeyCode = КлавишаПереключенияВкладок Then
+        If e.KeyCode = switchPageKey Then
             openNextPage(TabControlOther)
             e.Handled = True
         End If
 
-        If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
+        If e.KeyCode = seitchPageKey_Inverse Then
             openPrevPage(TabControlOther)
             e.Handled = True
         End If
     End Sub
 
     Private Sub ПП_ДопускКИА_KeyDown(sender As Object, e As KeyEventArgs) Handles ПП_ДопускКИА.KeyDown
-        If e.KeyCode = КлавишаПереключенияВкладок Then
+        If e.KeyCode = switchPageKey Then
             openNextPage(TabControlOther)
             e.Handled = True
         End If
 
-        If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
+        If e.KeyCode = seitchPageKey_Inverse Then
             openPrevPage(TabControlOther)
             e.Handled = True
         End If
     End Sub
 
     Private Sub ПП_Окончание_KeyDown(sender As Object, e As KeyEventArgs) Handles ПП_Окончание.KeyDown
-        If e.KeyCode = КлавишаПереключенияВкладок Then
+        If e.KeyCode = switchPageKey Then
             openNextPage(TabControlOther)
             e.Handled = True
         End If
 
-        If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
+        If e.KeyCode = seitchPageKey_Inverse Then
             openPrevPage(TabControlOther)
             e.Handled = True
         End If
     End Sub
 
     Private Sub ПО_Зачисление_KeyDown(sender As Object, e As KeyEventArgs) Handles ПО_Зачисление.KeyDown
-        If e.KeyCode = КлавишаПереключенияВкладок Then
+        If e.KeyCode = switchPageKey Then
             openNextPage(TabControlOther)
             e.Handled = True
         End If
 
-        If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
+        If e.KeyCode = seitchPageKey_Inverse Then
             openPrevPage(TabControlOther)
             e.Handled = True
         End If
     End Sub
 
     Private Sub ПО_Практика_KeyDown(sender As Object, e As KeyEventArgs) Handles ПО_Практика.KeyDown
-        If e.KeyCode = КлавишаПереключенияВкладок Then
+        If e.KeyCode = switchPageKey Then
             openNextPage(TabControlOther)
             e.Handled = True
         End If
 
-        If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
+        If e.KeyCode = seitchPageKey_Inverse Then
             openPrevPage(TabControlOther)
             e.Handled = True
         End If
     End Sub
 
     Private Sub ПО_ДопускКИА_KeyDown(sender As Object, e As KeyEventArgs) Handles ПО_ДопускКИА.KeyDown
-        If e.KeyCode = КлавишаПереключенияВкладок Then
+        If e.KeyCode = switchPageKey Then
             openNextPage(TabControlOther)
             e.Handled = True
         End If
 
-        If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
+        If e.KeyCode = seitchPageKey_Inverse Then
             openPrevPage(TabControlOther)
             e.Handled = True
         End If
     End Sub
 
     Private Sub ПО_Окончание_KeyDown(sender As Object, e As KeyEventArgs) Handles ПО_Окончание.KeyDown
-        If e.KeyCode = КлавишаПереключенияВкладок Then
+        If e.KeyCode = switchPageKey Then
             openNextPage(TabControlOther)
             e.Handled = True
         End If
 
-        If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
+        If e.KeyCode = seitchPageKey_Inverse Then
             openPrevPage(TabControlOther)
             e.Handled = True
         End If
@@ -2857,703 +2855,703 @@ Public Class MainForm
     'End Sub
 
     Private Sub Стаж_ДопускКИА_KeyDown(sender As Object, e As KeyEventArgs)
-        If e.KeyCode = КлавишаПереключенияВкладок Then
+        If e.KeyCode = switchPageKey Then
             openNextPage(TabControlOther)
             e.Handled = True
         End If
 
-        If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
+        If e.KeyCode = seitchPageKey_Inverse Then
             openPrevPage(TabControlOther)
             e.Handled = True
         End If
     End Sub
 
     Private Sub СтажОкончание_KeyDown(sender As Object, e As KeyEventArgs)
-        If e.KeyCode = КлавишаПереключенияВкладок Then
+        If e.KeyCode = switchPageKey Then
             openNextPage(TabControlOther)
             e.Handled = True
         End If
 
-        If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
+        If e.KeyCode = seitchPageKey_Inverse Then
             openPrevPage(TabControlOther)
             e.Handled = True
         End If
     End Sub
 
     Private Sub ПК_Окончание_уд_KeyDown(sender As Object, e As KeyEventArgs) Handles ПК_Окончание_уд.KeyDown
-        If e.KeyCode = КлавишаПереключенияВкладок Then
+        If e.KeyCode = switchPageKey Then
             openNextPage(TabControlOther)
             e.Handled = True
         End If
 
-        If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
+        If e.KeyCode = seitchPageKey_Inverse Then
             openPrevPage(TabControlOther)
             e.Handled = True
         End If
     End Sub
 
     Private Sub Спецэкзамен_KeyDown(sender As Object, e As KeyEventArgs)
-        If e.KeyCode = КлавишаПереключенияВкладок Then
+        If e.KeyCode = switchPageKey Then
             openNextPage(TabControlOther)
             e.Handled = True
         End If
 
-        If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
+        If e.KeyCode = seitchPageKey_Inverse Then
             openPrevPage(TabControlOther)
             e.Handled = True
         End If
     End Sub
 
     Private Sub ПП_ПриложениеКдиплому_KeyDown(sender As Object, e As KeyEventArgs) Handles ПП_ПриложениеКдиплому.KeyDown
-        If e.KeyCode = КлавишаПереключенияВкладок Then
+        If e.KeyCode = switchPageKey Then
             openNextPage(TabControlOther)
             e.Handled = True
         End If
 
-        If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
+        If e.KeyCode = seitchPageKey_Inverse Then
             openPrevPage(TabControlOther)
             e.Handled = True
         End If
     End Sub
 
     Private Sub ПО_Свидетельство_KeyDown(sender As Object, e As KeyEventArgs) Handles ПО_Свидетельство.KeyDown
-        If e.KeyCode = КлавишаПереключенияВкладок Then
+        If e.KeyCode = switchPageKey Then
             openNextPage(TabControlOther)
             e.Handled = True
         End If
 
-        If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
+        If e.KeyCode = seitchPageKey_Inverse Then
             openPrevPage(TabControlOther)
             e.Handled = True
         End If
     End Sub
 
     Private Sub ПК_Заявление_KeyDown(sender As Object, e As KeyEventArgs) Handles ПК_Заявление.KeyDown
-        If e.KeyCode = КлавишаПереключенияВкладок Then
+        If e.KeyCode = switchPageKey Then
             openNextPage(TabControlOther)
             e.Handled = True
         End If
 
-        If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
+        If e.KeyCode = seitchPageKey_Inverse Then
             openPrevPage(TabControlOther)
             e.Handled = True
         End If
     End Sub
 
     Private Sub ПП_Заявление_KeyDown(sender As Object, e As KeyEventArgs) Handles ПП_Заявление.KeyDown
-        If e.KeyCode = КлавишаПереключенияВкладок Then
+        If e.KeyCode = switchPageKey Then
             openNextPage(TabControlOther)
             e.Handled = True
         End If
 
-        If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
+        If e.KeyCode = seitchPageKey_Inverse Then
             openPrevPage(TabControlOther)
             e.Handled = True
         End If
     End Sub
 
     Private Sub Карточка_слушателя_KeyDown(sender As Object, e As KeyEventArgs) Handles Карточка_слушателя.KeyDown
-        If e.KeyCode = КлавишаПереключенияВкладок Then
+        If e.KeyCode = switchPageKey Then
             openNextPage(TabControlOther)
             e.Handled = True
         End If
 
-        If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
+        If e.KeyCode = seitchPageKey_Inverse Then
             openPrevPage(TabControlOther)
             e.Handled = True
         End If
     End Sub
 
     Private Sub Спецэкзамен_договор_KeyDown(sender As Object, e As KeyEventArgs)
-        If e.KeyCode = КлавишаПереключенияВкладок Then
+        If e.KeyCode = switchPageKey Then
             openNextPage(TabControlOther)
             e.Handled = True
         End If
 
-        If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
+        If e.KeyCode = seitchPageKey_Inverse Then
             openPrevPage(TabControlOther)
             e.Handled = True
         End If
     End Sub
 
     Private Sub Спецэкзамен_протокол_KeyDown(sender As Object, e As KeyEventArgs)
-        If e.KeyCode = КлавишаПереключенияВкладок Then
+        If e.KeyCode = switchPageKey Then
             openNextPage(TabControlOther)
             e.Handled = True
         End If
 
-        If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
+        If e.KeyCode = seitchPageKey_Inverse Then
             openPrevPage(TabControlOther)
             e.Handled = True
         End If
     End Sub
 
     Private Sub Ведомость_слушателиИорганизации_KeyDown(sender As Object, e As KeyEventArgs) Handles Ведомость_слушателиИорганизации.KeyDown
-        If e.KeyCode = КлавишаПереключенияВкладок Then
+        If e.KeyCode = switchPageKey Then
             openNextPage(TabControlOther)
             e.Handled = True
         End If
 
-        If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
+        If e.KeyCode = seitchPageKey_Inverse Then
             openPrevPage(TabControlOther)
             e.Handled = True
         End If
     End Sub
 
     Private Sub ДоверенностьПолученияБланков_KeyDown(sender As Object, e As KeyEventArgs) Handles ДоверенностьПолученияБланков.KeyDown
-        If e.KeyCode = КлавишаПереключенияВкладок Then
+        If e.KeyCode = switchPageKey Then
             openNextPage(TabControlOther)
             e.Handled = True
         End If
 
-        If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
+        If e.KeyCode = seitchPageKey_Inverse Then
             openPrevPage(TabControlOther)
             e.Handled = True
         End If
     End Sub
 
     Private Sub ДоверенностьПолученияБланковСлушателей_KeyDown(sender As Object, e As KeyEventArgs) Handles ДоверенностьПолученияБланковСлушателей.KeyDown
-        If e.KeyCode = КлавишаПереключенияВкладок Then
+        If e.KeyCode = switchPageKey Then
             openNextPage(TabControlOther)
             e.Handled = True
         End If
 
-        If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
+        If e.KeyCode = seitchPageKey_Inverse Then
             openPrevPage(TabControlOther)
             e.Handled = True
         End If
     End Sub
 
     Private Sub ВедомостьПромежуточнойАттестации_KeyDown(sender As Object, e As KeyEventArgs) Handles ВедомостьПромежуточнойАттестации.KeyDown
-        If e.KeyCode = КлавишаПереключенияВкладок Then
+        If e.KeyCode = switchPageKey Then
             openNextPage(TabControlOther)
             e.Handled = True
         End If
 
-        If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
+        If e.KeyCode = seitchPageKey_Inverse Then
             openPrevPage(TabControlOther)
             e.Handled = True
         End If
     End Sub
 
     Private Sub ПП_Ведомость_KeyDown(sender As Object, e As KeyEventArgs) Handles ПП_Ведомость.KeyDown
-        If e.KeyCode = КлавишаПереключенияВкладок Then
+        If e.KeyCode = switchPageKey Then
             openNextPage(TabControlOther)
             e.Handled = True
         End If
 
-        If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
+        If e.KeyCode = seitchPageKey_Inverse Then
             openPrevPage(TabControlOther)
             e.Handled = True
         End If
     End Sub
 
     Private Sub СправкаОбОбучении_KeyDown(sender As Object, e As KeyEventArgs) Handles СправкаОбОбучении.KeyDown
-        If e.KeyCode = КлавишаПереключенияВкладок Then
+        If e.KeyCode = switchPageKey Then
             openNextPage(TabControlOther)
             e.Handled = True
         End If
 
-        If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
+        If e.KeyCode = seitchPageKey_Inverse Then
             openPrevPage(TabControlOther)
             e.Handled = True
         End If
     End Sub
 
     Private Sub СправкаОбОкончании_KeyDown(sender As Object, e As KeyEventArgs) Handles СправкаОбОкончании.KeyDown
-        If e.KeyCode = КлавишаПереключенияВкладок Then
+        If e.KeyCode = switchPageKey Then
             openNextPage(TabControlOther)
             e.Handled = True
         End If
 
-        If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
+        If e.KeyCode = seitchPageKey_Inverse Then
             openPrevPage(TabControlOther)
             e.Handled = True
         End If
     End Sub
 
     Private Sub КнигаУчетаУдостоверений_KeyDown(sender As Object, e As KeyEventArgs) Handles КнигаУчетаУдостоверений.KeyDown
-        If e.KeyCode = КлавишаПереключенияВкладок Then
+        If e.KeyCode = switchPageKey Then
             openNextPage(TabControlOther)
             e.Handled = True
         End If
 
-        If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
+        If e.KeyCode = seitchPageKey_Inverse Then
             openPrevPage(TabControlOther)
             e.Handled = True
         End If
     End Sub
 
     Private Sub КнигаУчетаДипломов_KeyDown(sender As Object, e As KeyEventArgs) Handles КнигаУчетаДипломов.KeyDown
-        If e.KeyCode = КлавишаПереключенияВкладок Then
+        If e.KeyCode = switchPageKey Then
             openNextPage(TabControlOther)
             e.Handled = True
         End If
 
-        If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
+        If e.KeyCode = seitchPageKey_Inverse Then
             openPrevPage(TabControlOther)
             e.Handled = True
         End If
     End Sub
 
     Private Sub КнигаУчетаСвидетельств_KeyDown(sender As Object, e As KeyEventArgs) Handles КнигаУчетаСвидетельств.KeyDown
-        If e.KeyCode = КлавишаПереключенияВкладок Then
+        If e.KeyCode = switchPageKey Then
             openNextPage(TabControlOther)
             e.Handled = True
         End If
 
-        If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
+        If e.KeyCode = seitchPageKey_Inverse Then
             openPrevPage(TabControlOther)
             e.Handled = True
         End If
     End Sub
 
     Private Sub КнигаУчетаУдостоверенийФРДО_KeyDown(sender As Object, e As KeyEventArgs) Handles КнигаУчетаУдостоверенийФРДО.KeyDown
-        If e.KeyCode = КлавишаПереключенияВкладок Then
+        If e.KeyCode = switchPageKey Then
             openNextPage(TabControlOther)
             e.Handled = True
         End If
 
-        If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
+        If e.KeyCode = seitchPageKey_Inverse Then
             openPrevPage(TabControlOther)
             e.Handled = True
         End If
     End Sub
 
     Private Sub КнигаДипломовФРДО_KeyDown(sender As Object, e As KeyEventArgs) Handles КнигаДипломовФРДО.KeyDown
-        If e.KeyCode = КлавишаПереключенияВкладок Then
+        If e.KeyCode = switchPageKey Then
             openNextPage(TabControlOther)
             e.Handled = True
         End If
 
-        If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
+        If e.KeyCode = seitchPageKey_Inverse Then
             openPrevPage(TabControlOther)
             e.Handled = True
         End If
     End Sub
 
     Private Sub КнигаСвидетельствФРДО_KeyDown(sender As Object, e As KeyEventArgs) Handles КнигаСвидетельствФРДО.KeyDown
-        If e.KeyCode = КлавишаПереключенияВкладок Then
+        If e.KeyCode = switchPageKey Then
             openNextPage(TabControlOther)
             e.Handled = True
         End If
 
-        If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
+        If e.KeyCode = seitchPageKey_Inverse Then
             openPrevPage(TabControlOther)
             e.Handled = True
         End If
     End Sub
 
     Private Sub Button2_KeyDown(sender As Object, e As KeyEventArgs) Handles Button2.KeyDown
-        If e.KeyCode = КлавишаПереключенияВкладок Then
+        If e.KeyCode = switchPageKey Then
             openNextPage(TabControlOther)
             e.Handled = True
         End If
 
-        If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
+        If e.KeyCode = seitchPageKey_Inverse Then
             openPrevPage(TabControlOther)
             e.Handled = True
         End If
     End Sub
 
     Private Sub Button2_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs) Handles Button2.PreviewKeyDown
-        If e.KeyCode = КлавишаПереключенияВкладок Then
+        If e.KeyCode = switchPageKey Then
             e.IsInputKey = True
         End If
 
-        If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
+        If e.KeyCode = seitchPageKey_Inverse Then
             e.IsInputKey = True
         End If
     End Sub
 
     Private Sub СправочникГруппыПП_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs) Handles СправочникГруппыПП.PreviewKeyDown
-        If e.KeyCode = КлавишаПереключенияВкладок Then
+        If e.KeyCode = switchPageKey Then
             e.IsInputKey = True
         End If
 
-        If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
+        If e.KeyCode = seitchPageKey_Inverse Then
             e.IsInputKey = True
         End If
     End Sub
 
     Private Sub СправочникГруппыПО_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs) Handles СправочникГруппыПО.PreviewKeyDown
-        If e.KeyCode = КлавишаПереключенияВкладок Then
+        If e.KeyCode = switchPageKey Then
             e.IsInputKey = True
         End If
 
-        If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
+        If e.KeyCode = seitchPageKey_Inverse Then
             e.IsInputKey = True
         End If
     End Sub
 
     Private Sub КнопкаСоздатьГруппу_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs) Handles КнопкаСоздатьГруппу.PreviewKeyDown
-        If e.KeyCode = КлавишаПереключенияВкладок Then
+        If e.KeyCode = switchPageKey Then
             e.IsInputKey = True
         End If
 
-        If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
+        If e.KeyCode = seitchPageKey_Inverse Then
             e.IsInputKey = True
         End If
     End Sub
 
     Private Sub СправочникСлушатели_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs) Handles СправочникСлушатели.PreviewKeyDown
-        If e.KeyCode = КлавишаПереключенияВкладок Then
+        If e.KeyCode = switchPageKey Then
             e.IsInputKey = True
         End If
 
-        If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
+        If e.KeyCode = seitchPageKey_Inverse Then
             e.IsInputKey = True
         End If
     End Sub
 
     Private Sub ДобавитьСлушателя_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs) Handles ДобавитьСлушателя.PreviewKeyDown
-        If e.KeyCode = КлавишаПереключенияВкладок Then
+        If e.KeyCode = switchPageKey Then
             e.IsInputKey = True
         End If
 
-        If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
+        If e.KeyCode = seitchPageKey_Inverse Then
             e.IsInputKey = True
         End If
     End Sub
 
     Private Sub Ведомость_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs) Handles Ведомость.PreviewKeyDown
-        If e.KeyCode = КлавишаПереключенияВкладок Then
+        If e.KeyCode = switchPageKey Then
             e.IsInputKey = True
         End If
 
-        If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
+        If e.KeyCode = seitchPageKey_Inverse Then
             e.IsInputKey = True
         End If
     End Sub
 
     Private Sub ИтоговаяАттествцияОценки_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs) Handles ИтоговаяАттествцияОценки.PreviewKeyDown
-        If e.KeyCode = КлавишаПереключенияВкладок Then
+        If e.KeyCode = switchPageKey Then
             e.IsInputKey = True
         End If
 
-        If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
+        If e.KeyCode = seitchPageKey_Inverse Then
             e.IsInputKey = True
         End If
     End Sub
 
     Private Sub Педнагрузка_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs) Handles Педнагрузка.PreviewKeyDown
-        If e.KeyCode = КлавишаПереключенияВкладок Then
+        If e.KeyCode = switchPageKey Then
             e.IsInputKey = True
         End If
 
-        If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
+        If e.KeyCode = seitchPageKey_Inverse Then
             e.IsInputKey = True
         End If
     End Sub
 
     Private Sub ПриказОЗачислении_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs) Handles ПриказОЗачислении.PreviewKeyDown
-        If e.KeyCode = КлавишаПереключенияВкладок Then
+        If e.KeyCode = switchPageKey Then
             e.IsInputKey = True
         End If
 
-        If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
+        If e.KeyCode = seitchPageKey_Inverse Then
             e.IsInputKey = True
         End If
     End Sub
 
     Private Sub ПК_Отчисление_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs) Handles ПК_Отчисление.PreviewKeyDown
-        If e.KeyCode = КлавишаПереключенияВкладок Then
+        If e.KeyCode = switchPageKey Then
             e.IsInputKey = True
         End If
 
-        If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
+        If e.KeyCode = seitchPageKey_Inverse Then
             e.IsInputKey = True
         End If
     End Sub
 
     Private Sub ПК_Окончание_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs) Handles ПК_Окончание.PreviewKeyDown
-        If e.KeyCode = КлавишаПереключенияВкладок Then
+        If e.KeyCode = switchPageKey Then
             e.IsInputKey = True
         End If
 
-        If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
+        If e.KeyCode = seitchPageKey_Inverse Then
             e.IsInputKey = True
         End If
     End Sub
 
     Private Sub ППЗачисление_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs) Handles ППЗачисление.PreviewKeyDown
-        If e.KeyCode = КлавишаПереключенияВкладок Then
+        If e.KeyCode = switchPageKey Then
             e.IsInputKey = True
         End If
 
-        If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
+        If e.KeyCode = seitchPageKey_Inverse Then
             e.IsInputKey = True
         End If
     End Sub
 
     Private Sub ПП_Практика_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs) Handles ПП_Практика.PreviewKeyDown
-        If e.KeyCode = КлавишаПереключенияВкладок Then
+        If e.KeyCode = switchPageKey Then
             e.IsInputKey = True
         End If
 
-        If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
+        If e.KeyCode = seitchPageKey_Inverse Then
             e.IsInputKey = True
         End If
     End Sub
 
     Private Sub ПП_ДопускКИА_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs) Handles ПП_ДопускКИА.PreviewKeyDown
-        If e.KeyCode = КлавишаПереключенияВкладок Then
+        If e.KeyCode = switchPageKey Then
             e.IsInputKey = True
         End If
 
-        If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
+        If e.KeyCode = seitchPageKey_Inverse Then
             e.IsInputKey = True
         End If
     End Sub
 
     Private Sub ПП_Окончание_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs) Handles ПП_Окончание.PreviewKeyDown
-        If e.KeyCode = КлавишаПереключенияВкладок Then
+        If e.KeyCode = switchPageKey Then
             e.IsInputKey = True
         End If
 
-        If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
+        If e.KeyCode = seitchPageKey_Inverse Then
             e.IsInputKey = True
         End If
     End Sub
 
     Private Sub ПО_Зачисление_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs) Handles ПО_Зачисление.PreviewKeyDown
-        If e.KeyCode = КлавишаПереключенияВкладок Then
+        If e.KeyCode = switchPageKey Then
             e.IsInputKey = True
         End If
 
-        If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
+        If e.KeyCode = seitchPageKey_Inverse Then
             e.IsInputKey = True
         End If
     End Sub
 
     Private Sub ПО_Практика_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs) Handles ПО_Практика.PreviewKeyDown
-        If e.KeyCode = КлавишаПереключенияВкладок Then
+        If e.KeyCode = switchPageKey Then
             e.IsInputKey = True
         End If
 
-        If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
+        If e.KeyCode = seitchPageKey_Inverse Then
             e.IsInputKey = True
         End If
     End Sub
 
     Private Sub ПО_ДопускКИА_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs) Handles ПО_ДопускКИА.PreviewKeyDown
-        If e.KeyCode = КлавишаПереключенияВкладок Then
+        If e.KeyCode = switchPageKey Then
             e.IsInputKey = True
         End If
 
-        If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
+        If e.KeyCode = seitchPageKey_Inverse Then
             e.IsInputKey = True
         End If
     End Sub
 
     Private Sub ПО_Окончание_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs) Handles ПО_Окончание.PreviewKeyDown
-        If e.KeyCode = КлавишаПереключенияВкладок Then
+        If e.KeyCode = switchPageKey Then
             e.IsInputKey = True
         End If
 
-        If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
+        If e.KeyCode = seitchPageKey_Inverse Then
             e.IsInputKey = True
         End If
     End Sub
 
     Private Sub Стаж_зачисление_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs)
-        If e.KeyCode = КлавишаПереключенияВкладок Then
+        If e.KeyCode = switchPageKey Then
             e.IsInputKey = True
         End If
 
-        If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
+        If e.KeyCode = seitchPageKey_Inverse Then
             e.IsInputKey = True
         End If
     End Sub
 
     Private Sub Стаж_ДопускКИА_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs)
-        If e.KeyCode = КлавишаПереключенияВкладок Then
+        If e.KeyCode = switchPageKey Then
             e.IsInputKey = True
         End If
 
-        If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
+        If e.KeyCode = seitchPageKey_Inverse Then
             e.IsInputKey = True
         End If
     End Sub
 
     Private Sub СтажОкончание_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs)
-        If e.KeyCode = КлавишаПереключенияВкладок Then
+        If e.KeyCode = switchPageKey Then
             e.IsInputKey = True
         End If
 
-        If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
+        If e.KeyCode = seitchPageKey_Inverse Then
             e.IsInputKey = True
         End If
     End Sub
 
     Private Sub ПК_Окончание_уд_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs) Handles ПК_Окончание_уд.PreviewKeyDown
-        If e.KeyCode = КлавишаПереключенияВкладок Then
+        If e.KeyCode = switchPageKey Then
             e.IsInputKey = True
         End If
 
-        If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
+        If e.KeyCode = seitchPageKey_Inverse Then
             e.IsInputKey = True
         End If
     End Sub
 
     Private Sub Спецэкзамен_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs)
-        If e.KeyCode = КлавишаПереключенияВкладок Then
+        If e.KeyCode = switchPageKey Then
             e.IsInputKey = True
         End If
 
-        If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
+        If e.KeyCode = seitchPageKey_Inverse Then
             e.IsInputKey = True
         End If
     End Sub
 
     Private Sub ПП_ПриложениеКдиплому_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs) Handles ПП_ПриложениеКдиплому.PreviewKeyDown
-        If e.KeyCode = КлавишаПереключенияВкладок Then
+        If e.KeyCode = switchPageKey Then
             e.IsInputKey = True
         End If
 
-        If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
+        If e.KeyCode = seitchPageKey_Inverse Then
             e.IsInputKey = True
         End If
     End Sub
 
     Private Sub ПО_Свидетельство_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs) Handles ПО_Свидетельство.PreviewKeyDown
-        If e.KeyCode = КлавишаПереключенияВкладок Then
+        If e.KeyCode = switchPageKey Then
             e.IsInputKey = True
         End If
 
-        If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
+        If e.KeyCode = seitchPageKey_Inverse Then
             e.IsInputKey = True
         End If
     End Sub
 
     Private Sub ПК_Заявление_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs) Handles ПК_Заявление.PreviewKeyDown
-        If e.KeyCode = КлавишаПереключенияВкладок Then
+        If e.KeyCode = switchPageKey Then
             e.IsInputKey = True
         End If
 
-        If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
+        If e.KeyCode = seitchPageKey_Inverse Then
             e.IsInputKey = True
         End If
     End Sub
 
     Private Sub ПП_Заявление_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs) Handles ПП_Заявление.PreviewKeyDown
-        If e.KeyCode = КлавишаПереключенияВкладок Then
+        If e.KeyCode = switchPageKey Then
             e.IsInputKey = True
         End If
 
-        If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
+        If e.KeyCode = seitchPageKey_Inverse Then
             e.IsInputKey = True
         End If
     End Sub
 
     Private Sub Карточка_слушателя_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs) Handles Карточка_слушателя.PreviewKeyDown
-        If e.KeyCode = КлавишаПереключенияВкладок Then
+        If e.KeyCode = switchPageKey Then
             e.IsInputKey = True
         End If
 
-        If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
+        If e.KeyCode = seitchPageKey_Inverse Then
             e.IsInputKey = True
         End If
     End Sub
 
     Private Sub Спецэкзамен_договор_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs)
-        If e.KeyCode = КлавишаПереключенияВкладок Then
+        If e.KeyCode = switchPageKey Then
             e.IsInputKey = True
         End If
 
-        If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
+        If e.KeyCode = seitchPageKey_Inverse Then
             e.IsInputKey = True
         End If
     End Sub
 
     Private Sub Спецэкзамен_протокол_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs)
-        If e.KeyCode = КлавишаПереключенияВкладок Then
+        If e.KeyCode = switchPageKey Then
             e.IsInputKey = True
         End If
 
-        If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
+        If e.KeyCode = seitchPageKey_Inverse Then
             e.IsInputKey = True
         End If
     End Sub
 
     Private Sub Ведомость_слушателиИорганизации_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs) Handles Ведомость_слушателиИорганизации.PreviewKeyDown
-        If e.KeyCode = КлавишаПереключенияВкладок Then
+        If e.KeyCode = switchPageKey Then
             e.IsInputKey = True
         End If
 
-        If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
+        If e.KeyCode = seitchPageKey_Inverse Then
             e.IsInputKey = True
         End If
     End Sub
 
     Private Sub ДоверенностьПолученияБланков_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs) Handles ДоверенностьПолученияБланков.PreviewKeyDown
-        If e.KeyCode = КлавишаПереключенияВкладок Then
+        If e.KeyCode = switchPageKey Then
             e.IsInputKey = True
         End If
 
-        If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
+        If e.KeyCode = seitchPageKey_Inverse Then
             e.IsInputKey = True
         End If
     End Sub
 
     Private Sub ДоверенностьПолученияБланковСлушателей_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs) Handles ДоверенностьПолученияБланковСлушателей.PreviewKeyDown
-        If e.KeyCode = КлавишаПереключенияВкладок Then
+        If e.KeyCode = switchPageKey Then
             e.IsInputKey = True
         End If
 
-        If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
+        If e.KeyCode = seitchPageKey_Inverse Then
             e.IsInputKey = True
         End If
     End Sub
 
     Private Sub ВедомостьПромежуточнойАттестации_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs) Handles ВедомостьПромежуточнойАттестации.PreviewKeyDown
-        If e.KeyCode = КлавишаПереключенияВкладок Then
+        If e.KeyCode = switchPageKey Then
             e.IsInputKey = True
         End If
 
-        If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
+        If e.KeyCode = seitchPageKey_Inverse Then
             e.IsInputKey = True
         End If
     End Sub
 
     Private Sub ПП_Ведомость_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs) Handles ПП_Ведомость.PreviewKeyDown
-        If e.KeyCode = КлавишаПереключенияВкладок Then
+        If e.KeyCode = switchPageKey Then
             e.IsInputKey = True
         End If
 
-        If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
+        If e.KeyCode = seitchPageKey_Inverse Then
             e.IsInputKey = True
         End If
     End Sub
 
     Private Sub СправкаОбОбучении_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs) Handles СправкаОбОбучении.PreviewKeyDown
-        If e.KeyCode = КлавишаПереключенияВкладок Then
+        If e.KeyCode = switchPageKey Then
             e.IsInputKey = True
         End If
 
-        If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
+        If e.KeyCode = seitchPageKey_Inverse Then
             e.IsInputKey = True
         End If
     End Sub
 
     Private Sub СправкаОбОкончании_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs) Handles СправкаОбОкончании.PreviewKeyDown
-        If e.KeyCode = КлавишаПереключенияВкладок Then
+        If e.KeyCode = switchPageKey Then
             e.IsInputKey = True
         End If
 
-        If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
+        If e.KeyCode = seitchPageKey_Inverse Then
             e.IsInputKey = True
         End If
     End Sub
 
     Private Sub Button1_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs) Handles createOtchet.PreviewKeyDown
-        If e.KeyCode = КлавишаПереключенияВкладок Then
+        If e.KeyCode = switchPageKey Then
 
             e.IsInputKey = True
 
         End If
 
-        If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
+        If e.KeyCode = seitchPageKey_Inverse Then
 
             e.IsInputKey = True
 
@@ -3561,52 +3559,52 @@ Public Class MainForm
     End Sub
 
     Private Sub КнигаУчетаУдостоверений_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs) Handles КнигаУчетаУдостоверений.PreviewKeyDown
-        If e.KeyCode = КлавишаПереключенияВкладок Then
+        If e.KeyCode = switchPageKey Then
             e.IsInputKey = True
         End If
 
-        If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
+        If e.KeyCode = seitchPageKey_Inverse Then
             e.IsInputKey = True
         End If
     End Sub
 
     Private Sub КнигаУчетаДипломов_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs) Handles КнигаУчетаДипломов.PreviewKeyDown
-        If e.KeyCode = КлавишаПереключенияВкладок Then
+        If e.KeyCode = switchPageKey Then
             e.IsInputKey = True
         End If
 
-        If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
+        If e.KeyCode = seitchPageKey_Inverse Then
             e.IsInputKey = True
         End If
     End Sub
 
     Private Sub КнигаУчетаСвидетельств_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs) Handles КнигаУчетаСвидетельств.PreviewKeyDown
-        If e.KeyCode = КлавишаПереключенияВкладок Then
+        If e.KeyCode = switchPageKey Then
             e.IsInputKey = True
         End If
 
-        If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
+        If e.KeyCode = seitchPageKey_Inverse Then
             e.IsInputKey = True
         End If
     End Sub
 
     Private Sub КнигаУчетаУдостоверенийФРДО_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs) Handles КнигаУчетаУдостоверенийФРДО.PreviewKeyDown
-        If e.KeyCode = КлавишаПереключенияВкладок Then
+        If e.KeyCode = switchPageKey Then
             e.IsInputKey = True
         End If
 
-        If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
+        If e.KeyCode = seitchPageKey_Inverse Then
             e.IsInputKey = True
         End If
     End Sub
 
     Private Sub КнигаДипломовФРДО_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs) Handles КнигаДипломовФРДО.PreviewKeyDown
 
-        If e.KeyCode = КлавишаПереключенияВкладок Then
+        If e.KeyCode = switchPageKey Then
             e.IsInputKey = True
         End If
 
-        If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
+        If e.KeyCode = seitchPageKey_Inverse Then
             e.IsInputKey = True
         End If
 
@@ -3614,11 +3612,11 @@ Public Class MainForm
 
     Private Sub КнигаСвидетельствФРДО_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs) Handles КнигаСвидетельствФРДО.PreviewKeyDown
 
-        If e.KeyCode = КлавишаПереключенияВкладок Then
+        If e.KeyCode = switchPageKey Then
             e.IsInputKey = True
         End If
 
-        If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
+        If e.KeyCode = seitchPageKey_Inverse Then
             e.IsInputKey = True
         End If
 
@@ -4363,45 +4361,49 @@ Public Class MainForm
         mySqlConnect.sendQuery(queryString, 1)
     End Sub
 
-    Private Sub ПоискСлушателейПоУм_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ПоискСлушателейПоУм.SelectedIndexChanged
+    Private Sub ПоискСлушателейПоУм_SelectedIndexChanged(sender As Object, e As EventArgs) Handles students__defaultSearchSetts.SelectedIndexChanged
 
         Dim queryString As String = ""
-        queryString = updateSettings("ПоискСлушателейПоУм", ПоискСлушателейПоУм.Text)
+        queryString = updateSettings("ПоискСлушателейПоУм", students__defaultSearchSetts.Text)
         mySqlConnect.sendQuery(queryString, 1)
-        If ПоискСлушателейПоУм.Text <> "" Then
-            НастройкаПоискаСлушателей.checkedAnyValue(ПоискСлушателейПоУм.Text)
+        If students__defaultSearchSetts.Text <> "" Then
+            НастройкаПоискаСлушателей.checkedAnyValue(students__defaultSearchSetts.Text)
         End If
 
     End Sub
 
-    Private Sub ПоискГруппПоУм_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ПоискГруппПоУм.SelectedIndexChanged
+    Private Sub ПоискГруппПоУм_SelectedIndexChanged(sender As Object, e As EventArgs) Handles group_dafaultSearchSetts.SelectedIndexChanged
 
         Dim queryString As String = ""
-        queryString = updateSettings("ПоискГруппПоУм", ПоискГруппПоУм.Text)
+        queryString = updateSettings("ПоискГруппПоУм", group_dafaultSearchSetts.Text)
         mySqlConnect.sendQuery(queryString, 1)
-        If ПоискГруппПоУм.Text <> "" Then
-            НастройкаПоискаГрупп.checkedAnyValue(ПоискГруппПоУм.Text)
+
+        If group_dafaultSearchSetts.Text <> "" Then
+            group__serchSettings.checkedAnyValue(group_dafaultSearchSetts.Text)
         End If
 
     End Sub
 
-    Private Sub НастройкаСортировкиСлушателей_SelectedIndexChanged(sender As Object, e As EventArgs) Handles НастройкаСортировкиСлушателей.SelectedIndexChanged
+    Private Sub НастройкаСортировкиСлушателей_SelectedIndexChanged(sender As Object, e As EventArgs) Handles students__defaultSortSetts.SelectedIndexChanged
 
         Dim queryString As String = ""
-        queryString = updateSettings("НастройкаСортировкиСлушателей", НастройкаСортировкиСлушателей.Text)
+        queryString = updateSettings("НастройкаСортировкиСлушателей", students__defaultSortSetts.Text)
         mySqlConnect.sendQuery(queryString, 1)
-        If НастройкаСортировкиСлушателей.Text <> "" Then
-            WindowsApp2.НастройкаСортировкиСлушателей.checkedAnyValue(НастройкаСортировкиСлушателей.Text)
+        If students__defaultSortSetts.Text <> "" Then
+            sortSettsStudents.checkedAnyValue(students__defaultSortSetts.Text)
         End If
 
     End Sub
 
-    Private Sub НастройкаСортировкиГрупп_SelectedIndexChanged(sender As Object, e As EventArgs) Handles НастройкаСортировкиГрупп.SelectedIndexChanged
+    Private Sub НастройкаСортировкиГрупп_SelectedIndexChanged(sender As Object, e As EventArgs) Handles group__dafaultSortSetts.SelectedIndexChanged
+
         Dim queryString As String = ""
-        queryString = updateSettings("НастройкаСортировкиГрупп", НастройкаСортировкиГрупп.Text)
+
+        queryString = updateSettings("НастройкаСортировкиГрупп", group__dafaultSortSetts.Text)
         mySqlConnect.sendQuery(queryString, 1)
-        If НастройкаСортировкиГрупп.Text <> "" Then
-            sortSetts.checkedAnyValue(НастройкаСортировкиГрупп.Text)
+
+        If group__dafaultSortSetts.Text <> "" Then
+            sortSettsGroup.checkedAnyValue(group__dafaultSortSetts.Text)
         End If
 
     End Sub
@@ -4467,7 +4469,7 @@ Public Class MainForm
         tbl_obrazovanie.Dock = DockStyle.Fill
         tbl_obrazovanie.number_column = 1
 
-        tbl_obrazovanie.queryString_load = program__sqlQueryString.load_list_doljnosti()
+        tbl_obrazovanie.queryString_load = sqlQueryString.load_list_doljnosti()
 
         tbl_obrazovanie.persent_width_column_0 = 100
         tbl_obrazovanie.persent_width_column_1 = 0
@@ -4516,7 +4518,7 @@ Public Class MainForm
         tbl_obrazovanie.Dock = DockStyle.Fill
         tbl_obrazovanie.number_column = 2
 
-        tbl_obrazovanie.queryString_load = program__sqlQueryString.load_list_organization()
+        tbl_obrazovanie.queryString_load = sqlQueryString.load_list_organization()
 
         tbl_obrazovanie.persent_width_column_0 = 30
         tbl_obrazovanie.persent_width_column_1 = 69

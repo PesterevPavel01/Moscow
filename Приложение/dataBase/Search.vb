@@ -1,5 +1,5 @@
-﻿Module Поиск
-    Function Поиск(str As String, mass As Object, Optional ПоискПоСтолбцуНомер As Integer = 0) As Object
+﻿Module Search
+    Function search(str As String, mass As Object, Optional ПоискПоСтолбцуНомер As Integer = 0) As Object
         Dim schet1 As Long
         Dim schet2 As Long
         Dim schet3 As Long
@@ -13,7 +13,7 @@
         schet3 = 0
 
         If mass(0, 0).ToString = "нет записей" Then
-            Поиск = mass
+            search = mass
             Exit Function
         End If
 
@@ -79,7 +79,7 @@
 
         End While
 
-        Поиск = ChMass
+        search = ChMass
 
 
     End Function

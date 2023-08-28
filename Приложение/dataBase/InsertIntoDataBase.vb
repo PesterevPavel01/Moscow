@@ -171,7 +171,7 @@ Module InsertIntoDataBase
         If Not MainForm.mySqlConnect.sendQuery(queryString, 1) Then
 
             предупреждение.текст.Text = "не удалось удалить запись!"
-            ОткрытьФорму(предупреждение)
+            openForm(предупреждение)
 
         End If
 
@@ -188,7 +188,7 @@ Module InsertIntoDataBase
 
         If Not MainForm.mySqlConnect.sendQuery(sqlQuery, 1) Then
             предупреждение.текст.Text = "не удалось удалить запись!"
-            ОткрытьФорму(предупреждение)
+            openForm(предупреждение)
         End If
 
     End Sub

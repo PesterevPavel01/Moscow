@@ -10,7 +10,7 @@ Public Class РедакторСлушателя
         ActiveControl = BtnFocus
         Сообщение.Visible = False
         slushatel.clearStructSlushatel()
-        slushatel.structSlushatel.snils = ДобавитьРубашку.УдалитьРубашку(Снилс.Text)
+        slushatel.structSlushatel.snils = addMask.deleteMasck(Снилс.Text)
         slushatel.structSlushatel.старыйСнилс = oldSnils
         slushatel.structSlushatel.фамилия = Фамилия.Text
         slushatel.structSlushatel.имя = Имя.Text
@@ -82,7 +82,7 @@ Public Class РедакторСлушателя
             oldSnils = slushatel.structSlushatel.snils
             Me.Text = slushatel.structSlushatel.фамилия & " " & slushatel.structSlushatel.имя & " " & slushatel.structSlushatel.отчество
 
-            ИзменениеВыделеннойСтрокиВListView.ИзменениеВыделеннойСтрокиВListView("СправочникСлушатели", 1, ДобавитьРубашку.ДобавитьРубашку(slushatel.structSlushatel.snils), 2, slushatel.structSlushatel.фамилия, 3, slushatel.structSlushatel.имя, 4, slushatel.structSlushatel.отчество)
+            ИзменениеВыделеннойСтрокиВListView.ИзменениеВыделеннойСтрокиВListView("СправочникСлушатели", 1, addMask.ДобавитьРубашку(slushatel.structSlushatel.snils), 2, slushatel.structSlushatel.фамилия, 3, slushatel.structSlushatel.имя, 4, slushatel.structSlushatel.отчество)
 
         Else
 
@@ -97,7 +97,7 @@ Public Class РедакторСлушателя
         Сообщение.Visible = False
         ФормаСписок.textboxName = Me.ActiveControl.Name
         ФормаСписок.FormName = Me.Name
-        ОткрытьФорму(ФормаСписок)
+        openForm(ФормаСписок)
 
     End Sub
 
@@ -107,7 +107,7 @@ Public Class РедакторСлушателя
         Сообщение.Visible = False
         ФормаСписок.textboxName = Me.ActiveControl.Name
         ФормаСписок.FormName = ActiveForm.Name
-        ОткрытьФорму(ФормаСписок)
+        openForm(ФормаСписок)
 
     End Sub
 
@@ -116,7 +116,7 @@ Public Class РедакторСлушателя
         Сообщение.Visible = False
         ФормаСписок.textboxName = Me.ActiveControl.Name
         ФормаСписок.FormName = ActiveForm.Name
-        ОткрытьФорму(ФормаСписок)
+        openForm(ФормаСписок)
 
     End Sub
 
@@ -125,7 +125,7 @@ Public Class РедакторСлушателя
         Сообщение.Visible = False
         ФормаСписок.textboxName = Me.ActiveControl.Name
         ФормаСписок.FormName = ActiveForm.Name
-        ОткрытьФорму(ФормаСписок)
+        openForm(ФормаСписок)
 
     End Sub
 
@@ -135,7 +135,7 @@ Public Class РедакторСлушателя
         Сообщение.Visible = False
         ФормаСписок.textboxName = Me.ActiveControl.Name
         ФормаСписок.FormName = ActiveForm.Name
-        ОткрытьФорму(ФормаСписок)
+        openForm(ФормаСписок)
 
 
     End Sub
@@ -146,13 +146,13 @@ Public Class РедакторСлушателя
 
         If Not Press Then
 
-            Снилс.Text = ДобавитьРубашку.РубашкаНаВвод(Снилс.Text, 3, 3, 3, 14)
+            Снилс.Text = addMask.РубашкаНаВвод(Снилс.Text, 3, 3, 3, 14)
 
         End If
         Press = False
         Снилс.SelectionStart = Len(Снилс.Text)
 
-        snils = УдалитьРубашку(Снилс.Text)
+        snils = deleteMasck(Снилс.Text)
         If Len(snils) = 11 Then
 
             InsertIntoDataBase.argumentClear()
@@ -184,7 +184,7 @@ Public Class РедакторСлушателя
 
         If e.KeyCode = 8 Then
             Press = True
-            Снилс.Text = ДобавитьРубашку.УдалитьДефисВРубашке(str)
+            Снилс.Text = addMask.УдалитьДефисВРубашке(str)
 
         End If
 
@@ -248,7 +248,7 @@ Public Class РедакторСлушателя
         Сообщение.Visible = False
         ФормаСписок.textboxName = Me.ActiveControl.Name
         ФормаСписок.FormName = ActiveForm.Name
-        ОткрытьФорму(ФормаСписок)
+        openForm(ФормаСписок)
 
     End Sub
 
@@ -270,15 +270,15 @@ Public Class РедакторСлушателя
 
     Private Sub РедакторСлушателя_Shown(sender As Object, e As EventArgs) Handles Me.Shown
 
-        If ФормаСправочникСлушатели.ИнформацияОСлушателе(0, 0).ToString = "нет записей" Then
+        If ФормаСправочникСлушатели.studentsInfo(0, 0).ToString = "нет записей" Then
 
             Me.Close()
             предупреждение.текст.Text = "Ошибка. Некорректный СНИЛС в базе. Необходима ручная проверка базы!"
-            ОткрытьФорму(предупреждение)
+            openForm(предупреждение)
 
         Else
 
-            oldSnils = УдалитьРубашку(ФормаСправочникСлушатели.ИнформацияОСлушателе(1, 0))
+            oldSnils = deleteMasck(ФормаСправочникСлушатели.studentsInfo(1, 0))
             Сообщение.Visible = False
             ActiveControl = BtnFocus
 
@@ -374,14 +374,14 @@ Public Class РедакторСлушателя
         Сообщение.Visible = False
         ФормаСписок.textboxName = Me.ActiveControl.Name
         ФормаСписок.FormName = ActiveForm.Name
-        ОткрытьФорму(ФормаСписок)
+        openForm(ФормаСписок)
     End Sub
 
     Private Sub СтранаДОО_Click(sender As Object, e As EventArgs)
         Сообщение.Visible = False
         ФормаСписок.textboxName = Me.ActiveControl.Name
         ФормаСписок.FormName = ActiveForm.Name
-        ОткрытьФорму(ФормаСписок)
+        openForm(ФормаСписок)
     End Sub
 
     Private Sub СтранаДОО_KeyDown(sender As Object, e As KeyEventArgs)

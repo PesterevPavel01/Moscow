@@ -25,8 +25,8 @@ Partial Class ОценочнаяВедомость
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.Label2 = New System.Windows.Forms.Label()
-        Me.НомерГруппы = New System.Windows.Forms.TextBox()
-        Me.ТаблицаВедомость = New System.Windows.Forms.DataGridView()
+        Me.groupNumber = New System.Windows.Forms.TextBox()
+        Me.resultTable = New System.Windows.Forms.DataGridView()
         Me.Номер = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.ФИО = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Модуль1 = New System.Windows.Forms.DataGridViewComboBoxColumn()
@@ -42,7 +42,7 @@ Partial Class ОценочнаяВедомость
         Me.Сохранить = New System.Windows.Forms.Button()
         Me.Button2 = New System.Windows.Forms.Button()
         Me.Button1 = New System.Windows.Forms.Button()
-        CType(Me.ТаблицаВедомость, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.resultTable, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'Label2
@@ -57,22 +57,22 @@ Partial Class ОценочнаяВедомость
         '
         'НомерГруппы
         '
-        Me.НомерГруппы.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.НомерГруппы.Location = New System.Drawing.Point(77, 5)
-        Me.НомерГруппы.Name = "НомерГруппы"
-        Me.НомерГруппы.ReadOnly = True
-        Me.НомерГруппы.Size = New System.Drawing.Size(294, 29)
-        Me.НомерГруппы.TabIndex = 1
+        Me.groupNumber.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
+        Me.groupNumber.Location = New System.Drawing.Point(77, 5)
+        Me.groupNumber.Name = "НомерГруппы"
+        Me.groupNumber.ReadOnly = True
+        Me.groupNumber.Size = New System.Drawing.Size(294, 29)
+        Me.groupNumber.TabIndex = 1
         '
-        'ТаблицаВедомость
+        'resultTable
         '
-        Me.ТаблицаВедомость.AllowUserToAddRows = False
-        Me.ТаблицаВедомость.AllowUserToDeleteRows = False
-        Me.ТаблицаВедомость.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+        Me.resultTable.AllowUserToAddRows = False
+        Me.resultTable.AllowUserToDeleteRows = False
+        Me.resultTable.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.ТаблицаВедомость.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells
-        Me.ТаблицаВедомость.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight
+        Me.resultTable.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells
+        Me.resultTable.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight
         DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
         DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
         DataGridViewCellStyle1.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
@@ -81,9 +81,9 @@ Partial Class ОценочнаяВедомость
         DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.ControlLight
         DataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.ControlText
         DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.ТаблицаВедомость.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
-        Me.ТаблицаВедомость.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.ТаблицаВедомость.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Номер, Me.ФИО, Me.Модуль1, Me.Модуль2, Me.Модуль3, Me.Модуль4, Me.Модуль5, Me.Модуль6, Me.Модуль7, Me.Модуль8, Me.Модуль9, Me.Модуль10})
+        Me.resultTable.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
+        Me.resultTable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.resultTable.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Номер, Me.ФИО, Me.Модуль1, Me.Модуль2, Me.Модуль3, Me.Модуль4, Me.Модуль5, Me.Модуль6, Me.Модуль7, Me.Модуль8, Me.Модуль9, Me.Модуль10})
         DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
         DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window
         DataGridViewCellStyle2.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
@@ -92,13 +92,13 @@ Partial Class ОценочнаяВедомость
         DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.ControlLight
         DataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.ControlText
         DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.ТаблицаВедомость.DefaultCellStyle = DataGridViewCellStyle2
-        Me.ТаблицаВедомость.Location = New System.Drawing.Point(4, 43)
-        Me.ТаблицаВедомость.Name = "ТаблицаВедомость"
-        Me.ТаблицаВедомость.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.[Single]
-        Me.ТаблицаВедомость.RowHeadersVisible = False
-        Me.ТаблицаВедомость.Size = New System.Drawing.Size(1722, 780)
-        Me.ТаблицаВедомость.TabIndex = 4
+        Me.resultTable.DefaultCellStyle = DataGridViewCellStyle2
+        Me.resultTable.Location = New System.Drawing.Point(4, 43)
+        Me.resultTable.Name = "resultTable"
+        Me.resultTable.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.[Single]
+        Me.resultTable.RowHeadersVisible = False
+        Me.resultTable.Size = New System.Drawing.Size(1722, 780)
+        Me.resultTable.TabIndex = 4
         '
         'Номер
         '
@@ -247,22 +247,22 @@ Partial Class ОценочнаяВедомость
         Me.Controls.Add(Me.Button1)
         Me.Controls.Add(Me.Сохранить)
         Me.Controls.Add(Me.Label2)
-        Me.Controls.Add(Me.НомерГруппы)
-        Me.Controls.Add(Me.ТаблицаВедомость)
+        Me.Controls.Add(Me.groupNumber)
+        Me.Controls.Add(Me.resultTable)
         Me.Controls.Add(Me.Button2)
         Me.KeyPreview = True
         Me.Name = "ОценочнаяВедомость"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
         Me.Text = "Ведомость"
-        CType(Me.ТаблицаВедомость, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.resultTable, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
     End Sub
 
     Friend WithEvents Label2 As Label
-    Friend WithEvents НомерГруппы As TextBox
-    Friend WithEvents ТаблицаВедомость As DataGridView
+    Friend WithEvents groupNumber As TextBox
+    Friend WithEvents resultTable As DataGridView
     Friend WithEvents Button2 As Button
     Friend WithEvents Сохранить As Button
     Friend WithEvents Button1 As Button

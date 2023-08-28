@@ -1,7 +1,7 @@
 ﻿Imports System.Threading
 Imports System.IO
 
-Module Интерфейс
+Module interfaceMod
 
     Sub cursorStepLefth(textbox As TextBox)
 
@@ -118,7 +118,7 @@ Module Интерфейс
         End If
     End Sub
 
-    Sub ШрифтКонтрола(контрол As Object, шрифтF As Object)
+    Sub controlFont(контрол As Object, шрифтF As Object)
 
         контрол.Font = New Font("Microsoft Sans Serif", шрифтF, FontStyle.Regular)
 
@@ -185,6 +185,10 @@ Module Интерфейс
 
                     element.Checked = False
 
+                Else
+
+                    element.Checked = True
+
                 End If
 
             Catch ex As Exception
@@ -250,11 +254,11 @@ Module Интерфейс
 
         If currentCheckBox.Checked = True Then
 
-            Интерфейс.enableOneCheckbox(currentForm, currentCheckBox.Name)
+            interfaceMod.enableOneCheckbox(currentForm, currentCheckBox.Name)
 
         ElseIf currentCheckBox.Checked = False Then
 
-            If Not Интерфейс.statusCheckBoxes(currentForm) Then
+            If Not interfaceMod.statusCheckBoxes(currentForm) Then
 
                 currentCheckBox.Checked = True
 

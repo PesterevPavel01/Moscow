@@ -71,33 +71,33 @@ Module Запуск
         End If
 
         If Not ЗначениеПараметра(параметры, "ПоискСлушателейПоУм") = "Не найден" Then
-            MainForm.ПоискСлушателейПоУм.Text = ЗначениеПараметра(параметры, "ПоискСлушателейПоУм")
+            MainForm.students__defaultSearchSetts.Text = ЗначениеПараметра(параметры, "ПоискСлушателейПоУм")
         Else
-            MainForm.ПоискСлушателейПоУм.Text = "Снилс"
+            MainForm.students__defaultSearchSetts.Text = "Снилс"
         End If
 
-        searchInit(НастройкаПоискаСлушателей, MainForm.ПоискСлушателейПоУм.Text)
+        searchInit(НастройкаПоискаСлушателей, MainForm.students__defaultSearchSetts.Text)
 
         If Not ЗначениеПараметра(параметры, "ПоискГруппПоУм") = "Не найден" Then
-            MainForm.ПоискГруппПоУм.Text = ЗначениеПараметра(параметры, "ПоискГруппПоУм")
+            MainForm.group_dafaultSearchSetts.Text = ЗначениеПараметра(параметры, "ПоискГруппПоУм")
         Else
-            MainForm.ПоискГруппПоУм.Text = "Номер"
+            MainForm.group_dafaultSearchSetts.Text = "Номер"
         End If
-        searchInit(НастройкаПоискаГрупп, MainForm.ПоискГруппПоУм.Text)
+        searchInit(group__serchSettings, MainForm.group_dafaultSearchSetts.Text)
 
         If Not ЗначениеПараметра(параметры, "НастройкаСортировкиГрупп") = "Не найден" Then
-            MainForm.НастройкаСортировкиГрупп.Text = ЗначениеПараметра(параметры, "НастройкаСортировкиГрупп")
+            MainForm.group__dafaultSortSetts.Text = ЗначениеПараметра(параметры, "НастройкаСортировкиГрупп")
         Else
-            MainForm.НастройкаСортировкиГрупп.Text = "Номер"
+            MainForm.group__dafaultSortSetts.Text = "Номер"
         End If
-        searchInit(sortSetts, MainForm.НастройкаСортировкиГрупп.Text)
+        searchInit(sortSettsGroup, MainForm.group__dafaultSortSetts.Text)
 
         If Not ЗначениеПараметра(параметры, "НастройкаСортировкиСлушателей") = "Не найден" Then
-            MainForm.НастройкаСортировкиСлушателей.Text = ЗначениеПараметра(параметры, "НастройкаСортировкиСлушателей")
+            MainForm.students__defaultSortSetts.Text = ЗначениеПараметра(параметры, "НастройкаСортировкиСлушателей")
         Else
-            MainForm.НастройкаСортировкиСлушателей.Text = "Снилс"
+            MainForm.students__defaultSortSetts.Text = "Снилс"
         End If
-        searchInit(НастройкаСортировкиСлушателей, MainForm.НастройкаСортировкиСлушателей.Text)
+        searchInit(sortSettsStudents, MainForm.students__defaultSortSetts.Text)
 
         If Not ЗначениеПараметра(параметры, "КоличествоСтрокВТаблице") = "Не найден" Then
             MainForm.КоличествоСтрокВТаблице.Text = ЗначениеПараметра(параметры, "КоличествоСтрокВТаблице")

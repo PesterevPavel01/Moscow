@@ -2,7 +2,7 @@
 
     Private sqlQueryString As New SqlQueryString
     Private mySQLConnector As New MySQLConnect
-    Public struct_gruppa As strGruppa
+    Public struct_grup As strGruppa
     Public flagGrouppForm As FormGrouppFlag
     Public formGrouppLists As FormGroupplLists
 
@@ -21,12 +21,12 @@
     Structure strGruppa
 
         Dim flagAllListProgs As Boolean
-        Dim kodProgramm As Integer
+        Dim kodProgram As Integer
         Dim Kod As Int32
         Dim yearNZ As Int32
         Dim oldYearNZ As Int32
         Dim oldNumber As String
-        Dim nameForma As String
+        Dim nameForm As String
         Dim dataNZ As String
         Dim dataKZ As String
         Dim dataVUd As String
@@ -103,6 +103,28 @@
         Public modul_10 As Boolean
     End Structure
 
+    Public Sub cleaкForm(currentForm As Form)
+
+        For Each element As TextBox In currentForm.Controls.OfType(Of TextBox)
+
+            element.Clear()
+
+        Next
+
+        For Each element As ComboBox In currentForm.Controls.OfType(Of ComboBox)
+
+            element.Text = ""
+
+        Next
+
+        For Each element As DateTimePicker In currentForm.Controls.OfType(Of DateTimePicker)
+
+            element.Value = "01.01.1753"
+
+        Next
+
+    End Sub
+
     Public Sub saveParameters(currentForm As Form)
 
         For Each element As TextBox In currentForm.Controls.OfType(Of TextBox)
@@ -110,9 +132,9 @@
             Select Case element.Name
 
                 Case "НоваяГруппаНомер"
-                    struct_gruppa.number = element.Text
+                    struct_grup.number = element.Text
                 Case "НоваяГруппаКоличествоЧасов"
-                    struct_gruppa.kolChasov = element.Text
+                    struct_grup.kolChasov = element.Text
             End Select
 
         Next
@@ -122,39 +144,39 @@
             Select Case element.Name
 
                 Case "НоваяГруппаФормаОбучения"
-                    struct_gruppa.formaObuch = element.Text
+                    struct_grup.formaObuch = element.Text
                 Case "НоваяГруппаСпециальность"
-                    struct_gruppa.specialnost = element.Text
+                    struct_grup.specialnost = element.Text
                 Case "НоваяГруппаОтветственныйКуратор"
-                    struct_gruppa.kurator = element.Text
+                    struct_grup.kurator = element.Text
                 Case "НоваягруппаОтветственныйЗаПрактику"
-                    struct_gruppa.otvZaPraktiku = element.Text
+                    struct_grup.otvZaPraktiku = element.Text
                 Case "Модуль1"
-                    struct_gruppa.modul1 = element.Text
+                    struct_grup.modul1 = element.Text
                 Case "Модуль2"
-                    struct_gruppa.modul2 = element.Text
+                    struct_grup.modul2 = element.Text
                 Case "Модуль3"
-                    struct_gruppa.modul3 = element.Text
+                    struct_grup.modul3 = element.Text
                 Case "Модуль4"
-                    struct_gruppa.modul4 = element.Text
+                    struct_grup.modul4 = element.Text
                 Case "Модуль5"
-                    struct_gruppa.modul5 = element.Text
+                    struct_grup.modul5 = element.Text
                 Case "Модуль6"
-                    struct_gruppa.modul6 = element.Text
+                    struct_grup.modul6 = element.Text
                 Case "Модуль7"
-                    struct_gruppa.modul7 = element.Text
+                    struct_grup.modul7 = element.Text
                 Case "Модуль8"
-                    struct_gruppa.modul8 = element.Text
+                    struct_grup.modul8 = element.Text
                 Case "Модуль9"
-                    struct_gruppa.modul9 = element.Text
+                    struct_grup.modul9 = element.Text
                 Case "Модуль10"
-                    struct_gruppa.modul10 = element.Text
+                    struct_grup.modul10 = element.Text
                 Case "НоваяГруппаУровеньКвалификации"
-                    struct_gruppa.urKvalific = element.Text
+                    struct_grup.urKvalific = element.Text
                 Case "НоваяГруппаФинансирование"
-                    struct_gruppa.financir = element.Text
+                    struct_grup.financir = element.Text
                 Case "Квалификация"
-                    struct_gruppa.kvalifikaciya = element.Text
+                    struct_grup.kvalifikaciya = element.Text
             End Select
 
         Next
@@ -164,16 +186,16 @@
             Select Case element.Name
 
                 Case "НоваяГруппаДатаНачалаЗанятий"
-                    struct_gruppa.yearNZ = element.Value.Year
-                    struct_gruppa.dataNZ = MainForm.mySqlConnect.dateToFormatMySQL(element.Value.ToShortDateString)
+                    struct_grup.yearNZ = element.Value.Year
+                    struct_grup.dataNZ = MainForm.mySqlConnect.dateToFormatMySQL(element.Value.ToShortDateString)
                 Case "НоваяГруппаКонецЗанятий"
-                    struct_gruppa.dataKZ = MainForm.mySqlConnect.dateToFormatMySQL(element.Value.ToShortDateString)
+                    struct_grup.dataKZ = MainForm.mySqlConnect.dateToFormatMySQL(element.Value.ToShortDateString)
                 Case "ДатаВыдачиУд"
-                    struct_gruppa.dataVUd = MainForm.mySqlConnect.dateToFormatMySQL(element.Value.ToShortDateString)
+                    struct_grup.dataVUd = MainForm.mySqlConnect.dateToFormatMySQL(element.Value.ToShortDateString)
                 Case "ДатаВДиплома"
-                    struct_gruppa.dataVD = MainForm.mySqlConnect.dateToFormatMySQL(element.Value.ToShortDateString)
+                    struct_grup.dataVD = MainForm.mySqlConnect.dateToFormatMySQL(element.Value.ToShortDateString)
                 Case "ДатаВСвид"
-                    struct_gruppa.dataVSv = MainForm.mySqlConnect.dateToFormatMySQL(element.Value.ToShortDateString)
+                    struct_grup.dataVSv = MainForm.mySqlConnect.dateToFormatMySQL(element.Value.ToShortDateString)
 
             End Select
 
@@ -194,7 +216,7 @@
         queryString = sqlQueryString.loadForma_obuch()
         formGrouppLists.forma_obuch = mySQLConnector.ЗагрузитьИзMySQLвОдномерныйМассив(queryString, 1, 0)
 
-        queryString = ProgrammPoUKvalifikLimit1(struct_gruppa.urKvalific)
+        queryString = ProgrammPoUKvalifikLimit1(struct_grup.urKvalific)
         formGrouppLists.programma = mySQLConnector.ЗагрузитьИзMySQLвОдномерныйМассив(queryString, 1, 0)
 
         queryString = sqlQueryString.loadSpecialnost()
@@ -233,7 +255,7 @@
     Public Sub updateProgramma()
 
         Dim queryString As String
-        queryString = ProgrammPoUKvalifikLimit1(struct_gruppa.urKvalific)
+        queryString = ProgrammPoUKvalifikLimit1(struct_grup.urKvalific)
         formGrouppLists.programma = mySQLConnector.ЗагрузитьИзMySQLвОдномерныйМассив(queryString, 1, 0)
 
     End Sub
@@ -243,7 +265,7 @@
         Dim result As Object(,)
         Dim queryString As String
 
-        queryString = sqlQueryString.loadKogProgramm(struct_gruppa.urKvalific, struct_gruppa.programma)
+        queryString = sqlQueryString.loadKogProgramm(struct_grup.urKvalific, struct_grup.programma)
 
         result = mySQLConnector.loadMySqlToArray(queryString, 1)
 
@@ -253,8 +275,8 @@
 
         End If
 
-        struct_gruppa.kodProgramm = result(0, 0)
-        struct_gruppa.kolChasov = result(1, 0)
+        struct_grup.kodProgram = result(0, 0)
+        struct_grup.kolChasov = result(1, 0)
 
     End Sub
 
@@ -263,7 +285,7 @@
         Dim result As String()
         Dim queryString As String
 
-        queryString = sqlQueryString.load_kol_chas(struct_gruppa.kodProgramm)
+        queryString = sqlQueryString.load_kol_chas(struct_grup.kodProgram)
 
         result = mySQLConnector.ЗагрузитьИзMySQLвОдномерныйМассив(queryString, 1, 0)
 
@@ -273,13 +295,13 @@
 
         End If
 
-        struct_gruppa.kolChasov = result(0)
+        struct_grup.kolChasov = result(0)
 
     End Sub
 
     Function formGroupValidation(currentForm As Form) As Boolean
 
-        struct_gruppa.mainDocument = mainDocument(currentForm)
+        struct_grup.mainDocument = mainDocument(currentForm)
 
         For Each element As Control In currentForm.Controls.OfType(Of TextBox)
 
@@ -313,7 +335,7 @@
 
         End If
 
-        If Not refreshNumbers(struct_gruppa.mainDocument, currentForm) Then
+        If Not refreshNumbers(struct_grup.mainDocument, currentForm) Then
 
             Return False
 
@@ -374,24 +396,24 @@
                 Select Case combo.Text
 
                     Case "повышение квалификации"
-                        If Not checkNumber(struct_gruppa.numbersUDS.numberUd, "Серия и номер удостоверения") Then
+                        If Not checkNumber(struct_grup.numbersUDS.numberUd, "Серия и номер удостоверения") Then
                             Return False
                         End If
 
-                        If Not checkNumber(struct_gruppa.numbersUDS.regNumberUd, "Регистрационный номер удостоверения") Then
+                        If Not checkNumber(struct_grup.numbersUDS.regNumberUd, "Регистрационный номер удостоверения") Then
                             Return False
                         End If
 
                     Case "профессиональная переподготовка"
 
                         If НоваяГруппа.НоваяГруппаУровеньКвалификации.Text = "профессиональная переподготовка" Then
-                            If Not checkNumber(struct_gruppa.numbersUDS.numberD, "Серия и номер диплома") Then
+                            If Not checkNumber(struct_grup.numbersUDS.numberD, "Серия и номер диплома") Then
                                 Return False
                             End If
-                            If Not checkNumber(struct_gruppa.numbersUDS.regNumberD, "Регистрационный номер диплома") Then
+                            If Not checkNumber(struct_grup.numbersUDS.regNumberD, "Регистрационный номер диплома") Then
                                 Return False
                             End If
-                            If Not checkNumber(struct_gruppa.numbersUDS.numberIA, "Номер протокола ИА") Then
+                            If Not checkNumber(struct_grup.numbersUDS.numberIA, "Номер протокола ИА") Then
                                 Return False
                             End If
 
@@ -401,15 +423,15 @@
 
                         If НоваяГруппа.НоваяГруппаУровеньКвалификации.Text = "профессиональное обучение" Then
 
-                            If Not checkNumber(struct_gruppa.numbersUDS.regNumberSv, "Серия и номер свидетельства") Then
+                            If Not checkNumber(struct_grup.numbersUDS.regNumberSv, "Серия и номер свидетельства") Then
                                 Return False
                             End If
 
-                            If Not checkNumber(struct_gruppa.numbersUDS.numberSv, "Регистрационный номер свидетельства") Then
+                            If Not checkNumber(struct_grup.numbersUDS.numberSv, "Регистрационный номер свидетельства") Then
                                 Return False
                             End If
 
-                            If Not checkNumber(struct_gruppa.numbersUDS.numberIA, "Номер протокола ИА") Then
+                            If Not checkNumber(struct_grup.numbersUDS.numberIA, "Номер протокола ИА") Then
                                 Return False
                             End If
 
@@ -537,13 +559,13 @@
 
     Function refreshNumbers(mainDocument As String, currentForm As Form) As Boolean
 
-        struct_gruppa.numbersUDS.numberUd = 0
-        struct_gruppa.numbersUDS.regNumberUd = 0
-        struct_gruppa.numbersUDS.numberD = 0
-        struct_gruppa.numbersUDS.regNumberD = 0
-        struct_gruppa.numbersUDS.numberSv = 0
-        struct_gruppa.numbersUDS.regNumberSv = 0
-        struct_gruppa.numbersUDS.numberIA = 0
+        struct_grup.numbersUDS.numberUd = 0
+        struct_grup.numbersUDS.regNumberUd = 0
+        struct_grup.numbersUDS.numberD = 0
+        struct_grup.numbersUDS.regNumberD = 0
+        struct_grup.numbersUDS.numberSv = 0
+        struct_grup.numbersUDS.regNumberSv = 0
+        struct_grup.numbersUDS.numberIA = 0
 
         Select Case mainDocument
 
@@ -565,7 +587,7 @@
                             Return False
                         End If
 
-                        struct_gruppa.numbersUDS.numberUd = element.Text
+                        struct_grup.numbersUDS.numberUd = element.Text
 
                     End If
 
@@ -575,7 +597,7 @@
                             Return False
                         End If
 
-                        struct_gruppa.numbersUDS.regNumberUd = element.Text
+                        struct_grup.numbersUDS.regNumberUd = element.Text
 
                     End If
 
@@ -597,7 +619,7 @@
                             Return False
                         End If
 
-                        struct_gruppa.numbersUDS.numberD = element.Text
+                        struct_grup.numbersUDS.numberD = element.Text
 
                     End If
 
@@ -607,7 +629,7 @@
                             Return False
                         End If
 
-                        struct_gruppa.numbersUDS.regNumberD = element.Text
+                        struct_grup.numbersUDS.regNumberD = element.Text
 
                     End If
 
@@ -617,7 +639,7 @@
                             Return False
                         End If
 
-                        struct_gruppa.numbersUDS.numberIA = element.Text
+                        struct_grup.numbersUDS.numberIA = element.Text
 
                     End If
 
@@ -640,7 +662,7 @@
                         End If
 
 
-                        struct_gruppa.numbersUDS.numberSv = element.Text
+                        struct_grup.numbersUDS.numberSv = element.Text
 
                     End If
 
@@ -650,7 +672,7 @@
                             Return False
                         End If
 
-                        struct_gruppa.numbersUDS.regNumberSv = element.Text
+                        struct_grup.numbersUDS.regNumberSv = element.Text
 
                     End If
 
@@ -660,7 +682,7 @@
                             Return False
                         End If
 
-                        struct_gruppa.numbersUDS.numberIA = element.Text
+                        struct_grup.numbersUDS.numberIA = element.Text
 
                     End If
 

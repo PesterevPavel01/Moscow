@@ -23,14 +23,14 @@ Public Class НовыйСлушатель
         End If
 
         Try
-            СнилсЧисло = ДобавитьРубашку.УдалитьРубашку(Снилс.Text)
+            СнилсЧисло = addMask.deleteMasck(Снилс.Text)
         Catch ex As Exception
             MsgBox("Снилс введен некорректно")
             Exit Sub
         End Try
 
         If ValidOn.Checked Then
-            If Not АнализСнилс.ПроверкаСнилс(ДобавитьРубашку.УдалитьРубашку(Снилс.Text)) Then
+            If Not АнализСнилс.ПроверкаСнилс(addMask.deleteMasck(Снилс.Text)) Then
                 MsgBox("Снилс не прошел проверку")
                 Exit Sub
             End If
@@ -56,7 +56,7 @@ Public Class НовыйСлушатель
             Exit Sub
         End If
 
-        If Not Интерфейс.formStudentValidation(Me) Then
+        If Not interfaceMod.formStudentValidation(Me) Then
             Try
                 предупреждение.ShowDialog()
             Catch ex As Exception
@@ -73,7 +73,7 @@ Public Class НовыйСлушатель
             slushatel.structSlushatel.kodGroup = -1
         End If
 
-        slushatel.structSlushatel.snils = ДобавитьРубашку.УдалитьРубашку(Снилс.Text)
+        slushatel.structSlushatel.snils = addMask.deleteMasck(Снилс.Text)
         slushatel.structSlushatel.фамилия = Фамилия.Text
         slushatel.structSlushatel.имя = Имя.Text
         slushatel.structSlushatel.отчество = Отчество.Text
@@ -118,12 +118,12 @@ Public Class НовыйСлушатель
 
         If slushatel.insertSlushatel() Then
 
-            SC.Send(AddressOf ЗаписьВСтатус, ДобавитьРубашку.ДобавитьРубашку(slushatel.structSlushatel.snils))
+            SC.Send(AddressOf ЗаписьВСтатус, addMask.ДобавитьРубашку(slushatel.structSlushatel.snils))
             SC.Send(AddressOf ЗаполнитьФормуССлушВГруппе.updateFormStudentsList, slushatel.structSlushatel.kodGroup)
 
         End If
 
-        SC.Send(AddressOf РазблокироватьКнопки, ДобавитьРубашку.ДобавитьРубашку(slushatel.structSlushatel.snils))
+        SC.Send(AddressOf РазблокироватьКнопки, addMask.ДобавитьРубашку(slushatel.structSlushatel.snils))
 
     End Sub
     Sub ЗаписьВСтатус(Слушатель As String)
@@ -170,12 +170,12 @@ Public Class НовыйСлушатель
         Dim snils As String
         If Not Press Then
 
-            Снилс.Text = ДобавитьРубашку.РубашкаНаВвод(Снилс.Text, 3, 3, 3, 14)
+            Снилс.Text = addMask.РубашкаНаВвод(Снилс.Text, 3, 3, 3, 14)
 
         End If
         Press = False
         Снилс.SelectionStart = Len(Снилс.Text)
-        snils = УдалитьРубашку(Снилс.Text)
+        snils = deleteMasck(Снилс.Text)
         If Len(snils) = 11 Then
 
             InsertIntoDataBase.argumentClear()
@@ -207,7 +207,7 @@ Public Class НовыйСлушатель
 
         If e.KeyCode = 8 Then
             Press = True
-            Снилс.Text = ДобавитьРубашку.УдалитьДефисВРубашке(str)
+            Снилс.Text = addMask.УдалитьДефисВРубашке(str)
         End If
 
         If e.KeyCode = 13 Then

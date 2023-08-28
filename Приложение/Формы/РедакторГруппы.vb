@@ -6,23 +6,23 @@ Public Class РедакторГруппы
     Dim SC As SynchronizationContext
     Public Sub setProgKod(kod As Integer)
 
-        gruppa.struct_gruppa.kodProgramm = kod
-        gruppa.struct_gruppa.flagAllListProgs = True
+        gruppa.struct_grup.kodProgram = kod
+        gruppa.struct_grup.flagAllListProgs = True
 
-        activateModuls(Me, НоваяГруппаПрограмма.Text, gruppa.struct_gruppa.kodProgramm)
+        activateModuls(Me, НоваяГруппаПрограмма.Text, gruppa.struct_grup.kodProgram)
 
         gruppa.load_kol_chas()
-        НоваяГруппаКоличествоЧасов.Text = gruppa.struct_gruppa.kolChasov
+        НоваяГруппаКоличествоЧасов.Text = gruppa.struct_grup.kolChasov
 
 
     End Sub
 
     Public Function getProgKod() As Int16
-        Return gruppa.struct_gruppa.kodProgramm
+        Return gruppa.struct_grup.kodProgram
     End Function
 
     Public Sub setflagAllListProgs(val As Boolean)
-        gruppa.struct_gruppa.flagAllListProgs = val
+        gruppa.struct_grup.flagAllListProgs = val
     End Sub
 
     Private Sub Квалификация_Click(sender As Object, e As EventArgs)
@@ -104,13 +104,13 @@ Public Class РедакторГруппы
             Return
         End If
 
-        gruppa.struct_gruppa.Kod = СправочникГруппы.kod
+        gruppa.struct_grup.Kod = СправочникГруппы.kod
         gruppa.saveParameters(Me)
 
-        gruppa.struct_gruppa.oldNumber = СправочникГруппы.numberGr
-        gruppa.struct_gruppa.oldYearNZ = СправочникГруппы.year
+        gruppa.struct_grup.oldNumber = СправочникГруппы.numberGr
+        gruppa.struct_grup.oldYearNZ = СправочникГруппы.year
 
-        argument(1) = gruppa.struct_gruppa
+        argument(1) = gruppa.struct_grup
 
         secondThread = New Thread(AddressOf updateGroup)
         secondThread.IsBackground = True
@@ -209,7 +209,7 @@ Public Class РедакторГруппы
             Сообщение.Text = "Группа № " & СправочникГруппы.numberGr & " успешно изменена, дата записи: " & DataString
             Сообщение.Visible = True
             СправочникГруппы.updateGroupList()
-            СписокСлушателейВГруппе.Text = "Группа № " & gruppa.number
+            StudentList.Text = "Группа № " & gruppa.number
             СправочникГруппы.infoAboutGroup(1, 0) = gruppa.number
             Me.Text = "Группа № " & gruppa.number
 
@@ -236,7 +236,7 @@ Public Class РедакторГруппы
     Private Sub РедакторГруппы_Shown(sender As Object, e As EventArgs) Handles MyBase.Shown
 
         Сообщение.Visible = False
-        gruppa.struct_gruppa.flagAllListProgs = False
+        gruppa.struct_grup.flagAllListProgs = False
         ActiveControl = BtnFocus
 
     End Sub
@@ -395,21 +395,6 @@ Public Class РедакторГруппы
             e.Handled = True
         End If
 
-        If e.KeyCode = 46 Then
-            For Each контрол In Me.Controls
-                If ActiveControl.Name = контрол.name Then
-                    If контрол.ReadOnly Then
-                        Try
-                            контрол.Text = ""
-                        Catch ex As Exception
-
-                        End Try
-                        Exit For
-                    End If
-                End If
-            Next
-        End If
-
     End Sub
 
     Private Sub Квалификация_KeyDown(sender As Object, e As KeyEventArgs)
@@ -420,10 +405,12 @@ Public Class РедакторГруппы
 
     End Sub
 
-    Private Sub НомерУд_TextChanged(sender As Object, e As EventArgs) Handles НомерУд.TextChanged
+    Private Sub numberUd_TextChanged(sender As Object, e As EventArgs) Handles НомерУд.TextChanged
 
         If НомерУд.Text = "" And РегНомерУд.Text = "" Then
+
             If НоваяГруппаУровеньКвалификации.Text = "повышение квалификации" Then
+
                 НоваяГруппаУровеньКвалификации.Text = ""
                 НомерДиплома.Enabled = True
                 РегНомерДиплома.Enabled = True
@@ -434,7 +421,6 @@ Public Class РедакторГруппы
                 ДатаВСвид.Enabled = True
 
             End If
-
 
         Else
             НоваяГруппаУровеньКвалификации.Text = "повышение квалификации"
@@ -641,7 +627,7 @@ Public Class РедакторГруппы
     Private Sub НоваяГруппаУровеньКвалификации_TextChanged(sender As Object, e As EventArgs) Handles НоваяГруппаУровеньКвалификации.TextChanged
         If НоваяГруппаУровеньКвалификации.Text = "специальный экзамен" Then
 
-            gruppa.struct_gruppa.urKvalific = "специальный экзамен"
+            gruppa.struct_grup.urKvalific = "специальный экзамен"
 
             НоваяГруппаФормаОбучения.Enabled = False
             НоваяГруппаДатаНачалаЗанятий.Enabled = False
@@ -690,7 +676,7 @@ Public Class РедакторГруппы
 
         ElseIf НоваяГруппаУровеньКвалификации.Text = "профессиональное обучение" Then
 
-            gruppa.struct_gruppa.urKvalific = "профессиональное обучение"
+            gruppa.struct_grup.urKvalific = "профессиональное обучение"
 
             НоваяГруппаФормаОбучения.Enabled = True
             НоваяГруппаДатаНачалаЗанятий.Enabled = True
@@ -736,7 +722,7 @@ Public Class РедакторГруппы
 
         ElseIf НоваяГруппаУровеньКвалификации.Text = "повышение квалификации" Then
 
-            gruppa.struct_gruppa.urKvalific = "повышение квалификации"
+            gruppa.struct_grup.urKvalific = "повышение квалификации"
 
             НоваяГруппаФормаОбучения.Enabled = True
             НоваяГруппаДатаНачалаЗанятий.Enabled = True
@@ -782,7 +768,7 @@ Public Class РедакторГруппы
 
         ElseIf НоваяГруппаУровеньКвалификации.Text = "профессиональная переподготовка" Then
 
-            gruppa.struct_gruppa.urKvalific = "профессиональная переподготовка"
+            gruppa.struct_grup.urKvalific = "профессиональная переподготовка"
 
             НоваяГруппаФормаОбучения.Enabled = True
             НоваяГруппаДатаНачалаЗанятий.Enabled = True
@@ -827,7 +813,7 @@ Public Class РедакторГруппы
             НоваяГруппаСпециальность.Text = ""
 
         Else
-            gruppa.struct_gruppa.urKvalific = ""
+            gruppa.struct_grup.urKvalific = ""
 
             НомерДиплома.Clear()
             РегНомерДиплома.Clear()
@@ -885,7 +871,7 @@ Public Class РедакторГруппы
 
     Private Sub НоваяГруппаПрограмма_TextChanged(sender As Object, e As EventArgs)
         If Me.НоваяГруппаУровеньКвалификации.Text <> "специальный экзамен" And НоваяГруппаУровеньКвалификации.Text <> "повышение квалификации" Then
-            activateModuls(Me, НоваяГруппаПрограмма.Text, gruppa.struct_gruppa.kodProgramm)
+            activateModuls(Me, НоваяГруппаПрограмма.Text, gruppa.struct_grup.kodProgram)
         End If
     End Sub
 
@@ -1286,7 +1272,7 @@ Public Class РедакторГруппы
     Sub loadFormGruppa()
 
         ActiveControl = BtnFocus
-        gruppa.struct_gruppa.nameForma = "РедакторГруппы"
+        gruppa.struct_grup.nameForm = "РедакторГруппы"
         gruppa.loadFormGrouppLists()
 
         НоваяГруппаУровеньКвалификации.Items.Clear()
@@ -1339,27 +1325,27 @@ Public Class РедакторГруппы
 
     Private Sub НоваяГруппаПрограмма_SelectedIndexChanged(sender As Object, e As EventArgs) Handles НоваяГруппаПрограмма.SelectedIndexChanged
 
-        gruppa.struct_gruppa.programma = НоваяГруппаПрограмма.Text
+        gruppa.struct_grup.programma = НоваяГруппаПрограмма.Text
 
         If НоваяГруппаПрограмма.Text = "" Then
 
-            gruppa.struct_gruppa.kodProgramm = -1
+            gruppa.struct_grup.kodProgram = -1
 
         Else
 
-            If gruppa.struct_gruppa.flagAllListProgs Then
+            If gruppa.struct_grup.flagAllListProgs Then
 
-                gruppa.struct_gruppa.flagAllListProgs = False
+                gruppa.struct_grup.flagAllListProgs = False
                 Return
 
             End If
 
             gruppa.updateKodProg()
-            НоваяГруппаКоличествоЧасов.Text = gruppa.struct_gruppa.kolChasov
+            НоваяГруппаКоличествоЧасов.Text = gruppa.struct_grup.kolChasov
 
         End If
 
-        activateModuls(Me, НоваяГруппаПрограмма.Text, gruppa.struct_gruppa.kodProgramm)
+        activateModuls(Me, НоваяГруппаПрограмма.Text, gruppa.struct_grup.kodProgram)
     End Sub
 
 End Class
