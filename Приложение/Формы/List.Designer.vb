@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
-Partial Class ФормаСписок
+Partial Class List
     Inherits System.Windows.Forms.Form
 
     'Форма переопределяет dispose для очистки списка компонентов.
@@ -22,13 +22,13 @@ Partial Class ФормаСписок
     'Не изменяйте ее в редакторе исходного кода.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(ФормаСписок))
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(List))
         Me.searchValue = New System.Windows.Forms.TextBox()
         Me.header = New System.Windows.Forms.ToolStrip()
         Me.pkOn = New System.Windows.Forms.ToolStripButton()
         Me.poOn = New System.Windows.Forms.ToolStripButton()
         Me.ppOn = New System.Windows.Forms.ToolStripButton()
-        Me.ListViewСписок = New System.Windows.Forms.ListView()
+        Me.resultList = New System.Windows.Forms.ListView()
         Me.ColumnHeader1 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ColumnHeader2 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.mainContainer = New System.Windows.Forms.SplitContainer()
@@ -95,19 +95,19 @@ Partial Class ФормаСписок
         '
         'ListViewСписок
         '
-        Me.ListViewСписок.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.ColumnHeader1, Me.ColumnHeader2})
-        Me.ListViewСписок.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.ListViewСписок.Font = New System.Drawing.Font("Microsoft YaHei", 11.25!)
-        Me.ListViewСписок.FullRowSelect = True
-        Me.ListViewСписок.GridLines = True
-        Me.ListViewСписок.HideSelection = False
-        Me.ListViewСписок.Location = New System.Drawing.Point(0, 0)
-        Me.ListViewСписок.MultiSelect = False
-        Me.ListViewСписок.Name = "ListViewСписок"
-        Me.ListViewСписок.Size = New System.Drawing.Size(876, 712)
-        Me.ListViewСписок.TabIndex = 3
-        Me.ListViewСписок.UseCompatibleStateImageBehavior = False
-        Me.ListViewСписок.View = System.Windows.Forms.View.Details
+        Me.resultList.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.ColumnHeader1, Me.ColumnHeader2})
+        Me.resultList.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.resultList.Font = New System.Drawing.Font("Microsoft YaHei", 11.25!)
+        Me.resultList.FullRowSelect = True
+        Me.resultList.GridLines = True
+        Me.resultList.HideSelection = False
+        Me.resultList.Location = New System.Drawing.Point(0, 0)
+        Me.resultList.MultiSelect = False
+        Me.resultList.Name = "ListViewСписок"
+        Me.resultList.Size = New System.Drawing.Size(876, 712)
+        Me.resultList.TabIndex = 3
+        Me.resultList.UseCompatibleStateImageBehavior = False
+        Me.resultList.View = System.Windows.Forms.View.Details
         '
         'ColumnHeader1
         '
@@ -133,7 +133,7 @@ Partial Class ФормаСписок
         '
         'mainContainer.Panel2
         '
-        Me.mainContainer.Panel2.Controls.Add(Me.ListViewСписок)
+        Me.mainContainer.Panel2.Controls.Add(Me.resultList)
         Me.mainContainer.Size = New System.Drawing.Size(876, 748)
         Me.mainContainer.SplitterDistance = 32
         Me.mainContainer.TabIndex = 5
@@ -165,7 +165,7 @@ Partial Class ФормаСписок
     Friend WithEvents pkOn As ToolStripButton
     Friend WithEvents poOn As ToolStripButton
     Friend WithEvents ppOn As ToolStripButton
-    Friend WithEvents ListViewСписок As ListView
+    Friend WithEvents resultList As ListView
     Friend WithEvents ColumnHeader1 As ColumnHeader
     Friend WithEvents ColumnHeader2 As ColumnHeader
     Friend WithEvents mainContainer As SplitContainer

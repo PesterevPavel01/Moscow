@@ -10,7 +10,7 @@ Namespace My
     Partial Friend Class MyApplication
         Private Sub MyApplication_Startup(sender As Object, e As StartupEventArgs) Handles Me.Startup
 
-            Запуск.ЗапускПриложения()
+            startApp.ЗапускПриложения()
 
         End Sub
 

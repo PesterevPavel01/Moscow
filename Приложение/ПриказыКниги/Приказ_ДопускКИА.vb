@@ -7,16 +7,16 @@
         Dim sqlQuery, ppOrStaj, ppOrStaj2 As String
         Dim tens, units As Integer
 
-        sqlQuery = dopusk_loadListStudents(MainForm.prikazKodGroup)
+        sqlQuery = dopusk_loadListStudents(MainForm.orderIdGroup)
         studentsData = MainForm.mySqlConnect.loadMySqlToArray(sqlQuery, 1)
 
         If studentsData(0, 0) = "нет записей" Then
-            предупреждение.текст.Text = "Нет данных для отображения"
-            предупреждение.ShowDialog()
+            Warning.content.Text = "Нет данных для отображения"
+            Warning.ShowDialog()
             Exit Sub
         End If
 
-        If АСформироватьПриказ.CheckBoxММС.Checked Then
+        If BuildOrder.CheckBoxММС.Checked Then
 
             ppOrStaj = "практическая подготовка"
             ppOrStaj2 = "практической подготовки"
@@ -29,59 +29,59 @@
 
 
 
-        resourcesPath = Запуск.ПутьКФайлуRes
+        resourcesPath = startApp.ПутьКФайлуRes
         ПутьКШаблону = resourcesPath & "Шаблоны\Приказы\" & ВидПриказа & ".docx"
 
         wordApp = CreateObject("Word.Application")
 
         wordDoc = wordApp.Documents.Open(ПутьКШаблону, ReadOnly:=True)
 
-        Вспомогательный.savePrikazBlank(wordDoc, MainForm.prikazKodGroup, ВидПриказа, resourcesPath, "Приказы")
+        _technical.savePrikazBlank(wordDoc, MainForm.orderIdGroup, ВидПриказа, resourcesPath, "Приказы")
 
         МСВорд.ДобавитьСписокПоМеткеСтрокой(wordDoc, "$СписокСлушателей$", studentsData, wordApp)
 
-        Вспомогательный.replaceTextInWordApp(wordDoc.Range, "$ДатаПриказа$", АСформироватьПриказ.ДатаПриказа.Text)
-        Вспомогательный.replaceTextInWordApp(wordDoc.Range, "$НомерГруппы$", АСформироватьПриказ.НомерГруппы.Text)
-        Вспомогательный.replaceTextInWordApp(wordDoc.Range, "$Программа$", studentsData(1, 0), 2)
-        Вспомогательный.replaceTextInWordApp(wordDoc.Range, "$Часы$", studentsData(4, 0), 2)
-        Вспомогательный.replaceTextInWordApp(wordDoc.Range, "$ПП/Стаж$", ppOrStaj, 2)
-        Вспомогательный.replaceTextInWordApp(wordDoc.Range, "$ДатаН$", studentsData(2, 0), 2)
-        Вспомогательный.replaceTextInWordApp(wordDoc.Range, "$ДатаК$", studentsData(3, 0), 2)
+        _technical.replaceTextInWordApp(wordDoc.Range, "$ДатаПриказа$", BuildOrder.ДатаПриказа.Text)
+        _technical.replaceTextInWordApp(wordDoc.Range, "$НомерГруппы$", BuildOrder.groupNumber.Text)
+        _technical.replaceTextInWordApp(wordDoc.Range, "$Программа$", studentsData(1, 0), 2)
+        _technical.replaceTextInWordApp(wordDoc.Range, "$Часы$", studentsData(4, 0), 2)
+        _technical.replaceTextInWordApp(wordDoc.Range, "$ПП/Стаж$", ppOrStaj, 2)
+        _technical.replaceTextInWordApp(wordDoc.Range, "$ДатаН$", studentsData(2, 0), 2)
+        _technical.replaceTextInWordApp(wordDoc.Range, "$ДатаК$", studentsData(3, 0), 2)
 
-        Вспомогательный.replaceTextInWordApp(wordDoc.Range, "$ПредседательИО$", АСформироватьПриказ.Ответственный.Text, 2)
-        Вспомогательный.replaceTextInWordApp(wordDoc.Range, "$ПредседательДолжность$", АСформироватьПриказ.ОтветственныйДолжность.Text, 2)
-        Вспомогательный.replaceTextInWordApp(wordDoc.Range, "$ЗПредседательИО$", АСформироватьПриказ.ЗамПредседателя.Text, 2)
-        Вспомогательный.replaceTextInWordApp(wordDoc.Range, "$ЗПредседательДолжность$", АСформироватьПриказ.ЗамПредседателяДолжность.Text, 2)
+        _technical.replaceTextInWordApp(wordDoc.Range, "$ПредседательИО$", BuildOrder.Ответственный.Text, 2)
+        _technical.replaceTextInWordApp(wordDoc.Range, "$ПредседательДолжность$", BuildOrder.ОтветственныйДолжность.Text, 2)
+        _technical.replaceTextInWordApp(wordDoc.Range, "$ЗПредседательИО$", BuildOrder.ЗамПредседателя.Text, 2)
+        _technical.replaceTextInWordApp(wordDoc.Range, "$ЗПредседательДолжность$", BuildOrder.ЗамПредседателяДолжность.Text, 2)
 
-        Вспомогательный.replaceTextInWordApp(wordDoc.Range, "$Комиссия1ИО$", АСформироватьПриказ.РуководительСтажировки.Text, 2)
-        Вспомогательный.replaceTextInWordApp(wordDoc.Range, "$Комиссия1Должность$", АСформироватьПриказ.РуководительСтажировкиДолжность.Text, 2)
+        _technical.replaceTextInWordApp(wordDoc.Range, "$Комиссия1ИО$", BuildOrder.РуководительСтажировки.Text, 2)
+        _technical.replaceTextInWordApp(wordDoc.Range, "$Комиссия1Должность$", BuildOrder.РуководительСтажировкиДолжность.Text, 2)
 
-        Вспомогательный.replaceTextInWordApp(wordDoc.Range, "$Комиссия2ИО$", АСформироватьПриказ.Комиссия2.Text, 2)
-        Вспомогательный.replaceTextInWordApp(wordDoc.Range, "$Комиссия2Должность$", АСформироватьПриказ.Комиссия2Должность.Text, 2)
+        _technical.replaceTextInWordApp(wordDoc.Range, "$Комиссия2ИО$", BuildOrder.Комиссия2.Text, 2)
+        _technical.replaceTextInWordApp(wordDoc.Range, "$Комиссия2Должность$", BuildOrder.Комиссия2Должность.Text, 2)
 
-        Вспомогательный.replaceTextInWordApp(wordDoc.Range, "$Комиссия3ИО$", АСформироватьПриказ.Комиссия3.Text, 2)
-        Вспомогательный.replaceTextInWordApp(wordDoc.Range, "$Комиссия3Должность$", АСформироватьПриказ.Комиссия3Должность.Text, 2)
+        _technical.replaceTextInWordApp(wordDoc.Range, "$Комиссия3ИО$", BuildOrder.Комиссия3.Text, 2)
+        _technical.replaceTextInWordApp(wordDoc.Range, "$Комиссия3Должность$", BuildOrder.Комиссия3Должность.Text, 2)
 
-        Вспомогательный.replaceTextInWordApp(wordDoc.Range, "$СКомиссииИО$", АСформироватьПриказ.СекретарьКомиссии.Text, 2)
-        Вспомогательный.replaceTextInWordApp(wordDoc.Range, "$СКомиссииДолжность$", АСформироватьПриказ.СекретарьКомиссииДолжность.Text, 2)
+        _technical.replaceTextInWordApp(wordDoc.Range, "$СКомиссииИО$", BuildOrder.СекретарьКомиссии.Text, 2)
+        _technical.replaceTextInWordApp(wordDoc.Range, "$СКомиссииДолжность$", BuildOrder.СекретарьКомиссииДолжность.Text, 2)
 
         ТаблицаУтверждаю(wordApp, wordDoc, "$ТаблицаУтверждаю$", "$КонецОсновногоРаздела$", True, "$ТаблицаСекретарь$")
 
-        Вспомогательный.replaceTextInWordApp(wordDoc.Range, "$ТаблицаУтверждаю$", АСформироватьПриказ.УтверждаетДолжность.Text)
-        Вспомогательный.replaceTextInWordApp(wordDoc.Range, "$УтверждаюИО$", АСформироватьПриказ.Утверждает.Text)
-        Вспомогательный.replaceTextInWordApp(wordDoc.Range, "$ТаблицаСекретарь$", "Секретарь комиссии:")
+        _technical.replaceTextInWordApp(wordDoc.Range, "$ТаблицаУтверждаю$", BuildOrder.УтверждаетДолжность.Text)
+        _technical.replaceTextInWordApp(wordDoc.Range, "$УтверждаюИО$", BuildOrder.Утверждает.Text)
+        _technical.replaceTextInWordApp(wordDoc.Range, "$ТаблицаСекретарь$", "Секретарь комиссии:")
 
 
         СкопироватьТаблицуИзШаблона(wordApp, wordDoc, resourcesPath & "Шаблоны\ПК_Окончание\ТаблицаСогласование.docx", 1)
 
-        Вспомогательный.replaceTextInWordApp(wordDoc.Range, "$ВноситДолжность$", АСформироватьПриказ.ПроектВноситДолжность.Text)
-        Вспомогательный.replaceTextInWordApp(wordDoc.Range, "$ИОФамилияВносит$", rotate(АСформироватьПриказ.ПроектВносит.Text))
-        Вспомогательный.replaceTextInWordApp(wordDoc.Range, "$ИсполнительДолжность$", АСформироватьПриказ.ИсполнительДолжность.Text)
-        Вспомогательный.replaceTextInWordApp(wordDoc.Range, "$ИОФамилияИсполнитель$", rotate(АСформироватьПриказ.Исполнитель.Text))
-        Вспомогательный.replaceTextInWordApp(wordDoc.Range, "$Согласовано1Должность$", АСформироватьПриказ.Согласовано1Должность.Text)
-        Вспомогательный.replaceTextInWordApp(wordDoc.Range, "$ИОФамилияСогласовано1$", rotate(АСформироватьПриказ.Согласовано1.Text))
-        Вспомогательный.replaceTextInWordApp(wordDoc.Range, "$Согласовано2Должность$", АСформироватьПриказ.Согласовано2Должность.Text)
-        Вспомогательный.replaceTextInWordApp(wordDoc.Range, "$ИОФамилияСогласовано2$", rotate(АСформироватьПриказ.Согласовано2.Text))
+        _technical.replaceTextInWordApp(wordDoc.Range, "$ВноситДолжность$", BuildOrder.ПроектВноситДолжность.Text)
+        _technical.replaceTextInWordApp(wordDoc.Range, "$ИОФамилияВносит$", rotate(BuildOrder.ПроектВносит.Text))
+        _technical.replaceTextInWordApp(wordDoc.Range, "$ИсполнительДолжность$", BuildOrder.ИсполнительДолжность.Text)
+        _technical.replaceTextInWordApp(wordDoc.Range, "$ИОФамилияИсполнитель$", rotate(BuildOrder.Исполнитель.Text))
+        _technical.replaceTextInWordApp(wordDoc.Range, "$Согласовано1Должность$", BuildOrder.Согласовано1Должность.Text)
+        _technical.replaceTextInWordApp(wordDoc.Range, "$ИОФамилияСогласовано1$", rotate(BuildOrder.Согласовано1.Text))
+        _technical.replaceTextInWordApp(wordDoc.Range, "$Согласовано2Должность$", BuildOrder.Согласовано2Должность.Text)
+        _technical.replaceTextInWordApp(wordDoc.Range, "$ИОФамилияСогласовано2$", rotate(BuildOrder.Согласовано2.Text))
 
         wordDoc.Bookmarks("\EndOfDoc").Range.InsertBreak(Type:=7)
 
@@ -92,35 +92,35 @@
         rangeObj.SetRange(Start:=rangeObj.Start,
         End:=wordDoc.Bookmarks("\EndOfDoc").Range.End)
 
-        Dim DATEq As Date = АСформироватьПриказ.ДатаПриказа.Text
+        Dim DATEq As Date = BuildOrder.ДатаПриказа.Text
 
-        Вспомогательный.replaceTextInWordApp(rangeObj, "$НомерПротокола$", studentsData(8, 0))
-        Вспомогательный.replaceTextInWordApp(rangeObj, "$Программа$", studentsData(1, 0))
-        Вспомогательный.replaceTextInWordApp(rangeObj, "$День$", Convert.ToDateTime(studentsData(3, 0)).Day)
-        Вспомогательный.replaceTextInWordApp(rangeObj, "$Месяц$", месяцРП(Format(Convert.ToDateTime(studentsData(3, 0)), "MMMM")), 2)
-        Вспомогательный.replaceTextInWordApp(rangeObj, "$Год$", Convert.ToDateTime(studentsData(3, 0)).Year)
-        Вспомогательный.replaceTextInWordApp(rangeObj, "$ДатаН$", studentsData(2, 0), 2)
-        Вспомогательный.replaceTextInWordApp(rangeObj, "$ДатаК$", studentsData(3, 0), 2)
+        _technical.replaceTextInWordApp(rangeObj, "$НомерПротокола$", studentsData(8, 0))
+        _technical.replaceTextInWordApp(rangeObj, "$Программа$", studentsData(1, 0))
+        _technical.replaceTextInWordApp(rangeObj, "$День$", Convert.ToDateTime(studentsData(3, 0)).Day)
+        _technical.replaceTextInWordApp(rangeObj, "$Месяц$", месяцРП(Format(Convert.ToDateTime(studentsData(3, 0)), "MMMM")), 2)
+        _technical.replaceTextInWordApp(rangeObj, "$Год$", Convert.ToDateTime(studentsData(3, 0)).Year)
+        _technical.replaceTextInWordApp(rangeObj, "$ДатаН$", studentsData(2, 0), 2)
+        _technical.replaceTextInWordApp(rangeObj, "$ДатаК$", studentsData(3, 0), 2)
 
-        Вспомогательный.replaceTextInWordApp(rangeObj, "$ИОПредседатель$", rotate(АСформироватьПриказ.Ответственный.Text))
-        Вспомогательный.replaceTextInWordApp(rangeObj, "$ПредседательДолжность$", АСформироватьПриказ.ОтветственныйДолжность.Text)
-        Вспомогательный.replaceTextInWordApp(rangeObj, "$ИОЗПредседатель$", rotate(АСформироватьПриказ.ЗамПредседателя.Text))
-        Вспомогательный.replaceTextInWordApp(rangeObj, "$ЗПредседательДолжность$", АСформироватьПриказ.ЗамПредседателяДолжность.Text)
+        _technical.replaceTextInWordApp(rangeObj, "$ИОПредседатель$", rotate(BuildOrder.Ответственный.Text))
+        _technical.replaceTextInWordApp(rangeObj, "$ПредседательДолжность$", BuildOrder.ОтветственныйДолжность.Text)
+        _technical.replaceTextInWordApp(rangeObj, "$ИОЗПредседатель$", rotate(BuildOrder.ЗамПредседателя.Text))
+        _technical.replaceTextInWordApp(rangeObj, "$ЗПредседательДолжность$", BuildOrder.ЗамПредседателяДолжность.Text)
 
-        Вспомогательный.replaceTextInWordApp(rangeObj, "$ИОКомиссия1$", rotate(АСформироватьПриказ.РуководительСтажировки.Text))
-        Вспомогательный.replaceTextInWordApp(rangeObj, "$Комиссия1Должность$", АСформироватьПриказ.РуководительСтажировкиДолжность.Text, 2)
+        _technical.replaceTextInWordApp(rangeObj, "$ИОКомиссия1$", rotate(BuildOrder.РуководительСтажировки.Text))
+        _technical.replaceTextInWordApp(rangeObj, "$Комиссия1Должность$", BuildOrder.РуководительСтажировкиДолжность.Text, 2)
 
-        Вспомогательный.replaceTextInWordApp(rangeObj, "$ИОКомиссия2$", rotate(АСформироватьПриказ.Комиссия2.Text))
-        Вспомогательный.replaceTextInWordApp(rangeObj, "$Комиссия2Должность$", АСформироватьПриказ.Комиссия2Должность.Text, 2)
+        _technical.replaceTextInWordApp(rangeObj, "$ИОКомиссия2$", rotate(BuildOrder.Комиссия2.Text))
+        _technical.replaceTextInWordApp(rangeObj, "$Комиссия2Должность$", BuildOrder.Комиссия2Должность.Text, 2)
 
-        Вспомогательный.replaceTextInWordApp(rangeObj, "$ИОКомиссия3$", rotate(АСформироватьПриказ.Комиссия3.Text))
-        Вспомогательный.replaceTextInWordApp(rangeObj, "$Комиссия3Должность$", АСформироватьПриказ.Комиссия3Должность.Text, 2)
+        _technical.replaceTextInWordApp(rangeObj, "$ИОКомиссия3$", rotate(BuildOrder.Комиссия3.Text))
+        _technical.replaceTextInWordApp(rangeObj, "$Комиссия3Должность$", BuildOrder.Комиссия3Должность.Text, 2)
 
-        Вспомогательный.replaceTextInWordApp(rangeObj, "$ИОСКомиссии$", rotate(АСформироватьПриказ.СекретарьКомиссии.Text))
-        Вспомогательный.replaceTextInWordApp(rangeObj, "$СКомиссииДолжность$", АСформироватьПриказ.СекретарьКомиссииДолжность.Text, 2)
+        _technical.replaceTextInWordApp(rangeObj, "$ИОСКомиссии$", rotate(BuildOrder.СекретарьКомиссии.Text))
+        _technical.replaceTextInWordApp(rangeObj, "$СКомиссииДолжность$", BuildOrder.СекретарьКомиссииДолжность.Text, 2)
 
-        Вспомогательный.replaceTextInWordApp(rangeObj, "$Часы$", studentsData(4, 0), 2)
-        Вспомогательный.replaceTextInWordApp(rangeObj, "$ПП/Стаж2$", ppOrStaj2, 2)
+        _technical.replaceTextInWordApp(rangeObj, "$Часы$", studentsData(4, 0), 2)
+        _technical.replaceTextInWordApp(rangeObj, "$ПП/Стаж2$", ppOrStaj2, 2)
 
         table = НайтиТаблицуПоМеткеИлиНеНайдена(wordDoc, "$СписокСлушателей$", 2, 3)
 
@@ -169,29 +169,29 @@
         Область.SetRange(Start:=Область.Start,
         End:=ДокументВорд.Bookmarks("\EndOfDoc").Range.End)
 
-        Вспомогательный.replaceTextInWordApp(Область, "$Программа$", ДанныеСлушателей(1, 0))
-        Вспомогательный.replaceTextInWordApp(Область, "$День$", Format(АСформироватьПриказ.ДатаПриказа.Value, "dd"), 2)
-        Вспомогательный.replaceTextInWordApp(Область, "$Месяц$", месяцРП(Format(АСформироватьПриказ.ДатаПриказа.Value, "MMMM")), 2)
-        Вспомогательный.replaceTextInWordApp(Область, "$Год$", Format(АСформироватьПриказ.ДатаПриказа.Value, "yyyy"), 2)
-        Вспомогательный.replaceTextInWordApp(Область, "$ДатаН$", ДанныеСлушателей(2, 0), 2)
+        _technical.replaceTextInWordApp(Область, "$Программа$", ДанныеСлушателей(1, 0))
+        _technical.replaceTextInWordApp(Область, "$День$", Format(BuildOrder.ДатаПриказа.Value, "dd"), 2)
+        _technical.replaceTextInWordApp(Область, "$Месяц$", месяцРП(Format(BuildOrder.ДатаПриказа.Value, "MMMM")), 2)
+        _technical.replaceTextInWordApp(Область, "$Год$", Format(BuildOrder.ДатаПриказа.Value, "yyyy"), 2)
+        _technical.replaceTextInWordApp(Область, "$ДатаН$", ДанныеСлушателей(2, 0), 2)
 
-        Вспомогательный.replaceTextInWordApp(Область, "$ИОПредседатель$", rotate(АСформироватьПриказ.Ответственный.Text))
-        Вспомогательный.replaceTextInWordApp(Область, "$ПредседательДолжность$", АСформироватьПриказ.ОтветственныйДолжность.Text)
+        _technical.replaceTextInWordApp(Область, "$ИОПредседатель$", rotate(BuildOrder.Ответственный.Text))
+        _technical.replaceTextInWordApp(Область, "$ПредседательДолжность$", BuildOrder.ОтветственныйДолжность.Text)
 
-        Вспомогательный.replaceTextInWordApp(Область, "$ИОЗПредседатель$", rotate(АСформироватьПриказ.ЗамПредседателя.Text))
-        Вспомогательный.replaceTextInWordApp(Область, "$ЗПредседательДолжность$", АСформироватьПриказ.ЗамПредседателяДолжность.Text)
+        _technical.replaceTextInWordApp(Область, "$ИОЗПредседатель$", rotate(BuildOrder.ЗамПредседателя.Text))
+        _technical.replaceTextInWordApp(Область, "$ЗПредседательДолжность$", BuildOrder.ЗамПредседателяДолжность.Text)
 
-        Вспомогательный.replaceTextInWordApp(Область, "$ИОКомиссия1$", rotate(АСформироватьПриказ.РуководительСтажировки.Text))
-        Вспомогательный.replaceTextInWordApp(Область, "$Комиссия1Должность$", АСформироватьПриказ.РуководительСтажировкиДолжность.Text, 2)
+        _technical.replaceTextInWordApp(Область, "$ИОКомиссия1$", rotate(BuildOrder.РуководительСтажировки.Text))
+        _technical.replaceTextInWordApp(Область, "$Комиссия1Должность$", BuildOrder.РуководительСтажировкиДолжность.Text, 2)
 
-        Вспомогательный.replaceTextInWordApp(Область, "$ИОКомиссия2$", rotate(АСформироватьПриказ.Комиссия2.Text))
-        Вспомогательный.replaceTextInWordApp(Область, "$Комиссия2Должность$", АСформироватьПриказ.Комиссия2Должность.Text, 2)
+        _technical.replaceTextInWordApp(Область, "$ИОКомиссия2$", rotate(BuildOrder.Комиссия2.Text))
+        _technical.replaceTextInWordApp(Область, "$Комиссия2Должность$", BuildOrder.Комиссия2Должность.Text, 2)
 
-        Вспомогательный.replaceTextInWordApp(Область, "$ИОКомиссия3$", rotate(АСформироватьПриказ.Комиссия3.Text))
-        Вспомогательный.replaceTextInWordApp(Область, "$Комиссия3Должность$", АСформироватьПриказ.Комиссия3Должность.Text, 2)
+        _technical.replaceTextInWordApp(Область, "$ИОКомиссия3$", rotate(BuildOrder.Комиссия3.Text))
+        _technical.replaceTextInWordApp(Область, "$Комиссия3Должность$", BuildOrder.Комиссия3Должность.Text, 2)
 
-        Вспомогательный.replaceTextInWordApp(Область, "$ИОСКомиссии$", rotate(АСформироватьПриказ.СекретарьКомиссии.Text))
-        Вспомогательный.replaceTextInWordApp(Область, "$СКомиссииДолжность$", АСформироватьПриказ.СекретарьКомиссииДолжность.Text, 2)
+        _technical.replaceTextInWordApp(Область, "$ИОСКомиссии$", rotate(BuildOrder.СекретарьКомиссии.Text))
+        _technical.replaceTextInWordApp(Область, "$СКомиссииДолжность$", BuildOrder.СекретарьКомиссииДолжность.Text, 2)
 
         For Счетчик = 1 To UBound(ДанныеСлушателей, 2)
 
@@ -204,11 +204,11 @@
 
             Область2.SetRange(Start:=Область2.Start,
         End:=ДокументВорд.Bookmarks("\EndOfDoc").Range.End)
-            Вспомогательный.replaceTextInWordApp(Область2, "$СлушательИмяОтчество$", ДанныеСлушателей(0, Счетчик))
+            _technical.replaceTextInWordApp(Область2, "$СлушательИмяОтчество$", ДанныеСлушателей(0, Счетчик))
 
         Next
 
-        Вспомогательный.replaceTextInWordApp(Область, "$СлушательИмяОтчество$", ДанныеСлушателей(0, 0))
+        _technical.replaceTextInWordApp(Область, "$СлушательИмяОтчество$", ДанныеСлушателей(0, 0))
 
     End Sub
 

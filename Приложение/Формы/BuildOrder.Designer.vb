@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
-Partial Class АСформироватьПриказ
+Partial Class BuildOrder
     Inherits System.Windows.Forms.Form
 
     'Форма переопределяет dispose для очистки списка компонентов.
@@ -23,7 +23,6 @@ Partial Class АСформироватьПриказ
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Me.НомерГруппы = New System.Windows.Forms.TextBox()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.ДатаПриказа = New System.Windows.Forms.DateTimePicker()
         Me.Label1 = New System.Windows.Forms.Label()
@@ -60,7 +59,7 @@ Partial Class АСформироватьПриказ
         Me.Label25 = New System.Windows.Forms.Label()
         Me.НомерДоговора = New System.Windows.Forms.TextBox()
         Me.LabelНомерДоговора = New System.Windows.Forms.Label()
-        Me.ListViewСписокСлушателей = New System.Windows.Forms.ListView()
+        Me.tableStudentsList = New System.Windows.Forms.ListView()
         Me.ColumnHeader1 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ColumnHeader2 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.LabelИзмениПадеж = New System.Windows.Forms.Label()
@@ -103,15 +102,8 @@ Partial Class АСформироватьПриказ
         Me.СекретарьКомиссииДолжность = New System.Windows.Forms.ComboBox()
         Me.ЗамПредседателя = New System.Windows.Forms.ComboBox()
         Me.ЗамПредседателяДолжность = New System.Windows.Forms.ComboBox()
+        Me.groupNumber = New System.Windows.Forms.TextBox()
         Me.SuspendLayout()
-        '
-        'НомерГруппы
-        '
-        Me.НомерГруппы.Location = New System.Drawing.Point(260, 12)
-        Me.НомерГруппы.Name = "НомерГруппы"
-        Me.НомерГруппы.ReadOnly = True
-        Me.НомерГруппы.Size = New System.Drawing.Size(318, 20)
-        Me.НомерГруппы.TabIndex = 1
         '
         'Label3
         '
@@ -464,21 +456,21 @@ Partial Class АСформироватьПриказ
         Me.LabelНомерДоговора.Text = "Номер договора"
         Me.LabelНомерДоговора.Visible = False
         '
-        'ListViewСписокСлушателей
+        'tableStudentsList
         '
-        Me.ListViewСписокСлушателей.CheckBoxes = True
-        Me.ListViewСписокСлушателей.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.ColumnHeader1, Me.ColumnHeader2})
-        Me.ListViewСписокСлушателей.FullRowSelect = True
-        Me.ListViewСписокСлушателей.GridLines = True
-        Me.ListViewСписокСлушателей.HideSelection = False
-        Me.ListViewСписокСлушателей.Location = New System.Drawing.Point(818, 33)
-        Me.ListViewСписокСлушателей.MultiSelect = False
-        Me.ListViewСписокСлушателей.Name = "ListViewСписокСлушателей"
-        Me.ListViewСписокСлушателей.Size = New System.Drawing.Size(811, 575)
-        Me.ListViewСписокСлушателей.TabIndex = 21
-        Me.ListViewСписокСлушателей.UseCompatibleStateImageBehavior = False
-        Me.ListViewСписокСлушателей.View = System.Windows.Forms.View.Details
-        Me.ListViewСписокСлушателей.Visible = False
+        Me.tableStudentsList.CheckBoxes = True
+        Me.tableStudentsList.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.ColumnHeader1, Me.ColumnHeader2})
+        Me.tableStudentsList.FullRowSelect = True
+        Me.tableStudentsList.GridLines = True
+        Me.tableStudentsList.HideSelection = False
+        Me.tableStudentsList.Location = New System.Drawing.Point(818, 33)
+        Me.tableStudentsList.MultiSelect = False
+        Me.tableStudentsList.Name = "tableStudentsList"
+        Me.tableStudentsList.Size = New System.Drawing.Size(811, 575)
+        Me.tableStudentsList.TabIndex = 21
+        Me.tableStudentsList.UseCompatibleStateImageBehavior = False
+        Me.tableStudentsList.View = System.Windows.Forms.View.Details
+        Me.tableStudentsList.Visible = False
         '
         'ColumnHeader1
         '
@@ -895,11 +887,20 @@ Partial Class АСформироватьПриказ
         Me.ЗамПредседателяДолжность.Size = New System.Drawing.Size(546, 21)
         Me.ЗамПредседателяДолжность.TabIndex = 195
         '
-        'АСформироватьПриказ
+        'groupNumber
+        '
+        Me.groupNumber.Location = New System.Drawing.Point(260, 13)
+        Me.groupNumber.Name = "groupNumber"
+        Me.groupNumber.ReadOnly = True
+        Me.groupNumber.Size = New System.Drawing.Size(318, 20)
+        Me.groupNumber.TabIndex = 197
+        '
+        'BuildOrder
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1632, 1018)
+        Me.Controls.Add(Me.groupNumber)
         Me.Controls.Add(Me.ЗамПредседателяДолжность)
         Me.Controls.Add(Me.ЗамПредседателя)
         Me.Controls.Add(Me.СекретарьКомиссииДолжность)
@@ -926,7 +927,7 @@ Partial Class АСформироватьПриказ
         Me.Controls.Add(Me.Включить6)
         Me.Controls.Add(Me.Включить5)
         Me.Controls.Add(Me.LabelИзмениПадеж)
-        Me.Controls.Add(Me.ListViewСписокСлушателей)
+        Me.Controls.Add(Me.tableStudentsList)
         Me.Controls.Add(Me.НомерДоговора)
         Me.Controls.Add(Me.LabelНомерДоговора)
         Me.Controls.Add(Me.ИтоговаяАттестация)
@@ -965,7 +966,6 @@ Partial Class АСформироватьПриказ
         Me.Controls.Add(Me.Label6)
         Me.Controls.Add(Me.GroupBox1)
         Me.Controls.Add(Me.Label1)
-        Me.Controls.Add(Me.НомерГруппы)
         Me.Controls.Add(Me.Label3)
         Me.Controls.Add(Me.ДатаПриказа)
         Me.Controls.Add(Me.GroupBox4)
@@ -978,15 +978,13 @@ Partial Class АСформироватьПриказ
         Me.Controls.Add(Me.GroupBox12)
         Me.Controls.Add(Me.GroupBox11)
         Me.KeyPreview = True
-        Me.Name = "АСформироватьПриказ"
+        Me.Name = "BuildOrder"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
         Me.Text = "Приказ"
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
     End Sub
-
-    Friend WithEvents НомерГруппы As TextBox
     Friend WithEvents Label3 As Label
     Friend WithEvents ДатаПриказа As DateTimePicker
     Friend WithEvents Label1 As Label
@@ -1023,7 +1021,7 @@ Partial Class АСформироватьПриказ
     Friend WithEvents Label25 As Label
     Friend WithEvents НомерДоговора As TextBox
     Friend WithEvents LabelНомерДоговора As Label
-    Friend WithEvents ListViewСписокСлушателей As ListView
+    Friend WithEvents tableStudentsList As ListView
     Friend WithEvents ColumnHeader1 As ColumnHeader
     Friend WithEvents ColumnHeader2 As ColumnHeader
     Friend WithEvents LabelИзмениПадеж As Label
@@ -1066,4 +1064,5 @@ Partial Class АСформироватьПриказ
     Friend WithEvents СекретарьКомиссииДолжность As ComboBox
     Friend WithEvents ЗамПредседателя As ComboBox
     Friend WithEvents ЗамПредседателяДолжность As ComboBox
+    Friend WithEvents groupNumber As TextBox
 End Class

@@ -103,28 +103,6 @@
         Public modul_10 As Boolean
     End Structure
 
-    Public Sub cleaкForm(currentForm As Form)
-
-        For Each element As TextBox In currentForm.Controls.OfType(Of TextBox)
-
-            element.Clear()
-
-        Next
-
-        For Each element As ComboBox In currentForm.Controls.OfType(Of ComboBox)
-
-            element.Text = ""
-
-        Next
-
-        For Each element As DateTimePicker In currentForm.Controls.OfType(Of DateTimePicker)
-
-            element.Value = "01.01.1753"
-
-        Next
-
-    End Sub
-
     Public Sub saveParameters(currentForm As Form)
 
         For Each element As TextBox In currentForm.Controls.OfType(Of TextBox)
@@ -322,13 +300,13 @@
 
         If Not checkRequiredField(currentForm) Then
 
-            предупреждение.текст.Text = "Необходимо заполнить обязательные поля"
+            Warning.content.Text = "Необходимо заполнить обязательные поля"
 
             Try
-                предупреждение.ShowDialog()
+                Warning.ShowDialog()
             Catch ex As Exception
-                предупреждение.Close()
-                предупреждение.ShowDialog()
+                Warning.Close()
+                Warning.ShowDialog()
             End Try
 
             Return False
@@ -356,31 +334,23 @@
     Function checkRequiredField(currentForm As Form) As Boolean
 
         For Each element In currentForm.Controls.OfType(Of ComboBox)
-
             If validationField(element.Name) Then
-
                 If element.Text = "" And element.Visible = True And element.Enabled = True Then
 
                     Return False
 
                 End If
-
             End If
-
         Next
 
         For Each element In currentForm.Controls.OfType(Of TextBox)
-
             If validationField(element.Name) Then
-
                 If element.Text = "" And element.Visible = True And element.Enabled = True Then
 
                     Return False
 
                 End If
-
             End If
-
         Next
 
         Return True
@@ -406,7 +376,7 @@
 
                     Case "профессиональная переподготовка"
 
-                        If НоваяГруппа.НоваяГруппаУровеньКвалификации.Text = "профессиональная переподготовка" Then
+                        If newGroup.НоваяГруппаУровеньКвалификации.Text = "профессиональная переподготовка" Then
                             If Not checkNumber(struct_grup.numbersUDS.numberD, "Серия и номер диплома") Then
                                 Return False
                             End If
@@ -421,7 +391,7 @@
 
                     Case "профессиональное обучение"
 
-                        If НоваяГруппа.НоваяГруппаУровеньКвалификации.Text = "профессиональное обучение" Then
+                        If newGroup.НоваяГруппаУровеньКвалификации.Text = "профессиональное обучение" Then
 
                             If Not checkNumber(struct_grup.numbersUDS.regNumberSv, "Серия и номер свидетельства") Then
                                 Return False

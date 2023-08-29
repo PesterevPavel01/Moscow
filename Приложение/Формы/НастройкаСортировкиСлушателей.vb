@@ -35,7 +35,7 @@
     End Sub
 
     Private Sub НастройкаСортировкиСлушателей_Closed(sender As Object, e As EventArgs) Handles Me.Closed
-        ФормаСправочникСлушатели.search()
+        studentsList.search()
     End Sub
 
     Public Sub checkedAnyValue(value As String)

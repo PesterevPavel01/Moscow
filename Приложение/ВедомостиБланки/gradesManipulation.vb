@@ -1,6 +1,6 @@
 ﻿Imports System.Windows.Forms.VisualStyles.VisualStyleElement.ProgressBar
 
-Module АДействияСОВедомостью
+Module gradesManipulation
 
     Public СписокСлушателей
     Sub ЗаписатьСписокСлушателей(Список As Object)
@@ -25,7 +25,7 @@ Module АДействияСОВедомостью
             End If
         Next
     End Function
-    Sub СохранитьОценки(Ведомость As Object, kod As Integer)
+    Sub saveVal(Ведомость As Object, kod As Integer)
         Dim querys, fio, checkArray
         Dim queryString, snils As String
         Dim counter As Integer = 0, rowsCounter As Integer
@@ -36,11 +36,11 @@ Module АДействияСОВедомостью
         rowsCounter = Ведомость.Rows.Count
 
         For counter = 0 To rowsCounter - 1
-            If IsNothing(ОценочнаяВедомость.resultTable.Rows(counter).Cells(1).Value) Then
+            If IsNothing(Grades.resultTable.Rows(counter).Cells(1).Value) Then
                 Exit For
             End If
-            snils = loadSnils(CDbl(ОценочнаяВедомость.resultTable.Rows(counter).Cells(0).Value))
-            fio = Split(ОценочнаяВедомость.resultTable.Rows(counter).Cells(1).Value, " ")
+            snils = loadSnils(CDbl(Grades.resultTable.Rows(counter).Cells(0).Value))
+            fio = Split(Grades.resultTable.Rows(counter).Cells(1).Value, " ")
             Try
                 queryString = oVedom__checkStudent(Convert.ToString(kod), snils)
             Catch ex As Exception
@@ -53,7 +53,7 @@ Module АДействияСОВедомостью
 
             For count As Int16 = 0 To 9
 
-                argument(count) = Convert.ToString(ОценочнаяВедомость.resultTable.Rows(counter).Cells(count + 2).Value)
+                argument(count) = Convert.ToString(Grades.resultTable.Rows(counter).Cells(count + 2).Value)
 
             Next
 
@@ -63,8 +63,8 @@ Module АДействияСОВедомостью
             Try
                 queryString = oVedom__updateOcenki(argument)
             Catch ex As Exception
-                предупреждение.текст.Text = "Информация не была сохранена"
-                openForm(предупреждение)
+                Warning.content.Text = "Информация не была сохранена"
+                openForm(Warning)
                 Exit Sub
             End Try
             MainForm.mySqlConnect.sendQuery(queryString, 1)
@@ -73,21 +73,21 @@ Module АДействияСОВедомостью
 
     End Sub
 
-    Function проверка(Ведомость As Object) As Boolean
+    Function check(Ведомость As Object) As Boolean
 
         If Ведомость.Rows.Count = 1 Then
 
-            проверка = True
+            check = True
 
         ElseIf Ведомость.Rows(0).Cells(1).Value = "" Then
 
-            проверка = True
+            check = True
 
         ElseIf IsNothing(Ведомость.Rows(0).Cells(1).Value) Then
 
-            проверка = True
+            check = True
 
-        Else проверка = False
+        Else check = False
 
         End If
 

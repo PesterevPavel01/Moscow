@@ -56,7 +56,7 @@ Public Class MySQLConnect
         array = recordset.GetRows()
         recordset.Close()
         AdodbConnection.Close()
-        array = УбратьПустотыВМассиве.УбратьПустотыВМассиве(array)
+        array = arrayMethod.removeEmpty(array)
 
         Return array
     End Function

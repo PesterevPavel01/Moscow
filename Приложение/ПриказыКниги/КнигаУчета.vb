@@ -25,14 +25,14 @@
 
         Массив = addZerosIntoArray(Массив, 0, 5)
 
-        ПутьККаталогуСРесурсами = Вспомогательный.resourcesPath()
+        ПутьККаталогуСРесурсами = _technical.resourcesPath()
         ПутьКШаблону = ПутьККаталогуСРесурсами & "Шаблоны/Книга учёта выданных" & Название & "о повышении квалификации.docx"
         ПутьКНовомуФайлу = ПутьККаталогуСРесурсами & "Отчеты/КнигиУчета/Книга учёта выданных удостоверений о повышении квалификации.docx"
 
         ПриложениеВорд = CreateObject("Word.Application")
         ДокументВорд = ПриложениеВорд.Documents.Open(ПутьКШаблону, ReadOnly:=True)
 
-        Вспомогательный.saveKniga(ДокументВорд, "Книга учета " & Критерий, ПутьККаталогуСРесурсами)
+        _technical.saveKniga(ДокументВорд, "Книга учета " & Критерий, ПутьККаталогуСРесурсами)
 
         'ПриложениеВорд.Visible = True
         Таблица = ДокументВорд.Tables(1)
@@ -59,12 +59,12 @@
 
         End If
 
-        listResult = УбратьПустотыВМассиве.УбратьПустотыВМассиве(MainForm.mySqlConnect.loadMySqlToArray(sqlQuery, 1))
+        listResult = arrayMethod.removeEmpty(MainForm.mySqlConnect.loadMySqlToArray(sqlQuery, 1))
 
         If listResult(0, 0).ToString = "нет записей" Then
 
-            предупреждение.текст.Text = "Нет данных для отображения"
-            openForm(предупреждение)
+            Warning.content.Text = "Нет данных для отображения"
+            openForm(Warning)
             ЗагрузитьСписок = listResult
             Exit Function
 

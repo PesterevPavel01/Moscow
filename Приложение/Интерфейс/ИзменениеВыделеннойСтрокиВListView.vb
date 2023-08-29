@@ -13,13 +13,13 @@
 
         If indForm = "СправочникСлушатели" Then
 
-            ListV = ФормаСправочникСлушатели.ListViewСписокСлушателей
+            ListV = studentsList.ListViewСписокСлушателей
 
         End If
 
-        If indForm = "ФормаСписок" Then
+        If indForm = "List" Then
 
-            ListV = ФормаСписок.ListViewСписок
+            ListV = List.resultList
 
         End If
 

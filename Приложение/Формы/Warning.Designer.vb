@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class предупреждение
+Partial Class Warning
     Inherits System.Windows.Forms.Form
 
     'Форма переопределяет dispose для очистки списка компонентов.
@@ -23,7 +23,7 @@ Partial Class предупреждение
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.Ok = New System.Windows.Forms.Button()
-        Me.текст = New System.Windows.Forms.Label()
+        Me.content = New System.Windows.Forms.Label()
         Me.TextBox = New System.Windows.Forms.TextBox()
         Me.SuspendLayout()
         '
@@ -38,13 +38,13 @@ Partial Class предупреждение
         '
         'текст
         '
-        Me.текст.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.текст.Location = New System.Drawing.Point(0, -1)
-        Me.текст.Name = "текст"
-        Me.текст.Size = New System.Drawing.Size(461, 98)
-        Me.текст.TabIndex = 1
-        Me.текст.Text = "Необходимо заполнить все обязательные поля!"
-        Me.текст.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.content.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
+        Me.content.Location = New System.Drawing.Point(0, -1)
+        Me.content.Name = "текст"
+        Me.content.Size = New System.Drawing.Size(461, 98)
+        Me.content.TabIndex = 1
+        Me.content.Text = "Необходимо заполнить все обязательные поля!"
+        Me.content.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'TextBox
         '
@@ -63,7 +63,7 @@ Partial Class предупреждение
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(461, 141)
         Me.Controls.Add(Me.TextBox)
-        Me.Controls.Add(Me.текст)
+        Me.Controls.Add(Me.content)
         Me.Controls.Add(Me.Ok)
         Me.Name = "предупреждение"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
@@ -74,6 +74,6 @@ Partial Class предупреждение
     End Sub
 
     Friend WithEvents Ok As Button
-    Friend WithEvents текст As Label
+    Friend WithEvents content As Label
     Friend WithEvents TextBox As TextBox
 End Class

@@ -39,16 +39,16 @@
         x = 0
 
         Try
-            number = MainForm.КоличествоСтрокВТаблице.Text
+            number = MainForm.maxNumberRows.Text
         Catch ex As Exception
 
-            предупреждение.текст.Text = "Настройки. Количество отображаемых строк в справочнике должно быть числом"
-            openForm(предупреждение)
+            Warning.content.Text = "Настройки. Количество отображаемых строк в справочнике должно быть числом"
+            openForm(Warning)
             Exit Sub
 
         End Try
 
-        If y > MainForm.КоличествоСтрокВТаблице.Text Then y = MainForm.КоличествоСтрокВТаблице.Text
+        If y > MainForm.maxNumberRows.Text Then y = MainForm.maxNumberRows.Text
 
 
         While x <= y
@@ -223,16 +223,16 @@
         x = 0
 
         Try
-            число = MainForm.КоличествоСтрокВТаблице.Text
+            число = MainForm.maxNumberRows.Text
         Catch ex As Exception
 
-            предупреждение.текст.Text = "Настройки. Количество отображаемых строк в справочнике должно быть числом"
-            openForm(предупреждение)
+            Warning.content.Text = "Настройки. Количество отображаемых строк в справочнике должно быть числом"
+            openForm(Warning)
             Exit Sub
 
         End Try
 
-        If y > MainForm.КоличествоСтрокВТаблице.Text Then y = MainForm.КоличествоСтрокВТаблице.Text
+        If y > MainForm.maxNumberRows.Text Then y = MainForm.maxNumberRows.Text
 
 
         While x <= y

@@ -108,21 +108,19 @@ Module OtchetExcell
 
         End While
 
-        resultList = УбратьПустотыВМассиве.УбратьПустотыВМассиве(resultList)
+        resultList = arrayMethod.removeEmpty(resultList)
 
         MainForm.Name = "Отчет" & Date.Now.ToShortDateString & "_" & MainForm.orderNumber.ToString & ".xlsx"
-        path = Вспомогательный.resourcesPath
+        path = _technical.resourcesPath
         path = path & "Отчеты\"
 
-        excellObjects = Вспомогательный.СозданиеКнигиЭксельИЛИОшибкаВ0(path, MainForm.Name, MainForm.orderNumber)
+        excellObjects = _technical.СозданиеКнигиЭксельИЛИОшибкаВ0(path, MainForm.Name, MainForm.orderNumber)
 
         If excellObjects(0).ToString = "Ошибка" Then
             Exit Sub
         End If
         excellApp = excellObjects(0)
         excellWorkBook = excellObjects(1)
-
-ПослеСохранения:
 
         MainForm.orderNumber = MainForm.orderNumber + 1
 
@@ -135,8 +133,8 @@ Module OtchetExcell
             If Not listData.Count = 0 Then
                 createORuk(excellSheet, listData, resultList, groupsArray)
             Else
-                предупреждение.текст.Text = "Нет информации отвечающей условиям отбора для отчета руководителя"
-                предупреждение.ShowDialog()
+                Warning.content.Text = "Нет информации отвечающей условиям отбора для отчета руководителя"
+                Warning.ShowDialog()
             End If
 
         End If
@@ -148,8 +146,8 @@ Module OtchetExcell
             If Not listData.Count = 0 Then
                 CreateRMANPO(excellApp, excellWorkBook, listData, resultList, groupsArray, MonthName(MainForm.ДатаКонцаОтчета.Value.Month))
             Else
-                предупреждение.текст.Text = "Нет информации отвечающей условиям отбора для отчета руководителя"
-                предупреждение.ShowDialog()
+                Warning.content.Text = "Нет информации отвечающей условиям отбора для отчета руководителя"
+                Warning.ShowDialog()
             End If
         End If
 
@@ -162,8 +160,8 @@ Module OtchetExcell
             If Not otchetList(0, 0).ToString = "нет записей" Then
                 createSPK(excellSheet, rotateArray(otchetList), "СводПоКурсам")
             Else
-                предупреждение.текст.Text = "Нет информации отвечающей условиям отбора для отчета Свод по курсам"
-                предупреждение.ShowDialog()
+                Warning.content.Text = "Нет информации отвечающей условиям отбора для отчета Свод по курсам"
+                Warning.ShowDialog()
             End If
         End If
 
@@ -176,8 +174,8 @@ Module OtchetExcell
             If Not otchetList.ToString = "нет записей" Then
                 createSPK(excellSheet, rotateArray(otchetList), "СводПоСпециальностям")
             Else
-                предупреждение.текст.Text = "Нет информации отвечающей условиям отбора для отчета Свод по специальностям"
-                предупреждение.ShowDialog()
+                Warning.content.Text = "Нет информации отвечающей условиям отбора для отчета Свод по специальностям"
+                Warning.ShowDialog()
             End If
         End If
 
@@ -190,8 +188,8 @@ Module OtchetExcell
             If Not otchetList.ToString = "нет записей" Then
                 createSPO(excellSheet, otchetList)
             Else
-                предупреждение.текст.Text = "Нет информации отвечающей условиям отбора для отчета Свод по организациям"
-                предупреждение.ShowDialog()
+                Warning.content.Text = "Нет информации отвечающей условиям отбора для отчета Свод по организациям"
+                Warning.ShowDialog()
             End If
         End If
 
@@ -213,8 +211,8 @@ Module OtchetExcell
             If Not listData.Count = 0 Then
                 createBVB(excellSheet, otchetList, hours)
             Else
-                предупреждение.текст.Text = "Нет информации отвечающей условиям отбора для отчета Бюджет/Внебюджет"
-                предупреждение.ShowDialog()
+                Warning.content.Text = "Нет информации отвечающей условиям отбора для отчета Бюджет/Внебюджет"
+                Warning.ShowDialog()
             End If
         End If
 
@@ -255,7 +253,7 @@ Module OtchetExcell
         sum_d = 0
         sum_e = 0
         sum_f = 0
-        resourcesPath = Вспомогательный.resourcesPath()
+        resourcesPath = _technical.resourcesPath()
         ПутьКШаблону = resourcesPath & "Шаблоны\Отчёт_РМАНПО.xlsx"
 
         Шаблон = Excell.Workbooks.Open(ПутьКШаблону, ReadOnly:=True)

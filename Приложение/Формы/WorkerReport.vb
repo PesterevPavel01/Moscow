@@ -1,4 +1,4 @@
-﻿Public Class ВедомостьПеднагрузка
+﻿Public Class WorkerReport
 
     Public kodGroup As Integer
     Private infoDataTable As DataTable
@@ -32,8 +32,8 @@
 
         If resultList(0, 0).ToString = "нет записей" Then
 
-            предупреждение.текст.Text = "Нет данных для отображения"
-            openForm(предупреждение)
+            Warning.content.Text = "Нет данных для отображения"
+            openForm(Warning)
             ActiveControl = pednagr__mainTable
             Exit Sub
 
@@ -80,13 +80,13 @@
             Exit Sub
         End If
 
-        sumLectures.Text = СуммаЗначенийВСтолбце(pednagr__mainTable, 1)
-        sumPracticals.Text = СуммаЗначенийВСтолбце(pednagr__mainTable, 2)
-        sumStimul.Text = СуммаЗначенийВСтолбце(pednagr__mainTable, 3)
-        sumConsultations.Text = СуммаЗначенийВСтолбце(pednagr__mainTable, 4)
-        sumIA.Text = СуммаЗначенийВСтолбце(pednagr__mainTable, 6)
-        sumPA.Text = СуммаЗначенийВСтолбце(pednagr__mainTable, 5)
-        sumResult.Text = СуммаЗначенийВСтолбце(pednagr__mainTable, 7)
+        sumLectures.Text = sumInColumn(pednagr__mainTable, 1)
+        sumPracticals.Text = sumInColumn(pednagr__mainTable, 2)
+        sumStimul.Text = sumInColumn(pednagr__mainTable, 3)
+        sumConsultations.Text = sumInColumn(pednagr__mainTable, 4)
+        sumIA.Text = sumInColumn(pednagr__mainTable, 6)
+        sumPA.Text = sumInColumn(pednagr__mainTable, 5)
+        sumResult.Text = sumInColumn(pednagr__mainTable, 7)
         Dim count As Integer
         Dim счетчикСтрок As Integer = 0
         For Each строка In pednagr__mainTable.Rows
@@ -97,7 +97,7 @@
             End If
 
             count = pednagr__mainTable.Columns.Count
-            Значение = СуммаЗначенийВСтроке(pednagr__mainTable, счетчикСтрок, 1, pednagr__mainTable.Columns.Count - 2)
+            Значение = sumInRow(pednagr__mainTable, счетчикСтрок, 1, pednagr__mainTable.Columns.Count - 2)
 
             If Значение = -1 Then
                 счетчикСтрок += 1
@@ -148,24 +148,20 @@
     End Sub
 
     Private Sub groupNumber_Click(sender As Object, e As EventArgs) Handles groupNumber.Click
+        List.resultList.Columns(0).Width = 120
+        List.resultList.Columns.Add("Год", 100)
+        List.resultList.Columns.Add("Код", 100)
+        List.textboxName = sender.Name
+        List.currentFormName = "WorkerReport"
 
-        ФормаСписок.ListViewСписок.Columns(0).Width = 120
-        ФормаСписок.ListViewСписок.Columns.Add("Год", 100)
-        ФормаСписок.ListViewСписок.Columns.Add("Код", 100)
-        ФормаСписок.textboxName = sender.Name
-        ФормаСписок.FormName = Name
+        List.ShowDialog()
 
-        ФормаСписок.headerVisible = True
-
-        ФормаСписок.ShowDialog()
-        ФормаСписок.ListViewСписок.Columns.RemoveAt(1)
-        ФормаСписок.ListViewСписок.Columns.RemoveAt(2)
-        ФормаСписок.ListViewСписок.Columns(1).Width = 50
-        ФормаСписок.ListViewСписок.Columns(1).Width = 620
-        ФормаСписок.ListViewСписок.Columns(1).Text = "Наименование"
+        List.resultList.Columns.RemoveAt(1)
+        List.resultList.Columns.RemoveAt(2)
+        List.resultList.Columns(1).Width = 50
+        List.resultList.Columns(1).Width = 620
+        List.resultList.Columns(1).Text = "Наименование"
 
         loadTables()
-
     End Sub
-
 End Class

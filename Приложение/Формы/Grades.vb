@@ -1,4 +1,4 @@
-﻿Public Class ОценочнаяВедомость
+﻿Public Class Grades
 
     Public kodGroup As Integer
     Private Sub loadTables()
@@ -16,8 +16,8 @@
 
         If list(0, 0).ToString = "нет записей" Then
 
-            предупреждение.текст.Text = "Нет данных для отображения"
-            openForm(предупреждение)
+            Warning.content.Text = "Нет данных для отображения"
+            openForm(Warning)
             ActiveControl = resultTable
             Exit Sub
 
@@ -29,8 +29,8 @@
 
         If Not (IsNumeric(result(0)) Or result(0) = "0") Then
 
-            предупреждение.текст.Text = "Нет данных для отображения"
-            openForm(предупреждение)
+            Warning.content.Text = "Нет данных для отображения"
+            openForm(Warning)
             ActiveControl = resultTable
             Return
 
@@ -38,9 +38,9 @@
 
         updateDataGreed(Convert.ToInt16(result(0)))
 
-        list = УбратьПустотыВМассиве.УбратьПустотыВМассиве(list)
+        list = arrayMethod.removeEmpty(list)
 
-        АДействияСОВедомостью.ЗаписатьСписокСлушателей(list)
+        gradesManipulation.ЗаписатьСписокСлушателей(list)
 
         counterRows = UBound(list, 2)
 
@@ -72,21 +72,20 @@
 
     Private Sub groupNumber_Click(sender As Object, e As EventArgs) Handles groupNumber.Click
 
-        ФормаСписок.ListViewСписок.Columns(0).Width = 120
-        ФормаСписок.ListViewСписок.Columns.Add("Год", 100)
-        ФормаСписок.ListViewСписок.Columns.Add("Код", 100)
-        ФормаСписок.textboxName = Me.ActiveControl.Name
-        ФормаСписок.FormName = Me.Name
+        List.resultList.Columns(0).Width = 120
+        List.resultList.Columns.Add("Год", 100)
+        List.resultList.Columns.Add("Код", 100)
+        List.textboxName = "groupNumber"
+        List.currentFormName = "Grades"
 
-        ФормаСписок.headerVisible = True
         kodGroup = -1
 
-        ФормаСписок.ShowDialog()
-        ФормаСписок.ListViewСписок.Columns.RemoveAt(1)
-        ФормаСписок.ListViewСписок.Columns.RemoveAt(2)
-        ФормаСписок.ListViewСписок.Columns(1).Width = 50
-        ФормаСписок.ListViewСписок.Columns(1).Width = 620
-        ФормаСписок.ListViewСписок.Columns(1).Text = "Наименование"
+        List.ShowDialog()
+        List.resultList.Columns.RemoveAt(1)
+        List.resultList.Columns.RemoveAt(2)
+        List.resultList.Columns(1).Width = 50
+        List.resultList.Columns(1).Width = 620
+        List.resultList.Columns(1).Text = "Наименование"
 
         If kodGroup <> -1 Then
             loadTables()
@@ -98,13 +97,11 @@
 
         ActiveControl = Button2
 
-        If АДействияСОВедомостью.проверка(resultTable) Then
-
-            Exit Sub
-
+        If gradesManipulation.check(resultTable) Then
+            Return
         End If
 
-        АДействияСОВедомостью.СохранитьОценки(resultTable, kodGroup)
+        gradesManipulation.saveVal(resultTable, kodGroup)
 
     End Sub
 
@@ -124,7 +121,7 @@
         interfaceMod.controlFont(Button2, 11.0F)
     End Sub
 
-    Private Sub ОценочнаяВедомость_KeyDown(sender As Object, e As KeyEventArgs) Handles Me.KeyDown
+    Private Sub Grades_KeyDown(sender As Object, e As KeyEventArgs) Handles Me.KeyDown
         Call pressTab(e.KeyCode, 40)
         Call pressTab(e.KeyCode, 39)
         Call closeEsc(Me, e.KeyCode)

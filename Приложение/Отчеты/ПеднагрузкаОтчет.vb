@@ -14,7 +14,7 @@
         End If
 
         excellApp.Visible = True
-        resourcesPath = Вспомогательный.resourcesPath()
+        resourcesPath = _technical.resourcesPath()
         samplePath = resourcesPath & "Шаблоны\Педнагрузка.xlsx"
         pathNewFile = resourcesPath & "Отчеты\"
 
@@ -29,7 +29,7 @@
 
         excellSheet = excellWorkbook.Worksheets(1)
         excellSheet.name = arg
-        ФорматированиеСтолбцов = Вспомогательный.styleColumn(excellSheet, excellSheet.ListObjects("Таблица"))
+        ФорматированиеСтолбцов = _technical.styleColumn(excellSheet, excellSheet.ListObjects("Таблица"))
         adressTbl = excellSheet.ListObjects("Таблица").Range.Address
         adress = Split(adressTbl, ":")
         list = rotateArray(list)
@@ -80,8 +80,8 @@
 
             If resultList.Count = 0 Then
 
-                предупреждение.текст.Text = "Нет данных для отображения"
-                openForm(предупреждение)
+                Warning.content.Text = "Нет данных для отображения"
+                openForm(Warning)
 
                 Return resultList
 
@@ -91,8 +91,8 @@
 
         ElseIf resultArr(0, 0).ToString = "нет записей" Then
 
-            предупреждение.текст.Text = "Нет данных для отображения"
-            openForm(предупреждение)
+            Warning.content.Text = "Нет данных для отображения"
+            openForm(Warning)
 
         End If
 
@@ -122,7 +122,7 @@
 
         End If
 
-        resourcesPath = Вспомогательный.resourcesPath()
+        resourcesPath = _technical.resourcesPath()
         samplePath = resourcesPath & "Шаблоны\Педнагрузка.xlsx"
         pathNewFile = resourcesPath & "Отчеты\"
 
@@ -132,7 +132,7 @@
 
         excellSheet = excellWorkbook.Worksheets(1)
         excellSheet.name = "педнагрузка_расш"
-        columnStyle = Вспомогательный.styleColumnRange(excellSheet, excellSheet.Range("firstRow"))
+        columnStyle = _technical.styleColumnRange(excellSheet, excellSheet.Range("firstRow"))
 
         titleRow = Strings.Replace(excellSheet.Range("title").Value, "$ДатаНачала$", MainForm.ДатаНачалаОтчета.Value.ToShortDateString)
         titleRow = Strings.Replace(titleRow, "$ДатаОкончания$", MainForm.ДатаКонцаОтчета.Value.ToShortDateString)

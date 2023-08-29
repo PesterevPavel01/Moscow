@@ -926,7 +926,7 @@ sotrudnik.in_list,
                      CONCAT(students.Фамилия,' ',students.Имя,' ',IFNULL(students.Отчество,' ')) 
                      FROM group_list 
                      INNER JOIN students ON group_list.students = students.Снилс 
-                     WHERE group_list.Kod = " & MainForm.prikazKodGroup & " 
+                     WHERE group_list.Kod = " & MainForm.orderIdGroup & " 
                      ORDER BY students.Фамилия"
         Return sqlString
 

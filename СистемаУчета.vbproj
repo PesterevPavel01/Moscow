@@ -177,7 +177,7 @@
     <Compile Include="Приложение\Worker.vb" />
     <Compile Include="Приложение\Group.vb" />
     <Compile Include="Приложение\Prikaz.vb" />
-    <Compile Include="Приложение\Slushatel.vb" />
+    <Compile Include="Приложение\Student.vb" />
     <Compile Include="Приложение\dataBase\MySQLConnect.vb" />
     <Compile Include="Приложение\dataBase\QueryString.vb" />
     <Compile Include="Приложение\Интерфейс\ListViewItemComparer.vb" />
@@ -191,10 +191,10 @@
     <Compile Include="Приложение\Отчеты\ПеднагрузкаОтчет.vb" />
     <Compile Include="Приложение\Интерфейс\RedactorDataGrid.vb" />
     <Compile Include="Приложение\ПриказыКниги\Приказ_Практика.vb" />
-    <Compile Include="Приложение\Формы\ВедомостьПеднагрузка.Designer.vb">
-      <DependentUpon>ВедомостьПеднагрузка.vb</DependentUpon>
+    <Compile Include="Приложение\Формы\WorkerReport.Designer.vb">
+      <DependentUpon>WorkerReport.vb</DependentUpon>
     </Compile>
-    <Compile Include="Приложение\Формы\ВедомостьПеднагрузка.vb">
+    <Compile Include="Приложение\Формы\WorkerReport.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="My Project\Resources.Designer.vb">
@@ -213,10 +213,10 @@
     <Compile Include="Приложение\ПриказыКниги\КнигаУчетаФРДО.vb" />
     <Compile Include="Приложение\ПриказыКниги\КнигаУчета.vb" />
     <Compile Include="Приложение\ВедомостиБланки\АДействияСОценкиИА.vb" />
-    <Compile Include="Приложение\Формы\АОценкиИА.Designer.vb">
-      <DependentUpon>АОценкиИА.vb</DependentUpon>
+    <Compile Include="Приложение\Формы\GradesIA.Designer.vb">
+      <DependentUpon>GradesIA.vb</DependentUpon>
     </Compile>
-    <Compile Include="Приложение\Формы\АОценкиИА.vb">
+    <Compile Include="Приложение\Формы\GradesIA.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Приложение\Формы\НастройкаСортировкиСлушателей.Designer.vb">
@@ -231,10 +231,10 @@
     <Compile Include="Приложение\Формы\НастройкаСортировкиГрупп.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Приложение\Формы\group__serchSettings.Designer.vb">
-      <DependentUpon>group__serchSettings.vb</DependentUpon>
+    <Compile Include="Приложение\Формы\Group__serchSettings.Designer.vb">
+      <DependentUpon>Group__serchSettings.vb</DependentUpon>
     </Compile>
-    <Compile Include="Приложение\Формы\group__serchSettings.vb">
+    <Compile Include="Приложение\Формы\Group__serchSettings.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Приложение\Формы\НастройкаПоискаСлушателей.Designer.vb">
@@ -255,31 +255,31 @@
     <Compile Include="Приложение\Формы\Загрузка.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Приложение\ВедомостиБланки\АДействияСОВедомостью.vb" />
-    <Compile Include="Приложение\Формы\АОценочнаяВедомость.Designer.vb">
-      <DependentUpon>АОценочнаяВедомость.vb</DependentUpon>
+    <Compile Include="Приложение\ВедомостиБланки\gradesManipulation.vb" />
+    <Compile Include="Приложение\Формы\Grades.Designer.vb">
+      <DependentUpon>Grades.vb</DependentUpon>
     </Compile>
-    <Compile Include="Приложение\Формы\АОценочнаяВедомость.vb">
+    <Compile Include="Приложение\Формы\Grades.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Приложение\ВедомостиБланки\Бланки.vb" />
     <Compile Include="Приложение\Интерфейс\interfaceMod.vb" />
-    <Compile Include="Приложение\Интерфейс\Вспомогательный.vb" />
-    <Compile Include="Приложение\Формы\Предупреждение.Designer.vb">
-      <DependentUpon>Предупреждение.vb</DependentUpon>
+    <Compile Include="Приложение\Интерфейс\_technical.vb" />
+    <Compile Include="Приложение\Формы\Warning.Designer.vb">
+      <DependentUpon>Warning.vb</DependentUpon>
     </Compile>
-    <Compile Include="Приложение\Формы\Предупреждение.vb">
+    <Compile Include="Приложение\Формы\Warning.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="My Project\Module1.bas" />
-    <Compile Include="Приложение\Интерфейс\ОчиститьПоляФормы.vb" />
-    <Compile Include="Приложение\Формы\АСформироватьПриказ.Designer.vb">
-      <DependentUpon>АСформироватьПриказ.vb</DependentUpon>
+    <Compile Include="Приложение\Интерфейс\_formCleaner.vb" />
+    <Compile Include="Приложение\Формы\BuildOrder.Designer.vb">
+      <DependentUpon>BuildOrder.vb</DependentUpon>
     </Compile>
-    <Compile Include="Приложение\Формы\АСформироватьПриказ.vb">
+    <Compile Include="Приложение\Формы\BuildOrder.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Приложение\Интерфейс\УбратьПустотыВМассиве.vb" />
+    <Compile Include="Приложение\Интерфейс\arrayMethod.vb" />
     <Compile Include="Приложение\Отчеты\OtchetExcell.vb" />
     <Compile Include="Приложение\Интерфейс\ИзменениеВыделеннойСтрокиВListView.vb" />
     <Compile Include="Приложение\Справочники\ЗаполнитьФормуССлушВГруппе.vb" />
@@ -303,10 +303,10 @@
     <Compile Include="Приложение\Формы\РедакторГруппы.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Приложение\Формы\НовыйСлушатель.Designer.vb">
-      <DependentUpon>НовыйСлушатель.vb</DependentUpon>
+    <Compile Include="Приложение\Формы\newStudent.Designer.vb">
+      <DependentUpon>newStudent.vb</DependentUpon>
     </Compile>
-    <Compile Include="Приложение\Формы\НовыйСлушатель.vb">
+    <Compile Include="Приложение\Формы\newStudent.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Приложение\Формы\ФормаДаНетУдалить.Designer.vb">
@@ -321,17 +321,17 @@
     <Compile Include="Приложение\Формы\ФормаДаНет.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Приложение\dataBase\ИдентифицироватьБазу.vb" />
-    <Compile Include="Приложение\Формы\ФормаСписок.Designer.vb">
-      <DependentUpon>ФормаСписок.vb</DependentUpon>
+    <Compile Include="Приложение\dataBase\tableIdentificated.vb" />
+    <Compile Include="Приложение\Формы\List.Designer.vb">
+      <DependentUpon>List.vb</DependentUpon>
     </Compile>
-    <Compile Include="Приложение\Формы\ФормаСписок.vb">
+    <Compile Include="Приложение\Формы\List.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Приложение\Формы\НоваяГруппа.Designer.vb">
-      <DependentUpon>НоваяГруппа.vb</DependentUpon>
+    <Compile Include="Приложение\Формы\newGroup.Designer.vb">
+      <DependentUpon>newGroup.vb</DependentUpon>
     </Compile>
-    <Compile Include="Приложение\Формы\НоваяГруппа.vb">
+    <Compile Include="Приложение\Формы\newGroup.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Приложение\dataBase\InsertIntoDataBase.vb" />
@@ -349,14 +349,14 @@
     <Compile Include="Приложение\Формы\MainForm.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Приложение\Интерфейс\Запуск.vb" />
-    <Compile Include="Приложение\Формы\СправочникСлушатели.Designer.vb">
-      <DependentUpon>СправочникСлушатели.vb</DependentUpon>
+    <Compile Include="Приложение\Интерфейс\startApp.vb" />
+    <Compile Include="Приложение\Формы\StudentsList.Designer.vb">
+      <DependentUpon>StudentsList.vb</DependentUpon>
     </Compile>
-    <Compile Include="Приложение\Формы\СправочникСлушатели.vb">
+    <Compile Include="Приложение\Формы\StudentsList.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Приложение\Интерфейс\АнализСнилс.vb" />
+    <Compile Include="Приложение\Интерфейс\snilsMethod.vb" />
     <Compile Include="Приложение\dataBase\Search.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
@@ -377,11 +377,11 @@
     <EmbeddedResource Include="Приложение\User_controls\Tables_control.resx">
       <DependentUpon>Tables_control.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Приложение\Формы\АОценкиИА.resx">
-      <DependentUpon>АОценкиИА.vb</DependentUpon>
+    <EmbeddedResource Include="Приложение\Формы\GradesIA.resx">
+      <DependentUpon>GradesIA.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Приложение\Формы\ВедомостьПеднагрузка.resx">
-      <DependentUpon>ВедомостьПеднагрузка.vb</DependentUpon>
+    <EmbeddedResource Include="Приложение\Формы\WorkerReport.resx">
+      <DependentUpon>WorkerReport.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Приложение\Формы\НастройкаСортировкиСлушателей.resx">
       <DependentUpon>НастройкаСортировкиСлушателей.vb</DependentUpon>
@@ -389,8 +389,8 @@
     <EmbeddedResource Include="Приложение\Формы\НастройкаСортировкиГрупп.resx">
       <DependentUpon>НастройкаСортировкиГрупп.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Приложение\Формы\group__serchSettings.resx">
-      <DependentUpon>group__serchSettings.vb</DependentUpon>
+    <EmbeddedResource Include="Приложение\Формы\Group__serchSettings.resx">
+      <DependentUpon>Group__serchSettings.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Приложение\Формы\НастройкаПоискаСлушателей.resx">
       <DependentUpon>НастройкаПоискаСлушателей.vb</DependentUpon>
@@ -401,11 +401,11 @@
     <EmbeddedResource Include="Приложение\Формы\Загрузка.resx">
       <DependentUpon>Загрузка.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Приложение\Формы\АОценочнаяВедомость.resx">
-      <DependentUpon>АОценочнаяВедомость.vb</DependentUpon>
+    <EmbeddedResource Include="Приложение\Формы\Grades.resx">
+      <DependentUpon>Grades.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Приложение\Формы\Предупреждение.resx">
-      <DependentUpon>Предупреждение.vb</DependentUpon>
+    <EmbeddedResource Include="Приложение\Формы\Warning.resx">
+      <DependentUpon>Warning.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Приложение\Формы\СписокСлушателейВГруппе.resx">
       <DependentUpon>СписокСлушателейВГруппе.vb</DependentUpon>
@@ -416,11 +416,11 @@
     <EmbeddedResource Include="Приложение\Формы\РедакторГруппы.resx">
       <DependentUpon>РедакторГруппы.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Приложение\Формы\НовыйСлушатель.resx">
-      <DependentUpon>НовыйСлушатель.vb</DependentUpon>
+    <EmbeddedResource Include="Приложение\Формы\newStudent.resx">
+      <DependentUpon>newStudent.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Приложение\Формы\АСформироватьПриказ.resx">
-      <DependentUpon>АСформироватьПриказ.vb</DependentUpon>
+    <EmbeddedResource Include="Приложение\Формы\BuildOrder.resx">
+      <DependentUpon>BuildOrder.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Приложение\Формы\ФормаДаНетУдалить.resx">
       <DependentUpon>ФормаДаНетУдалить.vb</DependentUpon>
@@ -428,11 +428,11 @@
     <EmbeddedResource Include="Приложение\Формы\ФормаДаНет.resx">
       <DependentUpon>ФормаДаНет.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Приложение\Формы\ФормаСписок.resx">
-      <DependentUpon>ФормаСписок.vb</DependentUpon>
+    <EmbeddedResource Include="Приложение\Формы\List.resx">
+      <DependentUpon>List.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Приложение\Формы\НоваяГруппа.resx">
-      <DependentUpon>НоваяГруппа.vb</DependentUpon>
+    <EmbeddedResource Include="Приложение\Формы\newGroup.resx">
+      <DependentUpon>newGroup.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Приложение\Формы\СправочникГруппы.resx">
       <DependentUpon>СправочникГруппы.vb</DependentUpon>
@@ -440,8 +440,8 @@
     <EmbeddedResource Include="Приложение\Формы\MainForm.resx">
       <DependentUpon>MainForm.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Приложение\Формы\СправочникСлушатели.resx">
-      <DependentUpon>СправочникСлушатели.vb</DependentUpon>
+    <EmbeddedResource Include="Приложение\Формы\StudentsList.resx">
+      <DependentUpon>StudentsList.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>

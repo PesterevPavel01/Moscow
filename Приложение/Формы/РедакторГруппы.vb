@@ -1318,9 +1318,9 @@ Public Class РедакторГруппы
     End Sub
 
     Private Sub versProgs_Click(sender As Object, e As EventArgs) Handles versProgs.Click
-        ФормаСписок.textboxName = Me.ActiveControl.Name
-        ФормаСписок.FormName = ActiveForm.Name
-        ФормаСписок.ShowDialog()
+        List.textboxName = Me.ActiveControl.Name
+        List.currentFormName = ActiveForm.Name
+        List.ShowDialog()
     End Sub
 
     Private Sub НоваяГруппаПрограмма_SelectedIndexChanged(sender As Object, e As EventArgs) Handles НоваяГруппаПрограмма.SelectedIndexChanged

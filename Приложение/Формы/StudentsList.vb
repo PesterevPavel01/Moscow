@@ -1,4 +1,4 @@
-﻿Public Class ФормаСправочникСлушатели
+﻿Public Class StudentsList
     Public massiv
     Public Press As Boolean
     Public DelitMask As Boolean
@@ -21,7 +21,7 @@
         queryString = studentsList__loadStudentsList(columnSort, interfaceMod.sortType(sortSettsStudents.sortSetts.flagSortUp))
 
         massiv = MainForm.mySqlConnect.loadMySqlToArray(queryString, 1)
-        massiv = УбратьПустотыВМассиве.УбратьПустотыВМассиве(massiv)
+        massiv = arrayMethod.removeEmpty(massiv)
         massiv = addMask.addMask(massiv)
 
         Call UpdateListView.updateListView(False, True, ListViewСписокСлушателей, massiv, 1, 2, 3, 4)
@@ -50,7 +50,7 @@
             queryString = load_slushatel(snils)
 
             studentsInfo = MainForm.mySqlConnect.loadMySqlToArray(queryString, 1)
-            studentsInfo = УбратьПустотыВМассиве.УбратьПустотыВМассиве(studentsInfo)
+            studentsInfo = arrayMethod.removeEmpty(studentsInfo)
 
             РедакторСлушателя.Show()
 
@@ -113,13 +113,13 @@
 
     End Sub
 
-    Private Sub ФормаСправочникСлушатели_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    Private Sub studentsList_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
         searchRow.Visible = True
 
     End Sub
 
-    Private Sub СтрокаПоиска_KeyDown(sender As Object, e As KeyEventArgs) Handles searchRow.KeyDown
+    Private Sub searchField_KeyDown(sender As Object, e As KeyEventArgs) Handles searchRow.KeyDown
 
         Dim str As String
 
@@ -139,7 +139,7 @@
 
     End Sub
 
-    Private Sub ListViewСписокСлушателей_KeyDown(sender As Object, e As KeyEventArgs) Handles ListViewСписокСлушателей.KeyDown
+    Private Sub studentsListTbl_KeyDown(sender As Object, e As KeyEventArgs) Handles ListViewСписокСлушателей.KeyDown
         Dim element
         Dim ind As String
         Dim nomer As Integer, счетчик As Integer
@@ -229,71 +229,76 @@
 
     End Sub
 
-    Private Sub ФормаСправочникСлушатели_KeyDown(sender As Object, e As KeyEventArgs) Handles MyBase.KeyDown
+    Private Sub keyDownPressed()
 
-        '_________________________________________Esc
-        If e.KeyCode = Keys.Escape Then
+        If Not ListViewСписокСлушателей.Focused Then
 
-            Me.Close()
+            SendKeys.Send("{tab}")
 
-        End If
-
-
-        '_________________________________________вниз
-        If e.KeyCode = Keys.Down Then
-
-            If Not ListViewСписокСлушателей.Focused Then
-
-                SendKeys.Send("{tab}")
-
-            Else
-
-                Try
-                    str = ListViewСписокСлушателей.SelectedItems.Item(0).SubItems(1).Text
-                Catch ex As Exception
-
-                    Try
-                        ListViewСписокСлушателей.Items(0).Selected = True
-                    Catch ex1 As Exception
-                        SendKeys.Send("{tab}")
-                    End Try
-
-                End Try
-
-
-            End If
-
-        End If
-        '_________________________________________вправо
-        If e.KeyCode = Keys.Right Then
-
-            If Not ListViewСписокСлушателей.Focused Then
-
-                SendKeys.Send("{tab}")
-
-            End If
-
-        End If
-
-        '_________________________________________энтер
-
-        If e.KeyCode = Keys.Enter Then
+        Else
 
             Try
                 str = ListViewСписокСлушателей.SelectedItems.Item(0).SubItems(1).Text
-
             Catch ex As Exception
 
-                Exit Sub
+                Try
+                    ListViewСписокСлушателей.Items(0).Selected = True
+                Catch ex1 As Exception
+                    SendKeys.Send("{tab}")
+                End Try
 
             End Try
 
+        End If
 
-            ListViewСписокСлушателей_DoubleClick(sender, e)
+    End Sub
+
+    Private Sub keyRightPressed()
+
+        If Not ListViewСписокСлушателей.Focused Then
+
+            SendKeys.Send("{tab}")
 
         End If
 
+    End Sub
 
+    Private Sub keyEnterPressed(sender As Object, e As KeyEventArgs)
+
+        Try
+            str = ListViewСписокСлушателей.SelectedItems.Item(0).SubItems(1).Text
+
+        Catch ex As Exception
+
+            Exit Sub
+
+        End Try
+
+        ListViewСписокСлушателей_DoubleClick(sender, e)
+
+    End Sub
+
+    Private Sub studentsList_KeyDown(sender As Object, e As KeyEventArgs) Handles MyBase.KeyDown
+
+        Select Case e.KeyCode
+
+            Case Keys.Escape
+
+                Close()
+
+            Case Keys.Down
+
+                keyDownPressed()
+
+            Case Keys.Right
+
+                keyRightPressed()
+
+            Case Keys.Enter
+
+                keyEnterPressed(sender, e)
+
+        End Select
 
     End Sub
 
@@ -364,7 +369,7 @@
 
         snils = addMask.deleteMasck(snils)
 
-        Вспомогательный.insertIntoGroupList(snils)
+        _technical.insertIntoGroupList(snils)
         ActiveControl = BtnFocus
     End Sub
 

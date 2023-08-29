@@ -29,7 +29,7 @@
             End If
         Next
     End Sub
-    Function СуммаЗначенийВСтолбце(ДатаГрид As DataGridView, НомерСтолбца As Integer) As Double
+    Function sumInColumn(ДатаГрид As DataGridView, НомерСтолбца As Integer) As Double
         Dim Сумма As Double = 0
         Dim СчетчикСтрок As Integer = 0
         Dim Значение As String
@@ -44,10 +44,10 @@
             End Try
             СчетчикСтрок += 1
         Next
-        СуммаЗначенийВСтолбце = Сумма
+        sumInColumn = Сумма
     End Function
 
-    Function СуммаЗначенийВСтроке(ДатаГрид As DataGridView, НомерСтроки As Integer, НомерПервогоСтолбца As Integer, НомерПоследнегоСтолбца As Integer) As Double
+    Function sumInRow(ДатаГрид As DataGridView, НомерСтроки As Integer, НомерПервогоСтолбца As Integer, НомерПоследнегоСтолбца As Integer) As Double
         Dim Сумма As Double = 0
         Dim СчетчикСтолбцов As Integer = НомерПервогоСтолбца
 
@@ -55,14 +55,14 @@
             Try
                 Сумма += CDbl(Strings.Replace(ДатаГрид.Rows(НомерСтроки).Cells(СчетчикСтолбцов).Value, ".", ","))
             Catch ex As Exception
-                предупреждение.текст.Text = "Значение ячейки (" & СчетчикСтолбцов + 1 & "," & НомерСтроки + 1 & ") не является числом"
-                openForm(предупреждение)
-                СуммаЗначенийВСтроке = -1
+                Warning.content.Text = "Значение ячейки (" & СчетчикСтолбцов + 1 & "," & НомерСтроки + 1 & ") не является числом"
+                openForm(Warning)
+                sumInRow = -1
                 Exit Function
             End Try
             СчетчикСтолбцов += 1
         End While
-        СуммаЗначенийВСтроке = Сумма
+        sumInRow = Сумма
     End Function
 
     Sub arrayToDataGrid(ДатаГрид As DataGridView, Массив As Object)

@@ -9,7 +9,7 @@
 
                     If listViewItem.Text = textItemFlag Then
                         If listViewItem.Checked Then
-                            АСформироватьПриказ.flagCheck = False
+                            BuildOrder.flagCheck = False
                             listViewItem.Checked = False
                             Return
                         End If

@@ -2,7 +2,7 @@
 
 Public Class Загрузка
     Private Sub Загрузка_Closed(sender As Object, e As EventArgs) Handles Me.Closed
-        Запуск.Открыть = True
+        startApp.open = True
     End Sub
 
 End Class

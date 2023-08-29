@@ -1,15 +1,15 @@
 ﻿Imports System.Data.SqlTypes
 
-Public Class Slushatel
+Public Class Student
 
 
     Public flagSlushatelForm As formSlushatelFlag
     Public structSlushatel As strSlushatel
-    Public formSlushLists As formSlushatelLists
+    Public formSlushLists As formStudentsLists
     Dim mySQLConnector As New MySQLConnect
 
     Structure strSlushatel
-        Dim kodGroup As Integer
+        Dim idGroup As Integer
         Dim snils As String
         Dim snilsRub As String
         Dim старыйСнилс As String
@@ -42,7 +42,7 @@ Public Class Slushatel
 
     End Structure
 
-    Public Structure formSlushatelLists
+    Public Structure formStudentsLists
         Public doo_vid_dok() As String
         Public pol() As String
         Public urovenObr() As String
@@ -66,7 +66,7 @@ Public Class Slushatel
 
 
     Public Sub clearStructSlushatel()
-        structSlushatel.kodGroup = 0
+        structSlushatel.idGroup = 0
         structSlushatel.snils = ""
         structSlushatel.snilsRub = ""
         structSlushatel.старыйСнилс = ""
@@ -179,7 +179,7 @@ Public Class Slushatel
 
         MainForm.mySqlConnect.sendQuery(queryString, 1)
 
-        If structSlushatel.kodGroup <> -1 Then
+        If structSlushatel.idGroup <> -1 Then
             addToGroupp(structSlushatel)
         End If
 
@@ -225,16 +225,16 @@ Public Class Slushatel
 
     End Function
 
-    Sub addToGroupp(slushatel As Slushatel.strSlushatel)
+    Sub addToGroupp(slushatel As Student.strSlushatel)
 
         Dim queryString As String
 
-        queryString = SqlString__insertIntoListGroupp(slushatel.snils, Convert.ToString(slushatel.kodGroup))
+        queryString = SqlString__insertIntoListGroupp(slushatel.snils, Convert.ToString(slushatel.idGroup))
 
         InsertIntoDataBase.argumentClear()
         InsertIntoDataBase.argument.nameTable = "group_list"
         InsertIntoDataBase.argument.firstName = "Kod"
-        InsertIntoDataBase.argument.firstValue = slushatel.kodGroup
+        InsertIntoDataBase.argument.firstValue = slushatel.idGroup
         InsertIntoDataBase.argument.secondName = "students"
         InsertIntoDataBase.argument.secondValue = slushatel.snils
 

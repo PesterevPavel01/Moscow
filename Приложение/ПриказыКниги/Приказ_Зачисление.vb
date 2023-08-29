@@ -11,32 +11,32 @@
             End If
         End If
 
-        sqlQuery = loadListStudents(MainForm.prikazKodGroup)
+        sqlQuery = loadListStudents(MainForm.orderIdGroup)
         studentsData = MainForm.mySqlConnect.loadMySqlToArray(sqlQuery, 1)
 
         If studentsData(0, 0) = "нет записей" Then
-            предупреждение.текст.Text = "Нет данных для отображения"
-            предупреждение.ShowDialog()
+            Warning.content.Text = "Нет данных для отображения"
+            Warning.ShowDialog()
             Exit Sub
         End If
 
-        If АСформироватьПриказ.CheckBoxММС.Checked Then
+        If BuildOrder.CheckBoxММС.Checked Then
 
-            arg = АСформироватьПриказ.CheckBoxММС.Text
+            arg = BuildOrder.CheckBoxММС.Text
 
         Else
 
-            arg = АСформироватьПриказ.CheckBoxСанитар.Text
+            arg = BuildOrder.CheckBoxСанитар.Text
 
         End If
 
-        resourcesPath = Запуск.ПутьКФайлуRes
+        resourcesPath = startApp.ПутьКФайлуRes
         ПутьКШаблону = resourcesPath & "Шаблоны\Приказы\" & ВидПриказа & ".docx"
 
         wordApp = CreateObject("Word.Application")
         wordDoc = wordApp.Documents.Open(ПутьКШаблону, ReadOnly:=True)
 
-        Вспомогательный.savePrikazBlank(wordDoc, MainForm.prikazKodGroup, ВидПриказа, resourcesPath, "Приказы")
+        _technical.savePrikazBlank(wordDoc, MainForm.orderIdGroup, ВидПриказа, resourcesPath, "Приказы")
 
         If ВидПриказа = "ПК_Зачисление" Or ВидПриказа = "ПК_Зачисление_Доп" Then
             МСВорд.ДобавитьСписокПоМеткеСтрокой(wordDoc, "$СписокСлушателей$", ЧекнутыеСлушатели, wordApp)
@@ -44,36 +44,36 @@
             МСВорд.ДобавитьСписокПоМеткеСтрокой(wordDoc, "$СписокСлушателей$", studentsData, wordApp)
         End If
 
-        Вспомогательный.replaceTextInWordApp(wordDoc.Range, "$Приказ$", АСформироватьПриказ.ПрактическаяПодготовка.Text)
-        Вспомогательный.replaceTextInWordApp(wordDoc.Range, "$ОтвЗаАттестацию$", АСформироватьПриказ.Ответственный.Text)
-        Вспомогательный.replaceTextInWordApp(wordDoc.Range, "$ДатаПриказа$", АСформироватьПриказ.ДатаПриказа.Text)
-        Вспомогательный.replaceTextInWordApp(wordDoc.Range, "$НомерГруппы$", АСформироватьПриказ.НомерГруппы.Text)
-        Вспомогательный.replaceTextInWordApp(wordDoc.Range, "$Программа$", studentsData(1, 0), 2)
-        Вспомогательный.replaceTextInWordApp(wordDoc.Range, "$Часы$", studentsData(4, 0), 2)
-        Вспомогательный.replaceTextInWordApp(wordDoc.Range, "$ДатаН$", studentsData(2, 0), 2)
-        Вспомогательный.replaceTextInWordApp(wordDoc.Range, "$ДатаК$", studentsData(3, 0), 2)
-        Вспомогательный.replaceTextInWordApp(wordDoc.Range, "$ВидСредств$", arg, 2)
-        Вспомогательный.replaceTextInWordApp(wordDoc.Range, "$РуководительСтажировкиДолжность$", АСформироватьПриказ.РуководительСтажировкиДолжность.Text, 2)
-        Вспомогательный.replaceTextInWordApp(wordDoc.Range, "$РуководительСтажировки$", АСформироватьПриказ.РуководительСтажировки.Text, 2)
+        _technical.replaceTextInWordApp(wordDoc.Range, "$Приказ$", BuildOrder.ПрактическаяПодготовка.Text)
+        _technical.replaceTextInWordApp(wordDoc.Range, "$ОтвЗаАттестацию$", BuildOrder.Ответственный.Text)
+        _technical.replaceTextInWordApp(wordDoc.Range, "$ДатаПриказа$", BuildOrder.ДатаПриказа.Text)
+        _technical.replaceTextInWordApp(wordDoc.Range, "$НомерГруппы$", BuildOrder.groupNumber.Text)
+        _technical.replaceTextInWordApp(wordDoc.Range, "$Программа$", studentsData(1, 0), 2)
+        _technical.replaceTextInWordApp(wordDoc.Range, "$Часы$", studentsData(4, 0), 2)
+        _technical.replaceTextInWordApp(wordDoc.Range, "$ДатаН$", studentsData(2, 0), 2)
+        _technical.replaceTextInWordApp(wordDoc.Range, "$ДатаК$", studentsData(3, 0), 2)
+        _technical.replaceTextInWordApp(wordDoc.Range, "$ВидСредств$", arg, 2)
+        _technical.replaceTextInWordApp(wordDoc.Range, "$РуководительСтажировкиДолжность$", BuildOrder.РуководительСтажировкиДолжность.Text, 2)
+        _technical.replaceTextInWordApp(wordDoc.Range, "$РуководительСтажировки$", BuildOrder.РуководительСтажировки.Text, 2)
 
 
         ТаблицаУтверждаю(wordApp, wordDoc, "$ТаблицаУтверждаю$", "$КонецОсновногоРаздела$")
 
-        Вспомогательный.replaceTextInWordApp(wordDoc.Range, "$ТаблицаУтверждаю$", АСформироватьПриказ.УтверждаетДолжность.Text)
-        Вспомогательный.replaceTextInWordApp(wordDoc.Range, "$УтверждаюИО$", АСформироватьПриказ.Утверждает.Text)
+        _technical.replaceTextInWordApp(wordDoc.Range, "$ТаблицаУтверждаю$", BuildOrder.УтверждаетДолжность.Text)
+        _technical.replaceTextInWordApp(wordDoc.Range, "$УтверждаюИО$", BuildOrder.Утверждает.Text)
 
 
 
         СкопироватьТаблицуИзШаблона(wordApp, wordDoc, resourcesPath & "Шаблоны\ПК_Окончание\ТаблицаСогласование.docx", 1)
 
-        Вспомогательный.replaceTextInWordApp(wordDoc.Range, "$ВноситДолжность$", АСформироватьПриказ.ПроектВноситДолжность.Text)
-        Вспомогательный.replaceTextInWordApp(wordDoc.Range, "$ИОФамилияВносит$", rotate(АСформироватьПриказ.ПроектВносит.Text))
-        Вспомогательный.replaceTextInWordApp(wordDoc.Range, "$ИсполнительДолжность$", АСформироватьПриказ.ИсполнительДолжность.Text)
-        Вспомогательный.replaceTextInWordApp(wordDoc.Range, "$ИОФамилияИсполнитель$", rotate(АСформироватьПриказ.Исполнитель.Text))
-        Вспомогательный.replaceTextInWordApp(wordDoc.Range, "$Согласовано1Должность$", АСформироватьПриказ.Согласовано1Должность.Text)
-        Вспомогательный.replaceTextInWordApp(wordDoc.Range, "$ИОФамилияСогласовано1$", rotate(АСформироватьПриказ.Согласовано1.Text))
-        Вспомогательный.replaceTextInWordApp(wordDoc.Range, "$Согласовано2Должность$", АСформироватьПриказ.Согласовано2Должность.Text)
-        Вспомогательный.replaceTextInWordApp(wordDoc.Range, "$ИОФамилияСогласовано2$", rotate(АСформироватьПриказ.Согласовано2.Text))
+        _technical.replaceTextInWordApp(wordDoc.Range, "$ВноситДолжность$", BuildOrder.ПроектВноситДолжность.Text)
+        _technical.replaceTextInWordApp(wordDoc.Range, "$ИОФамилияВносит$", rotate(BuildOrder.ПроектВносит.Text))
+        _technical.replaceTextInWordApp(wordDoc.Range, "$ИсполнительДолжность$", BuildOrder.ИсполнительДолжность.Text)
+        _technical.replaceTextInWordApp(wordDoc.Range, "$ИОФамилияИсполнитель$", rotate(BuildOrder.Исполнитель.Text))
+        _technical.replaceTextInWordApp(wordDoc.Range, "$Согласовано1Должность$", BuildOrder.Согласовано1Должность.Text)
+        _technical.replaceTextInWordApp(wordDoc.Range, "$ИОФамилияСогласовано1$", rotate(BuildOrder.Согласовано1.Text))
+        _technical.replaceTextInWordApp(wordDoc.Range, "$Согласовано2Должность$", BuildOrder.Согласовано2Должность.Text)
+        _technical.replaceTextInWordApp(wordDoc.Range, "$ИОФамилияСогласовано2$", rotate(BuildOrder.Согласовано2.Text))
 
         wordApp.Visible = True
         wordDoc.Save

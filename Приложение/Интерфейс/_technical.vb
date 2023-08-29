@@ -1,7 +1,84 @@
 ﻿Imports System.IO
 Imports System.Threading
 
-Module Вспомогательный
+Module _technical
+    Function checkSnils(snils As String) As Boolean
+
+        Dim array
+        Dim Sum As Integer = 0
+        Dim count As Integer
+        count = 0
+        Dim chr As Integer = 0
+        Dim CheckNumbr As Integer
+        Dim element As String
+
+        checkSnils = False
+
+        array = Strings.Left(snils, 9).ToCharArray
+        CheckNumbr = Strings.Right(snils, 2)
+
+        For Each i In array
+            element = i
+            chr = Convert.ToInt32(element)
+            Sum += chr * (9 - count)
+            count += 1
+        Next
+
+        If Sum = 100 Then
+            Sum = 0
+        ElseIf Sum > 100 Then
+            Sum = Sum Mod 101
+
+            If Sum = 100 Then
+                Sum = 0
+            End If
+
+        End If
+
+        If Sum = CheckNumbr Then
+            checkSnils = True
+        End If
+
+    End Function
+
+    Function checkField(currentForm As Form) As Boolean
+
+        For Each element In currentForm.Controls.OfType(Of ComboBox)
+            If element.Text.Trim = "" And element.Visible = True And element.Enabled = True Then
+                Return False
+            End If
+        Next
+
+        For Each element In currentForm.Controls.OfType(Of TextBox)
+            If element.Text.Trim = "" And element.Visible = True And element.Enabled = True Then
+                Return False
+            End If
+        Next
+
+        Return True
+
+    End Function
+    Public Sub cleanForm(currentForm As Form)
+
+        For Each element As TextBox In currentForm.Controls.OfType(Of TextBox)
+
+            element.Clear()
+
+        Next
+
+        For Each element As ComboBox In currentForm.Controls.OfType(Of ComboBox)
+
+            element.Text = ""
+
+        Next
+
+        For Each element As DateTimePicker In currentForm.Controls.OfType(Of DateTimePicker)
+
+            element.Value = "01.01.1753"
+
+        Next
+
+    End Sub
 
     Function month(nomber As String)
         If nomber = "01" Or nomber = "1" Then month = "января"
@@ -29,8 +106,8 @@ Module Вспомогательный
         If Not IsNumeric(value) Then
 
             If showMessage Then
-                предупреждение.текст.Text = name & " не является числом"
-                предупреждение.ShowDialog()
+                Warning.content.Text = name & " не является числом"
+                Warning.ShowDialog()
             End If
 
             Return False
@@ -81,7 +158,7 @@ Module Вспомогательный
         End Try
 
         If РедакторСлушателя.ValidOn.Checked Then
-            If Not АнализСнилс.ПроверкаСнилс(addMask.deleteMasck(РедакторСлушателя.Снилс.Text)) Then
+            If Not checkSnils(addMask.deleteMasck(РедакторСлушателя.Снилс.Text)) Then
                 MsgBox("Снилс не прошел проверку")
                 Return False
             End If
@@ -114,8 +191,8 @@ Module Вспомогательный
 
         If Not interfaceMod.formStudentValidation(РедакторСлушателя) Then
 
-            предупреждение.текст.Text = "Заполните все обязательные поля"
-            openForm(предупреждение)
+            Warning.content.Text = "Заполните все обязательные поля"
+            openForm(Warning)
 
             Return False
 
@@ -582,8 +659,8 @@ Module Вспомогательный
                 Счетчик += 1
                 GoTo СоздатьПриложение
             End If
-            предупреждение.текст.Text = "Не удалось создать новое приложение эксель"
-            предупреждение.ShowDialog()
+            Warning.content.Text = "Не удалось создать новое приложение эксель"
+            Warning.ShowDialog()
             ОбъектыЭксель(0) = "Ошибка"
             ОбъектыЭксель(1) = "Ошибка"
             СозданиеКнигиЭксельИЛИОшибкаВ0 = ОбъектыЭксель
@@ -601,8 +678,8 @@ Module Вспомогательный
                 GoTo СоздатьКнигу
             End If
 
-            предупреждение.текст.Text = "Не удалось создать книгу эксель"
-            предупреждение.ShowDialog()
+            Warning.content.Text = "Не удалось создать книгу эксель"
+            Warning.ShowDialog()
             ПриложениеЭксель.Exit
             ОбъектыЭксель(0) = "Ошибка"
             ОбъектыЭксель(1) = "Ошибка"
@@ -628,8 +705,8 @@ Module Вспомогательный
             КнигаЭксель.SaveAs(Name)
         Catch ex As Exception
 
-            предупреждение.текст.Text = "Не удалось сохранить книгу эксель " & ex.Message
-            предупреждение.ShowDialog()
+            Warning.content.Text = "Не удалось сохранить книгу эксель " & ex.Message
+            Warning.ShowDialog()
             ПриложениеЭксель.Quit
             ОбъектыЭксель(0) = "Ошибка"
             ОбъектыЭксель(1) = "Ошибка"
@@ -666,7 +743,7 @@ Module Вспомогательный
         Else Путь = ПутьКПапке
         End If
 
-        АСформироватьПриказ.path = Путь
+        BuildOrder.path = Путь
 
         Путь = Путь & Name & ".docx"
 
@@ -679,9 +756,9 @@ Module Вспомогательный
         Try
             DOK.SaveAs(Путь)
         Catch ex As Exception
-            предупреждение.текст.Text = "не удалось сохранить файл:" & Путь
-            предупреждение.ShowDialog()
-            АСформироватьПриказ.path = ""
+            Warning.content.Text = "не удалось сохранить файл:" & Путь
+            Warning.ShowDialog()
+            BuildOrder.path = ""
         End Try
 
 
@@ -693,7 +770,7 @@ Module Вспомогательный
         Dim listFolder As List(Of String) = New List(Of String)
         Dim gruppa
 
-        sqlQuery = QueryString.SQLString_SELECT_dateAndKvalGrupp(MainForm.prikazKodGroup)
+        sqlQuery = QueryString.SQLString_SELECT_dateAndKvalGrupp(MainForm.orderIdGroup)
         gruppa = MainForm.mySqlConnect.loadMySqlToArray(sqlQuery, 1)
 
         listFolder.Add("Отчеты")
@@ -711,13 +788,13 @@ Module Вспомогательный
         Dim listFolder As List(Of String) = New List(Of String)
         Dim gruppa
 
-        sqlQuery = QueryString.SQLString_SELECT_dateAndKvalGrupp(MainForm.prikazKodGroup)
+        sqlQuery = QueryString.SQLString_SELECT_dateAndKvalGrupp(MainForm.orderIdGroup)
         gruppa = MainForm.mySqlConnect.loadMySqlToArray(sqlQuery, 1)
 
         listFolder.Add("Приказы")
         listFolder.Add(gruppa(0, 0))
         listFolder.Add(gruppa(1, 0))
-        listFolder.Add("Группа N" & checkName(АСформироватьПриказ.НомерГруппы.Text))
+        listFolder.Add("Группа N" & checkName(BuildOrder.groupNumber.Text))
         listFolder.Add(grouppDok)
 
         If checkDirectory(resourcesPath, listFolder) Then
@@ -771,7 +848,7 @@ Module Вспомогательный
             Next
         End If
 
-        АСформироватьПриказ.path = path
+        BuildOrder.path = path
 
         path = path & Name & ".docx"
 
@@ -786,9 +863,9 @@ Module Вспомогательный
         Catch ex As Exception
             Dim text1 As String = ex.Message
             Dim i As Integer = path.Length
-            предупреждение.текст.Text = "не удалось сохранить файл:" & path
-            предупреждение.ShowDialog()
-            АСформироватьПриказ.path = ""
+            Warning.content.Text = "не удалось сохранить файл:" & path
+            Warning.ShowDialog()
+            BuildOrder.path = ""
         End Try
 
     End Sub
@@ -998,7 +1075,7 @@ Module Вспомогательный
             Try
                 Directory.CreateDirectory(ПутьКПапке)
             Catch ex As Exception
-                предупреждение.текст.Text = "Не удалось создать папку: " & ПутьКПапке & " .Возможно нет нужных прав"
+                Warning.content.Text = "Не удалось создать папку: " & ПутьКПапке & " .Возможно нет нужных прав"
                 СоздатьПапку = False
             End Try
         End If
@@ -1014,7 +1091,7 @@ Module Вспомогательный
                 Try
                     Directory.CreateDirectory(resultPath)
                 Catch ex As Exception
-                    предупреждение.текст.Text = "Не удалось создать папку: " & resultPath & " .Возможно нет нужных прав"
+                    Warning.content.Text = "Не удалось создать папку: " & resultPath & " .Возможно нет нужных прав"
                     checkDirectory = False
                 End Try
             End If

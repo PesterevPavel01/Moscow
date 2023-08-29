@@ -1,4 +1,4 @@
-﻿Public Class group__serchSettings
+﻿Public Class Group__serchSettings
 
     Private Sub Куратор_CheckedChanged(sender As Object, e As EventArgs) Handles Куратор.CheckedChanged
 

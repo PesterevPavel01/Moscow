@@ -44,7 +44,7 @@ Module InsertIntoDataBase
                     ФормаДаНет.ShowDialog()
                     checkStatus = False
                     If Not removeDuplicates Then
-                        НоваяГруппа.zakr = True
+                        newGroup.zakr = True
                         Exit Sub
                     End If
 
@@ -170,8 +170,8 @@ Module InsertIntoDataBase
 
         If Not MainForm.mySqlConnect.sendQuery(queryString, 1) Then
 
-            предупреждение.текст.Text = "не удалось удалить запись!"
-            openForm(предупреждение)
+            Warning.content.Text = "не удалось удалить запись!"
+            openForm(Warning)
 
         End If
 
@@ -187,8 +187,8 @@ Module InsertIntoDataBase
         End If
 
         If Not MainForm.mySqlConnect.sendQuery(sqlQuery, 1) Then
-            предупреждение.текст.Text = "не удалось удалить запись!"
-            openForm(предупреждение)
+            Warning.content.Text = "не удалось удалить запись!"
+            openForm(Warning)
         End If
 
     End Sub

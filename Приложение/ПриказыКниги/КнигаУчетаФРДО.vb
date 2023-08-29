@@ -30,10 +30,10 @@
 
         array = ДобавитьРубашкуСПробеломВКонцеВМассив(array, 16)
 
-        resourcesPath = Вспомогательный.resourcesPath()
+        resourcesPath = _technical.resourcesPath()
         samplePath = resourcesPath & "Шаблоны\Книга учёта выданных" & name & "ФРДО.xlsx"
         newFilePath = resourcesPath & "Отчеты\Книги Учета"
-        excellObject = Вспомогательный.СозданиеКнигиЭксельИЛИОшибкаВ0(newFilePath, "Книга учёта выданных" & name & " ФРДО")
+        excellObject = _technical.СозданиеКнигиЭксельИЛИОшибкаВ0(newFilePath, "Книга учёта выданных" & name & " ФРДО")
 
         If excellObject(0).ToString = "Ошибка" Then
             Exit Sub
@@ -48,11 +48,11 @@
 
         excellSheet = excellBook.Worksheets(1)
         excellSheet.name = argument
-        ColumnSetts = Вспомогательный.styleColumn(excellSheet, excellSheet.ListObjects("Таблица"))
+        ColumnSetts = _technical.styleColumn(excellSheet, excellSheet.ListObjects("Таблица"))
         adress = excellSheet.ListObjects("Таблица").Range.Address
         coordinates = Split(adress, ":")
         array = addZerosIntoArray(array, 2, 5)
-        array = УбратьПустотыВМассиве.УбратьПустотыВМассиве(rotateArray(array))
+        array = arrayMethod.removeEmpty(rotateArray(array))
         excellSheet.Range("A1") = title
         excellSheet.Range("A2") = "за период с " & MainForm.ДатаНачалаОтчета.Value.ToShortDateString & " по " & MainForm.ДатаКонцаОтчета.Value.ToShortDateString & "г."
 
@@ -68,7 +68,7 @@
         Obl = excellBook.Worksheets(2).Range("C1").Resize(UBound(array, 1) + 10, 1)
         Obl.NumberFormat = "@"
 
-        mass = ВзятьЧастьМассива(array, 0, i - 1)
+        mass = partArray(array, 0, i - 1)
         excellBook.Worksheets(2).Range("A1").Resize(i, UBound(array, 2) + 1) = mass
         excellBook.Worksheets(2).Range("A1").Resize(i, UBound(array, 2) + 1).cut(excellSheet.Range("A6"))
 
@@ -112,8 +112,8 @@
 
         If listResult(0, 0).ToString = "нет записей" Then
 
-            предупреждение.текст.Text = "Нет данных для отображения"
-            openForm(предупреждение)
+            Warning.content.Text = "Нет данных для отображения"
+            openForm(Warning)
             ЗагрузитьСписок = listResult
             Exit Function
 

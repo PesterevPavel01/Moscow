@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
-Partial Class НоваяГруппа
+Partial Class newGroup
     Inherits System.Windows.Forms.Form
 
     'Форма переопределяет dispose для очистки списка компонентов.
@@ -22,7 +22,7 @@ Partial Class НоваяГруппа
     'Не изменяйте ее в редакторе исходного кода.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(НоваяГруппа))
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(newGroup))
         Me.lblPracticResponsible = New System.Windows.Forms.Label()
         Me.lblKurator = New System.Windows.Forms.Label()
         Me.lblNumbersHours = New System.Windows.Forms.Label()

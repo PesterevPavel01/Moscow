@@ -7,37 +7,37 @@
         Dim НомерАбзаца As Integer, счетчик As Integer
         Dim Дата As String, queryString As String, год As String
 
-        queryString = blanki_loadSlush(MainForm.prikazKodGroup)
+        queryString = blanki_loadSlush(MainForm.orderIdGroup)
 
         Слушатели = MainForm.mySqlConnect.loadMySqlToArray(queryString, 1)
 
         If Слушатели(0, 0).ToString = "нет записей" Then
 
-            предупреждение.текст.Text = "В выбранной группе нет слушателей!"
-            openForm(предупреждение)
+            Warning.content.Text = "В выбранной группе нет слушателей!"
+            openForm(Warning)
             Exit Sub
 
         End If
 
-        queryString = blanki_loadProgAndDateTFromGroup(MainForm.prikazKodGroup)
+        queryString = blanki_loadProgAndDateTFromGroup(MainForm.orderIdGroup)
 
         Группа = MainForm.mySqlConnect.loadMySqlToArray(queryString, 1)
 
-        queryString = WindowsApp2.QueryString.SQLSTring_KartSlushatel(MainForm.prikazKodGroup)
+        queryString = WindowsApp2.QueryString.SQLSTring_KartSlushatel(MainForm.orderIdGroup)
 
         Слушатели = MainForm.mySqlConnect.loadMySqlToArray(queryString, 1)
 
         If Слушатели(0, 0).ToString = "нет записей" Then
 
-            предупреждение.текст.Text = "Ошибка загрузки информации о слушателях, возможно у одного из слушателей указан некорректный СНИЛС!"
-            openForm(предупреждение)
+            Warning.content.Text = "Ошибка загрузки информации о слушателях, возможно у одного из слушателей указан некорректный СНИЛС!"
+            openForm(Warning)
             Exit Sub
 
         End If
 
         MSWord = CreateObject("Word.Application")
 
-        Дата = АСформироватьПриказ.ДатаПриказа.Value.ToShortDateString
+        Дата = BuildOrder.ДатаПриказа.Value.ToShortDateString
         MSWord.DisplayAlerts = False
         DOK = MSWord.Documents.Add
 
@@ -245,7 +245,7 @@
             счетчик = счетчик + 1
         End While
 
-        Вспомогательный.savePrikazBlank(DOK, MainForm.prikazKodGroup, видПриказа, resourcesPath, "Карточки")
+        _technical.savePrikazBlank(DOK, MainForm.orderIdGroup, видПриказа, resourcesPath, "Карточки")
         MSWord.Visible = True
 
         'Call сохранить(DOK, видПриказа)
@@ -307,40 +307,40 @@
         Dim НомерАбзаца As Integer, счетчик As Integer
         Dim Дата As String, sqlQuery As String
 
-        sqlQuery = blanki_loadSlush(Convert.ToString(MainForm.prikazKodGroup))
+        sqlQuery = blanki_loadSlush(Convert.ToString(MainForm.orderIdGroup))
 
         Слушатели = MainForm.mySqlConnect.loadMySqlToArray(sqlQuery, 1)
 
         If Слушатели(0, 0).ToString = "нет записей" Then
 
-            предупреждение.текст.Text = "В выбранной группе нет слушателей!"
-            openForm(предупреждение)
+            Warning.content.Text = "В выбранной группе нет слушателей!"
+            openForm(Warning)
 
             Exit Sub
 
         End If
 
-        sqlQuery = blanki_loadProgram(MainForm.prikazKodGroup)
+        sqlQuery = blanki_loadProgram(MainForm.orderIdGroup)
 
         Группа = MainForm.mySqlConnect.loadMySqlToArray(sqlQuery, 1)
 
-        sqlQuery = QueryString.SQLSTring_PKZayavlenie(MainForm.prikazKodGroup)
+        sqlQuery = QueryString.SQLSTring_PKZayavlenie(MainForm.orderIdGroup)
 
         Слушатели = MainForm.mySqlConnect.loadMySqlToArray(sqlQuery, 1)
 
         If Слушатели(0, 0).ToString = "нет записей" Then
 
-            предупреждение.текст.Text = "Ошибка загрузки информации о слушателях, возможно у одного из слушателей указан некорректный СНИЛС!"
-            openForm(предупреждение)
+            Warning.content.Text = "Ошибка загрузки информации о слушателях, возможно у одного из слушателей указан некорректный СНИЛС!"
+            openForm(Warning)
             Exit Sub
 
         End If
 
-        Слушатели = УбратьПустотыВМассиве.УбратьПустотыВМассиве(Слушатели)
+        Слушатели = arrayMethod.removeEmpty(Слушатели)
 
         MSWord = CreateObject("Word.Application")
 
-        Дата = АСформироватьПриказ.ДатаПриказа.Value.ToShortDateString
+        Дата = BuildOrder.ДатаПриказа.Value.ToShortDateString
         MSWord.DisplayAlerts = False
         DOK = MSWord.Documents.Add
 
@@ -534,7 +534,7 @@
             счетчик = счетчик + 1
         End While
 
-        Вспомогательный.savePrikazBlank(DOK, MainForm.prikazKodGroup, видПриказа, resourcesPath, "Заявления")
+        _technical.savePrikazBlank(DOK, MainForm.orderIdGroup, видПриказа, resourcesPath, "Заявления")
 
         MSWord.Visible = True
 
@@ -552,40 +552,40 @@
         Dim НомерАбзаца As Integer, счетчик As Integer
         Dim Дата As String, sqlQuery As String
 
-        sqlQuery = blanki_loadSlush(MainForm.prikazKodGroup)
+        sqlQuery = blanki_loadSlush(MainForm.orderIdGroup)
 
         Слушатели = MainForm.mySqlConnect.loadMySqlToArray(sqlQuery, 1)
 
         If Слушатели(0, 0).ToString = "нет записей" Then
 
-            предупреждение.текст.Text = "В выбранной группе нет слушателей!"
-            openForm(предупреждение)
+            Warning.content.Text = "В выбранной группе нет слушателей!"
+            openForm(Warning)
 
             Exit Sub
 
         End If
 
-        sqlQuery = blanki_loadSpesh(MainForm.prikazKodGroup)
+        sqlQuery = blanki_loadSpesh(MainForm.orderIdGroup)
 
         Группа = MainForm.mySqlConnect.loadMySqlToArray(sqlQuery, 1)
 
-        sqlQuery = SQLSTring_PKZayavlenie(MainForm.prikazKodGroup)
+        sqlQuery = SQLSTring_PKZayavlenie(MainForm.orderIdGroup)
 
         Слушатели = MainForm.mySqlConnect.loadMySqlToArray(sqlQuery, 1)
 
         If Слушатели(0, 0).ToString = "нет записей" Then
 
-            предупреждение.текст.Text = "Проверьте данные слушателей этой группы, возможно у одного из слушателей указан некорректный СНИЛС!"
-            openForm(предупреждение)
+            Warning.content.Text = "Проверьте данные слушателей этой группы, возможно у одного из слушателей указан некорректный СНИЛС!"
+            openForm(Warning)
             Exit Sub
 
         End If
 
-        Слушатели = УбратьПустотыВМассиве.УбратьПустотыВМассиве(Слушатели)
+        Слушатели = arrayMethod.removeEmpty(Слушатели)
 
         MSWord = CreateObject("Word.Application")
 
-        Дата = АСформироватьПриказ.ДатаПриказа.Value.ToShortDateString
+        Дата = BuildOrder.ДатаПриказа.Value.ToShortDateString
         MSWord.DisplayAlerts = False
         DOK = MSWord.Documents.Add
         'MSWord.Visible = True
@@ -806,7 +806,7 @@
             счетчик = счетчик + 1
         End While
 
-        Вспомогательный.savePrikazBlank(DOK, MainForm.prikazKodGroup, видПриказа, resourcesPath, "Заявления")
+        _technical.savePrikazBlank(DOK, MainForm.orderIdGroup, видПриказа, resourcesPath, "Заявления")
         MSWord.Visible = True
 
         'Call сохранить(DOK, видПриказа)

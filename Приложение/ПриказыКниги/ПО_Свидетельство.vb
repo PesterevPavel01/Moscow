@@ -7,40 +7,40 @@
         Dim number As Int64
         Dim sqlQuery As String, resorsesPath, samplePath As String
 
-        sqlQuery = poSvid__loadListSvid(MainForm.prikazKodGroup)
+        sqlQuery = poSvid__loadListSvid(MainForm.orderIdGroup)
         students = MainForm.mySqlConnect.loadMySqlToArray(sqlQuery, 1)
 
         If students(0, 0) = "нет записей" Then
-            предупреждение.текст.Text = "Нет данных для отображения"
-            предупреждение.ShowDialog()
+            Warning.content.Text = "Нет данных для отображения"
+            Warning.ShowDialog()
             Exit Sub
         End If
 
-        sqlQuery = selectMassForPrilSvidetelstvo(MainForm.prikazKodGroup)
+        sqlQuery = selectMassForPrilSvidetelstvo(MainForm.orderIdGroup)
         group = MainForm.mySqlConnect.loadMySqlToArray(sqlQuery, 1)
 
         If group(0, 0) = "нет записей" Then
-            предупреждение.текст.Text = "Нет данных для отображения"
-            предупреждение.ShowDialog()
+            Warning.content.Text = "Нет данных для отображения"
+            Warning.ShowDialog()
             Exit Sub
         End If
 
         Try
             number = group(7, 0)
         Catch ex As Exception
-            предупреждение.текст.Text = "В выбранной группе номер свидетельства не указан или не является числом"
-            openForm(предупреждение)
+            Warning.content.Text = "В выбранной группе номер свидетельства не указан или не является числом"
+            openForm(Warning)
             Exit Sub
         End Try
 
-        resorsesPath = Запуск.ПутьКФайлуRes
+        resorsesPath = startApp.ПутьКФайлуRes
         samplePath = resorsesPath & "Шаблоны\ПК_Окончание\Таблицы_ПО_Св-во.docx"
 
         WordApp = CreateObject("Word.Application")
 
         wordDok = WordApp.Documents.Open(samplePath, ReadOnly:=True)
 
-        Вспомогательный.savePrikazBlank(wordDok, MainForm.prikazKodGroup, orderType, resorsesPath, "Приказы")
+        _technical.savePrikazBlank(wordDok, MainForm.orderIdGroup, orderType, resorsesPath, "Приказы")
 
         WordApp.DisplayAlerts = False
 
@@ -48,8 +48,8 @@
 
         Try
             If table(0, 0).ToString = "не найдена" Then
-                предупреждение.текст.Text = "Не найдена таблица с меткой $Таблица2$ в ячейке (1,1). Путь к шаблону: " & samplePath
-                openForm(предупреждение)
+                Warning.content.Text = "Не найдена таблица с меткой $Таблица2$ в ячейке (1,1). Путь к шаблону: " & samplePath
+                openForm(Warning)
                 Exit Sub
             End If
         Catch ex As Exception
@@ -134,8 +134,8 @@
 
         For Счетчик = 0 To UBound(coordinates, 2)
             If IsNothing(coordinates(1, Счетчик)) Then
-                предупреждение.текст.Text = "В Таблице2 не обнаружены метка" & coordinates(0, Счетчик) & ". Путь к шаблону: " & samplePath
-                openForm(предупреждение)
+                Warning.content.Text = "В Таблице2 не обнаружены метка" & coordinates(0, Счетчик) & ". Путь к шаблону: " & samplePath
+                openForm(Warning)
                 Exit Sub
             End If
         Next
@@ -151,17 +151,17 @@
 
                 End If
 
-                If АСформироватьПриказ.CheckBox1.Checked And program(0, rowCounter) = "Практическая подготовка" Then
+                If BuildOrder.CheckBox1.Checked And program(0, rowCounter) = "Практическая подготовка" Then
 
                     table.Cell(rowCounter + numberRow, coordinates(2, 0)).Range.text = rowCounter + 1 & "."
                     table.Cell(rowCounter + numberRow, coordinates(2, 1)).Range.text = program(0, rowCounter)
-                    table.Cell(rowCounter + numberRow, coordinates(2, 2)).Range.text = АСформироватьПриказ.ПрактическаяПодготовка.Text
+                    table.Cell(rowCounter + numberRow, coordinates(2, 2)).Range.text = BuildOrder.ПрактическаяПодготовка.Text
                     table.Cell(rowCounter + numberRow, coordinates(2, 3)).Range.text = "$Модуль" & rowCounter + 1 & "$" '"$ПП$"
-                ElseIf АСформироватьПриказ.CheckBox1.Checked And program(0, rowCounter) = "Итоговая аттестация" Then
+                ElseIf BuildOrder.CheckBox1.Checked And program(0, rowCounter) = "Итоговая аттестация" Then
 
                     table.Cell(rowCounter + numberRow, coordinates(2, 0)).Range.text = rowCounter + 1 & "."
                     table.Cell(rowCounter + numberRow, coordinates(2, 1)).Range.text = program(0, rowCounter)
-                    table.Cell(rowCounter + numberRow, coordinates(2, 2)).Range.text = АСформироватьПриказ.ИтоговаяАттестация.Text
+                    table.Cell(rowCounter + numberRow, coordinates(2, 2)).Range.text = BuildOrder.ИтоговаяАттестация.Text
                     table.Cell(rowCounter + numberRow, coordinates(2, 3)).Range.text = "$Модуль" & rowCounter + 1 & "$" '"$ИА$"
                 Else
 
@@ -185,8 +185,8 @@
 
                     Else
 
-                        предупреждение.текст.Text = "Для модуля «" & program(0, rowCounter) & "» не указано количество часов"
-                        openForm(предупреждение)
+                        Warning.content.Text = "Для модуля «" & program(0, rowCounter) & "» не указано количество часов"
+                        openForm(Warning)
 
                     End If
 
@@ -199,8 +199,8 @@
 
             Else
 
-                предупреждение.текст.Text = "Для программы «" & program(4, 0) & "» не указан модуль 1. Приложение сформировано некорректно!!!"
-                openForm(предупреждение)
+                Warning.content.Text = "Для программы «" & program(4, 0) & "» не указан модуль 1. Приложение сформировано некорректно!!!"
+                openForm(Warning)
                 Exit While
 
             End If

@@ -35,10 +35,10 @@
         Dim queryString, snils As String
         Dim rowCounter As Integer
         rowCounter = Ведомость.Rows.Count
-        queryString = АОценкиИА.ТаблицаОценкиИА.Rows(rowCounter - 1).Cells(1).Value
+        queryString = GradesIA.iaTAble.Rows(rowCounter - 1).Cells(1).Value
 
 
-        For Each row As DataGridViewRow In АОценкиИА.ТаблицаОценкиИА.Rows
+        For Each row As DataGridViewRow In GradesIA.iaTAble.Rows
 
             If IsNothing(row.Cells(1).Value) Then
 
@@ -75,8 +75,8 @@
 
             Catch ex As Exception
 
-                предупреждение.текст.Text = "Информация не была сохранена"
-                openForm(предупреждение)
+                Warning.content.Text = "Информация не была сохранена"
+                openForm(Warning)
 
                 Exit Sub
 

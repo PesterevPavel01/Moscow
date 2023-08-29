@@ -1,10 +1,9 @@
 ﻿Imports System.Threading
-Imports System.IO
 Public Class StudentList
 
     Dim SC As SynchronizationContext
 
-    Sub ЗагрузитьРедакторГруппы()
+    Sub loadStudentRed()
         РедакторГруппы.loadFormGruppa()
         ЗаполнитьРедакторГруппы.ЗаполнитьРедакторГруппы(СправочникГруппы.numberGr)
     End Sub
@@ -45,7 +44,7 @@ Public Class StudentList
 
         End If
 
-        studentList = УбратьПустотыВМассиве.УбратьПустотыВМассиве(studentList)
+        studentList = arrayMethod.removeEmpty(studentList)
 
         ReDim params(7)
         params(0) = Me
@@ -127,7 +126,7 @@ Public Class StudentList
 
                 queryString = load_slushatel(snils)
 
-                ФормаСправочникСлушатели.studentsInfo = УбратьПустотыВМассиве.УбратьПустотыВМассиве(MainForm.mySqlConnect.loadMySqlToArray(queryString, 1))
+                WindowsApp2.StudentsList.studentsInfo = arrayMethod.removeEmpty(MainForm.mySqlConnect.loadMySqlToArray(queryString, 1))
 
                 '                РедакторСлушателя.prevFormSpisSlushVGr = True
 
@@ -178,20 +177,20 @@ Public Class StudentList
 
     Private Sub studentsList_Click(sender As Object, e As EventArgs) Handles studentsList.Click
 
-        ФормаСправочникСлушатели.showStudentsList()
-        ФормаСправочникСлушатели.insertIntoGroupList.Visible = True
-        ФормаСправочникСлушатели.ShowDialog()
+        WindowsApp2.StudentsList.showStudentsList()
+        WindowsApp2.StudentsList.insertIntoGroupList.Visible = True
+        WindowsApp2.StudentsList.ShowDialog()
 
     End Sub
 
     Private Sub newStudent_Click(sender As Object, e As EventArgs) Handles newStudent.Click
-        НовыйСлушатель.ВызваноСФормыСписокСлушателей = True
-        НовыйСлушатель.ShowDialog()
+        WindowsApp2.newStudent.fromStudentsList = True
+        WindowsApp2.newStudent.ShowDialog()
     End Sub
 
     Private Sub allInfo_Click(sender As Object, e As EventArgs) Handles allInfo.Click
-        ЗагрузитьРедакторГруппы()
+        loadStudentRed()
         РедакторГруппы.ShowDialog()
-        Очиститьформу(РедакторГруппы)
+        cleaner(РедакторГруппы)
     End Sub
 End Class

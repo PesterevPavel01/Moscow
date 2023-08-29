@@ -4,7 +4,7 @@ Public Class РедакторСлушателя
     Public Press As Boolean
     Public oldSnils As String
     'Public prevFormSpisSlushVGr As Boolean = False
-    Dim slushatel As New Slushatel
+    Dim slushatel As New Student
     Private Sub Сохранить_Click(sender As Object, e As EventArgs) Handles Сохранить.Click
 
         ActiveControl = BtnFocus
@@ -95,9 +95,9 @@ Public Class РедакторСлушателя
     Private Sub Пол_Click(sender As Object, e As EventArgs)
 
         Сообщение.Visible = False
-        ФормаСписок.textboxName = Me.ActiveControl.Name
-        ФормаСписок.FormName = Me.Name
-        openForm(ФормаСписок)
+        List.textboxName = Me.ActiveControl.Name
+        List.currentFormName = Me.Name
+        openForm(List)
 
     End Sub
 
@@ -105,27 +105,27 @@ Public Class РедакторСлушателя
     Private Sub УровеньОбразования_Click(sender As Object, e As EventArgs)
 
         Сообщение.Visible = False
-        ФормаСписок.textboxName = Me.ActiveControl.Name
-        ФормаСписок.FormName = ActiveForm.Name
-        openForm(ФормаСписок)
+        List.textboxName = Me.ActiveControl.Name
+        List.currentFormName = ActiveForm.Name
+        openForm(List)
 
     End Sub
 
     Private Sub ИсточникФин_Click(sender As Object, e As EventArgs)
 
         Сообщение.Visible = False
-        ФормаСписок.textboxName = Me.ActiveControl.Name
-        ФормаСписок.FormName = ActiveForm.Name
-        openForm(ФормаСписок)
+        List.textboxName = Me.ActiveControl.Name
+        List.currentFormName = ActiveForm.Name
+        openForm(List)
 
     End Sub
 
     Private Sub ДУЛ_Click(sender As Object, e As EventArgs)
 
         Сообщение.Visible = False
-        ФормаСписок.textboxName = Me.ActiveControl.Name
-        ФормаСписок.FormName = ActiveForm.Name
-        openForm(ФормаСписок)
+        List.textboxName = Me.ActiveControl.Name
+        List.currentFormName = ActiveForm.Name
+        openForm(List)
 
     End Sub
 
@@ -133,9 +133,9 @@ Public Class РедакторСлушателя
     Private Sub Гражданство_Click(sender As Object, e As EventArgs)
 
         Сообщение.Visible = False
-        ФормаСписок.textboxName = Me.ActiveControl.Name
-        ФормаСписок.FormName = ActiveForm.Name
-        openForm(ФормаСписок)
+        List.textboxName = Me.ActiveControl.Name
+        List.currentFormName = ActiveForm.Name
+        openForm(List)
 
 
     End Sub
@@ -246,9 +246,9 @@ Public Class РедакторСлушателя
     Private Sub НаправившаяОрг_Click(sender As Object, e As EventArgs)
 
         Сообщение.Visible = False
-        ФормаСписок.textboxName = Me.ActiveControl.Name
-        ФормаСписок.FormName = ActiveForm.Name
-        openForm(ФормаСписок)
+        List.textboxName = Me.ActiveControl.Name
+        List.currentFormName = ActiveForm.Name
+        openForm(List)
 
     End Sub
 
@@ -270,15 +270,15 @@ Public Class РедакторСлушателя
 
     Private Sub РедакторСлушателя_Shown(sender As Object, e As EventArgs) Handles Me.Shown
 
-        If ФормаСправочникСлушатели.studentsInfo(0, 0).ToString = "нет записей" Then
+        If WindowsApp2.StudentsList.studentsInfo(0, 0).ToString = "нет записей" Then
 
             Me.Close()
-            предупреждение.текст.Text = "Ошибка. Некорректный СНИЛС в базе. Необходима ручная проверка базы!"
-            openForm(предупреждение)
+            Warning.content.Text = "Ошибка. Некорректный СНИЛС в базе. Необходима ручная проверка базы!"
+            openForm(Warning)
 
         Else
 
-            oldSnils = deleteMasck(ФормаСправочникСлушатели.studentsInfo(1, 0))
+            oldSnils = deleteMasck(WindowsApp2.StudentsList.studentsInfo(1, 0))
             Сообщение.Visible = False
             ActiveControl = BtnFocus
 
@@ -372,16 +372,16 @@ Public Class РедакторСлушателя
 
     Private Sub СпециальностьСлушателя_Click(sender As Object, e As EventArgs)
         Сообщение.Visible = False
-        ФормаСписок.textboxName = Me.ActiveControl.Name
-        ФормаСписок.FormName = ActiveForm.Name
-        openForm(ФормаСписок)
+        List.textboxName = Me.ActiveControl.Name
+        List.currentFormName = ActiveForm.Name
+        openForm(List)
     End Sub
 
     Private Sub СтранаДОО_Click(sender As Object, e As EventArgs)
         Сообщение.Visible = False
-        ФормаСписок.textboxName = Me.ActiveControl.Name
-        ФормаСписок.FormName = ActiveForm.Name
-        openForm(ФормаСписок)
+        List.textboxName = Me.ActiveControl.Name
+        List.currentFormName = ActiveForm.Name
+        openForm(List)
     End Sub
 
     Private Sub СтранаДОО_KeyDown(sender As Object, e As KeyEventArgs)

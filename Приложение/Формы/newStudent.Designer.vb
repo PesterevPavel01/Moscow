@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
-Partial Class НовыйСлушатель
+Partial Class newStudent
     Inherits System.Windows.Forms.Form
 
     'Форма переопределяет dispose для очистки списка компонентов.
@@ -22,7 +22,7 @@ Partial Class НовыйСлушатель
     'Не изменяйте ее в редакторе исходного кода.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Me.Сообщение = New System.Windows.Forms.Label()
+        Me.message = New System.Windows.Forms.Label()
         Me.Очистить = New System.Windows.Forms.Button()
         Me.НомерДУЛ = New System.Windows.Forms.TextBox()
         Me.СерияДУЛ = New System.Windows.Forms.TextBox()
@@ -40,7 +40,7 @@ Partial Class НовыйСлушатель
         Me.Label10 = New System.Windows.Forms.Label()
         Me.СерияДокументаООбразовании = New System.Windows.Forms.TextBox()
         Me.Образование = New System.Windows.Forms.TextBox()
-        Me.Фамилия = New System.Windows.Forms.TextBox()
+        Me.secondName = New System.Windows.Forms.TextBox()
         Me.Label9 = New System.Windows.Forms.Label()
         Me.Label8 = New System.Windows.Forms.Label()
         Me.Label7 = New System.Windows.Forms.Label()
@@ -51,10 +51,10 @@ Partial Class НовыйСлушатель
         Me.Label3 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Label1 = New System.Windows.Forms.Label()
-        Me.Снилс = New System.Windows.Forms.TextBox()
+        Me.snils = New System.Windows.Forms.TextBox()
         Me.Сохранить = New System.Windows.Forms.Button()
         Me.Отчество = New System.Windows.Forms.TextBox()
-        Me.ДатаРождения = New System.Windows.Forms.DateTimePicker()
+        Me.birthDate = New System.Windows.Forms.DateTimePicker()
         Me.Label18 = New System.Windows.Forms.Label()
         Me.НомерНаправленияРосздравнадзора = New System.Windows.Forms.TextBox()
         Me.Label20 = New System.Windows.Forms.Label()
@@ -65,7 +65,7 @@ Partial Class НовыйСлушатель
         Me.label = New System.Windows.Forms.Label()
         Me.BtnFocus = New System.Windows.Forms.Button()
         Me.ДатаНаправленияРосздравнвдзора = New System.Windows.Forms.DateTimePicker()
-        Me.ДатаВыдачиДУЛ = New System.Windows.Forms.DateTimePicker()
+        Me.dateDUL = New System.Windows.Forms.DateTimePicker()
         Me.Label25 = New System.Windows.Forms.Label()
         Me.КемВыданДУЛ = New System.Windows.Forms.TextBox()
         Me.Label26 = New System.Windows.Forms.Label()
@@ -82,14 +82,14 @@ Partial Class НовыйСлушатель
         '
         'Сообщение
         '
-        Me.Сообщение.AutoSize = True
-        Me.Сообщение.ForeColor = System.Drawing.SystemColors.MenuHighlight
-        Me.Сообщение.Location = New System.Drawing.Point(27, 9)
-        Me.Сообщение.Name = "Сообщение"
-        Me.Сообщение.Size = New System.Drawing.Size(45, 13)
-        Me.Сообщение.TabIndex = 107
-        Me.Сообщение.Text = "Label20"
-        Me.Сообщение.Visible = False
+        Me.message.AutoSize = True
+        Me.message.ForeColor = System.Drawing.SystemColors.MenuHighlight
+        Me.message.Location = New System.Drawing.Point(27, 9)
+        Me.message.Name = "Сообщение"
+        Me.message.Size = New System.Drawing.Size(45, 13)
+        Me.message.TabIndex = 107
+        Me.message.Text = "Label20"
+        Me.message.Visible = False
         '
         'Очистить
         '
@@ -243,10 +243,10 @@ Partial Class НовыйСлушатель
         '
         'Фамилия
         '
-        Me.Фамилия.Location = New System.Drawing.Point(256, 44)
-        Me.Фамилия.Name = "Фамилия"
-        Me.Фамилия.Size = New System.Drawing.Size(534, 20)
-        Me.Фамилия.TabIndex = 2
+        Me.secondName.Location = New System.Drawing.Point(256, 44)
+        Me.secondName.Name = "Фамилия"
+        Me.secondName.Size = New System.Drawing.Size(534, 20)
+        Me.secondName.TabIndex = 2
         '
         'Label9
         '
@@ -347,10 +347,10 @@ Partial Class НовыйСлушатель
         '
         'Снилс
         '
-        Me.Снилс.Location = New System.Drawing.Point(256, 22)
-        Me.Снилс.Name = "Снилс"
-        Me.Снилс.Size = New System.Drawing.Size(534, 20)
-        Me.Снилс.TabIndex = 1
+        Me.snils.Location = New System.Drawing.Point(256, 22)
+        Me.snils.Name = "Снилс"
+        Me.snils.Size = New System.Drawing.Size(534, 20)
+        Me.snils.TabIndex = 1
         '
         'Сохранить
         '
@@ -372,12 +372,12 @@ Partial Class НовыйСлушатель
         '
         'ДатаРождения
         '
-        Me.ДатаРождения.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
-        Me.ДатаРождения.Location = New System.Drawing.Point(256, 110)
-        Me.ДатаРождения.Name = "ДатаРождения"
-        Me.ДатаРождения.Size = New System.Drawing.Size(534, 20)
-        Me.ДатаРождения.TabIndex = 5
-        Me.ДатаРождения.Value = New Date(1753, 1, 1, 0, 0, 0, 0)
+        Me.birthDate.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
+        Me.birthDate.Location = New System.Drawing.Point(256, 110)
+        Me.birthDate.Name = "ДатаРождения"
+        Me.birthDate.Size = New System.Drawing.Size(534, 20)
+        Me.birthDate.TabIndex = 5
+        Me.birthDate.Value = New Date(1753, 1, 1, 0, 0, 0, 0)
         '
         'Label18
         '
@@ -478,12 +478,12 @@ Partial Class НовыйСлушатель
         '
         'ДатаВыдачиДУЛ
         '
-        Me.ДатаВыдачиДУЛ.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
-        Me.ДатаВыдачиДУЛ.Location = New System.Drawing.Point(256, 512)
-        Me.ДатаВыдачиДУЛ.Name = "ДатаВыдачиДУЛ"
-        Me.ДатаВыдачиДУЛ.Size = New System.Drawing.Size(534, 20)
-        Me.ДатаВыдачиДУЛ.TabIndex = 22
-        Me.ДатаВыдачиДУЛ.Value = New Date(1753, 1, 1, 0, 0, 0, 0)
+        Me.dateDUL.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
+        Me.dateDUL.Location = New System.Drawing.Point(256, 512)
+        Me.dateDUL.Name = "ДатаВыдачиДУЛ"
+        Me.dateDUL.Size = New System.Drawing.Size(534, 20)
+        Me.dateDUL.TabIndex = 22
+        Me.dateDUL.Value = New Date(1753, 1, 1, 0, 0, 0, 0)
         '
         'Label25
         '
@@ -621,7 +621,7 @@ Partial Class НовыйСлушатель
         Me.Controls.Add(Me.Label26)
         Me.Controls.Add(Me.КемВыданДУЛ)
         Me.Controls.Add(Me.Label25)
-        Me.Controls.Add(Me.ДатаВыдачиДУЛ)
+        Me.Controls.Add(Me.dateDUL)
         Me.Controls.Add(Me.ДатаНаправленияРосздравнвдзора)
         Me.Controls.Add(Me.BtnFocus)
         Me.Controls.Add(Me.Email)
@@ -632,9 +632,9 @@ Partial Class НовыйСлушатель
         Me.Controls.Add(Me.Label20)
         Me.Controls.Add(Me.Label21)
         Me.Controls.Add(Me.Label18)
-        Me.Controls.Add(Me.ДатаРождения)
+        Me.Controls.Add(Me.birthDate)
         Me.Controls.Add(Me.Отчество)
-        Me.Controls.Add(Me.Сообщение)
+        Me.Controls.Add(Me.message)
         Me.Controls.Add(Me.Очистить)
         Me.Controls.Add(Me.НомерДУЛ)
         Me.Controls.Add(Me.СерияДУЛ)
@@ -652,7 +652,7 @@ Partial Class НовыйСлушатель
         Me.Controls.Add(Me.Label10)
         Me.Controls.Add(Me.СерияДокументаООбразовании)
         Me.Controls.Add(Me.Образование)
-        Me.Controls.Add(Me.Фамилия)
+        Me.Controls.Add(Me.secondName)
         Me.Controls.Add(Me.Label9)
         Me.Controls.Add(Me.Label8)
         Me.Controls.Add(Me.Label7)
@@ -663,7 +663,7 @@ Partial Class НовыйСлушатель
         Me.Controls.Add(Me.Label3)
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.Label1)
-        Me.Controls.Add(Me.Снилс)
+        Me.Controls.Add(Me.snils)
         Me.Controls.Add(Me.Сохранить)
         Me.KeyPreview = True
         Me.Name = "НовыйСлушатель"
@@ -673,7 +673,7 @@ Partial Class НовыйСлушатель
         Me.PerformLayout()
 
     End Sub
-    Friend WithEvents Сообщение As Label
+    Friend WithEvents message As Label
     Friend WithEvents Очистить As Button
     Friend WithEvents НомерДУЛ As TextBox
     Friend WithEvents СерияДУЛ As TextBox
@@ -691,7 +691,7 @@ Partial Class НовыйСлушатель
     Friend WithEvents Label10 As Label
     Friend WithEvents СерияДокументаООбразовании As TextBox
     Friend WithEvents Образование As TextBox
-    Friend WithEvents Фамилия As TextBox
+    Friend WithEvents secondName As TextBox
     Friend WithEvents Label9 As Label
     Friend WithEvents Label8 As Label
     Friend WithEvents Label7 As Label
@@ -702,10 +702,10 @@ Partial Class НовыйСлушатель
     Friend WithEvents Label3 As Label
     Friend WithEvents Label2 As Label
     Friend WithEvents Label1 As Label
-    Friend WithEvents Снилс As TextBox
+    Friend WithEvents snils As TextBox
     Friend WithEvents Сохранить As Button
     Friend WithEvents Отчество As TextBox
-    Friend WithEvents ДатаРождения As DateTimePicker
+    Friend WithEvents birthDate As DateTimePicker
     Friend WithEvents Label18 As Label
     Friend WithEvents НомерНаправленияРосздравнадзора As TextBox
     Friend WithEvents Label20 As Label
@@ -716,7 +716,7 @@ Partial Class НовыйСлушатель
     Friend WithEvents label As Label
     Friend WithEvents BtnFocus As Button
     Friend WithEvents ДатаНаправленияРосздравнвдзора As DateTimePicker
-    Friend WithEvents ДатаВыдачиДУЛ As DateTimePicker
+    Friend WithEvents dateDUL As DateTimePicker
     Friend WithEvents Label25 As Label
     Friend WithEvents КемВыданДУЛ As TextBox
     Friend WithEvents Label26 As Label

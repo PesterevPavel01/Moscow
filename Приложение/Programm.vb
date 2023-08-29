@@ -1,4 +1,4 @@
-﻿Imports WindowsApp2.Slushatel
+﻿Imports WindowsApp2.Student
 
 Public Class Programm
     Dim mySQLConnector As New MySQLConnect

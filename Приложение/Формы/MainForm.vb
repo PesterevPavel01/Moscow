@@ -1,6 +1,4 @@
-﻿Imports System.ComponentModel
-
-Public Class MainForm
+﻿Public Class MainForm
 
     Private redactor_enter As Boolean
     Public password0 As String
@@ -11,9 +9,8 @@ Public Class MainForm
     Public alternativeTabSecond As Integer = Keys.Right
     Public orderNumber As Integer
     Public directorOff As Boolean = False
-    Public internshipEnding As Boolean = False
     Public mySqlConnect As New MySQLConnect
-    Public prikazKodGroup As Int64 = 0
+    Public orderIdGroup As Int64 = 0
     Public activeTables As String = "Не загружено"
     Public settsStatus As Boolean = True
     Public cvalific As UInt16 = 0
@@ -24,13 +21,13 @@ Public Class MainForm
     Public Const PK_PP_PO = 0
     Public Const PK_PP = 4
 
-    Public prikazCvalif As UInt16 = 0
+    Public orderCvalif As UInt16 = 0
     Public program As New Programm
     Private worker As New Worker
     Private flag_ToolStrip_name_list As Boolean
     Private flag_worker_dolgnost As Boolean
     Private flag_worker_type As Boolean
-    Public tbl_obrazovanie As New Tables_control
+    Public tbl_education As New Tables_control
     Public programs__progrs_tbl As New Tables_control
     Public programs_type_tbl As New Tables_control
     Public sqlQueryString As New SqlQueryString
@@ -90,8 +87,8 @@ Public Class MainForm
     Private Sub Button1_Click(sender As Object, e As EventArgs)
 
         ActiveControl = Button2
-        ФормаСправочникСлушатели.searchSetts.Visible = False
-        ФормаСправочникСлушатели.ShowDialog()
+        StudentsList.searchSetts.Visible = False
+        StudentsList.ShowDialog()
 
     End Sub
 
@@ -122,25 +119,25 @@ Public Class MainForm
     Private Sub ИтоговаяАттествцияОценки_Click(sender As Object, e As EventArgs) Handles ИтоговаяАттествцияОценки.Click
 
         ActiveControl = Button2
-        АОценкиИА.groupNumber.Clear()
-        АОценкиИА.ТаблицаОценкиИА.Rows.Clear()
-        АОценкиИА.ShowDialog()
+        GradesIA.groupNumber.Clear()
+        GradesIA.iaTAble.Rows.Clear()
+        GradesIA.ShowDialog()
 
     End Sub
 
     Private Sub Ведомость_Click(sender As Object, e As EventArgs) Handles Ведомость.Click
 
         ActiveControl = Button2
-        ОценочнаяВедомость.groupNumber.Clear()
-        ОценочнаяВедомость.resultTable.Rows.Clear()
-        ОценочнаяВедомость.ShowDialog()
+        Grades.groupNumber.Clear()
+        Grades.resultTable.Rows.Clear()
+        Grades.ShowDialog()
 
     End Sub
 
     Private Sub createGroup_Click(sender As Object, e As EventArgs) Handles КнопкаСоздатьГруппу.Click
 
         ActiveControl = Button2
-        НоваяГруппа.ShowDialog()
+        newGroup.ShowDialog()
 
     End Sub
 
@@ -151,18 +148,18 @@ Public Class MainForm
             НастройкаПоискаСлушателей.Снилс.Checked = True
 
         End If
-        ФормаСправочникСлушатели.insertIntoGroupList.Visible = False
+        WindowsApp2.StudentsList.insertIntoGroupList.Visible = False
         ActiveControl = Button2
-        ФормаСправочникСлушатели.searchSetts.Visible = False
-        ФормаСправочникСлушатели.showStudentsList()
-        ФормаСправочникСлушатели.ShowDialog()
+        WindowsApp2.StudentsList.searchSetts.Visible = False
+        WindowsApp2.StudentsList.showStudentsList()
+        WindowsApp2.StudentsList.ShowDialog()
 
     End Sub
 
     Private Sub addStudent_Click(sender As Object, e As EventArgs) Handles ДобавитьСлушателя.Click
 
         ActiveControl = Button2
-        НовыйСлушатель.ShowDialog()
+        newStudent.ShowDialog()
 
     End Sub
 
@@ -176,21 +173,21 @@ Public Class MainForm
 
     Private Sub ПриказОЗачислении_Доп_Click(sender As Object, e As EventArgs) Handles ПриказОЗачислении_Доп.Click
 
-        prikazCvalif = PK
-        АСформироватьПриказ.Text = "ПК_Зачисление_Доп"
-        АСформироватьПриказ.orderType = "ПК_Зачисление_Доп"
+        BuildOrder.cvalification = PK
+        BuildOrder.Text = "ПК_Зачисление_Доп"
+        BuildOrder.orderType = "ПК_Зачисление_Доп"
 
-        АСформироватьПриказ.ListViewСписокСлушателей.Visible = True
-        АСформироватьПриказ.ListViewСписокСлушателей.Location = New Point(9, 320)
+        BuildOrder.tableStudentsList.Visible = True
+        BuildOrder.tableStudentsList.Location = New Point(9, 320)
 
-        While АСформироватьПриказ.ListViewСписокСлушателей.Columns.Count > 1
+        While BuildOrder.tableStudentsList.Columns.Count > 1
 
-            АСформироватьПриказ.ListViewСписокСлушателей.Columns.RemoveAt(1)
+            BuildOrder.tableStudentsList.Columns.RemoveAt(1)
 
         End While
 
-        АСформироватьПриказ.ListViewСписокСлушателей.Columns(0).Width = 805
-        АСформироватьПриказ.ListViewСписокСлушателей.Columns(0).Text = "ФИО"
+        BuildOrder.tableStudentsList.Columns(0).Width = 805
+        BuildOrder.tableStudentsList.Columns(0).Text = "ФИО"
 
         ОтветственныйЗаАттестацию(False)
 
@@ -205,36 +202,36 @@ Public Class MainForm
         СекретарьКомиссии(False)
         ЗаместительРПК(False)
 
-        ОчиститьПоляФормы.Очиститьформу(АСформироватьПриказ)
+        _formCleaner.cleaner(BuildOrder)
 
-        АСформироватьПриказ.Size = New Size(840, 1000)
-        АСформироватьПриказ.КнопкаСформировать.Location = New Point(135, 915)
-        АСформироватьПриказ.КнопкаОчистить.Location = New Point(2, 915)
-        ДиректорДолжность.Visible = True
+        BuildOrder.Size = New Size(840, 1000)
+        BuildOrder.КнопкаСформировать.Location = New Point(135, 915)
+        BuildOrder.КнопкаОчистить.Location = New Point(2, 915)
+        directorPosition.Visible = True
         ActiveControl = Button2
 
-        'местоНаФормеПослеДиректора(3, АСформироватьПриказ.Label4, АСформироватьПриказ.Label13, АСформироватьПриказ.Ответственный, АСформироватьПриказ.ОтветственныйДолжность, АСформироватьПриказ.GroupBox5)
-        местоНаФорме(1, АСформироватьПриказ.Label2, АСформироватьПриказ.Label14, АСформироватьПриказ.Утверждает, АСформироватьПриказ.УтверждаетДолжность, АСформироватьПриказ.GroupBox6)
-        местоНаФормеПослеДиректора(2, АСформироватьПриказ.Label5, АСформироватьПриказ.Label6, АСформироватьПриказ.ПроектВносит, АСформироватьПриказ.ПроектВноситДолжность, АСформироватьПриказ.GroupBox1)
-        местоНаФормеПослеДиректора(3, АСформироватьПриказ.Label7, АСформироватьПриказ.Label8, АСформироватьПриказ.Исполнитель, АСформироватьПриказ.ИсполнительДолжность, АСформироватьПриказ.GroupBox2)
-        местоНаФормеПослеДиректора(4, АСформироватьПриказ.Label9, АСформироватьПриказ.Label10, АСформироватьПриказ.Согласовано1, АСформироватьПриказ.Согласовано1Должность, АСформироватьПриказ.GroupBox3)
-        местоНаФормеПослеДиректора(5, АСформироватьПриказ.Label11, АСформироватьПриказ.Label12, АСформироватьПриказ.Согласовано2, АСформироватьПриказ.Согласовано2Должность, АСформироватьПриказ.GroupBox4)
+        'местоНаФормеПослеДиректора(3, BuildOrder.Label4, BuildOrder.Label13, BuildOrder.Ответственный, BuildOrder.ОтветственныйДолжность, BuildOrder.GroupBox5)
+        местоНаФорме(1, BuildOrder.Label2, BuildOrder.Label14, BuildOrder.Утверждает, BuildOrder.УтверждаетДолжность, BuildOrder.GroupBox6)
+        местоНаФормеПослеДиректора(2, BuildOrder.Label5, BuildOrder.Label6, BuildOrder.ПроектВносит, BuildOrder.ПроектВноситДолжность, BuildOrder.GroupBox1)
+        местоНаФормеПослеДиректора(3, BuildOrder.Label7, BuildOrder.Label8, BuildOrder.Исполнитель, BuildOrder.ИсполнительДолжность, BuildOrder.GroupBox2)
+        местоНаФормеПослеДиректора(4, BuildOrder.Label9, BuildOrder.Label10, BuildOrder.Согласовано1, BuildOrder.Согласовано1Должность, BuildOrder.GroupBox3)
+        местоНаФормеПослеДиректора(5, BuildOrder.Label11, BuildOrder.Label12, BuildOrder.Согласовано2, BuildOrder.Согласовано2Должность, BuildOrder.GroupBox4)
 
         'showPoleVvoda(True, 70, 30)
 
-        АСформироватьПриказ.ShowDialog()
+        BuildOrder.ShowDialog()
 
         'Чтобы вернуть на место, т.к. сбивается форма на справке о обучении
-        местоНаФорме(1, АСформироватьПриказ.Label2, АСформироватьПриказ.Label14, АСформироватьПриказ.Утверждает, АСформироватьПриказ.УтверждаетДолжность, АСформироватьПриказ.GroupBox6)
-        АСформироватьПриказ.ListViewСписокСлушателей.Visible = False
+        местоНаФорме(1, BuildOrder.Label2, BuildOrder.Label14, BuildOrder.Утверждает, BuildOrder.УтверждаетДолжность, BuildOrder.GroupBox6)
+        BuildOrder.tableStudentsList.Visible = False
         showPoleVvoda(False)
 
     End Sub
 
     Private Sub standard_location(Optional arg As Integer = 0)
 
-        местоНаФорме(1, АСформироватьПриказ.Label2, АСформироватьПриказ.Label14, АСформироватьПриказ.Утверждает, АСформироватьПриказ.УтверждаетДолжность, АСформироватьПриказ.GroupBox6)
-        местоНаФормеПослеДиректора(2, АСформироватьПриказ.Label4, АСформироватьПриказ.Label13, АСформироватьПриказ.Ответственный, АСформироватьПриказ.ОтветственныйДолжность, АСформироватьПриказ.GroupBox5)
+        местоНаФорме(1, BuildOrder.Label2, BuildOrder.Label14, BuildOrder.Утверждает, BuildOrder.УтверждаетДолжность, BuildOrder.GroupBox6)
+        местоНаФормеПослеДиректора(2, BuildOrder.Label4, BuildOrder.Label13, BuildOrder.Ответственный, BuildOrder.ОтветственныйДолжность, BuildOrder.GroupBox5)
 
         If arg = 1 Then
 
@@ -242,28 +239,28 @@ Public Class MainForm
 
         End If
 
-        местоНаФормеПослеДиректора(3, АСформироватьПриказ.Label5, АСформироватьПриказ.Label6, АСформироватьПриказ.ПроектВносит, АСформироватьПриказ.ПроектВноситДолжность, АСформироватьПриказ.GroupBox1)
-        местоНаФормеПослеДиректора(4, АСформироватьПриказ.Label7, АСформироватьПриказ.Label8, АСформироватьПриказ.Исполнитель, АСформироватьПриказ.ИсполнительДолжность, АСформироватьПриказ.GroupBox2)
-        местоНаФормеПослеДиректора(5, АСформироватьПриказ.Label9, АСформироватьПриказ.Label10, АСформироватьПриказ.Согласовано1, АСформироватьПриказ.Согласовано1Должность, АСформироватьПриказ.GroupBox3)
-        местоНаФормеПослеДиректора(6, АСформироватьПриказ.Label11, АСформироватьПриказ.Label12, АСформироватьПриказ.Согласовано2, АСформироватьПриказ.Согласовано2Должность, АСформироватьПриказ.GroupBox4)
+        местоНаФормеПослеДиректора(3, BuildOrder.Label5, BuildOrder.Label6, BuildOrder.ПроектВносит, BuildOrder.ПроектВноситДолжность, BuildOrder.GroupBox1)
+        местоНаФормеПослеДиректора(4, BuildOrder.Label7, BuildOrder.Label8, BuildOrder.Исполнитель, BuildOrder.ИсполнительДолжность, BuildOrder.GroupBox2)
+        местоНаФормеПослеДиректора(5, BuildOrder.Label9, BuildOrder.Label10, BuildOrder.Согласовано1, BuildOrder.Согласовано1Должность, BuildOrder.GroupBox3)
+        местоНаФормеПослеДиректора(6, BuildOrder.Label11, BuildOrder.Label12, BuildOrder.Согласовано2, BuildOrder.Согласовано2Должность, BuildOrder.GroupBox4)
 
     End Sub
 
     Private Sub ПриказОЗачислении_Click(sender As Object, e As EventArgs) Handles ПриказОЗачислении.Click
 
-        prikazCvalif = PK
-        АСформироватьПриказ.Text = "ПК_Зачисление"
-        АСформироватьПриказ.orderType = "ПК_Зачисление"
+        BuildOrder.cvalification = PK
+        BuildOrder.Text = "ПК_Зачисление"
+        BuildOrder.orderType = "ПК_Зачисление"
 
-        АСформироватьПриказ.ListViewСписокСлушателей.Visible = True
-        АСформироватьПриказ.ListViewСписокСлушателей.Location = New Point(9, 350)
+        BuildOrder.tableStudentsList.Visible = True
+        BuildOrder.tableStudentsList.Location = New Point(9, 350)
 
-        While АСформироватьПриказ.ListViewСписокСлушателей.Columns.Count > 1
-            АСформироватьПриказ.ListViewСписокСлушателей.Columns.RemoveAt(1)
+        While BuildOrder.tableStudentsList.Columns.Count > 1
+            BuildOrder.tableStudentsList.Columns.RemoveAt(1)
         End While
 
-        АСформироватьПриказ.ListViewСписокСлушателей.Columns(0).Width = 805
-        АСформироватьПриказ.ListViewСписокСлушателей.Columns(0).Text = "ФИО"
+        BuildOrder.tableStudentsList.Columns(0).Width = 805
+        BuildOrder.tableStudentsList.Columns(0).Text = "ФИО"
 
         ОтветственныйЗаАттестацию(True)
 
@@ -278,26 +275,26 @@ Public Class MainForm
         СекретарьКомиссии(False)
         ЗаместительРПК(False)
 
-        ОчиститьПоляФормы.Очиститьформу(АСформироватьПриказ)
+        _formCleaner.cleaner(BuildOrder)
 
-        АСформироватьПриказ.Size = New Size(840, 1020)
-        АСформироватьПриказ.КнопкаСформировать.Location = New Point(135, 935)
-        АСформироватьПриказ.КнопкаОчистить.Location = New Point(2, 935)
-        ДиректорДолжность.Visible = True
+        BuildOrder.Size = New Size(840, 1020)
+        BuildOrder.КнопкаСформировать.Location = New Point(135, 935)
+        BuildOrder.КнопкаОчистить.Location = New Point(2, 935)
+        directorPosition.Visible = True
         ActiveControl = Button2
 
         standard_location()
 
-        АСформироватьПриказ.ShowDialog()
+        BuildOrder.ShowDialog()
 
-        АСформироватьПриказ.ListViewСписокСлушателей.Visible = False
+        BuildOrder.tableStudentsList.Visible = False
 
     End Sub
 
     Private Sub ППЗачисление_Click(sender As Object, e As EventArgs) Handles ППЗачисление.Click
-        prikazCvalif = PP
-        АСформироватьПриказ.Text = "ПП_Зачисление"
-        АСформироватьПриказ.orderType = "ПП_Зачисление"
+        BuildOrder.cvalification = PP
+        BuildOrder.Text = "ПП_Зачисление"
+        BuildOrder.orderType = "ПП_Зачисление"
 
         ОтветственныйЗаАттестацию(False)
         чекбоксы(True, "иной приносящей доход деятельности", "федерального бюджета", "за счет средств")
@@ -311,29 +308,30 @@ Public Class MainForm
         СекретарьКомиссии(False)
         ЗаместительРПК(False)
 
-        ОчиститьПоляФормы.Очиститьформу(АСформироватьПриказ)
+        _formCleaner.cleaner(BuildOrder)
 
-        АСформироватьПриказ.Size = New Size(840, 590)
-        АСформироватьПриказ.КнопкаСформировать.Location = New Point(135, 505)
-        АСформироватьПриказ.КнопкаОчистить.Location = New Point(2, 505)
+        BuildOrder.Size = New Size(840, 590)
+        BuildOrder.КнопкаСформировать.Location = New Point(135, 505)
+        BuildOrder.КнопкаОчистить.Location = New Point(2, 505)
 
         ActiveControl = Button2
 
-        'Call местоНаФормеПослеДиректора(2, АСформироватьПриказ.Label4, АСформироватьПриказ.Label13, АСформироватьПриказ.Ответственный, АСформироватьПриказ.ОтветственныйДолжность, АСформироватьПриказ.GroupBox5)
-        местоНаФорме(1, АСформироватьПриказ.Label2, АСформироватьПриказ.Label14, АСформироватьПриказ.Утверждает, АСформироватьПриказ.УтверждаетДолжность, АСформироватьПриказ.GroupBox6)
-        местоНаФормеПослеДиректора(2, АСформироватьПриказ.Label5, АСформироватьПриказ.Label6, АСформироватьПриказ.ПроектВносит, АСформироватьПриказ.ПроектВноситДолжность, АСформироватьПриказ.GroupBox1)
-        местоНаФормеПослеДиректора(3, АСформироватьПриказ.Label7, АСформироватьПриказ.Label8, АСформироватьПриказ.Исполнитель, АСформироватьПриказ.ИсполнительДолжность, АСформироватьПриказ.GroupBox2)
-        местоНаФормеПослеДиректора(4, АСформироватьПриказ.Label9, АСформироватьПриказ.Label10, АСформироватьПриказ.Согласовано1, АСформироватьПриказ.Согласовано1Должность, АСформироватьПриказ.GroupBox3)
-        местоНаФормеПослеДиректора(5, АСформироватьПриказ.Label11, АСформироватьПриказ.Label12, АСформироватьПриказ.Согласовано2, АСформироватьПриказ.Согласовано2Должность, АСформироватьПриказ.GroupBox4)
+        'Call местоНаФормеПослеДиректора(2, BuildOrder.Label4, BuildOrder.Label13, BuildOrder.Ответственный, BuildOrder.ОтветственныйДолжность, BuildOrder.GroupBox5)
+        местоНаФорме(1, BuildOrder.Label2, BuildOrder.Label14, BuildOrder.Утверждает, BuildOrder.УтверждаетДолжность, BuildOrder.GroupBox6)
+        местоНаФормеПослеДиректора(2, BuildOrder.Label5, BuildOrder.Label6, BuildOrder.ПроектВносит, BuildOrder.ПроектВноситДолжность, BuildOrder.GroupBox1)
+        местоНаФормеПослеДиректора(3, BuildOrder.Label7, BuildOrder.Label8, BuildOrder.Исполнитель, BuildOrder.ИсполнительДолжность, BuildOrder.GroupBox2)
+        местоНаФормеПослеДиректора(4, BuildOrder.Label9, BuildOrder.Label10, BuildOrder.Согласовано1, BuildOrder.Согласовано1Должность, BuildOrder.GroupBox3)
+        местоНаФормеПослеДиректора(5, BuildOrder.Label11, BuildOrder.Label12, BuildOrder.Согласовано2, BuildOrder.Согласовано2Должность, BuildOrder.GroupBox4)
 
-        АСформироватьПриказ.ShowDialog()
+        BuildOrder.ShowDialog()
 
     End Sub
 
     Private Sub ПО_Зачисление_Click(sender As Object, e As EventArgs) Handles ПО_Зачисление.Click
-        prikazCvalif = PO
-        АСформироватьПриказ.Text = "ПО_Зачисление"
-        АСформироватьПриказ.orderType = "ПО_Зачисление"
+
+        BuildOrder.cvalification = PO
+        BuildOrder.Text = "ПО_Зачисление"
+        BuildOrder.orderType = "ПО_Зачисление"
 
         Call ОтветственныйЗаАттестацию(False)
         Call чекбоксы(True, "иной приносящей доход деятельности", "федерального бюджета", "за счет средств")
@@ -347,29 +345,29 @@ Public Class MainForm
         Call СекретарьКомиссии(False)
         Call ЗаместительРПК(False)
 
-        Call ОчиститьПоляФормы.Очиститьформу(АСформироватьПриказ)
+        Call _formCleaner.cleaner(BuildOrder)
 
-        АСформироватьПриказ.Size = New Size(840, 665)
-        АСформироватьПриказ.КнопкаСформировать.Location = New Point(135, 580)
-        АСформироватьПриказ.КнопкаОчистить.Location = New Point(2, 580)
+        BuildOrder.Size = New Size(840, 665)
+        BuildOrder.КнопкаСформировать.Location = New Point(135, 580)
+        BuildOrder.КнопкаОчистить.Location = New Point(2, 580)
 
         ActiveControl = Button2
 
-        'Call местоНаФормеПослеДиректора(2, АСформироватьПриказ.Label4, АСформироватьПриказ.Label13, АСформироватьПриказ.Ответственный, АСформироватьПриказ.ОтветственныйДолжность, АСформироватьПриказ.GroupBox5)
-        Call местоНаФорме(1, АСформироватьПриказ.Label2, АСформироватьПриказ.Label14, АСформироватьПриказ.Утверждает, АСформироватьПриказ.УтверждаетДолжность, АСформироватьПриказ.GroupBox6)
-        Call местоНаФормеПослеДиректора(2, АСформироватьПриказ.Label5, АСформироватьПриказ.Label6, АСформироватьПриказ.ПроектВносит, АСформироватьПриказ.ПроектВноситДолжность, АСформироватьПриказ.GroupBox1)
-        Call местоНаФормеПослеДиректора(3, АСформироватьПриказ.Label7, АСформироватьПриказ.Label8, АСформироватьПриказ.Исполнитель, АСформироватьПриказ.ИсполнительДолжность, АСформироватьПриказ.GroupBox2)
-        Call местоНаФормеПослеДиректора(4, АСформироватьПриказ.Label9, АСформироватьПриказ.Label10, АСформироватьПриказ.Согласовано1, АСформироватьПриказ.Согласовано1Должность, АСформироватьПриказ.GroupBox3)
-        Call местоНаФормеПослеДиректора(5, АСформироватьПриказ.Label11, АСформироватьПриказ.Label12, АСформироватьПриказ.Согласовано2, АСформироватьПриказ.Согласовано2Должность, АСформироватьПриказ.GroupBox4)
+        'Call местоНаФормеПослеДиректора(2, BuildOrder.Label4, BuildOrder.Label13, BuildOrder.Ответственный, BuildOrder.ОтветственныйДолжность, BuildOrder.GroupBox5)
+        Call местоНаФорме(1, BuildOrder.Label2, BuildOrder.Label14, BuildOrder.Утверждает, BuildOrder.УтверждаетДолжность, BuildOrder.GroupBox6)
+        Call местоНаФормеПослеДиректора(2, BuildOrder.Label5, BuildOrder.Label6, BuildOrder.ПроектВносит, BuildOrder.ПроектВноситДолжность, BuildOrder.GroupBox1)
+        Call местоНаФормеПослеДиректора(3, BuildOrder.Label7, BuildOrder.Label8, BuildOrder.Исполнитель, BuildOrder.ИсполнительДолжность, BuildOrder.GroupBox2)
+        Call местоНаФормеПослеДиректора(4, BuildOrder.Label9, BuildOrder.Label10, BuildOrder.Согласовано1, BuildOrder.Согласовано1Должность, BuildOrder.GroupBox3)
+        Call местоНаФормеПослеДиректора(5, BuildOrder.Label11, BuildOrder.Label12, BuildOrder.Согласовано2, BuildOrder.Согласовано2Должность, BuildOrder.GroupBox4)
 
-        АСформироватьПриказ.ShowDialog()
+        BuildOrder.ShowDialog()
 
     End Sub
 
     Private Sub ПП_Практика_Click(sender As Object, e As EventArgs) Handles ПП_Практика.Click
-        prikazCvalif = PP
-        АСформироватьПриказ.Text = "ПП_Практика"
-        АСформироватьПриказ.orderType = "ПП_Практика"
+        BuildOrder.cvalification = PP
+        BuildOrder.Text = "ПП_Практика"
+        BuildOrder.orderType = "ПП_Практика"
 
         Call ОтветственныйЗаАттестацию(True, "Руководитель ПП")
         Call чекбоксы(False, "", "", "")
@@ -383,33 +381,33 @@ Public Class MainForm
         Call СекретарьКомиссии(False)
         Call ЗаместительРПК(False)
 
-        Call ОчиститьПоляФормы.Очиститьформу(АСформироватьПриказ)
+        Call _formCleaner.cleaner(BuildOrder)
 
-        АСформироватьПриказ.Size = New Size(840, 665)
-        АСформироватьПриказ.КнопкаСформировать.Location = New Point(135, 580)
-        АСформироватьПриказ.КнопкаОчистить.Location = New Point(2, 580)
+        BuildOrder.Size = New Size(840, 665)
+        BuildOrder.КнопкаСформировать.Location = New Point(135, 580)
+        BuildOrder.КнопкаОчистить.Location = New Point(2, 580)
 
         ActiveControl = Button2
 
-        Call местоНаФормеПослеДиректора(2, АСформироватьПриказ.Label4, АСформироватьПриказ.Label13, АСформироватьПриказ.Ответственный, АСформироватьПриказ.ОтветственныйДолжность, АСформироватьПриказ.GroupBox5)
-        Call местоНаФорме(1, АСформироватьПриказ.Label2, АСформироватьПриказ.Label14, АСформироватьПриказ.Утверждает, АСформироватьПриказ.УтверждаетДолжность, АСформироватьПриказ.GroupBox6)
-        Call местоНаФормеПослеДиректора(3, АСформироватьПриказ.Label5, АСформироватьПриказ.Label6, АСформироватьПриказ.ПроектВносит, АСформироватьПриказ.ПроектВноситДолжность, АСформироватьПриказ.GroupBox1)
-        Call местоНаФормеПослеДиректора(4, АСформироватьПриказ.Label7, АСформироватьПриказ.Label8, АСформироватьПриказ.Исполнитель, АСформироватьПриказ.ИсполнительДолжность, АСформироватьПриказ.GroupBox2)
-        Call местоНаФормеПослеДиректора(5, АСформироватьПриказ.Label9, АСформироватьПриказ.Label10, АСформироватьПриказ.Согласовано1, АСформироватьПриказ.Согласовано1Должность, АСформироватьПриказ.GroupBox3)
-        Call местоНаФормеПослеДиректора(6, АСформироватьПриказ.Label11, АСформироватьПриказ.Label12, АСформироватьПриказ.Согласовано2, АСформироватьПриказ.Согласовано2Должность, АСформироватьПриказ.GroupBox4)
+        Call местоНаФормеПослеДиректора(2, BuildOrder.Label4, BuildOrder.Label13, BuildOrder.Ответственный, BuildOrder.ОтветственныйДолжность, BuildOrder.GroupBox5)
+        Call местоНаФорме(1, BuildOrder.Label2, BuildOrder.Label14, BuildOrder.Утверждает, BuildOrder.УтверждаетДолжность, BuildOrder.GroupBox6)
+        Call местоНаФормеПослеДиректора(3, BuildOrder.Label5, BuildOrder.Label6, BuildOrder.ПроектВносит, BuildOrder.ПроектВноситДолжность, BuildOrder.GroupBox1)
+        Call местоНаФормеПослеДиректора(4, BuildOrder.Label7, BuildOrder.Label8, BuildOrder.Исполнитель, BuildOrder.ИсполнительДолжность, BuildOrder.GroupBox2)
+        Call местоНаФормеПослеДиректора(5, BuildOrder.Label9, BuildOrder.Label10, BuildOrder.Согласовано1, BuildOrder.Согласовано1Должность, BuildOrder.GroupBox3)
+        Call местоНаФормеПослеДиректора(6, BuildOrder.Label11, BuildOrder.Label12, BuildOrder.Согласовано2, BuildOrder.Согласовано2Должность, BuildOrder.GroupBox4)
 
-        АСформироватьПриказ.ShowDialog()
+        BuildOrder.ShowDialog()
 
     End Sub
 
     Private Sub ПО_Практика_Click(sender As Object, e As EventArgs) Handles ПО_Практика.Click
 
-        prikazCvalif = PO
-        АСформироватьПриказ.Text = "ПО_Практика"
-        АСформироватьПриказ.orderType = "ПО_Практика"
+        BuildOrder.cvalification = PO
+        BuildOrder.Text = "ПО_Практика"
+        BuildOrder.orderType = "ПО_Практика"
 
         ОтветственныйЗаАттестацию(True, "Руководитель ПО")
-        АСформироватьПриказ.praktika = True
+        BuildOrder.practical = True
 
         чекбоксы(False, "", "", "")
         ПроектВносит(True)
@@ -422,32 +420,32 @@ Public Class MainForm
         СекретарьКомиссии(False)
         ЗаместительРПК(False)
 
-        ОчиститьПоляФормы.Очиститьформу(АСформироватьПриказ)
+        _formCleaner.cleaner(BuildOrder)
 
-        АСформироватьПриказ.Size = New Size(840, 665)
-        АСформироватьПриказ.КнопкаСформировать.Location = New Point(135, 580)
-        АСформироватьПриказ.КнопкаОчистить.Location = New Point(2, 580)
+        BuildOrder.Size = New Size(840, 665)
+        BuildOrder.КнопкаСформировать.Location = New Point(135, 580)
+        BuildOrder.КнопкаОчистить.Location = New Point(2, 580)
 
         ActiveControl = Button2
 
-        местоНаФормеПослеДиректора(2, АСформироватьПриказ.Label4, АСформироватьПриказ.Label13, АСформироватьПриказ.Ответственный, АСформироватьПриказ.ОтветственныйДолжность, АСформироватьПриказ.GroupBox5)
-        местоНаФорме(1, АСформироватьПриказ.Label2, АСформироватьПриказ.Label14, АСформироватьПриказ.Утверждает, АСформироватьПриказ.УтверждаетДолжность, АСформироватьПриказ.GroupBox6)
-        местоНаФормеПослеДиректора(3, АСформироватьПриказ.Label5, АСформироватьПриказ.Label6, АСформироватьПриказ.ПроектВносит, АСформироватьПриказ.ПроектВноситДолжность, АСформироватьПриказ.GroupBox1)
-        местоНаФормеПослеДиректора(4, АСформироватьПриказ.Label7, АСформироватьПриказ.Label8, АСформироватьПриказ.Исполнитель, АСформироватьПриказ.ИсполнительДолжность, АСформироватьПриказ.GroupBox2)
-        местоНаФормеПослеДиректора(5, АСформироватьПриказ.Label9, АСформироватьПриказ.Label10, АСформироватьПриказ.Согласовано1, АСформироватьПриказ.Согласовано1Должность, АСформироватьПриказ.GroupBox3)
-        местоНаФормеПослеДиректора(6, АСформироватьПриказ.Label11, АСформироватьПриказ.Label12, АСформироватьПриказ.Согласовано2, АСформироватьПриказ.Согласовано2Должность, АСформироватьПриказ.GroupBox4)
+        местоНаФормеПослеДиректора(2, BuildOrder.Label4, BuildOrder.Label13, BuildOrder.Ответственный, BuildOrder.ОтветственныйДолжность, BuildOrder.GroupBox5)
+        местоНаФорме(1, BuildOrder.Label2, BuildOrder.Label14, BuildOrder.Утверждает, BuildOrder.УтверждаетДолжность, BuildOrder.GroupBox6)
+        местоНаФормеПослеДиректора(3, BuildOrder.Label5, BuildOrder.Label6, BuildOrder.ПроектВносит, BuildOrder.ПроектВноситДолжность, BuildOrder.GroupBox1)
+        местоНаФормеПослеДиректора(4, BuildOrder.Label7, BuildOrder.Label8, BuildOrder.Исполнитель, BuildOrder.ИсполнительДолжность, BuildOrder.GroupBox2)
+        местоНаФормеПослеДиректора(5, BuildOrder.Label9, BuildOrder.Label10, BuildOrder.Согласовано1, BuildOrder.Согласовано1Должность, BuildOrder.GroupBox3)
+        местоНаФормеПослеДиректора(6, BuildOrder.Label11, BuildOrder.Label12, BuildOrder.Согласовано2, BuildOrder.Согласовано2Должность, BuildOrder.GroupBox4)
 
-        АСформироватьПриказ.ShowDialog()
+        BuildOrder.ShowDialog()
 
-        АСформироватьПриказ.praktika = False
+        BuildOrder.practical = False
 
     End Sub
 
     Private Sub ПК_Отчисление_Click(sender As Object, e As EventArgs) Handles ПК_Отчисление.Click
 
-        prikazCvalif = PK
-        АСформироватьПриказ.Text = "ПК_Отчисление"
-        АСформироватьПриказ.orderType = "ПК_Отчисление"
+        BuildOrder.cvalification = PK
+        BuildOrder.Text = "ПК_Отчисление"
+        BuildOrder.orderType = "ПК_Отчисление"
 
         Call ОтветственныйЗаАттестацию(False)
         Call чекбоксы(False, "", "", "")
@@ -461,33 +459,33 @@ Public Class MainForm
         Call СекретарьКомиссии(False)
         Call ЗаместительРПК(False)
 
-        Call ОчиститьПоляФормы.Очиститьформу(АСформироватьПриказ)
+        Call _formCleaner.cleaner(BuildOrder)
 
-        АСформироватьПриказ.Label4.Text = "Слушатель(ФИО)"
-        АСформироватьПриказ.GroupBox5.Visible = True
+        BuildOrder.Label4.Text = "Слушатель(ФИО)"
+        BuildOrder.GroupBox5.Visible = True
 
-        АСформироватьПриказ.Size = New Size(840, 665)
-        АСформироватьПриказ.КнопкаСформировать.Location = New Point(135, 580)
-        АСформироватьПриказ.КнопкаОчистить.Location = New Point(2, 580)
+        BuildOrder.Size = New Size(840, 665)
+        BuildOrder.КнопкаСформировать.Location = New Point(135, 580)
+        BuildOrder.КнопкаОчистить.Location = New Point(2, 580)
 
         ActiveControl = Button2
 
-        Call местоНаФормеПослеДиректора(2, АСформироватьПриказ.Label4, АСформироватьПриказ.Label13, АСформироватьПриказ.Ответственный, АСформироватьПриказ.ОтветственныйДолжность, АСформироватьПриказ.GroupBox5)
-        Call местоНаФорме(1, АСформироватьПриказ.Label2, АСформироватьПриказ.Label14, АСформироватьПриказ.Утверждает, АСформироватьПриказ.УтверждаетДолжность, АСформироватьПриказ.GroupBox6)
-        Call местоНаФормеПослеДиректора(3, АСформироватьПриказ.Label5, АСформироватьПриказ.Label6, АСформироватьПриказ.ПроектВносит, АСформироватьПриказ.ПроектВноситДолжность, АСформироватьПриказ.GroupBox1)
-        Call местоНаФормеПослеДиректора(4, АСформироватьПриказ.Label7, АСформироватьПриказ.Label8, АСформироватьПриказ.Исполнитель, АСформироватьПриказ.ИсполнительДолжность, АСформироватьПриказ.GroupBox2)
-        Call местоНаФормеПослеДиректора(5, АСформироватьПриказ.Label9, АСформироватьПриказ.Label10, АСформироватьПриказ.Согласовано1, АСформироватьПриказ.Согласовано1Должность, АСформироватьПриказ.GroupBox3)
-        Call местоНаФормеПослеДиректора(6, АСформироватьПриказ.Label11, АСформироватьПриказ.Label12, АСформироватьПриказ.Согласовано2, АСформироватьПриказ.Согласовано2Должность, АСформироватьПриказ.GroupBox4)
+        Call местоНаФормеПослеДиректора(2, BuildOrder.Label4, BuildOrder.Label13, BuildOrder.Ответственный, BuildOrder.ОтветственныйДолжность, BuildOrder.GroupBox5)
+        Call местоНаФорме(1, BuildOrder.Label2, BuildOrder.Label14, BuildOrder.Утверждает, BuildOrder.УтверждаетДолжность, BuildOrder.GroupBox6)
+        Call местоНаФормеПослеДиректора(3, BuildOrder.Label5, BuildOrder.Label6, BuildOrder.ПроектВносит, BuildOrder.ПроектВноситДолжность, BuildOrder.GroupBox1)
+        Call местоНаФормеПослеДиректора(4, BuildOrder.Label7, BuildOrder.Label8, BuildOrder.Исполнитель, BuildOrder.ИсполнительДолжность, BuildOrder.GroupBox2)
+        Call местоНаФормеПослеДиректора(5, BuildOrder.Label9, BuildOrder.Label10, BuildOrder.Согласовано1, BuildOrder.Согласовано1Должность, BuildOrder.GroupBox3)
+        Call местоНаФормеПослеДиректора(6, BuildOrder.Label11, BuildOrder.Label12, BuildOrder.Согласовано2, BuildOrder.Согласовано2Должность, BuildOrder.GroupBox4)
 
-        АСформироватьПриказ.ShowDialog()
+        BuildOrder.ShowDialog()
 
     End Sub
 
     Private Sub ПО_ДопускКИА_Click(sender As Object, e As EventArgs) Handles ПО_ДопускКИА.Click
 
-        prikazCvalif = PO
-        АСформироватьПриказ.Text = "ПО_Допуск к ИА"
-        АСформироватьПриказ.orderType = ActiveControl.Name
+        BuildOrder.cvalification = PO
+        BuildOrder.Text = "ПО_Допуск к ИА"
+        BuildOrder.orderType = ActiveControl.Name
 
         ОтветственныйЗаАттестацию(True, "Председатель комиссии")
         чекбоксы(True, "ММС", "санитар", "должность слушателей")
@@ -501,41 +499,41 @@ Public Class MainForm
         СекретарьКомиссии(True)
         ЗаместительРПК(False)
 
-        АСформироватьПриказ.komissiya = True
+        BuildOrder.komissiya = True
 
-        ОчиститьПоляФормы.Очиститьформу(АСформироватьПриказ)
+        _formCleaner.cleaner(BuildOrder)
 
-        АСформироватьПриказ.Button1.Visible = False
-        АСформироватьПриказ.Size = New Size(840, 883)
-        АСформироватьПриказ.КнопкаСформировать.Location = New Point(135, 800)
-        АСформироватьПриказ.КнопкаОчистить.Location = New Point(2, 800)
+        BuildOrder.Button1.Visible = False
+        BuildOrder.Size = New Size(840, 883)
+        BuildOrder.КнопкаСформировать.Location = New Point(135, 800)
+        BuildOrder.КнопкаОчистить.Location = New Point(2, 800)
 
         ActiveControl = Button2
 
-        местоНаФорме(1, АСформироватьПриказ.Label4, АСформироватьПриказ.Label13, АСформироватьПриказ.Ответственный, АСформироватьПриказ.ОтветственныйДолжность, АСформироватьПриказ.GroupBox5)
-        местоНаФорме(2, АСформироватьПриказ.LabelРуководительСтажировки, АСформироватьПриказ.Label16, АСформироватьПриказ.РуководительСтажировки, АСформироватьПриказ.РуководительСтажировкиДолжность, АСформироватьПриказ.GroupBox7)
-        местоНаФорме(3, АСформироватьПриказ.label20, АСформироватьПриказ.Label17, АСформироватьПриказ.Комиссия2, АСформироватьПриказ.Комиссия2Должность, АСформироватьПриказ.GroupBox8)
-        местоНаФорме(4, АСформироватьПриказ.Label18, АСформироватьПриказ.Label19, АСформироватьПриказ.Комиссия3, АСформироватьПриказ.Комиссия3Должность, АСформироватьПриказ.GroupBox9)
-        местоНаФорме(5, АСформироватьПриказ.Label15, АСформироватьПриказ.Label21, АСформироватьПриказ.СекретарьКомиссии, АСформироватьПриказ.СекретарьКомиссииДолжность, АСформироватьПриказ.GroupBox10)
-        местоНаФорме(6, АСформироватьПриказ.Label2, АСформироватьПриказ.Label14, АСформироватьПриказ.Утверждает, АСформироватьПриказ.УтверждаетДолжность, АСформироватьПриказ.GroupBox6)
-        местоНаФормеПослеДиректора(7, АСформироватьПриказ.Label5, АСформироватьПриказ.Label6, АСформироватьПриказ.ПроектВносит, АСформироватьПриказ.ПроектВноситДолжность, АСформироватьПриказ.GroupBox1)
-        местоНаФормеПослеДиректора(8, АСформироватьПриказ.Label7, АСформироватьПриказ.Label8, АСформироватьПриказ.Исполнитель, АСформироватьПриказ.ИсполнительДолжность, АСформироватьПриказ.GroupBox2)
-        местоНаФормеПослеДиректора(9, АСформироватьПриказ.Label9, АСформироватьПриказ.Label10, АСформироватьПриказ.Согласовано1, АСформироватьПриказ.Согласовано1Должность, АСформироватьПриказ.GroupBox3)
-        местоНаФормеПослеДиректора(10, АСформироватьПриказ.Label11, АСформироватьПриказ.Label12, АСформироватьПриказ.Согласовано2, АСформироватьПриказ.Согласовано2Должность, АСформироватьПриказ.GroupBox4)
+        местоНаФорме(1, BuildOrder.Label4, BuildOrder.Label13, BuildOrder.Ответственный, BuildOrder.ОтветственныйДолжность, BuildOrder.GroupBox5)
+        местоНаФорме(2, BuildOrder.LabelРуководительСтажировки, BuildOrder.Label16, BuildOrder.РуководительСтажировки, BuildOrder.РуководительСтажировкиДолжность, BuildOrder.GroupBox7)
+        местоНаФорме(3, BuildOrder.label20, BuildOrder.Label17, BuildOrder.Комиссия2, BuildOrder.Комиссия2Должность, BuildOrder.GroupBox8)
+        местоНаФорме(4, BuildOrder.Label18, BuildOrder.Label19, BuildOrder.Комиссия3, BuildOrder.Комиссия3Должность, BuildOrder.GroupBox9)
+        местоНаФорме(5, BuildOrder.Label15, BuildOrder.Label21, BuildOrder.СекретарьКомиссии, BuildOrder.СекретарьКомиссииДолжность, BuildOrder.GroupBox10)
+        местоНаФорме(6, BuildOrder.Label2, BuildOrder.Label14, BuildOrder.Утверждает, BuildOrder.УтверждаетДолжность, BuildOrder.GroupBox6)
+        местоНаФормеПослеДиректора(7, BuildOrder.Label5, BuildOrder.Label6, BuildOrder.ПроектВносит, BuildOrder.ПроектВноситДолжность, BuildOrder.GroupBox1)
+        местоНаФормеПослеДиректора(8, BuildOrder.Label7, BuildOrder.Label8, BuildOrder.Исполнитель, BuildOrder.ИсполнительДолжность, BuildOrder.GroupBox2)
+        местоНаФормеПослеДиректора(9, BuildOrder.Label9, BuildOrder.Label10, BuildOrder.Согласовано1, BuildOrder.Согласовано1Должность, BuildOrder.GroupBox3)
+        местоНаФормеПослеДиректора(10, BuildOrder.Label11, BuildOrder.Label12, BuildOrder.Согласовано2, BuildOrder.Согласовано2Должность, BuildOrder.GroupBox4)
 
-        АСформироватьПриказ.ShowDialog()
+        BuildOrder.ShowDialog()
 
-        АСформироватьПриказ.komissiya = False
+        BuildOrder.komissiya = False
 
     End Sub
 
     Private Sub ПП_ДопускКИА_Click(sender As Object, e As EventArgs) Handles ПП_ДопускКИА.Click
 
-        prikazCvalif = PP
-        АСформироватьПриказ.Text = "ПП_Допуск к ИА"
-        АСформироватьПриказ.orderType = ActiveControl.Name
+        BuildOrder.cvalification = PP
+        BuildOrder.Text = "ПП_Допуск к ИА"
+        BuildOrder.orderType = ActiveControl.Name
 
-        АСформироватьПриказ.komissiya = True
+        BuildOrder.komissiya = True
         ОтветственныйЗаАттестацию(True, "Председатель комиссии")
         чекбоксы(True, "ПП", "стажировка", "Практическая подготовка/стажировка")
         ПроектВносит(True)
@@ -548,42 +546,42 @@ Public Class MainForm
         СекретарьКомиссии(True)
         ЗаместительРПК(True)
 
-        ОчиститьПоляФормы.Очиститьформу(АСформироватьПриказ)
+        _formCleaner.cleaner(BuildOrder)
 
-        АСформироватьПриказ.Size = New Size(840, 960)
-        АСформироватьПриказ.КнопкаСформировать.Location = New Point(135, 877)
-        АСформироватьПриказ.КнопкаОчистить.Location = New Point(2, 877)
+        BuildOrder.Size = New Size(840, 960)
+        BuildOrder.КнопкаСформировать.Location = New Point(135, 877)
+        BuildOrder.КнопкаОчистить.Location = New Point(2, 877)
 
         ActiveControl = Button2
 
-        местоНаФорме(1, АСформироватьПриказ.Label4, АСформироватьПриказ.Label13, АСформироватьПриказ.Ответственный, АСформироватьПриказ.ОтветственныйДолжность, АСформироватьПриказ.GroupBox5)
-        местоНаФорме(2, АСформироватьПриказ.Label22, АСформироватьПриказ.Label23, АСформироватьПриказ.ЗамПредседателя, АСформироватьПриказ.ЗамПредседателяДолжность, АСформироватьПриказ.GroupBox12)
-        местоНаФорме(3, АСформироватьПриказ.LabelРуководительСтажировки, АСформироватьПриказ.Label16, АСформироватьПриказ.РуководительСтажировки, АСформироватьПриказ.РуководительСтажировкиДолжность, АСформироватьПриказ.GroupBox7)
-        местоНаФорме(4, АСформироватьПриказ.label20, АСформироватьПриказ.Label17, АСформироватьПриказ.Комиссия2, АСформироватьПриказ.Комиссия2Должность, АСформироватьПриказ.GroupBox8)
-        местоНаФорме(5, АСформироватьПриказ.Label18, АСформироватьПриказ.Label19, АСформироватьПриказ.Комиссия3, АСформироватьПриказ.Комиссия3Должность, АСформироватьПриказ.GroupBox9)
-        местоНаФорме(6, АСформироватьПриказ.Label15, АСформироватьПриказ.Label21, АСформироватьПриказ.СекретарьКомиссии, АСформироватьПриказ.СекретарьКомиссииДолжность, АСформироватьПриказ.GroupBox10)
-        местоНаФорме(7, АСформироватьПриказ.Label2, АСформироватьПриказ.Label14, АСформироватьПриказ.Утверждает, АСформироватьПриказ.УтверждаетДолжность, АСформироватьПриказ.GroupBox6)
-        местоНаФормеПослеДиректора(8, АСформироватьПриказ.Label5, АСформироватьПриказ.Label6, АСформироватьПриказ.ПроектВносит, АСформироватьПриказ.ПроектВноситДолжность, АСформироватьПриказ.GroupBox1)
-        местоНаФормеПослеДиректора(9, АСформироватьПриказ.Label7, АСформироватьПриказ.Label8, АСформироватьПриказ.Исполнитель, АСформироватьПриказ.ИсполнительДолжность, АСформироватьПриказ.GroupBox2)
-        местоНаФормеПослеДиректора(10, АСформироватьПриказ.Label9, АСформироватьПриказ.Label10, АСформироватьПриказ.Согласовано1, АСформироватьПриказ.Согласовано1Должность, АСформироватьПриказ.GroupBox3)
-        местоНаФормеПослеДиректора(11, АСформироватьПриказ.Label11, АСформироватьПриказ.Label12, АСформироватьПриказ.Согласовано2, АСформироватьПриказ.Согласовано2Должность, АСформироватьПриказ.GroupBox4)
+        местоНаФорме(1, BuildOrder.Label4, BuildOrder.Label13, BuildOrder.Ответственный, BuildOrder.ОтветственныйДолжность, BuildOrder.GroupBox5)
+        местоНаФорме(2, BuildOrder.Label22, BuildOrder.Label23, BuildOrder.ЗамПредседателя, BuildOrder.ЗамПредседателяДолжность, BuildOrder.GroupBox12)
+        местоНаФорме(3, BuildOrder.LabelРуководительСтажировки, BuildOrder.Label16, BuildOrder.РуководительСтажировки, BuildOrder.РуководительСтажировкиДолжность, BuildOrder.GroupBox7)
+        местоНаФорме(4, BuildOrder.label20, BuildOrder.Label17, BuildOrder.Комиссия2, BuildOrder.Комиссия2Должность, BuildOrder.GroupBox8)
+        местоНаФорме(5, BuildOrder.Label18, BuildOrder.Label19, BuildOrder.Комиссия3, BuildOrder.Комиссия3Должность, BuildOrder.GroupBox9)
+        местоНаФорме(6, BuildOrder.Label15, BuildOrder.Label21, BuildOrder.СекретарьКомиссии, BuildOrder.СекретарьКомиссииДолжность, BuildOrder.GroupBox10)
+        местоНаФорме(7, BuildOrder.Label2, BuildOrder.Label14, BuildOrder.Утверждает, BuildOrder.УтверждаетДолжность, BuildOrder.GroupBox6)
+        местоНаФормеПослеДиректора(8, BuildOrder.Label5, BuildOrder.Label6, BuildOrder.ПроектВносит, BuildOrder.ПроектВноситДолжность, BuildOrder.GroupBox1)
+        местоНаФормеПослеДиректора(9, BuildOrder.Label7, BuildOrder.Label8, BuildOrder.Исполнитель, BuildOrder.ИсполнительДолжность, BuildOrder.GroupBox2)
+        местоНаФормеПослеДиректора(10, BuildOrder.Label9, BuildOrder.Label10, BuildOrder.Согласовано1, BuildOrder.Согласовано1Должность, BuildOrder.GroupBox3)
+        местоНаФормеПослеДиректора(11, BuildOrder.Label11, BuildOrder.Label12, BuildOrder.Согласовано2, BuildOrder.Согласовано2Должность, BuildOrder.GroupBox4)
 
-        АСформироватьПриказ.ShowDialog()
+        BuildOrder.ShowDialog()
 
-        АСформироватьПриказ.komissiya = False
+        BuildOrder.komissiya = False
 
     End Sub
 
     Private Sub ПК_Заявление_Click(sender As Object, e As EventArgs) Handles ПК_Заявление.Click
 
-        prikazCvalif = PK
-        АСформироватьПриказ.Text = "ПК_Заявление"
-        АСформироватьПриказ.orderType = ActiveControl.Name
+        BuildOrder.cvalification = PK
+        BuildOrder.Text = "ПК_Заявление"
+        BuildOrder.orderType = ActiveControl.Name
 
-        АСформироватьПриказ.Утверждает.Visible = False
-        АСформироватьПриказ.УтверждаетДолжность.Visible = False
-        АСформироватьПриказ.Label2.Visible = False
-        АСформироватьПриказ.Label14.Visible = False
+        BuildOrder.Утверждает.Visible = False
+        BuildOrder.УтверждаетДолжность.Visible = False
+        BuildOrder.Label2.Visible = False
+        BuildOrder.Label14.Visible = False
 
 
         Call ОтветственныйЗаАттестацию(False)
@@ -600,16 +598,16 @@ Public Class MainForm
 
         standard_location(1)
 
-        Call ОчиститьПоляФормы.Очиститьформу(АСформироватьПриказ)
+        Call _formCleaner.cleaner(BuildOrder)
 
-        АСформироватьПриказ.Button1.Visible = False
-        АСформироватьПриказ.Size = New Size(840, 665)
-        АСформироватьПриказ.КнопкаСформировать.Location = New Point(135, 580)
-        АСформироватьПриказ.КнопкаОчистить.Location = New Point(2, 580)
+        BuildOrder.Button1.Visible = False
+        BuildOrder.Size = New Size(840, 665)
+        BuildOrder.КнопкаСформировать.Location = New Point(135, 580)
+        BuildOrder.КнопкаОчистить.Location = New Point(2, 580)
 
 
         ActiveControl = Button2
-        АСформироватьПриказ.ShowDialog()
+        BuildOrder.ShowDialog()
 
 
     End Sub
@@ -617,14 +615,14 @@ Public Class MainForm
 
     Private Sub ПП_Заявление_Click(sender As Object, e As EventArgs) Handles ПП_Заявление.Click
 
-        prikazCvalif = PP
-        АСформироватьПриказ.Text = "ПП_Заявление"
-        АСформироватьПриказ.orderType = ActiveControl.Name
+        BuildOrder.cvalification = PP
+        BuildOrder.Text = "ПП_Заявление"
+        BuildOrder.orderType = ActiveControl.Name
 
-        АСформироватьПриказ.Утверждает.Visible = False
-        АСформироватьПриказ.УтверждаетДолжность.Visible = False
-        АСформироватьПриказ.Label2.Visible = False
-        АСформироватьПриказ.Label14.Visible = False
+        BuildOrder.Утверждает.Visible = False
+        BuildOrder.УтверждаетДолжность.Visible = False
+        BuildOrder.Label2.Visible = False
+        BuildOrder.Label14.Visible = False
 
 
         Call ОтветственныйЗаАттестацию(False)
@@ -641,29 +639,29 @@ Public Class MainForm
 
         standard_location(1)
 
-        Call ОчиститьПоляФормы.Очиститьформу(АСформироватьПриказ)
+        Call _formCleaner.cleaner(BuildOrder)
 
-        АСформироватьПриказ.Button1.Visible = False
-        АСформироватьПриказ.Size = New Size(840, 665)
-        АСформироватьПриказ.КнопкаСформировать.Location = New Point(135, 580)
-        АСформироватьПриказ.КнопкаОчистить.Location = New Point(2, 580)
+        BuildOrder.Button1.Visible = False
+        BuildOrder.Size = New Size(840, 665)
+        BuildOrder.КнопкаСформировать.Location = New Point(135, 580)
+        BuildOrder.КнопкаОчистить.Location = New Point(2, 580)
 
 
         ActiveControl = Button2
-        АСформироватьПриказ.ShowDialog()
+        BuildOrder.ShowDialog()
 
     End Sub
 
     Private Sub Карточка_слушателя_Click(sender As Object, e As EventArgs) Handles Карточка_слушателя.Click
 
-        prikazCvalif = PK_PP_PO
-        АСформироватьПриказ.Text = "Карточка слушателя"
-        АСформироватьПриказ.orderType = ActiveControl.Name
+        BuildOrder.cvalification = PK_PP_PO
+        BuildOrder.Text = "Карточка слушателя"
+        BuildOrder.orderType = ActiveControl.Name
 
-        АСформироватьПриказ.Утверждает.Visible = False
-        АСформироватьПриказ.УтверждаетДолжность.Visible = False
-        АСформироватьПриказ.Label2.Visible = False
-        АСформироватьПриказ.Label14.Visible = False
+        BuildOrder.Утверждает.Visible = False
+        BuildOrder.УтверждаетДолжность.Visible = False
+        BuildOrder.Label2.Visible = False
+        BuildOrder.Label14.Visible = False
 
         ОтветственныйЗаАттестацию(False)
         чекбоксы(False, "ММС", "санитар", "должность слушателей")
@@ -679,33 +677,29 @@ Public Class MainForm
 
         standard_location(1)
 
-        ОчиститьПоляФормы.Очиститьформу(АСформироватьПриказ)
+        _formCleaner.cleaner(BuildOrder)
 
-        АСформироватьПриказ.Button1.Visible = False
-        АСформироватьПриказ.Size = New Size(840, 665)
-        АСформироватьПриказ.КнопкаСформировать.Location = New Point(135, 580)
-        АСформироватьПриказ.КнопкаОчистить.Location = New Point(2, 580)
+        BuildOrder.Button1.Visible = False
+        BuildOrder.Size = New Size(840, 665)
+        BuildOrder.КнопкаСформировать.Location = New Point(135, 580)
+        BuildOrder.КнопкаОчистить.Location = New Point(2, 580)
 
 
         ActiveControl = Button2
-        АСформироватьПриказ.ShowDialog()
+        BuildOrder.ShowDialog()
 
     End Sub
 
 
     Private Sub ПК_Окончание_Click(sender As Object, e As EventArgs) Handles ПК_Окончание.Click
 
-        If internshipEnding Then
-            prikazCvalif = PK
-            АСформироватьПриказ.Text = "Стаж_окончание"
-        Else
-            prikazCvalif = PK
-            АСформироватьПриказ.Text = "ПК_Окончание"
-        End If
+        BuildOrder.Text = "ПК_Окончание"
 
-        АСформироватьПриказ.Label2.Visible = True
-        АСформироватьПриказ.Label14.Visible = True
-        АСформироватьПриказ.orderType = "ПК_Окончание"
+        BuildOrder.cvalification = PK
+
+        BuildOrder.Label2.Visible = True
+        BuildOrder.Label14.Visible = True
+        BuildOrder.orderType = "ПК_Окончание"
 
         ОтветственныйЗаАттестацию(False)
         чекбоксы(False, "", "", "")
@@ -719,21 +713,21 @@ Public Class MainForm
         СекретарьКомиссии(False)
         ЗаместительРПК(False)
 
-        ОчиститьПоляФормы.Очиститьформу(АСформироватьПриказ)
+        _formCleaner.cleaner(BuildOrder)
 
-        АСформироватьПриказ.Size = New Size(840, 665)
-        АСформироватьПриказ.КнопкаСформировать.Location = New Point(135, 580)
-        АСформироватьПриказ.КнопкаОчистить.Location = New Point(2, 580)
+        BuildOrder.Size = New Size(840, 665)
+        BuildOrder.КнопкаСформировать.Location = New Point(135, 580)
+        BuildOrder.КнопкаОчистить.Location = New Point(2, 580)
 
         ActiveControl = Button2
 
-        местоНаФорме(1, АСформироватьПриказ.Label2, АСформироватьПриказ.Label14, АСформироватьПриказ.Утверждает, АСформироватьПриказ.УтверждаетДолжность, АСформироватьПриказ.GroupBox6)
-        местоНаФормеПослеДиректора(2, АСформироватьПриказ.Label5, АСформироватьПриказ.Label6, АСформироватьПриказ.ПроектВносит, АСформироватьПриказ.ПроектВноситДолжность, АСформироватьПриказ.GroupBox1)
-        местоНаФормеПослеДиректора(3, АСформироватьПриказ.Label7, АСформироватьПриказ.Label8, АСформироватьПриказ.Исполнитель, АСформироватьПриказ.ИсполнительДолжность, АСформироватьПриказ.GroupBox2)
-        местоНаФормеПослеДиректора(4, АСформироватьПриказ.Label9, АСформироватьПриказ.Label10, АСформироватьПриказ.Согласовано1, АСформироватьПриказ.Согласовано1Должность, АСформироватьПриказ.GroupBox3)
-        местоНаФормеПослеДиректора(5, АСформироватьПриказ.Label11, АСформироватьПриказ.Label12, АСформироватьПриказ.Согласовано2, АСформироватьПриказ.Согласовано2Должность, АСформироватьПриказ.GroupBox4)
+        местоНаФорме(1, BuildOrder.Label2, BuildOrder.Label14, BuildOrder.Утверждает, BuildOrder.УтверждаетДолжность, BuildOrder.GroupBox6)
+        местоНаФормеПослеДиректора(2, BuildOrder.Label5, BuildOrder.Label6, BuildOrder.ПроектВносит, BuildOrder.ПроектВноситДолжность, BuildOrder.GroupBox1)
+        местоНаФормеПослеДиректора(3, BuildOrder.Label7, BuildOrder.Label8, BuildOrder.Исполнитель, BuildOrder.ИсполнительДолжность, BuildOrder.GroupBox2)
+        местоНаФормеПослеДиректора(4, BuildOrder.Label9, BuildOrder.Label10, BuildOrder.Согласовано1, BuildOrder.Согласовано1Должность, BuildOrder.GroupBox3)
+        местоНаФормеПослеДиректора(5, BuildOrder.Label11, BuildOrder.Label12, BuildOrder.Согласовано2, BuildOrder.Согласовано2Должность, BuildOrder.GroupBox4)
 
-        АСформироватьПриказ.ShowDialog()
+        BuildOrder.ShowDialog()
 
     End Sub
 
@@ -741,41 +735,41 @@ Public Class MainForm
     Sub ОтветственныйЗаАттестацию(Видимость As Boolean, Optional Подпись1текстБ As String = "Ответственный за аттестацию")
 
         '----------------Ответственный за аттестацию------------
-        АСформироватьПриказ.load_form()
+        BuildOrder.load_form()
 
-        АСформироватьПриказ.GroupBox5.Visible = Видимость
-        АСформироватьПриказ.Label4.Visible = Видимость ' ответственный за аттестацию
-        АСформироватьПриказ.Label13.Visible = False ' должность
+        BuildOrder.GroupBox5.Visible = Видимость
+        BuildOrder.Label4.Visible = Видимость ' ответственный за аттестацию
+        BuildOrder.Label13.Visible = False ' должность
 
-        АСформироватьПриказ.Label4.Text = Подпись1текстБ
+        BuildOrder.Label4.Text = Подпись1текстБ
 
-        АСформироватьПриказ.Ответственный.Items.Clear()
-        АСформироватьПриказ.Ответственный.Items.AddRange(АСформироватьПриказ.prikaz.formPrikazList.otv_attestat)
+        BuildOrder.Ответственный.Items.Clear()
+        BuildOrder.Ответственный.Items.AddRange(BuildOrder.prikaz.formPrikazList.otv_attestat)
 
-        АСформироватьПриказ.Ответственный.Visible = Видимость
-        АСформироватьПриказ.ОтветственныйДолжность.Visible = False
+        BuildOrder.Ответственный.Visible = Видимость
+        BuildOrder.ОтветственныйДолжность.Visible = False
 
     End Sub
     Sub чекбоксы(Видимость As Boolean, ИмяПервый As String, ИмяВторой As String, ПодписьКонтейнера As String)
 
-        АСформироватьПриказ.CheckBoxММС.Visible = Видимость
-        АСформироватьПриказ.CheckBoxСанитар.Visible = Видимость
-        АСформироватьПриказ.GroupBox11.Visible = Видимость
-        АСформироватьПриказ.CheckBoxММС.Text = ИмяПервый
-        АСформироватьПриказ.CheckBoxСанитар.Text = ИмяВторой
-        АСформироватьПриказ.GroupBox11.Text = ПодписьКонтейнера
+        BuildOrder.CheckBoxММС.Visible = Видимость
+        BuildOrder.CheckBoxСанитар.Visible = Видимость
+        BuildOrder.GroupBox11.Visible = Видимость
+        BuildOrder.CheckBoxММС.Text = ИмяПервый
+        BuildOrder.CheckBoxСанитар.Text = ИмяВторой
+        BuildOrder.GroupBox11.Text = ПодписьКонтейнера
 
     End Sub
 
 
     Sub Утверждает(Видимость As Boolean)
 
-        АСформироватьПриказ.GroupBox6.Visible = Видимость
-        АСформироватьПриказ.Label2.Visible = Видимость
-        АСформироватьПриказ.Label14.Visible = False
+        BuildOrder.GroupBox6.Visible = Видимость
+        BuildOrder.Label2.Visible = Видимость
+        BuildOrder.Label14.Visible = False
 
-        АСформироватьПриказ.Утверждает.Visible = Видимость
-        АСформироватьПриказ.УтверждаетДолжность.Visible = False
+        BuildOrder.Утверждает.Visible = Видимость
+        BuildOrder.УтверждаетДолжность.Visible = False
 
     End Sub
 
@@ -783,15 +777,15 @@ Public Class MainForm
 
         If Название = "Без изменений" Then
         Else
-            АСформироватьПриказ.Label5.Text = Название
+            BuildOrder.Label5.Text = Название
         End If
 
-        АСформироватьПриказ.GroupBox1.Visible = Видимость
-        АСформироватьПриказ.Label5.Visible = Видимость
-        АСформироватьПриказ.Label6.Visible = False
+        BuildOrder.GroupBox1.Visible = Видимость
+        BuildOrder.Label5.Visible = Видимость
+        BuildOrder.Label6.Visible = False
 
-        АСформироватьПриказ.ПроектВносит.Visible = Видимость
-        АСформироватьПриказ.ПроектВноситДолжность.Visible = False
+        BuildOrder.ПроектВносит.Visible = Видимость
+        BuildOrder.ПроектВноситДолжность.Visible = False
 
     End Sub
 
@@ -799,107 +793,107 @@ Public Class MainForm
 
         If Название = "Без изменений" Then
         Else
-            АСформироватьПриказ.Label7.Text = Название
+            BuildOrder.Label7.Text = Название
         End If
 
-        АСформироватьПриказ.GroupBox2.Visible = Видимость
-        АСформироватьПриказ.Label7.Visible = Видимость
-        АСформироватьПриказ.Label8.Visible = False
+        BuildOrder.GroupBox2.Visible = Видимость
+        BuildOrder.Label7.Visible = Видимость
+        BuildOrder.Label8.Visible = False
 
-        АСформироватьПриказ.Исполнитель.Visible = Видимость
-        АСформироватьПриказ.ИсполнительДолжность.Visible = False
+        BuildOrder.Исполнитель.Visible = Видимость
+        BuildOrder.ИсполнительДолжность.Visible = False
 
     End Sub
 
     Sub Согласовано1(Видимость As Boolean, Optional Название As String = "Без изменений")
 
         If Название = "Без изменений" Then
-            АСформироватьПриказ.Label9.Text = "Согласовано"
+            BuildOrder.Label9.Text = "Согласовано"
         Else
-            АСформироватьПриказ.Label9.Text = Название
+            BuildOrder.Label9.Text = Название
         End If
-        АСформироватьПриказ.GroupBox3.Visible = Видимость
-        АСформироватьПриказ.Label9.Visible = Видимость
-        АСформироватьПриказ.Label10.Visible = False
+        BuildOrder.GroupBox3.Visible = Видимость
+        BuildOrder.Label9.Visible = Видимость
+        BuildOrder.Label10.Visible = False
 
-        АСформироватьПриказ.Согласовано1.Visible = Видимость
-        АСформироватьПриказ.Согласовано1Должность.Visible = False
+        BuildOrder.Согласовано1.Visible = Видимость
+        BuildOrder.Согласовано1Должность.Visible = False
 
     End Sub
 
     Sub Согласовано2(Видимость As Boolean)
 
-        АСформироватьПриказ.GroupBox4.Visible = Видимость
-        АСформироватьПриказ.Label11.Visible = Видимость
-        АСформироватьПриказ.Label12.Visible = False
+        BuildOrder.GroupBox4.Visible = Видимость
+        BuildOrder.Label11.Visible = Видимость
+        BuildOrder.Label12.Visible = False
 
-        АСформироватьПриказ.Согласовано2.Visible = Видимость
-        АСформироватьПриказ.Согласовано2Должность.Visible = False
+        BuildOrder.Согласовано2.Visible = Видимость
+        BuildOrder.Согласовано2Должность.Visible = False
 
     End Sub
 
     Sub РуководительСтажировки(Видимость As Boolean, Optional ПодписьТекстБ As String = "Руководитель стажировки")
 
-        АСформироватьПриказ.GroupBox7.Visible = Видимость
-        АСформироватьПриказ.LabelРуководительСтажировки.Visible = Видимость
-        АСформироватьПриказ.Label16.Visible = False
+        BuildOrder.GroupBox7.Visible = Видимость
+        BuildOrder.LabelРуководительСтажировки.Visible = Видимость
+        BuildOrder.Label16.Visible = False
 
-        АСформироватьПриказ.LabelРуководительСтажировки.Text = ПодписьТекстБ
+        BuildOrder.LabelРуководительСтажировки.Text = ПодписьТекстБ
 
-        АСформироватьПриказ.РуководительСтажировки.Visible = Видимость
-        АСформироватьПриказ.РуководительСтажировкиДолжность.Visible = False
+        BuildOrder.РуководительСтажировки.Visible = Видимость
+        BuildOrder.РуководительСтажировкиДолжность.Visible = False
 
     End Sub
 
     Sub Комиссия2(Видимость As Boolean, Optional ПодписьТекстБ As String = "Комиссия 2")
 
-        АСформироватьПриказ.GroupBox8.Visible = Видимость
-        АСформироватьПриказ.label20.Visible = Видимость
-        АСформироватьПриказ.Label17.Visible = False
+        BuildOrder.GroupBox8.Visible = Видимость
+        BuildOrder.label20.Visible = Видимость
+        BuildOrder.Label17.Visible = False
 
-        АСформироватьПриказ.label20.Text = ПодписьТекстБ
+        BuildOrder.label20.Text = ПодписьТекстБ
 
-        АСформироватьПриказ.Комиссия2.Visible = Видимость
-        АСформироватьПриказ.Комиссия2Должность.Visible = False
+        BuildOrder.Комиссия2.Visible = Видимость
+        BuildOrder.Комиссия2Должность.Visible = False
 
     End Sub
 
     Sub Комиссия3(Видимость As Boolean, Optional ПодписьТекстБ As String = "Комиссия 3")
 
-        АСформироватьПриказ.GroupBox9.Visible = Видимость
-        АСформироватьПриказ.Label18.Visible = Видимость
-        АСформироватьПриказ.Label19.Visible = False
+        BuildOrder.GroupBox9.Visible = Видимость
+        BuildOrder.Label18.Visible = Видимость
+        BuildOrder.Label19.Visible = False
 
-        АСформироватьПриказ.Label18.Text = ПодписьТекстБ
+        BuildOrder.Label18.Text = ПодписьТекстБ
 
-        АСформироватьПриказ.Комиссия3.Visible = Видимость
-        АСформироватьПриказ.Комиссия3Должность.Visible = False
+        BuildOrder.Комиссия3.Visible = Видимость
+        BuildOrder.Комиссия3Должность.Visible = False
 
     End Sub
 
     Sub СекретарьКомиссии(Видимость As Boolean, Optional ПодписьТекстБ As String = "Секретарь комиссии")
 
-        АСформироватьПриказ.GroupBox10.Visible = Видимость
-        АСформироватьПриказ.Label15.Visible = Видимость
-        АСформироватьПриказ.Label21.Visible = False
+        BuildOrder.GroupBox10.Visible = Видимость
+        BuildOrder.Label15.Visible = Видимость
+        BuildOrder.Label21.Visible = False
 
-        АСформироватьПриказ.Label15.Text = ПодписьТекстБ
+        BuildOrder.Label15.Text = ПодписьТекстБ
 
-        АСформироватьПриказ.СекретарьКомиссии.Visible = Видимость
-        АСформироватьПриказ.СекретарьКомиссииДолжность.Visible = False
+        BuildOrder.СекретарьКомиссии.Visible = Видимость
+        BuildOrder.СекретарьКомиссииДолжность.Visible = False
 
     End Sub
 
     Sub ЗаместительРПК(Видимость As Boolean, Optional ПодписьТекстБ As String = "Зам председателя комиссии")
 
-        АСформироватьПриказ.GroupBox12.Visible = Видимость
-        АСформироватьПриказ.Label22.Visible = Видимость
-        АСформироватьПриказ.Label23.Visible = False
+        BuildOrder.GroupBox12.Visible = Видимость
+        BuildOrder.Label22.Visible = Видимость
+        BuildOrder.Label23.Visible = False
 
-        АСформироватьПриказ.Label22.Text = ПодписьТекстБ
+        BuildOrder.Label22.Text = ПодписьТекстБ
 
-        АСформироватьПриказ.ЗамПредседателя.Visible = Видимость
-        АСформироватьПриказ.ЗамПредседателяДолжность.Visible = False
+        BuildOrder.ЗамПредседателя.Visible = Видимость
+        BuildOrder.ЗамПредседателяДолжность.Visible = False
 
     End Sub
 
@@ -951,7 +945,7 @@ Public Class MainForm
 
     Private Sub tabPageOther_KeyDown(sender As Object, e As KeyEventArgs)
 
-        If tbl_obrazovanie.flag_active_control Then
+        If tbl_education.flag_active_control Then
 
             tbl_obrazovanie_keyDown(e)
             Return
@@ -1131,7 +1125,7 @@ Public Class MainForm
 
     Private Sub MainForm_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs) Handles MyBase.PreviewKeyDown
 
-        If tbl_obrazovanie.Focused Then
+        If tbl_education.Focused Then
 
             If e.KeyValue = Keys.Tab Then
 
@@ -1147,7 +1141,7 @@ Public Class MainForm
 
         If e.KeyValue = Keys.Tab Then
 
-            If tbl_obrazovanie.active_last_element Then
+            If tbl_education.active_last_element Then
 
                 ToolStrip_name_list.Focus()
                 e.Handled = True
@@ -1156,7 +1150,7 @@ Public Class MainForm
 
         ElseIf e.KeyValue = Keys.Right Then
 
-            If tbl_obrazovanie.active_last_element Then
+            If tbl_education.active_last_element Then
 
                 openNextPage(TabControlOther)
                 e.Handled = True
@@ -1165,7 +1159,7 @@ Public Class MainForm
 
         ElseIf e.KeyValue = Keys.Left Then
 
-            If tbl_obrazovanie.active_last_element Then
+            If tbl_education.active_last_element Then
 
                 openPrevPage(TabControlOther)
                 e.Handled = True
@@ -1174,7 +1168,7 @@ Public Class MainForm
 
         ElseIf e.KeyValue = Keys.Escape Then
 
-            tbl_obrazovanie.redactorClose()
+            tbl_education.redactorClose()
             e.Handled = True
 
         End If
@@ -1780,9 +1774,10 @@ Public Class MainForm
 
 
     Private Sub ПП_Окончание_Click(sender As Object, e As EventArgs) Handles ПП_Окончание.Click
-        prikazCvalif = PP
-        АСформироватьПриказ.Text = "ПП_Окончание"
-        АСформироватьПриказ.orderType = "ПП_Окончание"
+
+        BuildOrder.cvalification = PP
+        BuildOrder.Text = "ПП_Окончание"
+        BuildOrder.orderType = "ПП_Окончание"
 
         ОтветственныйЗаАттестацию(False)
         чекбоксы(False, "", "", "")
@@ -1796,21 +1791,21 @@ Public Class MainForm
         СекретарьКомиссии(False)
         ЗаместительРПК(False)
 
-        Call ОчиститьПоляФормы.Очиститьформу(АСформироватьПриказ)
+        Call _formCleaner.cleaner(BuildOrder)
 
-        АСформироватьПриказ.Size = New Size(840, 665)
-        АСформироватьПриказ.КнопкаСформировать.Location = New Point(135, 580)
-        АСформироватьПриказ.КнопкаОчистить.Location = New Point(2, 580)
+        BuildOrder.Size = New Size(840, 665)
+        BuildOrder.КнопкаСформировать.Location = New Point(135, 580)
+        BuildOrder.КнопкаОчистить.Location = New Point(2, 580)
 
         ActiveControl = Button2
 
-        местоНаФорме(1, АСформироватьПриказ.Label2, АСформироватьПриказ.Label14, АСформироватьПриказ.Утверждает, АСформироватьПриказ.УтверждаетДолжность, АСформироватьПриказ.GroupBox6)
-        местоНаФормеПослеДиректора(2, АСформироватьПриказ.Label5, АСформироватьПриказ.Label6, АСформироватьПриказ.ПроектВносит, АСформироватьПриказ.ПроектВноситДолжность, АСформироватьПриказ.GroupBox1)
-        местоНаФормеПослеДиректора(3, АСформироватьПриказ.Label7, АСформироватьПриказ.Label8, АСформироватьПриказ.Исполнитель, АСформироватьПриказ.ИсполнительДолжность, АСформироватьПриказ.GroupBox2)
-        местоНаФормеПослеДиректора(4, АСформироватьПриказ.Label9, АСформироватьПриказ.Label10, АСформироватьПриказ.Согласовано1, АСформироватьПриказ.Согласовано1Должность, АСформироватьПриказ.GroupBox3)
-        местоНаФормеПослеДиректора(5, АСформироватьПриказ.Label11, АСформироватьПриказ.Label12, АСформироватьПриказ.Согласовано2, АСформироватьПриказ.Согласовано2Должность, АСформироватьПриказ.GroupBox4)
+        местоНаФорме(1, BuildOrder.Label2, BuildOrder.Label14, BuildOrder.Утверждает, BuildOrder.УтверждаетДолжность, BuildOrder.GroupBox6)
+        местоНаФормеПослеДиректора(2, BuildOrder.Label5, BuildOrder.Label6, BuildOrder.ПроектВносит, BuildOrder.ПроектВноситДолжность, BuildOrder.GroupBox1)
+        местоНаФормеПослеДиректора(3, BuildOrder.Label7, BuildOrder.Label8, BuildOrder.Исполнитель, BuildOrder.ИсполнительДолжность, BuildOrder.GroupBox2)
+        местоНаФормеПослеДиректора(4, BuildOrder.Label9, BuildOrder.Label10, BuildOrder.Согласовано1, BuildOrder.Согласовано1Должность, BuildOrder.GroupBox3)
+        местоНаФормеПослеДиректора(5, BuildOrder.Label11, BuildOrder.Label12, BuildOrder.Согласовано2, BuildOrder.Согласовано2Должность, BuildOrder.GroupBox4)
 
-        АСформироватьПриказ.ShowDialog()
+        BuildOrder.ShowDialog()
 
     End Sub
 
@@ -1824,15 +1819,15 @@ Public Class MainForm
 
     Private Sub ПП_ПриложениеКдиплому_Click(sender As Object, e As EventArgs) Handles ПП_ПриложениеКдиплому.Click
 
-        prikazCvalif = PP
-        АСформироватьПриказ.Text = "ПП_Приложение к диплому"
-        АСформироватьПриказ.orderType = "ПП_ПриложениеКдиплому"
+        BuildOrder.cvalification = PP
+        BuildOrder.Text = "ПП_Приложение к диплому"
+        BuildOrder.orderType = "ПП_ПриложениеКдиплому"
 
-        АСформироватьПриказ.Label24.Text = "Производственная практика"
+        BuildOrder.Label24.Text = "Производственная практика"
 
-        АСформироватьПриказ.CheckBox1.Visible = True
-        АСформироватьПриказ.CheckBox1.Location = New Point(20, 76)
-        АСформироватьПриказ.CheckBox1.Checked = False
+        BuildOrder.CheckBox1.Visible = True
+        BuildOrder.CheckBox1.Location = New Point(20, 76)
+        BuildOrder.CheckBox1.Checked = False
 
         ОтветственныйЗаАттестацию(False)
         чекбоксы(False, "", "", "")
@@ -1846,30 +1841,30 @@ Public Class MainForm
         СекретарьКомиссии(False)
         ЗаместительРПК(False)
 
-        ОчиститьПоляФормы.Очиститьформу(АСформироватьПриказ)
+        _formCleaner.cleaner(BuildOrder)
 
-        АСформироватьПриказ.Size = New Size(840, 180)
-        АСформироватьПриказ.КнопкаСформировать.Location = New Point(135, 96)
-        АСформироватьПриказ.КнопкаОчистить.Location = New Point(2, 96)
+        BuildOrder.Size = New Size(840, 180)
+        BuildOrder.КнопкаСформировать.Location = New Point(135, 96)
+        BuildOrder.КнопкаОчистить.Location = New Point(2, 96)
 
         ActiveControl = Button2
 
-        местоНаФорме(2, АСформироватьПриказ.Label4, АСформироватьПриказ.Label13, АСформироватьПриказ.Ответственный, АСформироватьПриказ.ОтветственныйДолжность, АСформироватьПриказ.GroupBox5)
-        местоНаФорме(1, АСформироватьПриказ.Label2, АСформироватьПриказ.Label14, АСформироватьПриказ.Утверждает, АСформироватьПриказ.УтверждаетДолжность, АСформироватьПриказ.GroupBox6)
-        местоНаФорме(3, АСформироватьПриказ.Label5, АСформироватьПриказ.Label6, АСформироватьПриказ.ПроектВносит, АСформироватьПриказ.ПроектВноситДолжность, АСформироватьПриказ.GroupBox1)
-        местоНаФорме(4, АСформироватьПриказ.Label7, АСформироватьПриказ.Label8, АСформироватьПриказ.Исполнитель, АСформироватьПриказ.ИсполнительДолжность, АСформироватьПриказ.GroupBox2)
-        местоНаФорме(5, АСформироватьПриказ.Label9, АСформироватьПриказ.Label10, АСформироватьПриказ.Согласовано1, АСформироватьПриказ.Согласовано1Должность, АСформироватьПриказ.GroupBox3)
-        местоНаФорме(6, АСформироватьПриказ.Label11, АСформироватьПриказ.Label12, АСформироватьПриказ.Согласовано2, АСформироватьПриказ.Согласовано2Должность, АСформироватьПриказ.GroupBox4)
+        местоНаФорме(2, BuildOrder.Label4, BuildOrder.Label13, BuildOrder.Ответственный, BuildOrder.ОтветственныйДолжность, BuildOrder.GroupBox5)
+        местоНаФорме(1, BuildOrder.Label2, BuildOrder.Label14, BuildOrder.Утверждает, BuildOrder.УтверждаетДолжность, BuildOrder.GroupBox6)
+        местоНаФорме(3, BuildOrder.Label5, BuildOrder.Label6, BuildOrder.ПроектВносит, BuildOrder.ПроектВноситДолжность, BuildOrder.GroupBox1)
+        местоНаФорме(4, BuildOrder.Label7, BuildOrder.Label8, BuildOrder.Исполнитель, BuildOrder.ИсполнительДолжность, BuildOrder.GroupBox2)
+        местоНаФорме(5, BuildOrder.Label9, BuildOrder.Label10, BuildOrder.Согласовано1, BuildOrder.Согласовано1Должность, BuildOrder.GroupBox3)
+        местоНаФорме(6, BuildOrder.Label11, BuildOrder.Label12, BuildOrder.Согласовано2, BuildOrder.Согласовано2Должность, BuildOrder.GroupBox4)
 
         Утверждает(False)
 
-        АСформироватьПриказ.ShowDialog()
-        АСформироватьПриказ.CheckBox1.Visible = False
-        АСформироватьПриказ.ПрактическаяПодготовка.Visible = False
-        АСформироватьПриказ.ИтоговаяАттестация.Visible = False
-        АСформироватьПриказ.Label24.Visible = False
-        АСформироватьПриказ.Label25.Visible = False
-        АСформироватьПриказ.Text = "Приказ"
+        BuildOrder.ShowDialog()
+        BuildOrder.CheckBox1.Visible = False
+        BuildOrder.ПрактическаяПодготовка.Visible = False
+        BuildOrder.ИтоговаяАттестация.Visible = False
+        BuildOrder.Label24.Visible = False
+        BuildOrder.Label25.Visible = False
+        BuildOrder.Text = "Приказ"
 
         Утверждает(True)
 
@@ -1885,9 +1880,9 @@ Public Class MainForm
 
     Private Sub ПО_Окончание_Click(sender As Object, e As EventArgs) Handles ПО_Окончание.Click
 
-        prikazCvalif = PO
-        АСформироватьПриказ.Text = "ПО_Окончание"
-        АСформироватьПриказ.orderType = "ПО_Окончание"
+        BuildOrder.cvalification = PO
+        BuildOrder.Text = "ПО_Окончание"
+        BuildOrder.orderType = "ПО_Окончание"
 
         ОтветственныйЗаАттестацию(False)
         чекбоксы(False, "", "", "")
@@ -1901,22 +1896,22 @@ Public Class MainForm
         СекретарьКомиссии(False)
         ЗаместительРПК(False)
 
-        Call ОчиститьПоляФормы.Очиститьформу(АСформироватьПриказ)
+        Call _formCleaner.cleaner(BuildOrder)
 
-        АСформироватьПриказ.Size = New Size(840, 665)
-        АСформироватьПриказ.КнопкаСформировать.Location = New Point(135, 580)
-        АСформироватьПриказ.КнопкаОчистить.Location = New Point(2, 580)
+        BuildOrder.Size = New Size(840, 665)
+        BuildOrder.КнопкаСформировать.Location = New Point(135, 580)
+        BuildOrder.КнопкаОчистить.Location = New Point(2, 580)
 
         ActiveControl = Button2
 
-        местоНаФорме(2, АСформироватьПриказ.Label4, АСформироватьПриказ.Label13, АСформироватьПриказ.Ответственный, АСформироватьПриказ.ОтветственныйДолжность, АСформироватьПриказ.GroupBox5)
-        местоНаФорме(1, АСформироватьПриказ.Label2, АСформироватьПриказ.Label14, АСформироватьПриказ.Утверждает, АСформироватьПриказ.УтверждаетДолжность, АСформироватьПриказ.GroupBox6)
-        местоНаФорме(3, АСформироватьПриказ.Label5, АСформироватьПриказ.Label6, АСформироватьПриказ.ПроектВносит, АСформироватьПриказ.ПроектВноситДолжность, АСформироватьПриказ.GroupBox1)
-        местоНаФорме(4, АСформироватьПриказ.Label7, АСформироватьПриказ.Label8, АСформироватьПриказ.Исполнитель, АСформироватьПриказ.ИсполнительДолжность, АСформироватьПриказ.GroupBox2)
-        местоНаФорме(5, АСформироватьПриказ.Label9, АСформироватьПриказ.Label10, АСформироватьПриказ.Согласовано1, АСформироватьПриказ.Согласовано1Должность, АСформироватьПриказ.GroupBox3)
-        местоНаФорме(6, АСформироватьПриказ.Label11, АСформироватьПриказ.Label12, АСформироватьПриказ.Согласовано2, АСформироватьПриказ.Согласовано2Должность, АСформироватьПриказ.GroupBox4)
+        местоНаФорме(2, BuildOrder.Label4, BuildOrder.Label13, BuildOrder.Ответственный, BuildOrder.ОтветственныйДолжность, BuildOrder.GroupBox5)
+        местоНаФорме(1, BuildOrder.Label2, BuildOrder.Label14, BuildOrder.Утверждает, BuildOrder.УтверждаетДолжность, BuildOrder.GroupBox6)
+        местоНаФорме(3, BuildOrder.Label5, BuildOrder.Label6, BuildOrder.ПроектВносит, BuildOrder.ПроектВноситДолжность, BuildOrder.GroupBox1)
+        местоНаФорме(4, BuildOrder.Label7, BuildOrder.Label8, BuildOrder.Исполнитель, BuildOrder.ИсполнительДолжность, BuildOrder.GroupBox2)
+        местоНаФорме(5, BuildOrder.Label9, BuildOrder.Label10, BuildOrder.Согласовано1, BuildOrder.Согласовано1Должность, BuildOrder.GroupBox3)
+        местоНаФорме(6, BuildOrder.Label11, BuildOrder.Label12, BuildOrder.Согласовано2, BuildOrder.Согласовано2Должность, BuildOrder.GroupBox4)
 
-        АСформироватьПриказ.ShowDialog()
+        BuildOrder.ShowDialog()
     End Sub
 
     Private Sub ПО_Окончание_GotFocus(sender As Object, e As EventArgs) Handles ПО_Окончание.GotFocus
@@ -1929,15 +1924,15 @@ Public Class MainForm
 
     Private Sub ПО_Свидетельство_Click(sender As Object, e As EventArgs) Handles ПО_Свидетельство.Click
 
-        prikazCvalif = PO
-        АСформироватьПриказ.Text = "ПО_Свидетельство"
-        АСформироватьПриказ.orderType = "ПО_Свидетельство"
+        BuildOrder.cvalification = PO
+        BuildOrder.Text = "ПО_Свидетельство"
+        BuildOrder.orderType = "ПО_Свидетельство"
 
-        АСформироватьПриказ.Label24.Text = "Практическая подготовка"
+        BuildOrder.Label24.Text = "Практическая подготовка"
 
-        АСформироватьПриказ.CheckBox1.Visible = True
-        АСформироватьПриказ.CheckBox1.Location = New Point(20, 76)
-        АСформироватьПриказ.CheckBox1.Checked = False
+        BuildOrder.CheckBox1.Visible = True
+        BuildOrder.CheckBox1.Location = New Point(20, 76)
+        BuildOrder.CheckBox1.Checked = False
 
         ОтветственныйЗаАттестацию(False)
         чекбоксы(False, "", "", "")
@@ -1951,29 +1946,29 @@ Public Class MainForm
         СекретарьКомиссии(False)
         ЗаместительРПК(False)
 
-        ОчиститьПоляФормы.Очиститьформу(АСформироватьПриказ)
+        _formCleaner.cleaner(BuildOrder)
 
-        АСформироватьПриказ.Size = New Size(840, 180)
-        АСформироватьПриказ.КнопкаСформировать.Location = New Point(135, 96)
-        АСформироватьПриказ.КнопкаОчистить.Location = New Point(2, 96)
+        BuildOrder.Size = New Size(840, 180)
+        BuildOrder.КнопкаСформировать.Location = New Point(135, 96)
+        BuildOrder.КнопкаОчистить.Location = New Point(2, 96)
 
         ActiveControl = Button2
 
-        местоНаФорме(2, АСформироватьПриказ.Label4, АСформироватьПриказ.Label13, АСформироватьПриказ.Ответственный, АСформироватьПриказ.ОтветственныйДолжность, АСформироватьПриказ.GroupBox5)
-        местоНаФорме(1, АСформироватьПриказ.Label2, АСформироватьПриказ.Label14, АСформироватьПриказ.Утверждает, АСформироватьПриказ.УтверждаетДолжность, АСформироватьПриказ.GroupBox6)
-        местоНаФорме(3, АСформироватьПриказ.Label5, АСформироватьПриказ.Label6, АСформироватьПриказ.ПроектВносит, АСформироватьПриказ.ПроектВноситДолжность, АСформироватьПриказ.GroupBox1)
-        местоНаФорме(4, АСформироватьПриказ.Label7, АСформироватьПриказ.Label8, АСформироватьПриказ.Исполнитель, АСформироватьПриказ.ИсполнительДолжность, АСформироватьПриказ.GroupBox2)
-        местоНаФорме(5, АСформироватьПриказ.Label9, АСформироватьПриказ.Label10, АСформироватьПриказ.Согласовано1, АСформироватьПриказ.Согласовано1Должность, АСформироватьПриказ.GroupBox3)
-        местоНаФорме(6, АСформироватьПриказ.Label11, АСформироватьПриказ.Label12, АСформироватьПриказ.Согласовано2, АСформироватьПриказ.Согласовано2Должность, АСформироватьПриказ.GroupBox4)
+        местоНаФорме(2, BuildOrder.Label4, BuildOrder.Label13, BuildOrder.Ответственный, BuildOrder.ОтветственныйДолжность, BuildOrder.GroupBox5)
+        местоНаФорме(1, BuildOrder.Label2, BuildOrder.Label14, BuildOrder.Утверждает, BuildOrder.УтверждаетДолжность, BuildOrder.GroupBox6)
+        местоНаФорме(3, BuildOrder.Label5, BuildOrder.Label6, BuildOrder.ПроектВносит, BuildOrder.ПроектВноситДолжность, BuildOrder.GroupBox1)
+        местоНаФорме(4, BuildOrder.Label7, BuildOrder.Label8, BuildOrder.Исполнитель, BuildOrder.ИсполнительДолжность, BuildOrder.GroupBox2)
+        местоНаФорме(5, BuildOrder.Label9, BuildOrder.Label10, BuildOrder.Согласовано1, BuildOrder.Согласовано1Должность, BuildOrder.GroupBox3)
+        местоНаФорме(6, BuildOrder.Label11, BuildOrder.Label12, BuildOrder.Согласовано2, BuildOrder.Согласовано2Должность, BuildOrder.GroupBox4)
         Утверждает(False)
 
-        АСформироватьПриказ.ShowDialog()
-        АСформироватьПриказ.CheckBox1.Visible = False
-        АСформироватьПриказ.ПрактическаяПодготовка.Visible = False
-        АСформироватьПриказ.ИтоговаяАттестация.Visible = False
-        АСформироватьПриказ.Label24.Visible = False
-        АСформироватьПриказ.Label25.Visible = False
-        АСформироватьПриказ.Text = "Приказ"
+        BuildOrder.ShowDialog()
+        BuildOrder.CheckBox1.Visible = False
+        BuildOrder.ПрактическаяПодготовка.Visible = False
+        BuildOrder.ИтоговаяАттестация.Visible = False
+        BuildOrder.Label24.Visible = False
+        BuildOrder.Label25.Visible = False
+        BuildOrder.Text = "Приказ"
 
         Call Утверждает(True)
 
@@ -1989,76 +1984,56 @@ Public Class MainForm
 
 
     Private Sub MainForm_Shown(sender As Object, e As EventArgs) Handles MyBase.Shown
-        If Запуск.Открыть Then
-
-            Запуск.Открыть = False
-            Me.Close()
-
+        If startApp.open Then
+            startApp.open = False
+            Close()
         End If
     End Sub
 
-    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
-
-        Коллекция()
-        Dim form1 As New ФормаСписок
-        form1.Show()
-
-    End Sub
-
-    Private Sub MainForm_Closing(sender As Object, e As CancelEventArgs) Handles MyBase.Closing
-    End Sub
-
-    Private Sub ДиректорФИО_Click(sender As Object, e As EventArgs) Handles ДиректорФИО.Click
-
-        ФормаСписок.textboxName = Me.ActiveControl.Name
-        ФормаСписок.FormName = Me.Name
-        ФормаСписок.currentControl = ДиректорФИО
-        ФормаСписок.ShowDialog()
+    Private Sub directorName_Click(sender As Object, e As EventArgs) Handles directorName.Click
+        List.textboxName = Me.ActiveControl.Name
+        List.currentFormName = Me.Name
+        List.ShowDialog()
 
     End Sub
 
-    Private Sub ДиректорДолжность_Click(sender As Object, e As EventArgs) Handles ДиректорДолжность.Click
+    Private Sub directorPosition_Click(sender As Object, e As EventArgs) Handles directorPosition.Click
 
-        ФормаСписок.textboxName = Me.ActiveControl.Name
-        ФормаСписок.FormName = Me.Name
-        ФормаСписок.currentControl = ДиректорДолжность
-        ФормаСписок.ShowDialog()
+        List.textboxName = ActiveControl.Name
+        List.currentFormName = Name
+        List.ShowDialog()
 
     End Sub
 
     Private Sub Согласовано1ДолжностьПУ_Click(sender As Object, e As EventArgs) Handles Согласовано1ДолжностьПУ.Click
 
-        ФормаСписок.textboxName = Me.ActiveControl.Name
-        ФормаСписок.FormName = Me.Name
-        ФормаСписок.currentControl = Согласовано1ДолжностьПУ
-        ФормаСписок.ShowDialog()
+        List.textboxName = ActiveControl.Name
+        List.currentFormName = Name
+        List.ShowDialog()
 
     End Sub
 
     Private Sub Согласовано2ДолжностьПУ_Click(sender As Object, e As EventArgs) Handles Согласовано2ДолжностьПУ.Click
 
-        ФормаСписок.textboxName = Me.ActiveControl.Name
-        ФормаСписок.FormName = Me.Name
-        ФормаСписок.currentControl = Согласовано2ДолжностьПУ
-        ФормаСписок.ShowDialog()
+        List.textboxName = ActiveControl.Name
+        List.currentFormName = Name
+        List.ShowDialog()
 
     End Sub
 
     Private Sub Согласовано1ПУ_Click(sender As Object, e As EventArgs) Handles Согласовано1ПУ.Click
 
-        ФормаСписок.textboxName = Me.ActiveControl.Name
-        ФормаСписок.FormName = Me.Name
-        ФормаСписок.currentControl = Согласовано1ПУ
-        ФормаСписок.ShowDialog()
+        List.textboxName = ActiveControl.Name
+        List.currentFormName = Name
+        List.ShowDialog()
 
     End Sub
 
     Private Sub Согласовано2ПУ_Click(sender As Object, e As EventArgs) Handles Согласовано2ПУ.Click
 
-        ФормаСписок.textboxName = Me.ActiveControl.Name
-        ФормаСписок.FormName = Me.Name
-        ФормаСписок.currentControl = Согласовано2ПУ
-        ФормаСписок.ShowDialog()
+        List.textboxName = ActiveControl.Name
+        List.currentFormName = Name
+        List.ShowDialog()
 
     End Sub
 
@@ -2101,15 +2076,15 @@ Public Class MainForm
 
     Private Sub Ведомость_слушателиИорганизации_Click(sender As Object, e As EventArgs) Handles Ведомость_слушателиИорганизации.Click
 
-        prikazCvalif = PK_PP
-        АСформироватьПриказ.Text = "Ведомость слушатели и организации"
-        АСформироватьПриказ.orderType = ActiveControl.Name
+        BuildOrder.cvalification = PK_PP
+        BuildOrder.Text = "Ведомость слушатели и организации"
+        BuildOrder.orderType = ActiveControl.Name
         ActiveControl = Button2
 
-        АСформироватьПриказ.Утверждает.Visible = False
-        АСформироватьПриказ.УтверждаетДолжность.Visible = False
-        АСформироватьПриказ.Label2.Visible = False
-        АСформироватьПриказ.Label14.Visible = False
+        BuildOrder.Утверждает.Visible = False
+        BuildOrder.УтверждаетДолжность.Visible = False
+        BuildOrder.Label2.Visible = False
+        BuildOrder.Label14.Visible = False
 
 
         Call ОтветственныйЗаАттестацию(False)
@@ -2124,32 +2099,32 @@ Public Class MainForm
         Call СекретарьКомиссии(False)
         Call ЗаместительРПК(False)
 
-        Call ОчиститьПоляФормы.Очиститьформу(АСформироватьПриказ)
+        Call _formCleaner.cleaner(BuildOrder)
 
-        АСформироватьПриказ.Button1.Visible = False
-        АСформироватьПриказ.Size = New Size(840, 150)
-        АСформироватьПриказ.КнопкаСформировать.Location = New Point(135, 65)
-        АСформироватьПриказ.КнопкаОчистить.Location = New Point(2, 65)
+        BuildOrder.Button1.Visible = False
+        BuildOrder.Size = New Size(840, 150)
+        BuildOrder.КнопкаСформировать.Location = New Point(135, 65)
+        BuildOrder.КнопкаОчистить.Location = New Point(2, 65)
 
         ActiveControl = Button2
-        АСформироватьПриказ.ДатаПриказа.Enabled = False
-        АСформироватьПриказ.ShowDialog()
-        АСформироватьПриказ.ДатаПриказа.Enabled = True
+        BuildOrder.ДатаПриказа.Enabled = False
+        BuildOrder.ShowDialog()
+        BuildOrder.ДатаПриказа.Enabled = True
 
     End Sub
 
     Private Sub ДоверенностьПолученияБланков_Click(sender As Object, e As EventArgs) Handles ДоверенностьПолученияБланков.Click
 
-        prikazCvalif = PK_PP_PO
-        АСформироватьПриказ.Text = "Доверенность получения бланков на группу"
-        АСформироватьПриказ.orderType = ActiveControl.Name
+        BuildOrder.cvalification = PK_PP_PO
+        BuildOrder.Text = "Доверенность получения бланков на группу"
+        BuildOrder.orderType = ActiveControl.Name
 
-        АСформироватьПриказ.Утверждает.Visible = True
-        АСформироватьПриказ.УтверждаетДолжность.Visible = False
-        АСформироватьПриказ.Label2.Visible = True
-        АСформироватьПриказ.Label14.Visible = False
+        BuildOrder.Утверждает.Visible = True
+        BuildOrder.УтверждаетДолжность.Visible = False
+        BuildOrder.Label2.Visible = True
+        BuildOrder.Label14.Visible = False
 
-        АСформироватьПриказ.Label2.Text = "Ответственный"
+        BuildOrder.Label2.Text = "Ответственный"
 
 
         ОтветственныйЗаАттестацию(False)
@@ -2166,50 +2141,50 @@ Public Class MainForm
 
         standard_location(1)
 
-        ОчиститьПоляФормы.Очиститьформу(АСформироватьПриказ)
+        _formCleaner.cleaner(BuildOrder)
 
-        АСформироватьПриказ.Button1.Visible = False
-        АСформироватьПриказ.Size = New Size(840, 190)
-        АСформироватьПриказ.КнопкаСформировать.Location = New Point(135, 107)
-        АСформироватьПриказ.КнопкаОчистить.Location = New Point(2, 107)
+        BuildOrder.Button1.Visible = False
+        BuildOrder.Size = New Size(840, 190)
+        BuildOrder.КнопкаСформировать.Location = New Point(135, 107)
+        BuildOrder.КнопкаОчистить.Location = New Point(2, 107)
 
         directorOff = True
         ActiveControl = Button2
-        АСформироватьПриказ.ShowDialog()
+        BuildOrder.ShowDialog()
         directorOff = False
-        АСформироватьПриказ.Label2.Text = "Директор ФИО"
+        BuildOrder.Label2.Text = "Директор ФИО"
 
     End Sub
 
     Private Sub ДоверенностьПолученияБланковСлушателей_Click(sender As Object, e As EventArgs) Handles ДоверенностьПолученияБланковСлушателей.Click
 
-        prikazCvalif = PK_PP_PO
-        АСформироватьПриказ.Text = "Доверенность получения бланков на слушателя"
-        АСформироватьПриказ.orderType = ActiveControl.Name
+        BuildOrder.cvalification = PK_PP_PO
+        BuildOrder.Text = "Доверенность получения бланков на слушателя"
+        BuildOrder.orderType = ActiveControl.Name
 
-        АСформироватьПриказ.ListViewСписокСлушателей.Visible = True
-        АСформироватьПриказ.ListViewСписокСлушателей.Location = New Point(9, 120)
+        BuildOrder.tableStudentsList.Visible = True
+        BuildOrder.tableStudentsList.Location = New Point(9, 120)
 
-        АСформироватьПриказ.Label2.Visible = False
-        АСформироватьПриказ.Label14.Visible = False
+        BuildOrder.Label2.Visible = False
+        BuildOrder.Label14.Visible = False
 
-        While АСформироватьПриказ.ListViewСписокСлушателей.Columns.Count > 1
+        While BuildOrder.tableStudentsList.Columns.Count > 1
 
-            АСформироватьПриказ.ListViewСписокСлушателей.Columns.RemoveAt(1)
+            BuildOrder.tableStudentsList.Columns.RemoveAt(1)
 
         End While
 
-        АСформироватьПриказ.ListViewСписокСлушателей.Columns(0).Width = 805
-        АСформироватьПриказ.ListViewСписокСлушателей.Columns(0).Text = "ФИО"
+        BuildOrder.tableStudentsList.Columns(0).Width = 805
+        BuildOrder.tableStudentsList.Columns(0).Text = "ФИО"
 
-        АСформироватьПриказ.LabelИзмениПадеж.Location = New Point(9, 99)
-        АСформироватьПриказ.LabelИзмениПадеж.Visible = True
-        АСформироватьПриказ.Утверждает.Visible = True
-        АСформироватьПриказ.УтверждаетДолжность.Visible = False
-        АСформироватьПриказ.Label2.Visible = True
-        АСформироватьПриказ.Label14.Visible = False
+        BuildOrder.LabelИзмениПадеж.Location = New Point(9, 99)
+        BuildOrder.LabelИзмениПадеж.Visible = True
+        BuildOrder.Утверждает.Visible = True
+        BuildOrder.УтверждаетДолжность.Visible = False
+        BuildOrder.Label2.Visible = True
+        BuildOrder.Label14.Visible = False
 
-        АСформироватьПриказ.Label2.Text = "Ответственный"
+        BuildOrder.Label2.Text = "Ответственный"
 
 
         ОтветственныйЗаАттестацию(False)
@@ -2226,46 +2201,46 @@ Public Class MainForm
 
         standard_location(1)
 
-        ОчиститьПоляФормы.Очиститьформу(АСформироватьПриказ)
+        _formCleaner.cleaner(BuildOrder)
 
-        АСформироватьПриказ.Button1.Visible = False
-        АСформироватьПриказ.Size = New Size(840, 790)
-        АСформироватьПриказ.КнопкаСформировать.Location = New Point(135, 700)
-        АСформироватьПриказ.КнопкаОчистить.Location = New Point(2, 700)
+        BuildOrder.Button1.Visible = False
+        BuildOrder.Size = New Size(840, 790)
+        BuildOrder.КнопкаСформировать.Location = New Point(135, 700)
+        BuildOrder.КнопкаОчистить.Location = New Point(2, 700)
 
         directorOff = True
         ActiveControl = Button2
-        АСформироватьПриказ.ShowDialog()
+        BuildOrder.ShowDialog()
 
         directorOff = False
-        АСформироватьПриказ.Label2.Text = "Директор ФИО"
-        АСформироватьПриказ.ListViewСписокСлушателей.Visible = False
-        АСформироватьПриказ.LabelИзмениПадеж.Visible = False
+        BuildOrder.Label2.Text = "Директор ФИО"
+        BuildOrder.tableStudentsList.Visible = False
+        BuildOrder.LabelИзмениПадеж.Visible = False
     End Sub
 
     Private Sub ВедомостьПромежуточнойАттестации_Click(sender As Object, e As EventArgs) Handles ВедомостьПромежуточнойАттестации.Click
 
-        prikazCvalif = PO
-        АСформироватьПриказ.Text = "Ведомость промежуточной аттестации"
-        АСформироватьПриказ.orderType = ActiveControl.Name
+        BuildOrder.cvalification = PO
+        BuildOrder.Text = "Ведомость промежуточной аттестации"
+        BuildOrder.orderType = ActiveControl.Name
 
-        While АСформироватьПриказ.ListViewСписокСлушателей.Columns.Count < 3
-            АСформироватьПриказ.ListViewСписокСлушателей.Columns.Add("Преподаватель", 200)
+        While BuildOrder.tableStudentsList.Columns.Count < 3
+            BuildOrder.tableStudentsList.Columns.Add("Преподаватель", 200)
         End While
-        АСформироватьПриказ.ListViewСписокСлушателей.Columns(0).Text = "Номер"
-        АСформироватьПриказ.ListViewСписокСлушателей.Columns(0).Width = 50
-        АСформироватьПриказ.ListViewСписокСлушателей.Visible = True
-        АСформироватьПриказ.ListViewСписокСлушателей.Columns(1).Width = 550
-        АСформироватьПриказ.ListViewСписокСлушателей.Columns(1).Text = "Наименование модуля"
+        BuildOrder.tableStudentsList.Columns(0).Text = "Номер"
+        BuildOrder.tableStudentsList.Columns(0).Width = 50
+        BuildOrder.tableStudentsList.Visible = True
+        BuildOrder.tableStudentsList.Columns(1).Width = 550
+        BuildOrder.tableStudentsList.Columns(1).Text = "Наименование модуля"
 
 
 
-        АСформироватьПриказ.ListViewСписокСлушателей.Location = New Point(9, 120)
+        BuildOrder.tableStudentsList.Location = New Point(9, 120)
 
-        АСформироватьПриказ.Утверждает.Visible = False
-        АСформироватьПриказ.УтверждаетДолжность.Visible = False
-        АСформироватьПриказ.Label2.Visible = False
-        АСформироватьПриказ.Label14.Visible = False
+        BuildOrder.Утверждает.Visible = False
+        BuildOrder.УтверждаетДолжность.Visible = False
+        BuildOrder.Label2.Visible = False
+        BuildOrder.Label14.Visible = False
 
 
         Call ОтветственныйЗаАттестацию(False)
@@ -2280,44 +2255,44 @@ Public Class MainForm
         Call СекретарьКомиссии(False)
         Call ЗаместительРПК(False)
 
-        ОчиститьПоляФормы.Очиститьформу(АСформироватьПриказ)
+        _formCleaner.cleaner(BuildOrder)
 
-        АСформироватьПриказ.Button1.Visible = False
-        АСформироватьПриказ.Size = New Size(840, 790)
-        АСформироватьПриказ.КнопкаСформировать.Location = New Point(135, 700)
-        АСформироватьПриказ.КнопкаОчистить.Location = New Point(2, 700)
+        BuildOrder.Button1.Visible = False
+        BuildOrder.Size = New Size(840, 790)
+        BuildOrder.КнопкаСформировать.Location = New Point(135, 700)
+        BuildOrder.КнопкаОчистить.Location = New Point(2, 700)
 
         ActiveControl = Button2
-        АСформироватьПриказ.ShowDialog()
-        АСформироватьПриказ.ListViewСписокСлушателей.Visible = False
+        BuildOrder.ShowDialog()
+        BuildOrder.tableStudentsList.Visible = False
 
 
     End Sub
 
     Private Sub ПП_Ведомость_Click(sender As Object, e As EventArgs) Handles ПП_Ведомость.Click
 
-        prikazCvalif = PP
-        АСформироватьПриказ.Text = "ПП Ведомость промежуточной аттестации"
-        АСформироватьПриказ.orderType = ActiveControl.Name
+        BuildOrder.cvalification = PP
+        BuildOrder.Text = "ПП Ведомость промежуточной аттестации"
+        BuildOrder.orderType = ActiveControl.Name
 
-        While АСформироватьПриказ.ListViewСписокСлушателей.Columns.Count < 3
-            АСформироватьПриказ.ListViewСписокСлушателей.Columns.Add("Преподаватель", 200)
+        While BuildOrder.tableStudentsList.Columns.Count < 3
+            BuildOrder.tableStudentsList.Columns.Add("Преподаватель", 200)
         End While
 
-        АСформироватьПриказ.ListViewСписокСлушателей.Visible = True
-        АСформироватьПриказ.ListViewСписокСлушателей.Location = New Point(9, 120)
-        АСформироватьПриказ.ListViewСписокСлушателей.Columns(0).Text = "Номер"
-        АСформироватьПриказ.ListViewСписокСлушателей.Columns(0).Width = 50
-        АСформироватьПриказ.ListViewСписокСлушателей.Columns(1).Width = 550
-        АСформироватьПриказ.ListViewСписокСлушателей.Columns(1).Text = "Наименование модуля"
+        BuildOrder.tableStudentsList.Visible = True
+        BuildOrder.tableStudentsList.Location = New Point(9, 120)
+        BuildOrder.tableStudentsList.Columns(0).Text = "Номер"
+        BuildOrder.tableStudentsList.Columns(0).Width = 50
+        BuildOrder.tableStudentsList.Columns(1).Width = 550
+        BuildOrder.tableStudentsList.Columns(1).Text = "Наименование модуля"
 
-        'АСформироватьПриказ.ListViewСписокСлушателей.Columns(2).Width = 300
-        'АСформироватьПриказ.ListViewСписокСлушателей.Columns(2).Text = "Преподаватель"
+        'BuildOrder.ListViewСписокСлушателей.Columns(2).Width = 300
+        'BuildOrder.ListViewСписокСлушателей.Columns(2).Text = "Преподаватель"
 
-        АСформироватьПриказ.Утверждает.Visible = False
-        АСформироватьПриказ.УтверждаетДолжность.Visible = False
-        АСформироватьПриказ.Label2.Visible = False
-        АСформироватьПриказ.Label14.Visible = False
+        BuildOrder.Утверждает.Visible = False
+        BuildOrder.УтверждаетДолжность.Visible = False
+        BuildOrder.Label2.Visible = False
+        BuildOrder.Label14.Visible = False
 
 
         Call ОтветственныйЗаАттестацию(False)
@@ -2332,24 +2307,24 @@ Public Class MainForm
         Call СекретарьКомиссии(False)
         Call ЗаместительРПК(False)
 
-        Call ОчиститьПоляФормы.Очиститьформу(АСформироватьПриказ)
+        Call _formCleaner.cleaner(BuildOrder)
 
-        АСформироватьПриказ.Button1.Visible = False
-        АСформироватьПриказ.Size = New Size(840, 790)
-        АСформироватьПриказ.КнопкаСформировать.Location = New Point(135, 700)
-        АСформироватьПриказ.КнопкаОчистить.Location = New Point(2, 700)
+        BuildOrder.Button1.Visible = False
+        BuildOrder.Size = New Size(840, 790)
+        BuildOrder.КнопкаСформировать.Location = New Point(135, 700)
+        BuildOrder.КнопкаОчистить.Location = New Point(2, 700)
 
         ActiveControl = Button2
-        АСформироватьПриказ.ShowDialog()
+        BuildOrder.ShowDialog()
 
-        АСформироватьПриказ.ListViewСписокСлушателей.Visible = False
+        BuildOrder.tableStudentsList.Visible = False
 
     End Sub
     Private Sub ПК_Окончание_уд_Click(sender As Object, e As EventArgs) Handles ПК_Окончание_уд.Click
 
-        prikazCvalif = PK
-        АСформироватьПриказ.orderType = "ПК_Окончание_уд"
-        АСформироватьПриказ.Text = "ПК_Окончание_уд"
+        BuildOrder.cvalification = PK
+        BuildOrder.orderType = "ПК_Окончание_уд"
+        BuildOrder.Text = "ПК_Окончание_уд"
         ActiveControl = Button2
 
         ОтветственныйЗаАттестацию(False)
@@ -2364,55 +2339,56 @@ Public Class MainForm
         СекретарьКомиссии(False)
         ЗаместительРПК(False)
 
-        АСформироватьПриказ.ListViewСписокСлушателей.Visible = True
-        While АСформироватьПриказ.ListViewСписокСлушателей.Columns.Count > 1
-            АСформироватьПриказ.ListViewСписокСлушателей.Columns.RemoveAt(1)
+        BuildOrder.tableStudentsList.Visible = True
+        While BuildOrder.tableStudentsList.Columns.Count > 1
+            BuildOrder.tableStudentsList.Columns.RemoveAt(1)
         End While
-        АСформироватьПриказ.ListViewСписокСлушателей.Columns(0).Width = 805
-        АСформироватьПриказ.ListViewСписокСлушателей.Columns(0).Text = "ФИО"
+        BuildOrder.tableStudentsList.Columns(0).Width = 805
+        BuildOrder.tableStudentsList.Columns(0).Text = "ФИО"
 
-        АСформироватьПриказ.LabelИзмениПадеж.Location = New Point(9, 98)
-        ОчиститьПоляФормы.Очиститьформу(АСформироватьПриказ)
-        АСформироватьПриказ.ListViewСписокСлушателей.Location = New Point(9, 330)
+        BuildOrder.LabelИзмениПадеж.Location = New Point(9, 98)
+        _formCleaner.cleaner(BuildOrder)
+        BuildOrder.tableStudentsList.Location = New Point(9, 330)
 
-        АСформироватьПриказ.Size = New Size(840, 990)
-        АСформироватьПриказ.КнопкаСформировать.Location = New Point(135, 907)
-        АСформироватьПриказ.КнопкаОчистить.Location = New Point(2, 907)
+        BuildOrder.Size = New Size(840, 990)
+        BuildOrder.КнопкаСформировать.Location = New Point(135, 907)
+        BuildOrder.КнопкаОчистить.Location = New Point(2, 907)
 
         ActiveControl = Button2
 
-        местоНаФорме(1, АСформироватьПриказ.Label2, АСформироватьПриказ.Label14, АСформироватьПриказ.Утверждает, АСформироватьПриказ.УтверждаетДолжность, АСформироватьПриказ.GroupBox6)
-        местоНаФормеПослеДиректора(2, АСформироватьПриказ.Label5, АСформироватьПриказ.Label6, АСформироватьПриказ.ПроектВносит, АСформироватьПриказ.ПроектВноситДолжность, АСформироватьПриказ.GroupBox1)
-        местоНаФормеПослеДиректора(3, АСформироватьПриказ.Label7, АСформироватьПриказ.Label8, АСформироватьПриказ.Исполнитель, АСформироватьПриказ.ИсполнительДолжность, АСформироватьПриказ.GroupBox2)
-        местоНаФормеПослеДиректора(4, АСформироватьПриказ.Label9, АСформироватьПриказ.Label10, АСформироватьПриказ.Согласовано1, АСформироватьПриказ.Согласовано1Должность, АСформироватьПриказ.GroupBox3)
-        местоНаФормеПослеДиректора(5, АСформироватьПриказ.Label11, АСформироватьПриказ.Label12, АСформироватьПриказ.Согласовано2, АСформироватьПриказ.Согласовано2Должность, АСформироватьПриказ.GroupBox4)
+        местоНаФорме(1, BuildOrder.Label2, BuildOrder.Label14, BuildOrder.Утверждает, BuildOrder.УтверждаетДолжность, BuildOrder.GroupBox6)
+        местоНаФормеПослеДиректора(2, BuildOrder.Label5, BuildOrder.Label6, BuildOrder.ПроектВносит, BuildOrder.ПроектВноситДолжность, BuildOrder.GroupBox1)
+        местоНаФормеПослеДиректора(3, BuildOrder.Label7, BuildOrder.Label8, BuildOrder.Исполнитель, BuildOrder.ИсполнительДолжность, BuildOrder.GroupBox2)
+        местоНаФормеПослеДиректора(4, BuildOrder.Label9, BuildOrder.Label10, BuildOrder.Согласовано1, BuildOrder.Согласовано1Должность, BuildOrder.GroupBox3)
+        местоНаФормеПослеДиректора(5, BuildOrder.Label11, BuildOrder.Label12, BuildOrder.Согласовано2, BuildOrder.Согласовано2Должность, BuildOrder.GroupBox4)
 
-        АСформироватьПриказ.ShowDialog()
+        BuildOrder.ShowDialog()
 
-        АСформироватьПриказ.ListViewСписокСлушателей.Visible = False
+        BuildOrder.tableStudentsList.Visible = False
+
     End Sub
     Private Sub СправкаОбОбучении_Click(sender As Object, e As EventArgs) Handles СправкаОбОбучении.Click
 
-        prikazCvalif = PK_PP_PO
-        АСформироватьПриказ.Text = "СправкаОбОбучении"
-        АСформироватьПриказ.orderType = ActiveControl.Name
+        BuildOrder.cvalification = PK_PP_PO
+        BuildOrder.Text = "СправкаОбОбучении"
+        BuildOrder.orderType = ActiveControl.Name
 
-        АСформироватьПриказ.LabelИзмениПадеж.Visible = True
-        АСформироватьПриказ.ListViewСписокСлушателей.Visible = True
-        АСформироватьПриказ.LabelИзмениПадеж.Location = New Point(9, 152)
-        АСформироватьПриказ.ListViewСписокСлушателей.Location = New Point(9, 180)
+        BuildOrder.LabelИзмениПадеж.Visible = True
+        BuildOrder.tableStudentsList.Visible = True
+        BuildOrder.LabelИзмениПадеж.Location = New Point(9, 152)
+        BuildOrder.tableStudentsList.Location = New Point(9, 180)
 
-        АСформироватьПриказ.Утверждает.Visible = False
-        АСформироватьПриказ.УтверждаетДолжность.Visible = False
-        АСформироватьПриказ.Label2.Visible = False
-        АСформироватьПриказ.Label14.Visible = False
+        BuildOrder.Утверждает.Visible = False
+        BuildOrder.УтверждаетДолжность.Visible = False
+        BuildOrder.Label2.Visible = False
+        BuildOrder.Label14.Visible = False
 
-        While АСформироватьПриказ.ListViewСписокСлушателей.Columns.Count > 1
-            АСформироватьПриказ.ListViewСписокСлушателей.Columns.RemoveAt(1)
+        While BuildOrder.tableStudentsList.Columns.Count > 1
+            BuildOrder.tableStudentsList.Columns.RemoveAt(1)
         End While
 
-        АСформироватьПриказ.ListViewСписокСлушателей.Columns(0).Width = 805
-        АСформироватьПриказ.ListViewСписокСлушателей.Columns(0).Text = "ФИО"
+        BuildOrder.tableStudentsList.Columns(0).Width = 805
+        BuildOrder.tableStudentsList.Columns(0).Text = "ФИО"
 
 
         Call ОтветственныйЗаАттестацию(False)
@@ -2429,29 +2405,29 @@ Public Class MainForm
 
         standard_location(1)
 
-        Call ОчиститьПоляФормы.Очиститьформу(АСформироватьПриказ)
+        Call _formCleaner.cleaner(BuildOrder)
 
-        АСформироватьПриказ.Button1.Visible = False
-        АСформироватьПриказ.Size = New Size(840, 843)
-        АСформироватьПриказ.КнопкаСформировать.Location = New Point(135, 760)
-        АСформироватьПриказ.КнопкаОчистить.Location = New Point(2, 760)
+        BuildOrder.Button1.Visible = False
+        BuildOrder.Size = New Size(840, 843)
+        BuildOrder.КнопкаСформировать.Location = New Point(135, 760)
+        BuildOrder.КнопкаОчистить.Location = New Point(2, 760)
 
         showPoleVvoda(True)
 
-        АСформироватьПриказ.ДатаПриказа.Enabled = False
+        BuildOrder.ДатаПриказа.Enabled = False
         ActiveControl = Button2
-        АСформироватьПриказ.ShowDialog()
-        АСформироватьПриказ.ДатаПриказа.Enabled = True
+        BuildOrder.ShowDialog()
+        BuildOrder.ДатаПриказа.Enabled = True
 
         showPoleVvoda(False)
 
-        АСформироватьПриказ.LabelИзмениПадеж.Visible = False
-        АСформироватьПриказ.ListViewСписокСлушателей.Visible = False
-        АСформироватьПриказ.ListViewСписокСлушателей.Columns.Add(1)
-        АСформироватьПриказ.ListViewСписокСлушателей.Columns(0).Text = "Номер"
-        АСформироватьПриказ.ListViewСписокСлушателей.Columns(1).Text = "ФИО"
-        АСформироватьПриказ.ListViewСписокСлушателей.Columns(1).Width = 120
-        АСформироватьПриказ.ListViewСписокСлушателей.Columns(0).Width = 50
+        BuildOrder.LabelИзмениПадеж.Visible = False
+        BuildOrder.tableStudentsList.Visible = False
+        BuildOrder.tableStudentsList.Columns.Add(1)
+        BuildOrder.tableStudentsList.Columns(0).Text = "Номер"
+        BuildOrder.tableStudentsList.Columns(1).Text = "ФИО"
+        BuildOrder.tableStudentsList.Columns(1).Width = 120
+        BuildOrder.tableStudentsList.Columns(0).Width = 50
 
 
     End Sub
@@ -2460,81 +2436,81 @@ Public Class MainForm
 
         If Not onOff Then
 
-            АСформироватьПриказ.ПрактическаяПодготовка.Text = ""
-            АСформироватьПриказ.Label24.Text = "Практическая подготовка"
-            АСформироватьПриказ.ПрактическаяПодготовка.Visible = False
-            АСформироватьПриказ.Label24.Visible = False
-            АСформироватьПриказ.ПрактическаяПодготовка.Multiline = False
-            АСформироватьПриказ.ПрактическаяПодготовка.Location = New Point(260, 110)
-            АСформироватьПриказ.Label24.Location = New Point(20, 110)
-            АСформироватьПриказ.ПрактическаяПодготовка.Size = New Size(546, 20)
+            BuildOrder.ПрактическаяПодготовка.Text = ""
+            BuildOrder.Label24.Text = "Практическая подготовка"
+            BuildOrder.ПрактическаяПодготовка.Visible = False
+            BuildOrder.Label24.Visible = False
+            BuildOrder.ПрактическаяПодготовка.Multiline = False
+            BuildOrder.ПрактическаяПодготовка.Location = New Point(260, 110)
+            BuildOrder.Label24.Location = New Point(20, 110)
+            BuildOrder.ПрактическаяПодготовка.Size = New Size(546, 20)
 
         Else
 
-            АСформироватьПриказ.ПрактическаяПодготовка.Location = New Point(260, x)
-            АСформироватьПриказ.Label24.Text = "приказ о зачислении"
-            АСформироватьПриказ.Label24.Location = New Point(20, x)
-            АСформироватьПриказ.ПрактическаяПодготовка.Visible = True
-            АСформироватьПриказ.ПрактическаяПодготовка.Multiline = True
-            АСформироватьПриказ.ПрактическаяПодготовка.Size = New Size(546, heightText)
-            АСформироватьПриказ.Label24.Visible = True
+            BuildOrder.ПрактическаяПодготовка.Location = New Point(260, x)
+            BuildOrder.Label24.Text = "приказ о зачислении"
+            BuildOrder.Label24.Location = New Point(20, x)
+            BuildOrder.ПрактическаяПодготовка.Visible = True
+            BuildOrder.ПрактическаяПодготовка.Multiline = True
+            BuildOrder.ПрактическаяПодготовка.Size = New Size(546, heightText)
+            BuildOrder.Label24.Visible = True
 
         End If
     End Sub
     Private Sub СправкаОбОкончании_Click(sender As Object, e As EventArgs) Handles СправкаОбОкончании.Click
 
-        prikazCvalif = PK_PP_PO
-        АСформироватьПриказ.Text = "Справка об окончании без ИА"
-        АСформироватьПриказ.orderType = ActiveControl.Name
+        BuildOrder.cvalification = PK_PP_PO
+        BuildOrder.Text = "Справка об окончании без ИА"
+        BuildOrder.orderType = ActiveControl.Name
 
-        АСформироватьПриказ.LabelИзмениПадеж.Visible = True
-        АСформироватьПриказ.ListViewСписокСлушателей.Visible = True
-        АСформироватьПриказ.LabelИзмениПадеж.Location = New Point(9, 92)
-        АСформироватьПриказ.ListViewСписокСлушателей.Location = New Point(9, 120)
+        BuildOrder.LabelИзмениПадеж.Visible = True
+        BuildOrder.tableStudentsList.Visible = True
+        BuildOrder.LabelИзмениПадеж.Location = New Point(9, 92)
+        BuildOrder.tableStudentsList.Location = New Point(9, 120)
 
-        АСформироватьПриказ.Утверждает.Visible = False
-        АСформироватьПриказ.УтверждаетДолжность.Visible = False
-        АСформироватьПриказ.Label2.Visible = False
-        АСформироватьПриказ.Label14.Visible = False
+        BuildOrder.Утверждает.Visible = False
+        BuildOrder.УтверждаетДолжность.Visible = False
+        BuildOrder.Label2.Visible = False
+        BuildOrder.Label14.Visible = False
 
-        While АСформироватьПриказ.ListViewСписокСлушателей.Columns.Count > 1
-            АСформироватьПриказ.ListViewСписокСлушателей.Columns.RemoveAt(1)
+        While BuildOrder.tableStudentsList.Columns.Count > 1
+            BuildOrder.tableStudentsList.Columns.RemoveAt(1)
         End While
-        АСформироватьПриказ.ListViewСписокСлушателей.Columns(0).Width = 805
-        АСформироватьПриказ.ListViewСписокСлушателей.Columns(0).Text = "ФИО"
+        BuildOrder.tableStudentsList.Columns(0).Width = 805
+        BuildOrder.tableStudentsList.Columns(0).Text = "ФИО"
 
-        Call ОтветственныйЗаАттестацию(False)
-        Call чекбоксы(False, "ММС", "санитар", "должность слушателей")
-        Call ПроектВносит(False)
-        Call Исполнитель(False)
-        Call Согласовано1(False)
-        Call Согласовано2(False)
-        Call РуководительСтажировки(False)
-        Call Комиссия2(False)
-        Call Комиссия3(False)
-        Call СекретарьКомиссии(False)
-        Call ЗаместительРПК(False)
+        ОтветственныйЗаАттестацию(False)
+        чекбоксы(False, "ММС", "санитар", "должность слушателей")
+        ПроектВносит(False)
+        Исполнитель(False)
+        Согласовано1(False)
+        Согласовано2(False)
+        РуководительСтажировки(False)
+        Комиссия2(False)
+        Комиссия3(False)
+        СекретарьКомиссии(False)
+        ЗаместительРПК(False)
 
         standard_location(1)
 
-        Call ОчиститьПоляФормы.Очиститьформу(АСформироватьПриказ)
+        Call _formCleaner.cleaner(BuildOrder)
 
-        АСформироватьПриказ.Button1.Visible = False
-        АСформироватьПриказ.Size = New Size(840, 790)
-        АСформироватьПриказ.КнопкаСформировать.Location = New Point(135, 700)
-        АСформироватьПриказ.КнопкаОчистить.Location = New Point(2, 700)
-        АСформироватьПриказ.ДатаПриказа.Enabled = False
+        BuildOrder.Button1.Visible = False
+        BuildOrder.Size = New Size(840, 790)
+        BuildOrder.КнопкаСформировать.Location = New Point(135, 700)
+        BuildOrder.КнопкаОчистить.Location = New Point(2, 700)
+        BuildOrder.ДатаПриказа.Enabled = False
         ActiveControl = Button2
-        АСформироватьПриказ.ShowDialog()
-        АСформироватьПриказ.ДатаПриказа.Enabled = True
+        BuildOrder.ShowDialog()
+        BuildOrder.ДатаПриказа.Enabled = True
 
-        АСформироватьПриказ.LabelИзмениПадеж.Visible = False
-        АСформироватьПриказ.ListViewСписокСлушателей.Visible = False
-        АСформироватьПриказ.ListViewСписокСлушателей.Columns.Add(1)
-        АСформироватьПриказ.ListViewСписокСлушателей.Columns(0).Text = "Номер"
-        АСформироватьПриказ.ListViewСписокСлушателей.Columns(1).Text = "ФИО"
-        АСформироватьПриказ.ListViewСписокСлушателей.Columns(1).Width = 120
-        АСформироватьПриказ.ListViewСписокСлушателей.Columns(0).Width = 50
+        BuildOrder.LabelИзмениПадеж.Visible = False
+        BuildOrder.tableStudentsList.Visible = False
+        BuildOrder.tableStudentsList.Columns.Add(1)
+        BuildOrder.tableStudentsList.Columns(0).Text = "Номер"
+        BuildOrder.tableStudentsList.Columns(1).Text = "ФИО"
+        BuildOrder.tableStudentsList.Columns(1).Width = 120
+        BuildOrder.tableStudentsList.Columns(0).Width = 50
 
     End Sub
 
@@ -2641,25 +2617,25 @@ Public Class MainForm
 
         ActiveControl = Button2
 
-        ВедомостьПеднагрузка.pednagr__mainTable.Rows.Clear()
-        ВедомостьПеднагрузка.groupNumber.Clear()
+        WorkerReport.pednagr__mainTable.Rows.Clear()
+        WorkerReport.groupNumber.Clear()
 
-        ОчиститьПоляФормы.Очиститьформу(ВедомостьПеднагрузка)
+        _formCleaner.cleaner(WorkerReport)
 
         queryString = load_prepod()
         Список = mySqlConnect.loadMySqlToArray(queryString, 1)
 
         If Список(0, 0).ToString = "нет записей" Then
 
-            предупреждение.текст.Text = "Не удалось загрузить список преподавателей"
-            openForm(предупреждение)
+            Warning.content.Text = "Не удалось загрузить список преподавателей"
+            openForm(Warning)
 
             Return
 
         End If
 
-        ЗагрузитьСписокВКомбоБокс(ВедомостьПеднагрузка.pednagr__mainTable, Список, "ФИО")
-        ВедомостьПеднагрузка.ShowDialog()
+        ЗагрузитьСписокВКомбоБокс(WorkerReport.pednagr__mainTable, Список, "ФИО")
+        WorkerReport.ShowDialog()
 
     End Sub
 
@@ -4319,15 +4295,15 @@ Public Class MainForm
 
     End Sub
 
-    Private Sub ДиректорФИО_TextChanged(sender As Object, e As EventArgs) Handles ДиректорФИО.TextChanged
+    Private Sub ДиректорФИО_TextChanged(sender As Object, e As EventArgs) Handles directorName.TextChanged
         Dim queryString As String = ""
-        queryString = updateSettings("ДиректорФИО", ДиректорФИО.Text)
+        queryString = updateSettings("ДиректорФИО", directorName.Text)
         mySqlConnect.sendQuery(queryString, 1)
     End Sub
 
-    Private Sub ДиректорДолжность_TextChanged(sender As Object, e As EventArgs) Handles ДиректорДолжность.TextChanged
+    Private Sub ДиректорДолжность_TextChanged(sender As Object, e As EventArgs) Handles directorPosition.TextChanged
         Dim queryString As String = ""
-        queryString = updateSettings("ДиректорДолжность", ДиректорДолжность.Text)
+        queryString = updateSettings("ДиректорДолжность", directorPosition.Text)
         mySqlConnect.sendQuery(queryString, 1)
     End Sub
 
@@ -4355,9 +4331,9 @@ Public Class MainForm
         mySqlConnect.sendQuery(queryString, 1)
     End Sub
 
-    Private Sub КоличествоСтрокВТаблице_TextChanged(sender As Object, e As EventArgs) Handles КоличествоСтрокВТаблице.TextChanged
+    Private Sub maxNumberRows_TextChanged(sender As Object, e As EventArgs) Handles maxNumberRows.TextChanged
         Dim queryString As String = ""
-        queryString = updateSettings("КоличествоСтрокВТаблице", КоличествоСтрокВТаблице.Text)
+        queryString = updateSettings("КоличествоСтрокВТаблице", maxNumberRows.Text)
         mySqlConnect.sendQuery(queryString, 1)
     End Sub
 
@@ -4379,7 +4355,7 @@ Public Class MainForm
         mySqlConnect.sendQuery(queryString, 1)
 
         If group_dafaultSearchSetts.Text <> "" Then
-            group__serchSettings.checkedAnyValue(group_dafaultSearchSetts.Text)
+            Group__serchSettings.checkedAnyValue(group_dafaultSearchSetts.Text)
         End If
 
     End Sub
@@ -4433,7 +4409,7 @@ Public Class MainForm
 
         If ToolStrip_name_list.Text = "Преподаватели" Then
 
-            tbl_obrazovanie.Visible = False
+            tbl_education.Visible = False
             SplitContainerOtherList.Visible = True
             ToolStripButton1.Visible = True
             SplitContainerOtherList.Panel2Collapsed = True
@@ -4464,75 +4440,75 @@ Public Class MainForm
 
     Private Sub connect_table_doljnosti()
 
-        tbl_obrazovanie.Parent = Panel_main
-        tbl_obrazovanie.Visible = True
-        tbl_obrazovanie.Dock = DockStyle.Fill
-        tbl_obrazovanie.number_column = 1
+        tbl_education.Parent = Panel_main
+        tbl_education.Visible = True
+        tbl_education.Dock = DockStyle.Fill
+        tbl_education.number_column = 1
 
-        tbl_obrazovanie.queryString_load = sqlQueryString.load_list_doljnosti()
+        tbl_education.queryString_load = sqlQueryString.load_list_doljnosti()
 
-        tbl_obrazovanie.persent_width_column_0 = 100
-        tbl_obrazovanie.persent_width_column_1 = 0
+        tbl_education.persent_width_column_0 = 100
+        tbl_education.persent_width_column_1 = 0
 
-        tbl_obrazovanie.names.redactor_element_first = "Наименование"
-        tbl_obrazovanie.names.db_element_first = "name"
-        tbl_obrazovanie.name_table = "doljnost"
+        tbl_education.names.redactor_element_first = "Наименование"
+        tbl_education.names.db_element_first = "name"
+        tbl_education.name_table = "doljnost"
 
-        tbl_obrazovanie.kod_number = 1
+        tbl_education.kod_number = 1
 
-        tbl_obrazovanie.table_init()
+        tbl_education.table_init()
 
     End Sub
 
     Private Sub connect_table_obrazovanie()
 
-        tbl_obrazovanie.Parent = Panel_main
-        tbl_obrazovanie.Visible = True
-        tbl_obrazovanie.Dock = DockStyle.Fill
-        tbl_obrazovanie.number_column = 1
+        tbl_education.Parent = Panel_main
+        tbl_education.Visible = True
+        tbl_education.Dock = DockStyle.Fill
+        tbl_education.number_column = 1
 
-        tbl_obrazovanie.queryString_load =
+        tbl_education.queryString_load =
             "SELECT
                   name AS 'Вид документа',
                   kod
                 FROM doo_vid_dok
                 ORDER BY name"
 
-        tbl_obrazovanie.persent_width_column_0 = 100
-        tbl_obrazovanie.persent_width_column_1 = 0
+        tbl_education.persent_width_column_0 = 100
+        tbl_education.persent_width_column_1 = 0
 
-        tbl_obrazovanie.names.redactor_element_first = "Наименование"
-        tbl_obrazovanie.names.db_element_first = "name"
-        tbl_obrazovanie.name_table = "doo_vid_dok"
+        tbl_education.names.redactor_element_first = "Наименование"
+        tbl_education.names.db_element_first = "name"
+        tbl_education.name_table = "doo_vid_dok"
 
-        tbl_obrazovanie.kod_number = 1
+        tbl_education.kod_number = 1
 
-        tbl_obrazovanie.table_init()
+        tbl_education.table_init()
 
     End Sub
 
     Private Sub connect_table_organization()
 
-        tbl_obrazovanie.Parent = Panel_main
-        tbl_obrazovanie.Visible = True
-        tbl_obrazovanie.Dock = DockStyle.Fill
-        tbl_obrazovanie.number_column = 2
+        tbl_education.Parent = Panel_main
+        tbl_education.Visible = True
+        tbl_education.Dock = DockStyle.Fill
+        tbl_education.number_column = 2
 
-        tbl_obrazovanie.queryString_load = sqlQueryString.load_list_organization()
+        tbl_education.queryString_load = sqlQueryString.load_list_organization()
 
-        tbl_obrazovanie.persent_width_column_0 = 30
-        tbl_obrazovanie.persent_width_column_1 = 69
-        tbl_obrazovanie.persent_width_column_2 = 0
+        tbl_education.persent_width_column_0 = 30
+        tbl_education.persent_width_column_1 = 69
+        tbl_education.persent_width_column_2 = 0
 
-        tbl_obrazovanie.names.redactor_element_first = "Наименование"
-        tbl_obrazovanie.names.redactor_element_second = "Полное наименование"
-        tbl_obrazovanie.names.db_element_first = "name"
-        tbl_obrazovanie.names.db_element_second = "full_name"
-        tbl_obrazovanie.name_table = "napr_organization"
+        tbl_education.names.redactor_element_first = "Наименование"
+        tbl_education.names.redactor_element_second = "Полное наименование"
+        tbl_education.names.db_element_first = "name"
+        tbl_education.names.db_element_second = "full_name"
+        tbl_education.name_table = "napr_organization"
 
-        tbl_obrazovanie.kod_number = 2
+        tbl_education.kod_number = 2
 
-        tbl_obrazovanie.table_init()
+        tbl_education.table_init()
 
     End Sub
 
@@ -4574,9 +4550,9 @@ Public Class MainForm
 
             redactorOpen(sender, e)
 
-        ElseIf tbl_obrazovanie.Visible Then
+        ElseIf tbl_education.Visible Then
 
-            tbl_obrazovanie.redactorOpen()
+            tbl_education.redactorOpen()
             SplitContainerOtherList.Panel2Collapsed = True
 
         End If
@@ -4665,10 +4641,10 @@ Public Class MainForm
         worker.worker_struct.kod = Convert.ToInt64(DataGridView_list.Rows(curNumber).Cells(6).Value)
 
         If Not worker.removeWorker() Then
-            предупреждение.TextBox.Visible = False
-            предупреждение.текст.Visible = True
-            предупреждение.текст.Text = "Сотрудник не может быть удален"
-            предупреждение.ShowDialog()
+            Warning.TextBox.Visible = False
+            Warning.content.Visible = True
+            Warning.content.Text = "Сотрудник не может быть удален"
+            Warning.ShowDialog()
             Return
         End If
 
@@ -4682,7 +4658,7 @@ Public Class MainForm
             DataGridView_list.CurrentCell = DataGridView_list.Rows(curNumber - 1).Cells(0)
         End If
 
-        АСформироватьПриказ.reload_lists()
+        BuildOrder.reload_lists()
 
     End Sub
 
@@ -4719,9 +4695,9 @@ Public Class MainForm
 
         If Not result.Count = 2 Then
 
-            предупреждение.TextBox.Visible = False
-            предупреждение.текст.Text = message
-            предупреждение.ShowDialog()
+            Warning.TextBox.Visible = False
+            Warning.content.Text = message
+            Warning.ShowDialog()
             worker_name.Select(worker_name.Text.Length, 0)
 
         End If
@@ -4761,7 +4737,7 @@ Public Class MainForm
         End If
 
         loadTblWorker()
-        АСформироватьПриказ.reload_lists()
+        BuildOrder.reload_lists()
 
     End Sub
 
@@ -5010,7 +4986,7 @@ Public Class MainForm
 
     End Sub
 
-    Private Sub ToolStrip2_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs) Handles toolStripProgram.PreviewKeyDown
+    Private Sub program_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs) Handles toolStripProgram.PreviewKeyDown
 
         If e.KeyValue = Keys.Tab Then
 
@@ -5020,7 +4996,7 @@ Public Class MainForm
 
     End Sub
 
-    Private Sub ToolStrip2_KeyDown(sender As Object, e As KeyEventArgs) Handles toolStripProgram.KeyDown
+    Private Sub program_KeyDown(sender As Object, e As KeyEventArgs) Handles toolStripProgram.KeyDown
 
         If e.KeyValue = Keys.Tab Then
 
@@ -5043,7 +5019,7 @@ Public Class MainForm
 
     End Sub
 
-    Private Sub ToolStrip3_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs) Handles toolStripModulsInProg.PreviewKeyDown
+    Private Sub modulsInProg_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs) Handles toolStripModulsInProg.PreviewKeyDown
 
         If e.KeyValue = Keys.Tab Then
 
@@ -5062,7 +5038,7 @@ Public Class MainForm
 
     End Sub
 
-    Private Sub ToolStrip3_KeyDown(sender As Object, e As KeyEventArgs) Handles toolStripModulsInProg.KeyDown
+    Private Sub modulsInProg_KeyDown(sender As Object, e As KeyEventArgs) Handles toolStripModulsInProg.KeyDown
 
         If e.KeyValue = Keys.Tab Then
 
@@ -5129,9 +5105,9 @@ Public Class MainForm
 
         If e.KeyValue = Keys.Tab Then
 
-            If tbl_obrazovanie.Visible Then
+            If tbl_education.Visible Then
 
-                ActiveControl = tbl_obrazovanie
+                ActiveControl = tbl_education
 
             ElseIf DataGridView_list.Visible Then
 

@@ -2,14 +2,14 @@
 
     Sub ЗаполнитьРедакторСлушателя()
         Dim array
-        array = ФормаСправочникСлушатели.studentsInfo
+        array = studentsList.studentsInfo
         Try
             РедакторСлушателя.Снилс.Text = addMask.ДобавитьРубашку(array(1, 0)).ToString
         Catch ex As Exception
-            предупреждение.текст.Text = "Ошибка. Некорректный СНИЛС в базе. Необходима ручная проверка базы!"
+            Warning.content.Text = "Ошибка. Некорректный СНИЛС в базе. Необходима ручная проверка базы!"
             Exit Sub
             РедакторСлушателя.Close()
-            openForm(предупреждение)
+            openForm(Warning)
         End Try
 
         РедакторСлушателя.Фамилия.Text = array(2, 0).ToString

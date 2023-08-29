@@ -8,16 +8,16 @@
         Dim sqlQuery, ВидПриказа As String
 
 
-        sqlQuery = load_slushatel_and_org(MainForm.prikazKodGroup)
+        sqlQuery = load_slushatel_and_org(MainForm.orderIdGroup)
         ДанныеСлушателей = MainForm.mySqlConnect.loadMySqlToArray(sqlQuery, 1)
 
         If ДанныеСлушателей(0, 0) = "нет записей" Then
-            предупреждение.текст.Text = "Нет данных для отображения"
-            предупреждение.ShowDialog()
+            Warning.content.Text = "Нет данных для отображения"
+            Warning.ShowDialog()
             Exit Sub
         End If
 
-        resourcesPath = Вспомогательный.resourcesPath()
+        resourcesPath = _technical.resourcesPath()
         ПутьКШаблону = resourcesPath & "Шаблоны\Ведомость слушаетели и организации.docx"
 
         ПриложениеВорд = CreateObject("Word.Application")
@@ -25,9 +25,9 @@
 
         ДокументВорд = ПриложениеВорд.Documents.Open(ПутьКШаблону, ReadOnly:=True)
 
-        Вспомогательный.savePrikazBlank(ДокументВорд, MainForm.prikazKodGroup, "ВедомостьСлушателиИОрганизации", resourcesPath, "Ведомости")
+        _technical.savePrikazBlank(ДокументВорд, MainForm.orderIdGroup, "ВедомостьСлушателиИОрганизации", resourcesPath, "Ведомости")
 
-        Вспомогательный.ЗаменитьТекстВОбластиДокументаВорд(ДокументВорд.Range, "$НомерГруппы$", АСформироватьПриказ.НомерГруппы.Text, 2)
+        _technical.ЗаменитьТекстВОбластиДокументаВорд(ДокументВорд.Range, "$НомерГруппы$", BuildOrder.groupNumber.Text, 2)
 
         Таблица = ДокументВорд.Tables(1)
         ЗаполнитьТаблицу(Таблица, ДанныеСлушателей)

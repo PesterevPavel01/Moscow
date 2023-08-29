@@ -2,7 +2,7 @@
 Imports System.Threading
 Imports Google.Protobuf.Reflection.FieldDescriptorProto.Types
 
-Public Class НоваяГруппа
+Public Class newGroup
 
     Dim grup As New Group
     Public zakr As Boolean = False
@@ -154,7 +154,7 @@ Public Class НоваяГруппа
 
     End Sub
 
-    Sub addGroup(grup As Group.strGruppa)
+    Sub addGroup(grupStr As Group.strGruppa)
 
         Dim queryString As String
         Dim result
@@ -163,9 +163,9 @@ Public Class НоваяГруппа
         InsertIntoDataBase.argumentClear()
         InsertIntoDataBase.argument.nameTable = "`group`"
         InsertIntoDataBase.argument.firstName = "Year(ДатаНЗ)"
-        InsertIntoDataBase.argument.firstValue = grup.yearNZ
+        InsertIntoDataBase.argument.firstValue = grupStr.yearNZ
         InsertIntoDataBase.argument.secondName = "Номер"
-        InsertIntoDataBase.argument.secondValue = grup.number
+        InsertIntoDataBase.argument.secondValue = grupStr.number
 
         queryResult = InsertIntoDataBase.checkUniq_No2()
 
@@ -175,26 +175,26 @@ Public Class НоваяГруппа
 
             If Not InsertIntoDataBase.removeDuplicates Then
 
-                SC.Send(AddressOf enabledButton, grup.number)
+                SC.Send(AddressOf enabledButton, grupStr.number)
                 Return
 
             End If
 
-            queryString = group__loadKodGroup(grup.number, Convert.ToString(grup.yearNZ))
+            queryString = group__loadKodGroup(grupStr.number, Convert.ToString(grupStr.yearNZ))
             result = MainForm.mySqlConnect.loadMySqlToArray(queryString, 1)
 
-            grup.Kod = result(0, 0)
+            grupStr.Kod = result(0, 0)
 
-            queryString = "DELETE FROM group_list WHERE Kod = " & grup.Kod
+            queryString = group__deleteFromGroupList(grupStr.Kod)
 
             MainForm.mySqlConnect.sendQuery(queryString, 1)
 
-            queryString = updateGroup(grup)
+            queryString = updateGroup(grupStr)
 
             If queryString = "" Then
 
-                SC.Send(AddressOf enabledButton, grup.number)
-                Exit Sub
+                SC.Send(AddressOf enabledButton, grupStr.number)
+                Return
 
             End If
 
@@ -202,19 +202,19 @@ Public Class НоваяГруппа
 
         ElseIf queryResult = 1 Then
 
-            queryString = insertIntoGroup(grup)
+            queryString = insertIntoGroup(grupStr)
 
             If queryString = "" Then
 
-                SC.Send(AddressOf enabledButton, grup.number)
+                SC.Send(AddressOf enabledButton, grupStr.number)
                 Exit Sub
 
             End If
 
         Else
 
-            SC.Send(AddressOf enabledButton, grup.number)
-            SC.Send(AddressOf endTreadErr, grup.number)
+            SC.Send(AddressOf enabledButton, grupStr.number)
+            SC.Send(AddressOf endTreadErr, grupStr.number)
 
         End If
 
@@ -223,20 +223,20 @@ Public Class НоваяГруппа
         InsertIntoDataBase.argumentClear()
         InsertIntoDataBase.argument.nameTable = "`group`"
         InsertIntoDataBase.argument.firstName = "Номер"
-        InsertIntoDataBase.argument.firstValue = grup.number
+        InsertIntoDataBase.argument.firstValue = grupStr.number
         InsertIntoDataBase.argument.secondName = "датаСоздания"
         InsertIntoDataBase.argument.secondValue = MainForm.mySqlConnect.dateToFormatMySQL(Date.Now.ToShortDateString)
         InsertIntoDataBase.argument.thirdName = "Year(ДатаНЗ)"
-        InsertIntoDataBase.argument.thirdValue = grup.yearNZ
+        InsertIntoDataBase.argument.thirdValue = grupStr.yearNZ
 
 
         If InsertIntoDataBase.checkDuplicates() Then
 
-            SC.Send(AddressOf endTread, grup.number)
+            SC.Send(AddressOf endTread, grupStr.number)
 
         End If
 
-        SC.Send(AddressOf enabledButton, grup.number)
+        SC.Send(AddressOf enabledButton, grupStr.number)
 
     End Sub
 
@@ -255,10 +255,12 @@ Public Class НоваяГруппа
     End Sub
 
     Private Sub clear_Click(sender As Object, e As EventArgs) Handles clear.Click
+
         ActiveControl = BtnFocus
         message.Visible = False
-        grup.cleaкForm(Me)
+        cleanForm(Me)
         message.Visible = False
+
     End Sub
 
     Private Sub newGroup_Shown(sender As Object, e As EventArgs) Handles MyBase.Shown
@@ -910,9 +912,11 @@ Public Class НоваяГруппа
     End Sub
 
     Private Sub versProgs_Click(sender As Object, e As EventArgs) Handles versProgs.Click
-        ФормаСписок.textboxName = Me.ActiveControl.Name
-        ФормаСписок.FormName = ActiveForm.Name
-        ФормаСписок.ShowDialog()
+
+        List.textboxName = ActiveControl.Name
+        List.currentFormName = "NewGroup"
+        List.ShowDialog()
+
     End Sub
 
     Private Sub program_SelectedIndexChanged(sender As Object, e As EventArgs) Handles НоваяГруппаПрограмма.SelectedIndexChanged
@@ -1158,9 +1162,7 @@ Public Class НоваяГруппа
     Private Sub activateLavel(level As String)
 
         If swichNumbers.activeType = "null" Then
-
             Return
-
         End If
 
         activateField(True)

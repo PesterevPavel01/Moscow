@@ -1,13 +1,20 @@
 ﻿
-Imports WindowsApp2.Slushatel
+Imports WindowsApp2.Student
 
 Module QueryString
 
     Dim sqlString As String
-    Public Function group__loadKodGroup(numberGroup As String, year As String)
-        Dim sqlQuery As String
-        sqlQuery = "SELECT Код FROM `group` WHERE Номер='" & numberGroup & "' AND Year(ДатаНЗ) = " & year
+
+    Public Function group__deleteFromGroupList(kodGroup As String)
+        sqlString = "DELETE FROM group_list WHERE Kod = " & kodGroup
+        Return sqlString
     End Function
+
+    Public Function group__loadKodGroup(numberGroup As String, year As String)
+        sqlString = "SELECT Код FROM `group` WHERE Номер='" & numberGroup & "' AND Year(ДатаНЗ) = " & year
+        Return sqlString
+    End Function
+
     Public Function studentsList__loadStudentsList(columnSort As String, arg As String) As String
 
         Dim mameSortCol As String = ""
@@ -460,6 +467,14 @@ Module QueryString
 
     End Function
 
+    Public Function formList__loadList(name As String) As String
+
+        sqlString = "SELECT * FROM " + tableIdentificated.nameTable(name)
+
+        Return sqlString
+
+    End Function
+
     Public Function formList__loadProgramms() As String
 
         sqlString = "SELECT name, date, kod FROM programm ORDER BY name"
@@ -755,14 +770,14 @@ Module QueryString
         countRows = UBound(massTypes, 2)
 
         If numberLastColumn > dataGridTbl.Columns.Count Then
-            предупреждение.текст.Text = "Неверно указан номер последнего столбца таблицы"
-            предупреждение.ShowDialog()
+            Warning.content.Text = "Неверно указан номер последнего столбца таблицы"
+            Warning.ShowDialog()
             Exit Sub
         End If
 
         If Not UBound(massTypes, 2) = numberLastColumn - numberFirstColumn Then
-            предупреждение.текст.Text = "Неверно указаны имена столбцов"
-            предупреждение.ShowDialog()
+            Warning.content.Text = "Неверно указаны имена столбцов"
+            Warning.ShowDialog()
             Exit Sub
         End If
 
@@ -2327,7 +2342,7 @@ Module QueryString
         End If
 
         ChMass = MainForm.mySqlConnect.loadMySqlToArray(sqlString, 1)
-        ChMass = УбратьПустотыВМассиве.УбратьПустотыВМассиве(ChMass)
+        ChMass = arrayMethod.removeEmpty(ChMass)
 
         sqlSearch = ChMass
 
@@ -2359,13 +2374,13 @@ Module QueryString
 
         If includeUK Then
 
-            If MainForm.prikazCvalif = MainForm.PP Then
+            If MainForm.orderCvalif = MainForm.PP Then
                 sqlString &= " AND УровеньКвалификации = 'профессиональная переподготовка'"
-            ElseIf MainForm.prikazCvalif = MainForm.PK Then
+            ElseIf MainForm.orderCvalif = MainForm.PK Then
                 sqlString &= " AND УровеньКвалификации = 'повышение квалификации'"
-            ElseIf MainForm.prikazCvalif = MainForm.PO Then
+            ElseIf MainForm.orderCvalif = MainForm.PO Then
                 sqlString &= " AND УровеньКвалификации = 'профессиональное обучение'"
-            ElseIf MainForm.prikazCvalif = MainForm.PK_PP Then
+            ElseIf MainForm.orderCvalif = MainForm.PK_PP Then
                 sqlString &= " AND (УровеньКвалификации = 'профессиональная переподготовка' OR УровеньКвалификации = 'повышение квалификации')"
             End If
 
@@ -2375,18 +2390,18 @@ Module QueryString
 
             sqlString &= " AND " + nameSearchColumn + " LIKE "
             If valInApostrophes Then
-                sqlString += "'%" + searchValue + "%'"
+                sqlString += "'" + searchValue + "%'"
             Else
                 sqlString += searchValue
             End If
 
         End If
 
-        If ФормаСписок.sortColumn <> -1 Then
+        If List.sortColumn <> -1 Then
 
-            If (ФормаСписок.ListViewСписок.Columns(ФормаСписок.sortColumn).Text = "Группа" Or ФормаСписок.ListViewСписок.Columns(ФормаСписок.sortColumn).Text = "Номер") And MainForm.prikazCvalif = MainForm.PK Then
+            If (List.resultList.Columns(List.sortColumn).Text = "Группа" Or List.resultList.Columns(List.sortColumn).Text = "Номер") And MainForm.orderCvalif = MainForm.PK Then
                 sqlString &= " ORDER BY Номер"
-                If ФормаСписок.sort = ФормаСписок.poUb Then
+                If List.sort = List.poUb Then
                     sqlString &= " DESC"
                 End If
             Else
@@ -2425,7 +2440,7 @@ Module QueryString
                                 From uroven_kvalifik
                              WHERE uroven_kvalifik.name = '" + UrovenKvalifik + "'
                              ) AS tbl1
-                           INNER Join programm
+                           INNER JOIN programm
                              ON tbl1.kod = programm.uroven_kvalifik
                           GROUP BY programm.name
                          ORDER BY name"
@@ -2435,7 +2450,7 @@ Module QueryString
 
     End Function
 
-    Public Function ProgramPoUKvalifik(UrovenKvalifik As String)
+    Public Function ProgramPoUKvalifik(UrovenKvalifik As String, Optional text As String = "no")
 
         sqlString = ""
 
@@ -2453,8 +2468,11 @@ Module QueryString
                              WHERE uroven_kvalifik.name = '" + UrovenKvalifik + "'
                              ) AS tbl1
                            INNER Join programm
-                             On tbl1.kod = programm.uroven_kvalifik
-                        ORDER BY name"
+                             On tbl1.kod = programm.uroven_kvalifik"
+            If Not text = "no" Then
+                sqlString += " WHERE name LIKE '" + text + "%'"
+            End If
+            sqlString += " ORDER BY name"
         End If
         Return sqlString
 
@@ -2694,7 +2712,7 @@ Module QueryString
 
     End Function
 
-    Public Function updateSlushatel(slushatel As Slushatel.strSlushatel) As String
+    Public Function updateSlushatel(slushatel As Student.strSlushatel) As String
 
         Dim sqlString As String = "", ДатаВыдачиДул, СтрокаЗапроса As String
 
@@ -2733,7 +2751,7 @@ Module QueryString
     End Function
 
 
-    Public Function insertIntoSlushatel(slushatel As Slushatel.strSlushatel) As String
+    Public Function insertIntoSlushatel(slushatel As Student.strSlushatel) As String
 
         Dim part1, part2 As String
         Dim sqlString, ДатаВыдачиДул As String

@@ -1,4 +1,5 @@
-﻿Public Class АСформироватьПриказ
+﻿Public Class BuildOrder
+
     Public prikaz As New Prikaz
     Public flagLoad As Boolean = False
     Public orderType As String
@@ -7,145 +8,26 @@
     Public flagCheck As Boolean = False
     Public ЧекнутыеСлушатели
     Public komissiya As Boolean = False
-    Public praktika As Boolean = False
+    Public practical As Boolean = False
+    Public cvalification As Int16
 
-    Private Sub ПОЗачисленииНомерГруппы_Click(sender As Object, e As EventArgs) Handles НомерГруппы.Click
-
-        ФормаСписок.ListViewСписок.Columns.RemoveAt(0)
-        ФормаСписок.ListViewСписок.Columns.Add("Программа", 500)
-        ФормаСписок.ListViewСписок.Columns(0).Width = 200
-        ФормаСписок.ListViewСписок.Columns.Add("Год", 100)
-        ФормаСписок.ListViewСписок.Columns.Add("Код", 100)
-        ФормаСписок.textboxName = Me.ActiveControl.Name
-        ФормаСписок.FormName = Me.Name
-
-        If MainForm.prikazCvalif = MainForm.PK_PP_PO Then
-
-            ФормаСписок.headerVisible = True
-
-        End If
-
-        ФормаСписок.ShowDialog()
-        ФормаСписок.ListViewСписок.Columns.RemoveAt(1)
-        ФормаСписок.ListViewСписок.Columns.RemoveAt(2)
-        ФормаСписок.ListViewСписок.Columns(0).Width = 100
-        ФормаСписок.ListViewСписок.Columns(1).Width = 620
-        ФормаСписок.ListViewСписок.Columns(1).Text = "Наименование"
-
-    End Sub
-
-    Private Sub Директор_Click(sender As Object, e As EventArgs)
-
-        ФормаСписок.textboxName = Me.ActiveControl.Name
-
-    End Sub
-
-    Private Sub Ответственный_Click(sender As Object, e As EventArgs) Handles Ответственный.Click
-
-        ФормаСписок.textboxName = Me.ActiveControl.Name
-
-    End Sub
-
-
-    Private Sub ОтветственныйДолжность_Click(sender As Object, e As EventArgs)
-
-        ФормаСписок.textboxName = Me.ActiveControl.Name
-
-
-    End Sub
-
-    Private Sub ПроектВносит_Click(sender As Object, e As EventArgs)
-
-        ФормаСписок.textboxName = Me.ActiveControl.Name
-
-    End Sub
-
-    Private Sub ПроектВноситДолжность_Click(sender As Object, e As EventArgs)
-
-        ФормаСписок.textboxName = Me.ActiveControl.Name
-
-    End Sub
-
-    Private Sub Согласовано1_Click(sender As Object, e As EventArgs)
-
-        ФормаСписок.textboxName = Me.ActiveControl.Name
-    End Sub
-
-    Private Sub Согласовано1Должность_Click(sender As Object, e As EventArgs)
-
-        ФормаСписок.textboxName = Me.ActiveControl.Name
-
-    End Sub
-
-    Private Sub Согласовано2_Click(sender As Object, e As EventArgs)
-
-        ФормаСписок.textboxName = Me.ActiveControl.Name
-
-    End Sub
-
-    Private Sub Согласовано2Должность_Click(sender As Object, e As EventArgs)
-
-        ФормаСписок.textboxName = Me.ActiveControl.Name
-
-    End Sub
-
-    Private Sub Исполнитель_Click(sender As Object, e As EventArgs)
-
-        ФормаСписок.textboxName = Me.ActiveControl.Name
-
-    End Sub
-
-    Private Sub ИсполнительДолжность_Click(sender As Object, e As EventArgs)
-
-        ФормаСписок.textboxName = Me.ActiveControl.Name
-
-    End Sub
-    Private Sub Утверждает_Click(sender As Object, e As EventArgs)
-
-        ФормаСписок.textboxName = Me.ActiveControl.Name
-
-    End Sub
-
-    Private Sub УтверждаетДолжность_Click(sender As Object, e As EventArgs)
-
-        ФормаСписок.textboxName = Me.ActiveControl.Name
-
-    End Sub
-
-
-    Private Sub ДолжностьРуководительСтажировки_Click(sender As Object, e As EventArgs)
-
-        ФормаСписок.textboxName = Me.ActiveControl.Name
-
-    End Sub
-    Private Sub РуководительСтажировки_Click(sender As Object, e As EventArgs)
-
-        ФормаСписок.textboxName = Me.ActiveControl.Name
-
-    End Sub
-    Private Sub Комиссия2_Click(sender As Object, e As EventArgs)
-
-        ФормаСписок.textboxName = Me.ActiveControl.Name
-
-    End Sub
-
-    Private Sub Сформировать_Click(sender As Object, e As EventArgs) Handles КнопкаСформировать.Click
+    Private Sub build_Click(sender As Object, e As EventArgs) Handles КнопкаСформировать.Click
 
         Dim checkContent As Boolean
         Dim selectedStudents
         Dim selectedModuls
         ActiveControl = Button1
 
-        checkContent = checkSuff()
+        checkContent = checkField(Me)
 
         If Not checkContent Then
             Try
-                предупреждение.текст.Text = "Необходимо заполнить все обязательные поля!"
-                openForm(предупреждение)
+                Warning.content.Text = "Необходимо заполнить все обязательные поля!"
+                openForm(Warning)
             Catch ex As Exception
-                предупреждение.Close()
-                предупреждение.текст.Text = "Необходимо заполнить все обязательные поля!"
-                openForm(предупреждение)
+                Warning.Close()
+                Warning.content.Text = "Необходимо заполнить все обязательные поля!"
+                openForm(Warning)
             End Try
             Exit Sub
         End If
@@ -158,29 +40,29 @@
 
             Case "ВедомостьПромежуточнойАттестации"
 
-                selectedModuls = ЗаписатьЧекнутыеСтроки(ListViewСписокСлушателей, 1, 2)
+                selectedModuls = ЗаписатьЧекнутыеСтроки(tableStudentsList, 1, 2)
                 ВедомостьПромежуточнойАттестации.ВедомостьПромежуточнойАттестации(selectedModuls, orderType)
 
             Case "ПП_Ведомость"
 
-                selectedModuls = ЗаписатьЧекнутыеСтроки(ListViewСписокСлушателей, 1, 2)
+                selectedModuls = ЗаписатьЧекнутыеСтроки(tableStudentsList, 1, 2)
                 ВедомостьПромежуточнойАттестации.ВедомостьПромежуточнойАттестации(selectedModuls, orderType)
 
             Case "СправкаОбОкончании"
 
-                selectedStudents = ЗаписатьЧекнутыеСтроки(ListViewСписокСлушателей, 0)
+                selectedStudents = ЗаписатьЧекнутыеСтроки(tableStudentsList, 0)
 
                 СправкаОбОкончании.СправкаОбОкончании(selectedStudents)
 
             Case "СправкаОбОбучении"
 
-                selectedStudents = ЗаписатьЧекнутыеСтроки(ListViewСписокСлушателей, 0)
+                selectedStudents = ЗаписатьЧекнутыеСтроки(tableStudentsList, 0)
 
                 spravka.spravka(selectedStudents)
 
             Case "ДоверенностьПолученияБланковСлушателей"
 
-                selectedStudents = ЗаписатьЧекнутыеСтроки(ListViewСписокСлушателей, 0)
+                selectedStudents = ЗаписатьЧекнутыеСтроки(tableStudentsList, 0)
 
                 ДоверенностьПолученияБланковНаСлушателя(selectedStudents)
 
@@ -234,7 +116,7 @@
 
             Case "ПК_Окончание_уд"
 
-                selectedStudents = ЗаписатьЧекнутыеСтроки(ListViewСписокСлушателей, 0)
+                selectedStudents = ЗаписатьЧекнутыеСтроки(tableStudentsList, 0)
 
                 ПК_Окончание.ПК_Окончание_уд(selectedStudents, orderType)
 
@@ -248,12 +130,12 @@
 
             Case "ПК_Зачисление_Доп"
 
-                selectedStudents = ЗаписатьЧекнутыеСтроки(ListViewСписокСлушателей, 0)
+                selectedStudents = ЗаписатьЧекнутыеСтроки(tableStudentsList, 0)
                 Приказ_Зачисление.Приказ_Зачисление(orderType, selectedStudents)
 
             Case "ПК_Зачисление"
 
-                selectedStudents = ЗаписатьЧекнутыеСтроки(ListViewСписокСлушателей, 0)
+                selectedStudents = ЗаписатьЧекнутыеСтроки(tableStudentsList, 0)
                 Приказ_Зачисление.Приказ_Зачисление(orderType, selectedStudents)
 
             Case "ПП_Зачисление"
@@ -268,14 +150,9 @@
     End Sub
 
     Private Sub Очистить_Click(sender As Object, e As EventArgs) Handles КнопкаОчистить.Click
-        Dim Форма
 
-        ActiveControl = Button1
-        Форма = New Form
-        Форма = ActiveForm
-
-        Call ОчиститьПоляФормы.Очиститьформу(Форма)
-        ListViewСписокСлушателей.Items.Clear()
+        _formCleaner.cleaner(Me)
+        tableStudentsList.Items.Clear()
 
     End Sub
 
@@ -283,7 +160,7 @@
 
         flagCheck = True
 
-        ListViewСписокСлушателей.Items.Clear()
+        tableStudentsList.Items.Clear()
 
         ActiveControl = Button1
 
@@ -291,8 +168,8 @@
             Exit Sub
         End If
 
-        If MainForm.ДиректорДолжность.Text <> "" Then
-            УтверждаетДолжность.Text = MainForm.ДиректорДолжность.Text
+        If MainForm.directorPosition.Text <> "" Then
+            УтверждаетДолжность.Text = MainForm.directorPosition.Text
         End If
 
         If MainForm.Согласовано1ПУ.Text <> "" Then
@@ -321,7 +198,7 @@
             Ответственный.Items.Add("")
             Ответственный.Items.AddRange(prikaz.formPrikazList.komissiya)
 
-        ElseIf praktika Then
+        ElseIf practical Then
 
             РуководительСтажировки.Items.Clear()
             РуководительСтажировки.Items.Add("")
@@ -361,56 +238,8 @@
 
         If Not MainForm.directorOff Then
 
-            If MainForm.ДиректорФИО.Text <> "" Then
-                Утверждает.Text = MainForm.ДиректорФИО.Text
-            End If
-
-        End If
-
-    End Sub
-
-    Private Sub ПОЗачисленииНомерГруппы_TextChanged(sender As Object, e As EventArgs) Handles НомерГруппы.TextChanged
-
-        Me.ListViewСписокСлушателей.Items.Clear()
-
-        If orderType = "ПК_Отчисление" Then
-
-            If Not НомерГруппы.Text = "" Then
-                Label4.Visible = True
-                Ответственный.Visible = True
-            Else
-                Label4.Visible = False
-                Ответственный.Visible = False
-            End If
-
-        End If
-
-        If orderType = "ПК_Окончание_уд" Or orderType = "СправкаОбОкончании" Or orderType = "ДоверенностьПолученияБланковСлушателей" Or orderType = "СправкаОбОбучении" Or orderType = "СправкаОбОкончании" Then
-
-            If Not НомерГруппы.Text = "" Then
-                loadStudentsList()
-            End If
-
-            If orderType = "СправкаОбОбучении" Then
-                ListViewСписокСлушателей.Items.Insert(0, New ListViewItem("Выделить всех"))
-            End If
-
-        End If
-
-        If orderType = "ВедомостьПромежуточнойАттестации" Or orderType = "ПП_Ведомость" Then
-
-            If Not НомерГруппы.Text = "" Then
-                loadModuls()
-            End If
-
-        End If
-
-        If orderType = "ПК_Зачисление" Or orderType = "ПК_Зачисление_Доп" Then
-
-            If Not НомерГруппы.Text = "" Then
-                loadStudentsList()
-                ListViewСписокСлушателей.Items.Insert(0, New ListViewItem("Выделить всех"))
-                chekAllItem(ListViewСписокСлушателей)
+            If MainForm.directorName.Text <> "" Then
+                Утверждает.Text = MainForm.directorName.Text
             End If
 
         End If
@@ -422,14 +251,14 @@
         Dim queryString As String
         Dim progs, teachers, result
 
-        queryString = loadListModul(MainForm.prikazKodGroup)
+        queryString = loadListModul(MainForm.orderIdGroup)
         progs = MainForm.mySqlConnect.loadMySqlToArray(queryString, 1)
 
         If progs(0, 0) = "нет записей" Then
             Exit Sub
         End If
 
-        queryString = loadListSotrudnicModul(MainForm.prikazKodGroup)
+        queryString = loadListSotrudnicModul(MainForm.orderIdGroup)
         teachers = MainForm.mySqlConnect.loadMySqlToArray(queryString, 1)
 
         If teachers(0, 0) = "нет записей" Then
@@ -445,14 +274,14 @@
             result(1, i) = teachers(0, i)
         Next
 
-        If ListViewСписокСлушателей.Columns.Count < 3 Then
-            ListViewСписокСлушателей.Columns.Add("Преподаватель", 200)
+        If tableStudentsList.Columns.Count < 3 Then
+            tableStudentsList.Columns.Add("Преподаватель", 200)
         End If
 
-        UpdateListView.updateListView(False, True, ListViewСписокСлушателей, result, 0, 1)
+        UpdateListView.updateListView(False, True, tableStudentsList, result, 0, 1)
 
         Try
-            ListViewСписокСлушателей.Items(0).Selected = True
+            tableStudentsList.Items(0).Selected = True
         Catch ex1 As Exception
             Exit Sub
         End Try
@@ -464,7 +293,7 @@
         Dim queryString As String
         Dim students
 
-        queryString = formOrder__loadStudentsList(MainForm.prikazKodGroup)
+        queryString = formOrder__loadStudentsList(MainForm.orderIdGroup)
 
         students = MainForm.mySqlConnect.loadMySqlToArray(queryString, 1)
 
@@ -472,10 +301,10 @@
             Exit Sub
         End If
 
-        UpdateListView.updateListView(True, False, ListViewСписокСлушателей, students, 0)
+        UpdateListView.updateListView(True, False, tableStudentsList, students, 0)
 
         Try
-            ListViewСписокСлушателей.Items(0).Selected = True
+            tableStudentsList.Items(0).Selected = True
         Catch ex1 As Exception
             Exit Sub
         End Try
@@ -484,62 +313,45 @@
 
     Private Sub Комиссия3_Click(sender As Object, e As EventArgs)
 
-        ФормаСписок.textboxName = Me.ActiveControl.Name
+        List.textboxName = ActiveControl.Name
     End Sub
 
     Private Sub Комиссия2Должность_Click(sender As Object, e As EventArgs)
 
-        ФормаСписок.textboxName = Me.ActiveControl.Name
+        List.textboxName = ActiveControl.Name
 
     End Sub
 
     Private Sub СекретарьКомиссии_Click(sender As Object, e As EventArgs)
 
-        ФормаСписок.textboxName = Me.ActiveControl.Name
+        List.textboxName = ActiveControl.Name
 
     End Sub
 
     Private Sub Комиссия3Должность_Click(sender As Object, e As EventArgs)
-        ФормаСписок.textboxName = Me.ActiveControl.Name
-        'ФормаСписок.FormName = Me.Name
-        'ФормаСписок.ShowDialog()
+
+        List.textboxName = ActiveControl.Name
+
     End Sub
 
     Private Sub СекретарьКомиссииДолжность_Click(sender As Object, e As EventArgs)
 
-        ФормаСписок.textboxName = Me.ActiveControl.Name
+        List.textboxName = ActiveControl.Name
 
     End Sub
 
     Private Sub ЗамПредседателя_Click(sender As Object, e As EventArgs)
 
-        ФормаСписок.textboxName = Me.ActiveControl.Name
+        List.textboxName = ActiveControl.Name
 
     End Sub
     Private Sub ЗамПредседателяДолжность_Click(sender As Object, e As EventArgs)
 
-        ФормаСписок.textboxName = Me.ActiveControl.Name
+        List.textboxName = ActiveControl.Name
 
     End Sub
 
-    Function checkSuff() As Boolean
-
-        Dim nameControl As String
-
-        checkSuff = True
-
-        For Each i In Me.Controls
-            nameControl = i.Name
-            If Strings.Left(i.Name, 8) <> "ListView" And Strings.Left(i.Name, 6) <> "Кнопка" And Strings.Left(i.Name, 8) <> "Включить" And i.Name <> "Сохранить" And i.Name <> "Очистить" And Strings.Left(i.Name, 5) <> "Label" And Strings.Left(i.Name, 5) <> "label" And Strings.Left(i.Name, 5) <> "Check" And Strings.Left(i.Name, 8) <> "GroupBox" Then
-
-                If i.Text = "" And i.Visible = True And i.Enabled = True Then
-                    checkSuff = False
-                End If
-            End If
-        Next
-
-    End Function
-    Private Sub АСформироватьПриказ_KeyDown(sender As Object, e As KeyEventArgs) Handles MyBase.KeyDown
+    Private Sub BuildOrder_KeyDown(sender As Object, e As KeyEventArgs) Handles MyBase.KeyDown
 
         Call closeEsc(Me, e.KeyCode)
 
@@ -580,185 +392,6 @@
     Private Sub CheckBoxММС_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBoxММС.CheckedChanged
         ПрикрепитьЧекбокс(CheckBoxММС, CheckBoxСанитар)
     End Sub
-
-    Private Sub Утверждает_KeyDown(sender As Object, e As KeyEventArgs)
-        If e.KeyCode = 13 Then
-
-            Call Утверждает_Click(sender, e)
-
-        End If
-    End Sub
-
-
-    Private Sub УтверждаетДолжность_KeyDown(sender As Object, e As KeyEventArgs)
-        If e.KeyCode = 13 Then
-
-            УтверждаетДолжность_Click(sender, e)
-
-        End If
-    End Sub
-
-    Private Sub Ответственный_KeyDown(sender As Object, e As KeyEventArgs)
-        If e.KeyCode = 13 Then
-
-            Ответственный_Click(sender, e)
-
-        End If
-    End Sub
-
-    Private Sub ОтветственныйДолжность_KeyDown(sender As Object, e As KeyEventArgs)
-        If e.KeyCode = 13 Then
-
-            ОтветственныйДолжность_Click(sender, e)
-
-        End If
-    End Sub
-
-    Private Sub ПроектВносит_KeyDown(sender As Object, e As KeyEventArgs)
-        If e.KeyCode = 13 Then
-
-            ПроектВносит_Click(sender, e)
-
-        End If
-    End Sub
-
-    Private Sub ПроектВноситДолжность_KeyDown(sender As Object, e As KeyEventArgs)
-        If e.KeyCode = 13 Then
-
-            ПроектВноситДолжность_Click(sender, e)
-
-        End If
-    End Sub
-
-    Private Sub Исполнитель_KeyDown(sender As Object, e As KeyEventArgs)
-        If e.KeyCode = 13 Then
-
-            Исполнитель_Click(sender, e)
-
-        End If
-    End Sub
-
-    Private Sub ИсполнительДолжность_KeyDown(sender As Object, e As KeyEventArgs)
-        If e.KeyCode = 13 Then
-
-            ИсполнительДолжность_Click(sender, e)
-
-        End If
-    End Sub
-
-    Private Sub Согласовано1_KeyDown(sender As Object, e As KeyEventArgs)
-        If e.KeyCode = 13 Then
-
-            Согласовано1_Click(sender, e)
-
-        End If
-    End Sub
-
-    Private Sub Согласовано1Должность_KeyDown(sender As Object, e As KeyEventArgs)
-        If e.KeyCode = 13 Then
-
-            Согласовано1Должность_Click(sender, e)
-
-        End If
-    End Sub
-    Private Sub Согласовано2_KeyDown(sender As Object, e As KeyEventArgs)
-        If e.KeyCode = 13 Then
-
-            Согласовано2_Click(sender, e)
-
-        End If
-    End Sub
-
-    Private Sub Согласовано2Должность_KeyDown(sender As Object, e As KeyEventArgs)
-        If e.KeyCode = 13 Then
-
-            Согласовано2Должность_Click(sender, e)
-
-        End If
-    End Sub
-
-    Private Sub РуководительСтажировки_KeyDown(sender As Object, e As KeyEventArgs)
-        If e.KeyCode = 13 Then
-
-            РуководительСтажировки_Click(sender, e)
-
-        End If
-    End Sub
-    Private Sub ДолжностьРуководительСтажировки_KeyDown(sender As Object, e As KeyEventArgs)
-        If e.KeyCode = 13 Then
-
-            ДолжностьРуководительСтажировки_Click(sender, e)
-
-        End If
-    End Sub
-
-    Private Sub Комиссия2_KeyDown(sender As Object, e As KeyEventArgs)
-        If e.KeyCode = 13 Then
-
-            Комиссия2_Click(sender, e)
-
-        End If
-    End Sub
-
-    Private Sub Комиссия2Должность_KeyDown(sender As Object, e As KeyEventArgs)
-        If e.KeyCode = 13 Then
-
-            Комиссия2Должность_Click(sender, e)
-
-        End If
-    End Sub
-
-    Private Sub Комиссия3Должность_KeyDown(sender As Object, e As KeyEventArgs)
-        If e.KeyCode = 13 Then
-
-            Комиссия3Должность_Click(sender, e)
-
-        End If
-    End Sub
-    Private Sub Комиссия3_KeyDown(sender As Object, e As KeyEventArgs)
-        If e.KeyCode = 13 Then
-
-            Комиссия3_Click(sender, e)
-
-        End If
-    End Sub
-    Private Sub СекретарьКомиссии_KeyDown(sender As Object, e As KeyEventArgs)
-        If e.KeyCode = 13 Then
-
-            СекретарьКомиссии_Click(sender, e)
-
-        End If
-    End Sub
-    Private Sub СекретарьКомиссииДолжность_KeyDown(sender As Object, e As KeyEventArgs)
-        If e.KeyCode = 13 Then
-
-            СекретарьКомиссииДолжность_Click(sender, e)
-
-        End If
-    End Sub
-    Private Sub ЗамПредседателя_KeyDown(sender As Object, e As KeyEventArgs)
-        If e.KeyCode = 13 Then
-
-            ЗамПредседателя_Click(sender, e)
-
-        End If
-    End Sub
-    Private Sub ЗамПредседателяДолжность_KeyDown(sender As Object, e As KeyEventArgs)
-        If e.KeyCode = 13 Then
-
-            ЗамПредседателяДолжность_Click(sender, e)
-
-        End If
-    End Sub
-
-    Private Sub ПОЗачисленииНомерГруппы_KeyDown(sender As Object, e As KeyEventArgs) Handles НомерГруппы.KeyDown
-        If e.KeyCode = 13 Then
-
-            ПОЗачисленииНомерГруппы_Click(sender, e)
-
-        End If
-    End Sub
-
 
     Private Sub CheckBox1_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBox1.CheckedChanged
 
@@ -806,7 +439,7 @@
 
     End Sub
 
-    Private Sub АСформироватьПриказ_Closed(sender As Object, e As EventArgs) Handles Me.Closed
+    Private Sub BuildOrder_Closed(sender As Object, e As EventArgs) Handles Me.Closed
 
         Утверждает.Visible = True
         УтверждаетДолжность.Visible = True
@@ -893,18 +526,18 @@
         End If
     End Sub
 
-    Private Sub АСформироватьПриказ_FormClosed(sender As Object, e As FormClosedEventArgs) Handles MyBase.FormClosed
-        MainForm.prikazCvalif = 0
+    Private Sub BuildOrder_FormClosed(sender As Object, e As FormClosedEventArgs) Handles MyBase.FormClosed
+        MainForm.orderCvalif = 0
     End Sub
 
     Public Sub reload_lists()
 
         flagLoad = False
-        АСформироватьПриказ_Load(New Object, New EventArgs)
+        BuildOrder_Load(New Object, New EventArgs)
 
     End Sub
 
-    Private Sub АСформироватьПриказ_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    Private Sub BuildOrder_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
         If Not flagLoad Then
 
@@ -988,7 +621,7 @@
     Public Sub load_form()
         Dim sender As Object
         Dim e As EventArgs
-        АСформироватьПриказ_Load(sender, e)
+        BuildOrder_Load(sender, e)
     End Sub
 
     Private Sub Ответственный_VisibleChanged(sender As Object, e As EventArgs) Handles Ответственный.VisibleChanged
@@ -1201,14 +834,14 @@
         End If
     End Sub
 
-    Private Sub ListViewСписокСлушателей_ItemChecked(sender As Object, e As ItemCheckedEventArgs) Handles ListViewСписокСлушателей.ItemChecked
+    Private Sub ListViewСписокСлушателей_ItemChecked(sender As Object, e As ItemCheckedEventArgs) Handles tableStudentsList.ItemChecked
 
         If orderType = "СправкаОбОбучении" Or orderType = "ПК_Зачисление" Or orderType = "ПК_Зачисление_Доп" Then
             If Not flagCheck Then
                 flagCheck = True
                 Return
             End If
-            checkAllRow(ListViewСписокСлушателей, "Выделить всех", e.Item)
+            checkAllRow(tableStudentsList, "Выделить всех", e.Item)
         End If
 
     End Sub
@@ -1239,8 +872,8 @@
                 Dim message As String = ex.Message
             End Try
 
-            предупреждение.текст.Text = "Необходимо указать должность для этого сотрудника в БД!"
-            openForm(предупреждение)
+            Warning.content.Text = "Необходимо указать должность для этого сотрудника в БД!"
+            openForm(Warning)
             Return
 
         End If
@@ -1251,12 +884,89 @@
         If quaryResult(0, 0).ToString = "нет записей" Or quaryResult(0, 0).ToString = "" Then
 
             FIO.SelectedItem = ""
-            предупреждение.текст.Text = "Ошибка. Строка запроса " + queryString
-            openForm(предупреждение)
+            Warning.content.Text = "Ошибка. Строка запроса " + queryString
+            openForm(Warning)
             Return
         Else
             dolj.Text = quaryResult(0, 0)
         End If
     End Sub
 
+    Private Sub groupNumber_TextChanged(sender As Object, e As EventArgs) Handles groupNumber.TextChanged
+
+        tableStudentsList.Items.Clear()
+
+        If orderType = "ПК_Отчисление" Then
+
+            If Not groupNumber.Text = "" Then
+                Label4.Visible = True
+                Ответственный.Visible = True
+            Else
+                Label4.Visible = False
+                Ответственный.Visible = False
+            End If
+
+        End If
+
+        If orderType = "ПК_Окончание_уд" Or orderType = "СправкаОбОкончании" Or orderType = "ДоверенностьПолученияБланковСлушателей" Or orderType = "СправкаОбОбучении" Or orderType = "СправкаОбОкончании" Then
+
+            If Not groupNumber.Text = "" Then
+                loadStudentsList()
+            End If
+
+            If orderType = "СправкаОбОбучении" Then
+                tableStudentsList.Items.Insert(0, New ListViewItem("Выделить всех"))
+            End If
+
+        End If
+
+        If orderType = "ВедомостьПромежуточнойАттестации" Or orderType = "ПП_Ведомость" Then
+
+            If Not groupNumber.Text = "" Then
+                loadModuls()
+            End If
+
+        End If
+
+        If orderType = "ПК_Зачисление" Or orderType = "ПК_Зачисление_Доп" Then
+
+            If Not groupNumber.Text = "" Then
+                loadStudentsList()
+                tableStudentsList.Items.Insert(0, New ListViewItem("Выделить всех"))
+                chekAllItem(tableStudentsList)
+            End If
+
+        End If
+
+    End Sub
+
+    Private Sub groupNumber_KeyDown(sender As Object, e As KeyEventArgs) Handles groupNumber.KeyDown
+
+        If e.KeyCode = Keys.Enter Then
+
+            groupNumber_Click(sender, e)
+
+        End If
+
+    End Sub
+
+    Private Sub groupNumber_Click(sender As Object, e As EventArgs) Handles groupNumber.Click
+
+        List.resultList.Columns.RemoveAt(0)
+        List.resultList.Columns.Add("Программа", 500)
+        List.resultList.Columns(0).Width = 200
+        List.resultList.Columns.Add("Год", 100)
+        List.resultList.Columns.Add("Код", 100)
+        List.textboxName = "groupNumber"
+        List.currentFormName = "BuildOrder"
+
+        List.ShowDialog()
+
+        List.resultList.Columns.RemoveAt(1)
+        List.resultList.Columns.RemoveAt(2)
+        List.resultList.Columns(0).Width = 100
+        List.resultList.Columns(1).Width = 620
+        List.resultList.Columns(1).Text = "Наименование"
+
+    End Sub
 End Class

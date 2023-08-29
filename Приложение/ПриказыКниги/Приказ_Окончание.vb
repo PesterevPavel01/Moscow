@@ -19,17 +19,17 @@ Module Приказ_Окончание
 
         If ВидПриказа = "ПО_Окончание" Then
 
-            queryString = load_poOk_group(MainForm.prikazKodGroup)
+            queryString = load_poOk_group(MainForm.orderIdGroup)
             params(0) = "Свидетельство"
 
         ElseIf ВидПриказа = "ПК_Окончание" Then
 
-            queryString = load_pkOk_group(MainForm.prikazKodGroup)
+            queryString = load_pkOk_group(MainForm.orderIdGroup)
             params(0) = "Удостоверение"
 
         ElseIf ВидПриказа = "ПП_Окончание" Then
 
-            queryString = load_ppOk_group(MainForm.prikazKodGroup)
+            queryString = load_ppOk_group(MainForm.orderIdGroup)
             params(0) = "Диплом"
 
         End If
@@ -37,27 +37,27 @@ Module Приказ_Окончание
         studentList = MainForm.mySqlConnect.loadMySqlToArray(queryString, 1)
 
         If studentList(0, 0) = "нет записей" Then
-            предупреждение.текст.Text = "Нет данных для отображения"
-            предупреждение.ShowDialog()
+            Warning.content.Text = "Нет данных для отображения"
+            Warning.ShowDialog()
             Exit Sub
         End If
 
         If ВидПриказа = "ПК_Окончание" Then
             If Not studentList(6, 0) = "Удостоверение" Then
-                предупреждение.текст.Text = "Основной документ группы " & studentList(6, 0)
-                предупреждение.ShowDialog()
+                Warning.content.Text = "Основной документ группы " & studentList(6, 0)
+                Warning.ShowDialog()
                 Exit Sub
             End If
         ElseIf ВидПриказа = "ПО_Окончание" Then
             If Not studentList(6, 0) = "Свидетельство" Then
-                предупреждение.текст.Text = "Основной документ группы " & studentList(6, 0)
-                предупреждение.ShowDialog()
+                Warning.content.Text = "Основной документ группы " & studentList(6, 0)
+                Warning.ShowDialog()
                 Exit Sub
             End If
         ElseIf ВидПриказа = "ПП_Окончание" Then
             If Not studentList(6, 0) = "Диплом" Then
-                предупреждение.текст.Text = "Основной документ группы " & studentList(6, 0)
-                предупреждение.ShowDialog()
+                Warning.content.Text = "Основной документ группы " & studentList(6, 0)
+                Warning.ShowDialog()
                 Exit Sub
             End If
         End If
@@ -65,27 +65,27 @@ Module Приказ_Окончание
         Try
             number = studentList(4, 0) + 1
         Catch ex As Exception
-            предупреждение.текст.Text = "Номер удостоверения/свидетельства/диплома группы не задан или не является числом"
-            предупреждение.ShowDialog()
+            Warning.content.Text = "Номер удостоверения/свидетельства/диплома группы не задан или не является числом"
+            Warning.ShowDialog()
             Exit Sub
         End Try
 
         Try
             number = studentList(5, 0) + 1
         Catch ex As Exception
-            предупреждение.текст.Text = "Регистрационный номер удостоверения/свидетельства/диплома группы не задан или не является числом"
-            предупреждение.ShowDialog()
+            Warning.content.Text = "Регистрационный номер удостоверения/свидетельства/диплома группы не задан или не является числом"
+            Warning.ShowDialog()
             Exit Sub
         End Try
 
         params(1) = studentList
-        params(2) = MainForm.prikazKodGroup
+        params(2) = MainForm.orderIdGroup
 
         ВторойПоток = New Thread(AddressOf ПрисвоитьНомера)
         ВторойПоток.IsBackground = True
         ВторойПоток.Start(params)
 
-        resuorcesPath = Запуск.ПутьКФайлуRes
+        resuorcesPath = startApp.ПутьКФайлуRes
         ПутьКШаблону = resuorcesPath & "Шаблоны\ПК_Окончание\" & ВидПриказа & ".docx"
 
         wordApp = CreateObject("Word.Application")
@@ -93,35 +93,35 @@ Module Приказ_Окончание
 
         wordDoc = wordApp.Documents.Open(ПутьКШаблону, ReadOnly:=True)
 
-        Вспомогательный.savePrikazBlank(wordDoc, MainForm.prikazKodGroup, ВидПриказа, resuorcesPath, "Приказы")
+        _technical.savePrikazBlank(wordDoc, MainForm.orderIdGroup, ВидПриказа, resuorcesPath, "Приказы")
 
         МСВорд.ДобавитьСписокПоМеткеСтрокой(wordDoc, "$СписокСлушателей$", studentList, wordApp)
 
-        Вспомогательный.replaceTextInWordApp(wordDoc.Range, "$ДатаПриказа$", АСформироватьПриказ.ДатаПриказа.Text)
-        Вспомогательный.replaceTextInWordApp(wordDoc.Range, "$НомерГруппы$", АСформироватьПриказ.НомерГруппы.Text)
-        Вспомогательный.replaceTextInWordApp(wordDoc.Range, "$Программа$", studentList(7, 0), 2)
-        Вспомогательный.replaceTextInWordApp(wordDoc.Range, "$ДКонец$", studentList(10, 0), 2)
-        Вспомогательный.replaceTextInWordApp(wordDoc.Range, "$Часы$", studentList(11, 0), 2)
-        Вспомогательный.replaceTextInWordApp(wordDoc.Range, "$КураторГруппы$", studentList(14, 0), 2)
-        Вспомогательный.replaceTextInWordApp(wordDoc.Range, "$ИОФамилияВносит$", АСформироватьПриказ.ПроектВносит.Text)
+        _technical.replaceTextInWordApp(wordDoc.Range, "$ДатаПриказа$", BuildOrder.ДатаПриказа.Text)
+        _technical.replaceTextInWordApp(wordDoc.Range, "$НомерГруппы$", BuildOrder.groupNumber.Text)
+        _technical.replaceTextInWordApp(wordDoc.Range, "$Программа$", studentList(7, 0), 2)
+        _technical.replaceTextInWordApp(wordDoc.Range, "$ДКонец$", studentList(10, 0), 2)
+        _technical.replaceTextInWordApp(wordDoc.Range, "$Часы$", studentList(11, 0), 2)
+        _technical.replaceTextInWordApp(wordDoc.Range, "$КураторГруппы$", studentList(14, 0), 2)
+        _technical.replaceTextInWordApp(wordDoc.Range, "$ИОФамилияВносит$", BuildOrder.ПроектВносит.Text)
 
         ТаблицаУтверждаю(wordApp, wordDoc, "$ТаблицаУтверждаю$", "$КонецОсновногоРаздела$")
 
-        Вспомогательный.replaceTextInWordApp(wordDoc.Range, "$ТаблицаУтверждаю$", АСформироватьПриказ.УтверждаетДолжность.Text)
-        Вспомогательный.replaceTextInWordApp(wordDoc.Range, "$УтверждаюИО$", АСформироватьПриказ.Утверждает.Text)
+        _technical.replaceTextInWordApp(wordDoc.Range, "$ТаблицаУтверждаю$", BuildOrder.УтверждаетДолжность.Text)
+        _technical.replaceTextInWordApp(wordDoc.Range, "$УтверждаюИО$", BuildOrder.Утверждает.Text)
 
         wordDoc.Bookmarks("\EndOfDoc").Range.InsertBreak(2)
 
         СкопироватьТаблицуИзШаблона(wordApp, wordDoc, resuorcesPath & "Шаблоны\ПК_Окончание\ТаблицаСогласование.docx", 1)
 
-        Вспомогательный.replaceTextInWordApp(wordDoc.Range, "$ВноситДолжность$", АСформироватьПриказ.ПроектВноситДолжность.Text)
-        Вспомогательный.replaceTextInWordApp(wordDoc.Range, "$ИОФамилияВносит$", rotate(АСформироватьПриказ.ПроектВносит.Text))
-        Вспомогательный.replaceTextInWordApp(wordDoc.Range, "$ИсполнительДолжность$", АСформироватьПриказ.ИсполнительДолжность.Text)
-        Вспомогательный.replaceTextInWordApp(wordDoc.Range, "$ИОФамилияИсполнитель$", rotate(АСформироватьПриказ.Исполнитель.Text))
-        Вспомогательный.replaceTextInWordApp(wordDoc.Range, "$Согласовано1Должность$", АСформироватьПриказ.Согласовано1Должность.Text)
-        Вспомогательный.replaceTextInWordApp(wordDoc.Range, "$ИОФамилияСогласовано1$", rotate(АСформироватьПриказ.Согласовано1.Text))
-        Вспомогательный.replaceTextInWordApp(wordDoc.Range, "$Согласовано2Должность$", АСформироватьПриказ.Согласовано2Должность.Text)
-        Вспомогательный.replaceTextInWordApp(wordDoc.Range, "$ИОФамилияСогласовано2$", rotate(АСформироватьПриказ.Согласовано2.Text))
+        _technical.replaceTextInWordApp(wordDoc.Range, "$ВноситДолжность$", BuildOrder.ПроектВноситДолжность.Text)
+        _technical.replaceTextInWordApp(wordDoc.Range, "$ИОФамилияВносит$", rotate(BuildOrder.ПроектВносит.Text))
+        _technical.replaceTextInWordApp(wordDoc.Range, "$ИсполнительДолжность$", BuildOrder.ИсполнительДолжность.Text)
+        _technical.replaceTextInWordApp(wordDoc.Range, "$ИОФамилияИсполнитель$", rotate(BuildOrder.Исполнитель.Text))
+        _technical.replaceTextInWordApp(wordDoc.Range, "$Согласовано1Должность$", BuildOrder.Согласовано1Должность.Text)
+        _technical.replaceTextInWordApp(wordDoc.Range, "$ИОФамилияСогласовано1$", rotate(BuildOrder.Согласовано1.Text))
+        _technical.replaceTextInWordApp(wordDoc.Range, "$Согласовано2Должность$", BuildOrder.Согласовано2Должность.Text)
+        _technical.replaceTextInWordApp(wordDoc.Range, "$ИОФамилияСогласовано2$", rotate(BuildOrder.Согласовано2.Text))
 
         If ВидПриказа = "ПК_Окончание" Then
 
@@ -129,8 +129,8 @@ Module Приказ_Окончание
 
             Try
                 If table(0, 0) = "не найдена" Then
-                    предупреждение.текст.Text = "Не найдена метка $Таблица$ в ячейке (2,2) таблицы"
-                    предупреждение.ShowDialog()
+                    Warning.content.Text = "Не найдена метка $Таблица$ в ячейке (2,2) таблицы"
+                    Warning.ShowDialog()
                     wordApp.Visible = True
                     wordDoc.Save
                     Exit Sub
@@ -139,12 +139,12 @@ Module Приказ_Окончание
 
             End Try
 
-            queryString = pkEnd__loadShortListStudents(MainForm.prikazKodGroup)
+            queryString = pkEnd__loadShortListStudents(MainForm.orderIdGroup)
             student = MainForm.mySqlConnect.loadMySqlToArray(queryString, 1)
 
             If student(0, 0) = "нет записей" Then
-                предупреждение.текст.Text = "Нет данных для отображения"
-                предупреждение.ShowDialog()
+                Warning.content.Text = "Нет данных для отображения"
+                Warning.ShowDialog()
                 wordApp.Visible = True
                 wordDoc.Save
                 Exit Sub
@@ -154,7 +154,7 @@ Module Приказ_Окончание
 
         Else
 
-            queryString = poPpEnd__loadShortListStudents(MainForm.prikazKodGroup)
+            queryString = poPpEnd__loadShortListStudents(MainForm.orderIdGroup)
             student = MainForm.mySqlConnect.loadMySqlToArray(queryString, 1)
 
             МСВорд.ДобавитьСписокПоМеткеСтрокой(wordDoc, "$СписокСлушателей$", studentList, wordApp)
@@ -184,17 +184,17 @@ Module Приказ_Окончание
         Next
 
         For СчетчикСлушателей = 0 To UBound(studentList, 2)
-            Вспомогательный.ЗаменитьТекстВОбластиДокументаВорд(wordDoc.Tables(counterTables + СчетчикСлушателей).Range, "$НомерПротоколаИА$", studentList(13, 0))
-            Вспомогательный.ЗаменитьТекстВОбластиДокументаВорд(wordDoc.Tables(counterTables + СчетчикСлушателей).Range, "$Квалификация$", studentList(12, 0))
-            Вспомогательный.ЗаменитьТекстВОбластиДокументаВорд(wordDoc.Tables(counterTables + СчетчикСлушателей).Range, "$СлушательИмяОтчество$", studentList(0, СчетчикСлушателей))
-            Вспомогательный.ЗаменитьТекстВОбластиДокументаВорд(wordDoc.Tables(counterTables + СчетчикСлушателей).Range, "$Фамилия$", studentList(1, СчетчикСлушателей))
-            Вспомогательный.ЗаменитьТекстВОбластиДокументаВорд(wordDoc.Tables(counterTables + СчетчикСлушателей).Range, "$ИмяИОтчество$", studentList(2, СчетчикСлушателей))
-            Вспомогательный.ЗаменитьТекстВОбластиДокументаВорд(wordDoc.Tables(counterTables + СчетчикСлушателей).Range, "$ДНачало$", studentList(9, 0))
-            Вспомогательный.ЗаменитьТекстВОбластиДокументаВорд(wordDoc.Tables(counterTables + СчетчикСлушателей).Range, "$ДКонец$", studentList(10, 0))
-            Вспомогательный.ЗаменитьТекстВОбластиДокументаВорд(wordDoc.Tables(counterTables + СчетчикСлушателей).Range, "$Программа$", studentList(7, 0))
-            Вспомогательный.ЗаменитьТекстВОбластиДокументаВорд(wordDoc.Tables(counterTables + СчетчикСлушателей).Range, "$Часы$", studentList(11, 0))
-            Вспомогательный.ЗаменитьТекстВОбластиДокументаВорд(wordDoc.Tables(counterTables + СчетчикСлушателей).Range, "$Номер$", Вспомогательный.addZeros(studentList(5, СчетчикСлушателей) + СчетчикСлушателей, 5))
-            Вспомогательный.ЗаменитьТекстВОбластиДокументаВорд(wordDoc.Tables(counterTables + СчетчикСлушателей).Range, "$ДатаВ$", studentList(8, 0))
+            _technical.ЗаменитьТекстВОбластиДокументаВорд(wordDoc.Tables(counterTables + СчетчикСлушателей).Range, "$НомерПротоколаИА$", studentList(13, 0))
+            _technical.ЗаменитьТекстВОбластиДокументаВорд(wordDoc.Tables(counterTables + СчетчикСлушателей).Range, "$Квалификация$", studentList(12, 0))
+            _technical.ЗаменитьТекстВОбластиДокументаВорд(wordDoc.Tables(counterTables + СчетчикСлушателей).Range, "$СлушательИмяОтчество$", studentList(0, СчетчикСлушателей))
+            _technical.ЗаменитьТекстВОбластиДокументаВорд(wordDoc.Tables(counterTables + СчетчикСлушателей).Range, "$Фамилия$", studentList(1, СчетчикСлушателей))
+            _technical.ЗаменитьТекстВОбластиДокументаВорд(wordDoc.Tables(counterTables + СчетчикСлушателей).Range, "$ИмяИОтчество$", studentList(2, СчетчикСлушателей))
+            _technical.ЗаменитьТекстВОбластиДокументаВорд(wordDoc.Tables(counterTables + СчетчикСлушателей).Range, "$ДНачало$", studentList(9, 0))
+            _technical.ЗаменитьТекстВОбластиДокументаВорд(wordDoc.Tables(counterTables + СчетчикСлушателей).Range, "$ДКонец$", studentList(10, 0))
+            _technical.ЗаменитьТекстВОбластиДокументаВорд(wordDoc.Tables(counterTables + СчетчикСлушателей).Range, "$Программа$", studentList(7, 0))
+            _technical.ЗаменитьТекстВОбластиДокументаВорд(wordDoc.Tables(counterTables + СчетчикСлушателей).Range, "$Часы$", studentList(11, 0))
+            _technical.ЗаменитьТекстВОбластиДокументаВорд(wordDoc.Tables(counterTables + СчетчикСлушателей).Range, "$Номер$", _technical.addZeros(studentList(5, СчетчикСлушателей) + СчетчикСлушателей, 5))
+            _technical.ЗаменитьТекстВОбластиДокументаВорд(wordDoc.Tables(counterTables + СчетчикСлушателей).Range, "$ДатаВ$", studentList(8, 0))
         Next
 
         wordApp.Visible = True
@@ -227,7 +227,7 @@ Module Приказ_Окончание
 
         ReDim Параметры(2)
 
-        Параметры(2) = MainForm.prikazKodGroup
+        Параметры(2) = MainForm.orderIdGroup
 
 
         If ВидПриказа = "ПО_Окончание" Then
@@ -238,69 +238,69 @@ Module Приказ_Окончание
         ДанныеСлушателей = MainForm.mySqlConnect.loadMySqlToArray(queryString, 1)
 
         If ДанныеСлушателей(0, 0) = "нет записей" Then
-            предупреждение.текст.Text = "Нет данных для отображения"
-            предупреждение.ShowDialog()
+            Warning.content.Text = "Нет данных для отображения"
+            Warning.ShowDialog()
             Exit Sub
         End If
 
         If Not ДанныеСлушателей(6, 0) = "Свидетельство" Then
-            предупреждение.текст.Text = "Основной документ группы " & ДанныеСлушателей(6, 0)
-            предупреждение.ShowDialog()
+            Warning.content.Text = "Основной документ группы " & ДанныеСлушателей(6, 0)
+            Warning.ShowDialog()
             Exit Sub
         End If
 
         Try
             Число = ДанныеСлушателей(4, 0) + 1
         Catch ex As Exception
-            предупреждение.текст.Text = "Номер удостоверения/свидетельства/диплома группы не задан или не является числом"
-            предупреждение.ShowDialog()
+            Warning.content.Text = "Номер удостоверения/свидетельства/диплома группы не задан или не является числом"
+            Warning.ShowDialog()
             Exit Sub
         End Try
 
         Try
             Число = ДанныеСлушателей(5, 0) + 1
         Catch ex As Exception
-            предупреждение.текст.Text = "Регистрационный номер удостоверения/свидетельства/диплома группы не задан или не является числом"
-            предупреждение.ShowDialog()
+            Warning.content.Text = "Регистрационный номер удостоверения/свидетельства/диплома группы не задан или не является числом"
+            Warning.ShowDialog()
             Exit Sub
         End Try
 
-        ПутьККаталогуСРесурсами = Запуск.ПутьКФайлуRes
+        ПутьККаталогуСРесурсами = startApp.ПутьКФайлуRes
         ПутьКШаблону = ПутьККаталогуСРесурсами & "Шаблоны\ПК_Окончание\" & ВидПриказа & ".docx"
 
         ПриложениеВорд = CreateObject("Word.Application")
 
         ДокументВорд = ПриложениеВорд.Documents.Open(ПутьКШаблону, ReadOnly:=True)
 
-        If Вспомогательный.СоздатьПапку(ПутьККаталогуСРесурсами & "Группы\Группа N" & АСформироватьПриказ.НомерГруппы.Text & "_" & Year(ДанныеСлушателей(9, 0)) & "\Приказы") Then
-            Вспомогательный.сохранить(ДокументВорд, ВидПриказа, ПутьККаталогуСРесурсами & "Группы\Группа N" & АСформироватьПриказ.НомерГруппы.Text & "_" & Year(ДанныеСлушателей(9, 0)) & "\Приказы\")
+        If _technical.СоздатьПапку(ПутьККаталогуСРесурсами & "Группы\Группа N" & BuildOrder.groupNumber.Text & "_" & Year(ДанныеСлушателей(9, 0)) & "\Приказы") Then
+            _technical.сохранить(ДокументВорд, ВидПриказа, ПутьККаталогуСРесурсами & "Группы\Группа N" & BuildOrder.groupNumber.Text & "_" & Year(ДанныеСлушателей(9, 0)) & "\Приказы\")
         Else
-            Вспомогательный.сохранить(ДокументВорд, ВидПриказа, ПутьККаталогуСРесурсами & "Группы\Нераспределенное\")
+            _technical.сохранить(ДокументВорд, ВидПриказа, ПутьККаталогуСРесурсами & "Группы\Нераспределенное\")
         End If
 
         МСВорд.ДобавитьСписокПоМеткеСтрокой(ДокументВорд, "$СписокСлушателей$", ДанныеСлушателей, ПриложениеВорд)
 
-        Вспомогательный.replaceTextInWordApp(ДокументВорд.Range, "$ДатаПриказа$", АСформироватьПриказ.ДатаПриказа.Text)
-        Вспомогательный.replaceTextInWordApp(ДокументВорд.Range, "$НомерГруппы$", АСформироватьПриказ.НомерГруппы.Text)
-        Вспомогательный.replaceTextInWordApp(ДокументВорд.Range, "$Программа$", ДанныеСлушателей(7, 0), 2)
+        _technical.replaceTextInWordApp(ДокументВорд.Range, "$ДатаПриказа$", BuildOrder.ДатаПриказа.Text)
+        _technical.replaceTextInWordApp(ДокументВорд.Range, "$НомерГруппы$", BuildOrder.groupNumber.Text)
+        _technical.replaceTextInWordApp(ДокументВорд.Range, "$Программа$", ДанныеСлушателей(7, 0), 2)
 
         ТаблицаУтверждаю(ПриложениеВорд, ДокументВорд, "$ТаблицаУтверждаю$", "$КонецОсновногоРаздела$")
 
-        Вспомогательный.replaceTextInWordApp(ДокументВорд.Range, "$ТаблицаУтверждаю$", АСформироватьПриказ.УтверждаетДолжность.Text)
-        Вспомогательный.replaceTextInWordApp(ДокументВорд.Range, "$УтверждаюИО$", АСформироватьПриказ.Утверждает.Text)
+        _technical.replaceTextInWordApp(ДокументВорд.Range, "$ТаблицаУтверждаю$", BuildOrder.УтверждаетДолжность.Text)
+        _technical.replaceTextInWordApp(ДокументВорд.Range, "$УтверждаюИО$", BuildOrder.Утверждает.Text)
 
         ДокументВорд.Bookmarks("\EndOfDoc").Range.InsertBreak(2)
 
         СкопироватьТаблицуИзШаблона(ПриложениеВорд, ДокументВорд, ПутьККаталогуСРесурсами & "Шаблоны\ПК_Окончание\ТаблицаСогласование.docx", 1)
 
-        Вспомогательный.replaceTextInWordApp(ДокументВорд.Range, "$ВноситДолжность$", АСформироватьПриказ.ПроектВноситДолжность.Text)
-        Вспомогательный.replaceTextInWordApp(ДокументВорд.Range, "$ИОФамилияВносит$", rotate(АСформироватьПриказ.ПроектВносит.Text))
-        Вспомогательный.replaceTextInWordApp(ДокументВорд.Range, "$ИсполнительДолжность$", АСформироватьПриказ.ИсполнительДолжность.Text)
-        Вспомогательный.replaceTextInWordApp(ДокументВорд.Range, "$ИОФамилияИсполнитель$", rotate(АСформироватьПриказ.Исполнитель.Text))
-        Вспомогательный.replaceTextInWordApp(ДокументВорд.Range, "$Согласовано1Должность$", АСформироватьПриказ.Согласовано1Должность.Text)
-        Вспомогательный.replaceTextInWordApp(ДокументВорд.Range, "$ИОФамилияСогласовано1$", rotate(АСформироватьПриказ.Согласовано1.Text))
-        Вспомогательный.replaceTextInWordApp(ДокументВорд.Range, "$Согласовано2Должность$", АСформироватьПриказ.Согласовано2Должность.Text)
-        Вспомогательный.replaceTextInWordApp(ДокументВорд.Range, "$ИОФамилияСогласовано2$", rotate(АСформироватьПриказ.Согласовано2.Text))
+        _technical.replaceTextInWordApp(ДокументВорд.Range, "$ВноситДолжность$", BuildOrder.ПроектВноситДолжность.Text)
+        _technical.replaceTextInWordApp(ДокументВорд.Range, "$ИОФамилияВносит$", rotate(BuildOrder.ПроектВносит.Text))
+        _technical.replaceTextInWordApp(ДокументВорд.Range, "$ИсполнительДолжность$", BuildOrder.ИсполнительДолжность.Text)
+        _technical.replaceTextInWordApp(ДокументВорд.Range, "$ИОФамилияИсполнитель$", rotate(BuildOrder.Исполнитель.Text))
+        _technical.replaceTextInWordApp(ДокументВорд.Range, "$Согласовано1Должность$", BuildOrder.Согласовано1Должность.Text)
+        _technical.replaceTextInWordApp(ДокументВорд.Range, "$ИОФамилияСогласовано1$", rotate(BuildOrder.Согласовано1.Text))
+        _technical.replaceTextInWordApp(ДокументВорд.Range, "$Согласовано2Должность$", BuildOrder.Согласовано2Должность.Text)
+        _technical.replaceTextInWordApp(ДокументВорд.Range, "$ИОФамилияСогласовано2$", rotate(BuildOrder.Согласовано2.Text))
 
 
 
@@ -326,17 +326,17 @@ Module Приказ_Окончание
         Next
 
         For СчетчикСлушателей = 0 To UBound(ДанныеСлушателей, 2)
-            Вспомогательный.ЗаменитьТекстВОбластиДокументаВорд(ДокументВорд.Tables(счетчикТаблиц + СчетчикСлушателей).Range, "$НомерПротоколаИА$", ДанныеСлушателей(13, 0))
-            Вспомогательный.ЗаменитьТекстВОбластиДокументаВорд(ДокументВорд.Tables(счетчикТаблиц + СчетчикСлушателей).Range, "$Квалификация$", ДанныеСлушателей(12, 0))
-            Вспомогательный.ЗаменитьТекстВОбластиДокументаВорд(ДокументВорд.Tables(счетчикТаблиц + СчетчикСлушателей).Range, "$СлушательИмяОтчество$", ДанныеСлушателей(0, СчетчикСлушателей))
-            Вспомогательный.ЗаменитьТекстВОбластиДокументаВорд(ДокументВорд.Tables(счетчикТаблиц + СчетчикСлушателей).Range, "$Фамилия$", ДанныеСлушателей(1, СчетчикСлушателей))
-            Вспомогательный.ЗаменитьТекстВОбластиДокументаВорд(ДокументВорд.Tables(счетчикТаблиц + СчетчикСлушателей).Range, "$ИмяИОтчество$", ДанныеСлушателей(2, СчетчикСлушателей))
-            Вспомогательный.ЗаменитьТекстВОбластиДокументаВорд(ДокументВорд.Tables(счетчикТаблиц + СчетчикСлушателей).Range, "$ДНачало$", ДанныеСлушателей(9, 0))
-            Вспомогательный.ЗаменитьТекстВОбластиДокументаВорд(ДокументВорд.Tables(счетчикТаблиц + СчетчикСлушателей).Range, "$ДКонец$", ДанныеСлушателей(10, 0))
-            Вспомогательный.ЗаменитьТекстВОбластиДокументаВорд(ДокументВорд.Tables(счетчикТаблиц + СчетчикСлушателей).Range, "$Программа$", ДанныеСлушателей(7, 0))
-            Вспомогательный.ЗаменитьТекстВОбластиДокументаВорд(ДокументВорд.Tables(счетчикТаблиц + СчетчикСлушателей).Range, "$Часы$", ДанныеСлушателей(11, 0))
-            Вспомогательный.ЗаменитьТекстВОбластиДокументаВорд(ДокументВорд.Tables(счетчикТаблиц + СчетчикСлушателей).Range, "$Номер$", ДанныеСлушателей(4, СчетчикСлушателей) + СчетчикСлушателей)
-            Вспомогательный.ЗаменитьТекстВОбластиДокументаВорд(ДокументВорд.Tables(счетчикТаблиц + СчетчикСлушателей).Range, "$ДатаВ$", ДанныеСлушателей(8, 0))
+            _technical.ЗаменитьТекстВОбластиДокументаВорд(ДокументВорд.Tables(счетчикТаблиц + СчетчикСлушателей).Range, "$НомерПротоколаИА$", ДанныеСлушателей(13, 0))
+            _technical.ЗаменитьТекстВОбластиДокументаВорд(ДокументВорд.Tables(счетчикТаблиц + СчетчикСлушателей).Range, "$Квалификация$", ДанныеСлушателей(12, 0))
+            _technical.ЗаменитьТекстВОбластиДокументаВорд(ДокументВорд.Tables(счетчикТаблиц + СчетчикСлушателей).Range, "$СлушательИмяОтчество$", ДанныеСлушателей(0, СчетчикСлушателей))
+            _technical.ЗаменитьТекстВОбластиДокументаВорд(ДокументВорд.Tables(счетчикТаблиц + СчетчикСлушателей).Range, "$Фамилия$", ДанныеСлушателей(1, СчетчикСлушателей))
+            _technical.ЗаменитьТекстВОбластиДокументаВорд(ДокументВорд.Tables(счетчикТаблиц + СчетчикСлушателей).Range, "$ИмяИОтчество$", ДанныеСлушателей(2, СчетчикСлушателей))
+            _technical.ЗаменитьТекстВОбластиДокументаВорд(ДокументВорд.Tables(счетчикТаблиц + СчетчикСлушателей).Range, "$ДНачало$", ДанныеСлушателей(9, 0))
+            _technical.ЗаменитьТекстВОбластиДокументаВорд(ДокументВорд.Tables(счетчикТаблиц + СчетчикСлушателей).Range, "$ДКонец$", ДанныеСлушателей(10, 0))
+            _technical.ЗаменитьТекстВОбластиДокументаВорд(ДокументВорд.Tables(счетчикТаблиц + СчетчикСлушателей).Range, "$Программа$", ДанныеСлушателей(7, 0))
+            _technical.ЗаменитьТекстВОбластиДокументаВорд(ДокументВорд.Tables(счетчикТаблиц + СчетчикСлушателей).Range, "$Часы$", ДанныеСлушателей(11, 0))
+            _technical.ЗаменитьТекстВОбластиДокументаВорд(ДокументВорд.Tables(счетчикТаблиц + СчетчикСлушателей).Range, "$Номер$", ДанныеСлушателей(4, СчетчикСлушателей) + СчетчикСлушателей)
+            _technical.ЗаменитьТекстВОбластиДокументаВорд(ДокументВорд.Tables(счетчикТаблиц + СчетчикСлушателей).Range, "$ДатаВ$", ДанныеСлушателей(8, 0))
         Next
 
         ПриложениеВорд.Visible = True

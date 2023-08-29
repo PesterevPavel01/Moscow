@@ -1,8 +1,8 @@
 ﻿Imports System.Threading
 Imports System.IO
 
-Module Запуск
-    Public Открыть As Boolean = False
+Module startApp
+    Public open As Boolean = False
     Public АдрессОбщейБазы As String
     Dim SC As SynchronizationContext
     Public АдрессЛичнойКопииБазы, ПутьКФайлуRes As String
@@ -36,14 +36,14 @@ Module Запуск
 
         СтрокаЗапроса = loadSettings()
         Параметры = mySqlConnector.loadMySqlToArray(СтрокаЗапроса, 1)
-        Параметры = УбратьПустотыВМассиве.УбратьПустотыВМассиве(Параметры)
+        Параметры = arrayMethod.removeEmpty(Параметры)
         ЗагрузкаПараметровПриложения = Параметры
     End Function
 
     Sub ЗаписьСохраненныхНастроек(параметры As Object)
 
         If Not ЗначениеПараметра(параметры, "ДиректорФИО") = "Не найден" Then
-            MainForm.ДиректорФИО.Text = ЗначениеПараметра(параметры, "ДиректорФИО")
+            MainForm.directorName.Text = ЗначениеПараметра(параметры, "ДиректорФИО")
         End If
 
         If Not ЗначениеПараметра(параметры, "0") = "Не найден" Then
@@ -51,7 +51,7 @@ Module Запуск
         End If
 
         If Not ЗначениеПараметра(параметры, "ДиректорДолжность") = "Не найден" Then
-            MainForm.ДиректорДолжность.Text = ЗначениеПараметра(параметры, "ДиректорДолжность")
+            MainForm.directorPosition.Text = ЗначениеПараметра(параметры, "ДиректорДолжность")
         End If
 
         If Not ЗначениеПараметра(параметры, "Согласовано1ПУ") = "Не найден" Then
@@ -100,9 +100,9 @@ Module Запуск
         searchInit(sortSettsStudents, MainForm.students__defaultSortSetts.Text)
 
         If Not ЗначениеПараметра(параметры, "КоличествоСтрокВТаблице") = "Не найден" Then
-            MainForm.КоличествоСтрокВТаблице.Text = ЗначениеПараметра(параметры, "КоличествоСтрокВТаблице")
+            MainForm.maxNumberRows.Text = ЗначениеПараметра(параметры, "КоличествоСтрокВТаблице")
         Else
-            MainForm.КоличествоСтрокВТаблице.Text = 1000
+            MainForm.maxNumberRows.Text = 1000
         End If
 
     End Sub
