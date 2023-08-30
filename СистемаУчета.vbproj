@@ -283,10 +283,10 @@
     <Compile Include="Приложение\Отчеты\OtchetExcell.vb" />
     <Compile Include="Приложение\Интерфейс\ИзменениеВыделеннойСтрокиВListView.vb" />
     <Compile Include="Приложение\Справочники\ЗаполнитьФормуССлушВГруппе.vb" />
-    <Compile Include="Приложение\Формы\СписокСлушателейВГруппе.Designer.vb">
-      <DependentUpon>СписокСлушателейВГруппе.vb</DependentUpon>
+    <Compile Include="Приложение\Формы\StudentList.Designer.vb">
+      <DependentUpon>StudentList.vb</DependentUpon>
     </Compile>
-    <Compile Include="Приложение\Формы\СписокСлушателейВГруппе.vb">
+    <Compile Include="Приложение\Формы\StudentList.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Приложение\Справочники\ЗаполнитьРедакторСлушателя.vb" />
@@ -296,7 +296,7 @@
     <Compile Include="Приложение\Формы\РедакторСлушателя.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Приложение\Справочники\ЗаполнитьРедакторГруппы.vb" />
+    <Compile Include="Приложение\Справочники\updateGroupRedactor.vb" />
     <Compile Include="Приложение\Формы\РедакторГруппы.Designer.vb">
       <DependentUpon>РедакторГруппы.vb</DependentUpon>
     </Compile>
@@ -336,10 +336,10 @@
     </Compile>
     <Compile Include="Приложение\dataBase\InsertIntoDataBase.vb" />
     <Compile Include="Приложение\Интерфейс\addMask.vb" />
-    <Compile Include="Приложение\Формы\СправочникГруппы.Designer.vb">
-      <DependentUpon>СправочникГруппы.vb</DependentUpon>
+    <Compile Include="Приложение\Формы\GroupList.Designer.vb">
+      <DependentUpon>GroupList.vb</DependentUpon>
     </Compile>
-    <Compile Include="Приложение\Формы\СправочникГруппы.vb">
+    <Compile Include="Приложение\Формы\GroupList.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Приложение\Интерфейс\UpdateListView.vb" />
@@ -407,8 +407,8 @@
     <EmbeddedResource Include="Приложение\Формы\Warning.resx">
       <DependentUpon>Warning.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Приложение\Формы\СписокСлушателейВГруппе.resx">
-      <DependentUpon>СписокСлушателейВГруппе.vb</DependentUpon>
+    <EmbeddedResource Include="Приложение\Формы\StudentList.resx">
+      <DependentUpon>StudentList.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Приложение\Формы\РедакторСлушателя.resx">
       <DependentUpon>РедакторСлушателя.vb</DependentUpon>
@@ -434,8 +434,8 @@
     <EmbeddedResource Include="Приложение\Формы\newGroup.resx">
       <DependentUpon>newGroup.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Приложение\Формы\СправочникГруппы.resx">
-      <DependentUpon>СправочникГруппы.vb</DependentUpon>
+    <EmbeddedResource Include="Приложение\Формы\GroupList.resx">
+      <DependentUpon>GroupList.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Приложение\Формы\MainForm.resx">
       <DependentUpon>MainForm.vb</DependentUpon>

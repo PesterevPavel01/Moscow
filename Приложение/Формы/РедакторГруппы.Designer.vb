@@ -113,7 +113,7 @@ Partial Class РедакторГруппы
         'НоваяГруппаДатаНачалаЗанятий
         '
         Me.НоваяГруппаДатаНачалаЗанятий.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
-        Me.НоваяГруппаДатаНачалаЗанятий.Location = New System.Drawing.Point(337, 97)
+        Me.НоваяГруппаДатаНачалаЗанятий.Location = New System.Drawing.Point(337, 146)
         Me.НоваяГруппаДатаНачалаЗанятий.Name = "НоваяГруппаДатаНачалаЗанятий"
         Me.НоваяГруппаДатаНачалаЗанятий.Size = New System.Drawing.Size(546, 20)
         Me.НоваяГруппаДатаНачалаЗанятий.TabIndex = 3
@@ -122,7 +122,7 @@ Partial Class РедакторГруппы
         'ДатаВДиплома
         '
         Me.ДатаВДиплома.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
-        Me.ДатаВДиплома.Location = New System.Drawing.Point(337, 409)
+        Me.ДатаВДиплома.Location = New System.Drawing.Point(337, 458)
         Me.ДатаВДиплома.Name = "ДатаВДиплома"
         Me.ДатаВДиплома.Size = New System.Drawing.Size(546, 20)
         Me.ДатаВДиплома.TabIndex = 16
@@ -131,7 +131,7 @@ Partial Class РедакторГруппы
         'ДатаВыдачиУд
         '
         Me.ДатаВыдачиУд.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
-        Me.ДатаВыдачиУд.Location = New System.Drawing.Point(337, 334)
+        Me.ДатаВыдачиУд.Location = New System.Drawing.Point(337, 383)
         Me.ДатаВыдачиУд.Name = "ДатаВыдачиУд"
         Me.ДатаВыдачиУд.Size = New System.Drawing.Size(546, 20)
         Me.ДатаВыдачиУд.TabIndex = 13
@@ -141,7 +141,7 @@ Partial Class РедакторГруппы
         '
         Me.Label28.AutoSize = True
         Me.Label28.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.Label28.Location = New System.Drawing.Point(12, 411)
+        Me.Label28.Location = New System.Drawing.Point(12, 460)
         Me.Label28.Name = "Label28"
         Me.Label28.Size = New System.Drawing.Size(165, 18)
         Me.Label28.TabIndex = 122
@@ -151,7 +151,7 @@ Partial Class РедакторГруппы
         '
         Me.Label29.AutoSize = True
         Me.Label29.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.Label29.Location = New System.Drawing.Point(12, 389)
+        Me.Label29.Location = New System.Drawing.Point(12, 438)
         Me.Label29.Name = "Label29"
         Me.Label29.Size = New System.Drawing.Size(245, 18)
         Me.Label29.TabIndex = 121
@@ -161,7 +161,7 @@ Partial Class РедакторГруппы
         '
         Me.Label30.AutoSize = True
         Me.Label30.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.Label30.Location = New System.Drawing.Point(12, 367)
+        Me.Label30.Location = New System.Drawing.Point(12, 416)
         Me.Label30.Name = "Label30"
         Me.Label30.Size = New System.Drawing.Size(177, 18)
         Me.Label30.TabIndex = 120
@@ -169,28 +169,28 @@ Partial Class РедакторГруппы
         '
         'РегНомерДиплома
         '
-        Me.РегНомерДиплома.Location = New System.Drawing.Point(337, 387)
+        Me.РегНомерДиплома.Location = New System.Drawing.Point(337, 436)
         Me.РегНомерДиплома.Name = "РегНомерДиплома"
         Me.РегНомерДиплома.Size = New System.Drawing.Size(546, 20)
         Me.РегНомерДиплома.TabIndex = 15
         '
         'НомерДиплома
         '
-        Me.НомерДиплома.Location = New System.Drawing.Point(337, 365)
+        Me.НомерДиплома.Location = New System.Drawing.Point(337, 414)
         Me.НомерДиплома.Name = "НомерДиплома"
         Me.НомерДиплома.Size = New System.Drawing.Size(546, 20)
         Me.НомерДиплома.TabIndex = 14
         '
         'РегНомерУд
         '
-        Me.РегНомерУд.Location = New System.Drawing.Point(337, 312)
+        Me.РегНомерУд.Location = New System.Drawing.Point(337, 361)
         Me.РегНомерУд.Name = "РегНомерУд"
         Me.РегНомерУд.Size = New System.Drawing.Size(546, 20)
         Me.РегНомерУд.TabIndex = 12
         '
         'НомерУд
         '
-        Me.НомерУд.Location = New System.Drawing.Point(337, 290)
+        Me.НомерУд.Location = New System.Drawing.Point(337, 339)
         Me.НомерУд.Name = "НомерУд"
         Me.НомерУд.Size = New System.Drawing.Size(546, 20)
         Me.НомерУд.TabIndex = 11
@@ -199,7 +199,7 @@ Partial Class РедакторГруппы
         '
         Me.Label22.AutoSize = True
         Me.Label22.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.Label22.Location = New System.Drawing.Point(12, 338)
+        Me.Label22.Location = New System.Drawing.Point(12, 387)
         Me.Label22.Name = "Label22"
         Me.Label22.Size = New System.Drawing.Size(208, 18)
         Me.Label22.TabIndex = 119
@@ -209,7 +209,7 @@ Partial Class РедакторГруппы
         '
         Me.Label23.AutoSize = True
         Me.Label23.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.Label23.Location = New System.Drawing.Point(12, 316)
+        Me.Label23.Location = New System.Drawing.Point(12, 365)
         Me.Label23.Name = "Label23"
         Me.Label23.Size = New System.Drawing.Size(288, 18)
         Me.Label23.TabIndex = 118
@@ -219,7 +219,7 @@ Partial Class РедакторГруппы
         '
         Me.Label24.AutoSize = True
         Me.Label24.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.Label24.Location = New System.Drawing.Point(12, 292)
+        Me.Label24.Location = New System.Drawing.Point(12, 341)
         Me.Label24.Name = "Label24"
         Me.Label24.Size = New System.Drawing.Size(220, 18)
         Me.Label24.TabIndex = 117
@@ -229,7 +229,7 @@ Partial Class РедакторГруппы
         '
         Me.Label21.AutoSize = True
         Me.Label21.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.Label21.Location = New System.Drawing.Point(12, 152)
+        Me.Label21.Location = New System.Drawing.Point(12, 201)
         Me.Label21.Name = "Label21"
         Me.Label21.Size = New System.Drawing.Size(158, 18)
         Me.Label21.TabIndex = 107
@@ -237,14 +237,14 @@ Partial Class РедакторГруппы
         '
         'НомерПротоколаИА
         '
-        Me.НомерПротоколаИА.Location = New System.Drawing.Point(337, 150)
+        Me.НомерПротоколаИА.Location = New System.Drawing.Point(337, 199)
         Me.НомерПротоколаИА.Name = "НомерПротоколаИА"
         Me.НомерПротоколаИА.Size = New System.Drawing.Size(546, 20)
         Me.НомерПротоколаИА.TabIndex = 5
         '
         'BtnFocus
         '
-        Me.BtnFocus.Location = New System.Drawing.Point(202, 59)
+        Me.BtnFocus.Location = New System.Drawing.Point(202, 108)
         Me.BtnFocus.Name = "BtnFocus"
         Me.BtnFocus.Size = New System.Drawing.Size(75, 23)
         Me.BtnFocus.TabIndex = 116
@@ -256,7 +256,7 @@ Partial Class РедакторГруппы
         '
         Me.Сообщение.AutoSize = True
         Me.Сообщение.ForeColor = System.Drawing.SystemColors.MenuHighlight
-        Me.Сообщение.Location = New System.Drawing.Point(12, 1)
+        Me.Сообщение.Location = New System.Drawing.Point(12, 63)
         Me.Сообщение.Name = "Сообщение"
         Me.Сообщение.Size = New System.Drawing.Size(45, 13)
         Me.Сообщение.TabIndex = 109
@@ -267,7 +267,7 @@ Partial Class РедакторГруппы
         '
         Me.Label9.AutoSize = True
         Me.Label9.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.Label9.Location = New System.Drawing.Point(12, 262)
+        Me.Label9.Location = New System.Drawing.Point(12, 311)
         Me.Label9.Name = "Label9"
         Me.Label9.Size = New System.Drawing.Size(202, 18)
         Me.Label9.TabIndex = 115
@@ -277,7 +277,7 @@ Partial Class РедакторГруппы
         '
         Me.Label8.AutoSize = True
         Me.Label8.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.Label8.Location = New System.Drawing.Point(12, 242)
+        Me.Label8.Location = New System.Drawing.Point(12, 291)
         Me.Label8.Name = "Label8"
         Me.Label8.Size = New System.Drawing.Size(175, 18)
         Me.Label8.TabIndex = 114
@@ -287,7 +287,7 @@ Partial Class РедакторГруппы
         '
         Me.Label7.AutoSize = True
         Me.Label7.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.Label7.Location = New System.Drawing.Point(12, 220)
+        Me.Label7.Location = New System.Drawing.Point(12, 269)
         Me.Label7.Name = "Label7"
         Me.Label7.Size = New System.Drawing.Size(137, 18)
         Me.Label7.TabIndex = 113
@@ -297,7 +297,7 @@ Partial Class РедакторГруппы
         '
         Me.Label6.AutoSize = True
         Me.Label6.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.Label6.Location = New System.Drawing.Point(12, 196)
+        Me.Label6.Location = New System.Drawing.Point(12, 245)
         Me.Label6.Name = "Label6"
         Me.Label6.Size = New System.Drawing.Size(116, 18)
         Me.Label6.TabIndex = 112
@@ -307,7 +307,7 @@ Partial Class РедакторГруппы
         '
         Me.Label5.AutoSize = True
         Me.Label5.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.Label5.Location = New System.Drawing.Point(12, 174)
+        Me.Label5.Location = New System.Drawing.Point(12, 223)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(88, 18)
         Me.Label5.TabIndex = 111
@@ -317,7 +317,7 @@ Partial Class РедакторГруппы
         '
         Me.Label4.AutoSize = True
         Me.Label4.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.Label4.Location = New System.Drawing.Point(12, 121)
+        Me.Label4.Location = New System.Drawing.Point(12, 170)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(180, 18)
         Me.Label4.TabIndex = 110
@@ -326,7 +326,7 @@ Partial Class РедакторГруппы
         'НоваяГруппаКонецЗанятий
         '
         Me.НоваяГруппаКонецЗанятий.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
-        Me.НоваяГруппаКонецЗанятий.Location = New System.Drawing.Point(337, 119)
+        Me.НоваяГруппаКонецЗанятий.Location = New System.Drawing.Point(337, 168)
         Me.НоваяГруппаКонецЗанятий.Name = "НоваяГруппаКонецЗанятий"
         Me.НоваяГруппаКонецЗанятий.Size = New System.Drawing.Size(546, 20)
         Me.НоваяГруппаКонецЗанятий.TabIndex = 4
@@ -336,7 +336,7 @@ Partial Class РедакторГруппы
         '
         Me.Label3.AutoSize = True
         Me.Label3.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.Label3.Location = New System.Drawing.Point(12, 99)
+        Me.Label3.Location = New System.Drawing.Point(12, 148)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(155, 18)
         Me.Label3.TabIndex = 108
@@ -346,7 +346,7 @@ Partial Class РедакторГруппы
         '
         Me.Label2.AutoSize = True
         Me.Label2.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.Label2.Location = New System.Drawing.Point(12, 69)
+        Me.Label2.Location = New System.Drawing.Point(12, 118)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(126, 18)
         Me.Label2.TabIndex = 106
@@ -356,7 +356,7 @@ Partial Class РедакторГруппы
         '
         Me.Label1.AutoSize = True
         Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.Label1.Location = New System.Drawing.Point(12, 47)
+        Me.Label1.Location = New System.Drawing.Point(12, 96)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(55, 18)
         Me.Label1.TabIndex = 105
@@ -364,14 +364,14 @@ Partial Class РедакторГруппы
         '
         'НоваяГруппаНомер
         '
-        Me.НоваяГруппаНомер.Location = New System.Drawing.Point(337, 45)
+        Me.НоваяГруппаНомер.Location = New System.Drawing.Point(337, 94)
         Me.НоваяГруппаНомер.Name = "НоваяГруппаНомер"
         Me.НоваяГруппаНомер.Size = New System.Drawing.Size(546, 20)
         Me.НоваяГруппаНомер.TabIndex = 1
         '
         'GroupBox1
         '
-        Me.GroupBox1.Location = New System.Drawing.Point(2, 278)
+        Me.GroupBox1.Location = New System.Drawing.Point(2, 327)
         Me.GroupBox1.Name = "GroupBox1"
         Me.GroupBox1.Size = New System.Drawing.Size(893, 10)
         Me.GroupBox1.TabIndex = 123
@@ -379,7 +379,7 @@ Partial Class РедакторГруппы
         '
         'GroupBox2
         '
-        Me.GroupBox2.Location = New System.Drawing.Point(2, 352)
+        Me.GroupBox2.Location = New System.Drawing.Point(2, 401)
         Me.GroupBox2.Name = "GroupBox2"
         Me.GroupBox2.Size = New System.Drawing.Size(893, 10)
         Me.GroupBox2.TabIndex = 125
@@ -387,7 +387,7 @@ Partial Class РедакторГруппы
         '
         'GroupBox3
         '
-        Me.GroupBox3.Location = New System.Drawing.Point(2, 427)
+        Me.GroupBox3.Location = New System.Drawing.Point(2, 476)
         Me.GroupBox3.Name = "GroupBox3"
         Me.GroupBox3.Size = New System.Drawing.Size(893, 10)
         Me.GroupBox3.TabIndex = 126
@@ -395,7 +395,7 @@ Partial Class РедакторГруппы
         '
         'GroupBox7
         '
-        Me.GroupBox7.Location = New System.Drawing.Point(2, 137)
+        Me.GroupBox7.Location = New System.Drawing.Point(2, 186)
         Me.GroupBox7.Name = "GroupBox7"
         Me.GroupBox7.Size = New System.Drawing.Size(893, 10)
         Me.GroupBox7.TabIndex = 124
@@ -403,7 +403,7 @@ Partial Class РедакторГруппы
         '
         'GroupBox8
         '
-        Me.GroupBox8.Location = New System.Drawing.Point(2, 85)
+        Me.GroupBox8.Location = New System.Drawing.Point(2, 134)
         Me.GroupBox8.Name = "GroupBox8"
         Me.GroupBox8.Size = New System.Drawing.Size(893, 10)
         Me.GroupBox8.TabIndex = 127
@@ -422,7 +422,7 @@ Partial Class РедакторГруппы
         'ДатаВСвид
         '
         Me.ДатаВСвид.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
-        Me.ДатаВСвид.Location = New System.Drawing.Point(337, 483)
+        Me.ДатаВСвид.Location = New System.Drawing.Point(337, 532)
         Me.ДатаВСвид.Name = "ДатаВСвид"
         Me.ДатаВСвид.Size = New System.Drawing.Size(546, 20)
         Me.ДатаВСвид.TabIndex = 19
@@ -430,14 +430,14 @@ Partial Class РедакторГруппы
         '
         'РегНомерСвид
         '
-        Me.РегНомерСвид.Location = New System.Drawing.Point(337, 462)
+        Me.РегНомерСвид.Location = New System.Drawing.Point(337, 511)
         Me.РегНомерСвид.Name = "РегНомерСвид"
         Me.РегНомерСвид.Size = New System.Drawing.Size(546, 20)
         Me.РегНомерСвид.TabIndex = 18
         '
         'НомерСвид
         '
-        Me.НомерСвид.Location = New System.Drawing.Point(337, 440)
+        Me.НомерСвид.Location = New System.Drawing.Point(337, 489)
         Me.НомерСвид.Name = "НомерСвид"
         Me.НомерСвид.Size = New System.Drawing.Size(546, 20)
         Me.НомерСвид.TabIndex = 17
@@ -446,7 +446,7 @@ Partial Class РедакторГруппы
         '
         Me.Label25.AutoSize = True
         Me.Label25.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.Label25.Location = New System.Drawing.Point(12, 485)
+        Me.Label25.Location = New System.Drawing.Point(12, 534)
         Me.Label25.Name = "Label25"
         Me.Label25.Size = New System.Drawing.Size(207, 18)
         Me.Label25.TabIndex = 158
@@ -456,7 +456,7 @@ Partial Class РедакторГруппы
         '
         Me.Label26.AutoSize = True
         Me.Label26.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.Label26.Location = New System.Drawing.Point(12, 464)
+        Me.Label26.Location = New System.Drawing.Point(12, 513)
         Me.Label26.Name = "Label26"
         Me.Label26.Size = New System.Drawing.Size(287, 18)
         Me.Label26.TabIndex = 157
@@ -466,7 +466,7 @@ Partial Class РедакторГруппы
         '
         Me.Label27.AutoSize = True
         Me.Label27.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.Label27.Location = New System.Drawing.Point(12, 442)
+        Me.Label27.Location = New System.Drawing.Point(12, 491)
         Me.Label27.Name = "Label27"
         Me.Label27.Size = New System.Drawing.Size(219, 18)
         Me.Label27.TabIndex = 156
@@ -486,7 +486,7 @@ Partial Class РедакторГруппы
         '
         Me.Label20.AutoSize = True
         Me.Label20.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.Label20.Location = New System.Drawing.Point(12, 27)
+        Me.Label20.Location = New System.Drawing.Point(12, 76)
         Me.Label20.Name = "Label20"
         Me.Label20.Size = New System.Drawing.Size(173, 18)
         Me.Label20.TabIndex = 142
@@ -594,7 +594,7 @@ Partial Class РедакторГруппы
         '
         'GroupBox4
         '
-        Me.GroupBox4.Location = New System.Drawing.Point(2, 501)
+        Me.GroupBox4.Location = New System.Drawing.Point(2, 550)
         Me.GroupBox4.Name = "GroupBox4"
         Me.GroupBox4.Size = New System.Drawing.Size(893, 10)
         Me.GroupBox4.TabIndex = 160
@@ -613,7 +613,7 @@ Partial Class РедакторГруппы
         Me.НоваяГруппаУровеньКвалификации.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.НоваяГруппаУровеньКвалификации.FormattingEnabled = True
         Me.НоваяГруппаУровеньКвалификации.ItemHeight = 13
-        Me.НоваяГруппаУровеньКвалификации.Location = New System.Drawing.Point(337, 23)
+        Me.НоваяГруппаУровеньКвалификации.Location = New System.Drawing.Point(337, 72)
         Me.НоваяГруппаУровеньКвалификации.Name = "НоваяГруппаУровеньКвалификации"
         Me.НоваяГруппаУровеньКвалификации.Size = New System.Drawing.Size(546, 21)
         Me.НоваяГруппаУровеньКвалификации.TabIndex = 167
@@ -623,7 +623,7 @@ Partial Class РедакторГруппы
         Me.НоваяГруппаФормаОбучения.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.НоваяГруппаФормаОбучения.FormattingEnabled = True
         Me.НоваяГруппаФормаОбучения.ItemHeight = 13
-        Me.НоваяГруппаФормаОбучения.Location = New System.Drawing.Point(337, 66)
+        Me.НоваяГруппаФормаОбучения.Location = New System.Drawing.Point(337, 115)
         Me.НоваяГруппаФормаОбучения.Name = "НоваяГруппаФормаОбучения"
         Me.НоваяГруппаФормаОбучения.Size = New System.Drawing.Size(546, 21)
         Me.НоваяГруппаФормаОбучения.TabIndex = 168
@@ -633,7 +633,7 @@ Partial Class РедакторГруппы
         Me.НоваяГруппаПрограмма.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.НоваяГруппаПрограмма.FormattingEnabled = True
         Me.НоваяГруппаПрограмма.ItemHeight = 13
-        Me.НоваяГруппаПрограмма.Location = New System.Drawing.Point(337, 172)
+        Me.НоваяГруппаПрограмма.Location = New System.Drawing.Point(337, 221)
         Me.НоваяГруппаПрограмма.Name = "НоваяГруппаПрограмма"
         Me.НоваяГруппаПрограмма.Size = New System.Drawing.Size(546, 21)
         Me.НоваяГруппаПрограмма.TabIndex = 169
@@ -643,7 +643,7 @@ Partial Class РедакторГруппы
         Me.НоваяГруппаСпециальность.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.НоваяГруппаСпециальность.FormattingEnabled = True
         Me.НоваяГруппаСпециальность.ItemHeight = 13
-        Me.НоваяГруппаСпециальность.Location = New System.Drawing.Point(337, 194)
+        Me.НоваяГруппаСпециальность.Location = New System.Drawing.Point(337, 243)
         Me.НоваяГруппаСпециальность.Name = "НоваяГруппаСпециальность"
         Me.НоваяГруппаСпециальность.Size = New System.Drawing.Size(546, 21)
         Me.НоваяГруппаСпециальность.TabIndex = 170
@@ -653,7 +653,7 @@ Partial Class РедакторГруппы
         Me.НоваяГруппаОтветственныйКуратор.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.НоваяГруппаОтветственныйКуратор.FormattingEnabled = True
         Me.НоваяГруппаОтветственныйКуратор.ItemHeight = 13
-        Me.НоваяГруппаОтветственныйКуратор.Location = New System.Drawing.Point(337, 238)
+        Me.НоваяГруппаОтветственныйКуратор.Location = New System.Drawing.Point(337, 287)
         Me.НоваяГруппаОтветственныйКуратор.Name = "НоваяГруппаОтветственныйКуратор"
         Me.НоваяГруппаОтветственныйКуратор.Size = New System.Drawing.Size(546, 21)
         Me.НоваяГруппаОтветственныйКуратор.TabIndex = 172
@@ -663,7 +663,7 @@ Partial Class РедакторГруппы
         Me.НоваягруппаОтветственныйЗаПрактику.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.НоваягруппаОтветственныйЗаПрактику.FormattingEnabled = True
         Me.НоваягруппаОтветственныйЗаПрактику.ItemHeight = 13
-        Me.НоваягруппаОтветственныйЗаПрактику.Location = New System.Drawing.Point(337, 260)
+        Me.НоваягруппаОтветственныйЗаПрактику.Location = New System.Drawing.Point(337, 309)
         Me.НоваягруппаОтветственныйЗаПрактику.Name = "НоваягруппаОтветственныйЗаПрактику"
         Me.НоваягруппаОтветственныйЗаПрактику.Size = New System.Drawing.Size(546, 21)
         Me.НоваягруппаОтветственныйЗаПрактику.TabIndex = 173
@@ -790,7 +790,7 @@ Partial Class РедакторГруппы
         '
         'versProgs
         '
-        Me.versProgs.Location = New System.Drawing.Point(227, 172)
+        Me.versProgs.Location = New System.Drawing.Point(227, 221)
         Me.versProgs.Name = "versProgs"
         Me.versProgs.Size = New System.Drawing.Size(104, 21)
         Me.versProgs.TabIndex = 186
@@ -799,7 +799,7 @@ Partial Class РедакторГруппы
         '
         'НоваяГруппаКоличествоЧасов
         '
-        Me.НоваяГруппаКоличествоЧасов.Location = New System.Drawing.Point(337, 217)
+        Me.НоваяГруппаКоличествоЧасов.Location = New System.Drawing.Point(337, 266)
         Me.НоваяГруппаКоличествоЧасов.Name = "НоваяГруппаКоличествоЧасов"
         Me.НоваяГруппаКоличествоЧасов.ReadOnly = True
         Me.НоваяГруппаКоличествоЧасов.Size = New System.Drawing.Size(546, 20)

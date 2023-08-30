@@ -96,7 +96,7 @@
 
         cvalific = PK
         ActiveControl = Button2
-        СправочникГруппы.ShowDialog()
+        GroupList.ShowDialog()
 
     End Sub
 
@@ -104,7 +104,7 @@
 
         cvalific = PP
         ActiveControl = Button2
-        СправочникГруппы.ShowDialog()
+        GroupList.ShowDialog()
 
     End Sub
 
@@ -112,7 +112,7 @@
 
         cvalific = PO
         ActiveControl = Button2
-        СправочникГруппы.ShowDialog()
+        GroupList.ShowDialog()
 
     End Sub
 
@@ -137,7 +137,9 @@
     Private Sub createGroup_Click(sender As Object, e As EventArgs) Handles КнопкаСоздатьГруппу.Click
 
         ActiveControl = Button2
+        newGroup.newGroupInit()
         newGroup.ShowDialog()
+
 
     End Sub
 

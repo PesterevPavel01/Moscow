@@ -64,7 +64,7 @@ Public Class newStudent
         End If
 
         If fromStudentsList Then
-            slushatel.structSlushatel.idGroup = СправочникГруппы.kod
+            slushatel.structSlushatel.idGroup = GroupList.kod
             fromStudentsList = False
         Else
             slushatel.structSlushatel.idGroup = -1

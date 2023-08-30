@@ -91,142 +91,8 @@ Public Class РедакторГруппы
 
         SC = SynchronizationContext.Current
 
-        ReDim argument(2)
 
-        argument(0) = СправочникГруппы.gruppaData
 
-        Сохранить.Enabled = False
-
-        Сообщение.Visible = False
-
-        If Not gruppa.formGroupValidation(Me) Then
-            Сохранить.Enabled = True
-            Return
-        End If
-
-        gruppa.struct_grup.Kod = СправочникГруппы.kod
-        gruppa.saveParameters(Me)
-
-        gruppa.struct_grup.oldNumber = СправочникГруппы.numberGr
-        gruppa.struct_grup.oldYearNZ = СправочникГруппы.year
-
-        argument(1) = gruppa.struct_grup
-
-        secondThread = New Thread(AddressOf updateGroup)
-        secondThread.IsBackground = True
-        secondThread.Start(argument)
-
-    End Sub
-    Sub updateGroup(argument)
-
-        Dim SQLString As String
-        Dim gruppaOld As Group.strGruppa = argument(0)
-        Dim gruppa As Group.strGruppa = argument(1)
-
-        If gruppa.number <> gruppa.oldNumber Or gruppa.yearNZ <> gruppa.oldYearNZ Then
-
-            InsertIntoDataBase.argumentClear()
-            InsertIntoDataBase.argument.nameTable = "`group`"
-            InsertIntoDataBase.argument.firstName = "Номер"
-            InsertIntoDataBase.argument.firstValue = gruppa.number
-            InsertIntoDataBase.argument.secondName = "Year(ДатаНЗ)"
-            InsertIntoDataBase.argument.secondValue = gruppa.yearNZ
-
-            If InsertIntoDataBase.checkDuplicates() Then
-
-                ФормаДаНетУдалить.текстДаНет.Text = "Группа " + gruppa.number + " уже существует, удалить старую запись?"
-                ФормаДаНетУдалить.ShowDialog()
-
-                If ФормаДаНетУдалить.НажатаКнопкаНет Then
-                    SC.Send(AddressOf enabledButton, gruppa.number)
-                    Exit Sub
-                End If
-
-                SQLString = redactorGroup__deleteGroupInGroupList(gruppa.number, gruppa.yearNZ)
-                MainForm.mySqlConnect.sendQuery(SQLString, 1)
-
-                SQLString = redactorGroup__deketeGroupInGroup(gruppa.number, gruppa.yearNZ)
-                MainForm.mySqlConnect.sendQuery(SQLString, 1)
-
-                SC.Send(AddressOf updateNomberGroup, gruppa)
-
-            End If
-        End If
-
-        InsertIntoDataBase.argumentClear()
-        InsertIntoDataBase.argument.nameTable = "`group`"
-        InsertIntoDataBase.argument.firstName = "Номер"
-        InsertIntoDataBase.argument.firstValue = gruppa.oldNumber
-        InsertIntoDataBase.argument.secondName = "Year(ДатаНЗ)"
-        InsertIntoDataBase.argument.secondValue = gruppa.oldYearNZ
-
-        If InsertIntoDataBase.checkDuplicates() Then
-
-            SQLString = QueryString.updateGroup(gruppa)
-            If SQLString = "" Then
-                SC.Send(AddressOf enabledButton, gruppa.number)
-                Exit Sub
-            End If
-            InsertIntoDataBase.removeDuplicates = False  '??????
-
-        Else
-
-            SQLString = QueryString.insertIntoGroup(gruppa)
-            If SQLString = "" Then
-                SC.Send(AddressOf enabledButton, gruppa.number)
-                Exit Sub
-            End If
-
-        End If
-
-        MainForm.mySqlConnect.sendQuery(SQLString, 1)
-
-        If gruppaOld.numbersUDS.regNumberD <> gruppa.numbersUDS.regNumberD Or gruppaOld.numbersUDS.numberD <> gruppa.numbersUDS.numberD Or gruppaOld.numbersUDS.regNumberSv <> gruppaOld.numbersUDS.regNumberSv Or gruppaOld.numbersUDS.numberSv <> gruppa.numbersUDS.numberSv Or gruppaOld.numbersUDS.regNumberUd <> gruppa.numbersUDS.regNumberUd Or gruppaOld.numbersUDS.numberUd <> gruppa.numbersUDS.numberUd Then
-
-            SQLString = SQLString_UpdateNumbersSGrupp(gruppa.Kod)
-
-        End If
-
-        SC.Send(AddressOf updateSpravGroup, gruppa)
-        SC.Send(AddressOf enabledButton, gruppa.number)
-    End Sub
-
-    Sub updateSpravGroup(gruppa As Group.strGruppa)
-        Dim queryString As String
-        Dim DataString As String
-        Dim mySqlConnect As New MySQLConnect()
-
-        InsertIntoDataBase.argumentClear()
-        InsertIntoDataBase.argument.nameTable = "`group`"
-        InsertIntoDataBase.argument.firstName = "Номер"
-        InsertIntoDataBase.argument.firstValue = gruppa.number
-        InsertIntoDataBase.argument.secondName = "Year(ДатаНЗ)"
-        InsertIntoDataBase.argument.secondValue = gruppa.yearNZ
-
-        If InsertIntoDataBase.checkDuplicates() Then
-
-            DataString = mySqlConnect.dateToFormatMySQL(Date.Now.ToShortDateString)
-            Сообщение.Text = "Группа № " & СправочникГруппы.numberGr & " успешно изменена, дата записи: " & DataString
-            Сообщение.Visible = True
-            СправочникГруппы.updateGroupList()
-            StudentList.Text = "Группа № " & gruppa.number
-            СправочникГруппы.infoAboutGroup(1, 0) = gruppa.number
-            Me.Text = "Группа № " & gruppa.number
-
-            If gruppa.number <> gruppa.oldNumber Then
-
-                queryString = redactorGroup__updateGroupList(gruppa.number, gruppa.yearNZ)
-                СправочникГруппы.numberGr = gruppa.number
-
-                MainForm.mySqlConnect.sendQuery(queryString, 1)
-
-            End If
-        End If
-
-    End Sub
-    Sub updateNomberGroup(gruppa As Group.strGruppa)
-        СправочникГруппы.numberGr = gruppa.number
-        СправочникГруппы.year = gruppa.yearNZ
     End Sub
 
     Sub enabledButton(gruppa_number As String)
@@ -245,8 +111,8 @@ Public Class РедакторГруппы
         If e.KeyCode = 13 Then
             НоваяГруппаФормаОбучения_Click(sender, e)
         End If
-
     End Sub
+
 
     Private Sub НоваяГруппаПрограмма_KeyDown(sender As Object, e As KeyEventArgs)
 
@@ -1299,7 +1165,7 @@ Public Class РедакторГруппы
         НоваягруппаОтветственныйЗаПрактику.Items.Add("")
         НоваягруппаОтветственныйЗаПрактику.Items.AddRange(gruppa.formGrouppLists.otvetstv_praktika)
 
-        For Each element As Control In Me.Controls
+        For Each element As Control In Me.Controls.OfType(Of ComboBox)
             If Strings.Left(element.Name, 6) = "Модуль" Then
                 Dim com As ComboBox = element
                 com.Items.Clear()

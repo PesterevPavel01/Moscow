@@ -7,7 +7,7 @@
 
         If indForm = "СправочникГруппы" Then
 
-            ListV = СправочникГруппы.groupListTable
+            ListV = GroupList.groupListTable
 
         End If
 

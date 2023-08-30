@@ -969,7 +969,7 @@ Partial Class newGroup
         Me.НоваяГруппаУровеньКвалификации.TabIndex = 111
         Me.НоваяГруппаУровеньКвалификации.Visible = False
         '
-        'НоваяГруппа
+        'newGroup
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
@@ -1055,7 +1055,7 @@ Partial Class newGroup
         Me.ForeColor = System.Drawing.SystemColors.ControlText
         Me.KeyPreview = True
         Me.Margin = New System.Windows.Forms.Padding(5, 4, 5, 4)
-        Me.Name = "НоваяГруппа"
+        Me.Name = "newGroup"
         Me.Padding = New System.Windows.Forms.Padding(5)
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Новая Группа"

@@ -2,19 +2,14 @@
 Public Class StudentList
 
     Dim SC As SynchronizationContext
-
-    Sub loadStudentRed()
-        РедакторГруппы.loadFormGruppa()
-        ЗаполнитьРедакторГруппы.ЗаполнитьРедакторГруппы(СправочникГруппы.numberGr)
-    End Sub
-
+    Public cvalification As Int16
     Private Sub СписокСлушателейВГруппе_Shown(sender As Object, e As EventArgs) Handles Me.Shown
 
         SC = SynchronizationContext.Current
         Dim secondThread As Thread
         Dim argument
         ReDim argument(2)
-        argument(0) = СправочникГруппы.kod
+        argument(0) = GroupList.kod
         argument(1) = MainForm.mySqlConnect.mySqlSettings
 
         secondThread = New Thread(AddressOf studentListInGroup)
@@ -76,7 +71,7 @@ Public Class StudentList
 
             End If
 
-            Dim kod As Integer = СправочникГруппы.kod
+            Dim kod As Integer = GroupList.kod
             Dim snils As String
 
             Try
@@ -94,13 +89,13 @@ Public Class StudentList
             InsertIntoDataBase.argumentClear()
             InsertIntoDataBase.argument.nameTable = "group_list"
             InsertIntoDataBase.argument.firstName = "Kod"
-            InsertIntoDataBase.argument.firstValue = СправочникГруппы.kod
+            InsertIntoDataBase.argument.firstValue = GroupList.kod
             InsertIntoDataBase.argument.secondName = "students"
             InsertIntoDataBase.argument.secondValue = snils
 
             If InsertIntoDataBase.checkUniq_No2() = 2 Then
                 InsertIntoDataBase.deleteFromDB_NumberArg()
-                ЗаполнитьФормуССлушВГруппе.updateFormStudentsList(СправочникГруппы.kod)
+                ЗаполнитьФормуССлушВГруппе.updateFormStudentsList(GroupList.kod)
             End If
 
 
@@ -128,8 +123,6 @@ Public Class StudentList
 
                 WindowsApp2.StudentsList.studentsInfo = arrayMethod.removeEmpty(MainForm.mySqlConnect.loadMySqlToArray(queryString, 1))
 
-                '                РедакторСлушателя.prevFormSpisSlushVGr = True
-
                 РедакторСлушателя.ShowDialog()
 
                 СписокСлушателейВГруппе_Shown(sender, e)
@@ -137,6 +130,7 @@ Public Class StudentList
             Else MsgBox("информация удалена")
 
             End If
+
         Catch ex As Exception
 
         End Try
@@ -189,8 +183,16 @@ Public Class StudentList
     End Sub
 
     Private Sub allInfo_Click(sender As Object, e As EventArgs) Handles allInfo.Click
-        loadStudentRed()
-        РедакторГруппы.ShowDialog()
-        cleaner(РедакторГруппы)
+
+        newGroup.Enabled = True
+        newGroup.redactorGroupInit()
+        newGroup.ShowDialog()
+
+    End Sub
+
+    Private Sub StudentList_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
+
+        cleaner(newGroup)
+
     End Sub
 End Class

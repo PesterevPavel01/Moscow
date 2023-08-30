@@ -2330,9 +2330,9 @@ Module QueryString
         If nameTable = "Группа" Or nameTable = "`group`" Then
 
             If includeUK Then
-                sqlString = load_spr_group_search(СправочникГруппы.swichCvalification.activeType, sortColumn, searchColumn, searchValue, СправочникГруппы.yearSpravochnikGr.Text)
+                sqlString = load_spr_group_search(GroupList.swichCvalification.activeType, sortColumn, searchColumn, searchValue, GroupList.yearSpravochnikGr.Text)
             Else
-                sqlString = formList__loadGroup(СправочникГруппы.swichCvalification.activeType, sortColumn, searchColumn, searchValue, СправочникГруппы.yearSpravochnikGr.Text)
+                sqlString = formList__loadGroup(GroupList.swichCvalification.activeType, sortColumn, searchColumn, searchValue, GroupList.yearSpravochnikGr.Text)
             End If
 
         Else

@@ -1,6 +1,6 @@
 ﻿Imports System.Net.Mime.MediaTypeNames
 
-Public Class СправочникГруппы
+Public Class GroupList
 
     Public massiv
     Public numberGr As String
@@ -118,6 +118,7 @@ Public Class СправочникГруппы
             StudentList.ListViewStudentsList.Items.Clear()
 
             numberGr = groupListTable.SelectedItems.Item(0).SubItems(1).Text
+            StudentList.cvalification = MainForm.cvalific
 
             If groupListTable.SelectedItems.Item(0).SubItems(0).Text = "" Then
                 Exit Sub
@@ -140,8 +141,10 @@ Public Class СправочникГруппы
             StudentList.Text = "Группа № " & numberGr
             РедакторГруппы.Text = "Группа № " & numberGr
             StudentList.ShowDialog()
+            MainForm.cvalific = StudentList.cvalification
 
-        Else MsgBox("информация удалена")
+        Else
+            MsgBox("информация удалена")
         End If
 
     End Sub

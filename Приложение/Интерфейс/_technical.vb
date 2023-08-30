@@ -346,12 +346,12 @@ Module _technical
 
         'ФормаСправочникСлушатели.Label2.Visible = False
 
-        queryString = MainForm.sqlQueryString.insertIntoGroupList(snils, СправочникГруппы.kod)
+        queryString = MainForm.sqlQueryString.insertIntoGroupList(snils, GroupList.kod)
 
         InsertIntoDataBase.argumentClear()
         InsertIntoDataBase.argument.nameTable = "group_list"
         InsertIntoDataBase.argument.firstName = "Kod"
-        InsertIntoDataBase.argument.firstValue = Convert.ToString(СправочникГруппы.kod)
+        InsertIntoDataBase.argument.firstValue = Convert.ToString(GroupList.kod)
         InsertIntoDataBase.argument.secondName = "students"
         InsertIntoDataBase.argument.secondValue = snils
 
@@ -359,7 +359,7 @@ Module _technical
 
             MainForm.mySqlConnect.sendQuery(queryString, 1)
 
-            ЗаполнитьФормуССлушВГруппе.updateFormStudentsList(СправочникГруппы.kod)
+            ЗаполнитьФормуССлушВГруппе.updateFormStudentsList(GroupList.kod)
 
         Else MsgBox("Слушатель уже добавлен в группу")
 

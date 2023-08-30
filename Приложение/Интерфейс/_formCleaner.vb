@@ -2,8 +2,6 @@
 
     Sub cleaner(currentForm As Form)
 
-        Dim nameControl As String
-
         For Each element In currentForm.Controls.OfType(Of TextBox)
             element.Text = ""
         Next
