@@ -133,74 +133,74 @@ Module _technical
 
     End Function
 
-    Function formStudentsValidation() As Boolean
+    'Function formStudentsValidation() As Boolean
 
-        Dim snilsLen As Integer
-        Dim snilsNumber As Long
-        snilsLen = Len(РедакторСлушателя.Снилс.Text)
-
-
-        If snilsLen <> 14 Then
-
-            MsgBox("Снилс введен некорректно")
-
-            Return False
-
-        End If
-
-        Try
-            snilsNumber = addMask.deleteMasck(РедакторСлушателя.Снилс.Text)
-        Catch ex As Exception
-
-            MsgBox("Снилс введен некорректно")
-            Return False
-
-        End Try
-
-        If РедакторСлушателя.ValidOn.Checked Then
-            If Not checkSnils(addMask.deleteMasck(РедакторСлушателя.Снилс.Text)) Then
-                MsgBox("Снилс не прошел проверку")
-                Return False
-            End If
-        End If
+    '    Dim snilsLen As Integer
+    '    Dim snilsNumber As Long
+    '    snilsLen = Len(newStudent.snils.Text)
 
 
-        If РедакторСлушателя.Снилс.Text = "" Then
+    '    If snilsLen <> 14 Then
 
-            MsgBox("Заполните поле 'СНИЛС'")
-            Return False
+    '        MsgBox("Снилс введен некорректно")
 
-        End If
+    '        Return False
 
-        If РедакторСлушателя.ДатаРождения.Value.ToShortDateString = "01.01.1753" Then
+    '    End If
 
-            MsgBox("Установите дату в поле Дата рождения")
-            Return False
+    '    Try
+    '        snilsNumber = addMask.deleteMask(newStudent.snils.Text)
+    '    Catch ex As Exception
 
-        End If
+    '        MsgBox("Снилс введен некорректно")
+    '        Return False
 
-        If РедакторСлушателя.Фамилия.Text = "" Then
-            MsgBox("Укажите Фамилию слушателя")
-            Return False
-        End If
+    '    End Try
 
-        If РедакторСлушателя.ИсточникФин.Text = "" Then
-            MsgBox("Укажите источник финансирования")
-            Return False
-        End If
+    '    If newStudent.ValidOn.Checked Then
+    '        If Not checkSnils(addMask.deleteMask(newStudent.snils.Text)) Then
+    '            MsgBox("Снилс не прошел проверку")
+    '            Return False
+    '        End If
+    '    End If
 
-        If Not interfaceMod.formStudentValidation(РедакторСлушателя) Then
 
-            Warning.content.Text = "Заполните все обязательные поля"
-            openForm(Warning)
+    '    If newStudent.snils.Text = "" Then
 
-            Return False
+    '        MsgBox("Заполните поле 'СНИЛС'")
+    '        Return False
 
-        End If
+    '    End If
 
-        Return True
+    '    If newStudent.birthDate.Value.ToShortDateString = "01.01.1753" Then
 
-    End Function
+    '        MsgBox("Установите дату в поле Дата рождения")
+    '        Return False
+
+    '    End If
+
+    '    If newStudent.secondName.Text = "" Then
+    '        MsgBox("Укажите Фамилию слушателя")
+    '        Return False
+    '    End If
+
+    '    If newStudent.ИсточникФин.Text = "" Then
+    '        MsgBox("Укажите источник финансирования")
+    '        Return False
+    '    End If
+
+    '    If Not interfaceMod.formStudentValidation(newStudent) Then
+
+    '        Warning.content.Text = "Заполните все обязательные поля"
+    '        openForm(Warning)
+
+    '        Return False
+
+    '    End If
+
+    '    Return True
+
+    'End Function
 
     Function addZeros(value As Integer, length As Integer) As String
         Dim Result As String
@@ -359,7 +359,7 @@ Module _technical
 
             MainForm.mySqlConnect.sendQuery(queryString, 1)
 
-            ЗаполнитьФормуССлушВГруппе.updateFormStudentsList(GroupList.kod)
+            updateStudentsInGroup.updateFormStudentsInGroup(GroupList.kod)
 
         Else MsgBox("Слушатель уже добавлен в группу")
 

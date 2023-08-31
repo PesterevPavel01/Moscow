@@ -44,12 +44,23 @@
 
     End Sub
 
-    Private Sub groupNumber_Click(sender As Object, e As EventArgs) Handles groupNumber.Click
+    Private Sub ЗагрузитьИнформацию_GotFocus(sender As Object, e As EventArgs) Handles ЗагрузитьИнформацию.GotFocus
+        Call interfaceMod.controlFont(ЗагрузитьИнформацию, 14.0F)
+    End Sub
 
+    Private Sub ЗагрузитьИнформацию_LostFocus(sender As Object, e As EventArgs) Handles ЗагрузитьИнформацию.LostFocus
+        Call interfaceMod.controlFont(ЗагрузитьИнформацию, 11.0F)
+    End Sub
+
+    Private Sub АОценкиИА_KeyDown(sender As Object, e As KeyEventArgs) Handles Me.KeyDown
+        closeEsc(Me, e.KeyCode)
+    End Sub
+
+    Private Sub groupNumber_Click(sender As Object, e As EventArgs) Handles groupNumber.Click
         List.resultList.Columns(0).Width = 120
         List.resultList.Columns.Add("Год", 100)
         List.resultList.Columns.Add("Код", 100)
-        List.textboxName = ActiveControl.Name
+        List.textboxName = "groupNumber"
         List.currentFormName = Name
 
         kodGroup = -1
@@ -66,11 +77,17 @@
             loadTables()
 
         End If
-
     End Sub
 
-    Private Sub Сохранить_Click(sender As Object, e As EventArgs) Handles Сохранить.Click
+    Private Sub groupNumber_KeyDown(sender As Object, e As KeyEventArgs) Handles groupNumber.KeyDown
+        If e.KeyCode = Keys.Enter Then
 
+            groupNumber_Click(sender, e)
+
+        End If
+    End Sub
+
+    Private Sub save_Click(sender As Object, e As EventArgs) Handles save.Click
         ActiveControl = Button1
 
         If АДействияСОценкиИА.check(iaTAble) Then
@@ -80,37 +97,5 @@
         End If
 
         АДействияСОценкиИА.СохранитьОценки(iaTAble, kodGroup)
-
     End Sub
-
-    Private Sub Группа_KeyDown(sender As Object, e As KeyEventArgs) Handles groupNumber.KeyDown
-
-        If e.KeyCode = 13 Then
-
-            Call groupNumber_Click(sender, e)
-
-        End If
-
-    End Sub
-
-    Private Sub Сохранить_GotFocus(sender As Object, e As EventArgs) Handles Сохранить.GotFocus
-        Call interfaceMod.controlFont(сохранить, 14.0F)
-    End Sub
-
-    Private Sub Сохранить_LostFocus(sender As Object, e As EventArgs) Handles Сохранить.LostFocus
-        Call interfaceMod.controlFont(сохранить, 11.0F)
-    End Sub
-
-    Private Sub ЗагрузитьИнформацию_GotFocus(sender As Object, e As EventArgs) Handles ЗагрузитьИнформацию.GotFocus
-        Call interfaceMod.controlFont(ЗагрузитьИнформацию, 14.0F)
-    End Sub
-
-    Private Sub ЗагрузитьИнформацию_LostFocus(sender As Object, e As EventArgs) Handles ЗагрузитьИнформацию.LostFocus
-        Call interfaceMod.controlFont(ЗагрузитьИнформацию, 11.0F)
-    End Sub
-
-    Private Sub АОценкиИА_KeyDown(sender As Object, e As KeyEventArgs) Handles Me.KeyDown
-        closeEsc(Me, e.KeyCode)
-    End Sub
-
 End Class

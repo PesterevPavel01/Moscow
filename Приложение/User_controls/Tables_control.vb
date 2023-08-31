@@ -466,7 +466,7 @@ Public Class Tables_control
             If programm_on Then
 
                 queryString = MainForm.sqlQueryString.programs__checkKodGrouppBusy(remove_kod)
-                result = mySQLConnector.ЗагрузитьИзMySQLвОдномерныйМассив(queryString, 1, 0)
+                result = mySQLConnector.loadIntoarray(queryString, 1, 0)
 
                 If Convert.ToInt16(result(0)) > 0 Then
 
@@ -664,7 +664,7 @@ Public Class Tables_control
 
         End If
 
-        resAr = mySQLConnector.ЗагрузитьИзMySQLвОдномерныйМассив(queryString, 1, 0)
+        resAr = mySQLConnector.loadIntoarray(queryString, 1, 0)
 
         If Not resAr(0) = "0" Then
             Return
@@ -706,7 +706,7 @@ Public Class Tables_control
 
         End If
 
-        resAr = mySQLConnector.ЗагрузитьИзMySQLвОдномерныйМассив(queryString, 1, 0)
+        resAr = mySQLConnector.loadIntoarray(queryString, 1, 0)
 
         If Not resAr(0) = "0" Then
 
@@ -736,7 +736,7 @@ Public Class Tables_control
 
         End If
 
-        resAr = mySQLConnector.ЗагрузитьИзMySQLвОдномерныйМассив(queryString, 1, 0)
+        resAr = mySQLConnector.loadIntoarray(queryString, 1, 0)
 
         values.kod = resAr(0)
 

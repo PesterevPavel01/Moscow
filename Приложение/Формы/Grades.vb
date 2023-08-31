@@ -70,6 +70,56 @@
 
     End Sub
 
+    Private Sub save_GotFocus(sender As Object, e As EventArgs)
+        Call interfaceMod.controlFont(save, 14.0F)
+    End Sub
+
+    Private Sub save_LostFocus(sender As Object, e As EventArgs)
+        interfaceMod.controlFont(save, 11.0F)
+    End Sub
+
+    Private Sub Button2_GotFocus(sender As Object, e As EventArgs) Handles Button2.GotFocus
+        Call interfaceMod.controlFont(Button2, 14.0F)
+    End Sub
+
+    Private Sub Button2_LostFocus(sender As Object, e As EventArgs) Handles Button2.LostFocus
+        interfaceMod.controlFont(Button2, 11.0F)
+    End Sub
+
+    Private Sub Grades_KeyDown(sender As Object, e As KeyEventArgs) Handles Me.KeyDown
+        Call pressTab(e.KeyCode, 40)
+        Call pressTab(e.KeyCode, 39)
+        Call closeEsc(Me, e.KeyCode)
+    End Sub
+
+    Sub updateDataGreed(numberColumns As Integer)
+
+
+        For number As Int16 = 2 To 11
+
+            If number <= numberColumns + 1 Then
+                resultTable.Columns(number).ReadOnly = False
+                resultTable.Columns(number).DefaultCellStyle.BackColor = Color.White
+            Else
+                resultTable.Columns(number).ReadOnly = True
+                resultTable.Columns(number).DefaultCellStyle.BackColor = Color.Gray
+            End If
+
+        Next
+
+    End Sub
+
+    Private Sub save_Click(sender As Object, e As EventArgs) Handles save.Click
+
+        ActiveControl = Button2
+
+        If gradesManipulation.check(resultTable) Then
+            Return
+        End If
+        gradesManipulation.saveVal(resultTable, kodGroup)
+
+    End Sub
+
     Private Sub groupNumber_Click(sender As Object, e As EventArgs) Handles groupNumber.Click
 
         List.resultList.Columns(0).Width = 120
@@ -93,65 +143,11 @@
 
     End Sub
 
-    Private Sub save_Click(sender As Object, e As EventArgs) Handles Сохранить.Click
-
-        ActiveControl = Button2
-
-        If gradesManipulation.check(resultTable) Then
-            Return
-        End If
-
-        gradesManipulation.saveVal(resultTable, kodGroup)
-
-    End Sub
-
-    Private Sub save_GotFocus(sender As Object, e As EventArgs) Handles Сохранить.GotFocus
-        Call interfaceMod.controlFont(Сохранить, 14.0F)
-    End Sub
-
-    Private Sub save_LostFocus(sender As Object, e As EventArgs) Handles Сохранить.LostFocus
-        interfaceMod.controlFont(Сохранить, 11.0F)
-    End Sub
-
-    Private Sub Button2_GotFocus(sender As Object, e As EventArgs) Handles Button2.GotFocus
-        Call interfaceMod.controlFont(Button2, 14.0F)
-    End Sub
-
-    Private Sub Button2_LostFocus(sender As Object, e As EventArgs) Handles Button2.LostFocus
-        interfaceMod.controlFont(Button2, 11.0F)
-    End Sub
-
-    Private Sub Grades_KeyDown(sender As Object, e As KeyEventArgs) Handles Me.KeyDown
-        Call pressTab(e.KeyCode, 40)
-        Call pressTab(e.KeyCode, 39)
-        Call closeEsc(Me, e.KeyCode)
-    End Sub
-
-    Private Sub Группа_KeyDown(sender As Object, e As KeyEventArgs) Handles groupNumber.KeyDown
-
-        If e.KeyCode = 13 Then
+    Private Sub groupNumber_KeyDown(sender As Object, e As KeyEventArgs) Handles groupNumber.KeyDown
+        If e.KeyCode = Keys.Enter Then
 
             Call groupNumber_Click(sender, e)
 
         End If
-
     End Sub
-
-    Sub updateDataGreed(numberColumns As Integer)
-
-
-        For number As Int16 = 2 To 11
-
-            If number <= numberColumns + 1 Then
-                resultTable.Columns(number).ReadOnly = False
-                resultTable.Columns(number).DefaultCellStyle.BackColor = Color.White
-            Else
-                resultTable.Columns(number).ReadOnly = True
-                resultTable.Columns(number).DefaultCellStyle.BackColor = Color.Gray
-            End If
-
-        Next
-
-    End Sub
-
 End Class

@@ -75,7 +75,7 @@ Module gradesManipulation
 
     Function check(Ведомость As Object) As Boolean
 
-        If Ведомость.Rows.Count = 1 Then
+        If Ведомость.Rows.Count = 0 Then
 
             check = True
 

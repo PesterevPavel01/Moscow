@@ -1,24 +1,14 @@
-﻿Public Class Group
+﻿Imports WindowsApp2.Group
+
+Public Class Group
 
     Private sqlQueryString As New SqlQueryString
     Private mySQLConnector As New MySQLConnect
-    Public struct_grup As strGruppa
+    Public struct_grup As New strGruppa
     Public flagGrouppForm As FormGrouppFlag
     Public formGrouppLists As FormGroupplLists
 
-    Public Structure Numbers
-
-        Public numberUd As Int64
-        Public regNumberUd As Int64
-        Public numberD As Int64
-        Public regNumberD As Int64
-        Public numberSv As Int64
-        Public regNumberSv As Int64
-        Public numberIA As Int64
-
-    End Structure
-
-    Structure strGruppa
+    Public Structure strGruppa
 
         Dim flagAllListProgs As Boolean
         Dim kodProgram As Integer
@@ -66,6 +56,17 @@
         Dim numbersUDS As Numbers
         Dim mainDocument As String
 
+
+    End Structure
+    Public Structure Numbers
+
+        Public numberUd As Int64
+        Public regNumberUd As Int64
+        Public numberD As Int64
+        Public regNumberD As Int64
+        Public numberSv As Int64
+        Public regNumberSv As Int64
+        Public numberIA As Int64
 
     End Structure
 
@@ -189,27 +190,27 @@
         mySQLConnector.opdateArgument()
 
         queryString = sqlQueryString.loadUrovenKvalifikacii
-        formGrouppLists.ur_cvalifik = mySQLConnector.ЗагрузитьИзMySQLвОдномерныйМассив(queryString, 1, 0)
+        formGrouppLists.ur_cvalifik = mySQLConnector.loadIntoarray(queryString, 1, 0)
 
         queryString = sqlQueryString.loadForma_obuch()
-        formGrouppLists.forma_obuch = mySQLConnector.ЗагрузитьИзMySQLвОдномерныйМассив(queryString, 1, 0)
+        formGrouppLists.forma_obuch = mySQLConnector.loadIntoarray(queryString, 1, 0)
 
         queryString = ProgrammPoUKvalifikLimit1(struct_grup.urKvalific)
-        formGrouppLists.programma = mySQLConnector.ЗагрузитьИзMySQLвОдномерныйМассив(queryString, 1, 0)
+        formGrouppLists.programma = mySQLConnector.loadIntoarray(queryString, 1, 0)
 
         queryString = sqlQueryString.loadSpecialnost()
-        formGrouppLists.specialnost = mySQLConnector.ЗагрузитьИзMySQLвОдномерныйМассив(queryString, 1, 0)
+        formGrouppLists.specialnost = mySQLConnector.loadIntoarray(queryString, 1, 0)
 
         queryString = sqlQueryString.loadKurator()
-        formGrouppLists.kurator = mySQLConnector.ЗагрузитьИзMySQLвОдномерныйМассив(queryString, 1, 0)
+        formGrouppLists.kurator = mySQLConnector.loadIntoarray(queryString, 1, 0)
 
         formGrouppLists.otvetstv_praktika = formGrouppLists.kurator
 
         queryString = sqlQueryString.loadFinansirovanie()
-        formGrouppLists.finansirovanie = mySQLConnector.ЗагрузитьИзMySQLвОдномерныйМассив(queryString, 1, 0)
+        formGrouppLists.finansirovanie = mySQLConnector.loadIntoarray(queryString, 1, 0)
 
         queryString = sqlQueryString.loadKvalifikaciya()
-        formGrouppLists.kvalifikaciya = mySQLConnector.ЗагрузитьИзMySQLвОдномерныйМассив(queryString, 1, 0)
+        formGrouppLists.kvalifikaciya = mySQLConnector.loadIntoarray(queryString, 1, 0)
 
         flagGrouppForm.ur_cvalifik = False
         flagGrouppForm.forma_obuch = False
@@ -230,11 +231,11 @@
 
     End Sub
 
-    Public Sub updateProgramma()
+    Public Sub updateProgramm()
 
         Dim queryString As String
         queryString = ProgrammPoUKvalifikLimit1(struct_grup.urKvalific)
-        formGrouppLists.programma = mySQLConnector.ЗагрузитьИзMySQLвОдномерныйМассив(queryString, 1, 0)
+        formGrouppLists.programma = mySQLConnector.loadIntoarray(queryString, 1, 0)
 
     End Sub
 
@@ -265,7 +266,7 @@
 
         queryString = sqlQueryString.load_kol_chas(struct_grup.kodProgram)
 
-        result = mySQLConnector.ЗагрузитьИзMySQLвОдномерныйМассив(queryString, 1, 0)
+        result = mySQLConnector.loadIntoarray(queryString, 1, 0)
 
         If result.Length < 1 Then
 
@@ -376,7 +377,7 @@
 
                     Case "профессиональная переподготовка"
 
-                        If newGroup.НоваяГруппаУровеньКвалификации.Text = "профессиональная переподготовка" Then
+                        If newGroup.statusType.Text = "профессиональная переподготовка" Then
                             If Not checkNumber(struct_grup.numbersUDS.numberD, "Серия и номер диплома") Then
                                 Return False
                             End If
@@ -391,7 +392,7 @@
 
                     Case "профессиональное обучение"
 
-                        If newGroup.НоваяГруппаУровеньКвалификации.Text = "профессиональное обучение" Then
+                        If newGroup.statusType.Text = "профессиональное обучение" Then
 
                             If Not checkNumber(struct_grup.numbersUDS.regNumberSv, "Серия и номер свидетельства") Then
                                 Return False

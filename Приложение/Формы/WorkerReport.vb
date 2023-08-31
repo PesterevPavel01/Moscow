@@ -67,7 +67,7 @@
         End If
 
         pednagr__infoTable.Columns(0).Width = pednagr__infoTable.Width * 1 / 3
-        pednagr__infoTable.Columns(1).Width = pednagr__infoTable.Width * 2 / 3 - 4
+        pednagr__infoTable.Columns(1).Width = pednagr__infoTable.Width * 2 / 3 - 20
         pednagr__infoTable.Columns(1).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
 
     End Sub
@@ -137,7 +137,7 @@
         datagridInsertRowIntoDB(pednagr__mainTable, "pednagruzka", arg, arrayNameAndType, 0, 6)
     End Sub
 
-    Private Sub ВедомостьПеднагрузка_KeyDown(sender As Object, e As KeyEventArgs) Handles MyBase.KeyDown
+    Private Sub WorkerReport_KeyDown(sender As Object, e As KeyEventArgs) Handles MyBase.KeyDown
         closeEsc(Me, e.KeyCode)
     End Sub
 

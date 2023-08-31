@@ -243,18 +243,6 @@
     <Compile Include="Приложение\Формы\НастройкаПоискаСлушателей.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Приложение\Формы\ЗавершениеРаботы.Designer.vb">
-      <DependentUpon>ЗавершениеРаботы.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Приложение\Формы\ЗавершениеРаботы.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Приложение\Формы\Загрузка.Designer.vb">
-      <DependentUpon>Загрузка.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Приложение\Формы\Загрузка.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Приложение\ВедомостиБланки\gradesManipulation.vb" />
     <Compile Include="Приложение\Формы\Grades.Designer.vb">
       <DependentUpon>Grades.vb</DependentUpon>
@@ -281,28 +269,16 @@
     </Compile>
     <Compile Include="Приложение\Интерфейс\arrayMethod.vb" />
     <Compile Include="Приложение\Отчеты\OtchetExcell.vb" />
-    <Compile Include="Приложение\Интерфейс\ИзменениеВыделеннойСтрокиВListView.vb" />
-    <Compile Include="Приложение\Справочники\ЗаполнитьФормуССлушВГруппе.vb" />
-    <Compile Include="Приложение\Формы\StudentList.Designer.vb">
-      <DependentUpon>StudentList.vb</DependentUpon>
+    <Compile Include="Приложение\Интерфейс\updateListView_1.vb" />
+    <Compile Include="Приложение\Справочники\updateStudentsInGroup.vb" />
+    <Compile Include="Приложение\Формы\StudentsInGroup.Designer.vb">
+      <DependentUpon>StudentsInGroup.vb</DependentUpon>
     </Compile>
-    <Compile Include="Приложение\Формы\StudentList.vb">
+    <Compile Include="Приложение\Формы\StudentsInGroup.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Приложение\Справочники\ЗаполнитьРедакторСлушателя.vb" />
-    <Compile Include="Приложение\Формы\РедакторСлушателя.Designer.vb">
-      <DependentUpon>РедакторСлушателя.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Приложение\Формы\РедакторСлушателя.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="Приложение\Справочники\studentBuilder.vb" />
     <Compile Include="Приложение\Справочники\updateGroupRedactor.vb" />
-    <Compile Include="Приложение\Формы\РедакторГруппы.Designer.vb">
-      <DependentUpon>РедакторГруппы.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Приложение\Формы\РедакторГруппы.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Приложение\Формы\newStudent.Designer.vb">
       <DependentUpon>newStudent.vb</DependentUpon>
     </Compile>
@@ -342,7 +318,6 @@
     <Compile Include="Приложение\Формы\GroupList.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Приложение\Интерфейс\UpdateListView.vb" />
     <Compile Include="Приложение\Формы\MainForm.Designer.vb">
       <DependentUpon>MainForm.vb</DependentUpon>
     </Compile>
@@ -395,26 +370,14 @@
     <EmbeddedResource Include="Приложение\Формы\НастройкаПоискаСлушателей.resx">
       <DependentUpon>НастройкаПоискаСлушателей.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Приложение\Формы\ЗавершениеРаботы.resx">
-      <DependentUpon>ЗавершениеРаботы.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Приложение\Формы\Загрузка.resx">
-      <DependentUpon>Загрузка.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Приложение\Формы\Grades.resx">
       <DependentUpon>Grades.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Приложение\Формы\Warning.resx">
       <DependentUpon>Warning.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Приложение\Формы\StudentList.resx">
-      <DependentUpon>StudentList.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Приложение\Формы\РедакторСлушателя.resx">
-      <DependentUpon>РедакторСлушателя.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Приложение\Формы\РедакторГруппы.resx">
-      <DependentUpon>РедакторГруппы.vb</DependentUpon>
+    <EmbeddedResource Include="Приложение\Формы\StudentsInGroup.resx">
+      <DependentUpon>StudentsInGroup.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Приложение\Формы\newStudent.resx">
       <DependentUpon>newStudent.vb</DependentUpon>

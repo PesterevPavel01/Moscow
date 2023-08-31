@@ -22,9 +22,9 @@
 
         massiv = MainForm.mySqlConnect.loadMySqlToArray(queryString, 1)
         massiv = arrayMethod.removeEmpty(massiv)
-        massiv = addMask.addMask(massiv)
+        massiv = addMask.addMaskIntoArray(massiv, 1)
 
-        Call UpdateListView.updateListView(False, True, ListViewСписокСлушателей, massiv, 1, 2, 3, 4)
+        Call updateListView.updateListView(False, True, ListViewСписокСлушателей, massiv, 1, 2, 3, 4)
         searchRow.Text = ""
         ActiveControl = ListViewСписокСлушателей
         Try
@@ -43,16 +43,18 @@
 
         If Not ListViewСписокСлушателей.SelectedItems.Item(0).SubItems(1).Text = "удалено" Then
 
-            snils = addMask.deleteMasck(ListViewСписокСлушателей.SelectedItems.Item(0).SubItems(1).Text)
+            snils = addMask.deleteMask(ListViewСписокСлушателей.SelectedItems.Item(0).SubItems(1).Text)
 
-            РедакторСлушателя.Text = ListViewСписокСлушателей.SelectedItems.Item(0).SubItems(2).Text & " " & ListViewСписокСлушателей.SelectedItems.Item(0).SubItems(3).Text & " " & ListViewСписокСлушателей.SelectedItems.Item(0).SubItems(4).Text & " "
+            newStudent.Text = ListViewСписокСлушателей.SelectedItems.Item(0).SubItems(2).Text & " " & ListViewСписокСлушателей.SelectedItems.Item(0).SubItems(3).Text & " " & ListViewСписокСлушателей.SelectedItems.Item(0).SubItems(4).Text & " "
 
             queryString = load_slushatel(snils)
 
             studentsInfo = MainForm.mySqlConnect.loadMySqlToArray(queryString, 1)
             studentsInfo = arrayMethod.removeEmpty(studentsInfo)
-
-            РедакторСлушателя.Show()
+            newStudent.student.studentData.prevSnils = snils
+            newStudent.flagRedactor = True
+            newStudent.ShowDialog()
+            newStudent.flagRedactor = False
 
         Else MsgBox("информация удалена")
 
@@ -83,7 +85,7 @@
 
         If searchField = "Снилс" Then
 
-            massiv = sqlSearch(addMask.deleteMasck(searchRow.Text), "students", "Снилс, Фамилия, Имя, Отчество, ДатаРождения", searchField, sortField & interfaceMod.sortType(sortSettsStudents.sortSetts.flagSortUp))
+            massiv = sqlSearch(addMask.deleteMask(searchRow.Text), "students", "Снилс, Фамилия, Имя, Отчество, ДатаРождения", searchField, sortField & interfaceMod.sortType(sortSettsStudents.sortSetts.flagSortUp))
 
             If Not Press Then
 
@@ -96,14 +98,14 @@
 
             If Not massiv(0, 0) = "нет записей" Then
 
-                massiv = addMask.addMask(massiv, 0)
+                massiv = addMask.addMaskIntoArray(massiv, 0)
 
             End If
 
         Else
 
             massiv = sqlSearch(searchRow.Text, "students", "Снилс, Фамилия, Имя, Отчество, ДатаРождения", searchField, sortField)
-            massiv = addMask.addMask(massiv, 0)
+            massiv = addMask.addMaskIntoArray(massiv, 0)
 
         End If
 
@@ -151,7 +153,7 @@
 
             element = ListViewСписокСлушателей.SelectedItems.Count
 
-            ind = deleteMasck(ListViewСписокСлушателей.SelectedItems.Item(0).SubItems(1).Text)
+            ind = deleteMask(ListViewСписокСлушателей.SelectedItems.Item(0).SubItems(1).Text)
             nomer = ListViewСписокСлушателей.SelectedItems.Item(0).SubItems(0).Text
 
             InsertIntoDataBase.argumentClear()
@@ -192,7 +194,7 @@
 
                     'Label2.Visible = True
                     'Label2.Text = "Слушатель: Снилс №" & ind & " был удален."
-                    Call ИзменениеВыделеннойСтрокиВListView.ИзменениеВыделеннойСтрокиВListView("СправочникСлушатели", 1, "удалено", 2, "удалено", 3, "удалено", 4, "удалено")
+                    Call updateListView.updateRow("СправочникСлушатели", 1, "удалено", 2, "удалено", 3, "удалено", 4, "удалено")
                     счетчик = 0
                     While счетчик < UBound(massiv, 1)
 
@@ -328,7 +330,7 @@
 
         Try
 
-            Snils = addMask.deleteMasck(ListViewСписокСлушателей.SelectedItems.Item(0).SubItems(1).Text)
+            Snils = addMask.deleteMask(ListViewСписокСлушателей.SelectedItems.Item(0).SubItems(1).Text)
 
         Catch ex As Exception
 
@@ -367,7 +369,7 @@
             Exit Sub
         End Try
 
-        snils = addMask.deleteMasck(snils)
+        snils = addMask.deleteMask(snils)
 
         _technical.insertIntoGroupList(snils)
         ActiveControl = BtnFocus

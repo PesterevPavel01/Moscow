@@ -1,5 +1,5 @@
 ﻿Module addMask
-    Function ДобавитьРубашку(str As String) As String
+    Function addMask(str As String) As String
 
         Dim Строка As String
         Dim Начало As String
@@ -16,7 +16,7 @@
 
         Строка = Начало & Chr(45) & Первая & Chr(45) & Вторая & Chr(45) & Конец
 
-        ДобавитьРубашку = Строка
+        addMask = Строка
 
 
     End Function
@@ -24,7 +24,7 @@
     Function РубашкаНаВвод(str As String, ch1 As Integer, ch2 As Integer, ch3 As Integer, dl As Integer) As String
         Dim длина As Integer
 
-        str = deleteMasck(str)
+        str = deleteMask(str)
 
         If Len(str) >= ch1 Then
 
@@ -55,7 +55,7 @@
 
     End Function
 
-    Function deleteMasck(str As String) As String
+    Function deleteMask(str As String) As String
 
         Dim sc As Integer
         Dim rez As String, т As String
@@ -75,7 +75,7 @@ NextIteration:
             sc = sc + 1
         End While
 
-        deleteMasck = rez
+        deleteMask = rez
 
     End Function
 
@@ -92,7 +92,7 @@ NextIteration:
     End Function
 
 
-    Function addMask(massiv As Object, Optional номерСтолбца As Integer = 1) As Object
+    Function addMaskIntoArray(massiv As Object, номерСтолбца As Integer) As Object
 
         Dim massivListView
         Dim column As Integer, row As Byte
@@ -110,7 +110,7 @@ NextIteration:
                 If row = номерСтолбца Then
 
                     'massivListView(row, column) = УдалитьРубашку(massiv(row, column))
-                    massivListView(row, column) = ДобавитьРубашку(massiv(row, column))
+                    massivListView(row, column) = addMask(massiv(row, column))
 
                 End If
 
@@ -120,7 +120,7 @@ NextIteration:
             row = row + 1
         End While
 
-        addMask = massivListView
+        addMaskIntoArray = massivListView
 
     End Function
 
@@ -142,7 +142,7 @@ NextIteration:
                 If row = номерСтолбца Then
 
                     'massivListView(row, column) = УдалитьРубашку(massiv(row, column))
-                    massivListView(row, column) = ДобавитьРубашку(massiv(row, column))
+                    massivListView(row, column) = addMask(massiv(row, column))
                     massivListView(row, column) = Strings.Left(massivListView(row, column), 11) + " " + Strings.Right(massivListView(row, column), 2)
                 End If
 

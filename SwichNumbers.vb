@@ -13,12 +13,12 @@ Public Class SwichNumbers
     Public Sub init()
 
         controlList.Add("pk", pkList)
-        controlList.Add("po", poList)
         controlList.Add("pp", ppList)
+        controlList.Add("po", poList)
 
         typeCval.Add("pk")
-        typeCval.Add("po")
         typeCval.Add("pp")
+        typeCval.Add("po")
 
     End Sub
 
@@ -30,6 +30,7 @@ Public Class SwichNumbers
 
                 For Each element As TextBox In controlList(cvalType).OfType(Of TextBox)
                     element.Enabled = True
+                    Dim n As String = element.Name
                 Next
                 For Each element As Label In controlList(cvalType).OfType(Of Label)
                     element.Enabled = True
@@ -39,8 +40,8 @@ Public Class SwichNumbers
                 Next
             Else
                 For Each element As TextBox In controlList(cvalType).OfType(Of TextBox)
-                    element.Clear()
                     element.Enabled = False
+                    element.Clear()
                 Next
                 For Each element As Label In controlList(cvalType).OfType(Of Label)
                     element.Enabled = False
@@ -58,6 +59,7 @@ Public Class SwichNumbers
     Public Sub activateAll()
 
         activeType = "null"
+
         For Each cvalType As String In typeCval
 
             For Each element As Label In controlList(cvalType).OfType(Of Label)

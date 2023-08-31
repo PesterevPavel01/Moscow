@@ -1,5 +1,5 @@
 ﻿Imports System.Threading
-Public Class StudentList
+Public Class StudentsInGroup
 
     Dim SC As SynchronizationContext
     Public cvalification As Int16
@@ -44,7 +44,7 @@ Public Class StudentList
         ReDim params(7)
         params(0) = Me
         params(1) = ListViewStudentsList
-        params(2) = addMask.addMask(studentList, 0)
+        params(2) = addMask.addMaskIntoArray(studentList, 0)
         params(3) = 0
         params(4) = 1
         params(5) = 2
@@ -84,7 +84,7 @@ Public Class StudentList
 
             End Try
 
-            snils = deleteMasck(snils)
+            snils = deleteMask(snils)
 
             InsertIntoDataBase.argumentClear()
             InsertIntoDataBase.argument.nameTable = "group_list"
@@ -95,7 +95,7 @@ Public Class StudentList
 
             If InsertIntoDataBase.checkUniq_No2() = 2 Then
                 InsertIntoDataBase.deleteFromDB_NumberArg()
-                ЗаполнитьФормуССлушВГруппе.updateFormStudentsList(GroupList.kod)
+                updateStudentsInGroup.updateFormStudentsInGroup(GroupList.kod)
             End If
 
 
@@ -115,16 +115,18 @@ Public Class StudentList
 
             If Not ListViewStudentsList.SelectedItems.Item(0).SubItems(1).Text = "удалено" Then
 
-                snils = addMask.deleteMasck(ListViewStudentsList.SelectedItems.Item(0).SubItems(1).Text)
+                snils = addMask.deleteMask(ListViewStudentsList.SelectedItems.Item(0).SubItems(1).Text)
 
-                РедакторСлушателя.Text = ListViewStudentsList.SelectedItems.Item(0).SubItems(2).Text & " " & ListViewStudentsList.SelectedItems.Item(0).SubItems(3).Text & " " & ListViewStudentsList.SelectedItems.Item(0).SubItems(4).Text & " "
+                WindowsApp2.newStudent.Text = ListViewStudentsList.SelectedItems.Item(0).SubItems(2).Text & " " & ListViewStudentsList.SelectedItems.Item(0).SubItems(3).Text & " " & ListViewStudentsList.SelectedItems.Item(0).SubItems(4).Text & " "
 
                 queryString = load_slushatel(snils)
 
                 WindowsApp2.StudentsList.studentsInfo = arrayMethod.removeEmpty(MainForm.mySqlConnect.loadMySqlToArray(queryString, 1))
 
-                РедакторСлушателя.ShowDialog()
-
+                WindowsApp2.newStudent.student.studentData.prevSnils = snils
+                WindowsApp2.newStudent.flagRedactor = True
+                WindowsApp2.newStudent.ShowDialog()
+                WindowsApp2.newStudent.flagRedactor = False
                 СписокСлушателейВГруппе_Shown(sender, e)
 
             Else MsgBox("информация удалена")

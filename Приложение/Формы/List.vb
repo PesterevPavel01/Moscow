@@ -65,10 +65,6 @@
 
             queryString = ProgramPoUKvalifik(newGroup.swichCvalification.activeType)
 
-        ElseIf currentFormName = "РедакторГруппы" And РедакторГруппы.НоваяГруппаУровеньКвалификации.Text <> "" Then
-
-            queryString = ProgramPoUKvalifik(РедакторГруппы.НоваяГруппаУровеньКвалификации.Text)
-
         Else
 
             queryString = formList__loadProgramms()
@@ -89,10 +85,6 @@
         If currentFormName = "NewGroup" Then
 
             SelectedRow(2, newGroup.getProgKod())
-
-        ElseIf currentFormName = "РедакторГруппы" Then
-
-            SelectedRow(2, РедакторГруппы.getProgKod())
 
         End If
 
@@ -189,18 +181,11 @@
                     Grades.groupNumber.Text = ind
                 End If
 
-            Case "НоваяГруппа"
+            Case "NewGroup"
 
                 If (textboxName = "НоваяГруппаПрограмма") Then
                     newGroup.setProgKod(Convert.ToInt32(resultList.SelectedItems(0).SubItems(2).Text))
                     newGroup.НоваяГруппаПрограмма.Text = ind
-                End If
-
-            Case "РедакторГруппы"
-
-                If (textboxName = "НоваяГруппаПрограмма") Then
-                    РедакторГруппы.setProgKod(Convert.ToInt32(resultList.SelectedItems(0).SubItems(2).Text))
-                    РедакторГруппы.НоваяГруппаПрограмма.Text = ind
                 End If
 
             Case "BuildOrder"

@@ -22,20 +22,23 @@ Partial Class GradesIA
     'Не изменяйте ее в редакторе исходного кода.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(GradesIA))
         Me.ЗагрузитьИнформацию = New System.Windows.Forms.Button()
-        Me.Label2 = New System.Windows.Forms.Label()
-        Me.groupNumber = New System.Windows.Forms.TextBox()
         Me.iaTAble = New System.Windows.Forms.DataGridView()
         Me.Номер = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.ФИО = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.ИАТест = New System.Windows.Forms.DataGridViewComboBoxColumn()
         Me.ИАПрактНав = New System.Windows.Forms.DataGridViewComboBoxColumn()
         Me.ИАИтог = New System.Windows.Forms.DataGridViewComboBoxColumn()
-        Me.Сохранить = New System.Windows.Forms.Button()
         Me.Button1 = New System.Windows.Forms.Button()
+        Me.header = New System.Windows.Forms.ToolStrip()
+        Me.ToolStripLabel1 = New System.Windows.Forms.ToolStripLabel()
+        Me.save = New System.Windows.Forms.ToolStripButton()
+        Me.groupNumber = New System.Windows.Forms.ToolStripTextBox()
         CType(Me.iaTAble, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.header.SuspendLayout()
         Me.SuspendLayout()
         '
         'ЗагрузитьИнформацию
@@ -55,58 +58,37 @@ Partial Class GradesIA
         Me.ЗагрузитьИнформацию.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.ЗагрузитьИнформацию.UseVisualStyleBackColor = False
         '
-        'Label2
-        '
-        Me.Label2.AutoSize = True
-        Me.Label2.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.Label2.Location = New System.Drawing.Point(-2, 22)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(65, 21)
-        Me.Label2.TabIndex = 8
-        Me.Label2.Text = "Группа"
-        '
-        'groupNumber
-        '
-        Me.groupNumber.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.groupNumber.Location = New System.Drawing.Point(69, 18)
-        Me.groupNumber.Name = "groupNumber"
-        Me.groupNumber.ReadOnly = True
-        Me.groupNumber.Size = New System.Drawing.Size(406, 29)
-        Me.groupNumber.TabIndex = 6
-        '
-        'ТаблицаОценкиИА
+        'iaTAble
         '
         Me.iaTAble.AllowUserToAddRows = False
         Me.iaTAble.AllowUserToDeleteRows = False
-        Me.iaTAble.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.iaTAble.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells
         Me.iaTAble.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight
-        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle3.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        DataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText
-        DataGridViewCellStyle3.Padding = New System.Windows.Forms.Padding(10, 3, 3, 3)
-        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.ControlLight
-        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.iaTAble.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle1.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
+        DataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle1.Padding = New System.Windows.Forms.Padding(10, 3, 3, 3)
+        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.ControlLight
+        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.iaTAble.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
         Me.iaTAble.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.iaTAble.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Номер, Me.ФИО, Me.ИАТест, Me.ИАПрактНав, Me.ИАИтог})
-        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle4.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        DataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle4.Padding = New System.Windows.Forms.Padding(10, 3, 3, 3)
-        DataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.ControlLight
-        DataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.iaTAble.DefaultCellStyle = DataGridViewCellStyle4
-        Me.iaTAble.Location = New System.Drawing.Point(2, 62)
-        Me.iaTAble.Name = "ТаблицаОценкиИА"
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle2.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
+        DataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle2.Padding = New System.Windows.Forms.Padding(10, 3, 3, 3)
+        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.ControlLight
+        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.iaTAble.DefaultCellStyle = DataGridViewCellStyle2
+        Me.iaTAble.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.iaTAble.Location = New System.Drawing.Point(0, 51)
+        Me.iaTAble.Name = "iaTAble"
         Me.iaTAble.RowHeadersVisible = False
-        Me.iaTAble.Size = New System.Drawing.Size(1373, 774)
+        Me.iaTAble.Size = New System.Drawing.Size(1378, 786)
         Me.iaTAble.TabIndex = 9
         '
         'Номер
@@ -151,23 +133,6 @@ Partial Class GradesIA
         Me.ИАИтог.Name = "ИАИтог"
         Me.ИАИтог.Width = 200
         '
-        'Сохранить
-        '
-        Me.Сохранить.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Сохранить.BackColor = System.Drawing.Color.Transparent
-        Me.Сохранить.FlatAppearance.BorderColor = System.Drawing.Color.WhiteSmoke
-        Me.Сохранить.FlatAppearance.BorderSize = 0
-        Me.Сохранить.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Сохранить.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.Сохранить.Location = New System.Drawing.Point(1207, 17)
-        Me.Сохранить.Name = "Сохранить"
-        Me.Сохранить.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.Сохранить.Size = New System.Drawing.Size(166, 31)
-        Me.Сохранить.TabIndex = 10
-        Me.Сохранить.Text = "Сохранить"
-        Me.Сохранить.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.Сохранить.UseVisualStyleBackColor = False
-        '
         'Button1
         '
         Me.Button1.Location = New System.Drawing.Point(683, 17)
@@ -178,35 +143,74 @@ Partial Class GradesIA
         Me.Button1.UseVisualStyleBackColor = True
         Me.Button1.Visible = False
         '
+        'header
+        '
+        Me.header.AutoSize = False
+        Me.header.BackColor = System.Drawing.SystemColors.ControlLight
+        Me.header.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
+        Me.header.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripLabel1, Me.save, Me.groupNumber})
+        Me.header.Location = New System.Drawing.Point(0, 0)
+        Me.header.Name = "header"
+        Me.header.Padding = New System.Windows.Forms.Padding(0)
+        Me.header.Size = New System.Drawing.Size(1378, 51)
+        Me.header.TabIndex = 22
+        Me.header.Text = "ToolStrip2"
+        '
+        'ToolStripLabel1
+        '
+        Me.ToolStripLabel1.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
+        Me.ToolStripLabel1.ImageAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.ToolStripLabel1.Name = "ToolStripLabel1"
+        Me.ToolStripLabel1.Size = New System.Drawing.Size(65, 48)
+        Me.ToolStripLabel1.Text = "Группа"
+        '
+        'save
+        '
+        Me.save.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
+        Me.save.AutoSize = False
+        Me.save.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.save.Image = CType(resources.GetObject("save.Image"), System.Drawing.Image)
+        Me.save.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
+        Me.save.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.save.Name = "save"
+        Me.save.Size = New System.Drawing.Size(48, 48)
+        Me.save.Text = "toolStripButton2"
+        '
+        'groupNumber
+        '
+        Me.groupNumber.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
+        Me.groupNumber.Name = "groupNumber"
+        Me.groupNumber.Size = New System.Drawing.Size(380, 51)
+        '
         'GradesIA
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1378, 837)
         Me.Controls.Add(Me.Button1)
-        Me.Controls.Add(Me.Сохранить)
         Me.Controls.Add(Me.iaTAble)
         Me.Controls.Add(Me.ЗагрузитьИнформацию)
-        Me.Controls.Add(Me.Label2)
-        Me.Controls.Add(Me.groupNumber)
+        Me.Controls.Add(Me.header)
         Me.KeyPreview = True
         Me.Name = "GradesIA"
         Me.Text = "Оценки ИА"
         CType(Me.iaTAble, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.header.ResumeLayout(False)
+        Me.header.PerformLayout()
         Me.ResumeLayout(False)
-        Me.PerformLayout()
 
     End Sub
 
     Friend WithEvents ЗагрузитьИнформацию As Button
-    Friend WithEvents Label2 As Label
-    Friend WithEvents groupNumber As TextBox
     Friend WithEvents iaTAble As DataGridView
-    Friend WithEvents Сохранить As Button
     Friend WithEvents Button1 As Button
     Friend WithEvents Номер As DataGridViewTextBoxColumn
     Friend WithEvents ФИО As DataGridViewTextBoxColumn
     Friend WithEvents ИАТест As DataGridViewComboBoxColumn
     Friend WithEvents ИАПрактНав As DataGridViewComboBoxColumn
     Friend WithEvents ИАИтог As DataGridViewComboBoxColumn
+    Friend WithEvents header As ToolStrip
+    Friend WithEvents ToolStripLabel1 As ToolStripLabel
+    Private WithEvents save As ToolStripButton
+    Friend WithEvents groupNumber As ToolStripTextBox
 End Class

@@ -4,7 +4,7 @@ Imports Google.Protobuf.Reflection.FieldDescriptorProto.Types
 
 Public Class newGroup
 
-    Dim group As New Group
+    Dim group As Group
     Public zakr As Boolean = False
     Public alternateTab As Integer = Keys.Down
     Public alternateTab2 As Integer = Keys.Up
@@ -287,7 +287,7 @@ Public Class newGroup
             message.Text = "Группа № " & GroupList.numberGr & " успешно изменена, дата записи: " & DataString
             message.Visible = True
             GroupList.updateGroupList()
-            StudentList.Text = "Группа № " & gruppa.number
+            StudentsInGroup.Text = "Группа № " & gruppa.number
             GroupList.infoAboutGroup(1, 0) = gruppa.number
             Me.Text = "Группа № " & gruppa.number
 
@@ -516,7 +516,7 @@ Public Class newGroup
         End If
     End Sub
 
-    Private Sub qualificationLevel_KeyDown(sender As Object, e As KeyEventArgs) Handles НоваяГруппаУровеньКвалификации.KeyDown
+    Private Sub qualificationLevel_KeyDown(sender As Object, e As KeyEventArgs)
         If e.KeyCode = Keys.Enter Then
             qualificationLevel_Click(sender, e)
         End If
@@ -534,7 +534,7 @@ Public Class newGroup
         End If
     End Sub
 
-    Private Sub qualificationLevel_Click(sender As Object, e As EventArgs) Handles НоваяГруппаУровеньКвалификации.Click
+    Private Sub qualificationLevel_Click(sender As Object, e As EventArgs)
         message.Visible = False
     End Sub
 
@@ -608,6 +608,12 @@ Public Class newGroup
     End Sub
 
     Private Sub numberChanged(firstTextBox As TextBox, secondTextBox As TextBox, typeCval As String)
+        'если это пи переключении, то он не выполняется!
+        If firstTextBox.Enabled = False Then
+
+            Return
+
+        End If
 
         If firstTextBox.Text = "" And secondTextBox.Text = "" Then
 
@@ -615,43 +621,13 @@ Public Class newGroup
 
         Else
 
-            If firstTextBox.Text.Length = 1 Then
+            If firstTextBox.Text.Length = 1 And swichNumbers.activeType <> typeCval Then
 
-                swichNumbers.activeType = typeCval
-                activateLavel(typeCval)
+                updateTypeCval(typeCval)
 
             End If
 
         End If
-    End Sub
-
-    Private Sub qualificationLevel_TextChanged(sender As Object, e As EventArgs) Handles НоваяГруппаУровеньКвалификации.TextChanged
-
-        If НоваяГруппаУровеньКвалификации.Text = "профессиональное обучение" Then
-
-            group.struct_grup.urKvalific = "профессиональное обучение"
-
-            activateLavel("po")
-
-        ElseIf НоваяГруппаУровеньКвалификации.Text = "повышение квалификации" Then
-
-            group.struct_grup.urKvalific = "повышение квалификации"
-
-            activateLavel("pk")
-
-        ElseIf НоваяГруппаУровеньКвалификации.Text = "профессиональная переподготовка" Then
-
-            group.struct_grup.urKvalific = "профессиональная переподготовка"
-
-            activateLavel("pp")
-
-        End If
-
-        НоваяГруппаСпециальность.Text = ""
-        НоваяГруппаКоличествоЧасов.Clear()
-        НоваяГруппаПрограмма.Text = ""
-        group.updateProgramma()
-
     End Sub
 
     Private Sub program_TextChanged(sender As Object, e As EventArgs) Handles НоваяГруппаПрограмма.TextChanged
@@ -660,18 +636,12 @@ Public Class newGroup
 
     End Sub
 
-    Private Sub qualificationLevel_MouseLeave(sender As Object, e As EventArgs) Handles НоваяГруппаУровеньКвалификации.MouseLeave
+    Private Sub qualificationLevel_MouseLeave(sender As Object, e As EventArgs)
         group.flagGrouppForm.ur_cvalifik = False
     End Sub
 
-    Private Sub qualificationLevel_MouseMove(sender As Object, e As MouseEventArgs) Handles НоваяГруппаУровеньКвалификации.MouseMove
+    Private Sub qualificationLevel_MouseMove(sender As Object, e As MouseEventArgs)
         group.flagGrouppForm.ur_cvalifik = True
-    End Sub
-
-    Private Sub qualificationLevel_Enter(sender As Object, e As EventArgs) Handles НоваяГруппаУровеньКвалификации.Enter
-
-        comboBoxDrop(НоваяГруппаУровеньКвалификации, group.flagGrouppForm.ur_cvalifik)
-
     End Sub
 
     Private Sub formEducation_MouseLeave(sender As Object, e As EventArgs) Handles НоваяГруппаФормаОбучения.MouseLeave
@@ -1030,7 +1000,7 @@ Public Class newGroup
 
     Private Sub versProgs_Click(sender As Object, e As EventArgs) Handles versProgs.Click
 
-        List.textboxName = ActiveControl.Name
+        List.textboxName = НоваяГруппаПрограмма.Name
         List.currentFormName = "NewGroup"
         List.ShowDialog()
 
@@ -1090,7 +1060,7 @@ Public Class newGroup
 
         If Not currentControl.Enabled Then
 
-            For Each prevControl As Control In Me.Controls
+            For Each prevControl As Control In Controls
 
                 If prevControl.TabIndex = currentControl.TabIndex - 1 Then
 
@@ -1118,27 +1088,22 @@ Public Class newGroup
 
     Private Sub ppOn_Click(sender As Object, e As EventArgs) Handles ppOn.Click, poOn.Click
 
-        message.Visible = False
-        MainForm.cvalific = swichCvalification.type("pp") + 1
-        swichNumbers.activeType = "pp"
-        updateCvalification()
+        updateTypeCval("pp")
+        НоваяГруппаНомер.Focus()
 
     End Sub
 
     Private Sub poOn_Click(sender As Object, e As EventArgs) Handles poOn.Click
 
-        message.Visible = False
-        MainForm.cvalific = swichCvalification.type("po") + 1
-        swichNumbers.activeType = "po"
-        updateCvalification()
+        updateTypeCval("po")
+        НоваяГруппаНомер.Focus()
 
     End Sub
 
     Private Sub pkOn_Click(sender As Object, e As EventArgs) Handles pkOn.Click
 
-        swichNumbers.activeType = "pk"
-        activateLavel("pk")
-        message.Visible = False
+        updateTypeCval("pk")
+        НоваяГруппаНомер.Focus()
 
     End Sub
 
@@ -1147,7 +1112,7 @@ Public Class newGroup
         message.Visible = False
 
         If group.struct_grup.nameForm = "Редактор группы" Then
-            MainForm.cvalific = StudentList.cvalification
+            MainForm.cvalific = StudentsInGroup.cvalification
         End If
 
     End Sub
@@ -1160,6 +1125,7 @@ Public Class newGroup
 
     Public Sub newGroupInit()
 
+        group = New Group()
         group.struct_grup.nameForm = "Новая группа"
         swichNumbers = New SwichNumbers
         swichNumbersInit()
@@ -1169,14 +1135,13 @@ Public Class newGroup
 
         loadLists()
 
-        updateCvalification()
-        activateField(False)
         group.struct_grup.kodProgram = -1
         activateAllType()
 
     End Sub
     Public Sub redactorGroupInit()
 
+        group = New Group()
         group.struct_grup.nameForm = "Редактор группы"
         swichNumbers = New SwichNumbers
         swichNumbersInit()
@@ -1184,32 +1149,69 @@ Public Class newGroup
         swichCvalificationInit()
 
         loadLists()
+
         swichNumbers.activeType = swichNumbers.typeCval(MainForm.cvalific - 1)
 
         updateCvalification()
-        activateField(True)
 
         updateGroupRedactor.update(GroupList.numberGr)
 
     End Sub
 
+    Private Sub updateTypeCval(resultingType As String)
+
+        If swichNumbers.activeType = resultingType Then
+            Return
+        End If
+
+        message.Visible = False
+        MainForm.cvalific = swichCvalification.type(resultingType) + 1
+        swichNumbers.activeType = resultingType
+
+        updateCvalification()
+
+    End Sub
     Private Sub updateCvalification()
 
         swichCvalification.activate(MainForm.cvalific - 1)
-        НоваяГруппаУровеньКвалификации.Text = swichCvalification.activeType
+        statusType.Text = swichCvalification.activeType
         НоваяГруппаПрограмма.Items.Clear()
         НоваяГруппаПрограмма.Items.Add("")
+
+        group.struct_grup.urKvalific = swichCvalification.activeType
+        group.updateProgramm()
+
         НоваяГруппаПрограмма.Items.AddRange(group.formGrouppLists.programma)
+        НоваяГруппаСпециальность.Text = ""
+        НоваяГруппаКоличествоЧасов.Clear()
+        НоваяГруппаПрограмма.Text = ""
+
+        activateLavel(swichNumbers.activeType)
+
+    End Sub
+
+    Private Sub activateLavel(level As String)
+
+        If swichNumbers.activeType = "null" Then
+            Return
+        End If
+
+        activateField(True)
+        swichNumbers.activateLevel()
+
+    End Sub
+    Private Sub activateAllType()
+
+        swichNumbers.activateAll()
+        MainForm.cvalific = swichCvalification.type("not") + 1
+        updateCvalification()
+        activateField(False)
 
     End Sub
 
     Private Sub loadLists()
 
         group.loadFormGrouppLists()
-
-        НоваяГруппаУровеньКвалификации.Items.Clear()
-        НоваяГруппаУровеньКвалификации.Items.Add("")
-        НоваяГруппаУровеньКвалификации.Items.AddRange(group.formGrouppLists.ur_cvalifik)
 
         НоваяГруппаФормаОбучения.Items.Clear()
         НоваяГруппаФормаОбучения.Items.Add("")
@@ -1291,35 +1293,6 @@ Public Class newGroup
 
     End Sub
 
-    Private Sub activateAllType()
-
-        'If swichNumbers.activeType = "null" Then
-        '    Return
-        'End If
-
-        swichNumbers.activateAll()
-        MainForm.cvalific = swichCvalification.type("not") + 1
-        updateCvalification()
-        НоваяГруппаУровеньКвалификации.Text = ""
-        activateField(False)
-
-    End Sub
-
-    Private Sub activateLavel(level As String)
-
-        If swichNumbers.activeType = "null" Then
-            Return
-        End If
-
-        activateField(True)
-        MainForm.cvalific = swichCvalification.type(level) + 1
-        Dim n As Int16 = MainForm.cvalific
-        updateCvalification()
-        swichNumbers.activeType = level
-        swichNumbers.activateLevel()
-
-    End Sub
-
     Private Sub activateField(enabled As Boolean)
 
         If enabled Then
@@ -1345,10 +1318,13 @@ Public Class newGroup
             Else
 
                 НоваяГруппаНомерПротоколаИА.Enabled = False
+                НоваяГруппаНомерПротоколаИА.Clear()
                 LblNumberIA.Enabled = False
                 НоваягруппаОтветственныйЗаПрактику.Enabled = False
+                НоваягруппаОтветственныйЗаПрактику.Text = ""
                 lblPracticResponsible.Enabled = False
                 Квалификация.Enabled = False
+                Квалификация.Text = ""
                 lblCval.Enabled = False
 
 

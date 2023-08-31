@@ -4,124 +4,158 @@ Public Class newStudent
     Dim SC As SynchronizationContext
     Public fromStudentsList As Boolean = False
     Dim formSlushList As New Student.formStudentsLists
-    Public slushatel As New Student
+    Public student As New Student
+    Public flagRedactor As Boolean = False
 
-    Private Sub Сохранить_Click(sender As Object, e As EventArgs) Handles Сохранить.Click
+    Private Sub saveButton_Click(sender As Object, e As EventArgs) Handles saveButton.Click
 
         Dim secondThread As Thread
-        Dim snilsLen As Integer
         SC = SynchronizationContext.Current
-        slushatel.clearStructSlushatel()
+
+        student.clearStudentData()
+
         ActiveControl = BtnFocus
         message.Visible = False
-        snilsLen = Len(snils.Text)
 
-        If snilsLen <> 14 Then
-            MsgBox("Снилс введен некорректно")
-            Exit Sub
-        End If
+        updateStructStudent()
 
-        If Not IsNumeric(addMask.deleteMasck(snils.Text)) Then
-            MsgBox("Снилс введен некорректно")
+        If Not student.validationFirstLavel Then
+
+            saveButton.Enabled = True
             Return
+
         End If
 
-        If ValidOn.Checked Then
-            If Not checkSnils(addMask.deleteMasck(snils.Text)) Then
-                MsgBox("Снилс не прошел проверку")
-                Exit Sub
-            End If
-        End If
+        If Not student.validationSecondLvl(Me) Then
 
-        If birthDate.Value.ToShortDateString = "01.01.1753" Then
-            MsgBox("Установите дату в поле Дата рождения")
-            Exit Sub
-        End If
-
-        If snils.Text = "" Then
-            MsgBox("Заполните поле 'СНИЛС'")
-            Exit Sub
-        End If
-
-        If secondName.Text = "" Then
-            MsgBox("Укажите Фамилию слушателя")
-            Exit Sub
-        End If
-
-        If ИсточникФин.Text = "" Then
-            MsgBox("Укажите источник финансирования")
-            Exit Sub
-        End If
-
-        If Not interfaceMod.formStudentValidation(Me) Then
             Try
                 Warning.ShowDialog()
             Catch ex As Exception
                 Warning.Close()
                 Warning.ShowDialog()
             End Try
-            Exit Sub
+
+            saveButton.Enabled = True
+            Return
+
         End If
+
+        If flagRedactor Then
+            secondThread = New Thread(AddressOf updateStudent)
+        Else
+            secondThread = New Thread(AddressOf addStudent)
+        End If
+
+        secondThread.IsBackground = True
+        secondThread.Start(student)
+
+    End Sub
+
+    Private Sub updateStructStudent()
 
         If fromStudentsList Then
-            slushatel.structSlushatel.idGroup = GroupList.kod
+            student.studentData.idGroup = GroupList.kod
             fromStudentsList = False
         Else
-            slushatel.structSlushatel.idGroup = -1
+            student.studentData.idGroup = -1
         End If
 
-        slushatel.structSlushatel.snils = addMask.deleteMasck(snils.Text)
-        slushatel.structSlushatel.фамилия = secondName.Text
-        slushatel.structSlushatel.имя = Имя.Text
-        slushatel.structSlushatel.отчество = Отчество.Text
-        slushatel.structSlushatel.датаР = MainForm.mySqlConnect.dateToFormatMySQL(birthDate.Value.ToShortDateString)
-        slushatel.structSlushatel.пол = Пол.Text
-        slushatel.structSlushatel.уровеньОбразования = УровеньОбразования.Text
-        slushatel.structSlushatel.образование = Образование.Text
-        slushatel.structSlushatel.серияДокументаООбразовании = СерияДокументаООбразовании.Text
-        slushatel.structSlushatel.номерДокументаООбразовании = НомерДокументаООбразовании.Text
-        slushatel.structSlushatel.фамилияВДокОбОбразовании = ФамилияВДокОбОбразовании.Text
-        slushatel.structSlushatel.адресРегистрации = АдресРегистрации.Text
-        slushatel.structSlushatel.телефон = Телефон.Text
-        slushatel.structSlushatel.гражданство = Гражданство.Text
-        slushatel.structSlushatel.ДУЛ = ДУЛ.Text
-        slushatel.structSlushatel.серияДУЛ = СерияДУЛ.Text
-        slushatel.structSlushatel.номерДУЛ = НомерДУЛ.Text
-        slushatel.structSlushatel.источникФин = ИсточникФин.Text
-        slushatel.structSlushatel.направившаяОрг = НаправившаяОрг.Text
-        slushatel.structSlushatel.номерНаправленияРосздравнадзора = НомерНаправленияРосздравнадзора.Text
-        slushatel.structSlushatel.датаНаправленияРосздравнвдзора = MainForm.mySqlConnect.dateToFormatMySQL(ДатаНаправленияРосздравнвдзора.Value.ToShortDateString)
-        slushatel.structSlushatel.датаРег = MainForm.mySqlConnect.dateToFormatMySQL(Date.Now.ToShortDateString)
-        slushatel.structSlushatel.Email = Email.Text
-        slushatel.structSlushatel.doo_vid_dok = doo_vid_dok.Text
+        student.studentData.checkSnils = ValidOn.Checked
+        student.studentData.snils = addMask.deleteMask(snils.Text)
+        student.studentData.secondName = Отчество.Text
+        student.studentData.name = Имя.Text
+        student.studentData.lastName = secondName.Text
+        student.studentData.birthDay = MainForm.mySqlConnect.dateToFormatMySQL(birthDate.Value.ToShortDateString)
+        student.studentData.gender = Пол.Text
+        student.studentData.educationLevel = УровеньОбразования.Text
+        student.studentData.education = Образование.Text
+        student.studentData.seriesDOO = СерияДокументаООбразовании.Text
+        student.studentData.numberDOO = НомерДокументаООбразовании.Text
+        student.studentData.lastNameDOO = ФамилияВДокОбОбразовании.Text
+        student.studentData.adress = АдресРегистрации.Text
+        student.studentData.telephone = Телефон.Text
+        student.studentData.citizenship = Гражданство.Text
+        student.studentData.dUL = ДУЛ.Text
+        student.studentData.seriesDUL = СерияДУЛ.Text
+        student.studentData.numberDUL = НомерДУЛ.Text
+        student.studentData.sourceOfFinansing = ИсточникФин.Text
+        student.studentData.направившаяОрг = НаправившаяОрг.Text
+        student.studentData.dateReg = MainForm.mySqlConnect.dateToFormatMySQL(Date.Now.ToShortDateString)
+        student.studentData.email = Email.Text
+        student.studentData.doo_vid_dok = doo_vid_dok.Text
 
 
         If dateDUL.Value.ToShortDateString = "01.01.1753" Then
 
-            slushatel.structSlushatel.датаВыдачиДУЛ = "null"
+            student.studentData.dateDUL = "null"
+
         Else
-            slushatel.structSlushatel.датаВыдачиДУЛ = MainForm.mySqlConnect.dateToFormatMySQL(dateDUL.Value.ToShortDateString)
+            student.studentData.dateDUL = MainForm.mySqlConnect.dateToFormatMySQL(dateDUL.Value.ToShortDateString)
         End If
-        slushatel.structSlushatel.кемВыданДУЛ = КемВыданДУЛ.Text
-        slushatel.structSlushatel.snilsRub = snils.Text
-        secondThread = New Thread(AddressOf addStudent)
-        secondThread.IsBackground = True
-        secondThread.Start(slushatel)
+        student.studentData.autorDUL = КемВыданДУЛ.Text
+        student.studentData.snilsMusked = snils.Text
 
     End Sub
 
-    Sub addStudent(slushatel As Student)
+    Sub updateStudent(student As Student)
 
-        SC.Send(AddressOf blockButton, 1)
+        InsertIntoDataBase.argumentClear()
+        InsertIntoDataBase.argument.nameTable = "students"
+        InsertIntoDataBase.argument.firstName = "Снилс"
+        InsertIntoDataBase.argument.firstValue = student.studentData.snils
 
-        If slushatel.insertSlushatel() Then
+        If InsertIntoDataBase.checkDuplicates() Then
 
-            SC.Send(AddressOf updateStatus, addMask.ДобавитьРубашку(slushatel.structSlushatel.snils))
-            SC.Send(AddressOf ЗаполнитьФормуССлушВГруппе.updateFormStudentsList, slushatel.structSlushatel.idGroup)
+            ФормаДаНет.ShowDialog()
+
+            If Not InsertIntoDataBase.removeDuplicates Then
+
+                SC.Send(AddressOf enabledButton, addMask.addMask(student.studentData.snils))
+                Return
+
+            End If
+
+            InsertIntoDataBase.removeDuplicates = False
 
         End If
 
-        SC.Send(AddressOf enabledButton, addMask.ДобавитьРубашку(slushatel.structSlushatel.snils))
+        student.studentData.prevSnils = student.studentData.snils
+
+        If student.insertStudentRedact Then
+
+            SC.Send(AddressOf updateStatus, addMask.addMask(student.studentData.snils))
+            student.studentData.prevSnils = student.studentData.snils
+            SC.Send(AddressOf updateFormName, student.studentData)
+
+        Else
+
+            message.Text = "Произошла ошибка, слушатель не найден"
+
+        End If
+
+        SC.Send(AddressOf enabledButton, addMask.addMask(student.studentData.snils))
+
+    End Sub
+    Private Sub updateFormName(StudentData As Student.strStudent)
+        Me.Text = StudentData.lastName & " " & StudentData.name & " " & StudentData.secondName
+        updateListView.updateRow("СправочникСлушатели", 1, addMask.addMask(StudentData.snils), 2, StudentData.lastName, 3, StudentData.name, 4, StudentData.secondName)
+    End Sub
+
+    Sub addStudent(student As Student)
+
+        SC.Send(AddressOf blockButton, 1)
+
+        If student.insertStudent() Then
+
+            SC.Send(AddressOf updateStatus, addMask.addMask(student.studentData.snils))
+
+            If Not student.studentData.idGroup = -1 Then
+                SC.Send(AddressOf updateStudentsInGroup.updateFormStudentsInGroup, student.studentData.idGroup)
+            End If
+
+        End If
+
+        SC.Send(AddressOf enabledButton, addMask.addMask(student.studentData.snils))
 
     End Sub
     Sub updateStatus(student As String)
@@ -137,36 +171,13 @@ Public Class newStudent
 
     Sub enabledButton(student As String)
 
-        Сохранить.Enabled = True
+        saveButton.Enabled = True
 
     End Sub
 
     Sub blockButton(Слушатель As Integer)
 
-        Сохранить.Enabled = False
-
-    End Sub
-
-    Private Sub cleaning_Click(sender As Object, e As EventArgs) Handles Очистить.Click
-        Dim nameControl As String
-
-        ActiveControl = BtnFocus
-
-        message.Visible = False
-        For Each i In Me.Controls
-            nameControl = i.Name
-            nameControl = Strings.Left(nameControl, 5)
-            If i.Name <> "Сохранить" And i.Name <> "Очистить" And nameControl <> "Label" And nameControl <> "label" Then
-
-                If i.Name = "ДатаРождения" Or i.Name = "ДатаОкончания" Or i.Name = "ДатаНаправленияРосздравнвдзора" Or i.Name = "ДатаВыдачиДУЛ" Then
-                    i.Text = "01.01.1753"
-                Else
-                    i.Text = ""
-                End If
-            End If
-        Next
-
-        message.Visible = False
+        saveButton.Enabled = False
 
     End Sub
 
@@ -179,7 +190,7 @@ Public Class newStudent
         End If
         Press = False
         snils.SelectionStart = Len(Me.snils.Text)
-        snilsVal = deleteMasck(Me.snils.Text)
+        snilsVal = deleteMask(Me.snils.Text)
         If Len(snilsVal) = 11 Then
 
             InsertIntoDataBase.argumentClear()
@@ -275,7 +286,7 @@ Public Class newStudent
         message.Visible = False
     End Sub
 
-    Private Sub НомерБланкаУдостоверения_Click(sender As Object, e As EventArgs) Handles НомерНаправленияРосздравнадзора.Click
+    Private Sub НомерБланкаУдостоверения_Click(sender As Object, e As EventArgs)
         message.Visible = False
     End Sub
 
@@ -284,77 +295,99 @@ Public Class newStudent
     End Sub
 
     Private Sub НовыйСлушатель_Shown(sender As Object, e As EventArgs) Handles Me.Shown
+
         CheckBox1.Checked = True
-        cleaning_Click(sender, e)
+
+        clear_Click(sender, e)
+
         ActiveControl = snils
-    End Sub
 
-    Private Sub Фамилия_TextChanged(sender As Object, e As EventArgs) Handles secondName.TextChanged
-        If CheckBox1.Checked = True Then
+        If Not flagRedactor Then
+            Return
+        End If
 
-            ФамилияВДокОбОбразовании.Text = secondName.Text
+        If StudentsList.studentsInfo(0, 0).ToString = "нет записей" Then
+
+            Me.Close()
+            Warning.content.Text = "Ошибка. Некорректный СНИЛС в базе. Необходима ручная проверка базы!"
+            openForm(Warning)
+
+        Else
+
+            message.Visible = False
+            ActiveControl = BtnFocus
+
+            student.loadFormSlushLists()
+
+            studentBuilder.build()
 
         End If
+
+    End Sub
+    Private Sub updateStatus()
+        If (Имя.Text.Trim = "" And Отчество.Text.Trim = "" And secondName.Text.Trim = "") Then
+            status.Text = "Новый слушатель"
+            Return
+        End If
+        status.Text = Имя.Text.Trim & " " & Отчество.Text.Trim & " " & secondName.Text.Trim
+    End Sub
+    Private Sub Фамилия_TextChanged(sender As Object, e As EventArgs) Handles secondName.TextChanged
+        If CheckBox1.Checked = True Then
+            ФамилияВДокОбОбразовании.Text = secondName.Text
+        End If
+        updateStatus()
+
     End Sub
 
     Private Sub Фамилия_KeyDown(sender As Object, e As KeyEventArgs) Handles secondName.KeyDown
-        If e.KeyCode = 13 Then
-
-            Call Фамилия_Click(sender, e)
-
+        If e.KeyCode = Keys.Enter Then
+            Фамилия_Click(sender, e)
         End If
     End Sub
 
     Private Sub Имя_KeyDown(sender As Object, e As KeyEventArgs) Handles Имя.KeyDown
-        If e.KeyCode = 13 Then
-
-            Call Фамилия_Click(sender, e)
-
+        If e.KeyCode = Keys.Enter Then
+            Фамилия_Click(sender, e)
         End If
     End Sub
 
     Private Sub Отчество_KeyDown(sender As Object, e As KeyEventArgs) Handles Отчество.KeyDown
-        If e.KeyCode = 13 Then
-
-            Call Фамилия_Click(sender, e)
-
-        End If
-    End Sub
-
-    Private Sub ДатаРождения_KeyDown(sender As Object, e As KeyEventArgs) Handles birthDate.KeyDown
-        If e.KeyCode = 13 Then
+        If e.KeyCode = Keys.Enter Then
 
             Фамилия_Click(sender, e)
 
         End If
     End Sub
 
-    Private Sub Образование_KeyDown(sender As Object, e As KeyEventArgs) Handles Образование.KeyDown
-        If e.KeyCode = 13 Then
+    Private Sub ДатаРождения_KeyDown(sender As Object, e As KeyEventArgs) Handles birthDate.KeyDown
+        If e.KeyCode = Keys.Enter Then
+            Фамилия_Click(sender, e)
+        End If
+    End Sub
 
-            Call education_Click(sender, e)
+    Private Sub Образование_KeyDown(sender As Object, e As KeyEventArgs) Handles Образование.KeyDown
+        If e.KeyCode = Keys.Enter Then
+            education_Click(sender, e)
 
         End If
     End Sub
 
     Private Sub СерияДокументаООбразовании_KeyDown(sender As Object, e As KeyEventArgs) Handles СерияДокументаООбразовании.KeyDown
-        If e.KeyCode = 13 Then
-
-            Call Фамилия_Click(sender, e)
-
+        If e.KeyCode = Keys.Enter Then
+            Фамилия_Click(sender, e)
         End If
     End Sub
 
     Private Sub НомерДокументаООбразовании_KeyDown(sender As Object, e As KeyEventArgs) Handles НомерДокументаООбразовании.KeyDown
-        If e.KeyCode = 13 Then
+        If e.KeyCode = Keys.Enter Then
 
-            Call Фамилия_Click(sender, e)
+            Фамилия_Click(sender, e)
 
         End If
     End Sub
 
     Private Sub ФамилияВДокОбОбразовании_KeyDown(sender As Object, e As KeyEventArgs) Handles ФамилияВДокОбОбразовании.KeyDown
-        If e.KeyCode = 13 Then
+        If e.KeyCode = Keys.Enter Then
 
             Call Фамилия_Click(sender, e)
 
@@ -362,15 +395,13 @@ Public Class newStudent
     End Sub
 
     Private Sub АдресРегистрации_KeyDown(sender As Object, e As KeyEventArgs) Handles АдресРегистрации.KeyDown
-        If e.KeyCode = 13 Then
-
-            Call Фамилия_Click(sender, e)
-
+        If e.KeyCode = Keys.Enter Then
+            Фамилия_Click(sender, e)
         End If
     End Sub
 
     Private Sub Телефон_KeyDown(sender As Object, e As KeyEventArgs) Handles Телефон.KeyDown
-        If e.KeyCode = 13 Then
+        If e.KeyCode = Keys.Enter Then
 
             Call Фамилия_Click(sender, e)
 
@@ -378,7 +409,7 @@ Public Class newStudent
     End Sub
 
     Private Sub Гражданство_KeyDown(sender As Object, e As KeyEventArgs)
-        If e.KeyCode = 13 Then
+        If e.KeyCode = Keys.Enter Then
 
             Call Гражданство_Click(sender, e)
 
@@ -386,7 +417,7 @@ Public Class newStudent
     End Sub
 
     Private Sub СерияДУЛ_KeyDown(sender As Object, e As KeyEventArgs) Handles СерияДУЛ.KeyDown
-        If e.KeyCode = 13 Then
+        If e.KeyCode = Keys.Enter Then
 
             Call Фамилия_Click(sender, e)
 
@@ -394,22 +425,22 @@ Public Class newStudent
     End Sub
 
     Private Sub НомерДУЛ_KeyDown(sender As Object, e As KeyEventArgs) Handles НомерДУЛ.KeyDown
-        If e.KeyCode = 13 Then
+        If e.KeyCode = Keys.Enter Then
             Фамилия_Click(sender, e)
         End If
     End Sub
 
     Private Sub РегистрационныйНомерУдостоверения_KeyDown(sender As Object, e As KeyEventArgs)
 
-        If e.KeyCode = 13 Then
+        If e.KeyCode = Keys.Enter Then
             Фамилия_Click(sender, e)
         End If
 
     End Sub
 
-    Private Sub НомерБланкаУдостоверения_KeyDown(sender As Object, e As KeyEventArgs) Handles НомерНаправленияРосздравнадзора.KeyDown
+    Private Sub НомерБланкаУдостоверения_KeyDown(sender As Object, e As KeyEventArgs)
 
-        If e.KeyCode = 13 Then
+        If e.KeyCode = Keys.Enter Then
             Фамилия_Click(sender, e)
         End If
 
@@ -417,7 +448,7 @@ Public Class newStudent
 
     Private Sub НомерБланкаДиплома_KeyDown(sender As Object, e As KeyEventArgs)
 
-        If e.KeyCode = 13 Then
+        If e.KeyCode = Keys.Enter Then
             НомерБланкаДиплома_Click(sender, e)
         End If
 
@@ -427,9 +458,9 @@ Public Class newStudent
 
         closeEsc(Me, e.KeyCode)
 
-        If e.KeyCode = 38 Or e.KeyCode = 40 Then
-            pressTab(e.KeyCode, 40)
-            up(Me, e.KeyCode, 38)
+        If e.KeyCode = Keys.Up Or e.KeyCode = Keys.Down Then
+            pressTab(e.KeyCode, Keys.Down)
+            up(Me, e.KeyCode, Keys.Up)
             e.Handled = True
         End If
 
@@ -437,41 +468,41 @@ Public Class newStudent
 
     Private Sub НовыйСлушатель_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
-        slushatel.loadFormSlushLists()
+        student.loadFormSlushLists()
 
         doo_vid_dok.Items.Clear()
         doo_vid_dok.Items.Add("")
-        doo_vid_dok.Items.AddRange(slushatel.formSlushLists.doo_vid_dok)
+        doo_vid_dok.Items.AddRange(student.formSlushLists.doo_vid_dok)
 
         Пол.Items.Clear()
         Пол.Items.Add("")
-        Пол.Items.AddRange(slushatel.formSlushLists.pol)
+        Пол.Items.AddRange(student.formSlushLists.pol)
 
         УровеньОбразования.Items.Clear()
         УровеньОбразования.Items.Add("")
-        УровеньОбразования.Items.AddRange(slushatel.formSlushLists.urovenObr)
+        УровеньОбразования.Items.AddRange(student.formSlushLists.urovenObr)
 
         Гражданство.Items.Clear()
         Гражданство.Items.Add("")
-        Гражданство.Items.AddRange(slushatel.formSlushLists.grajdanstvo)
+        Гражданство.Items.AddRange(student.formSlushLists.grajdanstvo)
 
         ДУЛ.Items.Clear()
         ДУЛ.Items.Add("")
-        ДУЛ.Items.AddRange(slushatel.formSlushLists.dok_UL)
+        ДУЛ.Items.AddRange(student.formSlushLists.dok_UL)
 
         ИсточникФин.Items.Clear()
         ИсточникФин.Items.Add("")
-        ИсточникФин.Items.AddRange(slushatel.formSlushLists.ist_finans)
+        ИсточникФин.Items.AddRange(student.formSlushLists.ist_finans)
 
         НаправившаяОрг.Items.Clear()
         НаправившаяОрг.Items.Add("")
-        НаправившаяОрг.Items.AddRange(slushatel.formSlushLists.napr_organization)
+        НаправившаяОрг.Items.AddRange(student.formSlushLists.napr_organization)
 
     End Sub
 
     Private Sub НаправившаяОрг_Enter(sender As Object, e As EventArgs) Handles НаправившаяОрг.Enter
 
-        If slushatel.flagSlushatelForm.napr_organization Then
+        If student.flagSlushatelForm.napr_organization Then
             НаправившаяОрг.DroppedDown = False
         Else
             НаправившаяОрг.DroppedDown = True
@@ -480,7 +511,7 @@ Public Class newStudent
     End Sub
 
     Private Sub ИсточникФин_Enter(sender As Object, e As EventArgs) Handles ИсточникФин.Enter
-        If slushatel.flagSlushatelForm.ist_finans Then
+        If student.flagSlushatelForm.ist_finans Then
             ИсточникФин.DroppedDown = False
         Else
             ИсточникФин.DroppedDown = True
@@ -488,23 +519,23 @@ Public Class newStudent
     End Sub
 
     Private Sub ИсточникФин_MouseMove(sender As Object, e As MouseEventArgs) Handles ИсточникФин.MouseMove
-        slushatel.flagSlushatelForm.ist_finans = True
+        student.flagSlushatelForm.ist_finans = True
     End Sub
 
     Private Sub ИсточникФин_MouseLeave(sender As Object, e As EventArgs) Handles ИсточникФин.MouseLeave
-        slushatel.flagSlushatelForm.ist_finans = False
+        student.flagSlushatelForm.ist_finans = False
     End Sub
 
     Private Sub Пол_MouseMove(sender As Object, e As MouseEventArgs) Handles Пол.MouseMove
-        slushatel.flagSlushatelForm.pol = True
+        student.flagSlushatelForm.pol = True
     End Sub
 
     Private Sub Пол_MouseLeave(sender As Object, e As EventArgs) Handles Пол.MouseLeave
-        slushatel.flagSlushatelForm.pol = False
+        student.flagSlushatelForm.pol = False
     End Sub
 
     Private Sub Пол_Enter(sender As Object, e As EventArgs) Handles Пол.Enter
-        If slushatel.flagSlushatelForm.pol Then
+        If student.flagSlushatelForm.pol Then
             Пол.DroppedDown = False
         Else
             Пол.DroppedDown = True
@@ -512,15 +543,15 @@ Public Class newStudent
     End Sub
 
     Private Sub УровеньОбразования_MouseLeave(sender As Object, e As EventArgs) Handles УровеньОбразования.MouseLeave
-        slushatel.flagSlushatelForm.urovenObr = False
+        student.flagSlushatelForm.urovenObr = False
     End Sub
 
     Private Sub УровеньОбразования_MouseMove(sender As Object, e As MouseEventArgs) Handles УровеньОбразования.MouseMove
-        slushatel.flagSlushatelForm.urovenObr = True
+        student.flagSlushatelForm.urovenObr = True
     End Sub
 
     Private Sub УровеньОбразования_Enter(sender As Object, e As EventArgs) Handles УровеньОбразования.Enter
-        If slushatel.flagSlushatelForm.urovenObr Then
+        If student.flagSlushatelForm.urovenObr Then
             УровеньОбразования.DroppedDown = False
         Else
             УровеньОбразования.DroppedDown = True
@@ -528,23 +559,23 @@ Public Class newStudent
     End Sub
 
     Private Sub СтранаДОО_MouseLeave(sender As Object, e As EventArgs)
-        slushatel.flagSlushatelForm.DOO_strana = False
+        student.flagSlushatelForm.DOO_strana = False
     End Sub
 
     Private Sub СтранаДОО_MouseMove(sender As Object, e As MouseEventArgs)
-        slushatel.flagSlushatelForm.DOO_strana = True
+        student.flagSlushatelForm.DOO_strana = True
     End Sub
 
     Private Sub Гражданство_MouseLeave(sender As Object, e As EventArgs) Handles Гражданство.MouseLeave
-        slushatel.flagSlushatelForm.grajdanstvo = False
+        student.flagSlushatelForm.grajdanstvo = False
     End Sub
 
     Private Sub Гражданство_MouseMove(sender As Object, e As MouseEventArgs) Handles Гражданство.MouseMove
-        slushatel.flagSlushatelForm.grajdanstvo = True
+        student.flagSlushatelForm.grajdanstvo = True
     End Sub
 
     Private Sub Гражданство_Enter(sender As Object, e As EventArgs) Handles Гражданство.Enter
-        If slushatel.flagSlushatelForm.grajdanstvo Then
+        If student.flagSlushatelForm.grajdanstvo Then
             Гражданство.DroppedDown = False
         Else
             Гражданство.DroppedDown = True
@@ -552,15 +583,15 @@ Public Class newStudent
     End Sub
 
     Private Sub ДУЛ_MouseLeave(sender As Object, e As EventArgs) Handles ДУЛ.MouseLeave
-        slushatel.flagSlushatelForm.dok_UL = False
+        student.flagSlushatelForm.dok_UL = False
     End Sub
 
     Private Sub ДУЛ_MouseMove(sender As Object, e As MouseEventArgs) Handles ДУЛ.MouseMove
-        slushatel.flagSlushatelForm.dok_UL = True
+        student.flagSlushatelForm.dok_UL = True
     End Sub
 
     Private Sub ДУЛ_Enter(sender As Object, e As EventArgs) Handles ДУЛ.Enter
-        If slushatel.flagSlushatelForm.dok_UL Then
+        If student.flagSlushatelForm.dok_UL Then
             ДУЛ.DroppedDown = False
         Else
             ДУЛ.DroppedDown = True
@@ -568,11 +599,11 @@ Public Class newStudent
     End Sub
 
     Private Sub НаправившаяОрг_MouseLeave(sender As Object, e As EventArgs) Handles НаправившаяОрг.MouseLeave
-        slushatel.flagSlushatelForm.napr_organization = False
+        student.flagSlushatelForm.napr_organization = False
     End Sub
 
     Private Sub НаправившаяОрг_MouseMove(sender As Object, e As MouseEventArgs) Handles НаправившаяОрг.MouseMove
-        slushatel.flagSlushatelForm.napr_organization = True
+        student.flagSlushatelForm.napr_organization = True
     End Sub
 
     Private Sub Пол_Click(sender As Object, e As EventArgs) Handles Пол.Click
@@ -624,16 +655,16 @@ Public Class newStudent
     End Sub
 
     Private Sub doo_vid_dok_MouseLeave(sender As Object, e As EventArgs) Handles doo_vid_dok.MouseLeave
-        slushatel.flagSlushatelForm.doo_vid_dok = False
+        student.flagSlushatelForm.doo_vid_dok = False
     End Sub
 
     Private Sub doo_vid_dok_MouseMove(sender As Object, e As MouseEventArgs) Handles doo_vid_dok.MouseMove
-        slushatel.flagSlushatelForm.doo_vid_dok = True
+        student.flagSlushatelForm.doo_vid_dok = True
     End Sub
 
     Private Sub doo_vid_dok_Enter(sender As Object, e As EventArgs) Handles doo_vid_dok.Enter
 
-        If slushatel.flagSlushatelForm.doo_vid_dok Then
+        If student.flagSlushatelForm.doo_vid_dok Then
             doo_vid_dok.DroppedDown = False
         Else
             doo_vid_dok.DroppedDown = True
@@ -641,4 +672,21 @@ Public Class newStudent
 
     End Sub
 
+    Private Sub clear_Click(sender As Object, e As EventArgs) Handles clear.Click
+
+        ActiveControl = BtnFocus
+
+        cleanForm(Me)
+        updateStatus()
+        message.Visible = False
+
+    End Sub
+
+    Private Sub Имя_TextChanged(sender As Object, e As EventArgs) Handles Имя.TextChanged
+        updateStatus()
+    End Sub
+
+    Private Sub Отчество_TextChanged(sender As Object, e As EventArgs) Handles Отчество.TextChanged
+        updateStatus()
+    End Sub
 End Class

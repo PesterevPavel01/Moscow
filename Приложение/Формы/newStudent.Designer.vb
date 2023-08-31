@@ -22,8 +22,7 @@ Partial Class newStudent
     'Не изменяйте ее в редакторе исходного кода.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Me.message = New System.Windows.Forms.Label()
-        Me.Очистить = New System.Windows.Forms.Button()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(newStudent))
         Me.НомерДУЛ = New System.Windows.Forms.TextBox()
         Me.СерияДУЛ = New System.Windows.Forms.TextBox()
         Me.АдресРегистрации = New System.Windows.Forms.TextBox()
@@ -52,19 +51,14 @@ Partial Class newStudent
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.snils = New System.Windows.Forms.TextBox()
-        Me.Сохранить = New System.Windows.Forms.Button()
         Me.Отчество = New System.Windows.Forms.TextBox()
         Me.birthDate = New System.Windows.Forms.DateTimePicker()
         Me.Label18 = New System.Windows.Forms.Label()
-        Me.НомерНаправленияРосздравнадзора = New System.Windows.Forms.TextBox()
-        Me.Label20 = New System.Windows.Forms.Label()
-        Me.Label21 = New System.Windows.Forms.Label()
         Me.Телефон = New System.Windows.Forms.MaskedTextBox()
         Me.CheckBox1 = New System.Windows.Forms.CheckBox()
         Me.Email = New System.Windows.Forms.TextBox()
         Me.label = New System.Windows.Forms.Label()
         Me.BtnFocus = New System.Windows.Forms.Button()
-        Me.ДатаНаправленияРосздравнвдзора = New System.Windows.Forms.DateTimePicker()
         Me.dateDUL = New System.Windows.Forms.DateTimePicker()
         Me.Label25 = New System.Windows.Forms.Label()
         Me.КемВыданДУЛ = New System.Windows.Forms.TextBox()
@@ -78,353 +72,341 @@ Partial Class newStudent
         Me.НаправившаяОрг = New System.Windows.Forms.ComboBox()
         Me.Label22 = New System.Windows.Forms.Label()
         Me.doo_vid_dok = New System.Windows.Forms.ComboBox()
+        Me.header = New System.Windows.Forms.ToolStrip()
+        Me.saveButton = New System.Windows.Forms.ToolStripButton()
+        Me.clear = New System.Windows.Forms.ToolStripButton()
+        Me.message = New System.Windows.Forms.Label()
+        Me.status = New System.Windows.Forms.Label()
+        Me.header.SuspendLayout()
         Me.SuspendLayout()
-        '
-        'Сообщение
-        '
-        Me.message.AutoSize = True
-        Me.message.ForeColor = System.Drawing.SystemColors.MenuHighlight
-        Me.message.Location = New System.Drawing.Point(27, 9)
-        Me.message.Name = "Сообщение"
-        Me.message.Size = New System.Drawing.Size(45, 13)
-        Me.message.TabIndex = 107
-        Me.message.Text = "Label20"
-        Me.message.Visible = False
-        '
-        'Очистить
-        '
-        Me.Очистить.BackColor = System.Drawing.SystemColors.MenuBar
-        Me.Очистить.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.Очистить.Location = New System.Drawing.Point(4, 661)
-        Me.Очистить.Name = "Очистить"
-        Me.Очистить.Size = New System.Drawing.Size(198, 34)
-        Me.Очистить.TabIndex = 26
-        Me.Очистить.Text = "Очистить"
-        Me.Очистить.UseVisualStyleBackColor = False
         '
         'НомерДУЛ
         '
-        Me.НомерДУЛ.Location = New System.Drawing.Point(256, 468)
+        Me.НомерДУЛ.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
+        Me.НомерДУЛ.Location = New System.Drawing.Point(333, 688)
+        Me.НомерДУЛ.Margin = New System.Windows.Forms.Padding(4)
         Me.НомерДУЛ.Name = "НомерДУЛ"
-        Me.НомерДУЛ.Size = New System.Drawing.Size(534, 20)
+        Me.НомерДУЛ.Size = New System.Drawing.Size(711, 24)
         Me.НомерДУЛ.TabIndex = 20
         '
         'СерияДУЛ
         '
-        Me.СерияДУЛ.Location = New System.Drawing.Point(256, 446)
+        Me.СерияДУЛ.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
+        Me.СерияДУЛ.Location = New System.Drawing.Point(333, 656)
+        Me.СерияДУЛ.Margin = New System.Windows.Forms.Padding(4)
         Me.СерияДУЛ.Name = "СерияДУЛ"
-        Me.СерияДУЛ.Size = New System.Drawing.Size(534, 20)
+        Me.СерияДУЛ.Size = New System.Drawing.Size(711, 24)
         Me.СерияДУЛ.TabIndex = 19
         '
         'АдресРегистрации
         '
-        Me.АдресРегистрации.Location = New System.Drawing.Point(256, 320)
+        Me.АдресРегистрации.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
+        Me.АдресРегистрации.Location = New System.Drawing.Point(333, 476)
+        Me.АдресРегистрации.Margin = New System.Windows.Forms.Padding(4)
         Me.АдресРегистрации.Name = "АдресРегистрации"
-        Me.АдресРегистрации.Size = New System.Drawing.Size(534, 20)
+        Me.АдресРегистрации.Size = New System.Drawing.Size(711, 24)
         Me.АдресРегистрации.TabIndex = 14
         '
         'ФамилияВДокОбОбразовании
         '
-        Me.ФамилияВДокОбОбразовании.Location = New System.Drawing.Point(256, 282)
+        Me.ФамилияВДокОбОбразовании.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
+        Me.ФамилияВДокОбОбразовании.Location = New System.Drawing.Point(333, 428)
+        Me.ФамилияВДокОбОбразовании.Margin = New System.Windows.Forms.Padding(4)
         Me.ФамилияВДокОбОбразовании.Name = "ФамилияВДокОбОбразовании"
-        Me.ФамилияВДокОбОбразовании.Size = New System.Drawing.Size(534, 20)
+        Me.ФамилияВДокОбОбразовании.Size = New System.Drawing.Size(711, 24)
         Me.ФамилияВДокОбОбразовании.TabIndex = 13
         '
         'НомерДокументаООбразовании
         '
-        Me.НомерДокументаООбразовании.Location = New System.Drawing.Point(256, 260)
+        Me.НомерДокументаООбразовании.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
+        Me.НомерДокументаООбразовании.Location = New System.Drawing.Point(333, 396)
+        Me.НомерДокументаООбразовании.Margin = New System.Windows.Forms.Padding(4)
         Me.НомерДокументаООбразовании.Name = "НомерДокументаООбразовании"
-        Me.НомерДокументаООбразовании.Size = New System.Drawing.Size(534, 20)
+        Me.НомерДокументаООбразовании.Size = New System.Drawing.Size(711, 24)
         Me.НомерДокументаООбразовании.TabIndex = 11
         '
         'Label19
         '
         Me.Label19.AutoSize = True
-        Me.Label19.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.Label19.Location = New System.Drawing.Point(6, 580)
+        Me.Label19.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
+        Me.Label19.Location = New System.Drawing.Point(19, 841)
+        Me.Label19.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label19.Name = "Label19"
-        Me.Label19.Size = New System.Drawing.Size(185, 16)
+        Me.Label19.Size = New System.Drawing.Size(227, 21)
         Me.Label19.TabIndex = 95
         Me.Label19.Text = "Направившая организация"
         '
         'Label17
         '
         Me.Label17.AutoSize = True
-        Me.Label17.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.Label17.Location = New System.Drawing.Point(6, 558)
+        Me.Label17.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
+        Me.Label17.Location = New System.Drawing.Point(19, 807)
+        Me.Label17.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label17.Name = "Label17"
-        Me.Label17.Size = New System.Drawing.Size(186, 16)
+        Me.Label17.Size = New System.Drawing.Size(228, 21)
         Me.Label17.TabIndex = 94
         Me.Label17.Text = "Источник финансирования"
         '
         'Label16
         '
         Me.Label16.AutoSize = True
-        Me.Label16.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.Label16.Location = New System.Drawing.Point(6, 496)
+        Me.Label16.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
+        Me.Label16.Location = New System.Drawing.Point(19, 723)
+        Me.Label16.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label16.Name = "Label16"
-        Me.Label16.Size = New System.Drawing.Size(76, 16)
+        Me.Label16.Size = New System.Drawing.Size(96, 21)
         Me.Label16.TabIndex = 93
         Me.Label16.Text = "Кем выдан"
         '
         'Label15
         '
         Me.Label15.AutoSize = True
-        Me.Label15.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.Label15.Location = New System.Drawing.Point(6, 450)
+        Me.Label15.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
+        Me.Label15.Location = New System.Drawing.Point(19, 659)
+        Me.Label15.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label15.Name = "Label15"
-        Me.Label15.Size = New System.Drawing.Size(121, 16)
+        Me.Label15.Size = New System.Drawing.Size(148, 21)
         Me.Label15.TabIndex = 92
         Me.Label15.Text = "Серия документа"
         '
         'Label14
         '
         Me.Label14.AutoSize = True
-        Me.Label14.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.Label14.Location = New System.Drawing.Point(5, 429)
+        Me.Label14.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
+        Me.Label14.Location = New System.Drawing.Point(19, 627)
+        Me.Label14.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label14.Name = "Label14"
-        Me.Label14.Size = New System.Drawing.Size(226, 15)
+        Me.Label14.Size = New System.Drawing.Size(312, 21)
         Me.Label14.TabIndex = 91
         Me.Label14.Text = "Документ, удостоверяющий личность"
         '
         'Label13
         '
         Me.Label13.AutoSize = True
-        Me.Label13.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.Label13.Location = New System.Drawing.Point(5, 408)
+        Me.Label13.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
+        Me.Label13.Location = New System.Drawing.Point(19, 593)
+        Me.Label13.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label13.Name = "Label13"
-        Me.Label13.Size = New System.Drawing.Size(93, 16)
+        Me.Label13.Size = New System.Drawing.Size(113, 21)
         Me.Label13.TabIndex = 90
         Me.Label13.Text = "Гражданство"
         '
         'Label12
         '
         Me.Label12.AutoSize = True
-        Me.Label12.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.Label12.Location = New System.Drawing.Point(5, 346)
+        Me.Label12.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
+        Me.Label12.Location = New System.Drawing.Point(19, 511)
+        Me.Label12.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label12.Name = "Label12"
-        Me.Label12.Size = New System.Drawing.Size(146, 16)
+        Me.Label12.Size = New System.Drawing.Size(175, 21)
         Me.Label12.TabIndex = 89
         Me.Label12.Text = "Контактный телефон"
         '
         'Label11
         '
         Me.Label11.AutoSize = True
-        Me.Label11.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.Label11.Location = New System.Drawing.Point(5, 324)
+        Me.Label11.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
+        Me.Label11.Location = New System.Drawing.Point(19, 479)
+        Me.Label11.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label11.Name = "Label11"
-        Me.Label11.Size = New System.Drawing.Size(134, 16)
+        Me.Label11.Size = New System.Drawing.Size(163, 21)
         Me.Label11.TabIndex = 88
         Me.Label11.Text = "Адрес регистрации"
         '
         'Label10
         '
         Me.Label10.AutoSize = True
-        Me.Label10.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.Label10.Location = New System.Drawing.Point(5, 286)
+        Me.Label10.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
+        Me.Label10.Location = New System.Drawing.Point(19, 431)
+        Me.Label10.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label10.Name = "Label10"
-        Me.Label10.Size = New System.Drawing.Size(151, 16)
+        Me.Label10.Size = New System.Drawing.Size(185, 21)
         Me.Label10.TabIndex = 87
         Me.Label10.Text = "Фамилия в документе"
         '
         'СерияДокументаООбразовании
         '
-        Me.СерияДокументаООбразовании.Location = New System.Drawing.Point(256, 238)
+        Me.СерияДокументаООбразовании.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
+        Me.СерияДокументаООбразовании.Location = New System.Drawing.Point(333, 364)
+        Me.СерияДокументаООбразовании.Margin = New System.Windows.Forms.Padding(4)
         Me.СерияДокументаООбразовании.Name = "СерияДокументаООбразовании"
-        Me.СерияДокументаООбразовании.Size = New System.Drawing.Size(534, 20)
+        Me.СерияДокументаООбразовании.Size = New System.Drawing.Size(711, 24)
         Me.СерияДокументаООбразовании.TabIndex = 10
         '
         'Образование
         '
-        Me.Образование.Location = New System.Drawing.Point(256, 195)
+        Me.Образование.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
+        Me.Образование.Location = New System.Drawing.Point(333, 298)
+        Me.Образование.Margin = New System.Windows.Forms.Padding(4)
         Me.Образование.Name = "Образование"
-        Me.Образование.Size = New System.Drawing.Size(534, 20)
+        Me.Образование.Size = New System.Drawing.Size(711, 24)
         Me.Образование.TabIndex = 8
         '
-        'Фамилия
+        'secondName
         '
-        Me.secondName.Location = New System.Drawing.Point(256, 44)
-        Me.secondName.Name = "Фамилия"
-        Me.secondName.Size = New System.Drawing.Size(534, 20)
+        Me.secondName.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
+        Me.secondName.Location = New System.Drawing.Point(333, 87)
+        Me.secondName.Margin = New System.Windows.Forms.Padding(4)
+        Me.secondName.Name = "secondName"
+        Me.secondName.Size = New System.Drawing.Size(711, 24)
         Me.secondName.TabIndex = 2
         '
         'Label9
         '
         Me.Label9.AutoSize = True
-        Me.Label9.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.Label9.Location = New System.Drawing.Point(5, 242)
+        Me.Label9.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
+        Me.Label9.Location = New System.Drawing.Point(19, 365)
+        Me.Label9.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label9.Name = "Label9"
-        Me.Label9.Size = New System.Drawing.Size(121, 16)
+        Me.Label9.Size = New System.Drawing.Size(148, 21)
         Me.Label9.TabIndex = 81
         Me.Label9.Text = "Серия документа"
         '
         'Label8
         '
         Me.Label8.AutoSize = True
-        Me.Label8.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.Label8.Location = New System.Drawing.Point(6, 199)
+        Me.Label8.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
+        Me.Label8.Location = New System.Drawing.Point(19, 301)
+        Me.Label8.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(228, 16)
+        Me.Label8.Size = New System.Drawing.Size(280, 21)
         Me.Label8.TabIndex = 80
         Me.Label8.Text = "Образование (наименование ОО)"
         '
         'Label7
         '
         Me.Label7.AutoSize = True
-        Me.Label7.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.Label7.Location = New System.Drawing.Point(6, 177)
+        Me.Label7.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
+        Me.Label7.Location = New System.Drawing.Point(19, 269)
+        Me.Label7.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(153, 16)
+        Me.Label7.Size = New System.Drawing.Size(186, 21)
         Me.Label7.TabIndex = 79
         Me.Label7.Text = "Уровень образования"
         '
         'Label6
         '
         Me.Label6.AutoSize = True
-        Me.Label6.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.Label6.Location = New System.Drawing.Point(6, 136)
+        Me.Label6.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
+        Me.Label6.Location = New System.Drawing.Point(19, 220)
+        Me.Label6.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(33, 16)
+        Me.Label6.Size = New System.Drawing.Size(41, 21)
         Me.Label6.TabIndex = 78
         Me.Label6.Text = "Пол"
         '
         'Label5
         '
         Me.Label5.AutoSize = True
-        Me.Label5.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.Label5.Location = New System.Drawing.Point(5, 114)
+        Me.Label5.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
+        Me.Label5.Location = New System.Drawing.Point(19, 186)
+        Me.Label5.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(106, 16)
+        Me.Label5.Size = New System.Drawing.Size(133, 21)
         Me.Label5.TabIndex = 76
         Me.Label5.Text = "Дата рождения"
         '
         'Имя
         '
-        Me.Имя.Location = New System.Drawing.Point(256, 66)
+        Me.Имя.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
+        Me.Имя.Location = New System.Drawing.Point(333, 119)
+        Me.Имя.Margin = New System.Windows.Forms.Padding(4)
         Me.Имя.Name = "Имя"
-        Me.Имя.Size = New System.Drawing.Size(534, 20)
+        Me.Имя.Size = New System.Drawing.Size(711, 24)
         Me.Имя.TabIndex = 3
         '
         'Label4
         '
         Me.Label4.AutoSize = True
-        Me.Label4.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.Label4.Location = New System.Drawing.Point(5, 92)
+        Me.Label4.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
+        Me.Label4.Location = New System.Drawing.Point(19, 154)
+        Me.Label4.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(70, 16)
+        Me.Label4.Size = New System.Drawing.Size(83, 21)
         Me.Label4.TabIndex = 74
         Me.Label4.Text = "Отчество"
         '
         'Label3
         '
         Me.Label3.AutoSize = True
-        Me.Label3.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.Label3.Location = New System.Drawing.Point(6, 70)
+        Me.Label3.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
+        Me.Label3.Location = New System.Drawing.Point(19, 122)
+        Me.Label3.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(33, 16)
+        Me.Label3.Size = New System.Drawing.Size(44, 21)
         Me.Label3.TabIndex = 72
         Me.Label3.Text = "Имя"
         '
         'Label2
         '
         Me.Label2.AutoSize = True
-        Me.Label2.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.Label2.Location = New System.Drawing.Point(6, 48)
+        Me.Label2.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
+        Me.Label2.Location = New System.Drawing.Point(19, 90)
+        Me.Label2.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(66, 16)
+        Me.Label2.Size = New System.Drawing.Size(82, 21)
         Me.Label2.TabIndex = 70
         Me.Label2.Text = "Фамилия"
         '
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.Label1.Location = New System.Drawing.Point(6, 26)
+        Me.Label1.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
+        Me.Label1.Location = New System.Drawing.Point(19, 58)
+        Me.Label1.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(47, 16)
+        Me.Label1.Size = New System.Drawing.Size(58, 21)
         Me.Label1.TabIndex = 69
         Me.Label1.Text = "Снилс"
         '
-        'Снилс
+        'snils
         '
-        Me.snils.Location = New System.Drawing.Point(256, 22)
-        Me.snils.Name = "Снилс"
-        Me.snils.Size = New System.Drawing.Size(534, 20)
+        Me.snils.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
+        Me.snils.Location = New System.Drawing.Point(333, 55)
+        Me.snils.Margin = New System.Windows.Forms.Padding(4)
+        Me.snils.Name = "snils"
+        Me.snils.Size = New System.Drawing.Size(711, 24)
         Me.snils.TabIndex = 1
-        '
-        'Сохранить
-        '
-        Me.Сохранить.BackColor = System.Drawing.SystemColors.MenuBar
-        Me.Сохранить.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.Сохранить.Location = New System.Drawing.Point(200, 661)
-        Me.Сохранить.Name = "Сохранить"
-        Me.Сохранить.Size = New System.Drawing.Size(590, 34)
-        Me.Сохранить.TabIndex = 25
-        Me.Сохранить.Text = "Сохранить"
-        Me.Сохранить.UseVisualStyleBackColor = False
         '
         'Отчество
         '
-        Me.Отчество.Location = New System.Drawing.Point(256, 88)
+        Me.Отчество.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
+        Me.Отчество.Location = New System.Drawing.Point(333, 151)
+        Me.Отчество.Margin = New System.Windows.Forms.Padding(4)
         Me.Отчество.Name = "Отчество"
-        Me.Отчество.Size = New System.Drawing.Size(534, 20)
+        Me.Отчество.Size = New System.Drawing.Size(711, 24)
         Me.Отчество.TabIndex = 4
         '
-        'ДатаРождения
+        'birthDate
         '
+        Me.birthDate.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
         Me.birthDate.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
-        Me.birthDate.Location = New System.Drawing.Point(256, 110)
-        Me.birthDate.Name = "ДатаРождения"
-        Me.birthDate.Size = New System.Drawing.Size(534, 20)
+        Me.birthDate.Location = New System.Drawing.Point(333, 183)
+        Me.birthDate.Margin = New System.Windows.Forms.Padding(4)
+        Me.birthDate.Name = "birthDate"
+        Me.birthDate.Size = New System.Drawing.Size(711, 24)
         Me.birthDate.TabIndex = 5
         Me.birthDate.Value = New Date(1753, 1, 1, 0, 0, 0, 0)
         '
         'Label18
         '
         Me.Label18.AutoSize = True
-        Me.Label18.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.Label18.Location = New System.Drawing.Point(5, 262)
+        Me.Label18.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
+        Me.Label18.Location = New System.Drawing.Point(19, 399)
+        Me.Label18.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label18.Name = "Label18"
-        Me.Label18.Size = New System.Drawing.Size(124, 16)
+        Me.Label18.Size = New System.Drawing.Size(152, 21)
         Me.Label18.TabIndex = 111
         Me.Label18.Text = "Номер документа"
         '
-        'НомерНаправленияРосздравнадзора
-        '
-        Me.НомерНаправленияРосздравнадзора.Location = New System.Drawing.Point(256, 725)
-        Me.НомерНаправленияРосздравнадзора.Name = "НомерНаправленияРосздравнадзора"
-        Me.НомерНаправленияРосздравнадзора.Size = New System.Drawing.Size(534, 20)
-        Me.НомерНаправленияРосздравнадзора.TabIndex = 27
-        Me.НомерНаправленияРосздравнадзора.Visible = False
-        '
-        'Label20
-        '
-        Me.Label20.AutoSize = True
-        Me.Label20.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.Label20.Location = New System.Drawing.Point(6, 730)
-        Me.Label20.Name = "Label20"
-        Me.Label20.Size = New System.Drawing.Size(232, 15)
-        Me.Label20.TabIndex = 113
-        Me.Label20.Text = "Номер направления Росздравнадзора"
-        Me.Label20.Visible = False
-        '
-        'Label21
-        '
-        Me.Label21.AutoSize = True
-        Me.Label21.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.Label21.Location = New System.Drawing.Point(5, 708)
-        Me.Label21.Name = "Label21"
-        Me.Label21.Size = New System.Drawing.Size(223, 15)
-        Me.Label21.TabIndex = 112
-        Me.Label21.Text = "Дата направления Росздравнадзора"
-        Me.Label21.Visible = False
-        '
         'Телефон
         '
-        Me.Телефон.Location = New System.Drawing.Point(256, 342)
+        Me.Телефон.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
+        Me.Телефон.Location = New System.Drawing.Point(333, 508)
+        Me.Телефон.Margin = New System.Windows.Forms.Padding(4)
         Me.Телефон.Mask = "+7(000)  000 00 00"
         Me.Телефон.Name = "Телефон"
-        Me.Телефон.Size = New System.Drawing.Size(534, 20)
+        Me.Телефон.Size = New System.Drawing.Size(711, 24)
         Me.Телефон.TabIndex = 15
         '
         'CheckBox1
@@ -433,7 +415,8 @@ Partial Class newStudent
         Me.CheckBox1.AutoSize = True
         Me.CheckBox1.Checked = True
         Me.CheckBox1.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.CheckBox1.Location = New System.Drawing.Point(234, 285)
+        Me.CheckBox1.Location = New System.Drawing.Point(310, 428)
+        Me.CheckBox1.Margin = New System.Windows.Forms.Padding(4)
         Me.CheckBox1.Name = "CheckBox1"
         Me.CheckBox1.Size = New System.Drawing.Size(15, 14)
         Me.CheckBox1.TabIndex = 12
@@ -441,74 +424,74 @@ Partial Class newStudent
         '
         'Email
         '
-        Me.Email.Location = New System.Drawing.Point(256, 364)
+        Me.Email.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
+        Me.Email.Location = New System.Drawing.Point(333, 540)
+        Me.Email.Margin = New System.Windows.Forms.Padding(4)
         Me.Email.Name = "Email"
-        Me.Email.Size = New System.Drawing.Size(534, 20)
+        Me.Email.Size = New System.Drawing.Size(711, 24)
         Me.Email.TabIndex = 16
         '
         'label
         '
         Me.label.AutoSize = True
-        Me.label.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.label.Location = New System.Drawing.Point(6, 370)
+        Me.label.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
+        Me.label.Location = New System.Drawing.Point(19, 541)
+        Me.label.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.label.Name = "label"
-        Me.label.Size = New System.Drawing.Size(45, 16)
+        Me.label.Size = New System.Drawing.Size(58, 21)
         Me.label.TabIndex = 127
         Me.label.Text = "E-mail"
         '
         'BtnFocus
         '
-        Me.BtnFocus.Location = New System.Drawing.Point(174, 41)
+        Me.BtnFocus.Location = New System.Drawing.Point(209, 55)
+        Me.BtnFocus.Margin = New System.Windows.Forms.Padding(4)
         Me.BtnFocus.Name = "BtnFocus"
-        Me.BtnFocus.Size = New System.Drawing.Size(75, 23)
+        Me.BtnFocus.Size = New System.Drawing.Size(100, 28)
         Me.BtnFocus.TabIndex = 129
         Me.BtnFocus.Text = "Button1"
         Me.BtnFocus.UseVisualStyleBackColor = True
         Me.BtnFocus.Visible = False
         '
-        'ДатаНаправленияРосздравнвдзора
+        'dateDUL
         '
-        Me.ДатаНаправленияРосздравнвдзора.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
-        Me.ДатаНаправленияРосздравнвдзора.Location = New System.Drawing.Point(256, 703)
-        Me.ДатаНаправленияРосздравнвдзора.Name = "ДатаНаправленияРосздравнвдзора"
-        Me.ДатаНаправленияРосздравнвдзора.Size = New System.Drawing.Size(534, 20)
-        Me.ДатаНаправленияРосздравнвдзора.TabIndex = 26
-        Me.ДатаНаправленияРосздравнвдзора.Value = New Date(1753, 1, 1, 0, 0, 0, 0)
-        Me.ДатаНаправленияРосздравнвдзора.Visible = False
-        '
-        'ДатаВыдачиДУЛ
-        '
+        Me.dateDUL.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
         Me.dateDUL.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
-        Me.dateDUL.Location = New System.Drawing.Point(256, 512)
-        Me.dateDUL.Name = "ДатаВыдачиДУЛ"
-        Me.dateDUL.Size = New System.Drawing.Size(534, 20)
+        Me.dateDUL.Location = New System.Drawing.Point(333, 752)
+        Me.dateDUL.Margin = New System.Windows.Forms.Padding(4)
+        Me.dateDUL.Name = "dateDUL"
+        Me.dateDUL.Size = New System.Drawing.Size(711, 24)
         Me.dateDUL.TabIndex = 22
         Me.dateDUL.Value = New Date(1753, 1, 1, 0, 0, 0, 0)
         '
         'Label25
         '
         Me.Label25.AutoSize = True
-        Me.Label25.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.Label25.Location = New System.Drawing.Point(6, 519)
+        Me.Label25.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
+        Me.Label25.Location = New System.Drawing.Point(19, 755)
+        Me.Label25.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label25.Name = "Label25"
-        Me.Label25.Size = New System.Drawing.Size(89, 16)
+        Me.Label25.Size = New System.Drawing.Size(112, 21)
         Me.Label25.TabIndex = 134
-        Me.Label25.Text = "Когда выдан"
+        Me.Label25.Text = "Дата выдачи"
         '
         'КемВыданДУЛ
         '
-        Me.КемВыданДУЛ.Location = New System.Drawing.Point(256, 490)
+        Me.КемВыданДУЛ.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
+        Me.КемВыданДУЛ.Location = New System.Drawing.Point(333, 720)
+        Me.КемВыданДУЛ.Margin = New System.Windows.Forms.Padding(4)
         Me.КемВыданДУЛ.Name = "КемВыданДУЛ"
-        Me.КемВыданДУЛ.Size = New System.Drawing.Size(534, 20)
+        Me.КемВыданДУЛ.Size = New System.Drawing.Size(711, 24)
         Me.КемВыданДУЛ.TabIndex = 21
         '
         'Label26
         '
         Me.Label26.AutoSize = True
-        Me.Label26.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.Label26.Location = New System.Drawing.Point(6, 472)
+        Me.Label26.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
+        Me.Label26.Location = New System.Drawing.Point(19, 691)
+        Me.Label26.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label26.Name = "Label26"
-        Me.Label26.Size = New System.Drawing.Size(124, 16)
+        Me.Label26.Size = New System.Drawing.Size(152, 21)
         Me.Label26.TabIndex = 136
         Me.Label26.Text = "Номер документа"
         '
@@ -518,7 +501,8 @@ Partial Class newStudent
         Me.ValidOn.AutoSize = True
         Me.ValidOn.Checked = True
         Me.ValidOn.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.ValidOn.Location = New System.Drawing.Point(234, 22)
+        Me.ValidOn.Location = New System.Drawing.Point(310, 55)
+        Me.ValidOn.Margin = New System.Windows.Forms.Padding(4)
         Me.ValidOn.Name = "ValidOn"
         Me.ValidOn.Size = New System.Drawing.Size(15, 14)
         Me.ValidOn.TabIndex = 0
@@ -527,88 +511,169 @@ Partial Class newStudent
         'Пол
         '
         Me.Пол.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.Пол.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
         Me.Пол.FormattingEnabled = True
-        Me.Пол.ItemHeight = 13
-        Me.Пол.Location = New System.Drawing.Point(256, 132)
+        Me.Пол.ItemHeight = 18
+        Me.Пол.Location = New System.Drawing.Point(333, 215)
+        Me.Пол.Margin = New System.Windows.Forms.Padding(4)
         Me.Пол.Name = "Пол"
-        Me.Пол.Size = New System.Drawing.Size(534, 21)
+        Me.Пол.Size = New System.Drawing.Size(711, 26)
         Me.Пол.TabIndex = 6
         '
         'УровеньОбразования
         '
         Me.УровеньОбразования.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.УровеньОбразования.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
         Me.УровеньОбразования.FormattingEnabled = True
-        Me.УровеньОбразования.ItemHeight = 13
-        Me.УровеньОбразования.Location = New System.Drawing.Point(256, 172)
+        Me.УровеньОбразования.ItemHeight = 18
+        Me.УровеньОбразования.Location = New System.Drawing.Point(333, 264)
+        Me.УровеньОбразования.Margin = New System.Windows.Forms.Padding(4)
         Me.УровеньОбразования.Name = "УровеньОбразования"
-        Me.УровеньОбразования.Size = New System.Drawing.Size(534, 21)
+        Me.УровеньОбразования.Size = New System.Drawing.Size(711, 26)
         Me.УровеньОбразования.TabIndex = 7
         '
         'Гражданство
         '
         Me.Гражданство.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.Гражданство.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
         Me.Гражданство.FormattingEnabled = True
-        Me.Гражданство.ItemHeight = 13
-        Me.Гражданство.Location = New System.Drawing.Point(256, 401)
+        Me.Гражданство.ItemHeight = 18
+        Me.Гражданство.Location = New System.Drawing.Point(333, 588)
+        Me.Гражданство.Margin = New System.Windows.Forms.Padding(4)
         Me.Гражданство.Name = "Гражданство"
-        Me.Гражданство.Size = New System.Drawing.Size(534, 21)
+        Me.Гражданство.Size = New System.Drawing.Size(711, 26)
         Me.Гражданство.TabIndex = 17
         '
         'ДУЛ
         '
         Me.ДУЛ.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.ДУЛ.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
         Me.ДУЛ.FormattingEnabled = True
-        Me.ДУЛ.ItemHeight = 13
-        Me.ДУЛ.Location = New System.Drawing.Point(256, 423)
+        Me.ДУЛ.ItemHeight = 18
+        Me.ДУЛ.Location = New System.Drawing.Point(333, 622)
+        Me.ДУЛ.Margin = New System.Windows.Forms.Padding(4)
         Me.ДУЛ.Name = "ДУЛ"
-        Me.ДУЛ.Size = New System.Drawing.Size(534, 21)
+        Me.ДУЛ.Size = New System.Drawing.Size(711, 26)
         Me.ДУЛ.TabIndex = 18
         '
         'ИсточникФин
         '
         Me.ИсточникФин.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.ИсточникФин.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
         Me.ИсточникФин.FormattingEnabled = True
-        Me.ИсточникФин.ItemHeight = 13
-        Me.ИсточникФин.Location = New System.Drawing.Point(256, 553)
+        Me.ИсточникФин.ItemHeight = 18
+        Me.ИсточникФин.Location = New System.Drawing.Point(333, 802)
+        Me.ИсточникФин.Margin = New System.Windows.Forms.Padding(4)
         Me.ИсточникФин.Name = "ИсточникФин"
-        Me.ИсточникФин.Size = New System.Drawing.Size(534, 21)
+        Me.ИсточникФин.Size = New System.Drawing.Size(711, 26)
         Me.ИсточникФин.TabIndex = 23
         '
         'НаправившаяОрг
         '
         Me.НаправившаяОрг.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.НаправившаяОрг.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
         Me.НаправившаяОрг.FormattingEnabled = True
-        Me.НаправившаяОрг.ItemHeight = 13
-        Me.НаправившаяОрг.Location = New System.Drawing.Point(256, 575)
+        Me.НаправившаяОрг.ItemHeight = 18
+        Me.НаправившаяОрг.Location = New System.Drawing.Point(333, 836)
+        Me.НаправившаяОрг.Margin = New System.Windows.Forms.Padding(4)
         Me.НаправившаяОрг.Name = "НаправившаяОрг"
-        Me.НаправившаяОрг.Size = New System.Drawing.Size(534, 21)
+        Me.НаправившаяОрг.Size = New System.Drawing.Size(711, 26)
         Me.НаправившаяОрг.TabIndex = 24
         '
         'Label22
         '
         Me.Label22.AutoSize = True
-        Me.Label22.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.Label22.Location = New System.Drawing.Point(6, 220)
+        Me.Label22.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
+        Me.Label22.Location = New System.Drawing.Point(19, 335)
+        Me.Label22.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label22.Name = "Label22"
-        Me.Label22.Size = New System.Drawing.Size(208, 16)
+        Me.Label22.Size = New System.Drawing.Size(254, 21)
         Me.Label22.TabIndex = 138
         Me.Label22.Text = "Вид документа о образовании"
         '
         'doo_vid_dok
         '
         Me.doo_vid_dok.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.doo_vid_dok.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
         Me.doo_vid_dok.FormattingEnabled = True
-        Me.doo_vid_dok.ItemHeight = 13
-        Me.doo_vid_dok.Location = New System.Drawing.Point(256, 216)
+        Me.doo_vid_dok.ItemHeight = 18
+        Me.doo_vid_dok.Location = New System.Drawing.Point(333, 330)
+        Me.doo_vid_dok.Margin = New System.Windows.Forms.Padding(4)
         Me.doo_vid_dok.Name = "doo_vid_dok"
-        Me.doo_vid_dok.Size = New System.Drawing.Size(534, 21)
+        Me.doo_vid_dok.Size = New System.Drawing.Size(711, 26)
         Me.doo_vid_dok.TabIndex = 9
         '
-        'НовыйСлушатель
+        'header
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
+        Me.header.BackColor = System.Drawing.SystemColors.ControlLight
+        Me.header.GripMargin = New System.Windows.Forms.Padding(0)
+        Me.header.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
+        Me.header.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.saveButton, Me.clear})
+        Me.header.Location = New System.Drawing.Point(0, 0)
+        Me.header.Name = "header"
+        Me.header.Padding = New System.Windows.Forms.Padding(0, 2, 0, 0)
+        Me.header.Size = New System.Drawing.Size(1050, 52)
+        Me.header.TabIndex = 139
+        Me.header.Text = "ToolStrip1"
+        '
+        'saveButton
+        '
+        Me.saveButton.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
+        Me.saveButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.saveButton.Image = CType(resources.GetObject("saveButton.Image"), System.Drawing.Image)
+        Me.saveButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
+        Me.saveButton.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.saveButton.Margin = New System.Windows.Forms.Padding(0, 0, 5, 2)
+        Me.saveButton.Name = "saveButton"
+        Me.saveButton.Size = New System.Drawing.Size(48, 48)
+        Me.saveButton.Text = "Сохранить"
+        '
+        'clear
+        '
+        Me.clear.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
+        Me.clear.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.clear.Image = CType(resources.GetObject("clear.Image"), System.Drawing.Image)
+        Me.clear.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
+        Me.clear.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.clear.Margin = New System.Windows.Forms.Padding(0, 0, 0, 2)
+        Me.clear.Name = "clear"
+        Me.clear.Size = New System.Drawing.Size(48, 48)
+        Me.clear.Text = "Очистить"
+        '
+        'message
+        '
+        Me.message.AutoSize = True
+        Me.message.BackColor = System.Drawing.SystemColors.ControlLight
+        Me.message.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
+        Me.message.ForeColor = System.Drawing.SystemColors.MenuHighlight
+        Me.message.Location = New System.Drawing.Point(19, 31)
+        Me.message.Margin = New System.Windows.Forms.Padding(7, 0, 7, 0)
+        Me.message.Name = "message"
+        Me.message.Size = New System.Drawing.Size(68, 21)
+        Me.message.TabIndex = 141
+        Me.message.Text = "Label20"
+        Me.message.Visible = False
+        '
+        'status
+        '
+        Me.status.AutoSize = True
+        Me.status.BackColor = System.Drawing.SystemColors.ControlLight
+        Me.status.Font = New System.Drawing.Font("Microsoft YaHei", 15.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
+        Me.status.ForeColor = System.Drawing.Color.DarkGreen
+        Me.status.Location = New System.Drawing.Point(18, 3)
+        Me.status.Name = "status"
+        Me.status.Size = New System.Drawing.Size(90, 28)
+        Me.status.TabIndex = 142
+        Me.status.Text = "Label10"
+        '
+        'newStudent
+        '
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(794, 701)
+        Me.ClientSize = New System.Drawing.Size(1050, 874)
+        Me.Controls.Add(Me.status)
+        Me.Controls.Add(Me.message)
+        Me.Controls.Add(Me.header)
         Me.Controls.Add(Me.doo_vid_dok)
         Me.Controls.Add(Me.Label22)
         Me.Controls.Add(Me.НаправившаяОрг)
@@ -622,20 +687,14 @@ Partial Class newStudent
         Me.Controls.Add(Me.КемВыданДУЛ)
         Me.Controls.Add(Me.Label25)
         Me.Controls.Add(Me.dateDUL)
-        Me.Controls.Add(Me.ДатаНаправленияРосздравнвдзора)
         Me.Controls.Add(Me.BtnFocus)
         Me.Controls.Add(Me.Email)
         Me.Controls.Add(Me.label)
         Me.Controls.Add(Me.CheckBox1)
         Me.Controls.Add(Me.Телефон)
-        Me.Controls.Add(Me.НомерНаправленияРосздравнадзора)
-        Me.Controls.Add(Me.Label20)
-        Me.Controls.Add(Me.Label21)
         Me.Controls.Add(Me.Label18)
         Me.Controls.Add(Me.birthDate)
         Me.Controls.Add(Me.Отчество)
-        Me.Controls.Add(Me.message)
-        Me.Controls.Add(Me.Очистить)
         Me.Controls.Add(Me.НомерДУЛ)
         Me.Controls.Add(Me.СерияДУЛ)
         Me.Controls.Add(Me.АдресРегистрации)
@@ -664,17 +723,18 @@ Partial Class newStudent
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.snils)
-        Me.Controls.Add(Me.Сохранить)
+        Me.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
         Me.KeyPreview = True
-        Me.Name = "НовыйСлушатель"
+        Me.Margin = New System.Windows.Forms.Padding(4)
+        Me.Name = "newStudent"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
         Me.Text = "Слушатель"
+        Me.header.ResumeLayout(False)
+        Me.header.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
     End Sub
-    Friend WithEvents message As Label
-    Friend WithEvents Очистить As Button
     Friend WithEvents НомерДУЛ As TextBox
     Friend WithEvents СерияДУЛ As TextBox
     Friend WithEvents АдресРегистрации As TextBox
@@ -703,19 +763,14 @@ Partial Class newStudent
     Friend WithEvents Label2 As Label
     Friend WithEvents Label1 As Label
     Friend WithEvents snils As TextBox
-    Friend WithEvents Сохранить As Button
     Friend WithEvents Отчество As TextBox
     Friend WithEvents birthDate As DateTimePicker
     Friend WithEvents Label18 As Label
-    Friend WithEvents НомерНаправленияРосздравнадзора As TextBox
-    Friend WithEvents Label20 As Label
-    Friend WithEvents Label21 As Label
     Friend WithEvents Телефон As MaskedTextBox
     Friend WithEvents CheckBox1 As CheckBox
     Friend WithEvents Email As TextBox
     Friend WithEvents label As Label
     Friend WithEvents BtnFocus As Button
-    Friend WithEvents ДатаНаправленияРосздравнвдзора As DateTimePicker
     Friend WithEvents dateDUL As DateTimePicker
     Friend WithEvents Label25 As Label
     Friend WithEvents КемВыданДУЛ As TextBox
@@ -729,4 +784,9 @@ Partial Class newStudent
     Friend WithEvents НаправившаяОрг As ComboBox
     Friend WithEvents Label22 As Label
     Friend WithEvents doo_vid_dok As ComboBox
+    Friend WithEvents header As ToolStrip
+    Friend WithEvents saveButton As ToolStripButton
+    Friend WithEvents clear As ToolStripButton
+    Friend WithEvents message As Label
+    Friend WithEvents status As Label
 End Class

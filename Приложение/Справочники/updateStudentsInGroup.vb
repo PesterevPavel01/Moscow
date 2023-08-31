@@ -1,6 +1,6 @@
-﻿Module ЗаполнитьФормуССлушВГруппе
+﻿Module updateStudentsInGroup
 
-    Sub updateFormStudentsList(kod As String)
+    Sub updateFormStudentsInGroup(kod As String)
 
         Dim studentsList
         Dim queryString As String
@@ -16,15 +16,15 @@
 
             studentsList = MainForm.mySqlConnect.loadMySqlToArray(queryString, 1)
 
-            If studentsList(0, 0) = "Нет записей" Then
-                StudentList.ListViewStudentsList.Items.Clear()
+            If studentsList(0, 0) = "нет записей" Then
+                StudentsInGroup.ListViewStudentsList.Items.Clear()
                 Exit Sub
             End If
 
-            UpdateListView.updateListView(False, True, StudentList.ListViewStudentsList, addMask.addMask(studentsList, 0), 0, 1, 2, 3, 4)
+            updateListView.updateListView(False, True, StudentsInGroup.ListViewStudentsList, addMask.addMaskIntoArray(studentsList, 0), 0, 1, 2, 3, 4)
 
         Else
-            StudentList.ListViewStudentsList.Items.Clear()
+            StudentsInGroup.ListViewStudentsList.Items.Clear()
         End If
 
     End Sub

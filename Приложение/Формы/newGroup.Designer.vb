@@ -102,7 +102,6 @@ Partial Class newGroup
         Me.pkOn = New System.Windows.Forms.ToolStripButton()
         Me.ppOn = New System.Windows.Forms.ToolStripButton()
         Me.statusType = New System.Windows.Forms.Label()
-        Me.НоваяГруппаУровеньКвалификации = New System.Windows.Forms.ComboBox()
         Me.header.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -699,7 +698,7 @@ Partial Class newGroup
         Me.НоваяГруппаОтветственныйКуратор.Margin = New System.Windows.Forms.Padding(5, 4, 5, 4)
         Me.НоваяГруппаОтветственныйКуратор.Name = "НоваяГруппаОтветственныйКуратор"
         Me.НоваяГруппаОтветственныйКуратор.Size = New System.Drawing.Size(729, 24)
-        Me.НоваяГруппаОтветственныйКуратор.TabIndex = 10
+        Me.НоваяГруппаОтветственныйКуратор.TabIndex = 9
         '
         'НоваягруппаОтветственныйЗаПрактику
         '
@@ -954,21 +953,6 @@ Partial Class newGroup
         Me.statusType.TabIndex = 100
         Me.statusType.Text = "Label10"
         '
-        'НоваяГруппаУровеньКвалификации
-        '
-        Me.НоваяГруппаУровеньКвалификации.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.НоваяГруппаУровеньКвалификации.Enabled = False
-        Me.НоваяГруппаУровеньКвалификации.Font = New System.Drawing.Font("Microsoft YaHei", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.НоваяГруппаУровеньКвалификации.ForeColor = System.Drawing.Color.Green
-        Me.НоваяГруппаУровеньКвалификации.FormattingEnabled = True
-        Me.НоваяГруппаУровеньКвалификации.ItemHeight = 26
-        Me.НоваяГруппаУровеньКвалификации.Location = New System.Drawing.Point(164, 5)
-        Me.НоваяГруппаУровеньКвалификации.Margin = New System.Windows.Forms.Padding(5, 4, 5, 4)
-        Me.НоваяГруппаУровеньКвалификации.Name = "НоваяГруппаУровеньКвалификации"
-        Me.НоваяГруппаУровеньКвалификации.Size = New System.Drawing.Size(427, 34)
-        Me.НоваяГруппаУровеньКвалификации.TabIndex = 111
-        Me.НоваяГруппаУровеньКвалификации.Visible = False
-        '
         'newGroup
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
@@ -996,7 +980,6 @@ Partial Class newGroup
         Me.Controls.Add(Me.НоваяГруппаСпециальность)
         Me.Controls.Add(Me.НоваяГруппаПрограмма)
         Me.Controls.Add(Me.НоваяГруппаФормаОбучения)
-        Me.Controls.Add(Me.НоваяГруппаУровеньКвалификации)
         Me.Controls.Add(Me.НоваяГруппаДатаНачалаЗанятий)
         Me.Controls.Add(Me.lblCval)
         Me.Controls.Add(Me.ДатаВСвид)
@@ -1144,5 +1127,4 @@ Partial Class newGroup
     Friend WithEvents saveButton As ToolStripButton
     Friend WithEvents clear As ToolStripButton
     Friend WithEvents statusType As Label
-    Friend WithEvents НоваяГруппаУровеньКвалификации As ComboBox
 End Class

@@ -115,11 +115,11 @@ Public Class GroupList
 
         If Not groupListTable.SelectedItems.Item(0).SubItems(1).Text = "удалено" Then
 
-            StudentList.ListViewStudentsList.Items.Clear()
+            StudentsInGroup.ListViewStudentsList.Items.Clear()
 
             numberGr = groupListTable.SelectedItems.Item(0).SubItems(1).Text
-            StudentList.cvalification = MainForm.cvalific
-
+            StudentsInGroup.cvalification = MainForm.cvalific
+            Dim n As Int16 = MainForm.cvalific
             If groupListTable.SelectedItems.Item(0).SubItems(0).Text = "" Then
                 Exit Sub
             End If
@@ -134,14 +134,16 @@ Public Class GroupList
             sqiQuery = checkGroup(kod)
 
             infoAboutGroup = MainForm.mySqlConnect.loadMySqlToArray(sqiQuery, 1)
+
             If CStr(infoAboutGroup(0, 0)) = "нет записей" Then
                 MsgBox("Группа была изменена, обновите данные нажатием кнопки 'Загрузить из базы' ")
                 Exit Sub
             End If
-            StudentList.Text = "Группа № " & numberGr
-            РедакторГруппы.Text = "Группа № " & numberGr
-            StudentList.ShowDialog()
-            MainForm.cvalific = StudentList.cvalification
+
+            StudentsInGroup.Text = "Группа № " & numberGr
+            newGroup.Text = "Группа № " & numberGr
+            StudentsInGroup.ShowDialog()
+            MainForm.cvalific = StudentsInGroup.cvalification
 
         Else
             MsgBox("информация удалена")

@@ -905,44 +905,43 @@ Module QueryString
 
     End Function
 
-    Public Function SqlString__insertSlush(structSlushatel As strSlushatel)
+    Public Function SqlString__insertSlush(structSlushatel As strStudent)
 
         Dim part1, part2, part3 As String
 
-        part1 = "(Снилс, Фамилия, Имя, Отчество, ДатаРождения, Пол, УОбразования, doo_vid_dok, НаимДОО, СерияДОО, НомерДОО, ФамилияДОО, АРег, Телефон, Гражданство, ДУЛ, СерияДУЛ, НомерДУЛ, ИФин, НОрг, НомерНапрРосздрав, ДатаНапрРосздрав, Специальность, ДатаРегистрации, Почта, ДУЛКемВыдан,ДУЛДатаВыдачи ) "
+        part1 = "(Снилс, Фамилия, Имя, Отчество, ДатаРождения, Пол, УОбразования, doo_vid_dok, НаимДОО, СерияДОО, НомерДОО, ФамилияДОО, АРег, Телефон, Гражданство, ДУЛ, СерияДУЛ, НомерДУЛ, ИФин, НОрг,  Специальность, ДатаРегистрации, Почта, ДУЛКемВыдан,ДУЛДатаВыдачи ) "
 
         part2 = "(" & Chr(39) & structSlushatel.snils & Chr(39) & ",
-                 " & Chr(39) & structSlushatel.фамилия & Chr(39) & ",
-                 " & Chr(39) & structSlushatel.имя & Chr(39) & ",
-                 " & Chr(39) & structSlushatel.отчество & Chr(39) & ",
-                 " & Chr(39) & structSlushatel.датаР & Chr(39) & ",
-                 " & Chr(39) & structSlushatel.пол & Chr(39) & ",
-                 " & Chr(39) & structSlushatel.уровеньОбразования & Chr(39) & "
+                 " & Chr(39) & structSlushatel.secondName & Chr(39) & ",
+                 " & Chr(39) & structSlushatel.name & Chr(39) & ",
+                 " & Chr(39) & structSlushatel.lastName & Chr(39) & ",
+                 " & Chr(39) & structSlushatel.birthDay & Chr(39) & ",
+                 " & Chr(39) & structSlushatel.gender & Chr(39) & ",
+                 " & Chr(39) & structSlushatel.educationLevel & Chr(39) & "
                  ,(SELECT kod FROM doo_vid_dok WHERE name=
                  " & Chr(39) & structSlushatel.doo_vid_dok & Chr(39) & "
-                 LIMIT 1) ," & Chr(39) & structSlushatel.образование & Chr(39) & "
-                 ," & Chr(39) & structSlushatel.серияДокументаООбразовании & Chr(39) & "
-                 ," & Chr(39) & structSlushatel.номерДокументаООбразовании & Chr(39) & "
-                 ," & Chr(39) & structSlushatel.фамилияВДокОбОбразовании & Chr(39) & "
-                 ," & Chr(39) & structSlushatel.адресРегистрации & Chr(39) & "
-                 ," & Chr(39) & structSlushatel.телефон & Chr(39) & "
-                 ," & Chr(39) & structSlushatel.гражданство & Chr(39) & "
-                 ," & Chr(39) & structSlushatel.ДУЛ & Chr(39) & "
-                 ," & Chr(39) & structSlushatel.серияДУЛ & Chr(39) & "
-                 ," & Chr(39) & structSlushatel.номерДУЛ & Chr(39)
+                 LIMIT 1) ," & Chr(39) & structSlushatel.education & Chr(39) & "
+                 ," & Chr(39) & structSlushatel.seriesDOO & Chr(39) & "
+                 ," & Chr(39) & structSlushatel.numberDOO & Chr(39) & "
+                 ," & Chr(39) & structSlushatel.lastNameDOO & Chr(39) & "
+                 ," & Chr(39) & structSlushatel.adress & Chr(39) & "
+                 ," & Chr(39) & structSlushatel.telephone & Chr(39) & "
+                 ," & Chr(39) & structSlushatel.citizenship & Chr(39) & "
+                 ," & Chr(39) & structSlushatel.dUL & Chr(39) & "
+                 ," & Chr(39) & structSlushatel.seriesDUL & Chr(39) & "
+                 ," & Chr(39) & structSlushatel.numberDUL & Chr(39)
 
-        part3 = "," & Chr(39) & structSlushatel.источникФин & Chr(39) & "
+        part3 = "," & Chr(39) & structSlushatel.sourceOfFinansing & Chr(39) & "
                 , (SELECT kod FROM napr_organization WHERE name=" & Chr(39) & structSlushatel.направившаяОрг & Chr(39) & "
-                LIMIT 1) , " & Chr(39) & structSlushatel.номерНаправленияРосздравнадзора & Chr(39) & "
-                , " & Chr(39) & structSlushatel.датаНаправленияРосздравнвдзора & Chr(39) & "
-                , " & Chr(39) & structSlushatel.специальностьСлушателя & Chr(39) & "
-                , " & Chr(39) & structSlushatel.датаРег & Chr(39) & "
-                , " & Chr(39) & structSlushatel.Email & Chr(39) & "
-                , " & Chr(39) & structSlushatel.кемВыданДУЛ & Chr(39) & ","
+                LIMIT 1) " &
+                " , " & Chr(39) & structSlushatel.speciality & Chr(39) & "
+                , " & Chr(39) & structSlushatel.dateReg & Chr(39) & "
+                , " & Chr(39) & structSlushatel.email & Chr(39) & "
+                , " & Chr(39) & structSlushatel.autorDUL & Chr(39) & ","
 
-        If structSlushatel.датаВыдачиДУЛ = "null" Then
+        If structSlushatel.dateDUL = "null" Then
             part3 += "null)"
-        Else part3 += Chr(39) & structSlushatel.датаВыдачиДУЛ & Chr(39) & " ) "
+        Else part3 += Chr(39) & structSlushatel.dateDUL & Chr(39) & " ) "
         End If
 
         sqlString = "INSERT INTO students " & part1 & "  VALUES " & part2 & part3
@@ -951,22 +950,22 @@ Module QueryString
 
     End Function
 
-    Public Function SqlString__updateSlush(structSlushatel As strSlushatel)
+    Public Function SqlString__updateSlush(structSlushatel As strStudent)
 
         Dim part1 As String, part2 As String, part3 As String, part4 As String
 
-        part1 = "Снилс=" & Chr(39) & structSlushatel.snils & Chr(39) & ", Фамилия=" & Chr(39) & structSlushatel.фамилия & Chr(39) & ", Имя=" & Chr(39) & structSlushatel.имя & Chr(39) & ", Отчество=" & Chr(39) & structSlushatel.отчество & Chr(39) & ", ДатаРождения=" & Chr(39) & structSlushatel.датаР & Chr(39) & ", Пол=" & Chr(39) & structSlushatel.пол & Chr(39)
+        part1 = "Снилс=" & Chr(39) & structSlushatel.snils & Chr(39) & ", Фамилия=" & Chr(39) & structSlushatel.secondName & Chr(39) & ", Имя=" & Chr(39) & structSlushatel.name & Chr(39) & ", Отчество=" & Chr(39) & structSlushatel.lastName & Chr(39) & ", ДатаРождения=" & Chr(39) & structSlushatel.birthDay & Chr(39) & ", Пол=" & Chr(39) & structSlushatel.gender & Chr(39)
 
-        part2 = ", УОбразования=" & Chr(39) & structSlushatel.уровеньОбразования & Chr(39) & ", doo_vid_dok= (SELECT kod FROM doo_vid_dok WHERE name=" & Chr(39) & structSlushatel.doo_vid_dok & Chr(39) & " LIMIT 1), НаимДОО=" & Chr(39) & structSlushatel.образование & Chr(39) & ", СерияДОО=" & Chr(39) & structSlushatel.серияДокументаООбразовании & Chr(39) & ", НомерДОО=" & Chr(39) & structSlushatel.номерДокументаООбразовании & Chr(39) & ", ФамилияДОО=" & Chr(39) & structSlushatel.фамилияВДокОбОбразовании & Chr(39)
+        part2 = ", УОбразования=" & Chr(39) & structSlushatel.educationLevel & Chr(39) & ", doo_vid_dok= (SELECT kod FROM doo_vid_dok WHERE name=" & Chr(39) & structSlushatel.doo_vid_dok & Chr(39) & " LIMIT 1), НаимДОО=" & Chr(39) & structSlushatel.education & Chr(39) & ", СерияДОО=" & Chr(39) & structSlushatel.seriesDOO & Chr(39) & ", НомерДОО=" & Chr(39) & structSlushatel.numberDOO & Chr(39) & ", ФамилияДОО=" & Chr(39) & structSlushatel.lastNameDOO & Chr(39)
 
-        part3 = ",АРег=" & Chr(39) & structSlushatel.адресРегистрации & Chr(39) & ", Телефон=" & Chr(39) & structSlushatel.телефон & Chr(39) & ", Гражданство=" & Chr(39) & structSlushatel.гражданство & Chr(39) & ", ДУЛ=" & Chr(39) & structSlushatel.ДУЛ & Chr(39) & ", СерияДУЛ=" & Chr(39) & structSlushatel.серияДУЛ & Chr(39) & ", НомерДУЛ=" & Chr(39) & structSlushatel.номерДУЛ & Chr(39)
+        part3 = ",АРег=" & Chr(39) & structSlushatel.adress & Chr(39) & ", Телефон=" & Chr(39) & structSlushatel.telephone & Chr(39) & ", Гражданство=" & Chr(39) & structSlushatel.citizenship & Chr(39) & ", ДУЛ=" & Chr(39) & structSlushatel.dUL & Chr(39) & ", СерияДУЛ=" & Chr(39) & structSlushatel.seriesDUL & Chr(39) & ", НомерДУЛ=" & Chr(39) & structSlushatel.numberDUL & Chr(39)
 
-        part4 = ",ИФин=" & Chr(39) & structSlushatel.источникФин & Chr(39) & ", НОрг= (SELECT kod FROM napr_organization WHERE name=" & Chr(39) & structSlushatel.направившаяОрг & Chr(39) & " LIMIT 1), НомерНапрРосздрав=" & Chr(39) & structSlushatel.номерНаправленияРосздравнадзора & Chr(39) & ", ДатаНапрРосздрав=" & Chr(39) & structSlushatel.датаНаправленияРосздравнвдзора & Chr(39) & ", Специальность=" & Chr(39) & structSlushatel.специальностьСлушателя & Chr(39) & ", ДатаРегистрации=" & Chr(39) & structSlushatel.датаРег & Chr(39) & ", Почта=" & Chr(39) & structSlushatel.Email & Chr(39) & ", ДУЛКемВыдан=" & Chr(39) & structSlushatel.кемВыданДУЛ & Chr(39)
+        part4 = ",ИФин=" & Chr(39) & structSlushatel.sourceOfFinansing & Chr(39) & ", НОрг= (SELECT kod FROM napr_organization WHERE name=" & Chr(39) & structSlushatel.направившаяОрг & Chr(39) & " LIMIT 1),  Специальность=" & Chr(39) & structSlushatel.speciality & Chr(39) & ", ДатаРегистрации=" & Chr(39) & structSlushatel.dateReg & Chr(39) & ", Почта=" & Chr(39) & structSlushatel.email & Chr(39) & ", ДУЛКемВыдан=" & Chr(39) & structSlushatel.autorDUL & Chr(39)
 
-        If structSlushatel.датаВыдачиДУЛ = "null" Then
+        If structSlushatel.dateDUL = "null" Then
             part4 += ", ДУЛДатаВыдачи=null"
         Else
-            part4 += ", ДУЛДатаВыдачи=" & Chr(39) & structSlushatel.датаВыдачиДУЛ & Chr(39)
+            part4 += ", ДУЛДатаВыдачи=" & Chr(39) & structSlushatel.dateDUL & Chr(39)
         End If
 
         sqlString = "UPDATE students SET " & part1 & part2 & part3 & part4 & " WHERE Снилс =" & Chr(39) & structSlushatel.snils & Chr(39)
@@ -2712,46 +2711,44 @@ Module QueryString
 
     End Function
 
-    Public Function updateSlushatel(slushatel As Student.strSlushatel) As String
+    Public Function updateSlushatel(studentData As Student.strStudent) As String
 
-        Dim sqlString As String = "", ДатаВыдачиДул, СтрокаЗапроса As String
+        Dim sqlString As String = ""
 
-        sqlString = "Снилс=" & Chr(39) & slushatel.snils & Chr(39) &
-            ", Фамилия=" & Chr(39) & slushatel.фамилия & Chr(39) &
-            ", Имя=" & Chr(39) & slushatel.имя & Chr(39) &
-            ", Отчество=" & Chr(39) & slushatel.отчество & Chr(39) &
-            ", ДатаРождения=" & Chr(39) & MainForm.mySqlConnect.dateToFormatMySQL(slushatel.датаР) & Chr(39) &
-            ", Пол=" & Chr(39) & slushatel.пол & Chr(39) &
-            ", УОбразования=" & Chr(39) & slushatel.уровеньОбразования & Chr(39) &
-            ", НаимДОО=" & Chr(39) & slushatel.образование & Chr(39) &
-            ", СерияДОО=" & Chr(39) & slushatel.серияДокументаООбразовании & Chr(39) &
-            ", НомерДОО=" & Chr(39) & slushatel.номерДокументаООбразовании & Chr(39) &
-            ", ФамилияДОО=" & Chr(39) & slushatel.фамилияВДокОбОбразовании & Chr(39) &
-            ",АРег=" & Chr(39) & slushatel.адресРегистрации & Chr(39) &
-            ", Телефон=" & Chr(39) & slushatel.телефон & Chr(39) &
-            ", Гражданство=" & Chr(39) & slushatel.гражданство & Chr(39) &
-            ", ДУЛ=" & Chr(39) & slushatel.ДУЛ & Chr(39) &
-            ", СерияДУЛ=" & Chr(39) & slushatel.серияДУЛ & Chr(39) &
-            ", НомерДУЛ=" & Chr(39) & slushatel.номерДУЛ & Chr(39) &
-            ",ИФин=" & Chr(39) & slushatel.источникФин & Chr(39) &
-            ", НОрг=(SELECT kod FROM napr_organization WHERE name=" & Chr(39) & slushatel.направившаяОрг & Chr(39) & ")" &
-            ", НомерНапрРосздрав=" & Chr(39) & slushatel.номерНаправленияРосздравнадзора & Chr(39) &
-            ", ДатаНапрРосздрав=" & Chr(39) & MainForm.mySqlConnect.dateToFormatMySQL(slushatel.датаНаправленияРосздравнвдзора) & Chr(39) &
-            ", Специальность=" & Chr(39) & slushatel.специальностьСлушателя & Chr(39) &
-            ", ДатаРегистрации=" & Chr(39) & MainForm.mySqlConnect.dateToFormatMySQL(slushatel.датаРег) & Chr(39) &
-            ", Почта=" & Chr(39) & slushatel.Email & Chr(39) &
-            ", ДУЛКемВыдан=" & Chr(39) & slushatel.кемВыданДУЛ & Chr(39) &
-            ", doo_vid_dok=(SELECT kod FROM doo_vid_dok WHERE name = '" & slushatel.doo_vid_dok & "' LIMIT 1)"
+        sqlString = "Снилс=" & Chr(39) & studentData.snils & Chr(39) &
+            ", Фамилия=" & Chr(39) & studentData.lastName & Chr(39) &
+            ", Имя=" & Chr(39) & studentData.name & Chr(39) &
+            ", Отчество=" & Chr(39) & studentData.secondName & Chr(39) &
+            ", ДатаРождения=" & Chr(39) & MainForm.mySqlConnect.dateToFormatMySQL(studentData.birthDay) & Chr(39) &
+            ", Пол=" & Chr(39) & studentData.gender & Chr(39) &
+            ", УОбразования=" & Chr(39) & studentData.educationLevel & Chr(39) &
+            ", НаимДОО=" & Chr(39) & studentData.education & Chr(39) &
+            ", СерияДОО=" & Chr(39) & studentData.seriesDOO & Chr(39) &
+            ", НомерДОО=" & Chr(39) & studentData.numberDOO & Chr(39) &
+            ", ФамилияДОО=" & Chr(39) & studentData.lastNameDOO & Chr(39) &
+            ",АРег=" & Chr(39) & studentData.adress & Chr(39) &
+            ", Телефон=" & Chr(39) & studentData.telephone & Chr(39) &
+            ", Гражданство=" & Chr(39) & studentData.citizenship & Chr(39) &
+            ", ДУЛ=" & Chr(39) & studentData.dUL & Chr(39) &
+            ", СерияДУЛ=" & Chr(39) & studentData.seriesDUL & Chr(39) &
+            ", НомерДУЛ=" & Chr(39) & studentData.numberDUL & Chr(39) &
+            ",ИФин=" & Chr(39) & studentData.sourceOfFinansing & Chr(39) &
+            ", НОрг=(SELECT kod FROM napr_organization WHERE name=" & Chr(39) & studentData.направившаяОрг & Chr(39) & ")" &
+            ", Специальность=" & Chr(39) & studentData.speciality & Chr(39) &
+            ", ДатаРегистрации=" & Chr(39) & MainForm.mySqlConnect.dateToFormatMySQL(studentData.dateReg) & Chr(39) &
+            ", Почта=" & Chr(39) & studentData.email & Chr(39) &
+            ", ДУЛКемВыдан=" & Chr(39) & studentData.autorDUL & Chr(39) &
+            ", doo_vid_dok=(SELECT kod FROM doo_vid_dok WHERE name = '" & studentData.doo_vid_dok & "' LIMIT 1)"
 
 
-        sqlString = "UPDATE students SET " & sqlString & " WHERE Снилс =" & Chr(39) & slushatel.старыйСнилс & Chr(39)
+        sqlString = "UPDATE students SET " & sqlString & " WHERE Снилс =" & Chr(39) & studentData.prevSnils & Chr(39)
 
         Return sqlString
 
     End Function
 
 
-    Public Function insertIntoSlushatel(slushatel As Student.strSlushatel) As String
+    Public Function insertIntoSlushatel(slushatel As Student.strStudent) As String
 
         Dim part1, part2 As String
         Dim sqlString, ДатаВыдачиДул As String
@@ -2760,29 +2757,27 @@ Module QueryString
 
 
         part1 = "(Снилс,"
-        part2 = "(" & Chr(39) & addMask.deleteMasck(slushatel.snils) & Chr(39)
+        part2 = "(" & Chr(39) & addMask.deleteMask(slushatel.snils) & Chr(39)
         part1 = +"Фамилия, Имя, Отчество,"
-        part2 = +"," & Chr(39) & slushatel.фамилия & Chr(39) & "," & Chr(39) & slushatel.имя & Chr(39) & "," & Chr(39) & slushatel.отчество & Chr(39)
+        part2 = +"," & Chr(39) & slushatel.secondName & Chr(39) & "," & Chr(39) & slushatel.name & Chr(39) & "," & Chr(39) & slushatel.lastName & Chr(39)
         part1 = +"ДатаРождения, Пол, УОбразования,"
-        part2 = +"," & Chr(39) & MainForm.mySqlConnect.dateToFormatMySQL(slushatel.датаР) & Chr(39) & "," & Chr(39) & slushatel.пол & Chr(39) & "," & Chr(39) & slushatel.уровеньОбразования & Chr(39)
+        part2 = +"," & Chr(39) & MainForm.mySqlConnect.dateToFormatMySQL(slushatel.birthDay) & Chr(39) & "," & Chr(39) & slushatel.gender & Chr(39) & "," & Chr(39) & slushatel.educationLevel & Chr(39)
         part1 = +"НаимДОО, СерияДОО, НомерДОО,"
-        part2 = +"," & Chr(39) & slushatel.образование & Chr(39) & "," & Chr(39) & slushatel.серияДокументаООбразовании & Chr(39) & "," & Chr(39) & slushatel.номерДокументаООбразовании & Chr(39) &
+        part2 = +"," & Chr(39) & slushatel.education & Chr(39) & "," & Chr(39) & slushatel.seriesDOO & Chr(39) & "," & Chr(39) & slushatel.numberDOO & Chr(39) &
         part1 = +"ФамилияДОО, АРег, Телефон,"
-        part2 = +"," & Chr(39) & slushatel.фамилияВДокОбОбразовании & Chr(39) & "," & Chr(39) & slushatel.адресРегистрации & Chr(39) & "," & Chr(39) & slushatel.телефон & Chr(39) &
+        part2 = +"," & Chr(39) & slushatel.lastNameDOO & Chr(39) & "," & Chr(39) & slushatel.adress & Chr(39) & "," & Chr(39) & slushatel.telephone & Chr(39) &
         part1 = +"Гражданство, ДУЛ, СерияДУЛ, НомерДУЛ,"
-        part2 = +"," & Chr(39) & slushatel.гражданство & Chr(39) & "," & Chr(39) & slushatel.ДУЛ & Chr(39) & "," & Chr(39) & slushatel.серияДУЛ & Chr(39) & "," & Chr(39) & slushatel.номерДУЛ & Chr(39)
-        part1 = +"ИФин, НОрг, НомерНапрРосздрав,"
-        part2 = +"," & Chr(39) & slushatel.источникФин & Chr(39) & ",(SELECT kod FROM napr_organization WHERE name=" & Chr(39) & slushatel.направившаяОрг & Chr(39) & ") , " & Chr(39) & slushatel.номерНаправленияРосздравнадзора & Chr(39)
-        part1 = +" ДатаНапрРосздрав,"
-        part2 = +" , " & Chr(39) & MainForm.mySqlConnect.dateToFormatMySQL(slushatel.датаНаправленияРосздравнвдзора) & Chr(39) &
+        part2 = +"," & Chr(39) & slushatel.citizenship & Chr(39) & "," & Chr(39) & slushatel.dUL & Chr(39) & "," & Chr(39) & slushatel.seriesDUL & Chr(39) & "," & Chr(39) & slushatel.numberDUL & Chr(39)
+        part1 = +"ИФин, НОрг,"
+        part2 = +"," & Chr(39) & slushatel.sourceOfFinansing & Chr(39) & ",(SELECT kod FROM napr_organization WHERE name=" & Chr(39) & slushatel.направившаяОрг & Chr(39) & ") "
         part1 = +"Специальность, ДатаРегистрации, Почта,"
-        part2 = +" , " & Chr(39) & slushatel.специальностьСлушателя & Chr(39) & " , " & Chr(39) & MainForm.mySqlConnect.dateToFormatMySQL(slushatel.датаРег) & Chr(39) & " , " & Chr(39) & slushatel.Email & Chr(39) &
+        part2 = +" , " & Chr(39) & slushatel.speciality & Chr(39) & " , " & Chr(39) & MainForm.mySqlConnect.dateToFormatMySQL(slushatel.dateReg) & Chr(39) & " , " & Chr(39) & slushatel.email & Chr(39) &
         part1 = +"ДУЛКемВыдан,ДУЛДатаВыдачи ) "
-        part2 = +", " & Chr(39) & slushatel.кемВыданДУЛ & Chr(39) & ", "
+        part2 = +", " & Chr(39) & slushatel.autorDUL & Chr(39) & ", "
 
-        If slushatel.датаВыдачиДУЛ = "null" Then
+        If slushatel.dateDUL = "null" Then
             part2 += ДатаВыдачиДул & " ) "
-        Else part2 += Chr(39) & MainForm.mySqlConnect.dateToFormatMySQL(slushatel.датаВыдачиДУЛ) & Chr(39) & " ) "
+        Else part2 += Chr(39) & MainForm.mySqlConnect.dateToFormatMySQL(slushatel.dateDUL) & Chr(39) & " ) "
         End If
 
 
