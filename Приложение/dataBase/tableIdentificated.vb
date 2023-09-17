@@ -3,7 +3,7 @@
 
         If text = "Квалификация" Then
 
-            nameTable = "kvalifikaciya"
+            nameTable = "qualification"
 
         End If
 
@@ -15,7 +15,7 @@
 
         If text = "НоваяГруппаФормаОбучения" Then
 
-            nameTable = "forma_obuch"
+            nameTable = "form_education"
 
         End If
 
@@ -27,66 +27,66 @@
 
         If text = "НоваяГруппаПрограмма" Then
 
-            nameTable = "programma"
+            nameTable = "programa"
 
         End If
 
         If text = "НоваяГруппаСпециальность" Or text = "СпециальностьСлушателя" Then
 
-            nameTable = "specialnost"
+            nameTable = "speciality"
 
         End If
 
         If text = "НоваяГруппаКоличествоЧасов" Then
 
-            nameTable = "kol_chas"
+            nameTable = "number_hours"
 
         End If
 
         If text = "НоваяГруппаОтветственныйКуратор" Then
 
-            nameTable = "sotrudnik ORDER BY name"
+            nameTable = "worker ORDER BY name"
 
         End If
 
         If text = "НоваягруппаОтветственныйЗаПрактику" Then
 
-            nameTable = "sotrudnik ORDER BY name"
+            nameTable = "worker ORDER BY name"
 
         End If
 
         If Left(text, 6) = "Модуль" Then
 
-            nameTable = "sotrudnik ORDER BY name"
+            nameTable = "worker ORDER BY name"
 
         End If
 
         If text = "Пол" Then
 
-            nameTable = "pol"
+            nameTable = "gender"
 
         End If
 
         If text = "УровеньОбразования" Then
 
-            nameTable = "uroven_obr"
+            nameTable = "education_level"
 
         End If
 
         If text = "ДУЛ" Then
 
-            nameTable = "dok_ul"
+            nameTable = "doc_ul"
 
         End If
 
         If text = "ИсточникФин" Then
 
-            nameTable = "ist_finans"
+            nameTable = "fin_source"
 
         End If
         If text = "Гражданство" Then
 
-            nameTable = "grajdanstvo"
+            nameTable = "nationality"
 
         End If
 
@@ -98,7 +98,7 @@
 
         If text = "НоваяГруппаУровеньКвалификации" Then
 
-            nameTable = "uroven_kvalifik"
+            nameTable = "skill_level"
 
         End If
         If text = "Ответственный" And BuildOrder.Label4.Text = "Слушатель(ФИО)" Then
@@ -109,25 +109,25 @@
 
         If text = "Ответственный" And BuildOrder.Label4.Text <> "Слушатель(ФИО)" Then
 
-            nameTable = "sotrudnik ORDER BY name"
+            nameTable = "worker ORDER BY name"
 
         End If
 
         If text = "НоваяГруппаФинансирование" Then
 
-            nameTable = "finansirovanie"
+            nameTable = "financing"
 
         End If
 
         If text = "directorName" Or text = "СекретарьКомиссии" Or text = "ЗамПредседателя" Or text = "Комиссия3" Or text = "Комиссия2" Or text = "Утверждает" Or text = "РуководительСтажировки" Or text = "ПроектВносит" Or text = "Исполнитель" Or text = "Согласовано1" Or text = "Согласовано2" Or text = "Согласовано1ПУ" Or text = "Согласовано2ПУ" Then
 
-            nameTable = "sotrudnik ORDER BY name"
+            nameTable = "worker ORDER BY name"
 
         End If
 
         If text = "directorPosition" Or text = "СекретарьКомиссииДолжность" Or text = "ЗамПредседателяДолжность" Or text = "Комиссия3Должность" Or text = "Комиссия2Должность" Or text = "ОтветственныйДолжность" Or text = "ДолжностьРуководительСтажировки" Or text = "ПроектВноситДолжность" Or text = "ИсполнительДолжность" Or text = "Согласовано1Должность" Or text = "Согласовано1ДолжностьПУ" Or text = "Согласовано2Должность" Or text = "Согласовано2ДолжностьПУ" Or text = "УтверждаетДолжность" Then
 
-            nameTable = "doljnost"
+            nameTable = "position"
 
         End If
 

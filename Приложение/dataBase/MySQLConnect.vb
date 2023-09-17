@@ -251,6 +251,7 @@ Public Class MySQLConnect
     End Function
 
     Public Function loadIntoarray(sqlString As String, numberDB As Int16, numberColumn As Integer) As Object
+
         Dim command As MySqlCommand
         Dim connectionString As String
         Dim adapter As MySqlDataAdapter
@@ -283,7 +284,7 @@ Public Class MySQLConnect
         Dim row As DataRow
 
         For Each row In DSet.Tables(0).Rows
-            list.Add(row.Item(numberColumn))
+            list.Add(Convert.ToString(row.Item(numberColumn)))
         Next
 
         loadIntoarray = list.ToArray

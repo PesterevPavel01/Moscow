@@ -77,7 +77,7 @@
             coordinates(1, счетчикСлушателей) = wordDok.Paragraphs.Count
         Next
 
-        students = addZerosIntoArray(students, 16, 8)
+        students = addZerosIntoArray(students, 16, 5)
 
         For studentsCounter = 0 To UBound(students, 2)
 

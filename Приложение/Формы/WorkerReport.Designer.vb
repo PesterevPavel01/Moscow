@@ -31,6 +31,10 @@ Partial Class WorkerReport
         Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle9 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle10 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle11 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle12 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Группа = New System.Windows.Forms.TextBox()
         Me.pednagr__mainTable = New System.Windows.Forms.DataGridView()
@@ -56,9 +60,12 @@ Partial Class WorkerReport
         Me.save = New System.Windows.Forms.ToolStripButton()
         Me.groupNumber = New System.Windows.Forms.ToolStripTextBox()
         Me.pednagr_splitContainerInfo = New System.Windows.Forms.SplitContainer()
+        Me.programHoursContainer = New System.Windows.Forms.SplitContainer()
+        Me.wr__program = New System.Windows.Forms.DataGridView()
         Me.pednagr__infoTable = New System.Windows.Forms.DataGridView()
-        Me.ToolStrip1 = New System.Windows.Forms.ToolStrip()
-        Me.DataGridView2 = New System.Windows.Forms.DataGridView()
+        Me.DataGridView3 = New System.Windows.Forms.DataGridView()
+        Me.wr__dataTools = New System.Windows.Forms.ToolStrip()
+        Me.wr__moduls = New System.Windows.Forms.DataGridView()
         Me.DataGridView1 = New System.Windows.Forms.DataGridView()
         Me.DataGridViewComboBoxColumn1 = New System.Windows.Forms.DataGridViewComboBoxColumn()
         Me.DataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -78,8 +85,14 @@ Partial Class WorkerReport
         Me.pednagr_splitContainerInfo.Panel1.SuspendLayout()
         Me.pednagr_splitContainerInfo.Panel2.SuspendLayout()
         Me.pednagr_splitContainerInfo.SuspendLayout()
+        CType(Me.programHoursContainer, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.programHoursContainer.Panel1.SuspendLayout()
+        Me.programHoursContainer.Panel2.SuspendLayout()
+        Me.programHoursContainer.SuspendLayout()
+        CType(Me.wr__program, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.pednagr__infoTable, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.DataGridView2, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.DataGridView3, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.wr__moduls, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -130,7 +143,7 @@ Partial Class WorkerReport
         Me.pednagr__mainTable.Name = "pednagr__mainTable"
         Me.pednagr__mainTable.RowHeadersVisible = False
         Me.pednagr__mainTable.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
-        Me.pednagr__mainTable.Size = New System.Drawing.Size(1281, 804)
+        Me.pednagr__mainTable.Size = New System.Drawing.Size(1134, 804)
         Me.pednagr__mainTable.TabIndex = 7
         '
         'ФИО
@@ -279,7 +292,7 @@ Partial Class WorkerReport
         'pednagr__splitContainerMain
         '
         Me.pednagr__splitContainerMain.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.pednagr__splitContainerMain.FixedPanel = System.Windows.Forms.FixedPanel.Panel2
+        Me.pednagr__splitContainerMain.FixedPanel = System.Windows.Forms.FixedPanel.Panel1
         Me.pednagr__splitContainerMain.Location = New System.Drawing.Point(5, 0)
         Me.pednagr__splitContainerMain.Margin = New System.Windows.Forms.Padding(0)
         Me.pednagr__splitContainerMain.Name = "pednagr__splitContainerMain"
@@ -301,7 +314,7 @@ Partial Class WorkerReport
         '
         Me.pednagr__splitContainerMain.Panel2.Controls.Add(Me.pednagr_splitContainerInfo)
         Me.pednagr__splitContainerMain.Size = New System.Drawing.Size(1743, 855)
-        Me.pednagr__splitContainerMain.SplitterDistance = 1281
+        Me.pednagr__splitContainerMain.SplitterDistance = 1134
         Me.pednagr__splitContainerMain.SplitterWidth = 1
         Me.pednagr__splitContainerMain.TabIndex = 20
         '
@@ -314,7 +327,7 @@ Partial Class WorkerReport
         Me.header.Location = New System.Drawing.Point(0, 0)
         Me.header.Name = "header"
         Me.header.Padding = New System.Windows.Forms.Padding(0)
-        Me.header.Size = New System.Drawing.Size(1281, 51)
+        Me.header.Size = New System.Drawing.Size(1134, 51)
         Me.header.TabIndex = 20
         Me.header.Text = "ToolStrip2"
         '
@@ -355,16 +368,75 @@ Partial Class WorkerReport
         '
         'pednagr_splitContainerInfo.Panel1
         '
-        Me.pednagr_splitContainerInfo.Panel1.Controls.Add(Me.pednagr__infoTable)
-        Me.pednagr_splitContainerInfo.Panel1.Controls.Add(Me.ToolStrip1)
+        Me.pednagr_splitContainerInfo.Panel1.Controls.Add(Me.programHoursContainer)
+        Me.pednagr_splitContainerInfo.Panel1.Controls.Add(Me.wr__dataTools)
         '
         'pednagr_splitContainerInfo.Panel2
         '
-        Me.pednagr_splitContainerInfo.Panel2.Controls.Add(Me.DataGridView2)
-        Me.pednagr_splitContainerInfo.Size = New System.Drawing.Size(461, 855)
-        Me.pednagr_splitContainerInfo.SplitterDistance = 357
+        Me.pednagr_splitContainerInfo.Panel2.Controls.Add(Me.wr__moduls)
+        Me.pednagr_splitContainerInfo.Size = New System.Drawing.Size(608, 855)
+        Me.pednagr_splitContainerInfo.SplitterDistance = 410
         Me.pednagr_splitContainerInfo.SplitterWidth = 1
         Me.pednagr_splitContainerInfo.TabIndex = 0
+        '
+        'programHoursContainer
+        '
+        Me.programHoursContainer.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.programHoursContainer.FixedPanel = System.Windows.Forms.FixedPanel.Panel1
+        Me.programHoursContainer.Location = New System.Drawing.Point(0, 51)
+        Me.programHoursContainer.Margin = New System.Windows.Forms.Padding(0)
+        Me.programHoursContainer.Name = "programHoursContainer"
+        Me.programHoursContainer.Orientation = System.Windows.Forms.Orientation.Horizontal
+        '
+        'programHoursContainer.Panel1
+        '
+        Me.programHoursContainer.Panel1.Controls.Add(Me.wr__program)
+        '
+        'programHoursContainer.Panel2
+        '
+        Me.programHoursContainer.Panel2.Controls.Add(Me.pednagr__infoTable)
+        Me.programHoursContainer.Panel2.Controls.Add(Me.DataGridView3)
+        Me.programHoursContainer.Size = New System.Drawing.Size(608, 359)
+        Me.programHoursContainer.SplitterDistance = 75
+        Me.programHoursContainer.SplitterWidth = 1
+        Me.programHoursContainer.TabIndex = 22
+        '
+        'wr__program
+        '
+        Me.wr__program.AllowUserToAddRows = False
+        Me.wr__program.AllowUserToDeleteRows = False
+        Me.wr__program.AllowUserToResizeColumns = False
+        Me.wr__program.AllowUserToResizeRows = False
+        Me.wr__program.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells
+        Me.wr__program.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight
+        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle3.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
+        DataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.ControlLight
+        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.wr__program.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle3
+        Me.wr__program.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.wr__program.ColumnHeadersVisible = False
+        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle4.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
+        DataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle4.Padding = New System.Windows.Forms.Padding(10, 3, 3, 3)
+        DataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.ControlLight
+        DataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.wr__program.DefaultCellStyle = DataGridViewCellStyle4
+        Me.wr__program.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.wr__program.Location = New System.Drawing.Point(0, 0)
+        Me.wr__program.MultiSelect = False
+        Me.wr__program.Name = "wr__program"
+        Me.wr__program.ReadOnly = True
+        Me.wr__program.RowHeadersVisible = False
+        Me.wr__program.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
+        Me.wr__program.Size = New System.Drawing.Size(608, 75)
+        Me.wr__program.TabIndex = 9
         '
         'pednagr__infoTable
         '
@@ -374,54 +446,6 @@ Partial Class WorkerReport
         Me.pednagr__infoTable.AllowUserToResizeRows = False
         Me.pednagr__infoTable.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells
         Me.pednagr__infoTable.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight
-        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle3.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        DataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText
-        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.ControlLight
-        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.pednagr__infoTable.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle3
-        Me.pednagr__infoTable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle4.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        DataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle4.Padding = New System.Windows.Forms.Padding(10, 3, 3, 3)
-        DataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.ControlLight
-        DataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.pednagr__infoTable.DefaultCellStyle = DataGridViewCellStyle4
-        Me.pednagr__infoTable.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.pednagr__infoTable.Location = New System.Drawing.Point(0, 51)
-        Me.pednagr__infoTable.MultiSelect = False
-        Me.pednagr__infoTable.Name = "pednagr__infoTable"
-        Me.pednagr__infoTable.ReadOnly = True
-        Me.pednagr__infoTable.RowHeadersVisible = False
-        Me.pednagr__infoTable.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
-        Me.pednagr__infoTable.Size = New System.Drawing.Size(461, 306)
-        Me.pednagr__infoTable.TabIndex = 8
-        '
-        'ToolStrip1
-        '
-        Me.ToolStrip1.AutoSize = False
-        Me.ToolStrip1.BackColor = System.Drawing.SystemColors.ControlLight
-        Me.ToolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
-        Me.ToolStrip1.Location = New System.Drawing.Point(0, 0)
-        Me.ToolStrip1.Name = "ToolStrip1"
-        Me.ToolStrip1.Padding = New System.Windows.Forms.Padding(0)
-        Me.ToolStrip1.Size = New System.Drawing.Size(461, 51)
-        Me.ToolStrip1.TabIndex = 21
-        Me.ToolStrip1.Text = "ToolStrip2"
-        '
-        'DataGridView2
-        '
-        Me.DataGridView2.AllowUserToAddRows = False
-        Me.DataGridView2.AllowUserToDeleteRows = False
-        Me.DataGridView2.AllowUserToResizeColumns = False
-        Me.DataGridView2.AllowUserToResizeRows = False
-        Me.DataGridView2.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells
-        Me.DataGridView2.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight
         DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
         DataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Control
         DataGridViewCellStyle5.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
@@ -429,8 +453,8 @@ Partial Class WorkerReport
         DataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.ControlLight
         DataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.ControlText
         DataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.DataGridView2.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle5
-        Me.DataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.pednagr__infoTable.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle5
+        Me.pednagr__infoTable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
         DataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Window
         DataGridViewCellStyle6.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
@@ -439,16 +463,100 @@ Partial Class WorkerReport
         DataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.ControlLight
         DataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.ControlText
         DataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.DataGridView2.DefaultCellStyle = DataGridViewCellStyle6
-        Me.DataGridView2.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.DataGridView2.Location = New System.Drawing.Point(0, 0)
-        Me.DataGridView2.MultiSelect = False
-        Me.DataGridView2.Name = "DataGridView2"
-        Me.DataGridView2.ReadOnly = True
-        Me.DataGridView2.RowHeadersVisible = False
-        Me.DataGridView2.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
-        Me.DataGridView2.Size = New System.Drawing.Size(461, 497)
-        Me.DataGridView2.TabIndex = 9
+        Me.pednagr__infoTable.DefaultCellStyle = DataGridViewCellStyle6
+        Me.pednagr__infoTable.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.pednagr__infoTable.Location = New System.Drawing.Point(0, 0)
+        Me.pednagr__infoTable.MultiSelect = False
+        Me.pednagr__infoTable.Name = "pednagr__infoTable"
+        Me.pednagr__infoTable.ReadOnly = True
+        Me.pednagr__infoTable.RowHeadersVisible = False
+        Me.pednagr__infoTable.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
+        Me.pednagr__infoTable.Size = New System.Drawing.Size(608, 283)
+        Me.pednagr__infoTable.TabIndex = 8
+        '
+        'DataGridView3
+        '
+        Me.DataGridView3.AllowUserToAddRows = False
+        Me.DataGridView3.AllowUserToDeleteRows = False
+        Me.DataGridView3.AllowUserToResizeColumns = False
+        Me.DataGridView3.AllowUserToResizeRows = False
+        Me.DataGridView3.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells
+        Me.DataGridView3.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight
+        DataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle7.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
+        DataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.ControlLight
+        DataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.DataGridView3.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle7
+        Me.DataGridView3.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        DataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle8.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
+        DataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle8.Padding = New System.Windows.Forms.Padding(10, 3, 3, 3)
+        DataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.ControlLight
+        DataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.DataGridView3.DefaultCellStyle = DataGridViewCellStyle8
+        Me.DataGridView3.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.DataGridView3.Location = New System.Drawing.Point(0, 0)
+        Me.DataGridView3.MultiSelect = False
+        Me.DataGridView3.Name = "DataGridView3"
+        Me.DataGridView3.ReadOnly = True
+        Me.DataGridView3.RowHeadersVisible = False
+        Me.DataGridView3.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
+        Me.DataGridView3.Size = New System.Drawing.Size(608, 283)
+        Me.DataGridView3.TabIndex = 9
+        '
+        'wr__dataTools
+        '
+        Me.wr__dataTools.AutoSize = False
+        Me.wr__dataTools.BackColor = System.Drawing.SystemColors.ControlLight
+        Me.wr__dataTools.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
+        Me.wr__dataTools.Location = New System.Drawing.Point(0, 0)
+        Me.wr__dataTools.Name = "wr__dataTools"
+        Me.wr__dataTools.Padding = New System.Windows.Forms.Padding(0)
+        Me.wr__dataTools.Size = New System.Drawing.Size(608, 51)
+        Me.wr__dataTools.TabIndex = 21
+        Me.wr__dataTools.Text = "ToolStrip2"
+        '
+        'wr__moduls
+        '
+        Me.wr__moduls.AllowUserToAddRows = False
+        Me.wr__moduls.AllowUserToDeleteRows = False
+        Me.wr__moduls.AllowUserToResizeColumns = False
+        Me.wr__moduls.AllowUserToResizeRows = False
+        Me.wr__moduls.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells
+        Me.wr__moduls.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight
+        DataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle9.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
+        DataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.ControlLight
+        DataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.wr__moduls.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle9
+        Me.wr__moduls.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        DataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle10.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle10.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
+        DataGridViewCellStyle10.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle10.Padding = New System.Windows.Forms.Padding(10, 3, 3, 3)
+        DataGridViewCellStyle10.SelectionBackColor = System.Drawing.SystemColors.ControlLight
+        DataGridViewCellStyle10.SelectionForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.wr__moduls.DefaultCellStyle = DataGridViewCellStyle10
+        Me.wr__moduls.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.wr__moduls.Location = New System.Drawing.Point(0, 0)
+        Me.wr__moduls.MultiSelect = False
+        Me.wr__moduls.Name = "wr__moduls"
+        Me.wr__moduls.ReadOnly = True
+        Me.wr__moduls.RowHeadersVisible = False
+        Me.wr__moduls.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
+        Me.wr__moduls.Size = New System.Drawing.Size(608, 444)
+        Me.wr__moduls.TabIndex = 9
         '
         'DataGridView1
         '
@@ -459,25 +567,25 @@ Partial Class WorkerReport
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.DataGridView1.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells
         Me.DataGridView1.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight
-        DataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle7.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        DataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.WindowText
-        DataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.ControlLight
-        DataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.DataGridView1.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle7
+        DataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle11.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle11.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
+        DataGridViewCellStyle11.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle11.SelectionBackColor = System.Drawing.SystemColors.ControlLight
+        DataGridViewCellStyle11.SelectionForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.DataGridView1.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle11
         Me.DataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.DataGridView1.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DataGridViewComboBoxColumn1, Me.DataGridViewTextBoxColumn1, Me.DataGridViewTextBoxColumn2, Me.DataGridViewTextBoxColumn3, Me.DataGridViewTextBoxColumn4, Me.DataGridViewTextBoxColumn5, Me.DataGridViewTextBoxColumn6, Me.DataGridViewTextBoxColumn7})
-        DataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle8.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        DataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle8.Padding = New System.Windows.Forms.Padding(10, 3, 3, 3)
-        DataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.ControlLight
-        DataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.DataGridView1.DefaultCellStyle = DataGridViewCellStyle8
+        DataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle12.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle12.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
+        DataGridViewCellStyle12.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle12.Padding = New System.Windows.Forms.Padding(10, 3, 3, 3)
+        DataGridViewCellStyle12.SelectionBackColor = System.Drawing.SystemColors.ControlLight
+        DataGridViewCellStyle12.SelectionForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.DataGridView1.DefaultCellStyle = DataGridViewCellStyle12
         Me.DataGridView1.Location = New System.Drawing.Point(3, 41)
         Me.DataGridView1.Name = "DataGridView1"
         Me.DataGridView1.RowHeadersVisible = False
@@ -571,8 +679,14 @@ Partial Class WorkerReport
         Me.pednagr_splitContainerInfo.Panel2.ResumeLayout(False)
         CType(Me.pednagr_splitContainerInfo, System.ComponentModel.ISupportInitialize).EndInit()
         Me.pednagr_splitContainerInfo.ResumeLayout(False)
+        Me.programHoursContainer.Panel1.ResumeLayout(False)
+        Me.programHoursContainer.Panel2.ResumeLayout(False)
+        CType(Me.programHoursContainer, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.programHoursContainer.ResumeLayout(False)
+        CType(Me.wr__program, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.pednagr__infoTable, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.DataGridView2, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.DataGridView3, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.wr__moduls, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
@@ -610,10 +724,13 @@ Partial Class WorkerReport
     Friend WithEvents DataGridViewTextBoxColumn7 As DataGridViewTextBoxColumn
     Friend WithEvents pednagr_splitContainerInfo As SplitContainer
     Friend WithEvents pednagr__infoTable As DataGridView
-    Friend WithEvents DataGridView2 As DataGridView
+    Friend WithEvents wr__moduls As DataGridView
     Friend WithEvents header As ToolStrip
     Friend WithEvents ToolStripLabel1 As ToolStripLabel
     Private WithEvents save As ToolStripButton
-    Friend WithEvents ToolStrip1 As ToolStrip
+    Friend WithEvents wr__dataTools As ToolStrip
     Friend WithEvents groupNumber As ToolStripTextBox
+    Friend WithEvents programHoursContainer As SplitContainer
+    Friend WithEvents DataGridView3 As DataGridView
+    Friend WithEvents wr__program As DataGridView
 End Class

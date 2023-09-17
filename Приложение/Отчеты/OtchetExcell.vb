@@ -218,7 +218,7 @@ Module OtchetExcell
 
         If MainForm.ОтчетПеднагрузка.Checked Then
 
-            ПеднагрузкаОтчет.pednagruzka("Педнагрузка", excellApp, excellWorkBook, DateStart, DateEnd)
+            ПеднагрузкаОтчет.workerReport("Педнагрузка", excellApp, excellWorkBook, DateStart, DateEnd)
 
         End If
 

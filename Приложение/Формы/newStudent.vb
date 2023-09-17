@@ -1,5 +1,6 @@
 ﻿Imports System.Threading
 Public Class newStudent
+
     Public Press As Boolean
     Dim SC As SynchronizationContext
     Public fromStudentsList As Boolean = False
@@ -82,7 +83,7 @@ Public Class newStudent
         student.studentData.направившаяОрг = НаправившаяОрг.Text
         student.studentData.dateReg = MainForm.mySqlConnect.dateToFormatMySQL(Date.Now.ToShortDateString)
         student.studentData.email = Email.Text
-        student.studentData.doo_vid_dok = doo_vid_dok.Text
+        student.studentData.doo_doc_type = doo_vid_dok.Text
 
 
         If dateDUL.Value.ToShortDateString = "01.01.1753" Then
@@ -119,8 +120,6 @@ Public Class newStudent
 
         End If
 
-        student.studentData.prevSnils = student.studentData.snils
-
         If student.insertStudentRedact Then
 
             SC.Send(AddressOf updateStatus, addMask.addMask(student.studentData.snils))
@@ -129,16 +128,24 @@ Public Class newStudent
 
         Else
 
-            message.Text = "Произошла ошибка, слушатель не найден"
+            SC.Send(AddressOf showErrorMassege, "Произошла ошибка, слушатель не найден")
 
         End If
 
-        SC.Send(AddressOf enabledButton, addMask.addMask(student.studentData.snils))
+        student.studentData.prevSnils = student.studentData.snils
+
+        SC.Send(AddressOf enabledButton, "")
 
     End Sub
     Private Sub updateFormName(StudentData As Student.strStudent)
         Me.Text = StudentData.lastName & " " & StudentData.name & " " & StudentData.secondName
         updateListView.updateRow("СправочникСлушатели", 1, addMask.addMask(StudentData.snils), 2, StudentData.lastName, 3, StudentData.name, 4, StudentData.secondName)
+    End Sub
+
+    Private Sub showErrorMassege(content As String)
+
+        message.Text = content
+
     End Sub
 
     Sub addStudent(student As Student)
@@ -323,6 +330,8 @@ Public Class newStudent
 
         End If
 
+        student.studentData.prevSnils = addMask.deleteMask(snils.Text)
+
     End Sub
     Private Sub updateStatus()
         If (Имя.Text.Trim = "" And Отчество.Text.Trim = "" And secondName.Text.Trim = "") Then
@@ -472,11 +481,11 @@ Public Class newStudent
 
         doo_vid_dok.Items.Clear()
         doo_vid_dok.Items.Add("")
-        doo_vid_dok.Items.AddRange(student.formSlushLists.doo_vid_dok)
+        doo_vid_dok.Items.AddRange(student.formSlushLists.doo_doc_type)
 
         Пол.Items.Clear()
         Пол.Items.Add("")
-        Пол.Items.AddRange(student.formSlushLists.pol)
+        Пол.Items.AddRange(student.formSlushLists.gender)
 
         УровеньОбразования.Items.Clear()
         УровеньОбразования.Items.Add("")
@@ -484,15 +493,15 @@ Public Class newStudent
 
         Гражданство.Items.Clear()
         Гражданство.Items.Add("")
-        Гражданство.Items.AddRange(student.formSlushLists.grajdanstvo)
+        Гражданство.Items.AddRange(student.formSlushLists.nationality)
 
         ДУЛ.Items.Clear()
         ДУЛ.Items.Add("")
-        ДУЛ.Items.AddRange(student.formSlushLists.dok_UL)
+        ДУЛ.Items.AddRange(student.formSlushLists.doc_UL)
 
         ИсточникФин.Items.Clear()
         ИсточникФин.Items.Add("")
-        ИсточникФин.Items.AddRange(student.formSlushLists.ist_finans)
+        ИсточникФин.Items.AddRange(student.formSlushLists.finSource)
 
         НаправившаяОрг.Items.Clear()
         НаправившаяОрг.Items.Add("")
@@ -511,7 +520,7 @@ Public Class newStudent
     End Sub
 
     Private Sub ИсточникФин_Enter(sender As Object, e As EventArgs) Handles ИсточникФин.Enter
-        If student.flagSlushatelForm.ist_finans Then
+        If student.flagSlushatelForm.finSource Then
             ИсточникФин.DroppedDown = False
         Else
             ИсточникФин.DroppedDown = True
@@ -519,23 +528,23 @@ Public Class newStudent
     End Sub
 
     Private Sub ИсточникФин_MouseMove(sender As Object, e As MouseEventArgs) Handles ИсточникФин.MouseMove
-        student.flagSlushatelForm.ist_finans = True
+        student.flagSlushatelForm.finSource = True
     End Sub
 
     Private Sub ИсточникФин_MouseLeave(sender As Object, e As EventArgs) Handles ИсточникФин.MouseLeave
-        student.flagSlushatelForm.ist_finans = False
+        student.flagSlushatelForm.finSource = False
     End Sub
 
     Private Sub Пол_MouseMove(sender As Object, e As MouseEventArgs) Handles Пол.MouseMove
-        student.flagSlushatelForm.pol = True
+        student.flagSlushatelForm.gender = True
     End Sub
 
     Private Sub Пол_MouseLeave(sender As Object, e As EventArgs) Handles Пол.MouseLeave
-        student.flagSlushatelForm.pol = False
+        student.flagSlushatelForm.gender = False
     End Sub
 
     Private Sub Пол_Enter(sender As Object, e As EventArgs) Handles Пол.Enter
-        If student.flagSlushatelForm.pol Then
+        If student.flagSlushatelForm.gender Then
             Пол.DroppedDown = False
         Else
             Пол.DroppedDown = True
@@ -567,15 +576,15 @@ Public Class newStudent
     End Sub
 
     Private Sub Гражданство_MouseLeave(sender As Object, e As EventArgs) Handles Гражданство.MouseLeave
-        student.flagSlushatelForm.grajdanstvo = False
+        student.flagSlushatelForm.nationality = False
     End Sub
 
     Private Sub Гражданство_MouseMove(sender As Object, e As MouseEventArgs) Handles Гражданство.MouseMove
-        student.flagSlushatelForm.grajdanstvo = True
+        student.flagSlushatelForm.nationality = True
     End Sub
 
     Private Sub Гражданство_Enter(sender As Object, e As EventArgs) Handles Гражданство.Enter
-        If student.flagSlushatelForm.grajdanstvo Then
+        If student.flagSlushatelForm.nationality Then
             Гражданство.DroppedDown = False
         Else
             Гражданство.DroppedDown = True
@@ -583,15 +592,15 @@ Public Class newStudent
     End Sub
 
     Private Sub ДУЛ_MouseLeave(sender As Object, e As EventArgs) Handles ДУЛ.MouseLeave
-        student.flagSlushatelForm.dok_UL = False
+        student.flagSlushatelForm.doc_UL = False
     End Sub
 
     Private Sub ДУЛ_MouseMove(sender As Object, e As MouseEventArgs) Handles ДУЛ.MouseMove
-        student.flagSlushatelForm.dok_UL = True
+        student.flagSlushatelForm.doc_UL = True
     End Sub
 
     Private Sub ДУЛ_Enter(sender As Object, e As EventArgs) Handles ДУЛ.Enter
-        If student.flagSlushatelForm.dok_UL Then
+        If student.flagSlushatelForm.doc_UL Then
             ДУЛ.DroppedDown = False
         Else
             ДУЛ.DroppedDown = True
@@ -655,16 +664,16 @@ Public Class newStudent
     End Sub
 
     Private Sub doo_vid_dok_MouseLeave(sender As Object, e As EventArgs) Handles doo_vid_dok.MouseLeave
-        student.flagSlushatelForm.doo_vid_dok = False
+        student.flagSlushatelForm.doo_doc_type = False
     End Sub
 
     Private Sub doo_vid_dok_MouseMove(sender As Object, e As MouseEventArgs) Handles doo_vid_dok.MouseMove
-        student.flagSlushatelForm.doo_vid_dok = True
+        student.flagSlushatelForm.doo_doc_type = True
     End Sub
 
     Private Sub doo_vid_dok_Enter(sender As Object, e As EventArgs) Handles doo_vid_dok.Enter
 
-        If student.flagSlushatelForm.doo_vid_dok Then
+        If student.flagSlushatelForm.doo_doc_type Then
             doo_vid_dok.DroppedDown = False
         Else
             doo_vid_dok.DroppedDown = True

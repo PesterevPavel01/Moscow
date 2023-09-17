@@ -551,7 +551,7 @@
 
             УтверждаетДолжность.Items.Clear()
             УтверждаетДолжность.Items.Add("")
-            УтверждаетДолжность.Items.AddRange(prikaz.formPrikazList.directorDoljnost)
+            УтверждаетДолжность.Items.AddRange(prikaz.formPrikazList.Position)
 
             Ответственный.Items.Clear()
             Ответственный.Items.Add("")
@@ -612,7 +612,7 @@
                 comboB = control
                 comboB.Items.Clear()
                 comboB.Items.Add("")
-                comboB.Items.AddRange(prikaz.formPrikazList.doljnosti)
+                comboB.Items.AddRange(prikaz.formPrikazList.positions)
             End If
         Next
     End Sub
@@ -819,15 +819,15 @@
     End Sub
 
     Private Sub УтверждаетДолжность_MouseLeave(sender As Object, e As EventArgs) Handles УтверждаетДолжность.MouseLeave
-        prikaz.formPrikazFlag.directorDoljnost = False
+        prikaz.formPrikazFlag.directorPosition = False
     End Sub
 
     Private Sub УтверждаетДолжность_MouseMove(sender As Object, e As MouseEventArgs) Handles УтверждаетДолжность.MouseMove
-        prikaz.formPrikazFlag.directorDoljnost = True
+        prikaz.formPrikazFlag.directorPosition = True
     End Sub
 
     Private Sub УтверждаетДолжность_Enter(sender As Object, e As EventArgs) Handles УтверждаетДолжность.Enter
-        If prikaz.formPrikazFlag.directorDoljnost Then
+        If prikaz.formPrikazFlag.directorPosition Then
             УтверждаетДолжность.DroppedDown = False
         Else
             УтверждаетДолжность.DroppedDown = True

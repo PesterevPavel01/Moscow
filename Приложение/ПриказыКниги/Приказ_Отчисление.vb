@@ -4,7 +4,7 @@
         Dim wordDoc, group
         Dim resourcesPath, samplePath, sqlQuery As String
 
-        sqlQuery = expulsion__loadProgramm(MainForm.orderIdGroup)
+        sqlQuery = expulsion__loadProgram(MainForm.orderIdGroup)
         group = MainForm.mySqlConnect.loadMySqlToArray(sqlQuery, 1)
 
         resourcesPath = startApp.ПутьКФайлуRes

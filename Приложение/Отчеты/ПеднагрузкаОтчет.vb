@@ -1,5 +1,5 @@
 ﻿Module ПеднагрузкаОтчет
-    Sub pednagruzka(arg As String, excellApp As Object, excellWorkbook As Object, DateStart As String, DateEnd As String)
+    Sub workerReport(arg As String, excellApp As Object, excellWorkbook As Object, DateStart As String, DateEnd As String)
 
         Dim sample, ФорматированиеСтолбцов, excellSheet
         Dim adress
@@ -61,7 +61,7 @@
 
         If arg = "Педнагрузка" Then
 
-            queryString = pednagruzkaloadOtchet(DateStart, DateEnd)
+            queryString = workerReportLoad(DateStart, DateEnd)
             resultArr = MainForm.mySqlConnect.loadMySqlToArray(queryString, 1)
 
         ElseIf arg = "listWorker" Then

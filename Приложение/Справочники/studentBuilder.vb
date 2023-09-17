@@ -39,15 +39,15 @@
         newStudent.НомерДУЛ.Text = array(17, 0).ToString
         newStudent.ИсточникФин.Text = array(18, 0).ToString
         newStudent.НаправившаяОрг.Text = array(19, 0).ToString
-
+        newStudent.Email.Text = array(21, 0).ToString
         Try
-            newStudent.dateDUL.Value = array(28, 0).ToString
+            newStudent.dateDUL.Value = array(24, 0).ToString
         Catch ex As Exception
 
         End Try
 
-        newStudent.КемВыданДУЛ.Text = array(27, 0).ToString
-        newStudent.doo_vid_dok.Text = array(29, 0).ToString
+        newStudent.КемВыданДУЛ.Text = array(23, 0).ToString
+        newStudent.doo_vid_dok.Text = array(25, 0).ToString
 
     End Sub
 

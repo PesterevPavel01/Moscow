@@ -1,9 +1,8 @@
-﻿Imports System.Reflection.Emit
-Imports System.Threading
-Imports Google.Protobuf.Reflection.FieldDescriptorProto.Types
+﻿Imports System.Threading
 
 Public Class newGroup
 
+    Public cover_image As Image
     Dim group As Group
     Public zakr As Boolean = False
     Public alternateTab As Integer = Keys.Down
@@ -21,7 +20,7 @@ Public Class newGroup
 
         activateModuls(Me, НоваяГруппаПрограмма.Text, group.struct_grup.kodProgram)
 
-        group.load_kol_chas()
+        group.loadNumberHours()
 
         НоваяГруппаКоличествоЧасов.Text = group.struct_grup.kolChasov
 
@@ -489,7 +488,7 @@ Public Class newGroup
     End Sub
     Private Sub modul6_KeyDown(sender As Object, e As KeyEventArgs)
         If e.KeyCode = Keys.Enter Then
-            Call modul6_Click(sender, e)
+            modul6_Click(sender, e)
         End If
     End Sub
 
@@ -501,7 +500,7 @@ Public Class newGroup
 
     Private Sub modul8_KeyDown(sender As Object, e As KeyEventArgs)
         If e.KeyCode = Keys.Enter Then
-            Call modul8_Click(sender, e)
+            modul8_Click(sender, e)
         End If
     End Sub
     Private Sub modul9_KeyDown(sender As Object, e As KeyEventArgs)
@@ -530,7 +529,7 @@ Public Class newGroup
 
     Private Sub qualification_KeyDown(sender As Object, e As KeyEventArgs) Handles Квалификация.KeyDown
         If e.KeyCode = Keys.Enter Then
-            Call qualification_Click(sender, e)
+            qualification_Click(sender, e)
         End If
     End Sub
 
@@ -645,16 +644,16 @@ Public Class newGroup
     End Sub
 
     Private Sub formEducation_MouseLeave(sender As Object, e As EventArgs) Handles НоваяГруппаФормаОбучения.MouseLeave
-        group.flagGrouppForm.forma_obuch = False
+        group.flagGrouppForm.form_education = False
     End Sub
 
     Private Sub formEducation_MouseMove(sender As Object, e As MouseEventArgs) Handles НоваяГруппаФормаОбучения.MouseMove
-        group.flagGrouppForm.forma_obuch = True
+        group.flagGrouppForm.form_education = True
     End Sub
 
     Private Sub formEducation_Enter(sender As Object, e As EventArgs) Handles НоваяГруппаФормаОбучения.Enter
 
-        comboBoxDrop(НоваяГруппаФормаОбучения, group.flagGrouppForm.forma_obuch)
+        comboBoxDrop(НоваяГруппаФормаОбучения, group.flagGrouppForm.form_education)
 
     End Sub
 
@@ -665,16 +664,16 @@ Public Class newGroup
     End Sub
 
     Private Sub program_MouseLeave(sender As Object, e As EventArgs) Handles НоваяГруппаПрограмма.MouseLeave
-        group.flagGrouppForm.programma = False
+        group.flagGrouppForm.program = False
     End Sub
 
     Private Sub program_MouseMove(sender As Object, e As MouseEventArgs) Handles НоваяГруппаПрограмма.MouseMove
-        group.flagGrouppForm.programma = True
+        group.flagGrouppForm.program = True
     End Sub
 
     Private Sub program_Enter(sender As Object, e As EventArgs) Handles НоваяГруппаПрограмма.Enter
 
-        comboBoxDrop(НоваяГруппаПрограмма, group.flagGrouppForm.programma)
+        comboBoxDrop(НоваяГруппаПрограмма, group.flagGrouppForm.program)
 
     End Sub
 
@@ -685,16 +684,16 @@ Public Class newGroup
     End Sub
 
     Private Sub speciality_MouseLeave(sender As Object, e As EventArgs) Handles НоваяГруппаСпециальность.MouseLeave
-        group.flagGrouppForm.specialnost = False
+        group.flagGrouppForm.speciality = False
     End Sub
 
     Private Sub speciality_MouseMove(sender As Object, e As MouseEventArgs) Handles НоваяГруппаСпециальность.MouseMove
-        group.flagGrouppForm.specialnost = True
+        group.flagGrouppForm.speciality = True
     End Sub
 
     Private Sub speciality_Enter(sender As Object, e As EventArgs) Handles НоваяГруппаСпециальность.Enter
 
-        comboBoxDrop(НоваяГруппаСпециальность, group.flagGrouppForm.specialnost)
+        comboBoxDrop(НоваяГруппаСпециальность, group.flagGrouppForm.speciality)
 
     End Sub
 
@@ -759,11 +758,9 @@ Public Class newGroup
     End Sub
 
     Private Sub modul1_EnabledChanged(sender As Object, e As EventArgs) Handles Модуль1.EnabledChanged
-
         If Модуль1.Enabled = False Then
             Модуль1.DroppedDown = False
         End If
-
     End Sub
 
     Private Sub modul2_MouseLeave(sender As Object, e As EventArgs) Handles Модуль2.MouseLeave
@@ -955,16 +952,16 @@ Public Class newGroup
     End Sub
 
     Private Sub financing_MouseLeave(sender As Object, e As EventArgs) Handles НоваяГруппаФинансирование.MouseLeave
-        group.flagGrouppForm.finansirovanie = False
+        group.flagGrouppForm.financing = False
     End Sub
 
     Private Sub financing_MouseMove(sender As Object, e As MouseEventArgs) Handles НоваяГруппаФинансирование.MouseMove
-        group.flagGrouppForm.finansirovanie = True
+        group.flagGrouppForm.financing = True
     End Sub
 
     Private Sub financing_Enter(sender As Object, e As EventArgs) Handles НоваяГруппаФинансирование.Enter
 
-        comboBoxDrop(НоваяГруппаФинансирование, group.flagGrouppForm.finansirovanie)
+        comboBoxDrop(НоваяГруппаФинансирование, group.flagGrouppForm.financing)
 
     End Sub
 
@@ -975,16 +972,16 @@ Public Class newGroup
     End Sub
 
     Private Sub qualification_MouseLeave(sender As Object, e As EventArgs) Handles Квалификация.MouseLeave
-        group.flagGrouppForm.kvalifikaciya = False
+        group.flagGrouppForm.qualification = False
     End Sub
 
     Private Sub qualification_MouseMove(sender As Object, e As MouseEventArgs) Handles Квалификация.MouseMove
-        group.flagGrouppForm.kvalifikaciya = True
+        group.flagGrouppForm.qualification = True
     End Sub
 
     Private Sub qualification_Enter(sender As Object, e As EventArgs) Handles Квалификация.Enter
 
-        comboBoxDrop(Квалификация, group.flagGrouppForm.kvalifikaciya)
+        comboBoxDrop(Квалификация, group.flagGrouppForm.qualification)
 
     End Sub
 
@@ -1011,7 +1008,7 @@ Public Class newGroup
 
     Private Sub program_SelectedIndexChanged(sender As Object, e As EventArgs) Handles НоваяГруппаПрограмма.SelectedIndexChanged
 
-        group.struct_grup.programma = НоваяГруппаПрограмма.Text
+        group.struct_grup.program = НоваяГруппаПрограмма.Text
 
         If НоваяГруппаПрограмма.Text = "" Then
 
@@ -1125,6 +1122,8 @@ Public Class newGroup
 
     Public Sub newGroupInit()
 
+        Dim path As String = resourcesPath() + "images//"
+        cover_image = Image.FromFile(path + "deactivate.png")
         group = New Group()
         group.struct_grup.nameForm = "Новая группа"
         swichNumbers = New SwichNumbers
@@ -1136,6 +1135,29 @@ Public Class newGroup
         loadLists()
 
         group.struct_grup.kodProgram = -1
+
+        For Each comboBox As ComboBox In Me.Controls.OfType(Of ComboBox)
+
+            AddHandler comboBox.EnabledChanged, Sub()
+                                                    If comboBox.Enabled = False Then
+                                                        comboBox.DroppedDown = False
+                                                    End If
+                                                    activateBlackMode(comboBox, comboBox.Enabled)
+                                                End Sub
+        Next
+
+        For Each textBox As TextBox In Me.Controls.OfType(Of TextBox)
+            AddHandler textBox.EnabledChanged, Sub()
+                                                   activateBlackMode(textBox, textBox.Enabled)
+                                               End Sub
+        Next
+
+        For Each datePicker As DateTimePicker In Me.Controls.OfType(Of DateTimePicker)
+            AddHandler datePicker.EnabledChanged, Sub()
+                                                      activateBlackMode(datePicker, datePicker.Enabled)
+                                                  End Sub
+        Next
+
         activateAllType()
 
     End Sub
@@ -1179,9 +1201,9 @@ Public Class newGroup
         НоваяГруппаПрограмма.Items.Add("")
 
         group.struct_grup.urKvalific = swichCvalification.activeType
-        group.updateProgramm()
+        group.updateProgram()
 
-        НоваяГруппаПрограмма.Items.AddRange(group.formGrouppLists.programma)
+        НоваяГруппаПрограмма.Items.AddRange(group.formGrouppLists.program)
         НоваяГруппаСпециальность.Text = ""
         НоваяГруппаКоличествоЧасов.Clear()
         НоваяГруппаПрограмма.Text = ""
@@ -1215,15 +1237,15 @@ Public Class newGroup
 
         НоваяГруппаФормаОбучения.Items.Clear()
         НоваяГруппаФормаОбучения.Items.Add("")
-        НоваяГруппаФормаОбучения.Items.AddRange(group.formGrouppLists.forma_obuch)
+        НоваяГруппаФормаОбучения.Items.AddRange(group.formGrouppLists.form_education)
 
         НоваяГруппаПрограмма.Items.Clear()
         НоваяГруппаПрограмма.Items.Add("")
-        НоваяГруппаПрограмма.Items.AddRange(group.formGrouppLists.programma)
+        НоваяГруппаПрограмма.Items.AddRange(group.formGrouppLists.program)
 
         НоваяГруппаСпециальность.Items.Clear()
         НоваяГруппаСпециальность.Items.Add("")
-        НоваяГруппаСпециальность.Items.AddRange(group.formGrouppLists.specialnost)
+        НоваяГруппаСпециальность.Items.AddRange(group.formGrouppLists.speciality)
 
         НоваяГруппаОтветственныйКуратор.Items.Clear()
         НоваяГруппаОтветственныйКуратор.Items.Add("")
@@ -1243,11 +1265,11 @@ Public Class newGroup
 
         НоваяГруппаФинансирование.Items.Clear()
         НоваяГруппаФинансирование.Items.Add("")
-        НоваяГруппаФинансирование.Items.AddRange(group.formGrouppLists.finansirovanie)
+        НоваяГруппаФинансирование.Items.AddRange(group.formGrouppLists.financing)
 
         Квалификация.Items.Clear()
         Квалификация.Items.Add("")
-        Квалификация.Items.AddRange(group.formGrouppLists.kvalifikaciya)
+        Квалификация.Items.AddRange(group.formGrouppLists.qualification)
 
     End Sub
 
@@ -1298,33 +1320,45 @@ Public Class newGroup
         If enabled Then
 
             НоваяГруппаПрограмма.Enabled = True
+
             lblProgram.Enabled = True
+
             НоваяГруппаСпециальность.Enabled = True
+
             lblSpeciality.Enabled = True
+
             versProgs.Enabled = True
+
             НоваяГруппаКоличествоЧасов.Enabled = True
+
             lblNumbersHours.Enabled = True
             statusType.Text = swichCvalification.activeType
 
             If swichNumbers.activeType <> "pk" Then
 
                 НоваяГруппаНомерПротоколаИА.Enabled = True
+
                 LblNumberIA.Enabled = True
                 НоваягруппаОтветственныйЗаПрактику.Enabled = True
+
                 lblPracticResponsible.Enabled = True
                 Квалификация.Enabled = True
+
                 lblCval.Enabled = True
 
             Else
 
                 НоваяГруппаНомерПротоколаИА.Enabled = False
                 НоваяГруппаНомерПротоколаИА.Clear()
+
                 LblNumberIA.Enabled = False
                 НоваягруппаОтветственныйЗаПрактику.Enabled = False
                 НоваягруппаОтветственныйЗаПрактику.Text = ""
+
                 lblPracticResponsible.Enabled = False
                 Квалификация.Enabled = False
                 Квалификация.Text = ""
+
                 lblCval.Enabled = False
 
 
@@ -1333,22 +1367,63 @@ Public Class newGroup
         Else
 
             НоваяГруппаПрограмма.Enabled = False
+
             lblProgram.Enabled = False
             НоваяГруппаСпециальность.Enabled = False
+
             lblSpeciality.Enabled = False
+
             versProgs.Enabled = False
             НоваяГруппаКоличествоЧасов.Enabled = False
+
             lblNumbersHours.Enabled = False
+
             НоваяГруппаНомерПротоколаИА.Enabled = False
+
             LblNumberIA.Enabled = False
+
             НоваягруппаОтветственныйЗаПрактику.Enabled = False
+
             lblPracticResponsible.Enabled = False
+
             Квалификация.Enabled = False
+
             lblCval.Enabled = False
             statusType.Text = "Необходимо выбрать уровень квалификации"
 
         End If
 
+    End Sub
+
+    Private Sub activateBlackMode(currentControl As Control, flagOn As Boolean)
+
+        Dim cont As String = currentControl.Name
+
+        If Not flagOn Then
+
+            Dim cover As New PictureBox
+            Controls.Add(cover)
+            cover.Location = New Point(currentControl.Location.X, currentControl.Location.Y)
+            cover.Size = New Size(729, 25)
+            cover.Image = cover_image
+            cover.SizeMode = PictureBoxSizeMode.StretchImage
+            cover.Name = currentControl.Name + "_cover"
+            cover.BringToFront()
+
+        Else
+
+            removeCover(currentControl.Name + "_cover")
+
+        End If
+
+    End Sub
+
+    Private Sub removeCover(name As String)
+        For Each cover As PictureBox In Me.Controls.OfType(Of PictureBox)
+            If cover.Name = name Then
+                Me.Controls.Remove(cover)
+            End If
+        Next
     End Sub
 
 End Class

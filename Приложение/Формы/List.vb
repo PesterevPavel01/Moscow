@@ -67,7 +67,7 @@
 
         Else
 
-            queryString = formList__loadProgramms()
+            queryString = formList__loadPrograms()
 
         End If
 

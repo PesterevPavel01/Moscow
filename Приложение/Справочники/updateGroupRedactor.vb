@@ -32,7 +32,7 @@
 
 
         newGroup.НоваяГруппаСпециальность.Text = GroupList.infoAboutGroup(5, 0)
-        GroupList.gruppaData.specialnost = GroupList.infoAboutGroup(5, 0)
+        GroupList.gruppaData.speciality = GroupList.infoAboutGroup(5, 0)
 
         newGroup.НоваяГруппаОтветственныйКуратор.Text = GroupList.infoAboutGroup(8, 0)
         GroupList.gruppaData.kurator = GroupList.infoAboutGroup(8, 0)
@@ -134,11 +134,11 @@
         newGroup.НоваяГруппаПрограмма.Text = GroupList.infoAboutGroup(6, 0)
         Dim pr As String = GroupList.infoAboutGroup(6, 0)
         pr = newGroup.НоваяГруппаПрограмма.Text
-        GroupList.gruppaData.programma = GroupList.infoAboutGroup(6, 0)
+        GroupList.gruppaData.program = GroupList.infoAboutGroup(6, 0)
 
 
-        If IsNumeric(GroupList.infoAboutGroup(37, 0)) Then
-            newGroup.setProgKod(Convert.ToInt64(GroupList.infoAboutGroup(37, 0)))
+        If IsNumeric(GroupList.infoAboutGroup(35, 0)) Then
+            newGroup.setProgKod(Convert.ToInt64(GroupList.infoAboutGroup(35, 0)))
         End If
 
         newGroup.setflagAllListProgs(False)
@@ -166,7 +166,7 @@
         newGroup.НоваяГруппаФинансирование.Text = GroupList.infoAboutGroup(22, 0)
 
         newGroup.Квалификация.Text = GroupList.infoAboutGroup(33, 0)
-        GroupList.gruppaData.kvalifikaciya = GroupList.infoAboutGroup(33, 0)
+        GroupList.gruppaData.qualification = GroupList.infoAboutGroup(33, 0)
         GroupList.gruppaData.mainDocument = GroupList.infoAboutGroup(34, 0)
 
     End Sub

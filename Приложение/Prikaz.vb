@@ -10,7 +10,7 @@ Public Class Prikaz
 
     Public Structure FormPrikazLists
         Public director() As String
-        Public directorDoljnost() As String
+        Public Position() As String
         Public otv_attestat() As String
         Public proect_vnosit() As String
         Public ispolnitel() As String
@@ -19,12 +19,12 @@ Public Class Prikaz
         Public prepod() As String
         Public ruk_staj() As String
         Public slushatelFio() As String
-        Public doljnosti() As String
+        Public positions() As String
     End Structure
 
     Public Structure FormPrikazFlags
         Public director As Boolean
-        Public directorDoljnost As Boolean
+        Public directorPosition As Boolean
         Public otv_attestat As Boolean
         Public proekt_vnosit As Boolean
         Public ispolnitel As Boolean
@@ -47,8 +47,8 @@ Public Class Prikaz
         formPrikazList.director = mySQLConnector.loadIntoarray(queryString, 1, 0)
         flipDirector()
 
-        queryString = sqlQueryString.loadDirectorDoljnost()
-        formPrikazList.directorDoljnost = mySQLConnector.loadIntoarray(queryString, 1, 0)
+        queryString = sqlQueryString.loadDirectorPosition()
+        formPrikazList.Position = mySQLConnector.loadIntoarray(queryString, 1, 0)
 
         loadOtv_attestat()
         load_proeсt_vnosit()
@@ -58,11 +58,11 @@ Public Class Prikaz
         load_list_prepod()
         load_ruk_staj()
 
-        queryString = sqlQueryString.loadDoljnosti()
-        formPrikazList.doljnosti = mySQLConnector.loadIntoarray(queryString, 1, 0)
+        queryString = sqlQueryString.loadPositions()
+        formPrikazList.positions = mySQLConnector.loadIntoarray(queryString, 1, 0)
 
         formPrikazFlag.director = False
-        formPrikazFlag.directorDoljnost = False
+        formPrikazFlag.directorPosition = False
         formPrikazFlag.otv_attestat = False
 
     End Sub

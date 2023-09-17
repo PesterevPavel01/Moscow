@@ -348,7 +348,7 @@ Partial Class newGroup
         '
         'НоваяГруппаНомерПротоколаИА
         '
-        Me.НоваяГруппаНомерПротоколаИА.Location = New System.Drawing.Point(442, 199)
+        Me.НоваяГруппаНомерПротоколаИА.Location = New System.Drawing.Point(442, 197)
         Me.НоваяГруппаНомерПротоколаИА.Margin = New System.Windows.Forms.Padding(5, 4, 5, 4)
         Me.НоваяГруппаНомерПротоколаИА.Name = "НоваяГруппаНомерПротоколаИА"
         Me.НоваяГруппаНомерПротоколаИА.Size = New System.Drawing.Size(729, 22)
@@ -716,7 +716,7 @@ Partial Class newGroup
         Me.Модуль1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.Модуль1.FormattingEnabled = True
         Me.Модуль1.ItemHeight = 16
-        Me.Модуль1.Location = New System.Drawing.Point(442, 651)
+        Me.Модуль1.Location = New System.Drawing.Point(442, 650)
         Me.Модуль1.Margin = New System.Windows.Forms.Padding(5, 4, 5, 4)
         Me.Модуль1.Name = "Модуль1"
         Me.Модуль1.Size = New System.Drawing.Size(729, 24)
@@ -727,7 +727,7 @@ Partial Class newGroup
         Me.Модуль2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.Модуль2.FormattingEnabled = True
         Me.Модуль2.ItemHeight = 16
-        Me.Модуль2.Location = New System.Drawing.Point(442, 678)
+        Me.Модуль2.Location = New System.Drawing.Point(442, 677)
         Me.Модуль2.Margin = New System.Windows.Forms.Padding(5, 4, 5, 4)
         Me.Модуль2.Name = "Модуль2"
         Me.Модуль2.Size = New System.Drawing.Size(729, 24)
@@ -804,7 +804,7 @@ Partial Class newGroup
         Me.Модуль9.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.Модуль9.FormattingEnabled = True
         Me.Модуль9.ItemHeight = 16
-        Me.Модуль9.Location = New System.Drawing.Point(442, 867)
+        Me.Модуль9.Location = New System.Drawing.Point(442, 868)
         Me.Модуль9.Margin = New System.Windows.Forms.Padding(5, 4, 5, 4)
         Me.Модуль9.Name = "Модуль9"
         Me.Модуль9.Size = New System.Drawing.Size(729, 24)
@@ -815,7 +815,7 @@ Partial Class newGroup
         Me.Модуль10.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.Модуль10.FormattingEnabled = True
         Me.Модуль10.ItemHeight = 16
-        Me.Модуль10.Location = New System.Drawing.Point(442, 895)
+        Me.Модуль10.Location = New System.Drawing.Point(442, 896)
         Me.Модуль10.Margin = New System.Windows.Forms.Padding(5, 4, 5, 4)
         Me.Модуль10.Name = "Модуль10"
         Me.Модуль10.Size = New System.Drawing.Size(729, 24)

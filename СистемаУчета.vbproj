@@ -160,6 +160,7 @@
     <Compile Include="SwichNumbers.vb" />
     <Compile Include="Приложение\SorterSetts.vb" />
     <Compile Include="Приложение\SwitchCvalification.vb" />
+    <Compile Include="Приложение\User_controls\DGVBuilder.vb" />
     <Compile Include="Приложение\User_controls\user_comboBox.Designer.vb">
       <DependentUpon>user_comboBox.vb</DependentUpon>
     </Compile>
@@ -402,6 +403,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Приложение\Формы\MainForm.resx">
       <DependentUpon>MainForm.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Приложение\Формы\StudentsList.resx">
       <DependentUpon>StudentsList.vb</DependentUpon>

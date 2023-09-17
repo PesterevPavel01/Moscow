@@ -24,8 +24,8 @@ Public Class Group
         Dim dataVSv As String
         Dim number As String
         Dim formaObuch As String
-        Dim specialnost As String
-        Dim programma As String
+        Dim speciality As String
+        Dim program As String
         Dim kolChasov As String
         Dim kurator As String
         Dim otvZaPraktiku As String
@@ -52,7 +52,7 @@ Public Class Group
         'Dim nomerSvid As String
         'Dim regNomerSvid As String
         Dim dateVSvid As String
-        Dim kvalifikaciya As String
+        Dim qualification As String
         Dim numbersUDS As Numbers
         Dim mainDocument As String
 
@@ -72,26 +72,26 @@ Public Class Group
 
     Public Structure FormGroupplLists
         Public ur_cvalifik() As String
-        Public forma_obuch() As String
-        Public programma() As String
-        Public specialnost() As String
+        Public form_education() As String
+        Public program() As String
+        Public speciality() As String
         Public kol_chasov() As String
         Public kurator() As String
         Public otvetstv_praktika() As String
-        Public finansirovanie() As String
-        Public kvalifikaciya() As String
+        Public financing() As String
+        Public qualification() As String
 
     End Structure
 
     Public Structure FormGrouppFlag
         Public ur_cvalifik As Boolean
-        Public forma_obuch As Boolean
-        Public programma As Boolean
-        Public specialnost As Boolean
+        Public form_education As Boolean
+        Public program As Boolean
+        Public speciality As Boolean
         Public kurator As Boolean
         Public otvetstv_praktika As Boolean
-        Public finansirovanie As Boolean
-        Public kvalifikaciya As Boolean
+        Public financing As Boolean
+        Public qualification As Boolean
         Public modul_1 As Boolean
         Public modul_2 As Boolean
         Public modul_3 As Boolean
@@ -125,7 +125,7 @@ Public Class Group
                 Case "НоваяГруппаФормаОбучения"
                     struct_grup.formaObuch = element.Text
                 Case "НоваяГруппаСпециальность"
-                    struct_grup.specialnost = element.Text
+                    struct_grup.speciality = element.Text
                 Case "НоваяГруппаОтветственныйКуратор"
                     struct_grup.kurator = element.Text
                 Case "НоваягруппаОтветственныйЗаПрактику"
@@ -155,7 +155,7 @@ Public Class Group
                 Case "НоваяГруппаФинансирование"
                     struct_grup.financir = element.Text
                 Case "Квалификация"
-                    struct_grup.kvalifikaciya = element.Text
+                    struct_grup.qualification = element.Text
             End Select
 
         Next
@@ -192,30 +192,30 @@ Public Class Group
         queryString = sqlQueryString.loadUrovenKvalifikacii
         formGrouppLists.ur_cvalifik = mySQLConnector.loadIntoarray(queryString, 1, 0)
 
-        queryString = sqlQueryString.loadForma_obuch()
-        formGrouppLists.forma_obuch = mySQLConnector.loadIntoarray(queryString, 1, 0)
+        queryString = sqlQueryString.loadFormEducation()
+        formGrouppLists.form_education = mySQLConnector.loadIntoarray(queryString, 1, 0)
 
-        queryString = ProgrammPoUKvalifikLimit1(struct_grup.urKvalific)
-        formGrouppLists.programma = mySQLConnector.loadIntoarray(queryString, 1, 0)
+        queryString = ProgramPoUKvalifikLimit1(struct_grup.urKvalific)
+        formGrouppLists.program = mySQLConnector.loadIntoarray(queryString, 1, 0)
 
-        queryString = sqlQueryString.loadSpecialnost()
-        formGrouppLists.specialnost = mySQLConnector.loadIntoarray(queryString, 1, 0)
+        queryString = sqlQueryString.loadSpeciality()
+        formGrouppLists.speciality = mySQLConnector.loadIntoarray(queryString, 1, 0)
 
         queryString = sqlQueryString.loadKurator()
         formGrouppLists.kurator = mySQLConnector.loadIntoarray(queryString, 1, 0)
 
         formGrouppLists.otvetstv_praktika = formGrouppLists.kurator
 
-        queryString = sqlQueryString.loadFinansirovanie()
-        formGrouppLists.finansirovanie = mySQLConnector.loadIntoarray(queryString, 1, 0)
+        queryString = sqlQueryString.loadFinansing()
+        formGrouppLists.financing = mySQLConnector.loadIntoarray(queryString, 1, 0)
 
-        queryString = sqlQueryString.loadKvalifikaciya()
-        formGrouppLists.kvalifikaciya = mySQLConnector.loadIntoarray(queryString, 1, 0)
+        queryString = sqlQueryString.loadQualification()
+        formGrouppLists.qualification = mySQLConnector.loadIntoarray(queryString, 1, 0)
 
         flagGrouppForm.ur_cvalifik = False
-        flagGrouppForm.forma_obuch = False
-        flagGrouppForm.programma = False
-        flagGrouppForm.specialnost = False
+        flagGrouppForm.form_education = False
+        flagGrouppForm.program = False
+        flagGrouppForm.speciality = False
         flagGrouppForm.kurator = False
         flagGrouppForm.otvetstv_praktika = False
         flagGrouppForm.modul_1 = False
@@ -231,11 +231,11 @@ Public Class Group
 
     End Sub
 
-    Public Sub updateProgramm()
+    Public Sub updateProgram()
 
         Dim queryString As String
-        queryString = ProgrammPoUKvalifikLimit1(struct_grup.urKvalific)
-        formGrouppLists.programma = mySQLConnector.loadIntoarray(queryString, 1, 0)
+        queryString = ProgramPoUKvalifikLimit1(struct_grup.urKvalific)
+        formGrouppLists.program = mySQLConnector.loadIntoarray(queryString, 1, 0)
 
     End Sub
 
@@ -244,7 +244,7 @@ Public Class Group
         Dim result As Object(,)
         Dim queryString As String
 
-        queryString = sqlQueryString.loadKogProgramm(struct_grup.urKvalific, struct_grup.programma)
+        queryString = sqlQueryString.loadKogProgram(struct_grup.urKvalific, struct_grup.program)
 
         result = mySQLConnector.loadMySqlToArray(queryString, 1)
 
@@ -259,12 +259,12 @@ Public Class Group
 
     End Sub
 
-    Public Sub load_kol_chas()
+    Public Sub loadNumberHours()
 
         Dim result As String()
         Dim queryString As String
 
-        queryString = sqlQueryString.load_kol_chas(struct_grup.kodProgram)
+        queryString = sqlQueryString.loadNumberHours(struct_grup.kodProgram)
 
         result = mySQLConnector.loadIntoarray(queryString, 1, 0)
 

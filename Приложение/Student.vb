@@ -19,7 +19,7 @@ Public Class Student
         Dim birthDay As String
         Dim educationLevel As String
         Dim education As String
-        Dim doo_vid_dok As String
+        Dim doo_doc_type As String
         Dim seriesDOO As String
         Dim numberDOO As String
         Dim lastNameDOO As String
@@ -31,7 +31,6 @@ Public Class Student
         Dim numberDUL As String
         Dim sourceOfFinansing As String
         Dim направившаяОрг As String
-        Dim speciality As String
         Dim email As String
         Dim dateReg As String
         Dim dateDUL As String
@@ -42,24 +41,24 @@ Public Class Student
     End Structure
 
     Public Structure formStudentsLists
-        Public doo_vid_dok() As String
-        Public pol() As String
+        Public doo_doc_type() As String
+        Public gender() As String
         Public urovenObr() As String
         Public DOO_strana() As String
-        Public grajdanstvo() As String
-        Public dok_UL() As String
-        Public ist_finans() As String
+        Public nationality() As String
+        Public doc_UL() As String
+        Public finSource() As String
         Public napr_organization() As String
     End Structure
 
     Public Structure formSlushatelFlag
-        Public doo_vid_dok As Boolean
-        Public pol As Boolean
+        Public doo_doc_type As Boolean
+        Public gender As Boolean
         Public urovenObr As Boolean
         Public DOO_strana As Boolean
-        Public grajdanstvo As Boolean
-        Public dok_UL As Boolean
-        Public ist_finans As Boolean
+        Public nationality As Boolean
+        Public doc_UL As Boolean
+        Public finSource As Boolean
         Public napr_organization As Boolean
     End Structure
 
@@ -68,7 +67,6 @@ Public Class Student
         studentData.idGroup = 0
         studentData.snils = ""
         studentData.snilsMusked = ""
-        studentData.prevSnils = ""
         studentData.secondName = ""
         studentData.name = ""
         studentData.lastName = ""
@@ -86,7 +84,6 @@ Public Class Student
         studentData.numberDUL = ""
         studentData.sourceOfFinansing = ""
         studentData.направившаяОрг = ""
-        studentData.speciality = ""
         studentData.email = ""
         studentData.dateReg = ""
         studentData.dateDUL = ""
@@ -168,7 +165,7 @@ Public Class Student
                 Return True
             Case "Выполнение"
                 Return True
-            Case "doo_vid_dok"
+            Case "doo_doc_type"
                 Return True
 
         End Select
@@ -284,10 +281,10 @@ Public Class Student
         mySQLConnector.opdateArgument()
 
         queryString = loadDooVidDok()
-        formSlushLists.doo_vid_dok = mySQLConnector.loadIntoarray(queryString, 1, 0)
+        formSlushLists.doo_doc_type = mySQLConnector.loadIntoarray(queryString, 1, 0)
 
-        queryString = loadPol()
-        formSlushLists.pol = mySQLConnector.loadIntoarray(queryString, 1, 0)
+        queryString = loadGender()
+        formSlushLists.gender = mySQLConnector.loadIntoarray(queryString, 1, 0)
 
         queryString = loadUrovenObr()
         formSlushLists.urovenObr = mySQLConnector.loadIntoarray(queryString, 1, 0)
@@ -295,25 +292,25 @@ Public Class Student
         queryString = loadDooCountry()
         formSlushLists.DOO_strana = mySQLConnector.loadIntoarray(queryString, 1, 0)
 
-        queryString = loadGrajdanstvo()
-        formSlushLists.grajdanstvo = mySQLConnector.loadIntoarray(queryString, 1, 0)
+        queryString = loadNationality()
+        formSlushLists.nationality = mySQLConnector.loadIntoarray(queryString, 1, 0)
 
         queryString = loadDokUL()
-        formSlushLists.dok_UL = mySQLConnector.loadIntoarray(queryString, 1, 0)
+        formSlushLists.doc_UL = mySQLConnector.loadIntoarray(queryString, 1, 0)
 
         queryString = loadIstFinans()
-        formSlushLists.ist_finans = mySQLConnector.loadIntoarray(queryString, 1, 0)
+        formSlushLists.finSource = mySQLConnector.loadIntoarray(queryString, 1, 0)
 
         queryString = loadNOrganization()
         formSlushLists.napr_organization = mySQLConnector.loadIntoarray(queryString, 1, 0)
 
-        flagSlushatelForm.doo_vid_dok = False
-        flagSlushatelForm.pol = False
+        flagSlushatelForm.doo_doc_type = False
+        flagSlushatelForm.gender = False
         flagSlushatelForm.urovenObr = False
         flagSlushatelForm.DOO_strana = False
-        flagSlushatelForm.grajdanstvo = False
-        flagSlushatelForm.dok_UL = False
-        flagSlushatelForm.ist_finans = False
+        flagSlushatelForm.nationality = False
+        flagSlushatelForm.doc_UL = False
+        flagSlushatelForm.finSource = False
         flagSlushatelForm.napr_organization = False
 
     End Sub
@@ -418,7 +415,7 @@ Public Class Student
         InsertIntoDataBase.argument.secondName = "students"
         InsertIntoDataBase.argument.secondValue = slushatel.snils
 
-        If InsertIntoDataBase.checkUniq_No2() = 2 Then
+        If InsertIntoDataBase.checkUniq_No2() = 1 Then
 
             MainForm.mySqlConnect.sendQuery(queryString, 1)
 

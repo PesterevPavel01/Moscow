@@ -1,5 +1,4 @@
-﻿Imports System.Xml
-Imports Org.BouncyCastle.Utilities
+﻿
 Imports WindowsApp2.Worker
 
 Public Class SqlQueryString
@@ -18,19 +17,19 @@ Public Class SqlQueryString
 
     End Function
 
-    Public Function delete_doljnost(kod As String) As String
+    Public Function delete_position(kod As String) As String
 
-        sqlString = "DELETE FROM doljnost WHERE kod=" + kod
+        sqlString = "DELETE FROM position WHERE kod=" + kod
         Return sqlString
 
     End Function
 
-    Public Function check_kod_doljnost(kod As String) As String
+    Public Function check_kod_position(kod As String) As String
 
         sqlString = "SELECT
-                      COUNT(sotrudnik.doljnost)
-                    FROM sotrudnik
-                    WHERE sotrudnik.doljnost = " + kod
+                      COUNT(worker.position)
+                    FROM worker
+                    WHERE worker.position = " + kod
         Return sqlString
 
     End Function
@@ -45,13 +44,13 @@ Public Class SqlQueryString
 
     End Function
 
-    Public Function load_kod_doljnost(doljnost As String) As String
+    Public Function load_kod_position(position As String) As String
 
         sqlString = "SELECT
                      kod
                      FROM 
-                     doljnost
-                     WHERE name='" + doljnost + "'"
+                     position
+                     WHERE name='" + position + "'"
         Return sqlString
 
     End Function
@@ -67,13 +66,13 @@ Public Class SqlQueryString
 
     End Function
 
-    Public Function check_doljnost(doljnost As String) As String
+    Public Function check_position(position As String) As String
 
         sqlString = "SELECT
                      COUNT(kod)
                      FROM 
-                     doljnost
-                     WHERE name='" + doljnost + "'"
+                     position
+                     WHERE name='" + position + "'"
         Return sqlString
 
     End Function
@@ -96,9 +95,9 @@ Public Class SqlQueryString
 
     End Function
 
-    Public Function update_doljnost(doljnost As String, kod As String) As String
+    Public Function update_position(position As String, kod As String) As String
 
-        sqlString = "UPDATE doljnost SET name='" + doljnost + "' WHERE kod=" + kod
+        sqlString = "UPDATE position SET name='" + position + "' WHERE kod=" + kod
         Return sqlString
 
     End Function
@@ -110,19 +109,19 @@ Public Class SqlQueryString
 
     End Function
 
-    Public Function save_doljnost(doljnost As String) As String
+    Public Function save_position(position As String) As String
 
-        sqlString = "INSERT INTO doljnost (name) VALUE ('" + doljnost + "')"
+        sqlString = "INSERT INTO position (name) VALUE ('" + position + "')"
         Return sqlString
 
     End Function
 
-    Public Function load_list_doljnosti() As String
+    Public Function load_list_positions() As String
 
         sqlString = "SELECT
-                      doljnost.name AS Должность,
-                      doljnost.kod
-                    FROM doljnost"
+                      position.name AS Должность,
+                      position.kod
+                    FROM position"
         Return sqlString
 
     End Function
@@ -141,7 +140,7 @@ Public Class SqlQueryString
 
     Public Function update_status_list(kod As String, status As String) As String
 
-        sqlString = "UPDATE sotrudnik
+        sqlString = "UPDATE worker
                     SET in_list = " + status + "
                     WHERE kod = " + kod
         Return sqlString
@@ -151,7 +150,7 @@ Public Class SqlQueryString
     Public Function removeWorker(kod As String) As String
 
         Dim sqlString As String = ""
-        sqlString = "DELETE FROM sotrudnik WHERE kod=" + kod
+        sqlString = "DELETE FROM worker WHERE kod=" + kod
         Return sqlString
 
     End Function
@@ -194,7 +193,7 @@ Public Class SqlQueryString
 
         Dim sqlString As String = ""
         sqlString = "SELECT COUNT(kod) FROM
-                    sotrudnik
+                    worker
                     WHERE name='" + worker_name + "'"
         Return sqlString
 
@@ -204,7 +203,7 @@ Public Class SqlQueryString
 
         Dim sqlString As String = ""
         sqlString = "SELECT MAX(kod) FROM
-                    sotrudnik
+                    worker
                     WHERE name='" + worker_name + "'"
         Return sqlString
 
@@ -212,9 +211,9 @@ Public Class SqlQueryString
 
     Public Function updateWorker(worker As Worker_structure, worker_type As String) As String
         Dim sqlString As String = ""
-        sqlString = "UPDATE sotrudnik set name='" & worker.name & "',name_full='" & worker.name_full & "',name_pad='" & worker.name_pad & "',
-                     doljnost=(SELECT kod FROM doljnost WHERE name='" & worker.worker_doljnost & "' LIMIT 1),
-                     type_sotrudnik=(SELECT kod FROM kodirovka WHERE name='" & worker_type & "' LIMIT 1) WHERE kod=" & worker.kod
+        sqlString = "UPDATE worker set name='" & worker.name & "',name_full='" & worker.name_full & "',name_pad='" & worker.name_pad & "',
+                     position=(SELECT kod FROM position WHERE name='" & worker.worker_position & "' LIMIT 1),
+                     type=(SELECT kod FROM encoding WHERE name='" & worker_type & "' LIMIT 1) WHERE kod=" & worker.kod
         Return sqlString
 
     End Function
@@ -222,21 +221,22 @@ Public Class SqlQueryString
     Public Function addWorker(worker As Worker_structure, worker_type As String) As String
 
         Dim sqlString As String = ""
-        sqlString = "INSERT INTO sotrudnik (name, name_full, name_pad, doljnost, type_sotrudnik)
+        sqlString = "INSERT INTO worker (name, name_full, name_pad, position, type)
                         VALUES
                         (
-                        '" + worker.name + "','" + worker.name_full + "','" + worker.name_pad + "',(SELECT kod FROM doljnost WHERE name='" + worker.worker_doljnost + "' LIMIT 1),(SELECT kod FROM kodirovka WHERE name='" + worker_type + "' LIMIT 1)  
+                        '" + worker.name + "','" + worker.name_full + "','" + worker.name_pad + "',(SELECT kod FROM position WHERE name='" + worker.worker_position + "' LIMIT 1),(SELECT kod FROM 
+                        encoding WHERE name='" + worker_type + "' LIMIT 1)  
                         )"
         Return sqlString
 
     End Function
 
-    Public Function loadListDoljnost() As String
+    Public Function loadListPosition() As String
 
         Dim sqlString As String = ""
         sqlString = "SELECT
                       name AS Имя 
-                    FROM doljnost"
+                    FROM position"
         Return sqlString
 
     End Function
@@ -246,7 +246,7 @@ Public Class SqlQueryString
         Dim sqlString As String = ""
         sqlString = "SELECT
                       name 
-                    FROM kodirovka WHERE kod=0"
+                    FROM encoding WHERE kod=0"
         Return sqlString
 
     End Function
@@ -256,7 +256,7 @@ Public Class SqlQueryString
         Dim sqlString As String = ""
         sqlString = "SELECT
                       name 
-                    FROM kodirovka"
+                    FROM encoding"
         Return sqlString
 
     End Function
@@ -265,19 +265,19 @@ Public Class SqlQueryString
 
         Dim sqlString As String = ""
         sqlString = "SELECT
-sotrudnik.in_list,
-                      sotrudnik.name AS Имя,
-                      sotrudnik.name_full AS Полное,
-                      sotrudnik.name_pad AS Склонение,
-                      doljnost.name AS Должность,
-                      kodirovka.name AS type,
-                      sotrudnik.kod
-                    FROM sotrudnik
-                      LEFT JOIN doljnost
-                        ON sotrudnik.doljnost = doljnost.kod
-                      LEFT JOIN kodirovka 
-                        ON sotrudnik.type_sotrudnik = kodirovka.kod
-                      WHERE sotrudnik.name<>''"
+                      worker.in_list,
+                      worker.name AS Имя,
+                      worker.name_full AS Полное,
+                      worker.name_pad AS Склонение,
+                      position.name AS Должность,
+                      encoding.name AS type,
+                      worker.kod
+                    FROM worker
+                      LEFT JOIN position
+                        ON worker.position = position.kod
+                      LEFT JOIN encoding 
+                        ON worker.type = encoding.kod
+                      WHERE worker.name<>''"
         Return sqlString
 
     End Function
@@ -288,8 +288,8 @@ sotrudnik.in_list,
         sqlString = "SELECT
                       COUNT(progs_mods_hours.kod_modul) AS expr1
                     FROM progs_mods_hours
-                      INNER JOIN programm
-                        ON progs_mods_hours.kod_prog = programm.kod
+                      INNER JOIN program
+                        ON progs_mods_hours.kod_prog = program.kod
                     WHERE progs_mods_hours.kod_prog = " + kod
         Return sqlString
 
@@ -320,7 +320,7 @@ sotrudnik.in_list,
         Return sqlString
 
     End Function
-    Public Function updateModulnumber(listData As List(Of List(Of String)), kod_programm As Int16) As String
+    Public Function updateModulnumber(listData As List(Of List(Of String)), kod_program As Int16) As String
 
         Dim sqlString As String = ""
         sqlString = "ROLLBACK;
@@ -329,24 +329,24 @@ sotrudnik.in_list,
                     UPDATE progs_mods_hours
                     SET modul_number = 0
                     WHERE  kod_modul=" + listData(0)(1) + "
-                    AND kod_prog = " + Convert.ToString(kod_programm) + ";
+                    AND kod_prog = " + Convert.ToString(kod_program) + ";
 
                     UPDATE progs_mods_hours
                     SET modul_number = " + listData(0)(0) + "
                     WHERE  kod_modul=" + listData(1)(1) + "
-                    AND kod_prog = " + Convert.ToString(kod_programm) + ";
+                    AND kod_prog = " + Convert.ToString(kod_program) + ";
 
                     UPDATE progs_mods_hours
                     SET modul_number = " + listData(1)(0) + "
                     WHERE  kod_modul=" + listData(0)(1) + "
-                    AND kod_prog = " + Convert.ToString(kod_programm) + ";
+                    AND kod_prog = " + Convert.ToString(kod_program) + ";
 
                     COMMIT;"
 
         Return sqlString
 
     End Function
-    Public Function selectNumberModulTop(kod_programm As Int16, kod_modul As String) As String
+    Public Function selectNumberModulTop(kod_program As Int16, kod_modul As String) As String
 
         Dim sqlString As String = ""
         sqlString = "SELECT 
@@ -357,13 +357,13 @@ sotrudnik.in_list,
                     SELECT
                     MAX(progs_mods_hours.modul_number) AS m_number
                     FROM progs_mods_hours
-                    WHERE progs_mods_hours.kod_prog = " + Convert.ToString(kod_programm) + "
+                    WHERE progs_mods_hours.kod_prog = " + Convert.ToString(kod_program) + "
                     And modul_number < (SELECT progs_mods_hours.modul_number FROM progs_mods_hours 
                     INNER JOIN
                     moduls ON progs_mods_hours.kod_modul = moduls.kod
-                    WHERE moduls.kod=" + kod_modul + " AND progs_mods_hours.kod_prog = " + Convert.ToString(kod_programm) + ") LIMIT 1) AS tbl
+                    WHERE moduls.kod=" + kod_modul + " AND progs_mods_hours.kod_prog = " + Convert.ToString(kod_program) + ") LIMIT 1) AS tbl
                     INNER JOIN 
-                    (SELECT kod_modul,modul_number FROM progs_mods_hours WHERE kod_prog= " + Convert.ToString(kod_programm) + ") AS tb2
+                    (SELECT kod_modul,modul_number FROM progs_mods_hours WHERE kod_prog= " + Convert.ToString(kod_program) + ") AS tb2
                     ON tbl.m_number=tb2.modul_number
                     UNION ALL 
                     SELECT progs_mods_hours.modul_number,
@@ -371,12 +371,12 @@ sotrudnik.in_list,
                     FROM progs_mods_hours
                     INNER JOIN
                     moduls ON progs_mods_hours.kod_modul = moduls.kod
-                    WHERE moduls.kod=" + kod_modul + " AND progs_mods_hours.kod_prog = " + Convert.ToString(kod_programm)
+                    WHERE moduls.kod=" + kod_modul + " AND progs_mods_hours.kod_prog = " + Convert.ToString(kod_program)
         Return sqlString
 
     End Function
 
-    Public Function selectNumberModulButtom(kod_programm As Int16, kod_modul As String) As String
+    Public Function selectNumberModulButtom(kod_program As Int16, kod_modul As String) As String
 
         Dim sqlString As String = ""
         sqlString = "SELECT
@@ -385,35 +385,35 @@ sotrudnik.in_list,
                     FROM 
                     progs_mods_hours
                     WHERE
-                    kod_prog = " + Convert.ToString(kod_programm) + " AND
+                    kod_prog = " + Convert.ToString(kod_program) + " AND
                     modul_number= 
                     (
                     SELECT
                     MIN(progs_mods_hours.modul_number)
                     FROM progs_mods_hours
-                    WHERE progs_mods_hours.kod_prog = " + Convert.ToString(kod_programm) + "
+                    WHERE progs_mods_hours.kod_prog = " + Convert.ToString(kod_program) + "
                     And modul_number > (SELECT progs_mods_hours.modul_number FROM progs_mods_hours INNER JOIN
                     moduls ON progs_mods_hours.kod_modul = moduls.kod
-                    WHERE moduls.kod=" + kod_modul + " AND progs_mods_hours.kod_prog = " + Convert.ToString(kod_programm) + " LIMIT 1) LIMIT 1)
+                    WHERE moduls.kod=" + kod_modul + " AND progs_mods_hours.kod_prog = " + Convert.ToString(kod_program) + " LIMIT 1) LIMIT 1)
                     UNION ALL 
                     SELECT progs_mods_hours.modul_number,
                     progs_mods_hours.kod_modul
                     FROM progs_mods_hours
                     INNER JOIN
                     moduls ON progs_mods_hours.kod_modul = moduls.kod
-                    WHERE moduls.kod=" + kod_modul + " AND progs_mods_hours.kod_prog = " + Convert.ToString(kod_programm)
+                    WHERE moduls.kod=" + kod_modul + " AND progs_mods_hours.kod_prog = " + Convert.ToString(kod_program)
         Return sqlString
 
     End Function
 
-    Public Function insertModulIntoProg(kod_programm As String, kod_modul As String) As String
+    Public Function insertModulIntoProg(kod_program As String, kod_modul As String) As String
 
         Dim sqlString As String = ""
         sqlString = "INSERT IGNORE INTO progs_mods_hours (kod_prog,kod_modul,hours,modul_number)
-                    SELECT " + kod_programm + "
+                    SELECT " + kod_program + "
                     ," + kod_modul + ",
                     (SELECT hours FROM moduls WHERE kod=" + kod_modul + "),
-                    (SELECT IFNULL(MAX(modul_number),0)+1 FROM progs_mods_hours WHERE kod_prog=" + kod_programm + ")"
+                    (SELECT IFNULL(MAX(modul_number),0)+1 FROM progs_mods_hours WHERE kod_prog=" + kod_program + ")"
         Return sqlString
 
     End Function
@@ -425,10 +425,10 @@ sotrudnik.in_list,
         Return sqlString
 
     End Function
-    Public Function deleteProgramm(kod As String) As String
+    Public Function deleteProgram(kod As String) As String
 
         Dim sqlString As String = ""
-        sqlString = "DELETE FROM progs_mods_hours WHERE kod_prog=" + kod + ";DELETE FROM programm WHERE kod=" + kod + ";UPDATE `group` SET kod_programm = NULL WHERE kod_programm=" + kod
+        sqlString = "DELETE FROM progs_mods_hours WHERE kod_prog=" + kod + ";DELETE FROM program WHERE kod=" + kod + ";UPDATE `group` SET kod_program = NULL WHERE kod_program=" + kod
         Return sqlString
 
     End Function
@@ -440,23 +440,23 @@ sotrudnik.in_list,
 
     End Function
 
-    Public Function updateProgramm(programm As String, kod As String) As String
+    Public Function updateProgram(program As String, kod As String) As String
 
         Dim sqlString As String = ""
-        sqlString = "UPDATE programm SET name='" + programm + "' WHERE kod=" + kod
+        sqlString = "UPDATE program SET name='" + program + "' WHERE kod=" + kod
         Return sqlString
 
     End Function
 
-    Public Function loadLastKodProgramm(programm As String, ur_kvalif As String) As String
+    Public Function loadLastKodProgram(program As String, ur_kvalif As String) As String
 
         Dim sqlString As String = ""
         sqlString = " SELECT" +
                     "     MAX(kod)" +
                     "         FROM" +
-                    "         programm" +
-                    "         WHERE name ='" + programm + "' AND uroven_kvalifik=" +
-                    "   (SELECT kod FROM uroven_kvalifik WHERE name='" + ur_kvalif + "' LIMIT 1)"
+                    "         program" +
+                    "         WHERE name ='" + program + "' AND skill_level=" +
+                    "   (SELECT kod FROM skill_level WHERE name='" + ur_kvalif + "' LIMIT 1)"
         Return sqlString
 
     End Function
@@ -473,30 +473,30 @@ sotrudnik.in_list,
 
     End Function
 
-    Public Function loadLastKodModulInProgramm(kod_programm As String, kod_modul As String) As String
+    Public Function loadLastKodModulInProgram(kod_program As String, kod_modul As String) As String
 
         Dim sqlString As String = ""
         sqlString = " SELECT" +
                     "     kod" +
                     "         FROM" +
                     "             progs_mods_hours" +
-                    " WHERE kod_prog=" + kod_programm + " AND kod_modul=" + kod_modul
+                    " WHERE kod_prog=" + kod_program + " AND kod_modul=" + kod_modul
         Return sqlString
 
     End Function
 
-    Public Function addProgramm(programm As String, ur_kvalif As String) As String
+    Public Function addProgram(program As String, ur_kvalif As String) As String
 
         Dim sqlString As String = ""
-        sqlString = "INSERT IGNORE INTO programm (uroven_kvalifik, name, kod)
+        sqlString = "INSERT IGNORE INTO program (skill_level, name, kod)
                       SELECT
-                        uroven_kvalifik.kod,
-                        '" + programm + "',
+                        skill_level.kod,
+                        '" + program + "',
                         (SELECT
-                            MAX(programm.kod)+1 AS expr1
-                          FROM programm) AS expr1
-                      FROM uroven_kvalifik
-                      WHERE uroven_kvalifik.name = '" + ur_kvalif + "'"
+                            MAX(program.kod)+1 AS expr1
+                          FROM program) AS expr1
+                      FROM skill_level
+                      WHERE skill_level.name = '" + ur_kvalif + "'"
         Return sqlString
 
     End Function
@@ -596,54 +596,54 @@ sotrudnik.in_list,
 
         Dim queryString As String = ""
 
-        queryString = "INSERT INTO " + name_table + " (" + db_element_first + "," + db_element_second + ",uroven_kvalifik)
-                       VALUES ('" + values_element_first + "',(SELECT kod FROM kol_chas WHERE name=" + values_element_second + " LIMIT 1)
-                        ,(SELECT kod FROM uroven_kvalifik WHERE name = '" + name_prog + "' LIMIT 1));
+        queryString = "INSERT INTO " + name_table + " (" + db_element_first + "," + db_element_second + ",skill_level)
+                       VALUES ('" + values_element_first + "',(SELECT kod FROM number_hours WHERE name=" + values_element_second + " LIMIT 1)
+                        ,(SELECT kod FROM skill_level WHERE name = '" + name_prog + "' LIMIT 1));
                        
                         INSERT INTO progs_type_hours 
                         SELECT *
                         FROM(
-                            SELECT kod,1,0 FROM programm 
-                              WHERE programm.name = '" + values_element_first + "' 
-                              AND programm.uroven_kvalifik = 
-                                (SELECT kod FROM uroven_kvalifik WHERE name = '" + name_prog + "' LIMIT 1) 
-                              AND programm.kod NOT IN (SELECT kod_prog FROM progs_type_hours)
+                            SELECT kod,1,0 FROM program 
+                              WHERE program.name = '" + values_element_first + "' 
+                              AND program.skill_level = 
+                                (SELECT kod FROM skill_level WHERE name = '" + name_prog + "' LIMIT 1) 
+                              AND program.kod NOT IN (SELECT kod_prog FROM progs_type_hours)
                             LIMIT 1
                             ) AS tbl
                                 UNION ALL
-                           (SELECT kod,2,0 FROM programm 
-                            WHERE programm.name = '" + values_element_first + "' 
-                            AND programm.uroven_kvalifik = 
-                                (SELECT kod FROM uroven_kvalifik WHERE name = '" + name_prog + "' LIMIT 1) 
-                            AND programm.kod NOT IN (SELECT kod_prog FROM progs_type_hours)
+                           (SELECT kod,2,0 FROM program 
+                            WHERE program.name = '" + values_element_first + "' 
+                            AND program.skill_level = 
+                                (SELECT kod FROM skill_level WHERE name = '" + name_prog + "' LIMIT 1) 
+                            AND program.kod NOT IN (SELECT kod_prog FROM progs_type_hours)
                            LIMIT 1)
                                 UNION ALL
-                           (SELECT kod,3,0 FROM programm 
-                            WHERE programm.name = '" + values_element_first + "' 
-                            AND programm.uroven_kvalifik = 
-                                (SELECT kod FROM uroven_kvalifik WHERE name = '" + name_prog + "' LIMIT 1) 
-                            AND programm.kod NOT IN (SELECT kod_prog FROM progs_type_hours)
+                           (SELECT kod,3,0 FROM program 
+                            WHERE program.name = '" + values_element_first + "' 
+                            AND program.skill_level = 
+                                (SELECT kod FROM skill_level WHERE name = '" + name_prog + "' LIMIT 1) 
+                            AND program.kod NOT IN (SELECT kod_prog FROM progs_type_hours)
                            LIMIT 1)
                                 UNION ALL
-                           (SELECT kod,4,0 FROM programm 
-                            WHERE programm.name = '" + values_element_first + "' 
-                            AND programm.uroven_kvalifik = 
-                                (SELECT kod FROM uroven_kvalifik WHERE name = '" + name_prog + "' LIMIT 1) 
-                            AND programm.kod NOT IN (SELECT kod_prog FROM progs_type_hours)
+                           (SELECT kod,4,0 FROM program 
+                            WHERE program.name = '" + values_element_first + "' 
+                            AND program.skill_level = 
+                                (SELECT kod FROM skill_level WHERE name = '" + name_prog + "' LIMIT 1) 
+                            AND program.kod NOT IN (SELECT kod_prog FROM progs_type_hours)
                            LIMIT 1)
                                 UNION ALL
-                           (SELECT kod,5,0 FROM programm 
-                            WHERE programm.name = '" + values_element_first + "' 
-                            AND programm.uroven_kvalifik = 
-                                (SELECT kod FROM uroven_kvalifik WHERE name = '" + name_prog + "' LIMIT 1) 
-                            AND programm.kod NOT IN (SELECT kod_prog FROM progs_type_hours)
+                           (SELECT kod,5,0 FROM program 
+                            WHERE program.name = '" + values_element_first + "' 
+                            AND program.skill_level = 
+                                (SELECT kod FROM skill_level WHERE name = '" + name_prog + "' LIMIT 1) 
+                            AND program.kod NOT IN (SELECT kod_prog FROM progs_type_hours)
                            LIMIT 1)
                                 UNION ALL
-                           (SELECT kod,6,0 FROM programm 
-                            WHERE programm.name = '" + values_element_first + "' 
-                            AND programm.uroven_kvalifik = 
-                                (SELECT kod FROM uroven_kvalifik WHERE name = '" + name_prog + "' LIMIT 1) 
-                            AND programm.kod NOT IN (SELECT kod_prog FROM progs_type_hours)
+                           (SELECT kod,6,0 FROM program 
+                            WHERE program.name = '" + values_element_first + "' 
+                            AND program.skill_level = 
+                                (SELECT kod FROM skill_level WHERE name = '" + name_prog + "' LIMIT 1) 
+                            AND program.kod NOT IN (SELECT kod_prog FROM progs_type_hours)
                            LIMIT 1)"
 
         Return queryString
@@ -687,8 +687,8 @@ sotrudnik.in_list,
                            FROM
                             " + name_table + "
                            WHERE " + db_element_first + " ='" + values_element_first + "' AND " + db_element_second + "= 
-                           (SELECT kod FROM kol_chas WHERE name=" + values_element_second + " LIMIT 1) AND uroven_kvalifik = 
-                           (SELECT kod FROM uroven_kvalifik WHERE name = '" + name_prog + "' LIMIT 1)"
+                           (SELECT kod FROM number_hours WHERE name=" + values_element_second + " LIMIT 1) AND skill_level = 
+                           (SELECT kod FROM skill_level WHERE name = '" + name_prog + "' LIMIT 1)"
 
         Return queryString
 
@@ -699,7 +699,7 @@ sotrudnik.in_list,
         Dim queryString As String = ""
 
         queryString = "UPDATE " + name_table + " Set " + db_element_first + "='" + values_element_first + "'," + db_element_second + "=
-                        (SELECT kod FROM kol_chas WHERE name=" + values_element_second + " LIMIT 1) WHERE kod=" + Convert.ToString(kod)
+                        (SELECT kod FROM number_hours WHERE name=" + values_element_second + " LIMIT 1) WHERE kod=" + Convert.ToString(kod)
 
         Return queryString
 
@@ -714,7 +714,7 @@ sotrudnik.in_list,
                            FROM 
                             " + name_table + "
                            WHERE " + db_element_first + "='" + values_element_first + "' 
-                           AND uroven_kvalifik=(SELECT kod FROM uroven_kvalifik WHERE name = '" + name_prog + "' LIMIT 1)"
+                           AND skill_level=(SELECT kod FROM skill_level WHERE name = '" + name_prog + "' LIMIT 1)"
 
         Return queryString
 
@@ -724,22 +724,22 @@ sotrudnik.in_list,
 
         Dim queryString As String
 
-        queryString = "SELECT COUNT(kod_programm) FROM `group` WHERE kod_programm=" + Convert.ToString(remove_kod)
+        queryString = "SELECT COUNT(kod_program) FROM `group` WHERE kod_program=" + Convert.ToString(remove_kod)
 
         Return queryString
 
     End Function
 
-    Public Function update_delete_query(programm_on As Boolean, name_table As String, name_programm As String, remove_kod As Int64) As String
+    Public Function update_delete_query(program_on As Boolean, name_table As String, name_program As String, remove_kod As Int64) As String
 
         Dim queryString As String = ""
 
-        If programm_on Then
+        If program_on Then
 
             queryString = "DELETE FROM progs_type_hours WHERE kod_prog=" + Convert.ToString(remove_kod) + ";
                            DELETE FROM progs_mods_hours WHERE kod_prog=" + Convert.ToString(remove_kod) + ";
                            DELETE FROM " + name_table + " WHERE kod=" + Convert.ToString(remove_kod) + " 
-                           AND uroven_kvalifik = (SELECT kod FROM uroven_kvalifik WHERE name = '" + name_programm + "' LIMIT 1);"
+                           AND skill_level = (SELECT kod FROM skill_level WHERE name = '" + name_program + "' LIMIT 1);"
 
         Else
 
@@ -786,8 +786,8 @@ sotrudnik.in_list,
                           progs_type_hours.hours,
                           progs_type_hours.type
                         FROM progs_type_hours
-                          INNER JOIN programm
-                            ON progs_type_hours.kod_prog = programm.kod
+                          INNER JOIN program
+                            ON progs_type_hours.kod_prog = program.kod
                           WHERE kod=" + kodProgram + ") AS hours
                         ON type_class.kod = hours.type"
         Return sqlString
@@ -810,7 +810,7 @@ sotrudnik.in_list,
         Dim sqlString As String = ""
         sqlString = "SELECT 
                         name
-                        FROM kol_chas
+                        FROM number_hours
                         ORDER BY name"
         Return sqlString
 
@@ -823,11 +823,11 @@ sotrudnik.in_list,
                      progs_mods_hours.hours as Часы,
                      progs_mods_hours.kod_modul as Код
                      FROM progs_mods_hours
-                     INNER JOIN programm
-                     ON progs_mods_hours.kod_prog = programm.kod
+                     INNER JOIN program
+                     ON progs_mods_hours.kod_prog = program.kod
                      INNER JOIN moduls
                      ON progs_mods_hours.kod_modul = moduls.kod
-                     WHERE programm.kod =" + kod + "
+                     WHERE program.kod =" + kod + "
                      ORDER BY modul_number"
         Return sqlString
 
@@ -839,54 +839,54 @@ sotrudnik.in_list,
         sqlString = "SELECT
                      SUM(progs_mods_hours.hours) as Часы
                      FROM progs_mods_hours
-                     INNER JOIN programm
-                     ON progs_mods_hours.kod_prog = programm.kod
+                     INNER JOIN program
+                     ON progs_mods_hours.kod_prog = program.kod
                      INNER JOIN moduls
                      ON progs_mods_hours.kod_modul = moduls.kod
-                     WHERE programm.kod =" + kod + "
-                     GROUP BY programm.kod"
+                     WHERE program.kod =" + kod + "
+                     GROUP BY program.kod"
         Return sqlString
 
     End Function
 
-    Public Function program__loadProgramms(uroven_cval As String) As String
+    Public Function program__loadPrograms(uroven_cval As String) As String
 
         Dim sqlString As String = ""
 
         sqlString = "SELECT
-                      programm.name AS Наименование,
-                      kol_chas.name AS Часы,
-                      programm.kod,
-                      programm.date AS 'дата создания'
-                    FROM programm
-                      INNER JOIN uroven_kvalifik
-                        ON programm.uroven_kvalifik = uroven_kvalifik.kod
-                      INNER JOIN kol_chas
-                        ON programm.hours = kol_chas.kod
-                    WHERE uroven_kvalifik.name = '" + uroven_cval + "' ORDER BY programm.name"
+                      program.name AS Наименование,
+                      number_hours.name AS Часы,
+                      program.kod,
+                      program.date AS 'дата создания'
+                    FROM program
+                      INNER JOIN skill_level
+                        ON program.skill_level = skill_level.kod
+                      INNER JOIN number_hours
+                        ON program.hours = number_hours.kod
+                    WHERE skill_level.name = '" + uroven_cval + "' ORDER BY program.name"
         Return sqlString
 
     End Function
     Public Function loadUrovenKvalifikacii() As String
 
         Dim sqlString As String = ""
-        sqlString = "SELECT name FROM uroven_kvalifik WHERE visible=1"
+        sqlString = "SELECT name FROM skill_level WHERE visible=1"
         Return sqlString
 
     End Function
 
-    Public Function loadForma_obuch() As String
+    Public Function loadFormEducation() As String
 
         Dim sqlString As String = ""
-        sqlString = "SELECT name FROM forma_obuch"
+        sqlString = "SELECT name FROM form_education"
         Return sqlString
 
     End Function
 
-    Public Function loadSpecialnost() As String
+    Public Function loadSpeciality() As String
 
         Dim sqlString As String = ""
-        sqlString = "SELECT name FROM specialnost ORDER BY name"
+        sqlString = "SELECT name FROM speciality ORDER BY name"
         Return sqlString
 
     End Function
@@ -894,7 +894,7 @@ sotrudnik.in_list,
     Public Function loadKolChasov() As String
 
         Dim sqlString As String = ""
-        sqlString = "SELECT name FROM kol_chas ORDER BY kod"
+        sqlString = "SELECT name FROM number_hours ORDER BY kod"
         Return sqlString
 
     End Function
@@ -902,9 +902,9 @@ sotrudnik.in_list,
     Public Function loadKurator() As String
 
         Dim sqlString As String = ""
-        sqlString = "SELECT sotrudnik.name FROM sotrudnik
-                     INNER JOIN kodirovka ON sotrudnik.type_sotrudnik = kodirovka.kod
-                     WHERE kodirovka.name = 'сотрудник' AND sotrudnik.in_list=1 ORDER BY sotrudnik.name"
+        sqlString = "SELECT worker.name FROM worker
+                     INNER JOIN encoding ON worker.type = encoding.kod
+                     WHERE encoding.name = 'сотрудник' AND worker.in_list=1 ORDER BY worker.name"
         Return sqlString
 
     End Function
@@ -912,9 +912,9 @@ sotrudnik.in_list,
     Public Function loadDirector() As String
 
         Dim sqlString As String = ""
-        sqlString = "SELECT sotrudnik.name FROM sotrudnik
-                     INNER JOIN kodirovka ON sotrudnik.type_sotrudnik = kodirovka.kod
-                     WHERE kodirovka.name = 'директор' OR kodirovka.name = 'замдир' AND sotrudnik.in_list=1 ORDER BY sotrudnik.name"
+        sqlString = "SELECT worker.name FROM worker
+                     INNER JOIN encoding ON worker.type = encoding.kod
+                     WHERE encoding.name = 'директор' OR encoding.name = 'замдир' AND worker.in_list=1 ORDER BY worker.name"
         Return sqlString
 
     End Function
@@ -935,12 +935,12 @@ sotrudnik.in_list,
     Public Function load_list_prepod() As String
 
         Dim sqlString As String = ""
-        sqlString = "SELECT sotrudnik.name FROM sotrudnik
+        sqlString = "SELECT worker.name FROM worker
                      INNER JOIN 
-                     kodirovka 
+                     encoding 
                      ON 
-                     sotrudnik.type_sotrudnik = kodirovka.kod
-                     WHERE (kodirovka.name = 'сотрудник' OR kodirovka.name = 'преподаватель') AND sotrudnik.in_list=1  ORDER BY sotrudnik.name"
+                     worker.type = encoding.kod
+                     WHERE (encoding.name = 'сотрудник' OR encoding.name = 'преподаватель') AND worker.in_list=1  ORDER BY worker.name"
         Return sqlString
 
     End Function
@@ -948,12 +948,12 @@ sotrudnik.in_list,
     Public Function load_ruk_staj() As String
 
         Dim sqlString As String = ""
-        sqlString = "SELECT sotrudnik.name FROM sotrudnik
+        sqlString = "SELECT worker.name FROM worker
                      INNER JOIN 
-                     kodirovka 
+                     encoding 
                      ON 
-                     sotrudnik.type_sotrudnik = kodirovka.kod
-                     WHERE kodirovka.name = 'сотрудник' AND sotrudnik.in_list=1  ORDER BY sotrudnik.name"
+                     worker.type = encoding.kod
+                     WHERE encoding.name = 'сотрудник' AND worker.in_list=1  ORDER BY worker.name"
         Return sqlString
 
     End Function
@@ -961,12 +961,12 @@ sotrudnik.in_list,
     Public Function load_komissiya() As String
 
         Dim sqlString As String = ""
-        sqlString = "SELECT sotrudnik.name FROM sotrudnik
+        sqlString = "SELECT worker.name FROM worker
                      INNER JOIN 
-                     kodirovka 
+                     encoding 
                      ON 
-                     sotrudnik.type_sotrudnik = kodirovka.kod
-                     WHERE (kodirovka.name = 'сотрудник' OR kodirovka.name = 'замдир') AND sotrudnik.in_list=1  ORDER BY sotrudnik.name"
+                     worker.type = encoding.kod
+                     WHERE (encoding.name = 'сотрудник' OR encoding.name = 'замдир') AND worker.in_list=1  ORDER BY worker.name"
         Return sqlString
 
     End Function
@@ -974,12 +974,12 @@ sotrudnik.in_list,
     Public Function load_soglasovano() As String
 
         Dim sqlString As String = ""
-        sqlString = "SELECT sotrudnik.name FROM sotrudnik
+        sqlString = "SELECT worker.name FROM worker
                      INNER JOIN 
-                     kodirovka 
+                     encoding 
                      ON 
-                     sotrudnik.type_sotrudnik = kodirovka.kod
-                     WHERE (kodirovka.name = 'согласование' OR kodirovka.name = 'замдир') AND sotrudnik.in_list=1  ORDER BY sotrudnik.name"
+                     worker.type = encoding.kod
+                     WHERE (encoding.name = 'согласование' OR encoding.name = 'замдир') AND worker.in_list=1  ORDER BY worker.name"
         Return sqlString
 
     End Function
@@ -987,12 +987,12 @@ sotrudnik.in_list,
     Public Function load_ispolnitel() As String
 
         Dim sqlString As String = ""
-        sqlString = "SELECT sotrudnik.name FROM sotrudnik
+        sqlString = "SELECT worker.name FROM worker
                      INNER JOIN 
-                     kodirovka 
+                     encoding 
                      ON 
-                     sotrudnik.type_sotrudnik = kodirovka.kod
-                     WHERE kodirovka.name = 'сотрудник' AND sotrudnik.in_list=1  ORDER BY sotrudnik.name"
+                     worker.type = encoding.kod
+                     WHERE encoding.name = 'сотрудник' AND worker.in_list=1  ORDER BY worker.name"
         Return sqlString
 
     End Function
@@ -1000,12 +1000,12 @@ sotrudnik.in_list,
     Public Function load_proeсt_vnosit() As String
 
         Dim sqlString As String = ""
-        sqlString = "SELECT sotrudnik.name FROM sotrudnik
+        sqlString = "SELECT worker.name FROM worker
                      INNER JOIN 
-                     kodirovka 
+                     encoding 
                      ON 
-                     sotrudnik.type_sotrudnik = kodirovka.kod
-                     WHERE kodirovka.name = 'сотрудник' AND sotrudnik.in_list=1  ORDER BY sotrudnik.name"
+                     worker.type = encoding.kod
+                     WHERE encoding.name = 'сотрудник' AND worker.in_list=1  ORDER BY worker.name"
         Return sqlString
 
     End Function
@@ -1013,92 +1013,92 @@ sotrudnik.in_list,
     Public Function loadOtv_attestat() As String
 
         Dim sqlString As String = ""
-        sqlString = "SELECT sotrudnik.name FROM sotrudnik
+        sqlString = "SELECT worker.name FROM worker
                      INNER JOIN 
-                     kodirovka 
+                     encoding 
                      ON 
-                     sotrudnik.type_sotrudnik = kodirovka.kod
-                     WHERE kodirovka.name = 'сотрудник' AND sotrudnik.in_list=1  ORDER BY sotrudnik.name"
+                     worker.type = encoding.kod
+                     WHERE encoding.name = 'сотрудник' AND worker.in_list=1  ORDER BY worker.name"
         Return sqlString
 
     End Function
 
-    Public Function loadDirectorDoljnost() As String
+    Public Function loadDirectorPosition() As String
 
         Dim sqlString As String = ""
-        sqlString = "SELECT doljnost.name FROM doljnost
-                     INNER JOIN kodirovka ON doljnost.type = kodirovka.kod
-                     WHERE kodirovka.name = 'директор' ORDER BY doljnost.name"
+        sqlString = "SELECT position.name FROM position
+                     INNER JOIN encoding ON position.type = encoding.kod
+                     WHERE encoding.name = 'директор' ORDER BY position.name"
         Return sqlString
 
     End Function
 
-    Public Function loadDoljnosti() As String
+    Public Function loadPositions() As String
 
         Dim sqlString As String = ""
-        sqlString = "SELECT doljnost.name FROM doljnost"
+        sqlString = "SELECT position.name FROM position"
         Return sqlString
 
     End Function
 
-    Public Function loadFinansirovanie() As String
+    Public Function loadFinansing() As String
 
         Dim sqlString As String = ""
-        sqlString = "SELECT name FROM finansirovanie ORDER BY name"
+        sqlString = "SELECT name FROM financing ORDER BY name"
         Return sqlString
 
     End Function
 
-    Public Function loadKvalifikaciya() As String
+    Public Function loadQualification() As String
 
         Dim sqlString As String = ""
-        sqlString = "SELECT name FROM kvalifikaciya ORDER BY name"
+        sqlString = "SELECT name FROM qualification ORDER BY name"
         Return sqlString
 
     End Function
 
-    Public Function load_kol_chas(kod As String) As String
-
-        Dim sqlString As String = ""
-        sqlString = "SELECT
-                      kol_chas.name
-                    FROM programm
-                      INNER JOIN kol_chas
-                        ON programm.hours = kol_chas.kod
-                    WHERE programm.kod = " + kod
-        Return sqlString
-
-    End Function
-
-    Public Function loadKogProgramm(ur_kval As String, name_prog As String) As String
+    Public Function loadNumberHours(kod As String) As String
 
         Dim sqlString As String = ""
         sqlString = "SELECT
-                    programm.kod,
+                      number_hours.name
+                    FROM program
+                      INNER JOIN number_hours
+                        ON program.hours = number_hours.kod
+                    WHERE program.kod = " + kod
+        Return sqlString
+
+    End Function
+
+    Public Function loadKogProgram(ur_kval As String, name_prog As String) As String
+
+        Dim sqlString As String = ""
+        sqlString = "SELECT
+                    program.kod,
                     IFNULL(kc.name, 0)
                     FROM(
                     SELECT
                       prog.name,
                       MAX(date) AS date
                     FROM (SELECT
-                        uroven_kvalifik.kod
-                      FROM uroven_kvalifik"
+                        skill_level.kod
+                      FROM skill_level"
 
         If Not ur_kval = "" Then
-            sqlString += " WHERE uroven_kvalifik.name = '" + ur_kval + "'"
+            sqlString += " WHERE skill_level.name = '" + ur_kval + "'"
         End If
 
         sqlString += " ) AS tbl1
-                      INNER JOIN (SELECT * FROM programm WHERE programm.name='" + name_prog + "') AS prog
-                        ON tbl1.kod = prog.uroven_kvalifik
+                      INNER JOIN (SELECT * FROM program WHERE program.name='" + name_prog + "') AS prog
+                        ON tbl1.kod = prog.skill_level
                         GROUP BY prog.name
                         ) AS tbl
-                    INNER JOIN programm
-                    ON tbl.name=programm.name AND
-                        tbl.date=programm.date
-                    LEFT JOIN kol_chas kc 
-                    ON programm.hours = kc.kod
-                    ORDER BY programm.name"
+                    INNER JOIN program
+                    ON tbl.name=program.name AND
+                        tbl.date=program.date
+                    LEFT JOIN number_hours kc 
+                    ON program.hours = kc.kod
+                    ORDER BY program.name"
         Return sqlString
 
     End Function

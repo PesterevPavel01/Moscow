@@ -11,20 +11,22 @@
         Return number
     End Function
 
-    Sub ЗагрузитьСписокВКомбоБокс(ДатаГрид As DataGridView, Список As Object, Имя As String)
-        Dim Массив
-        Dim КомбоБоксСписок As New DataGridViewComboBoxColumn
-        ReDim Массив(UBound(Список, 2))
-        КомбоБоксСписок.Items.AddRange(Список)
+    Sub listIntoComboBox(table As DataGridView, ist As Object, name As String)
+        Dim array
+        'Dim listComboBox As New DataGridViewComboBoxColumn
+        ReDim array(UBound(ist, 2))
+        'Dim count As Int16 = listComboBox.Items.Count
+        'listComboBox.Items.Clear()
+        'listComboBox.Items.AddRange(ist)
 
-        For i = 0 To UBound(Список, 2)
-            Массив(i) = Список(0, i)
+        For i = 0 To UBound(ist, 2)
+            array(i) = ist(0, i)
         Next
 
-
-        For Each Колонка In ДатаГрид.Columns
-            If Колонка.name = Имя Then
-                Колонка.items.AddRange(Массив)
+        For Each column In table.Columns
+            If column.name = name Then
+                column.items.Clear()
+                column.items.AddRange(array)
                 Exit Sub
             End If
         Next

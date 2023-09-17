@@ -7,7 +7,7 @@ Public Class Tables_control
     Private remove_kod As Int64
     Public name_table As String
 
-    Public programm_on As Boolean
+    Public program_on As Boolean
     Public type_progs_on As Boolean
     Public add_on As Boolean = True
 
@@ -463,7 +463,7 @@ Public Class Tables_control
 
             remove_kod = Convert.ToInt64(DataGridTablesResult.Rows(curNumber).Cells(kod_number).Value)
 
-            If programm_on Then
+            If program_on Then
 
                 queryString = MainForm.sqlQueryString.programs__checkKodGrouppBusy(remove_kod)
                 result = mySQLConnector.loadIntoarray(queryString, 1, 0)
@@ -477,7 +477,7 @@ Public Class Tables_control
 
             End If
 
-            queryString = MainForm.sqlQueryString.update_delete_query(programm_on, name_table, MainForm.comboBoxProgramms.Text, remove_kod)
+            queryString = MainForm.sqlQueryString.update_delete_query(program_on, name_table, MainForm.comboBoxProgramms.Text, remove_kod)
 
             mySQLConnector.sendQuery(queryString, 1)
 
@@ -650,7 +650,7 @@ Public Class Tables_control
 
         Dim resAr() As String
 
-        If programm_on Then
+        If program_on Then
 
             queryString = MainForm.sqlQueryString.update_prog_check_query(name_table, names.db_element_first, values.element_first, names.db_element_second, values.element_second, MainForm.comboBoxProgramms.Text)
 
@@ -670,7 +670,7 @@ Public Class Tables_control
             Return
         End If
 
-        If programm_on Then
+        If program_on Then
 
             queryString = MainForm.sqlQueryString.update_prog_update_query(name_table, names.db_element_first, values.element_first, names.db_element_second, values.element_second, values.kod)
 
@@ -692,7 +692,7 @@ Public Class Tables_control
 
         Dim resAr() As String
 
-        If programm_on Then
+        If program_on Then
 
             queryString = MainForm.sqlQueryString.update_prog_check_query(name_table, names.db_element_first, values.element_first, names.db_element_second, values.element_second, MainForm.comboBoxProgramms.Text)
 
@@ -714,7 +714,7 @@ Public Class Tables_control
 
         End If
 
-        If programm_on Then
+        If program_on Then
 
             queryString = MainForm.sqlQueryString.update_prog_insert_query(number_column, name_table, names.db_element_first, values.element_first, names.db_element_second, values.element_second, MainForm.comboBoxProgramms.Text)
 
@@ -726,7 +726,7 @@ Public Class Tables_control
 
         mySQLConnector.sendQuery(queryString, 1)
 
-        If programm_on Then
+        If program_on Then
 
             queryString = MainForm.sqlQueryString.update_prog_load_kod_query(name_table, names.db_element_first, values.element_first, MainForm.comboBoxProgramms.Text)
 
@@ -777,7 +777,7 @@ Public Class Tables_control
         ActiveControl = DataGridTablesResult
         flag_active_control = True
 
-        If programm_on Then
+        If program_on Then
 
             MainForm.progsIndicator.Image = MainForm.iconsList.Images(9)
 
@@ -789,7 +789,7 @@ Public Class Tables_control
 
         flag_active_control = False
 
-        If programm_on Then
+        If program_on Then
 
             MainForm.progsIndicator.Image = MainForm.iconsList.Images(8)
 
@@ -806,7 +806,7 @@ Public Class Tables_control
 
     Private Sub DataGridTablesResult_SelectionChanged(sender As Object, e As EventArgs) Handles DataGridTablesResult.SelectionChanged
 
-        If programm_on Then
+        If program_on Then
 
             If IsNothing(DataGridTablesResult.CurrentCell) Then
                 Return

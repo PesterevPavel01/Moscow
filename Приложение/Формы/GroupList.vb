@@ -17,7 +17,7 @@ Public Class GroupList
 
         sortCol = interfaceMod.nameCheckedCheckBox(sortSettsGroup)
 
-        serchCol = interfaceMod.nameCheckedCheckBox(group__serchSettings)
+        serchCol = interfaceMod.nameCheckedCheckBox(Group__serchSettings)
 
         If searchRow.Text = "" Then
             groupListTable.Items.Clear()
@@ -63,7 +63,7 @@ Public Class GroupList
             If ФормаДаНетУдалить.НажатаКнопкаДа Then
 
                 InsertIntoDataBase.argumentClear()
-                InsertIntoDataBase.argument.nameTable = "pednagruzka"
+                InsertIntoDataBase.argument.nameTable = "worker_report"
                 InsertIntoDataBase.argument.firstName = "Kod"
                 InsertIntoDataBase.argument.firstValue = kod
 

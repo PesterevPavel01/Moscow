@@ -8,6 +8,7 @@ Public Class Worker
     Public listWorkers As List(Of List(Of String))
     Public worker_struct As Worker_structure
     Public flagRedactor As Boolean = False ' редактирование чекбоксов
+    Public flagTextBox As Boolean = False ' активен текстбокс
     Public flagUpdate As Boolean = False ' редактирование записей
     Public default_type As String ' тип работника поумолчанию
     'Public activTextBox As String ' имя текстбокса на котором была нажата клавиша enter
@@ -17,7 +18,7 @@ Public Class Worker
         Dim name As String
         Dim name_full As String
         Dim name_pad As String
-        Dim worker_doljnost As String
+        Dim worker_position As String
         Dim worker_type As String
         Dim worker_dolj() As String
         Dim worker_type_list() As String
@@ -52,7 +53,7 @@ Public Class Worker
     Public Sub loadLists()
 
         queryString = ""
-        queryString = sqlQueryString.loadListDoljnost()
+        queryString = sqlQueryString.loadListPosition()
         worker_struct.worker_dolj = mySQLConnector.loadIntoarray(queryString, 1, 0)
 
         queryString = sqlQueryString.loadListWorkerType()

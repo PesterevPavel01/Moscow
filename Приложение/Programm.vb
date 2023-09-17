@@ -54,9 +54,9 @@ Public Class Programm
         Return queryString
     End Function
 
-    Public Function programm__loadProgramms() As String
+    Public Function program__loadPrograms() As String
         Dim queryString As String
-        queryString = sqlQueryString.program__loadProgramms(uroven_cval)
+        queryString = sqlQueryString.program__loadPrograms(uroven_cval)
         Return queryString
     End Function
 
@@ -107,7 +107,7 @@ Public Class Programm
 
     Public Sub program__addProgramm(programm As String)
         Dim queryString As String
-        queryString = sqlQueryString.addProgramm(programm, uroven_cval)
+        queryString = sqlQueryString.addProgram(programm, uroven_cval)
         mySQLConnector.sendQuery(queryString, 1)
     End Sub
 
@@ -115,7 +115,7 @@ Public Class Programm
         Dim queryString As String
         Dim result As List(Of String)
         Dim kod As String
-        queryString = sqlQueryString.loadLastKodProgramm(programm, uroven_cval)
+        queryString = sqlQueryString.loadLastKodProgram(programm, uroven_cval)
         result = mySQLConnector.mySqlToList(queryString, 1, 0)
         If result.Count = 1 Then
             kod = result(0)
@@ -158,13 +158,13 @@ Public Class Programm
 
     Public Sub program__updateProgramm(programm As String)
         Dim queryString As String
-        queryString = sqlQueryString.updateProgramm(programm, struct_progs.program_kod_update)
+        queryString = sqlQueryString.updateProgram(programm, struct_progs.program_kod_update)
         mySQLConnector.sendQuery(queryString, 1)
     End Sub
 
     Public Sub program__deleteProgramm()
         Dim queryString As String
-        queryString = sqlQueryString.deleteProgramm(struct_progs.program_kod)
+        queryString = sqlQueryString.deleteProgram(struct_progs.program_kod)
         mySQLConnector.sendQuery(queryString, 1)
     End Sub
 

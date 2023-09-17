@@ -1,8 +1,14 @@
 ﻿Public Class WorkerReport
 
+    Private dvgBuilderProg As DGVBuilder
+    Private dvgBuilderHours As DGVBuilder
+    Private dvgBuilderModuls As DGVBuilder
     Public kodGroup As Integer
-    Private infoDataTable As DataTable
+    Private programTable As DataTable
+    Private hoursTable As DataTable
+    Private modulsTable As DataTable
     Dim queryString As String
+    Private tables As List(Of DGVBuilder)
 
     Private Sub loadTables()
 
@@ -24,11 +30,12 @@
 
 
         pednagr__mainTable.Rows.Clear()
-        infoDataTable = New DataTable()
+        programTable = New DataTable()
 
-        queryString = pednagruzka__load(Convert.ToString(kodGroup))
+        queryString = workerReport__load(Convert.ToString(kodGroup))
 
         resultList = MainForm.mySqlConnect.loadMySqlToArray(queryString, 1)
+        pednagr__loadInfoTables()
 
         If resultList(0, 0).ToString = "нет записей" Then
 
@@ -41,54 +48,133 @@
 
         RedactorDataGrid.arrayToDataGrid(pednagr__mainTable, resultList)
 
-        pednagr__loadInfoTables()
-
     End Sub
 
     Private Sub pednagr__loadInfoTables()
 
-        infoDataTable = New DataTable()
+        programTable = New DataTable()
+        hoursTable = New DataTable()
+        modulsTable = New DataTable()
 
-        queryString = pednagruzka__loadProgramm(Convert.ToString(kodGroup))
+        queryString = wr__loadProgram(Convert.ToString(kodGroup))
+        programTable = MainForm.mySqlConnect.mySqlToDataTable(queryString, 1)
+        wr__program.DataSource = programTable
+        wr__program.ClearSelection()
 
-        infoDataTable = MainForm.mySqlConnect.mySqlToDataTable(queryString, 1)
-        pednagr__infoTable.DataSource = infoDataTable
+        queryString = wr__loadHours(Convert.ToString(kodGroup))
+        hoursTable = MainForm.mySqlConnect.mySqlToDataTable(queryString, 1)
+        pednagr__infoTable.DataSource = hoursTable
+        pednagr__infoTable.ClearSelection()
 
-        pednagr__resizeInfoTables()
+        queryString = wr__loadModulsAndHours(Convert.ToString(kodGroup))
+        modulsTable = MainForm.mySqlConnect.mySqlToDataTable(queryString, 1)
+        wr__moduls.DataSource = modulsTable
+        wr__moduls.ClearSelection()
+
+        wr_builder()
 
     End Sub
 
-    Private Sub pednagr__resizeInfoTables()
+    Private Sub addSelectionClear(currentTable As DataGridView)
 
-        If IsNothing(infoDataTable) Then
+        AddHandler currentTable.Leave, Sub()
+                                           currentTable.ClearSelection()
+                                       End Sub
+
+    End Sub
+
+    Private Sub wr_builder()
+
+        If IsNothing(dvgBuilderProg) Then Return
+        If groupNumber.Text = "" Then Return
+
+        dvgBuilderProg.resizeTables()
+        dvgBuilderHours.resizeTables()
+        dvgBuilderModuls.resizeTables()
+
+        resizeHeightContainer()
+
+    End Sub
+
+    Private Sub wr__resizeInfoTables(currentTable As DataGridView, parent As Panel)
+
+        If IsNothing(currentTable.DataSource) Then
             Return
-        ElseIf pednagr__infoTable.Columns.Count < 2 Then
+        ElseIf currentTable.Columns.Count < 2 Then
             Return
         End If
 
-        pednagr__infoTable.Columns(0).Width = pednagr__infoTable.Width * 1 / 3
-        pednagr__infoTable.Columns(1).Width = pednagr__infoTable.Width * 2 / 3 - 20
-        pednagr__infoTable.Columns(1).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+        currentTable.Columns(0).Width = parent.Width * 1 / 3
+        currentTable.Columns(1).Width = parent.Width * 2 / 3 - 4
+        currentTable.Columns(1).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
 
     End Sub
 
-    Private Sub ТаблицаВедомость_CellValueChanged(sender As Object, e As DataGridViewCellEventArgs) Handles pednagr__mainTable.CellValueChanged
-        Dim Значение As Double
+    Private Sub resizeHeightContainer()
 
+        pednagr_splitContainerInfo.SplitterDistance =
+            wr__dataTools.Height +
+            dGWTableSize(wr__program) +
+            programHoursContainer.SplitterWidth +
+            dGWTableSize(pednagr__infoTable) + 2
+        programHoursContainer.SplitterDistance = dGWTableSize(wr__program)
+
+    End Sub
+
+    Private Function dGWTableSize(table As DataGridView)
+        Dim heigth As Int16 = 0
+
+        For Each row As DataGridViewRow In table.Rows
+            heigth += row.Height
+        Next
+
+        If table.ColumnHeadersVisible Then
+            heigth += table.ColumnHeadersHeight
+        End If
+
+        Return heigth
+
+    End Function
+
+    Private Sub ТаблицаВедомость_CellValueChanged(sender As Object, e As DataGridViewCellEventArgs) Handles pednagr__mainTable.CellValueChanged
+
+        Dim value As Double
 
         If IsNothing(pednagr__mainTable.Rows(0).Cells(0).Value) Or Trim(pednagr__mainTable.Rows(0).Cells(0).Value) = "" Then
             Exit Sub
         End If
 
-        sumLectures.Text = sumInColumn(pednagr__mainTable, 1)
-        sumPracticals.Text = sumInColumn(pednagr__mainTable, 2)
-        sumStimul.Text = sumInColumn(pednagr__mainTable, 3)
-        sumConsultations.Text = sumInColumn(pednagr__mainTable, 4)
-        sumIA.Text = sumInColumn(pednagr__mainTable, 6)
-        sumPA.Text = sumInColumn(pednagr__mainTable, 5)
+        Dim count As Short = 1
+
+        For Each row As DataGridViewRow In pednagr__infoTable.Rows
+
+            row.Cells(2).Value = sumInColumn(pednagr__mainTable, count)
+
+            If row.Cells(2).Value.ToString = "" Then
+                row.Cells(2).Value = 0
+            End If
+
+            If row.Cells(1).Value.ToString = "" Then
+                row.Cells(1).Value = 0
+            End If
+
+            row.Cells(3).Value = row.Cells(1).Value - row.Cells(2).Value
+
+            If row.Cells(3).Value < 0 Then
+                row.DefaultCellStyle.BackColor = Color.PaleVioletRed
+            Else
+                row.DefaultCellStyle.BackColor = SystemColors.Window
+            End If
+
+            count += 1
+
+        Next
+
         sumResult.Text = sumInColumn(pednagr__mainTable, 7)
-        Dim count As Integer
+
+
         Dim счетчикСтрок As Integer = 0
+
         For Each строка In pednagr__mainTable.Rows
 
             If IsNothing(строка.Cells(0).Value) Or Trim(pednagr__mainTable.Rows(0).Cells(0).Value) = "" Then
@@ -97,14 +183,14 @@
             End If
 
             count = pednagr__mainTable.Columns.Count
-            Значение = sumInRow(pednagr__mainTable, счетчикСтрок, 1, pednagr__mainTable.Columns.Count - 2)
+            value = sumInRow(pednagr__mainTable, счетчикСтрок, 1, pednagr__mainTable.Columns.Count - 2)
 
-            If Значение = -1 Then
+            If value = -1 Then
                 счетчикСтрок += 1
                 Continue For
             End If
 
-            строка.Cells(pednagr__mainTable.Columns.Count - 1).Value = Значение
+            строка.Cells(pednagr__mainTable.Columns.Count - 1).Value = value
             счетчикСтрок += 1
 
         Next
@@ -134,20 +220,16 @@
         arrayNameAndType(0, 6) = "IA"
         arrayNameAndType(1, 6) = "Double"
 
-        datagridInsertRowIntoDB(pednagr__mainTable, "pednagruzka", arg, arrayNameAndType, 0, 6)
+        datagridInsertRowIntoDB(pednagr__mainTable, "worker_report", arg, arrayNameAndType, 0, 6)
+
     End Sub
 
     Private Sub WorkerReport_KeyDown(sender As Object, e As KeyEventArgs) Handles MyBase.KeyDown
         closeEsc(Me, e.KeyCode)
     End Sub
 
-    Private Sub pednagr__splitContainerMain_SplitterMoved(sender As Object, e As SplitterEventArgs) Handles pednagr__splitContainerMain.SplitterMoved
-
-        pednagr__resizeInfoTables()
-
-    End Sub
-
     Private Sub groupNumber_Click(sender As Object, e As EventArgs) Handles groupNumber.Click
+
         List.resultList.Columns(0).Width = 120
         List.resultList.Columns.Add("Год", 100)
         List.resultList.Columns.Add("Код", 100)
@@ -163,5 +245,75 @@
         List.resultList.Columns(1).Text = "Наименование"
 
         loadTables()
+
+    End Sub
+
+    Public Sub WorkerReport_Init()
+
+        dvgBuilderProg = New DGVBuilder
+        dvgBuilderHours = New DGVBuilder
+        dvgBuilderModuls = New DGVBuilder
+
+        tables = New List(Of DGVBuilder)
+
+        tables.Add(dvgBuilderProg)
+        tables.Add(dvgBuilderHours)
+        tables.Add(dvgBuilderModuls)
+
+        dvgBuilderProg.table = wr__program
+        dvgBuilderProg.parent = pednagr__splitContainerMain.Panel2
+
+        dvgBuilderHours.table = pednagr__infoTable
+        dvgBuilderHours.parent = pednagr__splitContainerMain.Panel2
+
+        dvgBuilderModuls.table = wr__moduls
+        dvgBuilderModuls.parent = pednagr__splitContainerMain.Panel2
+
+
+        dvgBuilderProg.columnWidht = New Dictionary(Of Short, Short)
+        dvgBuilderModuls.columnWidht = New Dictionary(Of Short, Short)
+        dvgBuilderHours.columnWidht = New Dictionary(Of Short, Short)
+
+        dvgBuilderProg.columnAlignment = New Dictionary(Of Int16, DataGridViewContentAlignment)
+        dvgBuilderModuls.columnAlignment = New Dictionary(Of Int16, DataGridViewContentAlignment)
+        dvgBuilderHours.columnAlignment = New Dictionary(Of Int16, DataGridViewContentAlignment)
+
+        dvgBuilderProg.columnAlignment.Add(0, DataGridViewContentAlignment.MiddleLeft)
+        dvgBuilderModuls.columnAlignment.Add(0, DataGridViewContentAlignment.MiddleLeft)
+        dvgBuilderHours.columnAlignment.Add(0, DataGridViewContentAlignment.MiddleLeft)
+
+        dvgBuilderProg.columnWidht.Add(0, 33)
+        dvgBuilderProg.columnWidht.Add(1, 66)
+
+        dvgBuilderModuls.columnWidht.Add(0, 33)
+        dvgBuilderModuls.columnWidht.Add(1, 66)
+
+        For count As Short = 2 To 5
+            dvgBuilderProg.columnWidht.Add(count, 0)
+            dvgBuilderModuls.columnWidht.Add(count, 0)
+            count += 1
+        Next
+
+        dvgBuilderHours.columnWidht.Add(0, 33)
+        dvgBuilderHours.columnWidht.Add(1, 22)
+        dvgBuilderHours.columnWidht.Add(2, 22)
+        dvgBuilderHours.columnWidht.Add(3, 22)
+        dvgBuilderHours.columnWidht.Add(4, 0)
+        dvgBuilderHours.columnWidht.Add(5, 0)
+
+        For count As Short = 1 To 5
+            dvgBuilderProg.columnAlignment.Add(count, DataGridViewContentAlignment.MiddleLeft)
+            dvgBuilderModuls.columnAlignment.Add(count, DataGridViewContentAlignment.MiddleRight)
+            dvgBuilderHours.columnAlignment.Add(count, DataGridViewContentAlignment.MiddleRight)
+        Next
+
+        addSelectionClear(wr__moduls)
+        addSelectionClear(wr__program)
+        addSelectionClear(pednagr__infoTable)
+
+    End Sub
+
+    Private Sub pednagr__splitContainerMain_Panel2_SizeChanged(sender As Object, e As EventArgs) Handles pednagr__splitContainerMain.Panel2.SizeChanged
+        wr_builder()
     End Sub
 End Class

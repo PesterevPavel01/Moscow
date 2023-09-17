@@ -510,6 +510,7 @@ Partial Class newStudent
         '
         'Пол
         '
+        Me.Пол.BackColor = System.Drawing.SystemColors.Control
         Me.Пол.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.Пол.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
         Me.Пол.FormattingEnabled = True

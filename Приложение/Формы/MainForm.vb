@@ -150,11 +150,11 @@
             НастройкаПоискаСлушателей.Снилс.Checked = True
 
         End If
-        WindowsApp2.StudentsList.insertIntoGroupList.Visible = False
+        StudentsList.insertIntoGroupList.Visible = False
         ActiveControl = Button2
-        WindowsApp2.StudentsList.searchSetts.Visible = False
-        WindowsApp2.StudentsList.showStudentsList()
-        WindowsApp2.StudentsList.ShowDialog()
+        StudentsList.searchSetts.Visible = False
+        StudentsList.showStudentsList()
+        StudentsList.ShowDialog()
 
     End Sub
 
@@ -957,15 +957,20 @@
             If e.KeyValue = Keys.Escape Then
 
                 closeRedactorWorker(sender, e)
+
+                If worker.flagTextBox Then
+                    e.SuppressKeyPress = True
+                End If
+
                 ActiveControl = DataGridView_list
 
             ElseIf e.KeyValue = Keys.Enter Then
 
                 worker_EnterDown()
 
-            ElseIf e.KeyValue = Keys.Escape Then
-
-                closeRedactorWorker(sender, e)
+                If worker.flagTextBox Then
+                    e.SuppressKeyPress = True
+                End If
 
             End If
 
@@ -1003,7 +1008,7 @@
 
         If programs__progrs_tbl.flag_active_control Then
 
-            programms_tbl_keyDown(e)
+            programs_tbl_keyDown(e)
             Return
 
         ElseIf programs_type_tbl.flag_active_control Then
@@ -1247,7 +1252,7 @@
 
     End Sub
 
-    Private Sub programms_tbl_keyDown(e As KeyEventArgs)
+    Private Sub programs_tbl_keyDown(e As KeyEventArgs)
 
         If e.KeyValue = Keys.Tab Then
 
@@ -2614,8 +2619,10 @@
 
     Private Sub Педнагрузка_Click(sender As Object, e As EventArgs) Handles Педнагрузка.Click
 
-        Dim Список
+        Dim List
         Dim queryString As String
+
+        WorkerReport.WorkerReport_Init()
 
         ActiveControl = Button2
 
@@ -2625,9 +2632,9 @@
         _formCleaner.cleaner(WorkerReport)
 
         queryString = load_prepod()
-        Список = mySqlConnect.loadMySqlToArray(queryString, 1)
+        List = mySqlConnect.loadMySqlToArray(queryString, 1)
 
-        If Список(0, 0).ToString = "нет записей" Then
+        If List(0, 0).ToString = "нет записей" Then
 
             Warning.content.Text = "Не удалось загрузить список преподавателей"
             openForm(Warning)
@@ -2636,7 +2643,7 @@
 
         End If
 
-        ЗагрузитьСписокВКомбоБокс(WorkerReport.pednagr__mainTable, Список, "ФИО")
+        listIntoComboBox(WorkerReport.pednagr__mainTable, List, "ФИО")
         WorkerReport.ShowDialog()
 
     End Sub
@@ -3600,19 +3607,19 @@
 
     End Sub
 
-    Private Sub programs__loadProgramms()
+    Private Sub programs__loadPrograms()
 
-        programs__progrs_tbl.Parent = programms_tbl_parent
+        programs__progrs_tbl.Parent = programs_tbl_parent
         programs__progrs_tbl.Dock = DockStyle.Fill
         programs__progrs_tbl.Visible = True
         programs__progrs_tbl.number_column = 2
 
         programs__progrs_tbl.flag_second_control_combo = True
 
-        programs__progrs_tbl.programm_on = True
+        programs__progrs_tbl.program_on = True
 
 
-        programs__progrs_tbl.queryString_load = program.programm__loadProgramms()
+        programs__progrs_tbl.queryString_load = program.program__loadPrograms()
 
         programs__progrs_tbl.persent_width_column_0 = 65
         programs__progrs_tbl.persent_width_column_1 = 10
@@ -3624,7 +3631,7 @@
         programs__progrs_tbl.names.db_element_first = "name"
         programs__progrs_tbl.names.redactor_element_second = "Часы"
         programs__progrs_tbl.names.db_element_second = "hours"
-        programs__progrs_tbl.name_table = "programm"
+        programs__progrs_tbl.name_table = "program"
 
         program.program_loadHoursList()
 
@@ -3637,7 +3644,7 @@
 
     Private Sub programs__loadType()
 
-        programs_type_tbl.Parent = programms__SplitContainerModulsType.Panel2
+        programs_type_tbl.Parent = programs__SplitContainerModulsType.Panel2
         programs_type_tbl.Dock = DockStyle.Fill
         programs_type_tbl.Visible = True
         programs_type_tbl.number_column = 1
@@ -3753,7 +3760,7 @@
 
         program.uroven_cval = comboBoxProgramms.Text
 
-        programs__loadProgramms()
+        programs__loadPrograms()
 
         programs__loadModul()
 
@@ -4397,8 +4404,23 @@
             worker_dolgnost.Items.AddRange(worker.worker_struct.worker_dolj)
             worker_type.Items.AddRange(worker.worker_struct.worker_type_list)
 
+            textBoxSignalOff()
+
         End If
 
+    End Sub
+
+    Private Sub textBoxSignalOff()
+        For Each currentTBox As TextBox In panel_worker.Controls.OfType(Of TextBox)
+
+            AddHandler currentTBox.Leave, Sub()
+                                              worker.flagTextBox = False
+                                          End Sub
+            AddHandler currentTBox.Enter, Sub()
+                                              worker.flagTextBox = True
+                                          End Sub
+
+        Next
     End Sub
 
     Private Sub ToolStrip_name_list_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ToolStrip_name_list.SelectedIndexChanged
@@ -4422,7 +4444,7 @@
 
             SplitContainerOtherList.Visible = False
             ToolStripButton1.Visible = False
-            connect_table_doljnosti()
+            connect_table_positions()
 
         ElseIf ToolStrip_name_list.Text = "Организации" Then
 
@@ -4440,21 +4462,21 @@
 
     End Sub
 
-    Private Sub connect_table_doljnosti()
+    Private Sub connect_table_positions()
 
         tbl_education.Parent = Panel_main
         tbl_education.Visible = True
         tbl_education.Dock = DockStyle.Fill
         tbl_education.number_column = 1
 
-        tbl_education.queryString_load = sqlQueryString.load_list_doljnosti()
+        tbl_education.queryString_load = sqlQueryString.load_list_positions()
 
         tbl_education.persent_width_column_0 = 100
         tbl_education.persent_width_column_1 = 0
 
         tbl_education.names.redactor_element_first = "Наименование"
         tbl_education.names.db_element_first = "name"
-        tbl_education.name_table = "doljnost"
+        tbl_education.name_table = "position"
 
         tbl_education.kod_number = 1
 
@@ -4473,7 +4495,7 @@
             "SELECT
                   name AS 'Вид документа',
                   kod
-                FROM doo_vid_dok
+                FROM doo_doc_type
                 ORDER BY name"
 
         tbl_education.persent_width_column_0 = 100
@@ -4481,7 +4503,7 @@
 
         tbl_education.names.redactor_element_first = "Наименование"
         tbl_education.names.db_element_first = "name"
-        tbl_education.name_table = "doo_vid_dok"
+        tbl_education.name_table = "doo_doc_type"
 
         tbl_education.kod_number = 1
 
@@ -4701,6 +4723,7 @@
             Warning.content.Text = message
             Warning.ShowDialog()
             worker_name.Select(worker_name.Text.Length, 0)
+            Return
 
         End If
 
@@ -4719,7 +4742,7 @@
             worker.worker_struct.name_pad = ""
         End If
 
-        worker.worker_struct.worker_doljnost = worker_dolgnost.Text
+        worker.worker_struct.worker_position = worker_dolgnost.Text
         worker.worker_struct.worker_type = worker_type.Text
 
         If worker.flagUpdate Then
