@@ -11,6 +11,8 @@ Public Class newGroup
     Dim secondThread As Thread
     Public swichCvalification As SwitchCvalification
     Public swichNumbers As SwichNumbers
+    Public dictionaryFlag As Dictionary(Of String, Boolean)
+    Public redactorMode As Boolean = False
 
     Public Sub setProgKod(kod As Integer)
 
@@ -31,103 +33,6 @@ Public Class newGroup
         Return group.struct_grup.kodProgram
 
     End Function
-
-    Private Sub qualification_Click(sender As Object, e As EventArgs) Handles Квалификация.Click
-
-        message.Visible = False
-
-    End Sub
-
-    Private Sub modul1_Click(sender As Object, e As EventArgs)
-
-        message.Visible = False
-
-    End Sub
-    Private Sub modul2_Click(sender As Object, e As EventArgs)
-
-        message.Visible = False
-
-    End Sub
-    Private Sub modul3_Click(sender As Object, e As EventArgs)
-
-        message.Visible = False
-
-    End Sub
-
-    Private Sub modul4_Click(sender As Object, e As EventArgs)
-
-        message.Visible = False
-
-    End Sub
-    Private Sub modul5_Click(sender As Object, e As EventArgs)
-
-        message.Visible = False
-
-    End Sub
-    Private Sub modul6_Click(sender As Object, e As EventArgs)
-
-        message.Visible = False
-
-    End Sub
-    Private Sub modul7_Click(sender As Object, e As EventArgs)
-
-        message.Visible = False
-
-    End Sub
-    Private Sub modul8_Click(sender As Object, e As EventArgs)
-
-        message.Visible = False
-
-    End Sub
-    Private Sub modul9_Click(sender As Object, e As EventArgs)
-
-        message.Visible = False
-
-    End Sub
-    Private Sub modul10_Click(sender As Object, e As EventArgs)
-
-        message.Visible = False
-
-    End Sub
-
-    Private Sub numbersHourse_Click(sender As Object, e As EventArgs) Handles НоваяГруппаКоличествоЧасов.Click
-
-        message.Visible = False
-
-    End Sub
-
-
-    Private Sub kurator_Click(sender As Object, e As EventArgs) Handles НоваяГруппаОтветственныйКуратор.Click
-
-        message.Visible = False
-
-    End Sub
-
-    Private Sub НоваягруппаОтветственныйЗаПрактику_Click(sender As Object, e As EventArgs) Handles НоваягруппаОтветственныйЗаПрактику.Click
-
-        message.Visible = False
-
-    End Sub
-
-    Private Sub speciality_Click(sender As Object, e As EventArgs) Handles НоваяГруппаСпециальность.Click
-
-        message.Visible = False
-
-    End Sub
-
-
-    Private Sub program_Click(sender As Object, e As EventArgs) Handles НоваяГруппаПрограмма.Click
-
-        message.Visible = False
-
-    End Sub
-
-
-    Private Sub formEducation_click(sender As Object, e As EventArgs) Handles НоваяГруппаФормаОбучения.Click
-
-        message.Visible = False
-
-    End Sub
 
     Private Sub save_Click(sender As Object, e As EventArgs) Handles saveButton.Click
 
@@ -417,128 +322,14 @@ Public Class newGroup
     End Sub
 
     Private Sub newGroup_Shown(sender As Object, e As EventArgs) Handles MyBase.Shown
-        newGroup_Load(sender, e)
-    End Sub
 
+        cleanForm(Me)
 
-    Private Sub formEducation_KeyDown(sender As Object, e As KeyEventArgs) Handles НоваяГруппаФормаОбучения.KeyDown
-        If e.KeyCode = Keys.Enter Then
-            formEducation_click(sender, e)
+        If redactorMode Then
+            redactorGroupInit()
+        Else
+            newGroupInit()
         End If
-    End Sub
-
-    Private Sub program_KeyDown(sender As Object, e As KeyEventArgs) Handles НоваяГруппаПрограмма.KeyDown
-        If e.KeyCode = Keys.Enter Then
-            program_Click(sender, e)
-        End If
-    End Sub
-
-    Private Sub speciality_KeyDown(sender As Object, e As KeyEventArgs) Handles НоваяГруппаСпециальность.KeyDown
-        If e.KeyCode = Keys.Enter Then
-            speciality_Click(sender, e)
-        End If
-    End Sub
-
-    Private Sub numbersHours_KeyDown(sender As Object, e As KeyEventArgs) Handles НоваяГруппаКоличествоЧасов.KeyDown
-        If e.KeyCode = Keys.Enter Then
-            numbersHourse_Click(sender, e)
-        End If
-    End Sub
-
-    Private Sub kurator_KeyDown(sender As Object, e As KeyEventArgs) Handles НоваяГруппаОтветственныйКуратор.KeyDown
-        If e.KeyCode = Keys.Enter Then
-            kurator_Click(sender, e)
-        End If
-    End Sub
-
-    Private Sub НоваягруппаОтветственныйЗаПрактику_KeyDown(sender As Object, e As KeyEventArgs) Handles НоваягруппаОтветственныйЗаПрактику.KeyDown
-        If e.KeyCode = Keys.Enter Then
-            НоваягруппаОтветственныйЗаПрактику_Click(sender, e)
-        End If
-    End Sub
-
-    Private Sub modul1_KeyDown(sender As Object, e As KeyEventArgs)
-        If e.KeyCode = Keys.Enter Then
-            modul1_Click(sender, e)
-        End If
-    End Sub
-
-    Private Sub modul2_KeyDown(sender As Object, e As KeyEventArgs)
-        If e.KeyCode = Keys.Enter Then
-            modul2_Click(sender, e)
-        End If
-    End Sub
-
-    Private Sub modul3_KeyDown(sender As Object, e As KeyEventArgs)
-        If e.KeyCode = Keys.Enter Then
-            modul3_Click(sender, e)
-        End If
-    End Sub
-
-    Private Sub modul4_KeyDown(sender As Object, e As KeyEventArgs)
-        If e.KeyCode = Keys.Enter Then
-            modul4_Click(sender, e)
-        End If
-    End Sub
-
-    Private Sub modul5_KeyDown(sender As Object, e As KeyEventArgs)
-        If e.KeyCode = Keys.Enter Then
-            modul5_Click(sender, e)
-        End If
-    End Sub
-    Private Sub modul6_KeyDown(sender As Object, e As KeyEventArgs)
-        If e.KeyCode = Keys.Enter Then
-            modul6_Click(sender, e)
-        End If
-    End Sub
-
-    Private Sub modul7_KeyDown(sender As Object, e As KeyEventArgs)
-        If e.KeyCode = Keys.Enter Then
-            modul7_Click(sender, e)
-        End If
-    End Sub
-
-    Private Sub modul8_KeyDown(sender As Object, e As KeyEventArgs)
-        If e.KeyCode = Keys.Enter Then
-            modul8_Click(sender, e)
-        End If
-    End Sub
-    Private Sub modul9_KeyDown(sender As Object, e As KeyEventArgs)
-        If e.KeyCode = Keys.Enter Then
-            modul9_Click(sender, e)
-        End If
-    End Sub
-
-    Private Sub modul10_KeyDown(sender As Object, e As KeyEventArgs)
-        If e.KeyCode = Keys.Enter Then
-            modul10_Click(sender, e)
-        End If
-    End Sub
-
-    Private Sub qualificationLevel_KeyDown(sender As Object, e As KeyEventArgs)
-        If e.KeyCode = Keys.Enter Then
-            qualificationLevel_Click(sender, e)
-        End If
-    End Sub
-
-    Private Sub financing_KeyDown(sender As Object, e As KeyEventArgs) Handles НоваяГруппаФинансирование.KeyDown
-        If e.KeyCode = Keys.Enter Then
-            financing_Click(sender, e)
-        End If
-    End Sub
-
-    Private Sub qualification_KeyDown(sender As Object, e As KeyEventArgs) Handles Квалификация.KeyDown
-        If e.KeyCode = Keys.Enter Then
-            qualification_Click(sender, e)
-        End If
-    End Sub
-
-    Private Sub qualificationLevel_Click(sender As Object, e As EventArgs)
-        message.Visible = False
-    End Sub
-
-    Private Sub financing_Click(sender As Object, e As EventArgs) Handles НоваяГруппаФинансирование.Click
-        message.Visible = False
     End Sub
 
     Private Sub newGroup_KeyDown(sender As Object, e As KeyEventArgs) Handles MyBase.KeyDown
@@ -607,7 +398,7 @@ Public Class newGroup
     End Sub
 
     Private Sub numberChanged(firstTextBox As TextBox, secondTextBox As TextBox, typeCval As String)
-        'если это пи переключении, то он не выполняется!
+        'если это при переключении, то он не выполняется!
         If firstTextBox.Enabled = False Then
 
             Return
@@ -632,356 +423,6 @@ Public Class newGroup
     Private Sub program_TextChanged(sender As Object, e As EventArgs) Handles НоваяГруппаПрограмма.TextChanged
 
         activateModuls(Me, НоваяГруппаПрограмма.Text, group.struct_grup.kodProgram)
-
-    End Sub
-
-    Private Sub qualificationLevel_MouseLeave(sender As Object, e As EventArgs)
-        group.flagGrouppForm.ur_cvalifik = False
-    End Sub
-
-    Private Sub qualificationLevel_MouseMove(sender As Object, e As MouseEventArgs)
-        group.flagGrouppForm.ur_cvalifik = True
-    End Sub
-
-    Private Sub formEducation_MouseLeave(sender As Object, e As EventArgs) Handles НоваяГруппаФормаОбучения.MouseLeave
-        group.flagGrouppForm.form_education = False
-    End Sub
-
-    Private Sub formEducation_MouseMove(sender As Object, e As MouseEventArgs) Handles НоваяГруппаФормаОбучения.MouseMove
-        group.flagGrouppForm.form_education = True
-    End Sub
-
-    Private Sub formEducation_Enter(sender As Object, e As EventArgs) Handles НоваяГруппаФормаОбучения.Enter
-
-        comboBoxDrop(НоваяГруппаФормаОбучения, group.flagGrouppForm.form_education)
-
-    End Sub
-
-    Private Sub formEducation_EnabledChanged(sender As Object, e As EventArgs) Handles НоваяГруппаФормаОбучения.EnabledChanged
-        If НоваяГруппаФормаОбучения.Enabled = False Then
-            НоваяГруппаФормаОбучения.DroppedDown = False
-        End If
-    End Sub
-
-    Private Sub program_MouseLeave(sender As Object, e As EventArgs) Handles НоваяГруппаПрограмма.MouseLeave
-        group.flagGrouppForm.program = False
-    End Sub
-
-    Private Sub program_MouseMove(sender As Object, e As MouseEventArgs) Handles НоваяГруппаПрограмма.MouseMove
-        group.flagGrouppForm.program = True
-    End Sub
-
-    Private Sub program_Enter(sender As Object, e As EventArgs) Handles НоваяГруппаПрограмма.Enter
-
-        comboBoxDrop(НоваяГруппаПрограмма, group.flagGrouppForm.program)
-
-    End Sub
-
-    Private Sub program_EnabledChanged(sender As Object, e As EventArgs) Handles НоваяГруппаПрограмма.EnabledChanged
-        If НоваяГруппаПрограмма.Enabled = False Then
-            НоваяГруппаПрограмма.DroppedDown = False
-        End If
-    End Sub
-
-    Private Sub speciality_MouseLeave(sender As Object, e As EventArgs) Handles НоваяГруппаСпециальность.MouseLeave
-        group.flagGrouppForm.speciality = False
-    End Sub
-
-    Private Sub speciality_MouseMove(sender As Object, e As MouseEventArgs) Handles НоваяГруппаСпециальность.MouseMove
-        group.flagGrouppForm.speciality = True
-    End Sub
-
-    Private Sub speciality_Enter(sender As Object, e As EventArgs) Handles НоваяГруппаСпециальность.Enter
-
-        comboBoxDrop(НоваяГруппаСпециальность, group.flagGrouppForm.speciality)
-
-    End Sub
-
-    Private Sub speciality_EnabledChanged(sender As Object, e As EventArgs) Handles НоваяГруппаСпециальность.EnabledChanged
-        If НоваяГруппаСпециальность.Enabled = False Then
-            НоваяГруппаСпециальность.DroppedDown = False
-        End If
-    End Sub
-
-    Private Sub kurator_MouseLeave(sender As Object, e As EventArgs) Handles НоваяГруппаОтветственныйКуратор.MouseLeave
-        group.flagGrouppForm.kurator = False
-    End Sub
-
-    Private Sub kurator_MouseMove(sender As Object, e As MouseEventArgs) Handles НоваяГруппаОтветственныйКуратор.MouseMove
-        group.flagGrouppForm.kurator = True
-    End Sub
-
-    Private Sub kurator_Enter(sender As Object, e As EventArgs) Handles НоваяГруппаОтветственныйКуратор.Enter
-
-        comboBoxDrop(НоваяГруппаОтветственныйКуратор, group.flagGrouppForm.kurator)
-
-    End Sub
-
-    Private Sub kurator_EnabledChanged(sender As Object, e As EventArgs) Handles НоваяГруппаОтветственныйКуратор.EnabledChanged
-        If НоваяГруппаОтветственныйКуратор.Enabled = False Then
-            НоваяГруппаОтветственныйКуратор.DroppedDown = False
-        End If
-    End Sub
-
-    Private Sub НоваягруппаОтветственныйЗаПрактику_MouseLeave(sender As Object, e As EventArgs) Handles НоваягруппаОтветственныйЗаПрактику.MouseLeave
-        group.flagGrouppForm.otvetstv_praktika = False
-    End Sub
-
-    Private Sub НоваягруппаОтветственныйЗаПрактику_MouseMove(sender As Object, e As MouseEventArgs) Handles НоваягруппаОтветственныйЗаПрактику.MouseMove
-        group.flagGrouppForm.otvetstv_praktika = True
-    End Sub
-
-    Private Sub НоваягруппаОтветственныйЗаПрактику_Enter(sender As Object, e As EventArgs) Handles НоваягруппаОтветственныйЗаПрактику.Enter
-
-        comboBoxDrop(НоваягруппаОтветственныйЗаПрактику, group.flagGrouppForm.otvetstv_praktika)
-
-    End Sub
-
-    Private Sub НоваягруппаОтветственныйЗаПрактику_EnabledChanged(sender As Object, e As EventArgs) Handles НоваягруппаОтветственныйЗаПрактику.EnabledChanged
-        If НоваягруппаОтветственныйЗаПрактику.Enabled = False Then
-            НоваягруппаОтветственныйЗаПрактику.DroppedDown = False
-        End If
-    End Sub
-
-    Private Sub modul1_MouseLeave(sender As Object, e As EventArgs) Handles Модуль1.MouseLeave
-        group.flagGrouppForm.modul_1 = False
-    End Sub
-
-    Private Sub modul1_MouseMove(sender As Object, e As MouseEventArgs) Handles Модуль1.MouseMove
-        group.flagGrouppForm.modul_1 = True
-    End Sub
-
-    Private Sub modul1_Enter(sender As Object, e As EventArgs) Handles Модуль1.Enter
-
-        comboBoxDrop(Модуль1, group.flagGrouppForm.modul_1)
-
-    End Sub
-
-    Private Sub modul1_EnabledChanged(sender As Object, e As EventArgs) Handles Модуль1.EnabledChanged
-        If Модуль1.Enabled = False Then
-            Модуль1.DroppedDown = False
-        End If
-    End Sub
-
-    Private Sub modul2_MouseLeave(sender As Object, e As EventArgs) Handles Модуль2.MouseLeave
-
-        group.flagGrouppForm.modul_2 = False
-
-    End Sub
-
-    Private Sub modul2_MouseMove(sender As Object, e As MouseEventArgs) Handles Модуль2.MouseMove
-
-        group.flagGrouppForm.modul_2 = True
-
-    End Sub
-
-    Private Sub modul2_Enter(sender As Object, e As EventArgs) Handles Модуль2.Enter
-
-        comboBoxDrop(Модуль2, group.flagGrouppForm.modul_2)
-
-    End Sub
-
-    Private Sub modul2_EnabledChanged(sender As Object, e As EventArgs) Handles Модуль2.EnabledChanged
-
-        If Модуль2.Enabled = False Then
-            Модуль2.DroppedDown = False
-        End If
-
-    End Sub
-
-    Private Sub modul3_MouseLeave(sender As Object, e As EventArgs) Handles Модуль3.MouseLeave
-        group.flagGrouppForm.modul_3 = False
-    End Sub
-
-    Private Sub modul3_MouseMove(sender As Object, e As MouseEventArgs) Handles Модуль3.MouseMove
-
-        group.flagGrouppForm.modul_3 = True
-
-    End Sub
-
-    Private Sub modul3_Enter(sender As Object, e As EventArgs) Handles Модуль3.Enter
-
-        comboBoxDrop(Модуль3, group.flagGrouppForm.modul_3)
-
-    End Sub
-
-    Private Sub modul3_EnabledChanged(sender As Object, e As EventArgs) Handles Модуль3.EnabledChanged
-        If Модуль3.Enabled = False Then
-            Модуль3.DroppedDown = False
-        End If
-    End Sub
-
-    Private Sub modul4_MouseLeave(sender As Object, e As EventArgs) Handles Модуль4.MouseLeave
-        group.flagGrouppForm.modul_4 = False
-    End Sub
-
-    Private Sub modul4_MouseMove(sender As Object, e As MouseEventArgs) Handles Модуль4.MouseMove
-        group.flagGrouppForm.modul_4 = True
-    End Sub
-
-    Private Sub modul4_Enter(sender As Object, e As EventArgs) Handles Модуль4.Enter
-
-        comboBoxDrop(Модуль4, group.flagGrouppForm.modul_4)
-
-    End Sub
-
-    Private Sub modul4_EnabledChanged(sender As Object, e As EventArgs) Handles Модуль4.EnabledChanged
-        If Модуль4.Enabled = False Then
-            Модуль4.DroppedDown = False
-        End If
-    End Sub
-
-    Private Sub modul5_MouseLeave(sender As Object, e As EventArgs) Handles Модуль5.MouseLeave
-        group.flagGrouppForm.modul_5 = False
-    End Sub
-
-    Private Sub modul5_MouseMove(sender As Object, e As MouseEventArgs) Handles Модуль5.MouseMove
-        group.flagGrouppForm.modul_5 = True
-    End Sub
-
-    Private Sub modul5_Enter(sender As Object, e As EventArgs) Handles Модуль5.Enter
-
-        comboBoxDrop(Модуль5, group.flagGrouppForm.modul_5)
-
-    End Sub
-
-    Private Sub modul5_EnabledChanged(sender As Object, e As EventArgs) Handles Модуль5.EnabledChanged
-        If Модуль5.Enabled = False Then
-            Модуль5.DroppedDown = False
-        End If
-    End Sub
-
-    Private Sub modul6_MouseLeave(sender As Object, e As EventArgs) Handles Модуль6.MouseLeave
-        group.flagGrouppForm.modul_6 = False
-    End Sub
-
-    Private Sub modul6_MouseMove(sender As Object, e As MouseEventArgs) Handles Модуль6.MouseMove
-        group.flagGrouppForm.modul_3 = True
-    End Sub
-
-    Private Sub modul6_Enter(sender As Object, e As EventArgs) Handles Модуль6.Enter
-
-        comboBoxDrop(Модуль6, group.flagGrouppForm.modul_6)
-
-    End Sub
-
-    Private Sub modul6_EnabledChanged(sender As Object, e As EventArgs) Handles Модуль6.EnabledChanged
-        If Модуль6.Enabled = False Then
-            Модуль6.DroppedDown = False
-        End If
-    End Sub
-
-    Private Sub modul7_MouseLeave(sender As Object, e As EventArgs) Handles Модуль7.MouseLeave
-        group.flagGrouppForm.modul_7 = False
-    End Sub
-
-    Private Sub modul7_MouseMove(sender As Object, e As MouseEventArgs) Handles Модуль7.MouseMove
-        group.flagGrouppForm.modul_7 = True
-    End Sub
-
-    Private Sub modul7_Enter(sender As Object, e As EventArgs) Handles Модуль7.Enter
-
-        comboBoxDrop(Модуль7, group.flagGrouppForm.modul_7)
-
-    End Sub
-
-    Private Sub modul7_EnabledChanged(sender As Object, e As EventArgs) Handles Модуль7.EnabledChanged
-        If Модуль7.Enabled = False Then
-            Модуль7.DroppedDown = False
-        End If
-    End Sub
-
-    Private Sub modul8_MouseLeave(sender As Object, e As EventArgs) Handles Модуль8.MouseLeave
-        group.flagGrouppForm.modul_8 = False
-    End Sub
-
-    Private Sub modul8_MouseMove(sender As Object, e As MouseEventArgs) Handles Модуль8.MouseMove
-        group.flagGrouppForm.modul_8 = True
-    End Sub
-
-    Private Sub modul8_Enter(sender As Object, e As EventArgs) Handles Модуль8.Enter
-
-        comboBoxDrop(Модуль8, group.flagGrouppForm.modul_8)
-
-    End Sub
-
-    Private Sub modul8_EnabledChanged(sender As Object, e As EventArgs) Handles Модуль8.EnabledChanged
-        If Модуль8.Enabled = False Then
-            Модуль8.DroppedDown = False
-        End If
-    End Sub
-
-    Private Sub modul9_MouseLeave(sender As Object, e As EventArgs) Handles Модуль9.MouseLeave
-        group.flagGrouppForm.modul_9 = False
-    End Sub
-
-    Private Sub modul9_MouseMove(sender As Object, e As MouseEventArgs) Handles Модуль9.MouseMove
-        group.flagGrouppForm.modul_9 = True
-    End Sub
-
-    Private Sub modul9_Enter(sender As Object, e As EventArgs) Handles Модуль9.Enter
-
-        comboBoxDrop(Модуль9, group.flagGrouppForm.modul_9)
-
-    End Sub
-
-    Private Sub modul9_EnabledChanged(sender As Object, e As EventArgs) Handles Модуль9.EnabledChanged
-        If Модуль9.Enabled = False Then
-            Модуль9.DroppedDown = False
-        End If
-    End Sub
-
-    Private Sub modul10_MouseLeave(sender As Object, e As EventArgs) Handles Модуль10.MouseLeave
-        group.flagGrouppForm.modul_10 = False
-    End Sub
-
-    Private Sub modul10_MouseMove(sender As Object, e As MouseEventArgs) Handles Модуль10.MouseMove
-        group.flagGrouppForm.modul_10 = True
-    End Sub
-
-    Private Sub modul10_Enter(sender As Object, e As EventArgs) Handles Модуль10.Enter
-
-        comboBoxDrop(Модуль10, group.flagGrouppForm.modul_10)
-
-    End Sub
-
-    Private Sub modul10_EnabledChanged(sender As Object, e As EventArgs) Handles Модуль10.EnabledChanged
-        If Модуль10.Enabled = False Then
-            Модуль10.DroppedDown = False
-        End If
-    End Sub
-
-    Private Sub financing_MouseLeave(sender As Object, e As EventArgs) Handles НоваяГруппаФинансирование.MouseLeave
-        group.flagGrouppForm.financing = False
-    End Sub
-
-    Private Sub financing_MouseMove(sender As Object, e As MouseEventArgs) Handles НоваяГруппаФинансирование.MouseMove
-        group.flagGrouppForm.financing = True
-    End Sub
-
-    Private Sub financing_Enter(sender As Object, e As EventArgs) Handles НоваяГруппаФинансирование.Enter
-
-        comboBoxDrop(НоваяГруппаФинансирование, group.flagGrouppForm.financing)
-
-    End Sub
-
-    Private Sub financing_EnabledChanged(sender As Object, e As EventArgs) Handles НоваяГруппаФинансирование.EnabledChanged
-        If НоваяГруппаФинансирование.Enabled = False Then
-            НоваяГруппаФинансирование.DroppedDown = False
-        End If
-    End Sub
-
-    Private Sub qualification_MouseLeave(sender As Object, e As EventArgs) Handles Квалификация.MouseLeave
-        group.flagGrouppForm.qualification = False
-    End Sub
-
-    Private Sub qualification_MouseMove(sender As Object, e As MouseEventArgs) Handles Квалификация.MouseMove
-        group.flagGrouppForm.qualification = True
-    End Sub
-
-    Private Sub qualification_Enter(sender As Object, e As EventArgs) Handles Квалификация.Enter
-
-        comboBoxDrop(Квалификация, group.flagGrouppForm.qualification)
 
     End Sub
 
@@ -1033,26 +474,6 @@ Public Class newGroup
 
     End Sub
 
-    Private Sub comboBoxDrop(currentComboBox As ComboBox, flag As Boolean)
-
-        If Not currentComboBox.Enabled Then
-
-            Return
-
-        End If
-
-        If flag Then
-
-            currentComboBox.DroppedDown = False
-
-        Else
-
-            currentComboBox.DroppedDown = True
-
-        End If
-
-    End Sub
-
     Private Sub controlActivate(currentControl As Control)
 
         If Not currentControl.Enabled Then
@@ -1069,18 +490,6 @@ Public Class newGroup
 
         End If
 
-    End Sub
-
-    Private Sub poOn_Click_1(sender As Object, e As EventArgs)
-        message.Visible = False
-    End Sub
-
-    Private Sub pkOn_Click_1(sender As Object, e As EventArgs)
-        message.Visible = False
-    End Sub
-
-    Private Sub ppOn_Click_1(sender As Object, e As EventArgs)
-        message.Visible = False
     End Sub
 
     Private Sub ppOn_Click(sender As Object, e As EventArgs) Handles ppOn.Click, poOn.Click
@@ -1110,20 +519,22 @@ Public Class newGroup
 
         If group.struct_grup.nameForm = "Редактор группы" Then
             MainForm.cvalific = StudentsInGroup.cvalification
+            Dim number As Int16 = MainForm.cvalific
         End If
 
     End Sub
 
     Private Sub newGroup_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
+        Dim path As String = resourcesPath() + "images//"
+        cover_image = Image.FromFile(path + "deactivate.png")
+        controlsReaction(dictionaryFlag, Me)
         ActiveControl = BtnFocus
 
     End Sub
 
     Public Sub newGroupInit()
 
-        Dim path As String = resourcesPath() + "images//"
-        cover_image = Image.FromFile(path + "deactivate.png")
         group = New Group()
         group.struct_grup.nameForm = "Новая группа"
         swichNumbers = New SwichNumbers
@@ -1135,28 +546,6 @@ Public Class newGroup
         loadLists()
 
         group.struct_grup.kodProgram = -1
-
-        For Each comboBox As ComboBox In Me.Controls.OfType(Of ComboBox)
-
-            AddHandler comboBox.EnabledChanged, Sub()
-                                                    If comboBox.Enabled = False Then
-                                                        comboBox.DroppedDown = False
-                                                    End If
-                                                    activateBlackMode(comboBox, comboBox.Enabled)
-                                                End Sub
-        Next
-
-        For Each textBox As TextBox In Me.Controls.OfType(Of TextBox)
-            AddHandler textBox.EnabledChanged, Sub()
-                                                   activateBlackMode(textBox, textBox.Enabled)
-                                               End Sub
-        Next
-
-        For Each datePicker As DateTimePicker In Me.Controls.OfType(Of DateTimePicker)
-            AddHandler datePicker.EnabledChanged, Sub()
-                                                      activateBlackMode(datePicker, datePicker.Enabled)
-                                                  End Sub
-        Next
 
         activateAllType()
 
@@ -1171,6 +560,10 @@ Public Class newGroup
         swichCvalificationInit()
 
         loadLists()
+
+        MainForm.cvalific = StudentsInGroup.cvalification
+
+        Dim number As Int16 = MainForm.cvalific - 1
 
         swichNumbers.activeType = swichNumbers.typeCval(MainForm.cvalific - 1)
 
@@ -1393,37 +786,6 @@ Public Class newGroup
 
         End If
 
-    End Sub
-
-    Private Sub activateBlackMode(currentControl As Control, flagOn As Boolean)
-
-        Dim cont As String = currentControl.Name
-
-        If Not flagOn Then
-
-            Dim cover As New PictureBox
-            Controls.Add(cover)
-            cover.Location = New Point(currentControl.Location.X, currentControl.Location.Y)
-            cover.Size = New Size(729, 25)
-            cover.Image = cover_image
-            cover.SizeMode = PictureBoxSizeMode.StretchImage
-            cover.Name = currentControl.Name + "_cover"
-            cover.BringToFront()
-
-        Else
-
-            removeCover(currentControl.Name + "_cover")
-
-        End If
-
-    End Sub
-
-    Private Sub removeCover(name As String)
-        For Each cover As PictureBox In Me.Controls.OfType(Of PictureBox)
-            If cover.Name = name Then
-                Me.Controls.Remove(cover)
-            End If
-        Next
     End Sub
 
 End Class

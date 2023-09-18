@@ -2751,7 +2751,7 @@ Module QueryString
             ", Фамилия=" & Chr(39) & studentData.lastName & Chr(39) &
             ", Имя=" & Chr(39) & studentData.name & Chr(39) &
             ", Отчество=" & Chr(39) & studentData.secondName & Chr(39) &
-            ", ДатаРождения=" & Chr(39) & MainForm.mySqlConnect.dateToFormatMySQL(studentData.birthDay) & Chr(39) &
+            ", ДатаРождения=" & Chr(39) & studentData.birthDay & Chr(39) &
             ", Пол=" & Chr(39) & studentData.gender & Chr(39) &
             ", УОбразования=" & Chr(39) & studentData.educationLevel & Chr(39) &
             ", НаимДОО=" & Chr(39) & studentData.education & Chr(39) &
@@ -2766,11 +2766,17 @@ Module QueryString
             ", НомерДУЛ=" & Chr(39) & studentData.numberDUL & Chr(39) &
             ",ИФин=" & Chr(39) & studentData.sourceOfFinansing & Chr(39) &
             ", НОрг=(SELECT MAX(kod) FROM napr_organization WHERE name=" & Chr(39) & studentData.направившаяОрг & Chr(39) & ")" &
-            ", ДатаРегистрации=" & Chr(39) & MainForm.mySqlConnect.dateToFormatMySQL(studentData.dateReg) & Chr(39) &
+            ", ДатаРегистрации=" & Chr(39) & studentData.dateReg & Chr(39) &
             ", Почта=" & Chr(39) & studentData.email & Chr(39) &
-            ", ДУЛКемВыдан=" & Chr(39) & studentData.autorDUL & Chr(39) &
-            ", ДУЛДатаВыдачи=" & Chr(39) & MainForm.mySqlConnect.dateToFormatMySQL(studentData.dateDUL) & Chr(39) &
-            ", doo_doc_type=(SELECT MAX(kod) FROM doo_doc_type WHERE name = '" & studentData.doo_doc_type & "' LIMIT 1)"
+            ", ДУЛКемВыдан=" & Chr(39) & studentData.autorDUL & Chr(39)
+
+        If studentData.dateDUL = "null" Or studentData.dateDUL.Trim = "" Then
+            sqlString += ", ДУЛДатаВыдачи=" + studentData.dateDUL
+        Else
+            sqlString += ", ДУЛДатаВыдачи=" & Chr(39) & studentData.dateDUL & Chr(39)
+        End If
+
+        sqlString += ", doo_doc_type=(SELECT MAX(kod) FROM doo_doc_type WHERE name = '" & studentData.doo_doc_type & "' LIMIT 1)"
 
 
         sqlString = "UPDATE students SET " & sqlString & " WHERE Снилс =" & Chr(39) & studentData.prevSnils & Chr(39)

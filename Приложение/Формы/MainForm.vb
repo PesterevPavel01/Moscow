@@ -137,7 +137,7 @@
     Private Sub createGroup_Click(sender As Object, e As EventArgs) Handles КнопкаСоздатьГруппу.Click
 
         ActiveControl = Button2
-        newGroup.newGroupInit()
+        newGroup.redactorMode = False
         newGroup.ShowDialog()
 
 
@@ -501,7 +501,7 @@
         СекретарьКомиссии(True)
         ЗаместительРПК(False)
 
-        BuildOrder.komissiya = True
+        BuildOrder.comission = True
 
         _formCleaner.cleaner(BuildOrder)
 
@@ -525,7 +525,7 @@
 
         BuildOrder.ShowDialog()
 
-        BuildOrder.komissiya = False
+        BuildOrder.comission = False
 
     End Sub
 
@@ -535,7 +535,7 @@
         BuildOrder.Text = "ПП_Допуск к ИА"
         BuildOrder.orderType = ActiveControl.Name
 
-        BuildOrder.komissiya = True
+        BuildOrder.comission = True
         ОтветственныйЗаАттестацию(True, "Председатель комиссии")
         чекбоксы(True, "ПП", "стажировка", "Практическая подготовка/стажировка")
         ПроектВносит(True)
@@ -570,7 +570,7 @@
 
         BuildOrder.ShowDialog()
 
-        BuildOrder.komissiya = False
+        BuildOrder.comission = False
 
     End Sub
 
@@ -5024,6 +5024,11 @@
     Private Sub program_KeyDown(sender As Object, e As KeyEventArgs) Handles toolStripProgram.KeyDown
 
         If e.KeyValue = Keys.Tab Then
+
+            If comboBoxProgramms.Text = "" Then
+                comboBoxProgramms.Focus()
+                Return
+            End If
 
             ActiveControl = programs__progrs_tbl
             e.Handled = True

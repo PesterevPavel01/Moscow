@@ -18,10 +18,14 @@ Public Class MySQLConnect
     End Sub
 
 
-    Public Function dateToFormatMySQL(_date As DateTime) As String
-        Dim resultDate As String = ""
-        resultDate = _date.Year.ToString() + "-" + _date.Month.ToString() + "-" + _date.Day.ToString() + " " + _date.TimeOfDay.ToString()
-        Return resultDate
+    Public Function dateToFormatMySQL(_date As String) As String
+
+        If _date = "null" Or _date = "" Then
+            Return "null"
+        Else
+            Dim dateD As DateTime = Convert.ToDateTime(_date)
+            Return dateD.Year.ToString() + "-" + dateD.Month.ToString() + "-" + dateD.Day.ToString() + " " + dateD.TimeOfDay.ToString()
+        End If
     End Function
     Public Function loadMySqlToArray(СтрокаЗапроса As String, numberBD As Int16) As Object(,)
 

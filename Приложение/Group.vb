@@ -1,11 +1,8 @@
-﻿Imports WindowsApp2.Group
-
-Public Class Group
+﻿Public Class Group
 
     Private sqlQueryString As New SqlQueryString
     Private mySQLConnector As New MySQLConnect
     Public struct_grup As New strGruppa
-    Public flagGrouppForm As FormGrouppFlag
     Public formGrouppLists As FormGroupplLists
 
     Public Structure strGruppa
@@ -83,26 +80,26 @@ Public Class Group
 
     End Structure
 
-    Public Structure FormGrouppFlag
-        Public ur_cvalifik As Boolean
-        Public form_education As Boolean
-        Public program As Boolean
-        Public speciality As Boolean
-        Public kurator As Boolean
-        Public otvetstv_praktika As Boolean
-        Public financing As Boolean
-        Public qualification As Boolean
-        Public modul_1 As Boolean
-        Public modul_2 As Boolean
-        Public modul_3 As Boolean
-        Public modul_4 As Boolean
-        Public modul_5 As Boolean
-        Public modul_6 As Boolean
-        Public modul_7 As Boolean
-        Public modul_8 As Boolean
-        Public modul_9 As Boolean
-        Public modul_10 As Boolean
-    End Structure
+    'Public Structure FormGrouppFlag
+    '    Public ur_cvalifik As Boolean
+    '    Public form_education As Boolean
+    '    Public program As Boolean
+    '    Public speciality As Boolean
+    '    Public kurator As Boolean
+    '    Public otvetstv_praktika As Boolean
+    '    Public financing As Boolean
+    '    Public qualification As Boolean
+    '    Public modul_1 As Boolean
+    '    Public modul_2 As Boolean
+    '    Public modul_3 As Boolean
+    '    Public modul_4 As Boolean
+    '    Public modul_5 As Boolean
+    '    Public modul_6 As Boolean
+    '    Public modul_7 As Boolean
+    '    Public modul_8 As Boolean
+    '    Public modul_9 As Boolean
+    '    Public modul_10 As Boolean
+    'End Structure
 
     Public Sub saveParameters(currentForm As Form)
 
@@ -211,23 +208,6 @@ Public Class Group
 
         queryString = sqlQueryString.loadQualification()
         formGrouppLists.qualification = mySQLConnector.loadIntoarray(queryString, 1, 0)
-
-        flagGrouppForm.ur_cvalifik = False
-        flagGrouppForm.form_education = False
-        flagGrouppForm.program = False
-        flagGrouppForm.speciality = False
-        flagGrouppForm.kurator = False
-        flagGrouppForm.otvetstv_praktika = False
-        flagGrouppForm.modul_1 = False
-        flagGrouppForm.modul_2 = False
-        flagGrouppForm.modul_3 = False
-        flagGrouppForm.modul_4 = False
-        flagGrouppForm.modul_5 = False
-        flagGrouppForm.modul_6 = False
-        flagGrouppForm.modul_7 = False
-        flagGrouppForm.modul_8 = False
-        flagGrouppForm.modul_9 = False
-        flagGrouppForm.modul_10 = False
 
     End Sub
 

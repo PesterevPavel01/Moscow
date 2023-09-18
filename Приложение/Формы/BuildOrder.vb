@@ -7,7 +7,7 @@
     Public path As String
     Public flagCheck As Boolean = False
     Public ЧекнутыеСлушатели
-    Public komissiya As Boolean = False
+    Public comission As Boolean = False
     Public practical As Boolean = False
     Public cvalification As Int16
 
@@ -164,10 +164,6 @@
 
         ActiveControl = Button1
 
-        If orderType = "Спецэкзамен_протокол" Then
-            Exit Sub
-        End If
-
         If MainForm.directorPosition.Text <> "" Then
             УтверждаетДолжность.Text = MainForm.directorPosition.Text
         End If
@@ -188,15 +184,15 @@
             Согласовано2Должность.Text = MainForm.Согласовано2ДолжностьПУ.Text
         End If
 
-        If komissiya Then
+        If comission Then
 
             РуководительСтажировки.Items.Clear()
             РуководительСтажировки.Items.Add("")
-            РуководительСтажировки.Items.AddRange(prikaz.formPrikazList.komissiya)
+            РуководительСтажировки.Items.AddRange(prikaz.formPrikazList.comission)
 
             Ответственный.Items.Clear()
             Ответственный.Items.Add("")
-            Ответственный.Items.AddRange(prikaz.formPrikazList.komissiya)
+            Ответственный.Items.AddRange(prikaz.formPrikazList.comission)
 
         ElseIf practical Then
 
@@ -278,7 +274,7 @@
             tableStudentsList.Columns.Add("Преподаватель", 200)
         End If
 
-        UpdateListView.updateListView(False, True, tableStudentsList, result, 0, 1)
+        updateListView.updateListView(False, True, tableStudentsList, result, 0, 1)
 
         Try
             tableStudentsList.Items(0).Selected = True
@@ -301,7 +297,7 @@
             Exit Sub
         End If
 
-        UpdateListView.updateListView(True, False, tableStudentsList, students, 0)
+        updateListView.updateListView(True, False, tableStudentsList, students, 0)
 
         Try
             tableStudentsList.Items(0).Selected = True
@@ -579,19 +575,19 @@
 
             Комиссия2.Items.Clear()
             Комиссия2.Items.Add("")
-            Комиссия2.Items.AddRange(prikaz.formPrikazList.komissiya)
+            Комиссия2.Items.AddRange(prikaz.formPrikazList.comission)
 
             Комиссия3.Items.Clear()
             Комиссия3.Items.Add("")
-            Комиссия3.Items.AddRange(prikaz.formPrikazList.komissiya)
+            Комиссия3.Items.AddRange(prikaz.formPrikazList.comission)
 
             СекретарьКомиссии.Items.Clear()
             СекретарьКомиссии.Items.Add("")
-            СекретарьКомиссии.Items.AddRange(prikaz.formPrikazList.komissiya)
+            СекретарьКомиссии.Items.AddRange(prikaz.formPrikazList.comission)
 
             ЗамПредседателя.Items.Clear()
             ЗамПредседателя.Items.Add("")
-            ЗамПредседателя.Items.AddRange(prikaz.formPrikazList.komissiya)
+            ЗамПредседателя.Items.AddRange(prikaz.formPrikazList.comission)
 
             flagLoad = True
 

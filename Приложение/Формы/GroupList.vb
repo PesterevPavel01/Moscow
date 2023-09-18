@@ -119,12 +119,13 @@ Public Class GroupList
 
             numberGr = groupListTable.SelectedItems.Item(0).SubItems(1).Text
             StudentsInGroup.cvalification = MainForm.cvalific
-            Dim n As Int16 = MainForm.cvalific
+
             If groupListTable.SelectedItems.Item(0).SubItems(0).Text = "" Then
                 Exit Sub
             End If
 
             kod = groupListTable.SelectedItems.Item(0).SubItems(0).Text
+
             Try
                 year = Convert.ToDateTime(groupListTable.SelectedItems.Item(0).SubItems(4).Text).Year
             Catch ex As Exception
@@ -142,9 +143,11 @@ Public Class GroupList
 
             StudentsInGroup.Text = "Группа № " & numberGr
             newGroup.Text = "Группа № " & numberGr
-            StudentsInGroup.ShowDialog()
-            MainForm.cvalific = StudentsInGroup.cvalification
 
+            StudentsInGroup.ShowDialog()
+
+            MainForm.cvalific = StudentsInGroup.cvalification
+            updateCvalification()
         Else
             MsgBox("информация удалена")
         End If

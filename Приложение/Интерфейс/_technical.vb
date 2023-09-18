@@ -2,6 +2,116 @@
 Imports System.Threading
 
 Module _technical
+
+    Public Sub controlsReaction(dictionaryFlag As Dictionary(Of String, Boolean), currentForm As Form)
+
+        If IsNothing(dictionaryFlag) Then
+
+            dictionaryFlag = New Dictionary(Of String, Boolean)
+
+            For Each currentCBox As ComboBox In currentForm.Controls.OfType(Of ComboBox)
+
+                dictionaryFlag.Add(currentCBox.Name, False)
+
+                AddHandler currentCBox.MouseLeave, Sub()
+                                                       dictionaryFlag(currentCBox.Name) = False
+                                                   End Sub
+
+                AddHandler currentCBox.MouseMove, Sub()
+                                                      dictionaryFlag(currentCBox.Name) = True
+                                                  End Sub
+
+                AddHandler currentCBox.Enter, Sub()
+                                                  _technical.comboBoxDrop(currentCBox, dictionaryFlag(currentCBox.Name))
+                                                  newGroup.message.Visible = False
+                                                  newStudent.message.Visible = False
+                                              End Sub
+
+                AddHandler currentCBox.EnabledChanged, Sub()
+                                                           If currentCBox.Enabled = False Then
+                                                               currentCBox.DroppedDown = False
+                                                           End If
+                                                           activateBlackMode(currentCBox, currentCBox.Enabled, currentForm)
+                                                       End Sub
+
+            Next
+
+            For Each textBox As TextBox In currentForm.Controls.OfType(Of TextBox)
+                AddHandler textBox.EnabledChanged, Sub()
+                                                       activateBlackMode(textBox, textBox.Enabled, currentForm)
+                                                   End Sub
+                AddHandler textBox.Enter, Sub()
+                                              newGroup.message.Visible = False
+                                              newStudent.message.Visible = False
+                                          End Sub
+            Next
+
+            For Each datePicker As DateTimePicker In currentForm.Controls.OfType(Of DateTimePicker)
+
+                AddHandler datePicker.EnabledChanged, Sub()
+                                                          activateBlackMode(datePicker, datePicker.Enabled, currentForm)
+                                                      End Sub
+                AddHandler datePicker.Enter, Sub()
+                                                 newGroup.message.Visible = False
+                                                 newStudent.message.Visible = False
+                                             End Sub
+
+            Next
+
+        End If
+    End Sub
+
+    Private Sub activateBlackMode(currentControl As Control, flagOn As Boolean, currentForm As Form)
+
+        Dim cont As String = currentControl.Name
+
+        If Not flagOn Then
+
+            Dim cover As New PictureBox
+            currentForm.Controls.Add(cover)
+            cover.Location = New Point(currentControl.Location.X, currentControl.Location.Y)
+            cover.Size = New Size(729, 25)
+            cover.Image = newGroup.cover_image
+            cover.SizeMode = PictureBoxSizeMode.StretchImage
+            cover.Name = currentControl.Name + "_cover"
+            cover.BringToFront()
+
+        Else
+
+            removeCover(currentControl.Name + "_cover", currentForm)
+
+        End If
+
+    End Sub
+
+    Private Sub removeCover(name As String, currentForm As Form)
+        For Each cover As PictureBox In currentForm.Controls.OfType(Of PictureBox)
+            If cover.Name = name Then
+                currentForm.Controls.Remove(cover)
+            End If
+        Next
+    End Sub
+
+    Public Sub comboBoxDrop(currentComboBox As ComboBox, flag As Boolean)
+
+        If Not currentComboBox.Enabled Then
+
+            Return
+
+        End If
+
+        If flag Then
+
+            currentComboBox.DroppedDown = False
+
+        Else
+
+            currentComboBox.DroppedDown = True
+
+        End If
+
+    End Sub
+
     Function checkSnils(snils As String) As Boolean
 
         Dim array

@@ -187,7 +187,7 @@ Public Class StudentsInGroup
     Private Sub allInfo_Click(sender As Object, e As EventArgs) Handles allInfo.Click
 
         newGroup.Enabled = True
-        newGroup.redactorGroupInit()
+        newGroup.redactorMode = True
         newGroup.ShowDialog()
 
     End Sub

@@ -64,6 +64,7 @@
             End Try
 
         ElseIf (GroupList.infoAboutGroup(21, 0) = "профессиональная переподготовка") Then
+
             newGroup.НомерДиплома.Text = GroupList.infoAboutGroup(27, 0)
 
             If checkNumber(GroupList.infoAboutGroup(27, 0), "none", False) Then
@@ -98,8 +99,6 @@
 
             newGroup.НомерСвид.Text = GroupList.infoAboutGroup(30, 0)
 
-
-
             If checkNumber(GroupList.infoAboutGroup(30, 0), "none", False) Then
                 GroupList.gruppaData.numbersUDS.numberSv = GroupList.infoAboutGroup(30, 0)
             Else
@@ -113,7 +112,6 @@
             Else
                 GroupList.gruppaData.numbersUDS.regNumberSv = 0
             End If
-
 
             Try
                 newGroup.ДатаВСвид.Value = GroupList.infoAboutGroup(32, 0)

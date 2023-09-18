@@ -15,7 +15,7 @@ Public Class Prikaz
         Public proect_vnosit() As String
         Public ispolnitel() As String
         Public soglasovano() As String
-        Public komissiya() As String
+        Public comission() As String
         Public prepod() As String
         Public ruk_staj() As String
         Public slushatelFio() As String
@@ -54,7 +54,7 @@ Public Class Prikaz
         load_proeсt_vnosit()
         load_ispolnitel()
         load_soglasovano()
-        load_komissiya()
+        load_komission()
         load_list_prepod()
         load_ruk_staj()
 
@@ -86,13 +86,13 @@ Public Class Prikaz
     Private Sub load_list_prepod()
         Dim queryString As String
         queryString = sqlQueryString.load_komissiya()
-        formPrikazList.komissiya = mySQLConnector.loadIntoarray(queryString, 1, 0)
+        formPrikazList.comission = mySQLConnector.loadIntoarray(queryString, 1, 0)
     End Sub
 
-    Private Sub load_komissiya()
+    Private Sub load_komission()
         Dim queryString As String
         queryString = sqlQueryString.load_komissiya()
-        formPrikazList.komissiya = mySQLConnector.loadIntoarray(queryString, 1, 0)
+        formPrikazList.comission = mySQLConnector.loadIntoarray(queryString, 1, 0)
     End Sub
 
     Private Sub load_soglasovano()
