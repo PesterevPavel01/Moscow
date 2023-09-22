@@ -2577,10 +2577,10 @@ Module QueryString
 
         sqlString = "SELECT
                       Код,
-                      Номер,
-                      program.name,
-                      ДатаНЗ,
-                      ДатаКЗ
+                      Номер as 'Номер группы',
+                      program.name as Программа,
+                      ДатаНЗ as 'Дата начала',
+                      ДатаКЗ as 'Дата окончания'
                     FROM `group`
                       INNER JOIN group_list
                         ON `group`.Код = group_list.kod
