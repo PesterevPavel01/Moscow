@@ -39,15 +39,8 @@
         Dim modul10 As String
         Dim urKvalific As String
         Dim financir As String
-        'Dim nomerProtIA As String
-        'Dim nomerUd As String
-        'Dim regNomerUd As String
         Dim dateVUd As String
-        'Dim nomerDiploma As String
-        'Dim regNomerDiploma As String
         Dim DateVDiploma As String
-        'Dim nomerSvid As String
-        'Dim regNomerSvid As String
         Dim dateVSvid As String
         Dim qualification As String
         Dim numbersUDS As Numbers
@@ -79,27 +72,6 @@
         Public qualification() As String
 
     End Structure
-
-    'Public Structure FormGrouppFlag
-    '    Public ur_cvalifik As Boolean
-    '    Public form_education As Boolean
-    '    Public program As Boolean
-    '    Public speciality As Boolean
-    '    Public kurator As Boolean
-    '    Public otvetstv_praktika As Boolean
-    '    Public financing As Boolean
-    '    Public qualification As Boolean
-    '    Public modul_1 As Boolean
-    '    Public modul_2 As Boolean
-    '    Public modul_3 As Boolean
-    '    Public modul_4 As Boolean
-    '    Public modul_5 As Boolean
-    '    Public modul_6 As Boolean
-    '    Public modul_7 As Boolean
-    '    Public modul_8 As Boolean
-    '    Public modul_9 As Boolean
-    '    Public modul_10 As Boolean
-    'End Structure
 
     Public Sub saveParameters(currentForm As Form)
 

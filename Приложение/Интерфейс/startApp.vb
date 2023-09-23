@@ -36,7 +36,6 @@ Module startApp
 
         СтрокаЗапроса = loadSettings()
         Параметры = mySqlConnector.loadMySqlToArray(СтрокаЗапроса, 1)
-        Параметры = arrayMethod.removeEmpty(Параметры)
         ЗагрузкаПараметровПриложения = Параметры
     End Function
 

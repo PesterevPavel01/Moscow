@@ -239,7 +239,11 @@ Public Class GroupList
         Dim Str As String, searchField, sortField As String
 
         sortField = interfaceMod.nameCheckedCheckBox(sortSettsGroup)
-        searchField = interfaceMod.nameCheckedCheckBox(group__serchSettings)
+        searchField = interfaceMod.nameCheckedCheckBox(Group__serchSettings)
+
+        If IsNothing(sortField) Or IsNothing(searchField) Then
+            Return
+        End If
 
         searchRow.Visible = True
 

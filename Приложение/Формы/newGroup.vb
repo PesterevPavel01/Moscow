@@ -339,7 +339,7 @@ Public Class newGroup
         If e.KeyCode = Keys.Up Or e.KeyCode = Keys.Down Then
 
             pressTab(e.KeyCode, Keys.Down)
-            'up(Me, e.KeyCode, Keys.Up)
+            up(Me, e.KeyCode, Keys.Up)
             e.Handled = True
 
         End If

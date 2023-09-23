@@ -4456,7 +4456,7 @@
 
             SplitContainerOtherList.Visible = False
             ToolStripButton1.Visible = False
-            connect_table_obrazovanie()
+            connect_table_education()
 
         End If
 
@@ -4484,7 +4484,7 @@
 
     End Sub
 
-    Private Sub connect_table_obrazovanie()
+    Private Sub connect_table_education()
 
         tbl_education.Parent = Panel_main
         tbl_education.Visible = True
