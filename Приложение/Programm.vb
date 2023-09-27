@@ -36,7 +36,7 @@ Public Class Programm
 
         Dim queryString As String
         queryString = sqlQueryString.program__loadHours(struct_progs.program_kod)
-        struct_progs.list_hours = mySQLConnector.loadIntoarray(queryString, 1, 0)
+        struct_progs.list_hours = mySQLConnector.loadIntoArray(queryString, 1, 0)
 
     End Sub
 
@@ -44,7 +44,7 @@ Public Class Programm
 
         Dim queryString As String
         queryString = sqlQueryString.program__loadTypeList()
-        struct_progs.list_types = mySQLConnector.loadIntoarray(queryString, 1, 0)
+        struct_progs.list_types = mySQLConnector.loadIntoArray(queryString, 1, 0)
 
     End Sub
 
@@ -69,7 +69,7 @@ Public Class Programm
         struct_progs.tbl_modulsInProgs = mySQLConnector.mySqlToDataTable(queryString, 1)
 
         queryString = sqlQueryString.load_sum_hours(struct_progs.program_kod)
-        result = mySQLConnector.loadIntoarray(queryString, 1, 0)
+        result = mySQLConnector.loadIntoArray(queryString, 1, 0)
 
         If result.Length = 0 Then
             struct_progs.sum_hours_programm = 0

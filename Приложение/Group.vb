@@ -159,27 +159,27 @@
         mySQLConnector.opdateArgument()
 
         queryString = sqlQueryString.loadUrovenKvalifikacii
-        formGrouppLists.ur_cvalifik = mySQLConnector.loadIntoarray(queryString, 1, 0)
+        formGrouppLists.ur_cvalifik = mySQLConnector.loadIntoArray(queryString, 1, 0)
 
         queryString = sqlQueryString.loadFormEducation()
-        formGrouppLists.form_education = mySQLConnector.loadIntoarray(queryString, 1, 0)
+        formGrouppLists.form_education = mySQLConnector.loadIntoArray(queryString, 1, 0)
 
         queryString = ProgramPoUKvalifikLimit1(struct_grup.urKvalific)
-        formGrouppLists.program = mySQLConnector.loadIntoarray(queryString, 1, 0)
+        formGrouppLists.program = mySQLConnector.loadIntoArray(queryString, 1, 0)
 
         queryString = sqlQueryString.loadSpeciality()
-        formGrouppLists.speciality = mySQLConnector.loadIntoarray(queryString, 1, 0)
+        formGrouppLists.speciality = mySQLConnector.loadIntoArray(queryString, 1, 0)
 
         queryString = sqlQueryString.loadKurator()
-        formGrouppLists.kurator = mySQLConnector.loadIntoarray(queryString, 1, 0)
+        formGrouppLists.kurator = mySQLConnector.loadIntoArray(queryString, 1, 0)
 
         formGrouppLists.otvetstv_praktika = formGrouppLists.kurator
 
         queryString = sqlQueryString.loadFinansing()
-        formGrouppLists.financing = mySQLConnector.loadIntoarray(queryString, 1, 0)
+        formGrouppLists.financing = mySQLConnector.loadIntoArray(queryString, 1, 0)
 
         queryString = sqlQueryString.loadQualification()
-        formGrouppLists.qualification = mySQLConnector.loadIntoarray(queryString, 1, 0)
+        formGrouppLists.qualification = mySQLConnector.loadIntoArray(queryString, 1, 0)
 
     End Sub
 
@@ -187,7 +187,7 @@
 
         Dim queryString As String
         queryString = ProgramPoUKvalifikLimit1(struct_grup.urKvalific)
-        formGrouppLists.program = mySQLConnector.loadIntoarray(queryString, 1, 0)
+        formGrouppLists.program = mySQLConnector.loadIntoArray(queryString, 1, 0)
 
     End Sub
 
@@ -218,7 +218,7 @@
 
         queryString = sqlQueryString.loadNumberHours(struct_grup.kodProgram)
 
-        result = mySQLConnector.loadIntoarray(queryString, 1, 0)
+        result = mySQLConnector.loadIntoArray(queryString, 1, 0)
 
         If result.Length < 1 Then
 

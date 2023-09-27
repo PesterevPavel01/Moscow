@@ -67,15 +67,21 @@ Module QueryString
 
     Public Function studentList__studentListInGroup(kodGroup As String) As String
 
-        sqlString = "SELECT 
-                    students.Снилс,
-                    students.Фамилия,
-                    students.Имя,
-                    IFNULL(students.Отчество,' '),
-                    students.ДатаРождения 
-                    FROM group_list 
-                    INNER JOIN students 
-                    ON group_list.students = students.Снилс 
+        sqlString = "SELECT
+                      CONCAT(LEFT(students.Снилс,3),'-',RIGHT(LEFT(students.Снилс,6),3),'-',RIGHT(LEFT(students.Снилс,9),3),'-',RIGHT(students.Снилс,2)) AS Снилс,
+                      students.Фамилия,
+                      students.Имя,
+                      IFNULL(students.Отчество, ' ') AS Отчество,
+                      students.ДатаРождения,
+                      napr_organization.name AS Организация,
+                      financing.name AS Финансирование
+                    FROM group_list
+                      INNER JOIN students
+                        ON group_list.students = students.Снилс
+                      LEFT JOIN napr_organization
+                        ON organization=napr_organization.kod
+                      LEFT JOIN financing
+                        ON source_financing=financing.kod 
                     WHERE group_list.Kod = " & kodGroup & " 
                     ORDER BY students.Фамилия"
 
@@ -1026,9 +1032,17 @@ Module QueryString
 
     End Function
 
-    Public Function loadNOrganization()
+    Public Function loadFinancing()
 
-        sqlString = "SELECT name FROM napr_organization ORDER BY kod"
+        sqlString = "SELECT name FROM financing ORDER BY name"
+
+        Return sqlString
+
+    End Function
+
+    Public Function loadOrganization()
+
+        sqlString = "SELECT name FROM napr_organization ORDER BY name"
 
         Return sqlString
 

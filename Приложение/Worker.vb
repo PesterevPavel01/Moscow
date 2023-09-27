@@ -30,7 +30,7 @@ Public Class Worker
 
         Dim result() As String
         queryString = sqlQueryString.loadDefaultType()
-        result = mySQLConnector.loadIntoarray(queryString, 1, 0)
+        result = mySQLConnector.loadIntoArray(queryString, 1, 0)
 
         If result.Length < 1 Then
 
@@ -54,10 +54,10 @@ Public Class Worker
 
         queryString = ""
         queryString = sqlQueryString.loadListPosition()
-        worker_struct.worker_dolj = mySQLConnector.loadIntoarray(queryString, 1, 0)
+        worker_struct.worker_dolj = mySQLConnector.loadIntoArray(queryString, 1, 0)
 
         queryString = sqlQueryString.loadListWorkerType()
-        worker_struct.worker_type_list = mySQLConnector.loadIntoarray(queryString, 1, 0)
+        worker_struct.worker_type_list = mySQLConnector.loadIntoArray(queryString, 1, 0)
 
         load_default_type()
 
@@ -77,7 +77,7 @@ Public Class Worker
         Dim result() As String
         queryString = ""
         queryString = sqlQueryString.checkWorker(Convert.ToString(worker_struct.kod))
-        result = mySQLConnector.loadIntoarray(queryString, 1, 0)
+        result = mySQLConnector.loadIntoArray(queryString, 1, 0)
         If Not result(0) = "0" Then
             Return False
         End If
@@ -92,7 +92,7 @@ Public Class Worker
         Dim result() As String
 
         queryString = sqlQueryString.loadNumberWorker(worker_struct.name)
-        result = mySQLConnector.loadIntoarray(queryString, 1, 0)
+        result = mySQLConnector.loadIntoArray(queryString, 1, 0)
 
         If result(0) = "0" Then
             Return True
@@ -115,7 +115,7 @@ Public Class Worker
         mySQLConnector.sendQuery(queryString, 1)
 
         queryString = sqlQueryString.loadKodWorker(worker_struct.name)
-        result = mySQLConnector.loadIntoarray(queryString, 1, 0)
+        result = mySQLConnector.loadIntoArray(queryString, 1, 0)
         If IsNumeric(result(0)) Then
             worker_struct.kod = Convert.ToInt32(result(0))
         Else

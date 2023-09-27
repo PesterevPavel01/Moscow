@@ -44,11 +44,11 @@ Public Class Prikaz
         mySQLConnector.opdateArgument()
 
         queryString = sqlQueryString.loadDirector()
-        formPrikazList.director = mySQLConnector.loadIntoarray(queryString, 1, 0)
+        formPrikazList.director = mySQLConnector.loadIntoArray(queryString, 1, 0)
         flipDirector()
 
         queryString = sqlQueryString.loadDirectorPosition()
-        formPrikazList.Position = mySQLConnector.loadIntoarray(queryString, 1, 0)
+        formPrikazList.Position = mySQLConnector.loadIntoArray(queryString, 1, 0)
 
         loadOtv_attestat()
         load_proeсt_vnosit()
@@ -59,7 +59,7 @@ Public Class Prikaz
         load_ruk_staj()
 
         queryString = sqlQueryString.loadPositions()
-        formPrikazList.positions = mySQLConnector.loadIntoarray(queryString, 1, 0)
+        formPrikazList.positions = mySQLConnector.loadIntoArray(queryString, 1, 0)
 
         formPrikazFlag.director = False
         formPrikazFlag.directorPosition = False
@@ -80,49 +80,49 @@ Public Class Prikaz
     Private Sub load_ruk_staj()
         Dim queryString As String
         queryString = sqlQueryString.load_ruk_staj()
-        formPrikazList.ruk_staj = mySQLConnector.loadIntoarray(queryString, 1, 0)
+        formPrikazList.ruk_staj = mySQLConnector.loadIntoArray(queryString, 1, 0)
     End Sub
 
     Private Sub load_list_prepod()
         Dim queryString As String
         queryString = sqlQueryString.load_komissiya()
-        formPrikazList.comission = mySQLConnector.loadIntoarray(queryString, 1, 0)
+        formPrikazList.comission = mySQLConnector.loadIntoArray(queryString, 1, 0)
     End Sub
 
     Private Sub load_komission()
         Dim queryString As String
         queryString = sqlQueryString.load_komissiya()
-        formPrikazList.comission = mySQLConnector.loadIntoarray(queryString, 1, 0)
+        formPrikazList.comission = mySQLConnector.loadIntoArray(queryString, 1, 0)
     End Sub
 
     Private Sub load_soglasovano()
         Dim queryString As String
         queryString = sqlQueryString.load_soglasovano()
-        formPrikazList.soglasovano = mySQLConnector.loadIntoarray(queryString, 1, 0)
+        formPrikazList.soglasovano = mySQLConnector.loadIntoArray(queryString, 1, 0)
     End Sub
 
     Private Sub load_ispolnitel()
         Dim queryString As String
         queryString = sqlQueryString.load_ispolnitel()
-        formPrikazList.ispolnitel = mySQLConnector.loadIntoarray(queryString, 1, 0)
+        formPrikazList.ispolnitel = mySQLConnector.loadIntoArray(queryString, 1, 0)
     End Sub
 
     Private Sub load_proeсt_vnosit()
         Dim queryString As String
         queryString = sqlQueryString.load_proeсt_vnosit()
-        formPrikazList.proect_vnosit = mySQLConnector.loadIntoarray(queryString, 1, 0)
+        formPrikazList.proect_vnosit = mySQLConnector.loadIntoArray(queryString, 1, 0)
     End Sub
 
     Public Sub loadOtv_attestat()
         Dim queryString As String
         queryString = sqlQueryString.loadOtv_attestat()
-        formPrikazList.otv_attestat = mySQLConnector.loadIntoarray(queryString, 1, 0)
+        formPrikazList.otv_attestat = mySQLConnector.loadIntoArray(queryString, 1, 0)
     End Sub
 
     Public Sub loadslushatelFio()
         Dim queryString As String
         queryString = sqlQueryString.slushatelFio(kod_groupp)
-        formPrikazList.slushatelFio = mySQLConnector.loadIntoarray(queryString, 1, 0)
+        formPrikazList.slushatelFio = mySQLConnector.loadIntoArray(queryString, 1, 0)
     End Sub
 
 

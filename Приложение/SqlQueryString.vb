@@ -1,4 +1,5 @@
 ﻿
+Imports System.Xml
 Imports WindowsApp2.Worker
 
 Public Class SqlQueryString
@@ -520,7 +521,16 @@ Public Class SqlQueryString
         Return queryString
 
     End Function
+    Public Function update_checkStudentsInGroup(snils As String)
 
+        sqlString = "Select
+                     COUNT(kod)
+                     FROM
+                     group_list
+                     WHERE students=" + snils
+        Return sqlString
+
+    End Function
     Public Function update_check_query(number_column As Int16, name_table As String, db_element_first As String, values_element_first As String, db_element_second As String, values_element_second As String) As String
 
         Dim queryString As String = ""
@@ -546,7 +556,22 @@ Public Class SqlQueryString
         Return queryString
 
     End Function
+    Public Function update_updateStudentsInGroup(values_element_first As String, values_element_second As String, snils As String, kodGroup As Int64) As String
 
+
+        sqlString = "UPDATE group_list
+                    SET source_financing = (SELECT
+                        kod
+                      FROM financing
+                      WHERE name = '" + values_element_first + "'), organization = (SELECT
+                        kod
+                      FROM napr_organization
+                      WHERE name = '" + values_element_second + "')
+                    WHERE students = " + Convert.ToString(snils) + "
+                    AND kod =" + Convert.ToString(kodGroup)
+        Return sqlString
+
+    End Function
     Public Function update_update_query(number_column As Int16, name_table As String, db_element_first As String, values_element_first As String, db_element_second As String, values_element_second As String, kod As Int64) As String
 
         Dim queryString As String = ""

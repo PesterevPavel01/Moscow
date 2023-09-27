@@ -115,7 +115,7 @@ Public Class GroupList
 
         If Not groupListTable.SelectedItems.Item(0).SubItems(1).Text = "удалено" Then
 
-            StudentsInGroup.ListViewStudentsList.Items.Clear()
+            'StudentsInGroup.ListViewStudentsList.Items.Clear()
 
             numberGr = groupListTable.SelectedItems.Item(0).SubItems(1).Text
             StudentsInGroup.cvalification = MainForm.cvalific

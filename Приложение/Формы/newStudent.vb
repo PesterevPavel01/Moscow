@@ -140,7 +140,8 @@ Public Class newStudent
     End Sub
     Private Sub updateFormName(StudentData As Student.strStudent)
         Me.Text = StudentData.lastName & " " & StudentData.name & " " & StudentData.secondName
-        updateListView.updateRow("СправочникСлушатели", 1, addMask.addMask(StudentData.snils), 2, StudentData.lastName, 3, StudentData.name, 4, StudentData.secondName)
+        'updateListView.updateRow("СправочникСлушатели", 1, addMask.addMask(StudentData.snils), 2, StudentData.lastName, 3, StudentData.name, 4, StudentData.secondName)
+        StudentsInGroup.tbl_studentsInGroup.load_table()
     End Sub
 
     Private Sub showErrorMassege(content As String)
@@ -158,14 +159,19 @@ Public Class newStudent
             SC.Send(AddressOf updateStatus, addMask.addMask(student.studentData.snils))
 
             If Not student.studentData.idGroup = -1 Then
-                SC.Send(AddressOf updateStudentsInGroup.updateFormStudentsInGroup, student.studentData.idGroup)
+                SC.Send(AddressOf updateTableStudentsInGroup, 1)
             End If
 
         End If
 
-        SC.Send(AddressOf enabledButton, addMask.addMask(student.studentData.snils))
+        SC.Send(AddressOf blockButton, 0)
 
     End Sub
+
+    Sub updateTableStudentsInGroup(arg As Integer)
+        StudentsInGroup.tbl_studentsInGroup.load_table()
+    End Sub
+
     Sub updateStatus(student As String)
 
         message.Visible = True
@@ -177,15 +183,19 @@ Public Class newStudent
         snils.Text = content
     End Sub
 
-    Sub enabledButton(student As String)
+    Sub enabledButton(Слушатель As Integer)
 
         saveButton.Enabled = True
 
     End Sub
 
-    Sub blockButton(Слушатель As Integer)
+    Sub blockButton(arg As Integer)
+        If arg = 1 Then
+            saveButton.Enabled = False
+        Else
+            saveButton.Enabled = True
+        End If
 
-        saveButton.Enabled = False
 
     End Sub
 

@@ -157,20 +157,23 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationEvents.vb" />
+    <Compile Include="Приложение\studentsInGroup_builder.vb" />
     <Compile Include="SwichNumbers.vb" />
     <Compile Include="Приложение\SorterSetts.vb" />
     <Compile Include="Приложение\SwitchCvalification.vb" />
-    <Compile Include="Приложение\User_controls\DGVBuilder.vb" />
-    <Compile Include="Приложение\User_controls\user_comboBox.Designer.vb">
+    <Compile Include="Приложение\User_controls\UserGridView\DGVBuilder.vb" />
+    <Compile Include="Приложение\User_controls\UserGridView\DGVRedactorTable.vb" />
+    <Compile Include="Приложение\User_controls\UserGridView\DGV_Events.vb" />
+    <Compile Include="Приложение\User_controls\UserGridView\user_comboBox.Designer.vb">
       <DependentUpon>user_comboBox.vb</DependentUpon>
     </Compile>
-    <Compile Include="Приложение\User_controls\user_comboBox.vb">
+    <Compile Include="Приложение\User_controls\UserGridView\user_comboBox.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Приложение\User_controls\Tables_control.designer.vb">
+    <Compile Include="Приложение\User_controls\UserGridView\Tables_control.designer.vb">
       <DependentUpon>Tables_control.vb</DependentUpon>
     </Compile>
-    <Compile Include="Приложение\User_controls\Tables_control.vb">
+    <Compile Include="Приложение\User_controls\UserGridView\Tables_control.vb">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Приложение\Programm.vb" />
@@ -347,10 +350,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Приложение\User_controls\user_comboBox.resx">
+    <EmbeddedResource Include="Приложение\User_controls\UserGridView\user_comboBox.resx">
       <DependentUpon>user_comboBox.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Приложение\User_controls\Tables_control.resx">
+    <EmbeddedResource Include="Приложение\User_controls\UserGridView\Tables_control.resx">
       <DependentUpon>Tables_control.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Приложение\Формы\GradesIA.resx">

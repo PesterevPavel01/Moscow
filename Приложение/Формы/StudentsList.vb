@@ -194,7 +194,8 @@
 
                     'Label2.Visible = True
                     'Label2.Text = "Слушатель: Снилс №" & ind & " был удален."
-                    Call updateListView.updateRow("СправочникСлушатели", 1, "удалено", 2, "удалено", 3, "удалено", 4, "удалено")
+                    'Call updateListView.updateRow("СправочникСлушатели", 1, "удалено", 2, "удалено", 3, "удалено", 4, "удалено")
+                    StudentsInGroup.tbl_studentsInGroup.load_table()
                     счетчик = 0
                     While счетчик < UBound(massiv, 1)
 

@@ -469,7 +469,8 @@ Module _technical
 
             MainForm.mySqlConnect.sendQuery(queryString, 1)
 
-            updateStudentsInGroup.updateFormStudentsInGroup(GroupList.kod)
+            'updateStudentsInGroup.updateFormStudentsInGroup(GroupList.kod)
+            StudentsInGroup.tbl_studentsInGroup.load_table()
 
         Else MsgBox("Слушатель уже добавлен в группу")
 

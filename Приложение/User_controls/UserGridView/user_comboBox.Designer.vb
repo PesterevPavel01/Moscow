@@ -28,15 +28,16 @@ Partial Class user_comboBox
         '
         'my_ComboBox
         '
-        Me.my_ComboBox.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.my_ComboBox.BackColor = System.Drawing.SystemColors.Window
+        Me.my_ComboBox.Dock = System.Windows.Forms.DockStyle.Fill
         Me.my_ComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.my_ComboBox.DropDownWidth = 200
         Me.my_ComboBox.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.my_ComboBox.Font = New System.Drawing.Font("Microsoft YaHei", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.my_ComboBox.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
         Me.my_ComboBox.FormattingEnabled = True
         Me.my_ComboBox.Location = New System.Drawing.Point(0, 0)
         Me.my_ComboBox.Name = "my_ComboBox"
-        Me.my_ComboBox.Size = New System.Drawing.Size(644, 27)
+        Me.my_ComboBox.Size = New System.Drawing.Size(644, 29)
         Me.my_ComboBox.TabIndex = 0
         '
         'panel_control

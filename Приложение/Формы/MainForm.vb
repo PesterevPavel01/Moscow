@@ -150,6 +150,7 @@
             НастройкаПоискаСлушателей.Снилс.Checked = True
 
         End If
+
         StudentsList.insertIntoGroupList.Visible = False
         ActiveControl = Button2
         StudentsList.searchSetts.Visible = False
@@ -226,7 +227,7 @@
         'Чтобы вернуть на место, т.к. сбивается форма на справке о обучении
         местоНаФорме(1, BuildOrder.Label2, BuildOrder.Label14, BuildOrder.Утверждает, BuildOrder.УтверждаетДолжность, BuildOrder.GroupBox6)
         BuildOrder.tableStudentsList.Visible = False
-        showPoleVvoda(False)
+        inputField(False)
 
     End Sub
 
@@ -1175,7 +1176,7 @@
 
         ElseIf e.KeyValue = Keys.Escape Then
 
-            tbl_education.redactorClose()
+            tbl_education.builder.redactorClose()
             e.Handled = True
 
         End If
@@ -1184,8 +1185,9 @@
 
     Private Sub progsType_tbl()
 
-        If dataGridModulsInProgram.CurrentCell.RowIndex = (dataGridModulsInProgram.Rows.Count - 1) Then
+        If dataGridModulsInProgram.Rows.Count = 0 Then Return
 
+        If dataGridModulsInProgram.CurrentCell.RowIndex = (dataGridModulsInProgram.Rows.Count - 1) Then
 
             programs_type_tbl.Focus()
 
@@ -1224,7 +1226,7 @@
 
         ElseIf e.KeyValue = Keys.Escape Then
 
-            programs_type_tbl.redactorClose()
+            programs_type_tbl.builder.redactorClose()
 
             e.Handled = True
 
@@ -1283,15 +1285,18 @@
 
         ElseIf e.KeyValue = Keys.Escape Then
 
-            If Not programs__progrs_tbl.comboBox_second_element.my_ComboBox.DroppedDown Then
+            If programs__progrs_tbl.flag_active_control And programs__progrs_tbl.flagUpdate Then
 
-                programs__progrs_tbl.redactorClose()
+                programs__progrs_tbl.builder.redactorClose()
 
-            Else
+            End If
+
+            If programs__progrs_tbl.comboBox_second_element.my_ComboBox.DroppedDown Then
 
                 programs__progrs_tbl.comboBox_second_element.my_ComboBox.DroppedDown = False
 
             End If
+
             e.Handled = True
 
         End If
@@ -1435,24 +1440,23 @@
     End Sub
     Private Sub СправочникСлушатели_KeyDown(sender As Object, e As KeyEventArgs) Handles СправочникСлушатели.KeyDown
 
-        If e.KeyCode = 13 Then
+        Select Case e.KeyCode
 
-            studentList_Click(sender, e)
+            Case Keys.Enter
 
-        End If
-        If e.KeyCode = switchPageKey Then
+                studentList_Click(sender, e)
 
-            openNextPage(TabControlOther)
-            e.Handled = True
+            Case switchPageKey
 
-        End If
+                openNextPage(TabControlOther)
+                e.Handled = True
 
-        If e.KeyCode = seitchPageKey_Inverse Then
+            Case seitchPageKey_Inverse
 
-            openPrevPage(TabControlOther)
-            e.Handled = True
+                openPrevPage(TabControlOther)
+                e.Handled = True
 
-        End If
+        End Select
 
     End Sub
 
@@ -1778,8 +1782,6 @@
         увеличитьШрифт(Ведомость)
     End Sub
 
-
-
     Private Sub ПП_Окончание_Click(sender As Object, e As EventArgs) Handles ПП_Окончание.Click
 
         BuildOrder.cvalification = PP
@@ -1988,7 +1990,6 @@
     Private Sub ПО_Свидетельство_LostFocus(sender As Object, e As EventArgs) Handles ПО_Свидетельство.LostFocus
         Call НормальныйШрифт(ПО_Свидетельство)
     End Sub
-
 
     Private Sub MainForm_Shown(sender As Object, e As EventArgs) Handles MyBase.Shown
         If startApp.open Then
@@ -2293,9 +2294,6 @@
         BuildOrder.tableStudentsList.Columns(1).Width = 550
         BuildOrder.tableStudentsList.Columns(1).Text = "Наименование модуля"
 
-        'BuildOrder.ListViewСписокСлушателей.Columns(2).Width = 300
-        'BuildOrder.ListViewСписокСлушателей.Columns(2).Text = "Преподаватель"
-
         BuildOrder.Утверждает.Visible = False
         BuildOrder.УтверждаетДолжность.Visible = False
         BuildOrder.Label2.Visible = False
@@ -2419,14 +2417,14 @@
         BuildOrder.КнопкаСформировать.Location = New Point(135, 760)
         BuildOrder.КнопкаОчистить.Location = New Point(2, 760)
 
-        showPoleVvoda(True)
+        inputField(True)
 
         BuildOrder.ДатаПриказа.Enabled = False
         ActiveControl = Button2
         BuildOrder.ShowDialog()
         BuildOrder.ДатаПриказа.Enabled = True
 
-        showPoleVvoda(False)
+        inputField(False)
 
         BuildOrder.LabelИзмениПадеж.Visible = False
         BuildOrder.tableStudentsList.Visible = False
@@ -2439,7 +2437,7 @@
 
     End Sub
 
-    Sub showPoleVvoda(onOff As Boolean, Optional x As Integer = 90, Optional heightText As Integer = 42)
+    Sub inputField(onOff As Boolean, Optional x As Integer = 90, Optional heightText As Integer = 42)
 
         If Not onOff Then
 
@@ -2826,18 +2824,6 @@
             e.Handled = True
         End If
     End Sub
-
-    'Private Sub Стаж_зачисление_KeyDown(sender As Object, e As KeyEventArgs)
-    '    If e.KeyCode = КлавишаПереключенияВкладок Then
-    '        переключательВкладок(TabControlOther)
-    '        e.Handled = True
-    '    End If
-
-    '    If e.KeyCode = КлавишаОбратногоПереключенияВкладок Then
-    '        обратныйПереключательВкладок(TabControlOther)
-    '        e.Handled = True
-    '    End If
-    'End Sub
 
     Private Sub Стаж_ДопускКИА_KeyDown(sender As Object, e As KeyEventArgs)
         If e.KeyCode = switchPageKey Then
@@ -3621,10 +3607,11 @@
 
         programs__progrs_tbl.queryString_load = program.program__loadPrograms()
 
-        programs__progrs_tbl.persent_width_column_0 = 65
-        programs__progrs_tbl.persent_width_column_1 = 10
-        programs__progrs_tbl.persent_width_column_2 = 0
-        programs__progrs_tbl.persent_width_column_3 = 20
+        programs__progrs_tbl.width_column.Clear()
+        programs__progrs_tbl.width_column.Add(0, 65)
+        programs__progrs_tbl.width_column.Add(1, 10)
+        programs__progrs_tbl.width_column.Add(2, 0)
+        programs__progrs_tbl.width_column.Add(3, 20)
 
 
         programs__progrs_tbl.names.redactor_element_first = "Наименование"
@@ -3653,9 +3640,14 @@
         programs_type_tbl.type_progs_on = True
         programs_type_tbl.add_on = False
 
-        programs_type_tbl.persent_width_column_0 = 78
-        programs_type_tbl.persent_width_column_1 = 20
-        programs_type_tbl.persent_width_column_2 = 0
+        If programs_type_tbl.width_column.Count = 0 Then
+
+            programs_type_tbl.width_column.Add(0, 78)
+            programs_type_tbl.width_column.Add(1, 20)
+            programs_type_tbl.width_column.Add(2, 0)
+            programs_type_tbl.width_column.Add(3, -1)
+
+        End If
 
         programs_type_tbl.numberElementFirst = 1
         programs_type_tbl.numberElementSecond = 0
@@ -3699,7 +3691,7 @@
             Return
         End If
 
-        programs__progrs_tbl.add_Down()
+        programs__progrs_tbl.table_addDown()
 
     End Sub
 
@@ -3752,7 +3744,9 @@
             Return
         End If
 
+
         programs__loadTables()
+
 
     End Sub
 
@@ -3783,14 +3777,20 @@
 
         End If
 
-        If Convert.ToString(programs__progrs_tbl.selected_row.Cells(0).Value).Trim = "" Then
+        If programs__progrs_tbl.selected_row = -1 Then
+
+            programs__progrs_tbl.selected_row = 0
+
+        End If
+
+        If Convert.ToString(programs__progrs_tbl.DataGridTablesResult.Rows(programs__progrs_tbl.selected_row).Cells(0).Value).Trim = "" Then
 
             Return
 
         End If
 
         Try
-            program.struct_progs.program_kod = Convert.ToString(programs__progrs_tbl.selected_row.Cells(2).Value)
+            program.struct_progs.program_kod = Convert.ToString(programs__progrs_tbl.DataGridTablesResult.Rows(programs__progrs_tbl.selected_row).Cells(2).Value)
         Catch ex As Exception
             Return
         End Try
@@ -4281,11 +4281,11 @@
 
     End Sub
 
-    Private Sub dataGridProgs_SelectionChanged(sender As Object, e As EventArgs)
+    'Private Sub dataGridProgs_SelectionChanged(sender As Object, e As EventArgs)
 
-        programs__loadModulsInProgramm()
+    '    programs__loadModulsInProgramm()
 
-    End Sub
+    'End Sub
 
     Private Sub SplitContainerProgs_Enter(sender As Object, e As EventArgs)
 
@@ -4471,8 +4471,13 @@
 
         tbl_education.queryString_load = sqlQueryString.load_list_positions()
 
-        tbl_education.persent_width_column_0 = 100
-        tbl_education.persent_width_column_1 = 0
+        tbl_education.width_column.Clear()
+
+        tbl_education.width_column.Add(0, 100)
+        tbl_education.width_column.Add(1, 0)
+        tbl_education.width_column.Add(2, -1)
+        tbl_education.width_column.Add(3, -1)
+
 
         tbl_education.names.redactor_element_first = "Наименование"
         tbl_education.names.db_element_first = "name"
@@ -4498,8 +4503,12 @@
                 FROM doo_doc_type
                 ORDER BY name"
 
-        tbl_education.persent_width_column_0 = 100
-        tbl_education.persent_width_column_1 = 0
+        tbl_education.width_column.Clear()
+
+        tbl_education.width_column.Add(0, 100)
+        tbl_education.width_column.Add(1, 0)
+        tbl_education.width_column.Add(2, -1)
+        tbl_education.width_column.Add(3, -1)
 
         tbl_education.names.redactor_element_first = "Наименование"
         tbl_education.names.db_element_first = "name"
@@ -4520,9 +4529,12 @@
 
         tbl_education.queryString_load = sqlQueryString.load_list_organization()
 
-        tbl_education.persent_width_column_0 = 30
-        tbl_education.persent_width_column_1 = 69
-        tbl_education.persent_width_column_2 = 0
+        tbl_education.width_column.Clear()
+
+        tbl_education.width_column.Add(0, 30)
+        tbl_education.width_column.Add(1, 69)
+        tbl_education.width_column.Add(2, 0)
+        tbl_education.width_column.Add(3, -1)
 
         tbl_education.names.redactor_element_first = "Наименование"
         tbl_education.names.redactor_element_second = "Полное наименование"
@@ -4576,7 +4588,7 @@
 
         ElseIf tbl_education.Visible Then
 
-            tbl_education.redactorOpen()
+            tbl_education.builder.redactorOpen()
             SplitContainerOtherList.Panel2Collapsed = True
 
         End If

@@ -185,7 +185,7 @@ Public Class MySQLConnect
 
     End Function
 
-    Public Function loadIntoarray(sqlString As String, numberDB As Int16, numberColumn As Integer) As Object
+    Public Function loadIntoArray(sqlString As String, numberDB As Int16, numberColumn As Integer) As Object
 
         Dim list As New List(Of String)
 

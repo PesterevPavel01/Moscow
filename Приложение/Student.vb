@@ -281,28 +281,28 @@ Public Class Student
         mySQLConnector.opdateArgument()
 
         queryString = loadDooVidDok()
-        formSlushLists.doo_doc_type = mySQLConnector.loadIntoarray(queryString, 1, 0)
+        formSlushLists.doo_doc_type = mySQLConnector.loadIntoArray(queryString, 1, 0)
 
         queryString = loadGender()
-        formSlushLists.gender = mySQLConnector.loadIntoarray(queryString, 1, 0)
+        formSlushLists.gender = mySQLConnector.loadIntoArray(queryString, 1, 0)
 
         queryString = loadUrovenObr()
-        formSlushLists.urovenObr = mySQLConnector.loadIntoarray(queryString, 1, 0)
+        formSlushLists.urovenObr = mySQLConnector.loadIntoArray(queryString, 1, 0)
 
         queryString = loadDooCountry()
-        formSlushLists.DOO_strana = mySQLConnector.loadIntoarray(queryString, 1, 0)
+        formSlushLists.DOO_strana = mySQLConnector.loadIntoArray(queryString, 1, 0)
 
         queryString = loadNationality()
-        formSlushLists.nationality = mySQLConnector.loadIntoarray(queryString, 1, 0)
+        formSlushLists.nationality = mySQLConnector.loadIntoArray(queryString, 1, 0)
 
         queryString = loadDokUL()
-        formSlushLists.doc_UL = mySQLConnector.loadIntoarray(queryString, 1, 0)
+        formSlushLists.doc_UL = mySQLConnector.loadIntoArray(queryString, 1, 0)
 
         queryString = loadIstFinans()
-        formSlushLists.finSource = mySQLConnector.loadIntoarray(queryString, 1, 0)
+        formSlushLists.finSource = mySQLConnector.loadIntoArray(queryString, 1, 0)
 
-        queryString = loadNOrganization()
-        formSlushLists.napr_organization = mySQLConnector.loadIntoarray(queryString, 1, 0)
+        queryString = loadOrganization()
+        formSlushLists.napr_organization = mySQLConnector.loadIntoArray(queryString, 1, 0)
 
         flagSlushatelForm.doo_doc_type = False
         flagSlushatelForm.gender = False
