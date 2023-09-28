@@ -1124,12 +1124,12 @@ Module QueryString
 
     End Function
 
-    Public Function load_slushatel_and_org(kodGroup As String) As String
+    Public Function load_studentsAndOrg(kodGroup As String) As String
 
         sqlString = "SELECT
                       result.student,
                       napr_organization.name AS organization,
-                      financing.name AS financing
+                      fin_source.name AS financing
                     FROM (SELECT
                         CONCAT(students.Фамилия, ' ', students.Имя, ' ', IFNULL(students.Отчество, ' ')) AS student,
                         group_list.organization,
@@ -1141,8 +1141,8 @@ Module QueryString
                       ORDER BY students.Фамилия) AS result
                       LEFT JOIN napr_organization
                         ON result.organization = napr_organization.kod
-                      LEFT JOIN financing
-                        ON result.source_financing = napr_organization.kod
+                      LEFT JOIN fin_source
+                        ON result.source_financing = fin_source.kod
                     ORDER BY result.student"
 
         Return sqlString

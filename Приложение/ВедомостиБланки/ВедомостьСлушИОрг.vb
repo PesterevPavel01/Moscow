@@ -1,6 +1,6 @@
 ﻿Module ВедомостьСлушИОрг
 
-    Sub ВедомостьСлушателиИОрганизации()
+    Sub orderStudentsAndOrg()
 
         Dim wordApp
         Dim documentWord, studentsData, table
@@ -8,7 +8,7 @@
         Dim sqlQuery, orderType As String
 
 
-        sqlQuery = load_slushatel_and_org(MainForm.orderIdGroup)
+        sqlQuery = load_studentsAndOrg(MainForm.orderIdGroup)
         studentsData = MainForm.mySqlConnect.loadMySqlToArray(sqlQuery, 1)
 
         If studentsData(0, 0) = "нет записей" Then
