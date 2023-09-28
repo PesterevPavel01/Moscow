@@ -13,7 +13,7 @@
 
         End If
 
-        excellApp.Visible = True
+        'excellApp.Visible = True
         resourcesPath = _technical.resourcesPath()
         samplePath = resourcesPath & "Шаблоны\Педнагрузка.xlsx"
         pathNewFile = resourcesPath & "Отчеты\"

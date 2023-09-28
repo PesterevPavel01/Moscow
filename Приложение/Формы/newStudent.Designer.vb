@@ -28,8 +28,6 @@ Partial Class newStudent
         Me.АдресРегистрации = New System.Windows.Forms.TextBox()
         Me.ФамилияВДокОбОбразовании = New System.Windows.Forms.TextBox()
         Me.НомерДокументаООбразовании = New System.Windows.Forms.TextBox()
-        Me.Label19 = New System.Windows.Forms.Label()
-        Me.Label17 = New System.Windows.Forms.Label()
         Me.Label16 = New System.Windows.Forms.Label()
         Me.Label15 = New System.Windows.Forms.Label()
         Me.Label14 = New System.Windows.Forms.Label()
@@ -68,8 +66,6 @@ Partial Class newStudent
         Me.УровеньОбразования = New System.Windows.Forms.ComboBox()
         Me.Гражданство = New System.Windows.Forms.ComboBox()
         Me.ДУЛ = New System.Windows.Forms.ComboBox()
-        Me.ИсточникФин = New System.Windows.Forms.ComboBox()
-        Me.НаправившаяОрг = New System.Windows.Forms.ComboBox()
         Me.Label22 = New System.Windows.Forms.Label()
         Me.doo_vid_dok = New System.Windows.Forms.ComboBox()
         Me.header = New System.Windows.Forms.ToolStrip()
@@ -124,28 +120,6 @@ Partial Class newStudent
         Me.НомерДокументаООбразовании.Name = "НомерДокументаООбразовании"
         Me.НомерДокументаООбразовании.Size = New System.Drawing.Size(711, 24)
         Me.НомерДокументаООбразовании.TabIndex = 11
-        '
-        'Label19
-        '
-        Me.Label19.AutoSize = True
-        Me.Label19.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.Label19.Location = New System.Drawing.Point(19, 841)
-        Me.Label19.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.Label19.Name = "Label19"
-        Me.Label19.Size = New System.Drawing.Size(227, 21)
-        Me.Label19.TabIndex = 95
-        Me.Label19.Text = "Направившая организация"
-        '
-        'Label17
-        '
-        Me.Label17.AutoSize = True
-        Me.Label17.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.Label17.Location = New System.Drawing.Point(19, 807)
-        Me.Label17.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.Label17.Name = "Label17"
-        Me.Label17.Size = New System.Drawing.Size(228, 21)
-        Me.Label17.TabIndex = 94
-        Me.Label17.Text = "Источник финансирования"
         '
         'Label16
         '
@@ -557,30 +531,6 @@ Partial Class newStudent
         Me.ДУЛ.Size = New System.Drawing.Size(711, 26)
         Me.ДУЛ.TabIndex = 18
         '
-        'ИсточникФин
-        '
-        Me.ИсточникФин.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.ИсточникФин.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.ИсточникФин.FormattingEnabled = True
-        Me.ИсточникФин.ItemHeight = 18
-        Me.ИсточникФин.Location = New System.Drawing.Point(333, 802)
-        Me.ИсточникФин.Margin = New System.Windows.Forms.Padding(4)
-        Me.ИсточникФин.Name = "ИсточникФин"
-        Me.ИсточникФин.Size = New System.Drawing.Size(711, 26)
-        Me.ИсточникФин.TabIndex = 23
-        '
-        'НаправившаяОрг
-        '
-        Me.НаправившаяОрг.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.НаправившаяОрг.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.НаправившаяОрг.FormattingEnabled = True
-        Me.НаправившаяОрг.ItemHeight = 18
-        Me.НаправившаяОрг.Location = New System.Drawing.Point(333, 836)
-        Me.НаправившаяОрг.Margin = New System.Windows.Forms.Padding(4)
-        Me.НаправившаяОрг.Name = "НаправившаяОрг"
-        Me.НаправившаяОрг.Size = New System.Drawing.Size(711, 26)
-        Me.НаправившаяОрг.TabIndex = 24
-        '
         'Label22
         '
         Me.Label22.AutoSize = True
@@ -613,7 +563,7 @@ Partial Class newStudent
         Me.header.Location = New System.Drawing.Point(0, 0)
         Me.header.Name = "header"
         Me.header.Padding = New System.Windows.Forms.Padding(0, 2, 0, 0)
-        Me.header.Size = New System.Drawing.Size(1050, 52)
+        Me.header.Size = New System.Drawing.Size(1051, 52)
         Me.header.TabIndex = 139
         Me.header.Text = "ToolStrip1"
         '
@@ -671,14 +621,12 @@ Partial Class newStudent
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1050, 874)
+        Me.ClientSize = New System.Drawing.Size(1051, 790)
         Me.Controls.Add(Me.status)
         Me.Controls.Add(Me.message)
         Me.Controls.Add(Me.header)
         Me.Controls.Add(Me.doo_vid_dok)
         Me.Controls.Add(Me.Label22)
-        Me.Controls.Add(Me.НаправившаяОрг)
-        Me.Controls.Add(Me.ИсточникФин)
         Me.Controls.Add(Me.ДУЛ)
         Me.Controls.Add(Me.Гражданство)
         Me.Controls.Add(Me.УровеньОбразования)
@@ -701,8 +649,6 @@ Partial Class newStudent
         Me.Controls.Add(Me.АдресРегистрации)
         Me.Controls.Add(Me.ФамилияВДокОбОбразовании)
         Me.Controls.Add(Me.НомерДокументаООбразовании)
-        Me.Controls.Add(Me.Label19)
-        Me.Controls.Add(Me.Label17)
         Me.Controls.Add(Me.Label16)
         Me.Controls.Add(Me.Label15)
         Me.Controls.Add(Me.Label14)
@@ -741,8 +687,6 @@ Partial Class newStudent
     Friend WithEvents АдресРегистрации As TextBox
     Friend WithEvents ФамилияВДокОбОбразовании As TextBox
     Friend WithEvents НомерДокументаООбразовании As TextBox
-    Friend WithEvents Label19 As Label
-    Friend WithEvents Label17 As Label
     Friend WithEvents Label16 As Label
     Friend WithEvents Label15 As Label
     Friend WithEvents Label14 As Label
@@ -781,8 +725,6 @@ Partial Class newStudent
     Friend WithEvents УровеньОбразования As ComboBox
     Friend WithEvents Гражданство As ComboBox
     Friend WithEvents ДУЛ As ComboBox
-    Friend WithEvents ИсточникФин As ComboBox
-    Friend WithEvents НаправившаяОрг As ComboBox
     Friend WithEvents Label22 As Label
     Friend WithEvents doo_vid_dok As ComboBox
     Friend WithEvents header As ToolStrip

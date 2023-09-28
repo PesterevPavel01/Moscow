@@ -53,6 +53,7 @@ Public Class DGVRedactorTable
     Public Sub updateRow()
 
         Dim resAr() As String
+
         If userDGV.program_on Then
 
             sqlQuery = MainForm.sqlQueryString.update_prog_check_query(userDGV.name_table, userDGV.names.db_element_first, userDGV.values.element_first, userDGV.names.db_element_second, userDGV.values.element_second, MainForm.comboBoxProgramms.Text)

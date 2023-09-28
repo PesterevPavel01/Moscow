@@ -11,9 +11,10 @@ Public Class Tables_control
     Public type_progs_on As Boolean
     Public add_on As Boolean = True
 
+    Public adjacentControls = New Dictionary(Of String, Object)
+
     Public selected_row As Integer = -1
     Private flag_rowSelect As Boolean = False
-    'Private flag_responceProg As Boolean = False
 
     Public flag_active_control As Boolean = False
     Public active_last_element As Boolean = False
@@ -41,21 +42,30 @@ Public Class Tables_control
     Public flagUpdate As Boolean = False
 
     Public mySQLConnector As New MySQLConnect
-    Dim keyboardEvents As New DGV_Events
+    Public keyboardEvents As New DGV_Events
     Dim tableRedactor As New DGVRedactorTable
     Public builder As New DGVBuilder
 
-    Public Sub table_init()
-
-        keyboardEvents.userDGV = Me
-        keyboardEvents.formParent = StudentsInGroup
-        builder.userDGV = Me
-        tableRedactor.userDGV = Me
+    Public Sub studentInGroupSettings_init()
 
         keyboardEvents.listCombo.Add(comboBox_first_element)
         keyboardEvents.listCombo.Add(comboBox_second_element)
+        StudentsInGroup.tbl_studentsInGroup.name_table = "group_list"
+        StudentsInGroup.tbl_studentsInGroup.keyboardEvents.userDGV = Me
+        keyboardEvents.formParent = StudentsInGroup
 
-        keyboardEvents.userDGV_init()
+    End Sub
+
+    Public Sub table_init()
+
+        keyboardEvents.formParent = Me.ParentForm
+        keyboardEvents.userDGV = Me
+        keyboardEvents.listCombo.Clear()
+        keyboardEvents.listCombo.Add(comboBox_first_element)
+        keyboardEvents.listCombo.Add(comboBox_second_element)
+
+        builder.userDGV = Me
+        tableRedactor.userDGV = Me
 
         aligment_column.Clear()
 
@@ -121,6 +131,10 @@ Public Class Tables_control
 
         DataGridTablesResult.DataSource = result
 
+        If name_table <> "group_list" Then
+            keyboardEvents.userDGV_init()
+        End If
+
         load_table()
 
     End Sub
@@ -169,6 +183,23 @@ Public Class Tables_control
 
     End Sub
 
+    Public Sub table_enterPress(sender As Object, e As KeyPressEventArgs)
+
+        If Not SplitContainer_main.Panel2Collapsed Then
+
+            secondElement_enterPress(e)
+
+        Else
+
+            If name_table = "group_list" Then
+                dataGridTables_CellDoubleClick(sender, e)
+                e.Handled = True
+            End If
+
+        End If
+
+    End Sub
+
     Public Sub table_tabDown(e As KeyEventArgs)
 
         If Not SplitContainer_main.Panel2Collapsed Then
@@ -176,6 +207,13 @@ Public Class Tables_control
             builder.redactor_firstControl_focus()
 
             e.Handled = True
+
+        Else
+            If name_table = "group_list" Then
+                Dim nextControl As ToolStrip = adjacentControls("next")
+                nextControl.Select()
+                nextControl.Items(0).Select()
+            End If
 
         End If
 
@@ -251,11 +289,27 @@ Public Class Tables_control
 
                 response_programms()
 
+            ElseIf name_table = "group_list" Then
+
+                Dim organization As String = Convert.ToString(DataGridTablesResult.CurrentRow.Cells(5).Value)
+                Dim finansing As String = Convert.ToString(DataGridTablesResult.CurrentRow.Cells(6).Value)
+
+                StudentsInGroup.everyoneVisible(rowValidation(finansing, organization), finansing, organization)
+
             End If
 
         End If
 
     End Sub
+
+    Private Function rowValidation(finansing As String, organization As String) As Boolean
+
+        If organization.Trim <> "" And finansing.Trim <> "" Then
+            Return True
+        End If
+        Return False
+
+    End Function
 
     Public Sub redactorElementFirst_bottomDown(e As KeyEventArgs)
 
@@ -450,6 +504,7 @@ Public Class Tables_control
         Dim s As Integer
         's = DataGridTablesResult.CurrentCell.RowIndex
     End Sub
+
 End Class
 
 Public Structure Values

@@ -45,7 +45,7 @@
 
         _technical.savePrikazBlank(ДокументВорд, MainForm.orderIdGroup, ВидПриказа, ПутьККаталогуСРесурсами, "Доверенности")
 
-        _technical.ЗаменитьТекстВОбластиДокументаВорд(ДокументВорд.Range, "$НомерГруппы$", BuildOrder.groupNumber.Text, 2)
+        _technical.replaceText_documentWordRange(ДокументВорд.Range, "$НомерГруппы$", BuildOrder.groupNumber.Text, 2)
 
         Таблица = МСВорд.НайтиТаблицуПоМеткеИлиНеНайдена(ДокументВорд, "$Таблица$", 2, 2)
 
@@ -59,16 +59,16 @@
 
         End Try
 
-        _technical.ЗаменитьТекстВОбластиДокументаВорд(ДокументВорд.Range, "$КоличествоСлушателей$", UBound(ДанныеСлушателей, 2) + 1, 2)
-        _technical.ЗаменитьТекстВОбластиДокументаВорд(ДокументВорд.Range, "$НомерГруппы$", BuildOrder.groupNumber.Text, 2)
-        _technical.ЗаменитьТекстВОбластиДокументаВорд(ДокументВорд.Range, "$УровеньКвалификации$", Группа(1, 0), 2)
-        _technical.ЗаменитьТекстВОбластиДокументаВорд(ДокументВорд.Range, "$Программа$", Группа(0, 0), 2)
-        _technical.ЗаменитьТекстВОбластиДокументаВорд(ДокументВорд.Range, "$ГруппаФинансирование$", Группа(2, 0), 2)
-        _technical.ЗаменитьТекстВОбластиДокументаВорд(ДокументВорд.Range, "$И.О.Ответств$", rotate(BuildOrder.Утверждает.Text), 2)
-        _technical.ЗаменитьТекстВОбластиДокументаВорд(ДокументВорд.Range, "$Дата$", ДатаВПриказ, 2)
-        _technical.ЗаменитьТекстВОбластиДокументаВорд(ДокументВорд.Range, "$День$", Format(Дата, "dd"), 2)
-        _technical.ЗаменитьТекстВОбластиДокументаВорд(ДокументВорд.Range, "$Месяц$", месяцРП(Format(Дата, "MMMM")), 2)
-        _technical.ЗаменитьТекстВОбластиДокументаВорд(ДокументВорд.Range, "$Год$", Format(Дата, "yyyy"), 2)
+        _technical.replaceText_documentWordRange(ДокументВорд.Range, "$КоличествоСлушателей$", UBound(ДанныеСлушателей, 2) + 1, 2)
+        _technical.replaceText_documentWordRange(ДокументВорд.Range, "$НомерГруппы$", BuildOrder.groupNumber.Text, 2)
+        _technical.replaceText_documentWordRange(ДокументВорд.Range, "$УровеньКвалификации$", Группа(1, 0), 2)
+        _technical.replaceText_documentWordRange(ДокументВорд.Range, "$Программа$", Группа(0, 0), 2)
+        _technical.replaceText_documentWordRange(ДокументВорд.Range, "$ГруппаФинансирование$", Группа(2, 0), 2)
+        _technical.replaceText_documentWordRange(ДокументВорд.Range, "$И.О.Ответств$", rotate(BuildOrder.Утверждает.Text), 2)
+        _technical.replaceText_documentWordRange(ДокументВорд.Range, "$Дата$", ДатаВПриказ, 2)
+        _technical.replaceText_documentWordRange(ДокументВорд.Range, "$День$", Format(Дата, "dd"), 2)
+        _technical.replaceText_documentWordRange(ДокументВорд.Range, "$Месяц$", месяцРП(Format(Дата, "MMMM")), 2)
+        _technical.replaceText_documentWordRange(ДокументВорд.Range, "$Год$", Format(Дата, "yyyy"), 2)
 
         МСВорд.ЗаполнитьТаблицу(Таблица, ДанныеСлушателей, 2, True)
         ДокументВорд.Save
@@ -116,18 +116,18 @@
 
             _technical.savePrikazBlank(ДокументВорд, MainForm.orderIdGroup, ВидПриказа, ПутьККаталогуСРесурсами, "Доверенности")
 
-            _technical.ЗаменитьТекстВОбластиДокументаВорд(ДокументВорд.Range, "$СлушательИО$", _technical.ФамилияИОПоПолнойФИО(ЧекнутыеСлушатели(0, СчетчикСтрок)), 2)
-            _technical.ЗаменитьТекстВОбластиДокументаВорд(ДокументВорд.Range, "$ФИОСлушатель$", ЧекнутыеСлушатели(0, СчетчикСтрок), 2)
-            _technical.ЗаменитьТекстВОбластиДокументаВорд(ДокументВорд.Range, "$КоличествоСлушателей$", UBound(ЧекнутыеСлушатели, 2) + 1, 2)
-            _technical.ЗаменитьТекстВОбластиДокументаВорд(ДокументВорд.Range, "$НомерГруппы$", BuildOrder.groupNumber.Text, 2)
-            _technical.ЗаменитьТекстВОбластиДокументаВорд(ДокументВорд.Range, "$УровеньКвалификации$", Группа(1, 0), 2)
-            _technical.ЗаменитьТекстВОбластиДокументаВорд(ДокументВорд.Range, "$Программа$", Группа(0, 0), 2)
-            _technical.ЗаменитьТекстВОбластиДокументаВорд(ДокументВорд.Range, "$ГруппаФинансирование$", Группа(2, 0), 2)
-            _technical.ЗаменитьТекстВОбластиДокументаВорд(ДокументВорд.Range, "$И.О.Ответств$", rotate(BuildOrder.Утверждает.Text), 2)
-            _technical.ЗаменитьТекстВОбластиДокументаВорд(ДокументВорд.Range, "$ДатаК$", ДатаВПриказ, 2)
-            _technical.ЗаменитьТекстВОбластиДокументаВорд(ДокументВорд.Range, "$День$", Format(Дата, "dd"), 2)
-            _technical.ЗаменитьТекстВОбластиДокументаВорд(ДокументВорд.Range, "$Месяц$", месяцРП(Format(Дата, "MMMM")), 2)
-            _technical.ЗаменитьТекстВОбластиДокументаВорд(ДокументВорд.Range, "$Год$", Format(Дата, "yyyy"), 2)
+            _technical.replaceText_documentWordRange(ДокументВорд.Range, "$СлушательИО$", _technical.ФамилияИОПоПолнойФИО(ЧекнутыеСлушатели(0, СчетчикСтрок)), 2)
+            _technical.replaceText_documentWordRange(ДокументВорд.Range, "$ФИОСлушатель$", ЧекнутыеСлушатели(0, СчетчикСтрок), 2)
+            _technical.replaceText_documentWordRange(ДокументВорд.Range, "$КоличествоСлушателей$", UBound(ЧекнутыеСлушатели, 2) + 1, 2)
+            _technical.replaceText_documentWordRange(ДокументВорд.Range, "$НомерГруппы$", BuildOrder.groupNumber.Text, 2)
+            _technical.replaceText_documentWordRange(ДокументВорд.Range, "$УровеньКвалификации$", Группа(1, 0), 2)
+            _technical.replaceText_documentWordRange(ДокументВорд.Range, "$Программа$", Группа(0, 0), 2)
+            _technical.replaceText_documentWordRange(ДокументВорд.Range, "$ГруппаФинансирование$", Группа(2, 0), 2)
+            _technical.replaceText_documentWordRange(ДокументВорд.Range, "$И.О.Ответств$", rotate(BuildOrder.Утверждает.Text), 2)
+            _technical.replaceText_documentWordRange(ДокументВорд.Range, "$ДатаК$", ДатаВПриказ, 2)
+            _technical.replaceText_documentWordRange(ДокументВорд.Range, "$День$", Format(Дата, "dd"), 2)
+            _technical.replaceText_documentWordRange(ДокументВорд.Range, "$Месяц$", месяцРП(Format(Дата, "MMMM")), 2)
+            _technical.replaceText_documentWordRange(ДокументВорд.Range, "$Год$", Format(Дата, "yyyy"), 2)
 
             ДокументВорд.Save
             ДокументВорд.Close

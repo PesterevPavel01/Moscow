@@ -1,4 +1,6 @@
-﻿Public Class MainForm
+﻿Imports System.Xml
+
+Public Class MainForm
 
     Private redactor_enter As Boolean
     Public password0 As String
@@ -34,7 +36,7 @@
 
     Private Sub mainForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
-        UpdateListView.arrayEmpty = False
+        updateListView.arrayEmpty = False
 
         mySqlConnect.mySqlSettings.nameFirstDB = "database"
         mySqlConnect.mySqlSettings.userName = "admin"
@@ -56,6 +58,11 @@
 
         dataGridModulsInProgram.ColumnHeadersDefaultCellStyle.Font = New Font("Microsoft YaHei", 12)
         dataGridModulsInProgram.DefaultCellStyle.Font = New Font("Microsoft YaHei", 12)
+
+        StudentsInGroup.tbl_studentsInGroup.studentInGroupSettings_init()
+        StudentsInGroup.tbl_studentsInGroup.keyboardEvents.userDGV_init()
+
+
 
     End Sub
 

@@ -32,7 +32,7 @@ Module OtchetExcell
         sqlQuery = selectCol_otchet_info(DateStart, DateEnd)
         groupsArray = MainForm.mySqlConnect.loadMySqlToArray(sqlQuery, 1)
 
-        sqlQuery = selectCol_chas()
+        sqlQuery = selectNumberHours()
         hours = MainForm.mySqlConnect.loadMySqlToArray(sqlQuery, 1)
 
 
@@ -127,7 +127,7 @@ Module OtchetExcell
         If MainForm.ОтчетРуководителя.Checked Then
             excellSheet = excellWorkBook.Worksheets.Add
             excellSheet.Name = "ОтчетРуководителя"
-            sqlQuery = WindowsApp2.SQLString_OtchetRuk(DateStart, DateEnd)
+            sqlQuery = SQLString_managerOrder(DateStart, DateEnd)
             listData = MainForm.mySqlConnect.mySqlToListAll(sqlQuery, 1)
 
             If Not listData.Count = 0 Then
@@ -140,7 +140,7 @@ Module OtchetExcell
         End If
 
         If MainForm.ChРМАНПО.Checked Then
-            sqlQuery = WindowsApp2.SQLString_OtchetRMANPO(DateStart, DateEnd)
+            sqlQuery = SQLString_OtchetRMANPO(DateStart, DateEnd)
             listData = MainForm.mySqlConnect.mySqlToListAll(sqlQuery, 1)
 
             If Not listData.Count = 0 Then
@@ -154,7 +154,7 @@ Module OtchetExcell
         If MainForm.ChСводПоКурсам.Checked Then
             excellSheet = excellWorkBook.Worksheets.Add
             excellSheet.Name = "СводПоКурсам"
-            sqlQuery = WindowsApp2.SQLString_OtchetKurs(DateStart, DateEnd, "курс")
+            sqlQuery = SQLString_OtchetKurs(DateStart, DateEnd, "курс")
             otchetList = MainForm.mySqlConnect.loadMySqlToArray(sqlQuery, 1)
 
             If Not otchetList(0, 0).ToString = "нет записей" Then
@@ -168,7 +168,7 @@ Module OtchetExcell
         If MainForm.СводПоСпец.Checked Then
             excellSheet = excellWorkBook.Worksheets.Add
             excellSheet.Name = "СводПоСпециальностям"
-            sqlQuery = WindowsApp2.SQLString_OtchetKurs(DateStart, DateEnd, "специальность")
+            sqlQuery = SQLString_OtchetKurs(DateStart, DateEnd, "специальность")
             otchetList = MainForm.mySqlConnect.loadMySqlToArray(sqlQuery, 1)
 
             If Not otchetList.ToString = "нет записей" Then
@@ -182,7 +182,7 @@ Module OtchetExcell
         If MainForm.СводПоОрганиз.Checked Then
             excellSheet = excellWorkBook.Worksheets.Add
             excellSheet.Name = "ПереченьОрганизаций"
-            sqlQuery = SQLString_OtchetOrg(DateStart, DateEnd)
+            sqlQuery = SQLString_organizationOrder(DateStart, DateEnd)
             otchetList = MainForm.mySqlConnect.loadMySqlToArray(sqlQuery, 1)
 
             If Not otchetList.ToString = "нет записей" Then

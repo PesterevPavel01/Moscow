@@ -30,13 +30,13 @@ Partial Class Tables_control
         Me.SplitContainer_first = New System.Windows.Forms.SplitContainer()
         Me.redactor_name_element_first = New System.Windows.Forms.TextBox()
         Me.panel_first_element = New System.Windows.Forms.Panel()
+        Me.comboBox_first_element = New WindowsApp2.user_comboBox()
         Me.redactor_element_first = New System.Windows.Forms.TextBox()
         Me.SplitContainer4 = New System.Windows.Forms.SplitContainer()
         Me.redactor_name_element_second = New System.Windows.Forms.TextBox()
         Me.panel_second_element = New System.Windows.Forms.Panel()
-        Me.redactor_element_second = New System.Windows.Forms.TextBox()
-        Me.comboBox_first_element = New WindowsApp2.user_comboBox()
         Me.comboBox_second_element = New WindowsApp2.user_comboBox()
+        Me.redactor_element_second = New System.Windows.Forms.TextBox()
         CType(Me.SplitContainer_main, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SplitContainer_main.Panel1.SuspendLayout()
         Me.SplitContainer_main.Panel2.SuspendLayout()
@@ -75,7 +75,7 @@ Partial Class Tables_control
         '
         Me.SplitContainer_main.Panel2.Controls.Add(Me.SplitContainer_second)
         Me.SplitContainer_main.Size = New System.Drawing.Size(1598, 887)
-        Me.SplitContainer_main.SplitterDistance = 674
+        Me.SplitContainer_main.SplitterDistance = 670
         Me.SplitContainer_main.SplitterWidth = 6
         Me.SplitContainer_main.TabIndex = 0
         '
@@ -113,7 +113,7 @@ Partial Class Tables_control
         Me.DataGridTablesResult.RowHeadersVisible = False
         Me.DataGridTablesResult.RowHeadersWidth = 53
         Me.DataGridTablesResult.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
-        Me.DataGridTablesResult.Size = New System.Drawing.Size(1598, 674)
+        Me.DataGridTablesResult.Size = New System.Drawing.Size(1598, 670)
         Me.DataGridTablesResult.TabIndex = 36
         '
         'SplitContainer_second
@@ -131,7 +131,7 @@ Partial Class Tables_control
         'SplitContainer_second.Panel2
         '
         Me.SplitContainer_second.Panel2.Controls.Add(Me.SplitContainer4)
-        Me.SplitContainer_second.Size = New System.Drawing.Size(1598, 207)
+        Me.SplitContainer_second.Size = New System.Drawing.Size(1598, 211)
         Me.SplitContainer_second.SplitterDistance = 90
         Me.SplitContainer_second.SplitterWidth = 6
         Me.SplitContainer_second.TabIndex = 0
@@ -182,6 +182,18 @@ Partial Class Tables_control
         Me.panel_first_element.Size = New System.Drawing.Size(1598, 59)
         Me.panel_first_element.TabIndex = 39
         '
+        'comboBox_first_element
+        '
+        Me.comboBox_first_element.BackColor = System.Drawing.SystemColors.Window
+        Me.comboBox_first_element.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.comboBox_first_element.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.comboBox_first_element.Location = New System.Drawing.Point(0, 0)
+        Me.comboBox_first_element.Margin = New System.Windows.Forms.Padding(8)
+        Me.comboBox_first_element.Name = "comboBox_first_element"
+        Me.comboBox_first_element.Size = New System.Drawing.Size(1598, 59)
+        Me.comboBox_first_element.TabIndex = 38
+        Me.comboBox_first_element.Visible = False
+        '
         'redactor_element_first
         '
         Me.redactor_element_first.Dock = System.Windows.Forms.DockStyle.Fill
@@ -209,7 +221,7 @@ Partial Class Tables_control
         'SplitContainer4.Panel2
         '
         Me.SplitContainer4.Panel2.Controls.Add(Me.panel_second_element)
-        Me.SplitContainer4.Size = New System.Drawing.Size(1598, 111)
+        Me.SplitContainer4.Size = New System.Drawing.Size(1598, 115)
         Me.SplitContainer4.SplitterDistance = 25
         Me.SplitContainer4.SplitterWidth = 6
         Me.SplitContainer4.TabIndex = 1
@@ -236,8 +248,19 @@ Partial Class Tables_control
         Me.panel_second_element.Location = New System.Drawing.Point(0, 0)
         Me.panel_second_element.Margin = New System.Windows.Forms.Padding(5)
         Me.panel_second_element.Name = "panel_second_element"
-        Me.panel_second_element.Size = New System.Drawing.Size(1598, 80)
+        Me.panel_second_element.Size = New System.Drawing.Size(1598, 84)
         Me.panel_second_element.TabIndex = 0
+        '
+        'comboBox_second_element
+        '
+        Me.comboBox_second_element.BackColor = System.Drawing.SystemColors.Window
+        Me.comboBox_second_element.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.comboBox_second_element.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.comboBox_second_element.Location = New System.Drawing.Point(0, 0)
+        Me.comboBox_second_element.Margin = New System.Windows.Forms.Padding(5)
+        Me.comboBox_second_element.Name = "comboBox_second_element"
+        Me.comboBox_second_element.Size = New System.Drawing.Size(1598, 84)
+        Me.comboBox_second_element.TabIndex = 37
         '
         'redactor_element_second
         '
@@ -248,31 +271,8 @@ Partial Class Tables_control
         Me.redactor_element_second.Margin = New System.Windows.Forms.Padding(5)
         Me.redactor_element_second.Multiline = True
         Me.redactor_element_second.Name = "redactor_element_second"
-        Me.redactor_element_second.Size = New System.Drawing.Size(1598, 80)
+        Me.redactor_element_second.Size = New System.Drawing.Size(1598, 84)
         Me.redactor_element_second.TabIndex = 1
-        '
-        'comboBox_first_element
-        '
-        Me.comboBox_first_element.BackColor = System.Drawing.SystemColors.Window
-        Me.comboBox_first_element.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.comboBox_first_element.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.comboBox_first_element.Location = New System.Drawing.Point(0, 0)
-        Me.comboBox_first_element.Margin = New System.Windows.Forms.Padding(8)
-        Me.comboBox_first_element.Name = "comboBox_first_element"
-        Me.comboBox_first_element.Size = New System.Drawing.Size(1598, 59)
-        Me.comboBox_first_element.TabIndex = 38
-        Me.comboBox_first_element.Visible = False
-        '
-        'comboBox_second_element
-        '
-        Me.comboBox_second_element.BackColor = System.Drawing.SystemColors.Window
-        Me.comboBox_second_element.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.comboBox_second_element.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.comboBox_second_element.Location = New System.Drawing.Point(0, 0)
-        Me.comboBox_second_element.Margin = New System.Windows.Forms.Padding(5)
-        Me.comboBox_second_element.Name = "comboBox_second_element"
-        Me.comboBox_second_element.Size = New System.Drawing.Size(1598, 80)
-        Me.comboBox_second_element.TabIndex = 37
         '
         'Tables_control
         '

@@ -46,22 +46,22 @@ Module spravka
             Warning.TextBox.Text = "Справки сохранены, Путь к каталогу:
 " & BuildOrder.path
 
-            _technical.ЗаменитьТекстВОбластиДокументаВорд(wordDok.Range, "$СлушательИО$", _technical.ФамилияИОПоПолнойФИО(ЧекнутыеСлушатели(0, СчетчикСтрок)), 2)
-            _technical.ЗаменитьТекстВОбластиДокументаВорд(wordDok.Range, "$ФИОСлушатель$", ЧекнутыеСлушатели(0, СчетчикСтрок), 2)
-            _technical.ЗаменитьТекстВОбластиДокументаВорд(wordDok.Range, "$КоличествоСлушателей$", UBound(ЧекнутыеСлушатели, 2) + 1, 2)
-            _technical.ЗаменитьТекстВОбластиДокументаВорд(wordDok.Range, "$НомерГруппы$", BuildOrder.groupNumber.Text, 2)
-            _technical.ЗаменитьТекстВОбластиДокументаВорд(wordDok.Range, "$УровеньКвалификации$", group(1, 0), 2)
-            _technical.ЗаменитьТекстВОбластиДокументаВорд(wordDok.Range, "$Программа$", group(0, 0), 2)
-            _technical.ЗаменитьТекстВОбластиДокументаВорд(wordDok.Range, "$ГруппаФинансирование$", group(2, 0), 2)
-            _technical.ЗаменитьТекстВОбластиДокументаВорд(wordDok.Range, "$ДатаНЗ$", group(3, 0), 2)
-            _technical.ЗаменитьТекстВОбластиДокументаВорд(wordDok.Range, "$ДатаКЗ$", group(4, 0), 2)
-            _technical.ЗаменитьТекстВОбластиДокументаВорд(wordDok.Range, "$Приказ$", BuildOrder.ПрактическаяПодготовка.Text, 2)
+            _technical.replaceText_documentWordRange(wordDok.Range, "$СлушательИО$", _technical.ФамилияИОПоПолнойФИО(ЧекнутыеСлушатели(0, СчетчикСтрок)), 2)
+            _technical.replaceText_documentWordRange(wordDok.Range, "$ФИОСлушатель$", ЧекнутыеСлушатели(0, СчетчикСтрок), 2)
+            _technical.replaceText_documentWordRange(wordDok.Range, "$КоличествоСлушателей$", UBound(ЧекнутыеСлушатели, 2) + 1, 2)
+            _technical.replaceText_documentWordRange(wordDok.Range, "$НомерГруппы$", BuildOrder.groupNumber.Text, 2)
+            _technical.replaceText_documentWordRange(wordDok.Range, "$УровеньКвалификации$", group(1, 0), 2)
+            _technical.replaceText_documentWordRange(wordDok.Range, "$Программа$", group(0, 0), 2)
+            _technical.replaceText_documentWordRange(wordDok.Range, "$ГруппаФинансирование$", group(2, 0), 2)
+            _technical.replaceText_documentWordRange(wordDok.Range, "$ДатаНЗ$", group(3, 0), 2)
+            _technical.replaceText_documentWordRange(wordDok.Range, "$ДатаКЗ$", group(4, 0), 2)
+            _technical.replaceText_documentWordRange(wordDok.Range, "$Приказ$", BuildOrder.ПрактическаяПодготовка.Text, 2)
 
-            _technical.ЗаменитьТекстВОбластиДокументаВорд(wordDok.Range, "$И.О.Ответств$", rotate(BuildOrder.Утверждает.Text), 2)
-            _technical.ЗаменитьТекстВОбластиДокументаВорд(wordDok.Range, "$Дата$", dateMain, 2)
-            _technical.ЗаменитьТекстВОбластиДокументаВорд(wordDok.Range, "$День$", Format(dateVal, "dd"), 2)
-            _technical.ЗаменитьТекстВОбластиДокументаВорд(wordDok.Range, "$Месяц$", месяцРП(Format(dateVal, "MMMM")), 2)
-            _technical.ЗаменитьТекстВОбластиДокументаВорд(wordDok.Range, "$Год$", Format(dateVal, "yyyy"), 2)
+            _technical.replaceText_documentWordRange(wordDok.Range, "$И.О.Ответств$", rotate(BuildOrder.Утверждает.Text), 2)
+            _technical.replaceText_documentWordRange(wordDok.Range, "$Дата$", dateMain, 2)
+            _technical.replaceText_documentWordRange(wordDok.Range, "$День$", Format(dateVal, "dd"), 2)
+            _technical.replaceText_documentWordRange(wordDok.Range, "$Месяц$", месяцРП(Format(dateVal, "MMMM")), 2)
+            _technical.replaceText_documentWordRange(wordDok.Range, "$Год$", Format(dateVal, "yyyy"), 2)
 
             wordDok.Save
             wordDok.Close

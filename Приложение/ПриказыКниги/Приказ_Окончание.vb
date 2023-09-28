@@ -184,17 +184,17 @@ Module Приказ_Окончание
         Next
 
         For СчетчикСлушателей = 0 To UBound(studentList, 2)
-            _technical.ЗаменитьТекстВОбластиДокументаВорд(wordDoc.Tables(counterTables + СчетчикСлушателей).Range, "$НомерПротоколаИА$", studentList(13, 0))
-            _technical.ЗаменитьТекстВОбластиДокументаВорд(wordDoc.Tables(counterTables + СчетчикСлушателей).Range, "$Квалификация$", studentList(12, 0))
-            _technical.ЗаменитьТекстВОбластиДокументаВорд(wordDoc.Tables(counterTables + СчетчикСлушателей).Range, "$СлушательИмяОтчество$", studentList(0, СчетчикСлушателей))
-            _technical.ЗаменитьТекстВОбластиДокументаВорд(wordDoc.Tables(counterTables + СчетчикСлушателей).Range, "$Фамилия$", studentList(1, СчетчикСлушателей))
-            _technical.ЗаменитьТекстВОбластиДокументаВорд(wordDoc.Tables(counterTables + СчетчикСлушателей).Range, "$ИмяИОтчество$", studentList(2, СчетчикСлушателей))
-            _technical.ЗаменитьТекстВОбластиДокументаВорд(wordDoc.Tables(counterTables + СчетчикСлушателей).Range, "$ДНачало$", studentList(9, 0))
-            _technical.ЗаменитьТекстВОбластиДокументаВорд(wordDoc.Tables(counterTables + СчетчикСлушателей).Range, "$ДКонец$", studentList(10, 0))
-            _technical.ЗаменитьТекстВОбластиДокументаВорд(wordDoc.Tables(counterTables + СчетчикСлушателей).Range, "$Программа$", studentList(7, 0))
-            _technical.ЗаменитьТекстВОбластиДокументаВорд(wordDoc.Tables(counterTables + СчетчикСлушателей).Range, "$Часы$", studentList(11, 0))
-            _technical.ЗаменитьТекстВОбластиДокументаВорд(wordDoc.Tables(counterTables + СчетчикСлушателей).Range, "$Номер$", _technical.addZeros(studentList(5, СчетчикСлушателей) + СчетчикСлушателей, 5))
-            _technical.ЗаменитьТекстВОбластиДокументаВорд(wordDoc.Tables(counterTables + СчетчикСлушателей).Range, "$ДатаВ$", studentList(8, 0))
+            _technical.replaceText_documentWordRange(wordDoc.Tables(counterTables + СчетчикСлушателей).Range, "$НомерПротоколаИА$", studentList(13, 0))
+            _technical.replaceText_documentWordRange(wordDoc.Tables(counterTables + СчетчикСлушателей).Range, "$Квалификация$", studentList(12, 0))
+            _technical.replaceText_documentWordRange(wordDoc.Tables(counterTables + СчетчикСлушателей).Range, "$СлушательИмяОтчество$", studentList(0, СчетчикСлушателей))
+            _technical.replaceText_documentWordRange(wordDoc.Tables(counterTables + СчетчикСлушателей).Range, "$Фамилия$", studentList(1, СчетчикСлушателей))
+            _technical.replaceText_documentWordRange(wordDoc.Tables(counterTables + СчетчикСлушателей).Range, "$ИмяИОтчество$", studentList(2, СчетчикСлушателей))
+            _technical.replaceText_documentWordRange(wordDoc.Tables(counterTables + СчетчикСлушателей).Range, "$ДНачало$", studentList(9, 0))
+            _technical.replaceText_documentWordRange(wordDoc.Tables(counterTables + СчетчикСлушателей).Range, "$ДКонец$", studentList(10, 0))
+            _technical.replaceText_documentWordRange(wordDoc.Tables(counterTables + СчетчикСлушателей).Range, "$Программа$", studentList(7, 0))
+            _technical.replaceText_documentWordRange(wordDoc.Tables(counterTables + СчетчикСлушателей).Range, "$Часы$", studentList(11, 0))
+            _technical.replaceText_documentWordRange(wordDoc.Tables(counterTables + СчетчикСлушателей).Range, "$Номер$", _technical.addZeros(studentList(5, СчетчикСлушателей) + СчетчикСлушателей, 5))
+            _technical.replaceText_documentWordRange(wordDoc.Tables(counterTables + СчетчикСлушателей).Range, "$ДатаВ$", studentList(8, 0))
         Next
 
         wordApp.Visible = True
@@ -326,17 +326,17 @@ Module Приказ_Окончание
         Next
 
         For СчетчикСлушателей = 0 To UBound(ДанныеСлушателей, 2)
-            _technical.ЗаменитьТекстВОбластиДокументаВорд(ДокументВорд.Tables(счетчикТаблиц + СчетчикСлушателей).Range, "$НомерПротоколаИА$", ДанныеСлушателей(13, 0))
-            _technical.ЗаменитьТекстВОбластиДокументаВорд(ДокументВорд.Tables(счетчикТаблиц + СчетчикСлушателей).Range, "$Квалификация$", ДанныеСлушателей(12, 0))
-            _technical.ЗаменитьТекстВОбластиДокументаВорд(ДокументВорд.Tables(счетчикТаблиц + СчетчикСлушателей).Range, "$СлушательИмяОтчество$", ДанныеСлушателей(0, СчетчикСлушателей))
-            _technical.ЗаменитьТекстВОбластиДокументаВорд(ДокументВорд.Tables(счетчикТаблиц + СчетчикСлушателей).Range, "$Фамилия$", ДанныеСлушателей(1, СчетчикСлушателей))
-            _technical.ЗаменитьТекстВОбластиДокументаВорд(ДокументВорд.Tables(счетчикТаблиц + СчетчикСлушателей).Range, "$ИмяИОтчество$", ДанныеСлушателей(2, СчетчикСлушателей))
-            _technical.ЗаменитьТекстВОбластиДокументаВорд(ДокументВорд.Tables(счетчикТаблиц + СчетчикСлушателей).Range, "$ДНачало$", ДанныеСлушателей(9, 0))
-            _technical.ЗаменитьТекстВОбластиДокументаВорд(ДокументВорд.Tables(счетчикТаблиц + СчетчикСлушателей).Range, "$ДКонец$", ДанныеСлушателей(10, 0))
-            _technical.ЗаменитьТекстВОбластиДокументаВорд(ДокументВорд.Tables(счетчикТаблиц + СчетчикСлушателей).Range, "$Программа$", ДанныеСлушателей(7, 0))
-            _technical.ЗаменитьТекстВОбластиДокументаВорд(ДокументВорд.Tables(счетчикТаблиц + СчетчикСлушателей).Range, "$Часы$", ДанныеСлушателей(11, 0))
-            _technical.ЗаменитьТекстВОбластиДокументаВорд(ДокументВорд.Tables(счетчикТаблиц + СчетчикСлушателей).Range, "$Номер$", ДанныеСлушателей(4, СчетчикСлушателей) + СчетчикСлушателей)
-            _technical.ЗаменитьТекстВОбластиДокументаВорд(ДокументВорд.Tables(счетчикТаблиц + СчетчикСлушателей).Range, "$ДатаВ$", ДанныеСлушателей(8, 0))
+            _technical.replaceText_documentWordRange(ДокументВорд.Tables(счетчикТаблиц + СчетчикСлушателей).Range, "$НомерПротоколаИА$", ДанныеСлушателей(13, 0))
+            _technical.replaceText_documentWordRange(ДокументВорд.Tables(счетчикТаблиц + СчетчикСлушателей).Range, "$Квалификация$", ДанныеСлушателей(12, 0))
+            _technical.replaceText_documentWordRange(ДокументВорд.Tables(счетчикТаблиц + СчетчикСлушателей).Range, "$СлушательИмяОтчество$", ДанныеСлушателей(0, СчетчикСлушателей))
+            _technical.replaceText_documentWordRange(ДокументВорд.Tables(счетчикТаблиц + СчетчикСлушателей).Range, "$Фамилия$", ДанныеСлушателей(1, СчетчикСлушателей))
+            _technical.replaceText_documentWordRange(ДокументВорд.Tables(счетчикТаблиц + СчетчикСлушателей).Range, "$ИмяИОтчество$", ДанныеСлушателей(2, СчетчикСлушателей))
+            _technical.replaceText_documentWordRange(ДокументВорд.Tables(счетчикТаблиц + СчетчикСлушателей).Range, "$ДНачало$", ДанныеСлушателей(9, 0))
+            _technical.replaceText_documentWordRange(ДокументВорд.Tables(счетчикТаблиц + СчетчикСлушателей).Range, "$ДКонец$", ДанныеСлушателей(10, 0))
+            _technical.replaceText_documentWordRange(ДокументВорд.Tables(счетчикТаблиц + СчетчикСлушателей).Range, "$Программа$", ДанныеСлушателей(7, 0))
+            _technical.replaceText_documentWordRange(ДокументВорд.Tables(счетчикТаблиц + СчетчикСлушателей).Range, "$Часы$", ДанныеСлушателей(11, 0))
+            _technical.replaceText_documentWordRange(ДокументВорд.Tables(счетчикТаблиц + СчетчикСлушателей).Range, "$Номер$", ДанныеСлушателей(4, СчетчикСлушателей) + СчетчикСлушателей)
+            _technical.replaceText_documentWordRange(ДокументВорд.Tables(счетчикТаблиц + СчетчикСлушателей).Range, "$ДатаВ$", ДанныеСлушателей(8, 0))
         Next
 
         ПриложениеВорд.Visible = True

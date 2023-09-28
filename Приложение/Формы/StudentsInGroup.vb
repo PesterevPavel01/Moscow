@@ -4,12 +4,13 @@ Public Class StudentsInGroup
     Dim SC As SynchronizationContext
     Public cvalification As Int16
     Public tbl_studentsInGroup As New Tables_control
-    Dim studentsInGroup_builder As New StudentsInGroup_builder
+    Dim uploader As New StudentsInGroup_uploader
+    Public organization As String
+    Public finansing As String
 
-    Private Sub loadStudentsInGroup()
+    Public Sub loadStudentsInGroup()
 
-        tbl_studentsInGroup.Parent = container
-        tbl_studentsInGroup.Dock = DockStyle.Fill
+        container.Controls.Add(tbl_studentsInGroup)
         tbl_studentsInGroup.Visible = True
         tbl_studentsInGroup.number_column = 2
         tbl_studentsInGroup.flag_second_control_combo = True
@@ -43,6 +44,8 @@ Public Class StudentsInGroup
 
         If tbl_studentsInGroup.comboBox_second_element.adjacentControls.count = 0 Then
 
+            tbl_studentsInGroup.adjacentControls.Add("next", header)
+
             tbl_studentsInGroup.comboBox_second_element.adjacentControls.Add("next", tbl_studentsInGroup.DataGridTablesResult)
             tbl_studentsInGroup.comboBox_second_element.adjacentControls.Add("prev", tbl_studentsInGroup.comboBox_first_element)
 
@@ -51,64 +54,14 @@ Public Class StudentsInGroup
 
         End If
 
-        studentsInGroup_builder.load_listOrganization()
-        studentsInGroup_builder.load_listFinancing()
-        tbl_studentsInGroup.comboBox_second_element.settings.item_list = studentsInGroup_builder.listOrganization
-        tbl_studentsInGroup.comboBox_first_element.settings.item_list = studentsInGroup_builder.listFinancing
-        'tbl_studentInGroup.kod_number = 2
+        uploader.load_listOrganization()
+        uploader.load_listFinancing()
+        tbl_studentsInGroup.comboBox_second_element.settings.item_list = uploader.listOrganization
+        tbl_studentsInGroup.comboBox_first_element.settings.item_list = uploader.listFinancing
         tbl_studentsInGroup.table_init()
+        tbl_studentsInGroup.Dock = DockStyle.Fill
 
     End Sub
-
-    Private Sub СписокСлушателейВГруппе_Shown(sender As Object, e As EventArgs) Handles Me.Shown
-
-        'SC = SynchronizationContext.Current
-        'Dim secondThread As Thread
-        'Dim argument
-        'ReDim argument(2)
-        'argument(0) = GroupList.kod
-        'argument(1) = MainForm.mySqlConnect.mySqlSettings
-
-        'secondThread = New Thread(AddressOf studentListInGroup)
-        'secondThread.IsBackground = True
-        'secondThread.Start(argument)
-
-    End Sub
-
-    'Sub studentListInGroup(argument)
-
-    '    Dim studentList
-    '    Dim params
-    '    Dim queryStr As String
-    '    Dim mySqlConn As New MySQLConnect
-
-    '    mySqlConn.mySqlSettings = argument(1)
-
-    '    queryStr = studentList__studentListInGroup(argument(0))
-
-    '    studentList = mySqlConn.loadMySqlToArray(queryStr, 1)
-
-    '    If studentList(0, 0) = "Нет записей" Then
-
-    '        Exit Sub
-
-    '    End If
-
-    'studentList = arrayMethod.removeEmpty(studentList)
-
-    'ReDim params(7)
-    'params(0) = Me
-    'params(1) = ListViewStudentsList
-    'params(2) = addMask.addMaskIntoArray(studentList, 0)
-    'params(3) = 0
-    'params(4) = 1
-    'params(5) = 2
-    'params(6) = 3
-    'params(7) = 4
-
-    'SC.Send(AddressOf UpdateListView.updateListV, params)
-
-    'End Sub
 
     Public Sub dataGridTables_RemoveStudent(snils As String, name As String)
 
@@ -154,7 +107,6 @@ Public Class StudentsInGroup
         WindowsApp2.newStudent.flagRedactor = True
         WindowsApp2.newStudent.ShowDialog()
         WindowsApp2.newStudent.flagRedactor = False
-        СписокСлушателейВГруппе_Shown(sender, e)
 
     End Sub
 
@@ -199,6 +151,7 @@ Public Class StudentsInGroup
         Else
             closeEsc(Me, e.KeyCode)
         End If
+
     End Sub
     Private Sub StudentsInGroup_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs) Handles MyBase.PreviewKeyDown
 
@@ -229,14 +182,36 @@ Public Class StudentsInGroup
 
     End Sub
 
+    Private Sub StudentsInGroup_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        uploader.mySQLConnector = MainForm.mySqlConnect
+        loadStudentsInGroup()
+    End Sub
+
+    Private Sub everyone_Click(sender As Object, e As EventArgs) Handles everyone.Click
+
+        uploader.copyOrgAndFinEveryone(GroupList.kod, finansing, organization)
+        tbl_studentsInGroup.load_table()
+
+    End Sub
+
+    Public Sub everyoneVisible(status As Boolean, currentFinSource As String, currentOrganization As String)
+
+        everyone.Visible = status
+        finansing = ""
+        organization = ""
+
+        If status Then
+            finansing = currentFinSource
+            organization = currentOrganization
+        End If
+
+
+    End Sub
+
     Private Sub StudentList_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
 
         cleaner(newGroup)
 
     End Sub
 
-    Private Sub StudentsInGroup_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        studentsInGroup_builder.mySQLConnector = MainForm.mySqlConnect
-        loadStudentsInGroup()
-    End Sub
 End Class

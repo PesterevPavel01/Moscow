@@ -157,8 +157,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationEvents.vb" />
-    <Compile Include="Приложение\studentsInGroup_builder.vb" />
-    <Compile Include="SwichNumbers.vb" />
+    <Compile Include="Приложение\StudentsInGroup_uploader.vb" />
+    <Compile Include="Приложение\SwichNumbers.vb" />
     <Compile Include="Приложение\SorterSetts.vb" />
     <Compile Include="Приложение\SwitchCvalification.vb" />
     <Compile Include="Приложение\User_controls\UserGridView\DGVBuilder.vb" />
@@ -274,7 +274,6 @@
     <Compile Include="Приложение\Интерфейс\arrayMethod.vb" />
     <Compile Include="Приложение\Отчеты\OtchetExcell.vb" />
     <Compile Include="Приложение\Интерфейс\updateListView_1.vb" />
-    <Compile Include="Приложение\Справочники\updateStudentsInGroup.vb" />
     <Compile Include="Приложение\Формы\StudentsInGroup.Designer.vb">
       <DependentUpon>StudentsInGroup.vb</DependentUpon>
     </Compile>

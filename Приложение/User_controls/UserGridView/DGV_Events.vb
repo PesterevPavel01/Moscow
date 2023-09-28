@@ -53,6 +53,12 @@ Public Class DGV_Events
                 DataGridTables_KeyDown(sender, e)
             End Sub
 
+        AddHandler userDGV.DataGridTablesResult.KeyPress,
+            Sub(sender As Object, e As KeyPressEventArgs)
+                ' Обрабатывает нажатие Enter
+                DataGridTables_KeyPress(sender, e)
+            End Sub
+
         AddHandler userDGV.DataGridTablesResult.CellDoubleClick,
             Sub(sender As Object, e As EventArgs)
                 ' Открывает и обновляет редактор
@@ -81,25 +87,25 @@ Public Class DGV_Events
 
         AddHandler userDGV.redactor_element_second.KeyDown,
             Sub(sender As Object, e As KeyEventArgs)
-                'Обработка нажатий вверх-вниз,Enter и Tab
+                'Обработка нажатий вверх-вниз
                 redactor_element_second_KeyDown(sender, e)
             End Sub
 
         AddHandler userDGV.redactor_element_first.KeyDown,
             Sub(sender As Object, e As KeyEventArgs)
-                'Обработка нажатий вверх-вниз,Enter и Tab
+                'Обработка нажатий вверх-вниз
                 redactor_element_first_KeyDown(sender, e)
             End Sub
 
         AddHandler userDGV.redactor_element_second.KeyPress,
             Sub(sender As Object, e As KeyPressEventArgs)
-                'Обработка нажатий вверх-вниз,Enter и Tab
+                'Обработка нажатий Enter и Tab
                 redactor_element_second_KeyPress(sender, e)
             End Sub
 
         AddHandler userDGV.redactor_element_first.KeyPress,
             Sub(sender As Object, e As KeyPressEventArgs)
-                'Обработка нажатий вверх-вниз,Enter и Tab
+                'Обработка нажатий Enter и Tab
                 redactor_element_first_KeyPress(sender, e)
             End Sub
 
@@ -133,7 +139,23 @@ Public Class DGV_Events
                 Sub()
                     myCombo.flag_comboDroppedDown = True
                 End Sub
+
+            AddHandler myCombo.my_ComboBox.DropDownClosed,
+                Sub()
+                    myCombo.flag_comboDroppedDown = False
+                End Sub
         Next
+
+    End Sub
+
+    Private Sub DataGridTables_KeyPress(sender As Object, e As KeyPressEventArgs)
+
+        Select Case e.KeyChar
+
+            Case Convert.ToChar(Keys.Enter)
+                userDGV.table_enterPress(sender, e)
+
+        End Select
 
     End Sub
 

@@ -1,6 +1,5 @@
-﻿Imports MySql.Data.MySqlClient
-
-Public Class StudentsInGroup_builder
+﻿
+Public Class StudentsInGroup_uploader
 
     Public listOrganization As String()
     Public listFinancing As String()
@@ -18,6 +17,13 @@ Public Class StudentsInGroup_builder
 
         queryString = loadFinancing()
         listFinancing = mySQLConnector.loadIntoArray(queryString, 1, 0)
+
+    End Sub
+
+    Public Sub copyOrgAndFinEveryone(groupNumber As String, currentFinancing As String, currentOrganization As String)
+
+        queryString = updateOrgAndFinEveryone(groupNumber, currentFinancing, currentOrganization)
+        mySQLConnector.sendQuery(queryString, 1)
 
     End Sub
 

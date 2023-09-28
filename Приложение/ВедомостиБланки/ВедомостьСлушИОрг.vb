@@ -2,56 +2,56 @@
 
     Sub ВедомостьСлушателиИОрганизации()
 
-        Dim ПриложениеВорд
-        Dim ДокументВорд, ДанныеСлушателей, Таблица
-        Dim resourcesPath, ПутьКШаблону
-        Dim sqlQuery, ВидПриказа As String
+        Dim wordApp
+        Dim documentWord, studentsData, table
+        Dim resourcesPath, samplePath
+        Dim sqlQuery, orderType As String
 
 
         sqlQuery = load_slushatel_and_org(MainForm.orderIdGroup)
-        ДанныеСлушателей = MainForm.mySqlConnect.loadMySqlToArray(sqlQuery, 1)
+        studentsData = MainForm.mySqlConnect.loadMySqlToArray(sqlQuery, 1)
 
-        If ДанныеСлушателей(0, 0) = "нет записей" Then
+        If studentsData(0, 0) = "нет записей" Then
             Warning.content.Text = "Нет данных для отображения"
             Warning.ShowDialog()
             Exit Sub
         End If
 
         resourcesPath = _technical.resourcesPath()
-        ПутьКШаблону = resourcesPath & "Шаблоны\Ведомость слушаетели и организации.docx"
+        samplePath = resourcesPath & "Шаблоны\Ведомость слушаетели и организации.docx"
 
-        ПриложениеВорд = CreateObject("Word.Application")
+        wordApp = CreateObject("Word.Application")
 
 
-        ДокументВорд = ПриложениеВорд.Documents.Open(ПутьКШаблону, ReadOnly:=True)
+        documentWord = wordApp.Documents.Open(samplePath, ReadOnly:=True)
 
-        _technical.savePrikazBlank(ДокументВорд, MainForm.orderIdGroup, "ВедомостьСлушателиИОрганизации", resourcesPath, "Ведомости")
+        _technical.savePrikazBlank(documentWord, MainForm.orderIdGroup, "ВедомостьСлушателиИОрганизации", resourcesPath, "Ведомости")
 
-        _technical.ЗаменитьТекстВОбластиДокументаВорд(ДокументВорд.Range, "$НомерГруппы$", BuildOrder.groupNumber.Text, 2)
+        _technical.replaceText_documentWordRange(documentWord.Range, "$НомерГруппы$", BuildOrder.groupNumber.Text, 2)
 
-        Таблица = ДокументВорд.Tables(1)
-        ЗаполнитьТаблицу(Таблица, ДанныеСлушателей)
-        ДокументВорд.Save
-        ПриложениеВорд.visible = True
+        table = documentWord.Tables(1)
+        buildTable(table, studentsData)
+        documentWord.Save
+        wordApp.visible = True
 
 
     End Sub
 
-    Sub ЗаполнитьТаблицу(Таблица As Object, Массив As Object)
+    Sub buildTable(table As Object, data As Object)
         Dim d
-        For НомерСтроки = 0 To UBound(Массив, 2)
-            If Not НомерСтроки = 0 Then
-                Таблица.Rows.add
+        For rowNumber = 0 To UBound(data, 2)
+            If Not rowNumber = 0 Then
+                table.Rows.add
             End If
-            d = Таблица.Columns.Count
+            d = table.Columns.Count
 
-            Таблица.Cell(НомерСтроки + 2, 1).Range.text = НомерСтроки + 1 & "."
-            Таблица.Cell(НомерСтроки + 2, 2).Range.text = Массив(0, НомерСтроки)
-            Таблица.Cell(НомерСтроки + 2, 3).Range.text = Массив(1, НомерСтроки)
-            Таблица.Cell(НомерСтроки + 2, 4).Range.text = Массив(2, НомерСтроки)
+            table.Cell(rowNumber + 2, 1).Range.text = rowNumber + 1 & "."
+            table.Cell(rowNumber + 2, 2).Range.text = data(0, rowNumber)
+            table.Cell(rowNumber + 2, 3).Range.text = data(1, rowNumber)
+            table.Cell(rowNumber + 2, 4).Range.text = data(2, rowNumber)
         Next
 
-        With Таблица.Borders
+        With table.Borders
             .InsideLineStyle = 1
             .OutsideLineStyle = 1
         End With

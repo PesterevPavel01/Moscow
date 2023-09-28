@@ -68,20 +68,20 @@ Module QueryString
     Public Function studentList__studentListInGroup(kodGroup As String) As String
 
         sqlString = "SELECT
-                      CONCAT(LEFT(students.Снилс,3),'-',RIGHT(LEFT(students.Снилс,6),3),'-',RIGHT(LEFT(students.Снилс,9),3),'-',RIGHT(students.Снилс,2)) AS Снилс,
+                      CONCAT(LEFT(students.Снилс, 3), '-', RIGHT(LEFT(students.Снилс, 6), 3), '-', RIGHT(LEFT(students.Снилс, 9), 3), '-', RIGHT(students.Снилс, 2)) AS Снилс,
                       students.Фамилия,
                       students.Имя,
                       IFNULL(students.Отчество, ' ') AS Отчество,
                       students.ДатаРождения,
                       napr_organization.name AS Организация,
-                      financing.name AS Финансирование
+                      fin_source.name AS Финансирование
                     FROM group_list
                       INNER JOIN students
                         ON group_list.students = students.Снилс
                       LEFT JOIN napr_organization
-                        ON organization=napr_organization.kod
-                      LEFT JOIN financing
-                        ON source_financing=financing.kod 
+                        ON organization = napr_organization.kod
+                      LEFT JOIN fin_source
+                        ON fin_source.kod = group_list.source_financing 
                     WHERE group_list.Kod = " & kodGroup & " 
                     ORDER BY students.Фамилия"
 
@@ -944,7 +944,7 @@ Module QueryString
 
         Dim part1, part2, part3 As String
 
-        part1 = "(Снилс, Фамилия, Имя, Отчество, ДатаРождения, Пол, УОбразования, doo_doc_type, НаимДОО, СерияДОО, НомерДОО, ФамилияДОО, АРег, Телефон, Гражданство, ДУЛ, СерияДУЛ, НомерДУЛ, ИФин, НОрг,ДатаРегистрации, Почта, ДУЛКемВыдан,ДУЛДатаВыдачи ) "
+        part1 = "(Снилс, Фамилия, Имя, Отчество, ДатаРождения, Пол, УОбразования, doo_doc_type, НаимДОО, СерияДОО, НомерДОО, ФамилияДОО, АРег, Телефон, Гражданство, ДУЛ, СерияДУЛ, НомерДУЛ,ДатаРегистрации, Почта, ДУЛКемВыдан,ДУЛДатаВыдачи ) "
 
         part2 = "(" & Chr(39) & structSlushatel.snils & Chr(39) & ",
                  " & Chr(39) & structSlushatel.lastName & Chr(39) & ",
@@ -966,10 +966,7 @@ Module QueryString
                  ," & Chr(39) & structSlushatel.seriesDUL & Chr(39) & "
                  ," & Chr(39) & structSlushatel.numberDUL & Chr(39)
 
-        part3 = "," & Chr(39) & structSlushatel.sourceOfFinansing & Chr(39) & "
-                , (SELECT MAX(kod) FROM napr_organization WHERE name=" & Chr(39) & structSlushatel.направившаяОрг & Chr(39) & "
-                LIMIT 1) " & "
-                , " & Chr(39) & structSlushatel.dateReg & Chr(39) & "
+        part3 = "," & Chr(39) & structSlushatel.dateReg & Chr(39) & "
                 , " & Chr(39) & structSlushatel.email & Chr(39) & "
                 , " & Chr(39) & structSlushatel.autorDUL & Chr(39) & ","
 
@@ -994,7 +991,7 @@ Module QueryString
 
         part3 = ",АРег=" & Chr(39) & structSlushatel.adress & Chr(39) & ", Телефон=" & Chr(39) & structSlushatel.telephone & Chr(39) & ", Гражданство=" & Chr(39) & structSlushatel.citizenship & Chr(39) & ", ДУЛ=" & Chr(39) & structSlushatel.dUL & Chr(39) & ", СерияДУЛ=" & Chr(39) & structSlushatel.seriesDUL & Chr(39) & ", НомерДУЛ=" & Chr(39) & structSlushatel.numberDUL & Chr(39)
 
-        part4 = ",ИФин=" & Chr(39) & structSlushatel.sourceOfFinansing & Chr(39) & ", НОрг= (SELECT kod FROM napr_organization WHERE name=" & Chr(39) & structSlushatel.направившаяОрг & Chr(39) & " LIMIT 1), ДатаРегистрации=" & Chr(39) & structSlushatel.dateReg & Chr(39) & ", Почта=" & Chr(39) & structSlushatel.email & Chr(39) & ", ДУЛКемВыдан=" & Chr(39) & structSlushatel.autorDUL & Chr(39)
+        part4 = ", ДатаРегистрации=" & Chr(39) & structSlushatel.dateReg & Chr(39) & ", Почта=" & Chr(39) & structSlushatel.email & Chr(39) & ", ДУЛКемВыдан=" & Chr(39) & structSlushatel.autorDUL & Chr(39)
 
         If structSlushatel.dateDUL = "null" Then
             part4 += ", ДУЛДатаВыдачи=null"
@@ -1032,9 +1029,26 @@ Module QueryString
 
     End Function
 
+    Public Function updateOrgAndFinEveryone(groupNumber As String, currentFinancing As String, currentOrganization As String)
+
+        sqlString = "UPDATE group_list
+                    SET organization = (SELECT
+                            kod
+                          FROM napr_organization
+                          WHERE name = '" + currentOrganization + "' LIMIT 1),
+                        source_financing = (SELECT
+                            kod
+                          FROM fin_source
+                          WHERE name = '" + currentFinancing + "' LIMIT 1)
+                    WHERE Kod=" + groupNumber
+
+        Return sqlString
+
+    End Function
+
     Public Function loadFinancing()
 
-        sqlString = "SELECT name FROM financing ORDER BY name"
+        sqlString = "SELECT name FROM fin_source ORDER BY name"
 
         Return sqlString
 
@@ -1113,22 +1127,23 @@ Module QueryString
     Public Function load_slushatel_and_org(kodGroup As String) As String
 
         sqlString = "SELECT
-                      result.slush,
-                      name AS napr_org,
-                      result.ИФин
+                      result.student,
+                      napr_organization.name AS organization,
+                      financing.name AS financing
                     FROM (SELECT
-                        CONCAT(students.Фамилия, ' ', students.Имя, ' ', IFNULL(students.Отчество, ' ')) AS slush,
-                        students.НОрг,
-                        ИФин
+                        CONCAT(students.Фамилия, ' ', students.Имя, ' ', IFNULL(students.Отчество, ' ')) AS student,
+                        group_list.organization,
+                        group_list.source_financing
                       FROM group_list
                         INNER JOIN students
                           ON group_list.students = students.Снилс
                       WHERE group_list.kod = " & kodGroup & "
                       ORDER BY students.Фамилия) AS result
-
                       LEFT JOIN napr_organization
-                        ON result.НОрг = kod
-                        ORDER BY  result.slush"
+                        ON result.organization = napr_organization.kod
+                      LEFT JOIN financing
+                        ON result.source_financing = napr_organization.kod
+                    ORDER BY result.student"
 
         Return sqlString
 
@@ -1157,8 +1172,6 @@ Module QueryString
                       students.ДУЛ,
                       students.СерияДУЛ,
                       students.НомерДУЛ,
-                      students.ИФин,
-                      napr_organization.name,
                       students.ДатаРегистрации,
                       students.Почта,
                       students.СтранаДОО,
@@ -1168,9 +1181,7 @@ Module QueryString
                     FROM students
                       LEFT JOIN doo_doc_type
                         ON students.doo_doc_type=doo_doc_type.kod
-                      INNER JOIN napr_organization
-                        ON students.НОрг = napr_organization.kod
-                        WHERE students.Снилс='" + snils + "'"
+                    WHERE students.Снилс='" + snils + "'"
 
         Return sqlString
 
@@ -1696,7 +1707,7 @@ Module QueryString
 
     End Function
 
-    Public Function selectCol_chas() As String
+    Public Function selectNumberHours() As String
 
         sqlString = ""
 
@@ -1934,180 +1945,17 @@ Module QueryString
 
     End Function
 
-    Public Function SQLString_OtchetRuk(DateNach As String, DateKon As String)
+    Public Function SQLString_managerOrder(dateStart As String, dateEnd As String)
 
-        sqlString = ""
-
-        sqlString = "SELECT" +
-                     "  Tbl_spec.Спец," +
-                     "  Tbl_spec.Номер," +
-                     "  Tbl_spec.program," +
-                     "  Tbl_spec.КолЧас," +
-                     "  Tbl_spec.period," +
-                     "  Tbl_data_1.чел," +
-                     "  IFNULL(Tbl_data_2.bud,0) AS Бюджет," +
-                     "  Tbl_data_1.чел-IFNULL(Tbl_data_2.bud,0) AS Внебюджет," +
-                     "  IF(Tbl_spec.Финансирование='бюджет',1,0) AS бюджет," +
-                     "  IF(Tbl_spec.Финансирование='внебюджет',1,0) AS внебюджет," +
-                     "  IFNULL(Tbl_data_2.bud,0)*Tbl_spec.КолЧас AS бюджет," +
-                     "  (Tbl_data_1.чел - IFNULL(Tbl_data_2.bud,0))*Tbl_spec.КолЧас AS Внебюджет" +
-                     " FROM
-                     (
-                        SELECT 
-                        tblGroup.Номер,
-                        program.name AS program,
-                        tblGroup.Спец,
-                        tblGroup.КолЧас,
-                        tblGroup.Код,
-                        tblGroup.Финансирование,
-                        tblGroup.period
-                        FROM
-                        (
-                          SELECT" +
-                     "    Номер," +
-                     "    kod_program," +
-                     "    Спец," +
-                     "    КолЧас," +
-                     "    Код," +
-                     "    Финансирование," +
-                     "    CONCAT(DAY(ДатаНЗ), '.', IF(MONTH(ДатаНЗ) < 10, CONCAT('0', MONTH(ДатаНЗ)), MONTH(ДатаНЗ)), '.', YEAR(ДатаНЗ), '-', DAY(ДатаКЗ), '.', IF(MONTH(ДатаКЗ) < 10, CONCAT('0', MONTH(ДатаКЗ)), MONTH(ДатаКЗ)), '.', YEAR(ДатаКЗ)) AS period" +
-                     "  FROM `group`" +
-                     "  WHERE `group`.ДатаКЗ BETWEEN '" + DateNach + "' AND '" + DateKon + "'
-                     ) AS tblGroup
-                        LEFT JOIN
-                        program
-                        ON tblGroup.kod_program=kod
-                     ) AS Tbl_spec" +
-                     "  INNER JOIN (SELECT" +
-                     "      spec.Код," +
-                     "      COUNT(students) AS чел" +
-                     "    FROM (SELECT" +
-                     "        Код" +
-                     "      FROM `group`" +
-                     "      WHERE `group`.ДатаКЗ BETWEEN '" + DateNach + "' AND '" + DateKon + "') AS spec" +
-                     "      INNER JOIN group_list" +
-                     "        ON spec.Код = kod" +
-                     "    GROUP BY spec.Код) AS Tbl_data_1" +
-                     "    ON Tbl_data_1.Код = Tbl_spec.Код" +
-                     "  LEFT JOIN  " +
-                     "  (SELECT" +
-                     "      sostav.Код," +
-                     "      IFNULL(COUNT(slush.ИФин),0) AS bud" +
-                     "    FROM (SELECT" +
-                     "        spec.Код," +
-                     "        students" +
-                     "      FROM (SELECT" +
-                     "          Код" +
-                     "        FROM `group`" +
-                     "        WHERE `group`.ДатаКЗ BETWEEN '" + DateNach + "' AND '" + DateKon + "') AS spec" +
-                     "        INNER JOIN group_list" +
-                     "          ON spec.Код = kod) AS sostav" +
-                     "      INNER JOIN (SELECT" +
-                     "          Снилс," +
-                     "          ИФин" +
-                     "        FROM students" +
-                     "        WHERE ИФин = 'Федеральный бюджет') AS slush" +
-                     "        ON slush.Снилс = sostav.students" +
-                     "        GROUP BY sostav.Код" +
-                     "        ) AS Tbl_data_2" +
-                     "    ON Tbl_data_2.Код = Tbl_spec.Код" +
-                     " ORDER BY Tbl_spec.Спец,Tbl_spec.program DESC"
+        sqlString = "CALL managerOrder('" + dateStart + "','" + dateEnd + "')"
 
         Return sqlString
 
     End Function
 
-    Public Function SQLString_OtchetRMANPO(DateNach As String, DateKon As String)
+    Public Function SQLString_OtchetRMANPO(dateStart As String, dateEnd As String)
 
-        sqlString = ""
-
-        sqlString = "SELECT
-                    Tbl_spec.Спец,
-                    Tbl_spec.Номер,
-                    Tbl_spec.period,
-                    program.name,
-                    Tbl_data_1.чел,
-                    Tbl_data_2.bud AS Бюджет,
-                    Tbl_data_1.чел - Tbl_data_2.bud AS Внебюджет,
-                    Tbl_org.НОрг,
-                    Tbl_org.bud
-                  FROM (SELECT
-                      Номер,
-                      kod_program,
-                      Спец,
-                      КолЧас,
-                      Код,
-                      Финансирование,
-                      CONCAT(IF(DAY(ДатаНЗ) < 10, CONCAT('0',DAY(ДатаНЗ)), DAY(ДатаНЗ)), '.', IF(MONTH(ДатаНЗ) < 10, CONCAT('0', MONTH(ДатаНЗ)), MONTH(ДатаНЗ)), '.', YEAR(ДатаНЗ), '-',IF(DAY(ДатаКЗ) < 10, CONCAT('0',DAY(ДатаКЗ)), DAY(ДатаКЗ)) , '.', IF(MONTH(ДатаКЗ) < 10, CONCAT('0', MONTH(ДатаКЗ)), MONTH(ДатаКЗ)), '.', YEAR(ДатаКЗ)) AS period
-                    FROM `group`" +
-                          "  WHERE `group`.ДатаКЗ BETWEEN '" + DateNach + "' AND '" + DateKon + "'" +
-                    ") AS Tbl_spec
-
-                      LEFT JOIN
-                  program
-                  ON 
-                  Tbl_spec.kod_program=program.kod
-
-                    INNER JOIN (SELECT
-                        spec.Код,
-                        COUNT(students) AS чел
-                      FROM (SELECT
-                          Код
-                        FROM `group`" +
-                          "  WHERE `group`.ДатаКЗ BETWEEN '" + DateNach + "' AND '" + DateKon + "'" +
-                    ") AS spec
-                        INNER JOIN group_list
-                          ON spec.Код = kod
-                      GROUP BY spec.Код) AS Tbl_data_1
-                      ON Tbl_data_1.Код = Tbl_spec.Код
-                    INNER JOIN (SELECT
-                        sostav.Код,
-                        COUNT(slush.ИФин) AS bud
-                      FROM (SELECT
-                          spec.Код,
-                          students
-                        FROM (SELECT
-                            Код
-                          FROM `group`" +
-                          "  WHERE `group`.ДатаКЗ BETWEEN '" + DateNach + "' AND '" + DateKon + "'" +
-                    ") AS spec
-                          INNER JOIN group_list
-                            ON spec.Код = kod) AS sostav
-                        INNER JOIN (SELECT
-                            Снилс,
-                            ИФин
-                          FROM students
-                          WHERE ИФин = 'Федеральный бюджет') AS slush
-                          ON slush.Снилс = sostav.students
-                      GROUP BY sostav.Код) AS Tbl_data_2
-                      ON Tbl_data_2.Код = Tbl_spec.Код
-                    INNER JOIN (SELECT
-                        sostav.Код,
-                        full_name AS НОрг,
-                        COUNT(slush.ИФин) AS bud
-                      FROM (SELECT
-                          spec.Код,
-                          students
-                        FROM (SELECT
-                            Код
-                          FROM `group`" +
-                          "  WHERE `group`.ДатаКЗ BETWEEN '" + DateNach + "' AND '" + DateKon + "'" +
-                    ") AS spec
-                          INNER JOIN group_list
-                            ON spec.Код = kod) AS sostav
-                        INNER JOIN (SELECT
-                            Снилс,
-                            ИФин,
-                            НОрг
-                          FROM students) AS slush
-                          ON slush.Снилс = sostav.students
-                        LEFT JOIN napr_organization
-                                ON slush.НОрг=kod
-                      GROUP BY sostav.Код,
-                               slush.НОрг) AS Tbl_org
-                      ON Tbl_spec.Код = Tbl_org.Код
-                ORDER BY Tbl_spec.Спец,Tbl_spec.Номер, Tbl_org.НОрг "
-
+        sqlString = "CALL orderRMANPO('" + dateStart + "','" + dateEnd + "')"
         Return sqlString
 
     End Function
@@ -2170,159 +2018,24 @@ Module QueryString
     End Function
 
 
-    Public Function SQLString_OtchetOrg(DateNach As String, DateKon As String)
+    Public Function SQLString_organizationOrder(dateStart As String, dateEnd As String)
 
-        sqlString = ""
-
-        sqlString = "SELECT 
-                        name AS Организация,
-                        result.Человек
-                         FROM
-                        ( SELECT" +
-                    "       slush.НОрг," +
-                    "       COUNT(slush.Снилс) AS Человек" +
-                    "     FROM(SELECT" +
-                    "         spec.Код," +
-                    "         students" +
-                    "       FROM(SELECT" +
-                    "           Код" +
-                    "         From `group`" +
-                    "         WHERE `group`.ДатаКЗ BETWEEN '" + DateNach + "' AND '" + DateKon + "') AS spec" +
-                    "         INNER Join group_list" +
-                    "           On spec.Код = kod) AS sostav" +
-                    "       INNER Join (SELECT" +
-                    "           Снилс," +
-                    "           IFNULL(НОрг,'') AS НОрг" +
-                    "         From students" +
-                    "         ) AS slush" +
-                    "         ON slush.Снилс = sostav.students" +
-                    "     GROUP By slush.НОрг" +
-                    " ORDER BY slush.НОрг) AS result
-
-                    LEFT JOIN 
-
-                    napr_organization
-                    ON result.НОрг=kod"
-
+        sqlString = " CALL organizationOrder('" + dateStart + "','" + dateEnd + "')"
 
         Return sqlString
 
     End Function
 
-    Public Function SQLString_OtchetBud_Vbud(DateNach As String, DateKon As String, argument As String)
+    Public Function SQLString_OtchetBud_Vbud(dateStart As String, dateEnd As String, argument As String)
 
-        sqlString = ""
-
-        sqlString = " SELECT 
-                      gr.КолЧас часов,
-                      sostav_chel.number_slush As слушателей,
-                      tbl_slush.мужиков AS мужчин,
-                      tbl_slush.старше_60 As старше_60,
-                      gr.КолЧас * sostav_chel.number_slush As выполнено_часов,
-                      gr.number_gr AS групп
-                    FROM(SELECT
-                        SUM(slush.пол) As мужиков,
-                        SUM(slush.v_60) As старше_60,
-                        sostav.КолЧас
-                            FROM(SELECT
-                          spec.Код,
-                          spec.КолЧас,
-                          students
-                        FROM(SELECT
-                            Код,
-                            КолЧас
-                          From `group`" +
-                    "         WHERE `group`.ДатаКЗ BETWEEN '" + DateNach + "' AND '" + DateKon + "'"
-        sqlString += ") AS spec" +
-                    "      INNER Join group_list
-                            On spec.Код = kod) AS sostav
-                        INNER Join(SELECT
-                            Снилс,
-                            If(Пол = 'женский', 0, 1) AS Пол,
-                            If(If(month(Now()) >= month(ДатаРождения) And Day(Now()) >= Day(ДатаРождения), Year(Now()) >= Year(ДатаРождения), Year(Now()) >= Year(ДатаРождения) - 1) >= 60 And Пол = 'мужской', 1, 0) AS v_60
-                          From students"
-
-        If argument = "бюджет" Then
-            sqlString += "  WHERE ИФин = 'Федеральный бюджет'"
-        ElseIf argument = "внебюджет" Then
-            sqlString += "  WHERE ИФин = 'Платное обучение'"
-        End If
-
-        sqlString += " ) AS slush
-                          On slush.Снилс = sostav.students
-                      GROUP BY sostav.КолЧас) AS tbl_slush
-                      INNER Join
-                    
-                    (SELECT
-                        tbl.КолЧас,
-                        COUNT(gr) AS number_gr
-                        FROM
-                        (SELECT 
-                            sostav.КолЧас,
-                            sostav.Код AS gr
-                          FROM (SELECT
-                              spec.Код,
-                              spec.КолЧас,
-                              students
-                            FROM (SELECT
-                                Код,
-                                КолЧас
-                              FROM `group`" +
-                    "         WHERE `group`.ДатаКЗ BETWEEN '" + DateNach + "' AND '" + DateKon + "') AS spec"
-
-        sqlString += "       INNER JOIN group_list
-                                ON spec.Код = kod) AS sostav
-                            INNER JOIN (SELECT
-                                Снилс
-                                FROM students
-                                "
-
-        If argument = "бюджет" Then
-            sqlString += "  WHERE ИФин = 'Федеральный бюджет'"
-        ElseIf argument = "внебюджет" Then
-            sqlString += "  WHERE ИФин = 'Платное обучение'"
-        End If
-
-        sqlString += "
-                              ) AS slush
-                              ON slush.Снилс = sostav.students
-
-                          GROUP BY sostav.Код) AS tbl 
-                        GROUP BY tbl.КолЧас)
-                      AS gr
-
-                        On gr.КолЧас = tbl_slush.КолЧас
-                      INNER Join(SELECT
-                          COUNT(spec.Код) As number_slush,
-                          spec.КолЧас
-                            FROM(SELECT
-                            Код,
-                            КолЧас
-                          From `group`" +
-                    "         WHERE `group`.ДатаКЗ BETWEEN '" + DateNach + "' AND '" + DateKon + "'"
-
-        sqlString += ") AS spec" +
-                    "      INNER Join group_list
-                            On spec.Код = kod
-      INNER JOIN 
-      (SELECT
-          Снилс
-        FROM students "
-
-        If argument = "бюджет" Then
-            sqlString += "  WHERE ИФин = 'Федеральный бюджет'"
-        ElseIf argument = "внебюджет" Then
-            sqlString += "  WHERE ИФин = 'Платное обучение'"
-        End If
-
-        sqlString += " ) AS slush
-
-        ON slush.Снилс = students
-
-    GROUP BY spec.КолЧас) AS sostav_chel
-
-    ON tbl_slush.КолЧас = sostav_chel.КолЧас"
-
+        Select Case argument
+            Case "полный"
+                sqlString = "CALL VBOrder_full('" + dateStart + "','" + dateEnd + "')"
+            Case "внебюджет"
+                sqlString = "CALL VBOrder_partial('" + dateStart + "','" + dateEnd + "','Платное обучение')"
+            Case "бюджет"
+                sqlString = "CALL VBOrder_partial('" + dateStart + "','" + dateEnd + "','Федеральный бюджет')"
+        End Select
 
         Return sqlString
 
@@ -2528,38 +2241,39 @@ Module QueryString
 
         sqlString = ""
 
-        sqlString = " SELECT" +
-  " students.Код," +
-  " students.Снилс," +
-  " students.Фамилия," +
-  " students.Отчество," +
-  " students.Имя," +
-  " students.ДатаРождения," +
-  " students.Пол," +
-  " students.УОбразования," +
-  " students.НаимДОО," +
-  " students.СерияДОО," +
-  " students.НомерДОО," +
-  " students.ФамилияДОО," +
-  " students.АРег," +
-  " students.Телефон," +
-  " students.Гражданство," +
-  " students.ДУЛ," +
-  " students.СерияДУЛ," +
-  " students.НомерДУЛ," +
-  " students.ИФин," +
-  " students.ДатаРегистрации" +
-  " FROM" +
-  " (" +
-" SELECT " +
- "        group_list.students" +
-" FROM `group`" +
-"   INNER JOIN group_list" +
-"     ON `group`.Код = group_list.Kod" +
-"     WHERE `group`.ДатаКЗ BETWEEN '" + DateNach + "' And '" + DateKon + "'" +
-"     ) AS tbl1" +
-"   INNER JOIN students" +
-"     ON tbl1.students = students.Снилс"
+        sqlString = " SELECT
+                          students.Код,
+                          students.Снилс,
+                          students.Фамилия,
+                          students.Отчество,
+                          students.Имя,
+                          students.ДатаРождения,
+                          students.Пол,
+                          students.УОбразования,
+                          students.НаимДОО,
+                          students.СерияДОО,
+                          students.НомерДОО,
+                          students.ФамилияДОО,
+                          students.АРег,
+                          students.Телефон,
+                          students.Гражданство,
+                          students.ДУЛ,
+                          students.СерияДУЛ,
+                          students.НомерДУЛ,
+                          tbl1.financing,
+                          students.ДатаРегистрации
+                        FROM (SELECT
+                            group_list.students,
+                            name AS financing
+                          FROM `group`
+                            INNER JOIN group_list
+                              ON `group`.Код = group_list.kod
+                            LEFT JOIN financing
+                              ON group_list.source_financing = financing.kod" +
+                          " WHERE `group`.ДатаКЗ BETWEEN '" + DateNach + "' And '" + DateKon + "'" +
+                          " ) AS tbl1
+                          INNER JOIN students
+                            ON tbl1.students = students.Снилс"
 
         Return sqlString
 
@@ -2778,8 +2492,6 @@ Module QueryString
             ", ДУЛ=" & Chr(39) & studentData.dUL & Chr(39) &
             ", СерияДУЛ=" & Chr(39) & studentData.seriesDUL & Chr(39) &
             ", НомерДУЛ=" & Chr(39) & studentData.numberDUL & Chr(39) &
-            ",ИФин=" & Chr(39) & studentData.sourceOfFinansing & Chr(39) &
-            ", НОрг=(SELECT MAX(kod) FROM napr_organization WHERE name=" & Chr(39) & studentData.направившаяОрг & Chr(39) & ")" &
             ", ДатаРегистрации=" & Chr(39) & studentData.dateReg & Chr(39) &
             ", Почта=" & Chr(39) & studentData.email & Chr(39) &
             ", ДУЛКемВыдан=" & Chr(39) & studentData.autorDUL & Chr(39)
@@ -2820,8 +2532,6 @@ Module QueryString
         part2 = +"," & Chr(39) & slushatel.lastNameDOO & Chr(39) & "," & Chr(39) & slushatel.adress & Chr(39) & "," & Chr(39) & slushatel.telephone & Chr(39) &
         part1 = +"Гражданство, ДУЛ, СерияДУЛ, НомерДУЛ,"
         part2 = +"," & Chr(39) & slushatel.citizenship & Chr(39) & "," & Chr(39) & slushatel.dUL & Chr(39) & "," & Chr(39) & slushatel.seriesDUL & Chr(39) & "," & Chr(39) & slushatel.numberDUL & Chr(39)
-        part1 = +"ИФин, НОрг,"
-        part2 = +"," & Chr(39) & slushatel.sourceOfFinansing & Chr(39) & ",(SELECT kod FROM napr_organization WHERE name=" & Chr(39) & slushatel.направившаяОрг & Chr(39) & ") "
         part1 = +" ДатаРегистрации, Почта,"
         part2 = +" , " & Chr(39) & MainForm.mySqlConnect.dateToFormatMySQL(slushatel.dateReg) & Chr(39) & " , " & Chr(39) & slushatel.email & Chr(39) &
         part1 = +"ДУЛКемВыдан,ДУЛДатаВыдачи ) "

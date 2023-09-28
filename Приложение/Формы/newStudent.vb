@@ -80,8 +80,6 @@ Public Class newStudent
         student.studentData.dUL = ДУЛ.Text
         student.studentData.seriesDUL = СерияДУЛ.Text
         student.studentData.numberDUL = НомерДУЛ.Text
-        student.studentData.sourceOfFinansing = ИсточникФин.Text
-        student.studentData.направившаяОрг = НаправившаяОрг.Text
         student.studentData.dateReg = MainForm.mySqlConnect.dateToFormatMySQL(Date.Now.ToShortDateString)
         student.studentData.email = Email.Text
         student.studentData.doo_doc_type = doo_vid_dok.Text
@@ -135,12 +133,11 @@ Public Class newStudent
 
         student.studentData.prevSnils = student.studentData.snils
 
-        SC.Send(AddressOf enabledButton, "")
+        SC.Send(AddressOf enabledButton, 1)
 
     End Sub
     Private Sub updateFormName(StudentData As Student.strStudent)
         Me.Text = StudentData.lastName & " " & StudentData.name & " " & StudentData.secondName
-        'updateListView.updateRow("СправочникСлушатели", 1, addMask.addMask(StudentData.snils), 2, StudentData.lastName, 3, StudentData.name, 4, StudentData.secondName)
         StudentsInGroup.tbl_studentsInGroup.load_table()
     End Sub
 
@@ -325,14 +322,6 @@ Public Class newStudent
         ДУЛ.Items.Clear()
         ДУЛ.Items.Add("")
         ДУЛ.Items.AddRange(student.formSlushLists.doc_UL)
-
-        ИсточникФин.Items.Clear()
-        ИсточникФин.Items.Add("")
-        ИсточникФин.Items.AddRange(student.formSlushLists.finSource)
-
-        НаправившаяОрг.Items.Clear()
-        НаправившаяОрг.Items.Add("")
-        НаправившаяОрг.Items.AddRange(student.formSlushLists.napr_organization)
 
         controlsReaction(dictionaryFlag, Me)
 

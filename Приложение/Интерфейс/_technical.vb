@@ -585,7 +585,7 @@ Module _technical
         End If
         месяцРП = месяцРПадеж
     End Function
-    Sub ЗаменитьТекстВОбластиДокументаВорд(Область As Object, ЗаменяемыйТекст As String, ТекстНаКоторыйМеняем As String, Optional КоличествоЗамен As Integer = 2)
+    Sub replaceText_documentWordRange(Область As Object, ЗаменяемыйТекст As String, ТекстНаКоторыйМеняем As String, Optional КоличествоЗамен As Integer = 2)
         Область.Find.ClearFormatting
         Область.Find.Replacement.ClearFormatting
         With Область.Find

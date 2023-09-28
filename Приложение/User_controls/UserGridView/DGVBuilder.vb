@@ -1,5 +1,4 @@
-﻿Imports System.Xml
-
+﻿
 Public Class DGVBuilder
 
     Public userDGV As Tables_control
@@ -86,8 +85,6 @@ Public Class DGVBuilder
         redactorOpen()
         updateRedactor()
 
-        userDGV.flagUpdate = True
-
     End Sub
 
     Private Sub updateRedactor()
@@ -140,7 +137,7 @@ Public Class DGVBuilder
 
         redactor_firstControl_focus()
 
-        userDGV.flagUpdate = False
+        userDGV.flagUpdate = True
 
     End Sub
 
@@ -168,6 +165,7 @@ Public Class DGVBuilder
 
         If userDGV.flag_first_control_combo Then
             userDGV.comboBox_first_element.Focus()
+
         Else
             userDGV.redactor_element_first.Focus()
             userDGV.redactor_element_first.Select(userDGV.redactor_element_first.Text.Length, 0)

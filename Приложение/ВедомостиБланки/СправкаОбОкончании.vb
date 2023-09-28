@@ -54,22 +54,22 @@
             Warning.TextBox.Text = "Справки сохранены, Путь к каталогу:
 " & BuildOrder.path
 
-            _technical.ЗаменитьТекстВОбластиДокументаВорд(wordDoc.Range, "$СлушательИО$", _technical.ФамилияИОПоПолнойФИО(checkedStudents(0, СчетчикСтрок)), 2)
-            _technical.ЗаменитьТекстВОбластиДокументаВорд(wordDoc.Range, "$ФИОСлушатель$", checkedStudents(0, СчетчикСтрок), 2)
-            _technical.ЗаменитьТекстВОбластиДокументаВорд(wordDoc.Range, "$КоличествоСлушателей$", UBound(checkedStudents, 2) + 1, 2)
-            _technical.ЗаменитьТекстВОбластиДокументаВорд(wordDoc.Range, "$НомерГруппы$", BuildOrder.groupNumber.Text, 2)
-            _technical.ЗаменитьТекстВОбластиДокументаВорд(wordDoc.Range, "$УровеньКвалификации$", group(1, 0), 2)
-            _technical.ЗаменитьТекстВОбластиДокументаВорд(wordDoc.Range, "$Программа$", group(0, 0), 2)
-            _technical.ЗаменитьТекстВОбластиДокументаВорд(wordDoc.Range, "$ГруппаФинансирование$", group(2, 0), 2)
-            _technical.ЗаменитьТекстВОбластиДокументаВорд(wordDoc.Range, "$ДатаНЗ$", group(3, 0), 2)
-            _technical.ЗаменитьТекстВОбластиДокументаВорд(wordDoc.Range, "$ДатаКЗ$", group(4, 0), 2)
-            _technical.ЗаменитьТекстВОбластиДокументаВорд(wordDoc.Range, "$ГруппаЧасы$", group(5, 0), 2)
+            _technical.replaceText_documentWordRange(wordDoc.Range, "$СлушательИО$", _technical.ФамилияИОПоПолнойФИО(checkedStudents(0, СчетчикСтрок)), 2)
+            _technical.replaceText_documentWordRange(wordDoc.Range, "$ФИОСлушатель$", checkedStudents(0, СчетчикСтрок), 2)
+            _technical.replaceText_documentWordRange(wordDoc.Range, "$КоличествоСлушателей$", UBound(checkedStudents, 2) + 1, 2)
+            _technical.replaceText_documentWordRange(wordDoc.Range, "$НомерГруппы$", BuildOrder.groupNumber.Text, 2)
+            _technical.replaceText_documentWordRange(wordDoc.Range, "$УровеньКвалификации$", group(1, 0), 2)
+            _technical.replaceText_documentWordRange(wordDoc.Range, "$Программа$", group(0, 0), 2)
+            _technical.replaceText_documentWordRange(wordDoc.Range, "$ГруппаФинансирование$", group(2, 0), 2)
+            _technical.replaceText_documentWordRange(wordDoc.Range, "$ДатаНЗ$", group(3, 0), 2)
+            _technical.replaceText_documentWordRange(wordDoc.Range, "$ДатаКЗ$", group(4, 0), 2)
+            _technical.replaceText_documentWordRange(wordDoc.Range, "$ГруппаЧасы$", group(5, 0), 2)
 
-            _technical.ЗаменитьТекстВОбластиДокументаВорд(wordDoc.Range, "$И.О.Ответств$", rotate(BuildOrder.Утверждает.Text), 2)
-            _technical.ЗаменитьТекстВОбластиДокументаВорд(wordDoc.Range, "$Дата$", dateString, 2)
-            _technical.ЗаменитьТекстВОбластиДокументаВорд(wordDoc.Range, "$День$", Format(dateVal, "dd"), 2)
-            _technical.ЗаменитьТекстВОбластиДокументаВорд(wordDoc.Range, "$Месяц$", месяцРП(Format(dateVal, "MMMM")), 2)
-            _technical.ЗаменитьТекстВОбластиДокументаВорд(wordDoc.Range, "$Год$", Format(dateVal, "yyyy"), 2)
+            _technical.replaceText_documentWordRange(wordDoc.Range, "$И.О.Ответств$", rotate(BuildOrder.Утверждает.Text), 2)
+            _technical.replaceText_documentWordRange(wordDoc.Range, "$Дата$", dateString, 2)
+            _technical.replaceText_documentWordRange(wordDoc.Range, "$День$", Format(dateVal, "dd"), 2)
+            _technical.replaceText_documentWordRange(wordDoc.Range, "$Месяц$", месяцРП(Format(dateVal, "MMMM")), 2)
+            _technical.replaceText_documentWordRange(wordDoc.Range, "$Год$", Format(dateVal, "yyyy"), 2)
 
 
             table = НайтиТаблицуПоМеткеИлиНеНайдена(wordDoc.Range, "$Таблица$", 2, 2)

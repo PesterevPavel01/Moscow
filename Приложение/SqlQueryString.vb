@@ -562,7 +562,7 @@ Public Class SqlQueryString
         sqlString = "UPDATE group_list
                     SET source_financing = (SELECT
                         kod
-                      FROM financing
+                      FROM fin_source
                       WHERE name = '" + values_element_first + "'), organization = (SELECT
                         kod
                       FROM napr_organization

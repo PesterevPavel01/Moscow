@@ -29,8 +29,6 @@ Public Class Student
         Dim dUL As String
         Dim seriesDUL As String
         Dim numberDUL As String
-        Dim sourceOfFinansing As String
-        Dim направившаяОрг As String
         Dim email As String
         Dim dateReg As String
         Dim dateDUL As String
@@ -47,8 +45,6 @@ Public Class Student
         Public DOO_strana() As String
         Public nationality() As String
         Public doc_UL() As String
-        Public finSource() As String
-        Public napr_organization() As String
     End Structure
 
     Public Structure formSlushatelFlag
@@ -82,8 +78,6 @@ Public Class Student
         studentData.dUL = ""
         studentData.seriesDUL = ""
         studentData.numberDUL = ""
-        studentData.sourceOfFinansing = ""
-        studentData.направившаяОрг = ""
         studentData.email = ""
         studentData.dateReg = ""
         studentData.dateDUL = ""
@@ -147,11 +141,7 @@ Public Class Student
                 Return True
             Case "ДУЛ"
                 Return True
-            Case "ИсточникФин"
-                Return True
             Case "СтранаДОО"
-                Return True
-            Case "НаправившаяОрг"
                 Return True
             Case "ДатаНаправленияРосздравнвдзора"
                 Return True
@@ -228,11 +218,6 @@ Public Class Student
             Return False
         End If
 
-        If studentData.sourceOfFinansing = "" Then
-            MsgBox("Укажите источник финансирования", 10, "Внимание")
-            Return False
-        End If
-
         Return True
 
     End Function
@@ -298,20 +283,12 @@ Public Class Student
         queryString = loadDokUL()
         formSlushLists.doc_UL = mySQLConnector.loadIntoArray(queryString, 1, 0)
 
-        queryString = loadIstFinans()
-        formSlushLists.finSource = mySQLConnector.loadIntoArray(queryString, 1, 0)
-
-        queryString = loadOrganization()
-        formSlushLists.napr_organization = mySQLConnector.loadIntoArray(queryString, 1, 0)
-
         flagSlushatelForm.doo_doc_type = False
         flagSlushatelForm.gender = False
         flagSlushatelForm.urovenObr = False
         flagSlushatelForm.DOO_strana = False
         flagSlushatelForm.nationality = False
         flagSlushatelForm.doc_UL = False
-        flagSlushatelForm.finSource = False
-        flagSlushatelForm.napr_organization = False
 
     End Sub
 

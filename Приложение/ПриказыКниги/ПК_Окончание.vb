@@ -109,14 +109,14 @@ Module ПК_Окончание
         Next
 
         For СчетчикСлушателей = 0 To UBound(finishList, 2)
-            _technical.ЗаменитьТекстВОбластиДокументаВорд(wordDoc.Tables(cunterTAbles + СчетчикСлушателей).Range, "$Фамилия$", finishList(1, СчетчикСлушателей))
-            _technical.ЗаменитьТекстВОбластиДокументаВорд(wordDoc.Tables(cunterTAbles + СчетчикСлушателей).Range, "$ИмяИОтчество$", finishList(2, СчетчикСлушателей))
-            _technical.ЗаменитьТекстВОбластиДокументаВорд(wordDoc.Tables(cunterTAbles + СчетчикСлушателей).Range, "$ДНачало$", finishList(9, СчетчикСлушателей))
-            _technical.ЗаменитьТекстВОбластиДокументаВорд(wordDoc.Tables(cunterTAbles + СчетчикСлушателей).Range, "$ДКонец$", finishList(10, СчетчикСлушателей))
-            _technical.ЗаменитьТекстВОбластиДокументаВорд(wordDoc.Tables(cunterTAbles + СчетчикСлушателей).Range, "$Программа$", finishList(8, СчетчикСлушателей))
-            _technical.ЗаменитьТекстВОбластиДокументаВорд(wordDoc.Tables(cunterTAbles + СчетчикСлушателей).Range, "$Часы$", finishList(11, СчетчикСлушателей))
-            _technical.ЗаменитьТекстВОбластиДокументаВорд(wordDoc.Tables(cunterTAbles + СчетчикСлушателей).Range, "$Номер$", finishList(4, СчетчикСлушателей) + СчетчикСлушателей)
-            _technical.ЗаменитьТекстВОбластиДокументаВорд(wordDoc.Tables(cunterTAbles + СчетчикСлушателей).Range, "$ДатаВ$", BuildOrder.ДатаПриказа.Value.ToShortDateString)
+            _technical.replaceText_documentWordRange(wordDoc.Tables(cunterTAbles + СчетчикСлушателей).Range, "$Фамилия$", finishList(1, СчетчикСлушателей))
+            _technical.replaceText_documentWordRange(wordDoc.Tables(cunterTAbles + СчетчикСлушателей).Range, "$ИмяИОтчество$", finishList(2, СчетчикСлушателей))
+            _technical.replaceText_documentWordRange(wordDoc.Tables(cunterTAbles + СчетчикСлушателей).Range, "$ДНачало$", finishList(9, СчетчикСлушателей))
+            _technical.replaceText_documentWordRange(wordDoc.Tables(cunterTAbles + СчетчикСлушателей).Range, "$ДКонец$", finishList(10, СчетчикСлушателей))
+            _technical.replaceText_documentWordRange(wordDoc.Tables(cunterTAbles + СчетчикСлушателей).Range, "$Программа$", finishList(8, СчетчикСлушателей))
+            _technical.replaceText_documentWordRange(wordDoc.Tables(cunterTAbles + СчетчикСлушателей).Range, "$Часы$", finishList(11, СчетчикСлушателей))
+            _technical.replaceText_documentWordRange(wordDoc.Tables(cunterTAbles + СчетчикСлушателей).Range, "$Номер$", finishList(4, СчетчикСлушателей) + СчетчикСлушателей)
+            _technical.replaceText_documentWordRange(wordDoc.Tables(cunterTAbles + СчетчикСлушателей).Range, "$ДатаВ$", BuildOrder.ДатаПриказа.Value.ToShortDateString)
         Next
 
         wordApp.Visible = True

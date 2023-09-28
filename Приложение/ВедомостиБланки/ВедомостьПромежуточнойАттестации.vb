@@ -69,7 +69,7 @@
             Warning.TextBox.Text = "Документы сохранены, Путь к каталогу:
 " & BuildOrder.path
 
-            _technical.ЗаменитьТекстВОбластиДокументаВорд(ДокументВорд.Range, "$НомерГруппы$", BuildOrder.groupNumber.Text, 2)
+            _technical.replaceText_documentWordRange(ДокументВорд.Range, "$НомерГруппы$", BuildOrder.groupNumber.Text, 2)
 
             Таблица = МСВорд.НайтиТаблицуПоМеткеИлиНеНайдена(ДокументВорд, "$Таблица$", 2, 2)
 
@@ -82,20 +82,20 @@
             Catch ex As Exception
 
             End Try
-            _technical.ЗаменитьТекстВОбластиДокументаВорд(ДокументВорд.Range, "$КоличествоСлушателей$", UBound(ДанныеСлушателей, 2) + 1, 2)
-            _technical.ЗаменитьТекстВОбластиДокументаВорд(ДокументВорд.Range, "$НомерГруппы$", BuildOrder.groupNumber.Text, 2)
-            _technical.ЗаменитьТекстВОбластиДокументаВорд(ДокументВорд.Range, "$КураторГруппы$", Группа(1, 0), 2)
-            _technical.ЗаменитьТекстВОбластиДокументаВорд(ДокументВорд.Range, "$Программа$", Группа(0, 0), 2)
+            _technical.replaceText_documentWordRange(ДокументВорд.Range, "$КоличествоСлушателей$", UBound(ДанныеСлушателей, 2) + 1, 2)
+            _technical.replaceText_documentWordRange(ДокументВорд.Range, "$НомерГруппы$", BuildOrder.groupNumber.Text, 2)
+            _technical.replaceText_documentWordRange(ДокументВорд.Range, "$КураторГруппы$", Группа(1, 0), 2)
+            _technical.replaceText_documentWordRange(ДокументВорд.Range, "$Программа$", Группа(0, 0), 2)
 
             If Not Len(ЧекнутыеМодули(1, i)) < 5 Then
-                _technical.ЗаменитьТекстВОбластиДокументаВорд(ДокументВорд.Range, "$И.О.Ответств$", rotate(ЧекнутыеМодули(1, i)), 2)
+                _technical.replaceText_documentWordRange(ДокументВорд.Range, "$И.О.Ответств$", rotate(ЧекнутыеМодули(1, i)), 2)
             End If
 
-            _technical.ЗаменитьТекстВОбластиДокументаВорд(ДокументВорд.Range, "$Модуль$", ЧекнутыеМодули(0, i), 2)
-            _technical.ЗаменитьТекстВОбластиДокументаВорд(ДокументВорд.Range, "$Дата$", ДатаВПриказ, 2)
-            _technical.ЗаменитьТекстВОбластиДокументаВорд(ДокументВорд.Range, "$День$", Format(Дата, "dd"), 2)
-            _technical.ЗаменитьТекстВОбластиДокументаВорд(ДокументВорд.Range, "$Месяц$", месяцРП(Format(Дата, "MMMM")), 2)
-            _technical.ЗаменитьТекстВОбластиДокументаВорд(ДокументВорд.Range, "$Год$", Format(Дата, "yyyy"), 2)
+            _technical.replaceText_documentWordRange(ДокументВорд.Range, "$Модуль$", ЧекнутыеМодули(0, i), 2)
+            _technical.replaceText_documentWordRange(ДокументВорд.Range, "$Дата$", ДатаВПриказ, 2)
+            _technical.replaceText_documentWordRange(ДокументВорд.Range, "$День$", Format(Дата, "dd"), 2)
+            _technical.replaceText_documentWordRange(ДокументВорд.Range, "$Месяц$", месяцРП(Format(Дата, "MMMM")), 2)
+            _technical.replaceText_documentWordRange(ДокументВорд.Range, "$Год$", Format(Дата, "yyyy"), 2)
 
             МСВорд.ЗаполнитьТаблицуВедомости(Таблица, ДанныеСлушателей, ocenka, 2, True)
 

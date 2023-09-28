@@ -25,21 +25,22 @@ Partial Class StudentsInGroup
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(StudentsInGroup))
         Me.SplitContainer1 = New System.Windows.Forms.SplitContainer()
         Me.container = New System.Windows.Forms.Panel()
-        Me.ToolStrip1 = New System.Windows.Forms.ToolStrip()
+        Me.header = New System.Windows.Forms.ToolStrip()
         Me.newStudent = New System.Windows.Forms.ToolStripButton()
         Me.studentsList = New System.Windows.Forms.ToolStripButton()
+        Me.everyone = New System.Windows.Forms.ToolStripButton()
         Me.allInfo = New System.Windows.Forms.ToolStripButton()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SplitContainer1.Panel2.SuspendLayout()
         Me.SplitContainer1.SuspendLayout()
-        Me.ToolStrip1.SuspendLayout()
+        Me.header.SuspendLayout()
         Me.SuspendLayout()
         '
         'SplitContainer1
         '
         Me.SplitContainer1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.SplitContainer1.FixedPanel = System.Windows.Forms.FixedPanel.Panel1
-        Me.SplitContainer1.Location = New System.Drawing.Point(3, 3)
+        Me.SplitContainer1.Location = New System.Drawing.Point(5, 5)
         Me.SplitContainer1.Name = "SplitContainer1"
         Me.SplitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal
         Me.SplitContainer1.Panel1Collapsed = True
@@ -47,28 +48,30 @@ Partial Class StudentsInGroup
         'SplitContainer1.Panel2
         '
         Me.SplitContainer1.Panel2.Controls.Add(Me.container)
-        Me.SplitContainer1.Panel2.Controls.Add(Me.ToolStrip1)
-        Me.SplitContainer1.Size = New System.Drawing.Size(1903, 695)
+        Me.SplitContainer1.Panel2.Controls.Add(Me.header)
+        Me.SplitContainer1.Size = New System.Drawing.Size(1899, 691)
         Me.SplitContainer1.SplitterDistance = 45
         Me.SplitContainer1.TabIndex = 7
         '
         'container
         '
+        Me.container.AutoSize = True
         Me.container.Dock = System.Windows.Forms.DockStyle.Fill
         Me.container.Location = New System.Drawing.Point(0, 47)
         Me.container.Name = "container"
-        Me.container.Size = New System.Drawing.Size(1903, 648)
+        Me.container.Size = New System.Drawing.Size(1899, 644)
         Me.container.TabIndex = 7
         '
-        'ToolStrip1
+        'header
         '
-        Me.ToolStrip1.BackColor = System.Drawing.SystemColors.ButtonFace
-        Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.newStudent, Me.studentsList, Me.allInfo})
-        Me.ToolStrip1.Location = New System.Drawing.Point(0, 0)
-        Me.ToolStrip1.Name = "ToolStrip1"
-        Me.ToolStrip1.Size = New System.Drawing.Size(1903, 47)
-        Me.ToolStrip1.TabIndex = 6
-        Me.ToolStrip1.Text = "ToolStrip1"
+        Me.header.AllowMerge = False
+        Me.header.BackColor = System.Drawing.SystemColors.ButtonFace
+        Me.header.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.newStudent, Me.studentsList, Me.everyone, Me.allInfo})
+        Me.header.Location = New System.Drawing.Point(0, 0)
+        Me.header.Name = "header"
+        Me.header.Size = New System.Drawing.Size(1899, 47)
+        Me.header.TabIndex = 6
+        Me.header.Text = "ToolStrip1"
         '
         'newStudent
         '
@@ -90,6 +93,19 @@ Partial Class StudentsInGroup
         Me.studentsList.Size = New System.Drawing.Size(44, 44)
         Me.studentsList.Text = "Слушатели"
         '
+        'everyone
+        '
+        Me.everyone.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
+        Me.everyone.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.everyone.Image = CType(resources.GetObject("everyone.Image"), System.Drawing.Image)
+        Me.everyone.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
+        Me.everyone.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.everyone.Name = "everyone"
+        Me.everyone.Size = New System.Drawing.Size(44, 44)
+        Me.everyone.Text = "Прочее"
+        Me.everyone.ToolTipText = "распространить на всех"
+        Me.everyone.Visible = False
+        '
         'allInfo
         '
         Me.allInfo.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
@@ -98,7 +114,8 @@ Partial Class StudentsInGroup
         Me.allInfo.ImageTransparentColor = System.Drawing.Color.Magenta
         Me.allInfo.Name = "allInfo"
         Me.allInfo.Size = New System.Drawing.Size(44, 44)
-        Me.allInfo.Text = "Прочее"
+        Me.allInfo.Text = "информация о группе"
+        Me.allInfo.ToolTipText = "информация о группе"
         '
         'StudentsInGroup
         '
@@ -108,22 +125,23 @@ Partial Class StudentsInGroup
         Me.Controls.Add(Me.SplitContainer1)
         Me.KeyPreview = True
         Me.Name = "StudentsInGroup"
-        Me.Padding = New System.Windows.Forms.Padding(3)
+        Me.Padding = New System.Windows.Forms.Padding(5)
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
         Me.Text = "Form2"
         Me.SplitContainer1.Panel2.ResumeLayout(False)
         Me.SplitContainer1.Panel2.PerformLayout()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SplitContainer1.ResumeLayout(False)
-        Me.ToolStrip1.ResumeLayout(False)
-        Me.ToolStrip1.PerformLayout()
+        Me.header.ResumeLayout(False)
+        Me.header.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub
     Friend WithEvents SplitContainer1 As SplitContainer
-    Friend WithEvents ToolStrip1 As ToolStrip
+    Friend WithEvents header As ToolStrip
     Friend WithEvents allInfo As ToolStripButton
     Friend WithEvents studentsList As ToolStripButton
     Friend WithEvents newStudent As ToolStripButton
     Friend WithEvents container As Panel
+    Friend WithEvents everyone As ToolStripButton
 End Class
