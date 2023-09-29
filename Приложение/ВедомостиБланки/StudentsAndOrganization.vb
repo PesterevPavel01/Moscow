@@ -1,11 +1,11 @@
-﻿Module ВедомостьСлушИОрг
+﻿Module StudentsAndOrganization
 
     Sub orderStudentsAndOrg()
 
         Dim wordApp
         Dim documentWord, studentsData, table
         Dim resourcesPath, samplePath
-        Dim sqlQuery, orderType As String
+        Dim sqlQuery As String
 
 
         sqlQuery = load_studentsAndOrg(MainForm.orderIdGroup)

@@ -146,7 +146,7 @@ Module OtchetExcell
             If Not listData.Count = 0 Then
                 CreateRMANPO(excellApp, excellWorkBook, listData, resultList, groupsArray, MonthName(MainForm.ДатаКонцаОтчета.Value.Month))
             Else
-                Warning.content.Text = "Нет информации отвечающей условиям отбора для отчета руководителя"
+                Warning.content.Text = "Нет информации отвечающей условиям отбора для PVFYGJ"
                 Warning.ShowDialog()
             End If
         End If
