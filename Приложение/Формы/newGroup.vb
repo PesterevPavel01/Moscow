@@ -54,7 +54,7 @@ Public Class newGroup
 
         End Select
 
-
+        StudentsInGroup.cvalification = MainForm.cvalific
 
     End Sub
 
@@ -520,6 +520,7 @@ Public Class newGroup
         If group.struct_grup.nameForm = "Редактор группы" Then
             MainForm.cvalific = StudentsInGroup.cvalification
             Dim number As Int16 = MainForm.cvalific
+            StudentsInGroup.ordersBuilder.init()
         End If
 
     End Sub

@@ -161,6 +161,12 @@
     <Compile Include="Приложение\SwichNumbers.vb" />
     <Compile Include="Приложение\SorterSetts.vb" />
     <Compile Include="Приложение\SwitchCvalification.vb" />
+    <Compile Include="Приложение\User_controls\button\myButton.Designer.vb">
+      <DependentUpon>myButton.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Приложение\User_controls\button\myButton.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Приложение\User_controls\UserGridView\DGVBuilder.vb" />
     <Compile Include="Приложение\User_controls\UserGridView\DGVRedactorTable.vb" />
     <Compile Include="Приложение\User_controls\UserGridView\DGV_Events.vb" />
@@ -195,6 +201,8 @@
     <Compile Include="Приложение\Отчеты\ПеднагрузкаОтчет.vb" />
     <Compile Include="Приложение\Интерфейс\RedactorDataGrid.vb" />
     <Compile Include="Приложение\ПриказыКниги\Приказ_Практика.vb" />
+    <Compile Include="Приложение\Формы\StudentsInGroup\PanelOrders_builder.vb" />
+    <Compile Include="Приложение\Формы\StudentsInGroup\PanelOrders_Events.vb" />
     <Compile Include="Приложение\Формы\WorkerReport.Designer.vb">
       <DependentUpon>WorkerReport.vb</DependentUpon>
     </Compile>
@@ -274,10 +282,10 @@
     <Compile Include="Приложение\Интерфейс\arrayMethod.vb" />
     <Compile Include="Приложение\Отчеты\OtchetExcell.vb" />
     <Compile Include="Приложение\Интерфейс\updateListView_1.vb" />
-    <Compile Include="Приложение\Формы\StudentsInGroup.Designer.vb">
+    <Compile Include="Приложение\Формы\StudentsInGroup\StudentsInGroup.Designer.vb">
       <DependentUpon>StudentsInGroup.vb</DependentUpon>
     </Compile>
-    <Compile Include="Приложение\Формы\StudentsInGroup.vb">
+    <Compile Include="Приложение\Формы\StudentsInGroup\StudentsInGroup.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Приложение\Справочники\studentBuilder.vb" />
@@ -349,6 +357,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Приложение\User_controls\button\myButton.resx">
+      <DependentUpon>myButton.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Приложение\User_controls\UserGridView\user_comboBox.resx">
       <DependentUpon>user_comboBox.vb</DependentUpon>
     </EmbeddedResource>
@@ -379,7 +390,7 @@
     <EmbeddedResource Include="Приложение\Формы\Warning.resx">
       <DependentUpon>Warning.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Приложение\Формы\StudentsInGroup.resx">
+    <EmbeddedResource Include="Приложение\Формы\StudentsInGroup\StudentsInGroup.resx">
       <DependentUpon>StudentsInGroup.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Приложение\Формы\newStudent.resx">
@@ -519,5 +530,6 @@
     <None Include="Приложение\ВедомостиБланки\Иконки\треугольник3.jpg" />
     <None Include="Приложение\ВедомостиБланки\Иконки\Плей.jpg" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

@@ -7,6 +7,7 @@ Public Class StudentsInGroup
     Dim uploader As New StudentsInGroup_uploader
     Public organization As String
     Public finansing As String
+    Public ordersBuilder As New PanelOrders_builder
 
     Public Sub loadStudentsInGroup()
 
@@ -111,31 +112,31 @@ Public Class StudentsInGroup
     End Sub
 
     Private Sub ДобавитьВГруппу_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs)
-        pressTab(e.KeyCode, 39)
+        pressTab(e.KeyCode, Keys.Right)
     End Sub
 
     Private Sub ДобавитьВгруппуНового_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs)
-        pressTab(e.KeyCode, 39)
+        pressTab(e.KeyCode, Keys.Right)
     End Sub
 
     Private Sub Прочее_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs)
-        pressTab(e.KeyCode, 39)
+        pressTab(e.KeyCode, Keys.Right)
     End Sub
 
     Private Sub ListViewСписокСлушателей_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs)
-        pressTab(e.KeyCode, 39)
+        pressTab(e.KeyCode, Keys.Right)
     End Sub
 
     Private Sub SplitContainer1_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs) Handles SplitContainer1.PreviewKeyDown
-        pressTab(e.KeyCode, 39)
+        pressTab(e.KeyCode, Keys.Right)
     End Sub
 
     Private Sub SplitContainer2_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs)
-        pressTab(e.KeyCode, 39)
+        pressTab(e.KeyCode, Keys.Right)
     End Sub
 
     Private Sub SplitContainer3_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs)
-        pressTab(e.KeyCode, 39)
+        pressTab(e.KeyCode, Keys.Right)
     End Sub
 
     Public Sub studentsInGroup_KeyDown(e As KeyEventArgs)
@@ -183,6 +184,8 @@ Public Class StudentsInGroup
     End Sub
 
     Private Sub StudentsInGroup_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        ordersBuilder.panelOrders = panelOrders
+        ordersBuilder.buttonHeigth = 50
         uploader.mySQLConnector = MainForm.mySqlConnect
         loadStudentsInGroup()
     End Sub
@@ -211,7 +214,45 @@ Public Class StudentsInGroup
     Private Sub StudentList_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
 
         cleaner(newGroup)
+        mainConteiner.Panel2Collapsed = True
 
     End Sub
 
+    Private Sub orders_Click(sender As Object, e As EventArgs) Handles orders.Click
+
+        mainConteiner.Panel2Collapsed = False
+        ordersBuilder.init()
+        Dim control As Control = ordersBuilder.buttons.ElementAt(0).Value
+        control.Focus()
+
+    End Sub
+
+    Private Sub closePanelOrders_Click(sender As Object, e As EventArgs) Handles closePanelOrders.Click
+        mainConteiner.Panel2Collapsed = True
+        Dim control As Control = ordersBuilder.buttons.ElementAt(0).Value
+        control.Focus()
+    End Sub
+
+    Private Sub toolOrders_Enter(sender As Object, e As EventArgs) Handles toolOrders.Enter
+        closePanelOrders.Select()
+    End Sub
+
+    Private Sub toolOrders_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs) Handles toolOrders.PreviewKeyDown
+        e.IsInputKey = True
+    End Sub
+
+    Private Sub toolOrders_KeyDown(sender As Object, e As KeyEventArgs) Handles toolOrders.KeyDown
+
+        Select Case e.KeyCode
+            Case Keys.Enter
+                closePanelOrders_Click(sender, e)
+            Case Keys.Up
+                header.Focus()
+                newStudent.Select()
+            Case Keys.Down
+                Dim control As Control = ordersBuilder.buttons.ElementAt(0).Value
+                control.Focus()
+        End Select
+
+    End Sub
 End Class

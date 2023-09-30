@@ -181,7 +181,7 @@ Public Class MainForm
 
     End Sub
 
-    Private Sub ПриказОЗачислении_Доп_Click(sender As Object, e As EventArgs) Handles ПриказОЗачислении_Доп.Click
+    Public Sub ПриказОЗачислении_Доп_Click(sender As Object, e As EventArgs) Handles ПриказОЗачислении_Доп.Click
 
         BuildOrder.cvalification = PK
         BuildOrder.Text = "ПК_Зачисление_Доп"
@@ -256,7 +256,7 @@ Public Class MainForm
 
     End Sub
 
-    Private Sub ПриказОЗачислении_Click(sender As Object, e As EventArgs) Handles ПриказОЗачислении.Click
+    Public Sub ПриказОЗачислении_Click(sender As Object, e As EventArgs) Handles ПриказОЗачислении.Click
 
         BuildOrder.cvalification = PK
         BuildOrder.Text = "ПК_Зачисление"
@@ -301,7 +301,7 @@ Public Class MainForm
 
     End Sub
 
-    Private Sub ППЗачисление_Click(sender As Object, e As EventArgs) Handles ППЗачисление.Click
+    Public Sub ППЗачисление_Click(sender As Object, e As EventArgs) Handles ППЗачисление.Click
         BuildOrder.cvalification = PP
         BuildOrder.Text = "ПП_Зачисление"
         BuildOrder.orderType = "ПП_Зачисление"
@@ -337,7 +337,7 @@ Public Class MainForm
 
     End Sub
 
-    Private Sub ПО_Зачисление_Click(sender As Object, e As EventArgs) Handles ПО_Зачисление.Click
+    Public Sub ПО_Зачисление_Click(sender As Object, e As EventArgs) Handles ПО_Зачисление.Click
 
         BuildOrder.cvalification = PO
         BuildOrder.Text = "ПО_Зачисление"
@@ -374,7 +374,7 @@ Public Class MainForm
 
     End Sub
 
-    Private Sub ПП_Практика_Click(sender As Object, e As EventArgs) Handles ПП_Практика.Click
+    Public Sub ПП_Практика_Click(sender As Object, e As EventArgs) Handles ПП_Практика.Click
         BuildOrder.cvalification = PP
         BuildOrder.Text = "ПП_Практика"
         BuildOrder.orderType = "ПП_Практика"
@@ -410,7 +410,7 @@ Public Class MainForm
 
     End Sub
 
-    Private Sub ПО_Практика_Click(sender As Object, e As EventArgs) Handles ПО_Практика.Click
+    Public Sub ПО_Практика_Click(sender As Object, e As EventArgs) Handles ПО_Практика.Click
 
         BuildOrder.cvalification = PO
         BuildOrder.Text = "ПО_Практика"
@@ -451,7 +451,7 @@ Public Class MainForm
 
     End Sub
 
-    Private Sub ПК_Отчисление_Click(sender As Object, e As EventArgs) Handles ПК_Отчисление.Click
+    Public Sub ПК_Отчисление_Click(sender As Object, e As EventArgs) Handles ПК_Отчисление.Click
 
         BuildOrder.cvalification = PK
         BuildOrder.Text = "ПК_Отчисление"
@@ -491,7 +491,7 @@ Public Class MainForm
 
     End Sub
 
-    Private Sub ПО_ДопускКИА_Click(sender As Object, e As EventArgs) Handles ПО_ДопускКИА.Click
+    Public Sub ПО_ДопускКИА_Click(sender As Object, e As EventArgs) Handles ПО_ДопускКИА.Click
 
         BuildOrder.cvalification = PO
         BuildOrder.Text = "ПО_Допуск к ИА"
@@ -537,7 +537,7 @@ Public Class MainForm
 
     End Sub
 
-    Private Sub ПП_ДопускКИА_Click(sender As Object, e As EventArgs) Handles ПП_ДопускКИА.Click
+    Public Sub ПП_ДопускКИА_Click(sender As Object, e As EventArgs) Handles ПП_ДопускКИА.Click
 
         BuildOrder.cvalification = PP
         BuildOrder.Text = "ПП_Допуск к ИА"
@@ -582,7 +582,7 @@ Public Class MainForm
 
     End Sub
 
-    Private Sub ПК_Заявление_Click(sender As Object, e As EventArgs) Handles ПК_Заявление.Click
+    Public Sub ПК_Заявление_Click(sender As Object, e As EventArgs) Handles ПК_Заявление.Click
 
         BuildOrder.cvalification = PK
         BuildOrder.Text = "ПК_Заявление"
@@ -623,7 +623,7 @@ Public Class MainForm
     End Sub
 
 
-    Private Sub ПП_Заявление_Click(sender As Object, e As EventArgs) Handles ПП_Заявление.Click
+    Public Sub ПП_Заявление_Click(sender As Object, e As EventArgs) Handles ПП_Заявление.Click
 
         BuildOrder.cvalification = PP
         BuildOrder.Text = "ПП_Заявление"
@@ -701,7 +701,7 @@ Public Class MainForm
     End Sub
 
 
-    Private Sub ПК_Окончание_Click(sender As Object, e As EventArgs) Handles ПК_Окончание.Click
+    Public Sub ПК_Окончание_Click(sender As Object, e As EventArgs) Handles ПК_Окончание.Click
 
         BuildOrder.Text = "ПК_Окончание"
 
@@ -1789,7 +1789,7 @@ Public Class MainForm
         увеличитьШрифт(Ведомость)
     End Sub
 
-    Private Sub ПП_Окончание_Click(sender As Object, e As EventArgs) Handles ПП_Окончание.Click
+    Public Sub ПП_Окончание_Click(sender As Object, e As EventArgs) Handles ПП_Окончание.Click
 
         BuildOrder.cvalification = PP
         BuildOrder.Text = "ПП_Окончание"
@@ -1833,7 +1833,7 @@ Public Class MainForm
         НормальныйШрифт(ПП_Окончание)
     End Sub
 
-    Private Sub ПП_ПриложениеКдиплому_Click(sender As Object, e As EventArgs) Handles ПП_ПриложениеКдиплому.Click
+    Public Sub ПП_ПриложениеКдиплому_Click(sender As Object, e As EventArgs) Handles ПП_ПриложениеКдиплому.Click
 
         BuildOrder.cvalification = PP
         BuildOrder.Text = "ПП_Приложение к диплому"
@@ -1894,7 +1894,7 @@ Public Class MainForm
         Call НормальныйШрифт(ПП_ПриложениеКдиплому)
     End Sub
 
-    Private Sub ПО_Окончание_Click(sender As Object, e As EventArgs) Handles ПО_Окончание.Click
+    Public Sub ПО_Окончание_Click(sender As Object, e As EventArgs) Handles ПО_Окончание.Click
 
         BuildOrder.cvalification = PO
         BuildOrder.Text = "ПО_Окончание"
@@ -1938,7 +1938,7 @@ Public Class MainForm
         НормальныйШрифт(ПО_Окончание)
     End Sub
 
-    Private Sub ПО_Свидетельство_Click(sender As Object, e As EventArgs) Handles ПО_Свидетельство.Click
+    Public Sub ПО_Свидетельство_Click(sender As Object, e As EventArgs) Handles ПО_Свидетельство.Click
 
         BuildOrder.cvalification = PO
         BuildOrder.Text = "ПО_Свидетельство"
@@ -2233,7 +2233,7 @@ Public Class MainForm
         BuildOrder.LabelИзмениПадеж.Visible = False
     End Sub
 
-    Private Sub ВедомостьПромежуточнойАттестации_Click(sender As Object, e As EventArgs) Handles ВедомостьПромежуточнойАттестации.Click
+    Public Sub ВедомостьПромежуточнойАттестации_Click(sender As Object, e As EventArgs) Handles ВедомостьПромежуточнойАттестации.Click
 
         BuildOrder.cvalification = PO
         BuildOrder.Text = "Ведомость промежуточной аттестации"
@@ -2284,7 +2284,7 @@ Public Class MainForm
 
     End Sub
 
-    Private Sub ПП_Ведомость_Click(sender As Object, e As EventArgs) Handles ПП_Ведомость.Click
+    Public Sub ПП_Ведомость_Click(sender As Object, e As EventArgs) Handles ПП_Ведомость.Click
 
         BuildOrder.cvalification = PP
         BuildOrder.Text = "ПП Ведомость промежуточной аттестации"
@@ -2332,7 +2332,7 @@ Public Class MainForm
         BuildOrder.tableStudentsList.Visible = False
 
     End Sub
-    Private Sub ПК_Окончание_уд_Click(sender As Object, e As EventArgs) Handles ПК_Окончание_уд.Click
+    Public Sub ПК_Окончание_уд_Click(sender As Object, e As EventArgs) Handles ПК_Окончание_уд.Click
 
         BuildOrder.cvalification = PK
         BuildOrder.orderType = "ПК_Окончание_уд"

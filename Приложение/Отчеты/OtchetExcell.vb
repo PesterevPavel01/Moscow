@@ -1,6 +1,4 @@
-﻿Imports System.Threading
-Imports System.Windows.Forms.VisualStyles.VisualStyleElement.ToolBar
-
+﻿
 Module OtchetExcell
 
     Public numberBVB As Integer
