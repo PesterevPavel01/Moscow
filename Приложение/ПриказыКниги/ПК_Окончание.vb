@@ -50,7 +50,7 @@ Module ПК_Окончание
         ВторойПоток.IsBackground = True
         ВторойПоток.Start(parametrs)
 
-        resourcesPath = startApp.ПутьКФайлуRes
+        resourcesPath = startApp.resourcesPath
         ПутьКШаблону = resourcesPath & "Шаблоны\ПК_Окончание\ПК_Окончание_уд.docx"
 
         wordApp = CreateObject("Word.Application")

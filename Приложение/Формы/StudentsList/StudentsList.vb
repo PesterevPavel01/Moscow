@@ -115,7 +115,7 @@
 
     End Sub
 
-    Private Sub studentsList_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    Public Sub studentsList_Load()
 
         searchRow.Visible = True
 
@@ -281,7 +281,7 @@
 
     End Sub
 
-    Private Sub studentsList_KeyDown(sender As Object, e As KeyEventArgs) Handles MyBase.KeyDown
+    Public Sub studentsList_KeyDown(sender As Object, e As KeyEventArgs)
 
         Select Case e.KeyCode
 
@@ -302,18 +302,6 @@
                 keyEnterPressed(sender, e)
 
         End Select
-
-    End Sub
-
-    Private Sub ДобавитьВГруппу_GotFocus(sender As Object, e As EventArgs)
-
-        interfaceMod.controlFont(searchSetts, 14.0F)
-
-    End Sub
-
-    Private Sub ДобавитьВГруппу_LostFocus(sender As Object, e As EventArgs)
-
-        interfaceMod.controlFont(searchSetts, 11.0F)
 
     End Sub
 

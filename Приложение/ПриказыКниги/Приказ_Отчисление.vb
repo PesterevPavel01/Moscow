@@ -7,7 +7,7 @@
         sqlQuery = expulsion__loadProgram(MainForm.orderIdGroup)
         group = MainForm.mySqlConnect.loadMySqlToArray(sqlQuery, 1)
 
-        resourcesPath = startApp.ПутьКФайлуRes
+        resourcesPath = startApp.resourcesPath
         samplePath = resourcesPath & "Шаблоны\Приказы\" & ВидПриказа & ".docx"
 
         wordApp = CreateObject("Word.Application")

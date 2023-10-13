@@ -2,30 +2,29 @@
 Imports System.IO
 
 Module startApp
-    Public open As Boolean = False
-    Public АдрессОбщейБазы As String
-    Dim SC As SynchronizationContext
-    Public АдрессЛичнойКопииБазы, ПутьКФайлуRes As String
-    Public МассивЗапросов
-    Public РазрешитьЗавершениеРаботы As Boolean = False
+
+    Public resourcesPath As String
+    Public mainFormBuilder As New MainForm_builder
+
     Sub ЗапускПриложения()
 
-        ПутьКФайлуRes = resourcesPath()
+        resourcesPath = updateResourcesPath()
         work()
+        mainFormBuilder.init()
         MainForm.Show()
 
     End Sub
+
     Sub work()
 
-        Dim НастройкиПоУм
-
-        НастройкиПоУм = ЗагрузкаПараметровПриложения()
-        ЗаписьСохраненныхНастроек(НастройкиПоУм)
+        Dim defaultSettings
+        defaultSettings = loadParams()
+        saveSetts(defaultSettings)
 
     End Sub
-    Function ЗагрузкаПараметровПриложения() As Object
-        Dim Параметры
-        Dim СтрокаЗапроса As String
+    Function loadParams() As Object
+        Dim params
+        Dim sqlQuery As String
         Dim mySqlConnector As New MySQLConnect
 
         mySqlConnector.mySqlSettings.nameFirstDB = "database"
@@ -34,92 +33,92 @@ Module startApp
         mySqlConnector.mySqlSettings.ODBC = "Dsn=mySQLConnection;uid={admin}"
         mySqlConnector.mySqlSettings.server = "localhost"
 
-        СтрокаЗапроса = loadSettings()
-        Параметры = mySqlConnector.loadMySqlToArray(СтрокаЗапроса, 1)
-        ЗагрузкаПараметровПриложения = Параметры
+        sqlQuery = loadSettings()
+        params = mySqlConnector.loadMySqlToArray(sqlQuery, 1)
+        loadParams = params
     End Function
 
-    Sub ЗаписьСохраненныхНастроек(параметры As Object)
+    Sub saveSetts(params As Object)
 
-        If Not ЗначениеПараметра(параметры, "ДиректорФИО") = "Не найден" Then
-            MainForm.directorName.Text = ЗначениеПараметра(параметры, "ДиректорФИО")
+        If Not paramsValue(params, "ДиректорФИО") = "Не найден" Then
+            MainForm.directorName.Text = paramsValue(params, "ДиректорФИО")
         End If
 
-        If Not ЗначениеПараметра(параметры, "0") = "Не найден" Then
-            MainForm.password0 = ЗначениеПараметра(параметры, "0")
+        If Not paramsValue(params, "0") = "Не найден" Then
+            MainForm.password0 = paramsValue(params, "0")
         End If
 
-        If Not ЗначениеПараметра(параметры, "ДиректорДолжность") = "Не найден" Then
-            MainForm.directorPosition.Text = ЗначениеПараметра(параметры, "ДиректорДолжность")
+        If Not paramsValue(params, "ДиректорДолжность") = "Не найден" Then
+            MainForm.directorPosition.Text = paramsValue(params, "ДиректорДолжность")
         End If
 
-        If Not ЗначениеПараметра(параметры, "Согласовано1ПУ") = "Не найден" Then
-            MainForm.Согласовано1ПУ.Text = ЗначениеПараметра(параметры, "Согласовано1ПУ")
+        If Not paramsValue(params, "Согласовано1ПУ") = "Не найден" Then
+            MainForm.Согласовано1ПУ.Text = paramsValue(params, "Согласовано1ПУ")
         End If
 
-        If Not ЗначениеПараметра(параметры, "Согласовано2ПУ") = "Не найден" Then
-            MainForm.Согласовано2ПУ.Text = ЗначениеПараметра(параметры, "Согласовано2ПУ")
+        If Not paramsValue(params, "Согласовано2ПУ") = "Не найден" Then
+            MainForm.Согласовано2ПУ.Text = paramsValue(params, "Согласовано2ПУ")
         End If
 
-        If Not ЗначениеПараметра(параметры, "Согласовано1ДолжностьПУ") = "Не найден" Then
-            MainForm.Согласовано1ДолжностьПУ.Text = ЗначениеПараметра(параметры, "Согласовано1ДолжностьПУ")
+        If Not paramsValue(params, "Согласовано1ДолжностьПУ") = "Не найден" Then
+            MainForm.Согласовано1ДолжностьПУ.Text = paramsValue(params, "Согласовано1ДолжностьПУ")
         End If
 
-        If Not ЗначениеПараметра(параметры, "Согласовано2ДолжностьПУ") = "Не найден" Then
-            MainForm.Согласовано2ДолжностьПУ.Text = ЗначениеПараметра(параметры, "Согласовано2ДолжностьПУ")
+        If Not paramsValue(params, "Согласовано2ДолжностьПУ") = "Не найден" Then
+            MainForm.Согласовано2ДолжностьПУ.Text = paramsValue(params, "Согласовано2ДолжностьПУ")
         End If
 
-        If Not ЗначениеПараметра(параметры, "ПоискСлушателейПоУм") = "Не найден" Then
-            MainForm.students__defaultSearchSetts.Text = ЗначениеПараметра(параметры, "ПоискСлушателейПоУм")
+        If Not paramsValue(params, "ПоискСлушателейПоУм") = "Не найден" Then
+            MainForm.students__defaultSearchSetts.Text = paramsValue(params, "ПоискСлушателейПоУм")
         Else
             MainForm.students__defaultSearchSetts.Text = "Снилс"
         End If
 
         searchInit(НастройкаПоискаСлушателей, MainForm.students__defaultSearchSetts.Text)
 
-        If Not ЗначениеПараметра(параметры, "ПоискГруппПоУм") = "Не найден" Then
-            MainForm.group_dafaultSearchSetts.Text = ЗначениеПараметра(параметры, "ПоискГруппПоУм")
+        If Not paramsValue(params, "ПоискГруппПоУм") = "Не найден" Then
+            MainForm.group_dafaultSearchSetts.Text = paramsValue(params, "ПоискГруппПоУм")
         Else
             MainForm.group_dafaultSearchSetts.Text = "Номер"
         End If
-        searchInit(group__serchSettings, MainForm.group_dafaultSearchSetts.Text)
+        searchInit(Group__serchSettings, MainForm.group_dafaultSearchSetts.Text)
 
-        If Not ЗначениеПараметра(параметры, "НастройкаСортировкиГрупп") = "Не найден" Then
-            MainForm.group__dafaultSortSetts.Text = ЗначениеПараметра(параметры, "НастройкаСортировкиГрупп")
+        If Not paramsValue(params, "НастройкаСортировкиГрупп") = "Не найден" Then
+            MainForm.group__dafaultSortSetts.Text = paramsValue(params, "НастройкаСортировкиГрупп")
         Else
             MainForm.group__dafaultSortSetts.Text = "Номер"
         End If
         searchInit(sortSettsGroup, MainForm.group__dafaultSortSetts.Text)
 
-        If Not ЗначениеПараметра(параметры, "НастройкаСортировкиСлушателей") = "Не найден" Then
-            MainForm.students__defaultSortSetts.Text = ЗначениеПараметра(параметры, "НастройкаСортировкиСлушателей")
+        If Not paramsValue(params, "НастройкаСортировкиСлушателей") = "Не найден" Then
+            MainForm.students__defaultSortSetts.Text = paramsValue(params, "НастройкаСортировкиСлушателей")
         Else
             MainForm.students__defaultSortSetts.Text = "Снилс"
         End If
         searchInit(sortSettsStudents, MainForm.students__defaultSortSetts.Text)
 
-        If Not ЗначениеПараметра(параметры, "КоличествоСтрокВТаблице") = "Не найден" Then
-            MainForm.maxNumberRows.Text = ЗначениеПараметра(параметры, "КоличествоСтрокВТаблице")
+        If Not paramsValue(params, "КоличествоСтрокВТаблице") = "Не найден" Then
+            MainForm.maxNumberRows.Text = paramsValue(params, "КоличествоСтрокВТаблице")
         Else
             MainForm.maxNumberRows.Text = 1000
         End If
 
     End Sub
-    Function ЗначениеПараметра(Параметры As Object, Параметр As String) As String
-        If Параметры(0, 0) = "нет записей" Then
-            ЗначениеПараметра = "Не найден"
+    Function paramsValue(params As Object, currentParam As String) As String
+        If params(0, 0) = "нет записей" Then
+            paramsValue = "Не найден"
             Exit Function
         End If
 
-        For счетчик = 0 To UBound(Параметры, 2)
+        For counter = 0 To UBound(params, 2)
 
-            If Параметры(0, счетчик) = Параметр Then
+            If params(0, counter) = currentParam Then
 
-                If Параметры(1, счетчик) = "" Then
-                    ЗначениеПараметра = "Не найден"
+                If params(1, counter) = "" Then
+                    paramsValue = "Не найден"
                     Exit Function
                 Else
-                    ЗначениеПараметра = Параметры(1, счетчик)
+                    paramsValue = params(1, counter)
                 End If
                 Exit Function
 
@@ -127,7 +126,7 @@ Module startApp
 
         Next
 
-        ЗначениеПараметра = "Не найден"
+        paramsValue = "Не найден"
 
     End Function
 

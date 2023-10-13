@@ -200,6 +200,26 @@ Public Class Tables_control
 
     End Sub
 
+    Public Sub table_tabRight(e As KeyEventArgs)
+
+        If name_table = "group_list" Then
+
+            If SplitContainer_main.Panel2Collapsed Then
+
+                If StudentsInGroup.mainConteiner.Panel2Collapsed = False Then
+
+                    Dim control As Control = StudentsInGroup.ordersBuilder.buttons.ElementAt(0).Value
+                    control.Focus()
+                    e.Handled = True
+
+                End If
+
+            End If
+
+        End If
+
+    End Sub
+
     Public Sub table_tabDown(e As KeyEventArgs)
 
         If Not SplitContainer_main.Panel2Collapsed Then

@@ -27,7 +27,7 @@ Public Class SwitchCvalification
         name.Add(1, "профессиональная переподготовка")
         name.Add(2, "профессиональное обучение")
 
-        path = resourcesPath() + "images//"
+        path = updateResourcesPath() + "images//"
 
         images.PK = Image.FromFile(path + "PK.png")
         images.PP = Image.FromFile(path + "PP.png")

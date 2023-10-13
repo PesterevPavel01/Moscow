@@ -157,7 +157,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationEvents.vb" />
-    <Compile Include="Приложение\StudentsInGroup_uploader.vb" />
+    <Compile Include="Приложение\Формы\MainForm\MainForm_builder.vb" />
+    <Compile Include="Приложение\Формы\MainForm\MainForm_events.vb" />
+    <Compile Include="Приложение\Формы\MainForm\Orders.vb" />
+    <Compile Include="Приложение\Формы\StudentsList\StudentsList_events.vb" />
+    <Compile Include="Приложение\Формы\StudentsInGroup\StudentsInGroup_uploader.vb" />
     <Compile Include="Приложение\SwichNumbers.vb" />
     <Compile Include="Приложение\SorterSetts.vb" />
     <Compile Include="Приложение\SwitchCvalification.vb" />
@@ -203,6 +207,7 @@
     <Compile Include="Приложение\ПриказыКниги\Приказ_Практика.vb" />
     <Compile Include="Приложение\Формы\StudentsInGroup\PanelOrders_builder.vb" />
     <Compile Include="Приложение\Формы\StudentsInGroup\PanelOrders_Events.vb" />
+    <Compile Include="Приложение\Формы\StudentsInGroup\StudentsInGroup_Events.vb" />
     <Compile Include="Приложение\Формы\WorkerReport.Designer.vb">
       <DependentUpon>WorkerReport.vb</DependentUpon>
     </Compile>
@@ -329,17 +334,17 @@
     <Compile Include="Приложение\Формы\GroupList.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Приложение\Формы\MainForm.Designer.vb">
+    <Compile Include="Приложение\Формы\MainForm\MainForm.Designer.vb">
       <DependentUpon>MainForm.vb</DependentUpon>
     </Compile>
-    <Compile Include="Приложение\Формы\MainForm.vb">
+    <Compile Include="Приложение\Формы\MainForm\MainForm.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Приложение\Интерфейс\startApp.vb" />
-    <Compile Include="Приложение\Формы\StudentsList.Designer.vb">
+    <Compile Include="Приложение\Формы\StudentsList\StudentsList.Designer.vb">
       <DependentUpon>StudentsList.vb</DependentUpon>
     </Compile>
-    <Compile Include="Приложение\Формы\StudentsList.vb">
+    <Compile Include="Приложение\Формы\StudentsList\StudentsList.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Приложение\Интерфейс\snilsMethod.vb" />
@@ -414,11 +419,11 @@
     <EmbeddedResource Include="Приложение\Формы\GroupList.resx">
       <DependentUpon>GroupList.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Приложение\Формы\MainForm.resx">
+    <EmbeddedResource Include="Приложение\Формы\MainForm\MainForm.resx">
       <DependentUpon>MainForm.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Приложение\Формы\StudentsList.resx">
+    <EmbeddedResource Include="Приложение\Формы\StudentsList\StudentsList.resx">
       <DependentUpon>StudentsList.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">

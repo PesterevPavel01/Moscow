@@ -113,46 +113,16 @@ Partial Class MainForm
         Me.chPednagrExt = New System.Windows.Forms.CheckBox()
         Me.GroupBox5 = New System.Windows.Forms.GroupBox()
         Me.TabPage2 = New System.Windows.Forms.TabPage()
-        Me.СправкаОбОкончании = New System.Windows.Forms.Button()
-        Me.СправкаОбОбучении = New System.Windows.Forms.Button()
-        Me.ПП_Ведомость = New System.Windows.Forms.Button()
-        Me.ВедомостьПромежуточнойАттестации = New System.Windows.Forms.Button()
-        Me.ДоверенностьПолученияБланковСлушателей = New System.Windows.Forms.Button()
-        Me.ДоверенностьПолученияБланков = New System.Windows.Forms.Button()
-        Me.Ведомость_слушателиИорганизации = New System.Windows.Forms.Button()
-        Me.ПО_Свидетельство = New System.Windows.Forms.Button()
-        Me.Карточка_слушателя = New System.Windows.Forms.Button()
-        Me.ПП_Заявление = New System.Windows.Forms.Button()
-        Me.ПК_Заявление = New System.Windows.Forms.Button()
-        Me.ПП_ПриложениеКдиплому = New System.Windows.Forms.Button()
+        Me.sekshionsBlanks = New System.Windows.Forms.Panel()
         Me.TabPage3 = New System.Windows.Forms.TabPage()
-        Me.ПриказОЗачислении_Доп = New System.Windows.Forms.Button()
-        Me.ПК_Окончание_уд = New System.Windows.Forms.Button()
-        Me.ПО_Окончание = New System.Windows.Forms.Button()
-        Me.ПП_Окончание = New System.Windows.Forms.Button()
-        Me.ПК_Окончание = New System.Windows.Forms.Button()
-        Me.ПП_ДопускКИА = New System.Windows.Forms.Button()
-        Me.ПО_ДопускКИА = New System.Windows.Forms.Button()
-        Me.ПК_Отчисление = New System.Windows.Forms.Button()
-        Me.ПО_Практика = New System.Windows.Forms.Button()
-        Me.ПП_Практика = New System.Windows.Forms.Button()
-        Me.ПО_Зачисление = New System.Windows.Forms.Button()
-        Me.ППЗачисление = New System.Windows.Forms.Button()
-        Me.ПриказОЗачислении = New System.Windows.Forms.Button()
+        Me.ordersPOSection = New System.Windows.Forms.GroupBox()
+        Me.ordersPPSection = New System.Windows.Forms.GroupBox()
+        Me.ordersPKSection = New System.Windows.Forms.GroupBox()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
-        Me.СправочникГруппыПП = New System.Windows.Forms.Button()
-        Me.СправочникГруппыПО = New System.Windows.Forms.Button()
-        Me.Педнагрузка = New System.Windows.Forms.Button()
-        Me.Ведомость = New System.Windows.Forms.Button()
-        Me.КнопкаСоздатьГруппу = New System.Windows.Forms.Button()
-        Me.ДобавитьСлушателя = New System.Windows.Forms.Button()
-        Me.СправочникСлушатели = New System.Windows.Forms.Button()
-        Me.СправочникГруппыПК = New System.Windows.Forms.Button()
-        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.groupListSection = New System.Windows.Forms.GroupBox()
         Me.Button2 = New System.Windows.Forms.Button()
-        Me.GroupBox3 = New System.Windows.Forms.GroupBox()
-        Me.ИтоговаяАттествцияОценки = New System.Windows.Forms.Button()
-        Me.GroupBox2 = New System.Windows.Forms.GroupBox()
+        Me.studentsSection = New System.Windows.Forms.GroupBox()
+        Me.gradesContainer = New System.Windows.Forms.GroupBox()
         Me.TabControlOther = New System.Windows.Forms.TabControl()
         Me.Other = New System.Windows.Forms.TabPage()
         Me.passwordOther = New System.Windows.Forms.MaskedTextBox()
@@ -270,7 +240,7 @@ Partial Class MainForm
         Me.pageProgs.Location = New System.Drawing.Point(4, 29)
         Me.pageProgs.Name = "pageProgs"
         Me.pageProgs.Padding = New System.Windows.Forms.Padding(3)
-        Me.pageProgs.Size = New System.Drawing.Size(1573, 834)
+        Me.pageProgs.Size = New System.Drawing.Size(1851, 835)
         Me.pageProgs.TabIndex = 7
         Me.pageProgs.Text = "Программа"
         Me.pageProgs.UseVisualStyleBackColor = True
@@ -297,8 +267,8 @@ Partial Class MainForm
         'programms__splitMainConteiner.Panel2
         '
         Me.programms__splitMainConteiner.Panel2.Controls.Add(Me.SplitContainer5)
-        Me.programms__splitMainConteiner.Size = New System.Drawing.Size(1567, 828)
-        Me.programms__splitMainConteiner.SplitterDistance = 649
+        Me.programms__splitMainConteiner.Size = New System.Drawing.Size(1845, 829)
+        Me.programms__splitMainConteiner.SplitterDistance = 764
         Me.programms__splitMainConteiner.TabIndex = 36
         Me.programms__splitMainConteiner.Visible = False
         '
@@ -308,7 +278,7 @@ Partial Class MainForm
         Me.programs_tbl_parent.Dock = System.Windows.Forms.DockStyle.Fill
         Me.programs_tbl_parent.Location = New System.Drawing.Point(0, 48)
         Me.programs_tbl_parent.Name = "programs_tbl_parent"
-        Me.programs_tbl_parent.Size = New System.Drawing.Size(649, 780)
+        Me.programs_tbl_parent.Size = New System.Drawing.Size(764, 781)
         Me.programs_tbl_parent.TabIndex = 2
         '
         'programs__panelProgs
@@ -317,7 +287,7 @@ Partial Class MainForm
         Me.programs__panelProgs.Dock = System.Windows.Forms.DockStyle.Fill
         Me.programs__panelProgs.Location = New System.Drawing.Point(0, 0)
         Me.programs__panelProgs.Name = "programs__panelProgs"
-        Me.programs__panelProgs.Size = New System.Drawing.Size(649, 780)
+        Me.programs__panelProgs.Size = New System.Drawing.Size(764, 781)
         Me.programs__panelProgs.TabIndex = 0
         '
         'toolStripProgram
@@ -326,7 +296,7 @@ Partial Class MainForm
         Me.toolStripProgram.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripLabel1, Me.comboBoxProgramms, Me.ToolStripAddProg, Me.progsIndicator})
         Me.toolStripProgram.Location = New System.Drawing.Point(0, 0)
         Me.toolStripProgram.Name = "toolStripProgram"
-        Me.toolStripProgram.Size = New System.Drawing.Size(649, 48)
+        Me.toolStripProgram.Size = New System.Drawing.Size(764, 48)
         Me.toolStripProgram.TabIndex = 1
         Me.toolStripProgram.Text = "ToolStrip2"
         '
@@ -383,8 +353,8 @@ Partial Class MainForm
         '
         Me.SplitContainer5.Panel2.Controls.Add(Me.programms__SplitContainerModuls)
         Me.SplitContainer5.Panel2.Controls.Add(Me.ToolStrip4)
-        Me.SplitContainer5.Size = New System.Drawing.Size(914, 828)
-        Me.SplitContainer5.SplitterDistance = 506
+        Me.SplitContainer5.Size = New System.Drawing.Size(1077, 829)
+        Me.SplitContainer5.SplitterDistance = 596
         Me.SplitContainer5.TabIndex = 37
         '
         'programs__SplitContainerModulsType
@@ -401,8 +371,8 @@ Partial Class MainForm
         'programs__SplitContainerModulsType.Panel2
         '
         Me.programs__SplitContainerModulsType.Panel2.Controls.Add(Me.programs__panelType)
-        Me.programs__SplitContainerModulsType.Size = New System.Drawing.Size(460, 828)
-        Me.programs__SplitContainerModulsType.SplitterDistance = 468
+        Me.programs__SplitContainerModulsType.Size = New System.Drawing.Size(550, 829)
+        Me.programs__SplitContainerModulsType.SplitterDistance = 467
         Me.programs__SplitContainerModulsType.TabIndex = 5
         '
         'programms__SplitModulsInProg
@@ -420,7 +390,7 @@ Partial Class MainForm
         '
         Me.programms__SplitModulsInProg.Panel2.Controls.Add(Me.red_moduls)
         Me.programms__SplitModulsInProg.Panel2Collapsed = True
-        Me.programms__SplitModulsInProg.Size = New System.Drawing.Size(460, 468)
+        Me.programms__SplitModulsInProg.Size = New System.Drawing.Size(550, 467)
         Me.programms__SplitModulsInProg.SplitterDistance = 286
         Me.programms__SplitModulsInProg.TabIndex = 4
         '
@@ -458,7 +428,7 @@ Partial Class MainForm
         Me.dataGridModulsInProgram.RowHeadersVisible = False
         Me.dataGridModulsInProgram.RowHeadersWidth = 53
         Me.dataGridModulsInProgram.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
-        Me.dataGridModulsInProgram.Size = New System.Drawing.Size(460, 468)
+        Me.dataGridModulsInProgram.Size = New System.Drawing.Size(550, 467)
         Me.dataGridModulsInProgram.TabIndex = 34
         '
         'red_moduls
@@ -477,16 +447,16 @@ Partial Class MainForm
         Me.programs__panelType.Dock = System.Windows.Forms.DockStyle.Fill
         Me.programs__panelType.Location = New System.Drawing.Point(0, 0)
         Me.programs__panelType.Name = "programs__panelType"
-        Me.programs__panelType.Size = New System.Drawing.Size(460, 356)
+        Me.programs__panelType.Size = New System.Drawing.Size(550, 358)
         Me.programs__panelType.TabIndex = 1
         '
         'toolStripModulsInProg
         '
         Me.toolStripModulsInProg.Dock = System.Windows.Forms.DockStyle.Right
         Me.toolStripModulsInProg.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripTop, Me.ToolStripBottom, Me.addMidulInGroupp, Me.modulInProgsIndicator, Me.tbl_moduls_sum_hours})
-        Me.toolStripModulsInProg.Location = New System.Drawing.Point(460, 0)
+        Me.toolStripModulsInProg.Location = New System.Drawing.Point(550, 0)
         Me.toolStripModulsInProg.Name = "toolStripModulsInProg"
-        Me.toolStripModulsInProg.Size = New System.Drawing.Size(46, 828)
+        Me.toolStripModulsInProg.Size = New System.Drawing.Size(46, 829)
         Me.toolStripModulsInProg.TabIndex = 3
         Me.toolStripModulsInProg.Text = "ToolStrip3"
         '
@@ -558,7 +528,7 @@ Partial Class MainForm
         '
         Me.programms__SplitContainerModuls.Panel2.Controls.Add(Me.TableLayoutAddNewModul)
         Me.programms__SplitContainerModuls.Panel2Collapsed = True
-        Me.programms__SplitContainerModuls.Size = New System.Drawing.Size(358, 828)
+        Me.programms__SplitContainerModuls.Size = New System.Drawing.Size(431, 829)
         Me.programms__SplitContainerModuls.SplitterDistance = 676
         Me.programms__SplitContainerModuls.TabIndex = 4
         '
@@ -596,7 +566,7 @@ Partial Class MainForm
         Me.DataGridAllModuls.RowHeadersVisible = False
         Me.DataGridAllModuls.RowHeadersWidth = 53
         Me.DataGridAllModuls.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
-        Me.DataGridAllModuls.Size = New System.Drawing.Size(358, 828)
+        Me.DataGridAllModuls.Size = New System.Drawing.Size(431, 829)
         Me.DataGridAllModuls.TabIndex = 35
         '
         'TableLayoutAddNewModul
@@ -678,9 +648,9 @@ Partial Class MainForm
         '
         Me.ToolStrip4.Dock = System.Windows.Forms.DockStyle.Right
         Me.ToolStrip4.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripAddModul, Me.modulIndicator})
-        Me.ToolStrip4.Location = New System.Drawing.Point(358, 0)
+        Me.ToolStrip4.Location = New System.Drawing.Point(431, 0)
         Me.ToolStrip4.Name = "ToolStrip4"
-        Me.ToolStrip4.Size = New System.Drawing.Size(46, 828)
+        Me.ToolStrip4.Size = New System.Drawing.Size(46, 829)
         Me.ToolStrip4.TabIndex = 3
         Me.ToolStrip4.Text = "ToolStrip4"
         '
@@ -711,7 +681,7 @@ Partial Class MainForm
         Me.TabPage5.ImageIndex = 19
         Me.TabPage5.Location = New System.Drawing.Point(4, 29)
         Me.TabPage5.Name = "TabPage5"
-        Me.TabPage5.Size = New System.Drawing.Size(1573, 834)
+        Me.TabPage5.Size = New System.Drawing.Size(1851, 835)
         Me.TabPage5.TabIndex = 4
         Me.TabPage5.Text = "Настройки"
         Me.TabPage5.UseVisualStyleBackColor = True
@@ -979,7 +949,7 @@ Partial Class MainForm
         Me.TabPage4.ImageIndex = 0
         Me.TabPage4.Location = New System.Drawing.Point(4, 29)
         Me.TabPage4.Name = "TabPage4"
-        Me.TabPage4.Size = New System.Drawing.Size(1573, 834)
+        Me.TabPage4.Size = New System.Drawing.Size(1851, 835)
         Me.TabPage4.TabIndex = 3
         Me.TabPage4.Text = "Отчеты"
         Me.TabPage4.UseVisualStyleBackColor = True
@@ -1244,615 +1214,92 @@ Partial Class MainForm
         '
         'TabPage2
         '
-        Me.TabPage2.Controls.Add(Me.СправкаОбОкончании)
-        Me.TabPage2.Controls.Add(Me.СправкаОбОбучении)
-        Me.TabPage2.Controls.Add(Me.ПП_Ведомость)
-        Me.TabPage2.Controls.Add(Me.ВедомостьПромежуточнойАттестации)
-        Me.TabPage2.Controls.Add(Me.ДоверенностьПолученияБланковСлушателей)
-        Me.TabPage2.Controls.Add(Me.ДоверенностьПолученияБланков)
-        Me.TabPage2.Controls.Add(Me.Ведомость_слушателиИорганизации)
-        Me.TabPage2.Controls.Add(Me.ПО_Свидетельство)
-        Me.TabPage2.Controls.Add(Me.Карточка_слушателя)
-        Me.TabPage2.Controls.Add(Me.ПП_Заявление)
-        Me.TabPage2.Controls.Add(Me.ПК_Заявление)
-        Me.TabPage2.Controls.Add(Me.ПП_ПриложениеКдиплому)
+        Me.TabPage2.Controls.Add(Me.sekshionsBlanks)
         Me.TabPage2.ImageIndex = 5
         Me.TabPage2.Location = New System.Drawing.Point(4, 29)
         Me.TabPage2.Name = "TabPage2"
-        Me.TabPage2.Size = New System.Drawing.Size(1573, 834)
+        Me.TabPage2.Size = New System.Drawing.Size(1851, 835)
         Me.TabPage2.TabIndex = 5
         Me.TabPage2.Text = "Бланки"
         Me.TabPage2.UseVisualStyleBackColor = True
         '
-        'СправкаОбОкончании
+        'sekshionsBlanks
         '
-        Me.СправкаОбОкончании.FlatAppearance.BorderColor = System.Drawing.Color.WhiteSmoke
-        Me.СправкаОбОкончании.FlatAppearance.BorderSize = 0
-        Me.СправкаОбОкончании.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.СправкаОбОкончании.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!)
-        Me.СправкаОбОкончании.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.СправкаОбОкончании.Location = New System.Drawing.Point(3, 586)
-        Me.СправкаОбОкончании.Name = "СправкаОбОкончании"
-        Me.СправкаОбОкончании.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.СправкаОбОкончании.Size = New System.Drawing.Size(1240, 50)
-        Me.СправкаОбОкончании.TabIndex = 12
-        Me.СправкаОбОкончании.Text = "Справка об окончании без ИА"
-        Me.СправкаОбОкончании.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.СправкаОбОкончании.UseVisualStyleBackColor = True
-        '
-        'СправкаОбОбучении
-        '
-        Me.СправкаОбОбучении.FlatAppearance.BorderColor = System.Drawing.Color.WhiteSmoke
-        Me.СправкаОбОбучении.FlatAppearance.BorderSize = 0
-        Me.СправкаОбОбучении.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.СправкаОбОбучении.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!)
-        Me.СправкаОбОбучении.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.СправкаОбОбучении.Location = New System.Drawing.Point(3, 533)
-        Me.СправкаОбОбучении.Name = "СправкаОбОбучении"
-        Me.СправкаОбОбучении.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.СправкаОбОбучении.Size = New System.Drawing.Size(1240, 50)
-        Me.СправкаОбОбучении.TabIndex = 11
-        Me.СправкаОбОбучении.Text = "Справка об обучении"
-        Me.СправкаОбОбучении.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.СправкаОбОбучении.UseVisualStyleBackColor = True
-        '
-        'ПП_Ведомость
-        '
-        Me.ПП_Ведомость.FlatAppearance.BorderColor = System.Drawing.Color.WhiteSmoke
-        Me.ПП_Ведомость.FlatAppearance.BorderSize = 0
-        Me.ПП_Ведомость.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.ПП_Ведомость.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!)
-        Me.ПП_Ведомость.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.ПП_Ведомость.Location = New System.Drawing.Point(3, 480)
-        Me.ПП_Ведомость.Name = "ПП_Ведомость"
-        Me.ПП_Ведомость.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.ПП_Ведомость.Size = New System.Drawing.Size(1240, 50)
-        Me.ПП_Ведомость.TabIndex = 10
-        Me.ПП_Ведомость.Text = "ПП_Ведомость промежуточной аттестации"
-        Me.ПП_Ведомость.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.ПП_Ведомость.UseVisualStyleBackColor = True
-        '
-        'ВедомостьПромежуточнойАттестации
-        '
-        Me.ВедомостьПромежуточнойАттестации.FlatAppearance.BorderColor = System.Drawing.Color.WhiteSmoke
-        Me.ВедомостьПромежуточнойАттестации.FlatAppearance.BorderSize = 0
-        Me.ВедомостьПромежуточнойАттестации.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.ВедомостьПромежуточнойАттестации.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!)
-        Me.ВедомостьПромежуточнойАттестации.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.ВедомостьПромежуточнойАттестации.Location = New System.Drawing.Point(3, 427)
-        Me.ВедомостьПромежуточнойАттестации.Name = "ВедомостьПромежуточнойАттестации"
-        Me.ВедомостьПромежуточнойАттестации.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.ВедомостьПромежуточнойАттестации.Size = New System.Drawing.Size(1240, 50)
-        Me.ВедомостьПромежуточнойАттестации.TabIndex = 9
-        Me.ВедомостьПромежуточнойАттестации.Text = "ПО_Ведомость промежуточной аттестации"
-        Me.ВедомостьПромежуточнойАттестации.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.ВедомостьПромежуточнойАттестации.UseVisualStyleBackColor = True
-        '
-        'ДоверенностьПолученияБланковСлушателей
-        '
-        Me.ДоверенностьПолученияБланковСлушателей.FlatAppearance.BorderColor = System.Drawing.Color.WhiteSmoke
-        Me.ДоверенностьПолученияБланковСлушателей.FlatAppearance.BorderSize = 0
-        Me.ДоверенностьПолученияБланковСлушателей.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.ДоверенностьПолученияБланковСлушателей.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!)
-        Me.ДоверенностьПолученияБланковСлушателей.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.ДоверенностьПолученияБланковСлушателей.Location = New System.Drawing.Point(3, 374)
-        Me.ДоверенностьПолученияБланковСлушателей.Name = "ДоверенностьПолученияБланковСлушателей"
-        Me.ДоверенностьПолученияБланковСлушателей.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.ДоверенностьПолученияБланковСлушателей.Size = New System.Drawing.Size(1240, 50)
-        Me.ДоверенностьПолученияБланковСлушателей.TabIndex = 8
-        Me.ДоверенностьПолученияБланковСлушателей.Text = "Доверенность получения бланков на отдельных слушателей"
-        Me.ДоверенностьПолученияБланковСлушателей.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.ДоверенностьПолученияБланковСлушателей.UseVisualStyleBackColor = True
-        '
-        'ДоверенностьПолученияБланков
-        '
-        Me.ДоверенностьПолученияБланков.FlatAppearance.BorderColor = System.Drawing.Color.WhiteSmoke
-        Me.ДоверенностьПолученияБланков.FlatAppearance.BorderSize = 0
-        Me.ДоверенностьПолученияБланков.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.ДоверенностьПолученияБланков.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!)
-        Me.ДоверенностьПолученияБланков.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.ДоверенностьПолученияБланков.Location = New System.Drawing.Point(3, 321)
-        Me.ДоверенностьПолученияБланков.Name = "ДоверенностьПолученияБланков"
-        Me.ДоверенностьПолученияБланков.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.ДоверенностьПолученияБланков.Size = New System.Drawing.Size(1240, 50)
-        Me.ДоверенностьПолученияБланков.TabIndex = 7
-        Me.ДоверенностьПолученияБланков.Text = "Доверенность получения бланков на группу"
-        Me.ДоверенностьПолученияБланков.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.ДоверенностьПолученияБланков.UseVisualStyleBackColor = True
-        '
-        'Ведомость_слушателиИорганизации
-        '
-        Me.Ведомость_слушателиИорганизации.FlatAppearance.BorderColor = System.Drawing.Color.WhiteSmoke
-        Me.Ведомость_слушателиИорганизации.FlatAppearance.BorderSize = 0
-        Me.Ведомость_слушателиИорганизации.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Ведомость_слушателиИорганизации.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!)
-        Me.Ведомость_слушателиИорганизации.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Ведомость_слушателиИорганизации.Location = New System.Drawing.Point(3, 268)
-        Me.Ведомость_слушателиИорганизации.Name = "Ведомость_слушателиИорганизации"
-        Me.Ведомость_слушателиИорганизации.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.Ведомость_слушателиИорганизации.Size = New System.Drawing.Size(1240, 50)
-        Me.Ведомость_слушателиИорганизации.TabIndex = 6
-        Me.Ведомость_слушателиИорганизации.Text = "Ведомость слушатели и организации"
-        Me.Ведомость_слушателиИорганизации.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Ведомость_слушателиИорганизации.UseVisualStyleBackColor = True
-        '
-        'ПО_Свидетельство
-        '
-        Me.ПО_Свидетельство.FlatAppearance.BorderColor = System.Drawing.Color.WhiteSmoke
-        Me.ПО_Свидетельство.FlatAppearance.BorderSize = 0
-        Me.ПО_Свидетельство.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.ПО_Свидетельство.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!)
-        Me.ПО_Свидетельство.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.ПО_Свидетельство.Location = New System.Drawing.Point(3, 56)
-        Me.ПО_Свидетельство.Name = "ПО_Свидетельство"
-        Me.ПО_Свидетельство.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.ПО_Свидетельство.Size = New System.Drawing.Size(1240, 50)
-        Me.ПО_Свидетельство.TabIndex = 2
-        Me.ПО_Свидетельство.Text = "ПО_Свидетельство"
-        Me.ПО_Свидетельство.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.ПО_Свидетельство.UseVisualStyleBackColor = True
-        '
-        'Карточка_слушателя
-        '
-        Me.Карточка_слушателя.FlatAppearance.BorderColor = System.Drawing.Color.WhiteSmoke
-        Me.Карточка_слушателя.FlatAppearance.BorderSize = 0
-        Me.Карточка_слушателя.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Карточка_слушателя.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!)
-        Me.Карточка_слушателя.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Карточка_слушателя.Location = New System.Drawing.Point(3, 215)
-        Me.Карточка_слушателя.Name = "Карточка_слушателя"
-        Me.Карточка_слушателя.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.Карточка_слушателя.Size = New System.Drawing.Size(1240, 50)
-        Me.Карточка_слушателя.TabIndex = 5
-        Me.Карточка_слушателя.Text = "Карточка_слушателя"
-        Me.Карточка_слушателя.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Карточка_слушателя.UseVisualStyleBackColor = True
-        '
-        'ПП_Заявление
-        '
-        Me.ПП_Заявление.FlatAppearance.BorderColor = System.Drawing.Color.WhiteSmoke
-        Me.ПП_Заявление.FlatAppearance.BorderSize = 0
-        Me.ПП_Заявление.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.ПП_Заявление.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!)
-        Me.ПП_Заявление.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.ПП_Заявление.Location = New System.Drawing.Point(3, 162)
-        Me.ПП_Заявление.Name = "ПП_Заявление"
-        Me.ПП_Заявление.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.ПП_Заявление.Size = New System.Drawing.Size(1240, 50)
-        Me.ПП_Заявление.TabIndex = 4
-        Me.ПП_Заявление.Text = "ПП_Заявление"
-        Me.ПП_Заявление.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.ПП_Заявление.UseVisualStyleBackColor = True
-        '
-        'ПК_Заявление
-        '
-        Me.ПК_Заявление.FlatAppearance.BorderColor = System.Drawing.Color.WhiteSmoke
-        Me.ПК_Заявление.FlatAppearance.BorderSize = 0
-        Me.ПК_Заявление.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.ПК_Заявление.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!)
-        Me.ПК_Заявление.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.ПК_Заявление.Location = New System.Drawing.Point(3, 109)
-        Me.ПК_Заявление.Name = "ПК_Заявление"
-        Me.ПК_Заявление.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.ПК_Заявление.Size = New System.Drawing.Size(1240, 50)
-        Me.ПК_Заявление.TabIndex = 3
-        Me.ПК_Заявление.Text = "ПК_Заявление"
-        Me.ПК_Заявление.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.ПК_Заявление.UseVisualStyleBackColor = True
-        '
-        'ПП_ПриложениеКдиплому
-        '
-        Me.ПП_ПриложениеКдиплому.FlatAppearance.BorderColor = System.Drawing.Color.WhiteSmoke
-        Me.ПП_ПриложениеКдиплому.FlatAppearance.BorderSize = 0
-        Me.ПП_ПриложениеКдиплому.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.ПП_ПриложениеКдиплому.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!)
-        Me.ПП_ПриложениеКдиплому.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.ПП_ПриложениеКдиплому.Location = New System.Drawing.Point(3, 3)
-        Me.ПП_ПриложениеКдиплому.Name = "ПП_ПриложениеКдиплому"
-        Me.ПП_ПриложениеКдиплому.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.ПП_ПриложениеКдиплому.Size = New System.Drawing.Size(1240, 50)
-        Me.ПП_ПриложениеКдиплому.TabIndex = 1
-        Me.ПП_ПриложениеКдиплому.Text = "ПП_Приложение к диплому"
-        Me.ПП_ПриложениеКдиплому.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.ПП_ПриложениеКдиплому.UseVisualStyleBackColor = True
+        Me.sekshionsBlanks.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.sekshionsBlanks.Location = New System.Drawing.Point(0, 0)
+        Me.sekshionsBlanks.Name = "sekshionsBlanks"
+        Me.sekshionsBlanks.Size = New System.Drawing.Size(1851, 835)
+        Me.sekshionsBlanks.TabIndex = 13
         '
         'TabPage3
         '
-        Me.TabPage3.Controls.Add(Me.ПриказОЗачислении_Доп)
-        Me.TabPage3.Controls.Add(Me.ПК_Окончание_уд)
-        Me.TabPage3.Controls.Add(Me.ПО_Окончание)
-        Me.TabPage3.Controls.Add(Me.ПП_Окончание)
-        Me.TabPage3.Controls.Add(Me.ПК_Окончание)
-        Me.TabPage3.Controls.Add(Me.ПП_ДопускКИА)
-        Me.TabPage3.Controls.Add(Me.ПО_ДопускКИА)
-        Me.TabPage3.Controls.Add(Me.ПК_Отчисление)
-        Me.TabPage3.Controls.Add(Me.ПО_Практика)
-        Me.TabPage3.Controls.Add(Me.ПП_Практика)
-        Me.TabPage3.Controls.Add(Me.ПО_Зачисление)
-        Me.TabPage3.Controls.Add(Me.ППЗачисление)
-        Me.TabPage3.Controls.Add(Me.ПриказОЗачислении)
+        Me.TabPage3.Controls.Add(Me.ordersPOSection)
+        Me.TabPage3.Controls.Add(Me.ordersPPSection)
+        Me.TabPage3.Controls.Add(Me.ordersPKSection)
         Me.TabPage3.ImageIndex = 2
         Me.TabPage3.Location = New System.Drawing.Point(4, 29)
         Me.TabPage3.Name = "TabPage3"
-        Me.TabPage3.Size = New System.Drawing.Size(1573, 834)
+        Me.TabPage3.Size = New System.Drawing.Size(1851, 835)
         Me.TabPage3.TabIndex = 2
         Me.TabPage3.Text = "Приказы"
         Me.TabPage3.UseVisualStyleBackColor = True
         '
-        'ПриказОЗачислении_Доп
+        'ordersPOSection
         '
-        Me.ПриказОЗачислении_Доп.FlatAppearance.BorderColor = System.Drawing.Color.WhiteSmoke
-        Me.ПриказОЗачислении_Доп.FlatAppearance.BorderSize = 0
-        Me.ПриказОЗачислении_Доп.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.ПриказОЗачислении_Доп.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!)
-        Me.ПриказОЗачислении_Доп.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.ПриказОЗачислении_Доп.Location = New System.Drawing.Point(3, 53)
-        Me.ПриказОЗачислении_Доп.Name = "ПриказОЗачислении_Доп"
-        Me.ПриказОЗачислении_Доп.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.ПриказОЗачислении_Доп.Size = New System.Drawing.Size(1240, 47)
-        Me.ПриказОЗачислении_Доп.TabIndex = 2
-        Me.ПриказОЗачислении_Доп.Text = "ПК_Зачисление доп"
-        Me.ПриказОЗачислении_Доп.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.ПриказОЗачислении_Доп.UseVisualStyleBackColor = True
+        Me.ordersPOSection.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.ordersPOSection.Location = New System.Drawing.Point(14, 568)
+        Me.ordersPOSection.Name = "ordersPOSection"
+        Me.ordersPOSection.Size = New System.Drawing.Size(1831, 228)
+        Me.ordersPOSection.TabIndex = 16
+        Me.ordersPOSection.TabStop = False
         '
-        'ПК_Окончание_уд
+        'ordersPPSection
         '
-        Me.ПК_Окончание_уд.FlatAppearance.BorderColor = System.Drawing.Color.WhiteSmoke
-        Me.ПК_Окончание_уд.FlatAppearance.BorderSize = 0
-        Me.ПК_Окончание_уд.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.ПК_Окончание_уд.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!)
-        Me.ПК_Окончание_уд.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.ПК_Окончание_уд.Location = New System.Drawing.Point(3, 603)
-        Me.ПК_Окончание_уд.Name = "ПК_Окончание_уд"
-        Me.ПК_Окончание_уд.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.ПК_Окончание_уд.Size = New System.Drawing.Size(1240, 47)
-        Me.ПК_Окончание_уд.TabIndex = 13
-        Me.ПК_Окончание_уд.Text = "ПК_Окончание_уд"
-        Me.ПК_Окончание_уд.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.ПК_Окончание_уд.UseVisualStyleBackColor = True
+        Me.ordersPPSection.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.ordersPPSection.Location = New System.Drawing.Point(14, 321)
+        Me.ordersPPSection.Name = "ordersPPSection"
+        Me.ordersPPSection.Size = New System.Drawing.Size(1831, 228)
+        Me.ordersPPSection.TabIndex = 15
+        Me.ordersPPSection.TabStop = False
         '
-        'ПО_Окончание
+        'ordersPKSection
         '
-        Me.ПО_Окончание.FlatAppearance.BorderColor = System.Drawing.Color.WhiteSmoke
-        Me.ПО_Окончание.FlatAppearance.BorderSize = 0
-        Me.ПО_Окончание.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.ПО_Окончание.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!)
-        Me.ПО_Окончание.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.ПО_Окончание.Location = New System.Drawing.Point(3, 553)
-        Me.ПО_Окончание.Name = "ПО_Окончание"
-        Me.ПО_Окончание.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.ПО_Окончание.Size = New System.Drawing.Size(1240, 47)
-        Me.ПО_Окончание.TabIndex = 12
-        Me.ПО_Окончание.Text = "ПО_Окончание"
-        Me.ПО_Окончание.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.ПО_Окончание.UseVisualStyleBackColor = True
-        '
-        'ПП_Окончание
-        '
-        Me.ПП_Окончание.FlatAppearance.BorderColor = System.Drawing.Color.WhiteSmoke
-        Me.ПП_Окончание.FlatAppearance.BorderSize = 0
-        Me.ПП_Окончание.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.ПП_Окончание.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!)
-        Me.ПП_Окончание.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.ПП_Окончание.Location = New System.Drawing.Point(3, 353)
-        Me.ПП_Окончание.Name = "ПП_Окончание"
-        Me.ПП_Окончание.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.ПП_Окончание.Size = New System.Drawing.Size(1240, 47)
-        Me.ПП_Окончание.TabIndex = 8
-        Me.ПП_Окончание.Text = "ПП_Окончание"
-        Me.ПП_Окончание.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.ПП_Окончание.UseVisualStyleBackColor = True
-        '
-        'ПК_Окончание
-        '
-        Me.ПК_Окончание.FlatAppearance.BorderColor = System.Drawing.Color.WhiteSmoke
-        Me.ПК_Окончание.FlatAppearance.BorderSize = 0
-        Me.ПК_Окончание.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.ПК_Окончание.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!)
-        Me.ПК_Окончание.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.ПК_Окончание.Location = New System.Drawing.Point(3, 153)
-        Me.ПК_Окончание.Name = "ПК_Окончание"
-        Me.ПК_Окончание.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.ПК_Окончание.Size = New System.Drawing.Size(1240, 47)
-        Me.ПК_Окончание.TabIndex = 4
-        Me.ПК_Окончание.Text = "ПК_Окончание"
-        Me.ПК_Окончание.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.ПК_Окончание.UseVisualStyleBackColor = True
-        '
-        'ПП_ДопускКИА
-        '
-        Me.ПП_ДопускКИА.FlatAppearance.BorderColor = System.Drawing.Color.WhiteSmoke
-        Me.ПП_ДопускКИА.FlatAppearance.BorderSize = 0
-        Me.ПП_ДопускКИА.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.ПП_ДопускКИА.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!)
-        Me.ПП_ДопускКИА.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.ПП_ДопускКИА.Location = New System.Drawing.Point(3, 303)
-        Me.ПП_ДопускКИА.Name = "ПП_ДопускКИА"
-        Me.ПП_ДопускКИА.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.ПП_ДопускКИА.Size = New System.Drawing.Size(1240, 47)
-        Me.ПП_ДопускКИА.TabIndex = 7
-        Me.ПП_ДопускКИА.Text = "ПП_Допуск к ИА"
-        Me.ПП_ДопускКИА.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.ПП_ДопускКИА.UseVisualStyleBackColor = True
-        '
-        'ПО_ДопускКИА
-        '
-        Me.ПО_ДопускКИА.FlatAppearance.BorderColor = System.Drawing.Color.WhiteSmoke
-        Me.ПО_ДопускКИА.FlatAppearance.BorderSize = 0
-        Me.ПО_ДопускКИА.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.ПО_ДопускКИА.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!)
-        Me.ПО_ДопускКИА.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.ПО_ДопускКИА.Location = New System.Drawing.Point(3, 503)
-        Me.ПО_ДопускКИА.Name = "ПО_ДопускКИА"
-        Me.ПО_ДопускКИА.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.ПО_ДопускКИА.Size = New System.Drawing.Size(1240, 47)
-        Me.ПО_ДопускКИА.TabIndex = 11
-        Me.ПО_ДопускКИА.Text = "ПО_Допуск к ИА"
-        Me.ПО_ДопускКИА.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.ПО_ДопускКИА.UseVisualStyleBackColor = True
-        '
-        'ПК_Отчисление
-        '
-        Me.ПК_Отчисление.FlatAppearance.BorderColor = System.Drawing.Color.WhiteSmoke
-        Me.ПК_Отчисление.FlatAppearance.BorderSize = 0
-        Me.ПК_Отчисление.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.ПК_Отчисление.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!)
-        Me.ПК_Отчисление.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.ПК_Отчисление.Location = New System.Drawing.Point(3, 103)
-        Me.ПК_Отчисление.Name = "ПК_Отчисление"
-        Me.ПК_Отчисление.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.ПК_Отчисление.Size = New System.Drawing.Size(1240, 47)
-        Me.ПК_Отчисление.TabIndex = 3
-        Me.ПК_Отчисление.Text = "ПК_Отчисление"
-        Me.ПК_Отчисление.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.ПК_Отчисление.UseVisualStyleBackColor = True
-        '
-        'ПО_Практика
-        '
-        Me.ПО_Практика.FlatAppearance.BorderColor = System.Drawing.Color.WhiteSmoke
-        Me.ПО_Практика.FlatAppearance.BorderSize = 0
-        Me.ПО_Практика.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.ПО_Практика.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!)
-        Me.ПО_Практика.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.ПО_Практика.Location = New System.Drawing.Point(3, 453)
-        Me.ПО_Практика.Name = "ПО_Практика"
-        Me.ПО_Практика.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.ПО_Практика.Size = New System.Drawing.Size(1240, 47)
-        Me.ПО_Практика.TabIndex = 10
-        Me.ПО_Практика.Text = "ПО_Практика"
-        Me.ПО_Практика.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.ПО_Практика.UseVisualStyleBackColor = True
-        '
-        'ПП_Практика
-        '
-        Me.ПП_Практика.FlatAppearance.BorderColor = System.Drawing.Color.WhiteSmoke
-        Me.ПП_Практика.FlatAppearance.BorderSize = 0
-        Me.ПП_Практика.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.ПП_Практика.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!)
-        Me.ПП_Практика.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.ПП_Практика.Location = New System.Drawing.Point(3, 253)
-        Me.ПП_Практика.Name = "ПП_Практика"
-        Me.ПП_Практика.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.ПП_Практика.Size = New System.Drawing.Size(1240, 47)
-        Me.ПП_Практика.TabIndex = 6
-        Me.ПП_Практика.Text = "ПП_Практика"
-        Me.ПП_Практика.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.ПП_Практика.UseVisualStyleBackColor = True
-        '
-        'ПО_Зачисление
-        '
-        Me.ПО_Зачисление.FlatAppearance.BorderColor = System.Drawing.Color.WhiteSmoke
-        Me.ПО_Зачисление.FlatAppearance.BorderSize = 0
-        Me.ПО_Зачисление.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.ПО_Зачисление.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!)
-        Me.ПО_Зачисление.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.ПО_Зачисление.Location = New System.Drawing.Point(3, 403)
-        Me.ПО_Зачисление.Name = "ПО_Зачисление"
-        Me.ПО_Зачисление.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.ПО_Зачисление.Size = New System.Drawing.Size(1240, 47)
-        Me.ПО_Зачисление.TabIndex = 9
-        Me.ПО_Зачисление.Text = "ПО_Зачисление"
-        Me.ПО_Зачисление.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.ПО_Зачисление.UseVisualStyleBackColor = True
-        '
-        'ППЗачисление
-        '
-        Me.ППЗачисление.FlatAppearance.BorderColor = System.Drawing.Color.WhiteSmoke
-        Me.ППЗачисление.FlatAppearance.BorderSize = 0
-        Me.ППЗачисление.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.ППЗачисление.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!)
-        Me.ППЗачисление.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.ППЗачисление.Location = New System.Drawing.Point(3, 203)
-        Me.ППЗачисление.Name = "ППЗачисление"
-        Me.ППЗачисление.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.ППЗачисление.Size = New System.Drawing.Size(1240, 47)
-        Me.ППЗачисление.TabIndex = 5
-        Me.ППЗачисление.Text = "ПП_Зачисление"
-        Me.ППЗачисление.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.ППЗачисление.UseVisualStyleBackColor = True
-        '
-        'ПриказОЗачислении
-        '
-        Me.ПриказОЗачислении.FlatAppearance.BorderColor = System.Drawing.Color.WhiteSmoke
-        Me.ПриказОЗачислении.FlatAppearance.BorderSize = 0
-        Me.ПриказОЗачислении.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.ПриказОЗачислении.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!)
-        Me.ПриказОЗачислении.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.ПриказОЗачислении.Location = New System.Drawing.Point(3, 3)
-        Me.ПриказОЗачислении.Name = "ПриказОЗачислении"
-        Me.ПриказОЗачислении.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.ПриказОЗачислении.Size = New System.Drawing.Size(1240, 47)
-        Me.ПриказОЗачислении.TabIndex = 1
-        Me.ПриказОЗачислении.Text = "ПК_Зачисление"
-        Me.ПриказОЗачислении.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.ПриказОЗачислении.UseVisualStyleBackColor = True
+        Me.ordersPKSection.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.ordersPKSection.Location = New System.Drawing.Point(14, 3)
+        Me.ordersPKSection.Name = "ordersPKSection"
+        Me.ordersPKSection.Size = New System.Drawing.Size(1831, 299)
+        Me.ordersPKSection.TabIndex = 14
+        Me.ordersPKSection.TabStop = False
         '
         'TabPage1
         '
         Me.TabPage1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
-        Me.TabPage1.Controls.Add(Me.СправочникГруппыПП)
-        Me.TabPage1.Controls.Add(Me.СправочникГруппыПО)
-        Me.TabPage1.Controls.Add(Me.Педнагрузка)
-        Me.TabPage1.Controls.Add(Me.Ведомость)
-        Me.TabPage1.Controls.Add(Me.КнопкаСоздатьГруппу)
-        Me.TabPage1.Controls.Add(Me.ДобавитьСлушателя)
-        Me.TabPage1.Controls.Add(Me.СправочникСлушатели)
-        Me.TabPage1.Controls.Add(Me.СправочникГруппыПК)
-        Me.TabPage1.Controls.Add(Me.GroupBox1)
+        Me.TabPage1.Controls.Add(Me.groupListSection)
         Me.TabPage1.Controls.Add(Me.Button2)
-        Me.TabPage1.Controls.Add(Me.GroupBox3)
-        Me.TabPage1.Controls.Add(Me.ИтоговаяАттествцияОценки)
-        Me.TabPage1.Controls.Add(Me.GroupBox2)
+        Me.TabPage1.Controls.Add(Me.studentsSection)
+        Me.TabPage1.Controls.Add(Me.gradesContainer)
         Me.TabPage1.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
         Me.TabPage1.ImageIndex = 20
         Me.TabPage1.Location = New System.Drawing.Point(4, 29)
         Me.TabPage1.Name = "TabPage1"
         Me.TabPage1.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage1.Size = New System.Drawing.Size(1573, 834)
+        Me.TabPage1.Size = New System.Drawing.Size(1851, 835)
         Me.TabPage1.TabIndex = 0
         Me.TabPage1.Text = "Главная"
         Me.TabPage1.UseVisualStyleBackColor = True
         '
-        'СправочникГруппыПП
+        'groupListSection
         '
-        Me.СправочникГруппыПП.BackColor = System.Drawing.Color.Transparent
-        Me.СправочникГруппыПП.FlatAppearance.BorderColor = System.Drawing.Color.WhiteSmoke
-        Me.СправочникГруппыПП.FlatAppearance.BorderSize = 0
-        Me.СправочникГруппыПП.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.СправочникГруппыПП.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.СправочникГруппыПП.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.СправочникГруппыПП.Location = New System.Drawing.Point(20, 68)
-        Me.СправочникГруппыПП.Name = "СправочникГруппыПП"
-        Me.СправочникГруппыПП.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.СправочникГруппыПП.Size = New System.Drawing.Size(1240, 50)
-        Me.СправочникГруппыПП.TabIndex = 2
-        Me.СправочникГруппыПП.Text = "Профессиональная переподготовка"
-        Me.СправочникГруппыПП.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.СправочникГруппыПП.UseVisualStyleBackColor = False
-        '
-        'СправочникГруппыПО
-        '
-        Me.СправочникГруппыПО.BackColor = System.Drawing.Color.Transparent
-        Me.СправочникГруппыПО.FlatAppearance.BorderColor = System.Drawing.Color.WhiteSmoke
-        Me.СправочникГруппыПО.FlatAppearance.BorderSize = 0
-        Me.СправочникГруппыПО.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.СправочникГруппыПО.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.СправочникГруппыПО.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.СправочникГруппыПО.Location = New System.Drawing.Point(20, 121)
-        Me.СправочникГруппыПО.Name = "СправочникГруппыПО"
-        Me.СправочникГруппыПО.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.СправочникГруппыПО.Size = New System.Drawing.Size(1240, 50)
-        Me.СправочникГруппыПО.TabIndex = 3
-        Me.СправочникГруппыПО.Text = "Профессиональное обучение"
-        Me.СправочникГруппыПО.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.СправочникГруппыПО.UseVisualStyleBackColor = False
-        '
-        'Педнагрузка
-        '
-        Me.Педнагрузка.FlatAppearance.BorderColor = System.Drawing.Color.WhiteSmoke
-        Me.Педнагрузка.FlatAppearance.BorderSize = 0
-        Me.Педнагрузка.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Педнагрузка.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!)
-        Me.Педнагрузка.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Педнагрузка.Location = New System.Drawing.Point(20, 658)
-        Me.Педнагрузка.Name = "Педнагрузка"
-        Me.Педнагрузка.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.Педнагрузка.Size = New System.Drawing.Size(1240, 50)
-        Me.Педнагрузка.TabIndex = 9
-        Me.Педнагрузка.Text = "Педнагрузка"
-        Me.Педнагрузка.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Педнагрузка.UseVisualStyleBackColor = True
-        '
-        'Ведомость
-        '
-        Me.Ведомость.FlatAppearance.BorderColor = System.Drawing.Color.WhiteSmoke
-        Me.Ведомость.FlatAppearance.BorderSize = 0
-        Me.Ведомость.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Ведомость.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!)
-        Me.Ведомость.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Ведомость.Location = New System.Drawing.Point(20, 552)
-        Me.Ведомость.Name = "Ведомость"
-        Me.Ведомость.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.Ведомость.Size = New System.Drawing.Size(1240, 50)
-        Me.Ведомость.TabIndex = 7
-        Me.Ведомость.Text = "Ведомость"
-        Me.Ведомость.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Ведомость.UseVisualStyleBackColor = True
-        '
-        'КнопкаСоздатьГруппу
-        '
-        Me.КнопкаСоздатьГруппу.FlatAppearance.BorderColor = System.Drawing.Color.WhiteSmoke
-        Me.КнопкаСоздатьГруппу.FlatAppearance.BorderSize = 0
-        Me.КнопкаСоздатьГруппу.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.КнопкаСоздатьГруппу.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.КнопкаСоздатьГруппу.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.КнопкаСоздатьГруппу.Location = New System.Drawing.Point(20, 174)
-        Me.КнопкаСоздатьГруппу.Name = "КнопкаСоздатьГруппу"
-        Me.КнопкаСоздатьГруппу.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.КнопкаСоздатьГруппу.Size = New System.Drawing.Size(1240, 50)
-        Me.КнопкаСоздатьГруппу.TabIndex = 4
-        Me.КнопкаСоздатьГруппу.Text = "Создать группу"
-        Me.КнопкаСоздатьГруппу.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.КнопкаСоздатьГруппу.UseVisualStyleBackColor = True
-        '
-        'ДобавитьСлушателя
-        '
-        Me.ДобавитьСлушателя.FlatAppearance.BorderColor = System.Drawing.Color.WhiteSmoke
-        Me.ДобавитьСлушателя.FlatAppearance.BorderSize = 0
-        Me.ДобавитьСлушателя.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.ДобавитьСлушателя.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!)
-        Me.ДобавитьСлушателя.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.ДобавитьСлушателя.Location = New System.Drawing.Point(20, 393)
-        Me.ДобавитьСлушателя.Name = "ДобавитьСлушателя"
-        Me.ДобавитьСлушателя.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.ДобавитьСлушателя.Size = New System.Drawing.Size(1240, 50)
-        Me.ДобавитьСлушателя.TabIndex = 6
-        Me.ДобавитьСлушателя.Text = "Добавить нового слушателя"
-        Me.ДобавитьСлушателя.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.ДобавитьСлушателя.UseVisualStyleBackColor = True
-        '
-        'СправочникСлушатели
-        '
-        Me.СправочникСлушатели.FlatAppearance.BorderColor = System.Drawing.Color.WhiteSmoke
-        Me.СправочникСлушатели.FlatAppearance.BorderSize = 0
-        Me.СправочникСлушатели.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.СправочникСлушатели.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!)
-        Me.СправочникСлушатели.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.СправочникСлушатели.Location = New System.Drawing.Point(20, 340)
-        Me.СправочникСлушатели.Name = "СправочникСлушатели"
-        Me.СправочникСлушатели.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.СправочникСлушатели.Size = New System.Drawing.Size(1240, 50)
-        Me.СправочникСлушатели.TabIndex = 5
-        Me.СправочникСлушатели.Text = "Открыть справочник Слушатели"
-        Me.СправочникСлушатели.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.СправочникСлушатели.UseVisualStyleBackColor = True
-        '
-        'СправочникГруппыПК
-        '
-        Me.СправочникГруппыПК.BackColor = System.Drawing.Color.Transparent
-        Me.СправочникГруппыПК.FlatAppearance.BorderColor = System.Drawing.Color.WhiteSmoke
-        Me.СправочникГруппыПК.FlatAppearance.BorderSize = 0
-        Me.СправочникГруппыПК.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.СправочникГруппыПК.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.СправочникГруппыПК.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.СправочникГруппыПК.Location = New System.Drawing.Point(20, 15)
-        Me.СправочникГруппыПК.Name = "СправочникГруппыПК"
-        Me.СправочникГруппыПК.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.СправочникГруппыПК.Size = New System.Drawing.Size(1240, 50)
-        Me.СправочникГруппыПК.TabIndex = 1
-        Me.СправочникГруппыПК.Text = "Повышение квалификации"
-        Me.СправочникГруппыПК.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.СправочникГруппыПК.UseVisualStyleBackColor = False
-        '
-        'GroupBox1
-        '
-        Me.GroupBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+        Me.groupListSection.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.GroupBox1.Location = New System.Drawing.Point(14, 3)
-        Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(1553, 299)
-        Me.GroupBox1.TabIndex = 4
-        Me.GroupBox1.TabStop = False
+        Me.groupListSection.Location = New System.Drawing.Point(14, 3)
+        Me.groupListSection.Name = "groupListSection"
+        Me.groupListSection.Size = New System.Drawing.Size(1831, 299)
+        Me.groupListSection.TabIndex = 4
+        Me.groupListSection.TabStop = False
         '
         'Button2
         '
@@ -1864,41 +1311,25 @@ Partial Class MainForm
         Me.Button2.UseVisualStyleBackColor = False
         Me.Button2.Visible = False
         '
-        'GroupBox3
+        'studentsSection
         '
-        Me.GroupBox3.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+        Me.studentsSection.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.GroupBox3.Location = New System.Drawing.Point(14, 328)
-        Me.GroupBox3.Name = "GroupBox3"
-        Me.GroupBox3.Size = New System.Drawing.Size(1553, 174)
-        Me.GroupBox3.TabIndex = 5
-        Me.GroupBox3.TabStop = False
+        Me.studentsSection.Location = New System.Drawing.Point(14, 328)
+        Me.studentsSection.Name = "studentsSection"
+        Me.studentsSection.Size = New System.Drawing.Size(1831, 174)
+        Me.studentsSection.TabIndex = 5
+        Me.studentsSection.TabStop = False
         '
-        'ИтоговаяАттествцияОценки
+        'gradesContainer
         '
-        Me.ИтоговаяАттествцияОценки.FlatAppearance.BorderColor = System.Drawing.Color.WhiteSmoke
-        Me.ИтоговаяАттествцияОценки.FlatAppearance.BorderSize = 0
-        Me.ИтоговаяАттествцияОценки.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.ИтоговаяАттествцияОценки.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!)
-        Me.ИтоговаяАттествцияОценки.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.ИтоговаяАттествцияОценки.Location = New System.Drawing.Point(20, 605)
-        Me.ИтоговаяАттествцияОценки.Name = "ИтоговаяАттествцияОценки"
-        Me.ИтоговаяАттествцияОценки.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.ИтоговаяАттествцияОценки.Size = New System.Drawing.Size(1240, 50)
-        Me.ИтоговаяАттествцияОценки.TabIndex = 8
-        Me.ИтоговаяАттествцияОценки.Text = "Итоговая аттестация"
-        Me.ИтоговаяАттествцияОценки.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.ИтоговаяАттествцияОценки.UseVisualStyleBackColor = True
-        '
-        'GroupBox2
-        '
-        Me.GroupBox2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+        Me.gradesContainer.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.GroupBox2.Location = New System.Drawing.Point(14, 536)
-        Me.GroupBox2.Name = "GroupBox2"
-        Me.GroupBox2.Size = New System.Drawing.Size(1553, 226)
-        Me.GroupBox2.TabIndex = 6
-        Me.GroupBox2.TabStop = False
+        Me.gradesContainer.Location = New System.Drawing.Point(14, 536)
+        Me.gradesContainer.Name = "gradesContainer"
+        Me.gradesContainer.Size = New System.Drawing.Size(1831, 226)
+        Me.gradesContainer.TabIndex = 6
+        Me.gradesContainer.TabStop = False
         '
         'TabControlOther
         '
@@ -1916,7 +1347,7 @@ Partial Class MainForm
         Me.TabControlOther.Location = New System.Drawing.Point(0, 0)
         Me.TabControlOther.Name = "TabControlOther"
         Me.TabControlOther.SelectedIndex = 0
-        Me.TabControlOther.Size = New System.Drawing.Size(1581, 867)
+        Me.TabControlOther.Size = New System.Drawing.Size(1859, 868)
         Me.TabControlOther.TabIndex = 0
         '
         'Other
@@ -1926,7 +1357,7 @@ Partial Class MainForm
         Me.Other.ImageIndex = 18
         Me.Other.Location = New System.Drawing.Point(4, 29)
         Me.Other.Name = "Other"
-        Me.Other.Size = New System.Drawing.Size(1573, 834)
+        Me.Other.Size = New System.Drawing.Size(1851, 835)
         Me.Other.TabIndex = 8
         Me.Other.Text = "Прочее"
         Me.Other.UseVisualStyleBackColor = True
@@ -1950,7 +1381,7 @@ Partial Class MainForm
         Me.SplitContainerOther.Panel1.Controls.Add(Me.Panel_main)
         Me.SplitContainerOther.Panel1.Controls.Add(Me.ToolStrip1)
         Me.SplitContainerOther.Panel2Collapsed = True
-        Me.SplitContainerOther.Size = New System.Drawing.Size(1573, 834)
+        Me.SplitContainerOther.Size = New System.Drawing.Size(1851, 835)
         Me.SplitContainerOther.SplitterDistance = 748
         Me.SplitContainerOther.TabIndex = 41
         Me.SplitContainerOther.Visible = False
@@ -1961,7 +1392,7 @@ Partial Class MainForm
         Me.Panel_main.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Panel_main.Location = New System.Drawing.Point(0, 48)
         Me.Panel_main.Name = "Panel_main"
-        Me.Panel_main.Size = New System.Drawing.Size(1573, 786)
+        Me.Panel_main.Size = New System.Drawing.Size(1851, 787)
         Me.Panel_main.TabIndex = 5
         '
         'SplitContainerOtherList
@@ -1982,7 +1413,7 @@ Partial Class MainForm
         Me.SplitContainerOtherList.Panel2.Controls.Add(Me.panel_worker)
         Me.SplitContainerOtherList.Panel2Collapsed = True
         Me.SplitContainerOtherList.Panel2MinSize = 26
-        Me.SplitContainerOtherList.Size = New System.Drawing.Size(1573, 786)
+        Me.SplitContainerOtherList.Size = New System.Drawing.Size(1851, 787)
         Me.SplitContainerOtherList.SplitterDistance = 26
         Me.SplitContainerOtherList.TabIndex = 4
         '
@@ -2021,7 +1452,7 @@ Partial Class MainForm
         Me.DataGridView_list.RowHeadersVisible = False
         Me.DataGridView_list.RowHeadersWidth = 53
         Me.DataGridView_list.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DataGridView_list.Size = New System.Drawing.Size(1573, 786)
+        Me.DataGridView_list.Size = New System.Drawing.Size(1851, 787)
         Me.DataGridView_list.TabIndex = 34
         Me.DataGridView_list.Visible = False
         '
@@ -2163,7 +1594,7 @@ Partial Class MainForm
         Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripLabel2, Me.ToolStrip_name_list, Me.other_add, Me.ToolStripButton1})
         Me.ToolStrip1.Location = New System.Drawing.Point(0, 0)
         Me.ToolStrip1.Name = "ToolStrip1"
-        Me.ToolStrip1.Size = New System.Drawing.Size(1573, 48)
+        Me.ToolStrip1.Size = New System.Drawing.Size(1851, 48)
         Me.ToolStrip1.TabIndex = 3
         Me.ToolStrip1.Text = "ToolStrip1"
         '
@@ -2226,7 +1657,7 @@ Partial Class MainForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1581, 867)
+        Me.ClientSize = New System.Drawing.Size(1859, 868)
         Me.Controls.Add(Me.TabControlOther)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.KeyPreview = True
@@ -2310,13 +1741,13 @@ Partial Class MainForm
     Private WithEvents ToolStripAddProg As ToolStripButton
     Friend WithEvents SplitContainer5 As SplitContainer
     Friend WithEvents programms__SplitModulsInProg As SplitContainer
-    Private WithEvents dataGridModulsInProgram As DataGridView
+    Public WithEvents dataGridModulsInProgram As DataGridView
     Friend WithEvents toolStripModulsInProg As ToolStrip
     Private WithEvents ToolStripTop As ToolStripButton
     Private WithEvents ToolStripBottom As ToolStripButton
     Private WithEvents addMidulInGroupp As ToolStripButton
     Friend WithEvents programms__SplitContainerModuls As SplitContainer
-    Private WithEvents DataGridAllModuls As DataGridView
+    Public WithEvents DataGridAllModuls As DataGridView
     Friend WithEvents ToolStrip4 As ToolStrip
     Private WithEvents ToolStripAddModul As ToolStripButton
     Friend WithEvents TabPage5 As TabPage
@@ -2365,45 +1796,12 @@ Partial Class MainForm
     Friend WithEvents GroupBox6 As GroupBox
     Friend WithEvents GroupBox7 As GroupBox
     Friend WithEvents TabPage2 As TabPage
-    Friend WithEvents СправкаОбОкончании As Button
-    Friend WithEvents СправкаОбОбучении As Button
-    Friend WithEvents ПП_Ведомость As Button
-    Friend WithEvents ВедомостьПромежуточнойАттестации As Button
-    Friend WithEvents ДоверенностьПолученияБланковСлушателей As Button
-    Friend WithEvents ДоверенностьПолученияБланков As Button
-    Friend WithEvents Ведомость_слушателиИорганизации As Button
-    Friend WithEvents ПО_Свидетельство As Button
-    Friend WithEvents Карточка_слушателя As Button
-    Friend WithEvents ПП_Заявление As Button
-    Friend WithEvents ПК_Заявление As Button
-    Friend WithEvents ПП_ПриложениеКдиплому As Button
     Friend WithEvents TabPage3 As TabPage
-    Friend WithEvents ПК_Окончание_уд As Button
-    Friend WithEvents ПО_Окончание As Button
-    Friend WithEvents ПП_Окончание As Button
-    Friend WithEvents ПК_Окончание As Button
-    Friend WithEvents ПП_ДопускКИА As Button
-    Friend WithEvents ПО_ДопускКИА As Button
-    Friend WithEvents ПК_Отчисление As Button
-    Friend WithEvents ПО_Практика As Button
-    Friend WithEvents ПП_Практика As Button
-    Friend WithEvents ПО_Зачисление As Button
-    Friend WithEvents ППЗачисление As Button
-    Friend WithEvents ПриказОЗачислении As Button
     Friend WithEvents TabPage1 As TabPage
-    Friend WithEvents СправочникГруппыПП As Button
-    Friend WithEvents СправочникГруппыПО As Button
-    Friend WithEvents Педнагрузка As Button
-    Friend WithEvents ИтоговаяАттествцияОценки As Button
-    Friend WithEvents Ведомость As Button
-    Friend WithEvents КнопкаСоздатьГруппу As Button
-    Friend WithEvents ДобавитьСлушателя As Button
-    Friend WithEvents СправочникСлушатели As Button
-    Friend WithEvents СправочникГруппыПК As Button
-    Friend WithEvents GroupBox1 As GroupBox
+    Friend WithEvents groupListSection As GroupBox
     Friend WithEvents Button2 As Button
-    Friend WithEvents GroupBox3 As GroupBox
-    Friend WithEvents GroupBox2 As GroupBox
+    Friend WithEvents studentsSection As GroupBox
+    Friend WithEvents gradesContainer As GroupBox
     Friend WithEvents TabControlOther As TabControl
     Friend WithEvents red_moduls As TextBox
     Friend WithEvents TableLayoutAddNewModul As TableLayoutPanel
@@ -2415,7 +1813,6 @@ Partial Class MainForm
     Friend WithEvents progsIndicator As ToolStripButton
     Friend WithEvents modulInProgsIndicator As ToolStripButton
     Friend WithEvents modulIndicator As ToolStripButton
-    Friend WithEvents ПриказОЗачислении_Доп As Button
     Friend WithEvents Other As TabPage
     Friend WithEvents passwordOther As MaskedTextBox
     Friend WithEvents SplitContainerOther As SplitContainer
@@ -2451,4 +1848,8 @@ Partial Class MainForm
     Friend WithEvents programs__panelProgs As Panel
     Friend WithEvents programs__panelType As Panel
     Friend WithEvents PanelSetts As Panel
+    Friend WithEvents ordersPKSection As GroupBox
+    Friend WithEvents ordersPPSection As GroupBox
+    Friend WithEvents ordersPOSection As GroupBox
+    Friend WithEvents sekshionsBlanks As Panel
 End Class

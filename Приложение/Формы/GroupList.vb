@@ -124,6 +124,7 @@ Public Class GroupList
             End If
 
             kod = groupListTable.SelectedItems.Item(0).SubItems(0).Text
+            MainForm.orderIdGroup = Convert.ToInt64(kod)
 
             Try
                 year = Convert.ToDateTime(groupListTable.SelectedItems.Item(0).SubItems(4).Text).Year
@@ -348,5 +349,4 @@ Public Class GroupList
         updateGroupList()
 
     End Sub
-
 End Class

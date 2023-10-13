@@ -1,12 +1,13 @@
 ﻿Public Class BuildOrder
 
     Public prikaz As New Prikaz
+    Public fromGroupp As Boolean = False  ' true если отркрывается через группу
     Public flagLoad As Boolean = False
     Public orderType As String
     Public kodGroup As Integer
     Public path As String
     Public flagCheck As Boolean = False
-    Public ЧекнутыеСлушатели
+    Public checkedStudents
     Public comission As Boolean = False
     Public practical As Boolean = False
     Public cvalification As Int16
@@ -16,11 +17,13 @@
         Dim checkContent As Boolean
         Dim selectedStudents
         Dim selectedModuls
+
         ActiveControl = Button1
 
         checkContent = checkField(Me)
 
         If Not checkContent Then
+
             Try
                 Warning.content.Text = "Необходимо заполнить все обязательные поля!"
                 openForm(Warning)
@@ -30,6 +33,7 @@
                 openForm(Warning)
             End Try
             Exit Sub
+
         End If
 
         Select Case orderType
@@ -51,19 +55,16 @@
             Case "СправкаОбОкончании"
 
                 selectedStudents = ЗаписатьЧекнутыеСтроки(tableStudentsList, 0)
-
                 СправкаОбОкончании.СправкаОбОкончании(selectedStudents)
 
             Case "СправкаОбОбучении"
 
                 selectedStudents = ЗаписатьЧекнутыеСтроки(tableStudentsList, 0)
-
                 spravka.spravka(selectedStudents)
 
             Case "ДоверенностьПолученияБланковСлушателей"
 
                 selectedStudents = ЗаписатьЧекнутыеСтроки(tableStudentsList, 0)
-
                 ДоверенностьПолученияБланковНаСлушателя(selectedStudents)
 
             Case "ДоверенностьПолученияБланков"
@@ -117,7 +118,6 @@
             Case "ПК_Окончание_уд"
 
                 selectedStudents = ЗаписатьЧекнутыеСтроки(tableStudentsList, 0)
-
                 ПК_Окончание.ПК_Окончание_уд(selectedStudents, orderType)
 
             Case "ПП_Окончание"
@@ -156,7 +156,7 @@
 
     End Sub
 
-    Private Sub АСформироватьПриказОЗачислении_Shown(sender As Object, e As EventArgs) Handles Me.Shown
+    Private Sub createBuildOrder(sender As Object, e As EventArgs) Handles Me.Shown
 
         flagCheck = True
 
@@ -239,6 +239,8 @@
             End If
 
         End If
+
+        If fromGroupp Then groupNumber.SelectedText = GroupList.numberGr
 
     End Sub
 
@@ -349,7 +351,7 @@
 
     Private Sub BuildOrder_KeyDown(sender As Object, e As KeyEventArgs) Handles MyBase.KeyDown
 
-        Call closeEsc(Me, e.KeyCode)
+        closeEsc(Me, e.KeyCode)
 
         If e.KeyCode = 38 Or e.KeyCode = 40 Then
             pressTab(e.KeyCode, 40)
@@ -524,6 +526,7 @@
 
     Private Sub BuildOrder_FormClosed(sender As Object, e As FormClosedEventArgs) Handles MyBase.FormClosed
         MainForm.orderCvalif = 0
+        fromGroupp = False
     End Sub
 
     Public Sub reload_lists()

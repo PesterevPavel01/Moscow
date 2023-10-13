@@ -33,7 +33,7 @@
             Exit Sub
         End Try
 
-        resorsesPath = startApp.ПутьКФайлуRes
+        resorsesPath = startApp.resourcesPath
         samplePath = resorsesPath & "Шаблоны\ПК_Окончание\Таблицы_ПО_Св-во.docx"
 
         WordApp = CreateObject("Word.Application")

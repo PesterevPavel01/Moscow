@@ -30,7 +30,7 @@
 
         array = ДобавитьРубашкуСПробеломВКонцеВМассив(array, 16)
 
-        resourcesPath = _technical.resourcesPath()
+        resourcesPath = _technical.updateResourcesPath()
         samplePath = resourcesPath & "Шаблоны\Книга учёта выданных" & name & "ФРДО.xlsx"
         newFilePath = resourcesPath & "Отчеты\Книги Учета"
         excellObject = _technical.СозданиеКнигиЭксельИЛИОшибкаВ0(newFilePath, "Книга учёта выданных" & name & " ФРДО")

@@ -30,7 +30,7 @@
 
         End If
 
-        resourcesPath = startApp.ПутьКФайлуRes
+        resourcesPath = startApp.resourcesPath
         ПутьКШаблону = resourcesPath & "Шаблоны\Приказы\" & ВидПриказа & ".docx"
 
         wordApp = CreateObject("Word.Application")

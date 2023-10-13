@@ -527,7 +527,7 @@ Public Class newGroup
 
     Private Sub newGroup_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
-        Dim path As String = resourcesPath() + "images//"
+        Dim path As String = updateResourcesPath() + "images//"
         cover_image = Image.FromFile(path + "deactivate.png")
         controlsReaction(dictionaryFlag, Me)
         ActiveControl = BtnFocus

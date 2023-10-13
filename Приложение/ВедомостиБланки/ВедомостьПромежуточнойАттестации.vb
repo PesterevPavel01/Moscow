@@ -37,7 +37,7 @@
             Exit Sub
         End If
 
-        ПутьККаталогуСРесурсами = _technical.resourcesPath()
+        ПутьККаталогуСРесурсами = _technical.updateResourcesPath()
 
         If ВидПриказа = "ВедомостьПромежуточнойАттестации" Then
 

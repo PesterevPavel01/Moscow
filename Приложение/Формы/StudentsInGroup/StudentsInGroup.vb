@@ -8,6 +8,7 @@ Public Class StudentsInGroup
     Public organization As String
     Public finansing As String
     Public ordersBuilder As New PanelOrders_builder
+    Public formEvents As New StudentsInGroup_Events
 
     Public Sub loadStudentsInGroup()
 
@@ -62,6 +63,9 @@ Public Class StudentsInGroup
         tbl_studentsInGroup.table_init()
         tbl_studentsInGroup.Dock = DockStyle.Fill
 
+        formEvents.studentsInGroup = Me
+        formEvents.init()
+
     End Sub
 
     Public Sub dataGridTables_RemoveStudent(snils As String, name As String)
@@ -111,34 +115,6 @@ Public Class StudentsInGroup
 
     End Sub
 
-    Private Sub ДобавитьВГруппу_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs)
-        pressTab(e.KeyCode, Keys.Right)
-    End Sub
-
-    Private Sub ДобавитьВгруппуНового_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs)
-        pressTab(e.KeyCode, Keys.Right)
-    End Sub
-
-    Private Sub Прочее_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs)
-        pressTab(e.KeyCode, Keys.Right)
-    End Sub
-
-    Private Sub ListViewСписокСлушателей_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs)
-        pressTab(e.KeyCode, Keys.Right)
-    End Sub
-
-    Private Sub SplitContainer1_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs) Handles SplitContainer1.PreviewKeyDown
-        pressTab(e.KeyCode, Keys.Right)
-    End Sub
-
-    Private Sub SplitContainer2_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs)
-        pressTab(e.KeyCode, Keys.Right)
-    End Sub
-
-    Private Sub SplitContainer3_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs)
-        pressTab(e.KeyCode, Keys.Right)
-    End Sub
-
     Public Sub studentsInGroup_KeyDown(e As KeyEventArgs)
 
         If tbl_studentsInGroup.flag_active_control And tbl_studentsInGroup.flagUpdate Then
@@ -154,7 +130,8 @@ Public Class StudentsInGroup
         End If
 
     End Sub
-    Private Sub StudentsInGroup_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs) Handles MyBase.PreviewKeyDown
+
+    Public Sub StudentsInGroup_PreviewKeyDown(e As PreviewKeyDownEventArgs)
 
         If tbl_studentsInGroup.flag_active_control Then
             e.IsInputKey = True
@@ -162,7 +139,7 @@ Public Class StudentsInGroup
 
     End Sub
 
-    Private Sub studentsList_Click(sender As Object, e As EventArgs) Handles studentsList.Click
+    Public Sub studentsList_Click()
 
         WindowsApp2.StudentsList.showStudentsList()
         WindowsApp2.StudentsList.insertIntoGroupList.Visible = True
@@ -170,12 +147,12 @@ Public Class StudentsInGroup
 
     End Sub
 
-    Private Sub newStudent_Click(sender As Object, e As EventArgs) Handles newStudent.Click
+    Public Sub newStudent_Click()
         WindowsApp2.newStudent.fromStudentsList = True
         WindowsApp2.newStudent.ShowDialog()
     End Sub
 
-    Private Sub allInfo_Click(sender As Object, e As EventArgs) Handles allInfo.Click
+    Public Sub allInfo_Click()
 
         newGroup.Enabled = True
         newGroup.redactorMode = True
@@ -184,13 +161,15 @@ Public Class StudentsInGroup
     End Sub
 
     Private Sub StudentsInGroup_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
         ordersBuilder.panelOrders = panelOrders
         ordersBuilder.buttonHeigth = 50
         uploader.mySQLConnector = MainForm.mySqlConnect
         loadStudentsInGroup()
+
     End Sub
 
-    Private Sub everyone_Click(sender As Object, e As EventArgs) Handles everyone.Click
+    Public Sub everyone_Click()
 
         uploader.copyOrgAndFinEveryone(GroupList.kod, finansing, organization)
         tbl_studentsInGroup.load_table()
@@ -211,14 +190,7 @@ Public Class StudentsInGroup
 
     End Sub
 
-    Private Sub StudentList_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
-
-        cleaner(newGroup)
-        mainConteiner.Panel2Collapsed = True
-
-    End Sub
-
-    Private Sub orders_Click(sender As Object, e As EventArgs) Handles orders.Click
+    Public Sub orders_click()
 
         mainConteiner.Panel2Collapsed = False
         ordersBuilder.init()
@@ -227,25 +199,35 @@ Public Class StudentsInGroup
 
     End Sub
 
-    Private Sub closePanelOrders_Click(sender As Object, e As EventArgs) Handles closePanelOrders.Click
+    Public Sub StudentList_FormClosing()
+
+        cleaner(newGroup)
         mainConteiner.Panel2Collapsed = True
-        Dim control As Control = ordersBuilder.buttons.ElementAt(0).Value
-        control.Focus()
+
     End Sub
 
-    Private Sub toolOrders_Enter(sender As Object, e As EventArgs) Handles toolOrders.Enter
+    Public Sub closePanelOrders_Click()
+
+        mainConteiner.Panel2Collapsed = True
+        header.Focus()
+
+    End Sub
+
+    Public Sub toolOrders_Enter()
         closePanelOrders.Select()
     End Sub
 
-    Private Sub toolOrders_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs) Handles toolOrders.PreviewKeyDown
+    Public Sub toolOrders_PreviewKeyDown(e As PreviewKeyDownEventArgs)
+
         e.IsInputKey = True
+
     End Sub
 
-    Private Sub toolOrders_KeyDown(sender As Object, e As KeyEventArgs) Handles toolOrders.KeyDown
+    Public Sub toolOrders_KeyDown(e As KeyEventArgs)
 
         Select Case e.KeyCode
             Case Keys.Enter
-                closePanelOrders_Click(sender, e)
+                closePanelOrders_Click()
             Case Keys.Up
                 header.Focus()
                 newStudent.Select()
@@ -253,6 +235,12 @@ Public Class StudentsInGroup
                 Dim control As Control = ordersBuilder.buttons.ElementAt(0).Value
                 control.Focus()
         End Select
+
+    End Sub
+
+    Private Sub header_Enter()
+
+        newStudent.Select()
 
     End Sub
 End Class

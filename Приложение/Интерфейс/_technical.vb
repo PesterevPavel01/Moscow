@@ -701,7 +701,7 @@ Module _technical
         Номер = Список.Count
     End Sub
 
-    Function resourcesPath() As String
+    Function updateResourcesPath() As String
 
         Dim ПутьКФайлуRes, Путь As String
         Dim Массив
@@ -723,7 +723,7 @@ Module _technical
         End While
 
 
-        resourcesPath = ПутьКФайлуRes & "Resources\"
+        updateResourcesPath = ПутьКФайлуRes & "Resources\"
 
     End Function
     Function ПутьКОбщейБазе() As String

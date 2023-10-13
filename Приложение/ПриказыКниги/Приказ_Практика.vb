@@ -14,7 +14,7 @@
             Exit Sub
         End If
 
-        resourcesPath = startApp.ПутьКФайлуRes
+        resourcesPath = startApp.resourcesPath
         templatePath = resourcesPath & "Шаблоны\Приказы\" & ВидПриказа & ".docx"
 
         wordApp = CreateObject("Word.Application")

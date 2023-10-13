@@ -8,7 +8,7 @@
 
     Sub New()
 
-        Dim path As String = resourcesPath() + "images//"
+        Dim path As String = updateResourcesPath() + "images//"
         images.Add("sortUp", Image.FromFile(path + "sortUp.png"))
         images.Add("sortUpGr", Image.FromFile(path + "sortUpGr.png"))
         images.Add("sortDown", Image.FromFile(path + "sortDown.png"))

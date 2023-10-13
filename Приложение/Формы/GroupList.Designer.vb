@@ -45,7 +45,7 @@ Partial Class GroupList
         Me.header.SuspendLayout()
         Me.SuspendLayout()
         '
-        'ListViewСписокГрупп
+        'groupListTable
         '
         Me.groupListTable.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.groupListTable.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.Номер, Me.Группа, Me.Программа, Me.Куратор, Me.Начало, Me.Конец})
@@ -55,7 +55,7 @@ Partial Class GroupList
         Me.groupListTable.GridLines = True
         Me.groupListTable.HideSelection = False
         Me.groupListTable.Location = New System.Drawing.Point(5, 52)
-        Me.groupListTable.Name = "ListViewСписокГрупп"
+        Me.groupListTable.Name = "groupListTable"
         Me.groupListTable.Size = New System.Drawing.Size(1305, 890)
         Me.groupListTable.TabIndex = 1
         Me.groupListTable.UseCompatibleStateImageBehavior = False
@@ -200,7 +200,7 @@ Partial Class GroupList
         Me.yearSpravochnikGr.Name = "yearSpravochnikGr"
         Me.yearSpravochnikGr.Size = New System.Drawing.Size(121, 47)
         '
-        'СправочникГруппы
+        'GroupList
         '
         Me.AccessibleRole = System.Windows.Forms.AccessibleRole.TitleBar
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -211,7 +211,7 @@ Partial Class GroupList
         Me.Controls.Add(Me.header)
         Me.KeyPreview = True
         Me.Location = New System.Drawing.Point(12, 80)
-        Me.Name = "СправочникГруппы"
+        Me.Name = "GroupList"
         Me.Padding = New System.Windows.Forms.Padding(5)
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
         Me.Text = "Справочник Группы"

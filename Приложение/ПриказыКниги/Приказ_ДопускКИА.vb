@@ -29,7 +29,7 @@
 
 
 
-        resourcesPath = startApp.ПутьКФайлуRes
+        resourcesPath = startApp.resourcesPath
         ПутьКШаблону = resourcesPath & "Шаблоны\Приказы\" & ВидПриказа & ".docx"
 
         wordApp = CreateObject("Word.Application")
@@ -164,7 +164,7 @@
         ДокументВорд.Bookmarks("\EndOfDoc").Range.InsertBreak(Type:=7)
         Область = ДокументВорд.Bookmarks("\EndOfDoc").Range
 
-        СкопироватьДокументИзШаблона(ПриложениеВорд, ДокументВорд, resourcesPath() & "Шаблоны\Приказы\" & ВидПриказа & "_Протокол_Слушатель.docx", 1)
+        СкопироватьДокументИзШаблона(ПриложениеВорд, ДокументВорд, updateResourcesPath() & "Шаблоны\Приказы\" & ВидПриказа & "_Протокол_Слушатель.docx", 1)
 
         Область.SetRange(Start:=Область.Start,
         End:=ДокументВорд.Bookmarks("\EndOfDoc").Range.End)

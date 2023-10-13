@@ -87,9 +87,9 @@
     End Sub
 
     Private Sub Grades_KeyDown(sender As Object, e As KeyEventArgs) Handles Me.KeyDown
-        Call pressTab(e.KeyCode, 40)
-        Call pressTab(e.KeyCode, 39)
-        Call closeEsc(Me, e.KeyCode)
+        pressTab(e.KeyCode, 40)
+        pressTab(e.KeyCode, 39)
+        closeEsc(Me, e.KeyCode)
     End Sub
 
     Sub updateDataGreed(numberColumns As Integer)

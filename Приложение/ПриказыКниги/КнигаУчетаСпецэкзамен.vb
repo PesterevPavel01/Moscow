@@ -14,7 +14,7 @@
             Exit Sub
         End If
 
-        ПутьККаталогуСРесурсами = _technical.resourcesPath()
+        ПутьККаталогуСРесурсами = _technical.updateResourcesPath()
         ПутьКШаблону = ПутьККаталогуСРесурсами & "Шаблоны\Спецэкзамен\Книга учёта протоколов Спецэкзамен.docx"
 
         ПриложениеВорд = CreateObject("Word.Application")

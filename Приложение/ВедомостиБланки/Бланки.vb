@@ -245,7 +245,7 @@
             счетчик = счетчик + 1
         End While
 
-        _technical.savePrikazBlank(DOK, MainForm.orderIdGroup, видПриказа, resourcesPath, "Карточки")
+        _technical.savePrikazBlank(DOK, MainForm.orderIdGroup, видПриказа, updateResourcesPath, "Карточки")
         MSWord.Visible = True
 
         'Call сохранить(DOK, видПриказа)
@@ -534,7 +534,7 @@
             счетчик = счетчик + 1
         End While
 
-        _technical.savePrikazBlank(DOK, MainForm.orderIdGroup, видПриказа, resourcesPath, "Заявления")
+        _technical.savePrikazBlank(DOK, MainForm.orderIdGroup, видПриказа, updateResourcesPath, "Заявления")
 
         MSWord.Visible = True
 
@@ -806,7 +806,7 @@
             счетчик = счетчик + 1
         End While
 
-        _technical.savePrikazBlank(DOK, MainForm.orderIdGroup, видПриказа, resourcesPath, "Заявления")
+        _technical.savePrikazBlank(DOK, MainForm.orderIdGroup, видПриказа, updateResourcesPath, "Заявления")
         MSWord.Visible = True
 
         'Call сохранить(DOK, видПриказа)

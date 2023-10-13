@@ -49,7 +49,7 @@ Public Class DGV_Events
 
         AddHandler userDGV.DataGridTablesResult.KeyDown,
             Sub(sender As Object, e As KeyEventArgs)
-                ' Обрабатывает нажатие +, R, Delete и Tab
+                ' Обрабатывает нажатие +, R, Delete, вправо и Tab
                 DataGridTables_KeyDown(sender, e)
             End Sub
 
@@ -176,6 +176,10 @@ Public Class DGV_Events
         ElseIf e.KeyValue = Keys.Tab Then
 
             userDGV.table_tabDown(e)
+
+        ElseIf e.KeyValue = Keys.Right Then
+
+            userDGV.table_tabRight(e)
 
         End If
 

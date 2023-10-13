@@ -85,7 +85,7 @@ Module Приказ_Окончание
         ВторойПоток.IsBackground = True
         ВторойПоток.Start(params)
 
-        resuorcesPath = startApp.ПутьКФайлуRes
+        resuorcesPath = startApp.resourcesPath
         ПутьКШаблону = resuorcesPath & "Шаблоны\ПК_Окончание\" & ВидПриказа & ".docx"
 
         wordApp = CreateObject("Word.Application")
@@ -265,7 +265,7 @@ Module Приказ_Окончание
             Exit Sub
         End Try
 
-        ПутьККаталогуСРесурсами = startApp.ПутьКФайлуRes
+        ПутьККаталогуСРесурсами = startApp.resourcesPath
         ПутьКШаблону = ПутьККаталогуСРесурсами & "Шаблоны\ПК_Окончание\" & ВидПриказа & ".docx"
 
         ПриложениеВорд = CreateObject("Word.Application")

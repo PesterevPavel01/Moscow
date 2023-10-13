@@ -35,7 +35,7 @@
             Exit Sub
         End If
 
-        ПутьККаталогуСРесурсами = _technical.resourcesPath()
+        ПутьККаталогуСРесурсами = _technical.updateResourcesPath()
         ПутьКШаблону = ПутьККаталогуСРесурсами & "Шаблоны\Доверенность получения бланков на группу.docx"
 
         ПриложениеВорд = CreateObject("Word.Application")
@@ -103,7 +103,7 @@
         Дата = Группа(3, 0)
         ДатаВПриказ = Chr(34) & Format(Дата, "dd") & Chr(34) & " " & месяцРП(Format(Дата, "MMMM")) & " " & Format(Дата, "yyyy")
 
-        ПутьККаталогуСРесурсами = _technical.resourcesPath()
+        ПутьККаталогуСРесурсами = _technical.updateResourcesPath()
         ПутьКШаблону = ПутьККаталогуСРесурсами & "Шаблоны\Доверенность получения бланков на каждого человека группы.docx"
 
         ПриложениеВорд = CreateObject("Word.Application")

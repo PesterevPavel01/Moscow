@@ -98,7 +98,7 @@ Partial Class StudentsInGroup
         Me.panelOrders.Dock = System.Windows.Forms.DockStyle.Fill
         Me.panelOrders.Location = New System.Drawing.Point(0, 29)
         Me.panelOrders.Name = "panelOrders"
-        Me.panelOrders.Size = New System.Drawing.Size(498, 615)
+        Me.panelOrders.Size = New System.Drawing.Size(96, 71)
         Me.panelOrders.TabIndex = 16
         '
         'toolOrders
@@ -109,7 +109,7 @@ Partial Class StudentsInGroup
         Me.toolOrders.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.closePanelOrders})
         Me.toolOrders.Location = New System.Drawing.Point(0, 0)
         Me.toolOrders.Name = "toolOrders"
-        Me.toolOrders.Size = New System.Drawing.Size(498, 29)
+        Me.toolOrders.Size = New System.Drawing.Size(96, 29)
         Me.toolOrders.TabIndex = 15
         Me.toolOrders.TabStop = True
         '

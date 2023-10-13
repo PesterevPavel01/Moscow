@@ -17,7 +17,7 @@
             Exit Sub
         End If
 
-        resourcesPath = _technical.resourcesPath()
+        resourcesPath = _technical.updateResourcesPath()
         samplePath = resourcesPath & "Шаблоны\Ведомость слушаетели и организации.docx"
 
         wordApp = CreateObject("Word.Application")

@@ -109,7 +109,7 @@ Module OtchetExcell
         resultList = arrayMethod.removeEmpty(resultList)
 
         MainForm.Name = "Отчет" & Date.Now.ToShortDateString & "_" & MainForm.orderNumber.ToString & ".xlsx"
-        path = _technical.resourcesPath
+        path = _technical.updateResourcesPath
         path = path & "Отчеты\"
 
         excellObjects = _technical.СозданиеКнигиЭксельИЛИОшибкаВ0(path, MainForm.Name, MainForm.orderNumber)
@@ -251,7 +251,7 @@ Module OtchetExcell
         sum_d = 0
         sum_e = 0
         sum_f = 0
-        resourcesPath = _technical.resourcesPath()
+        resourcesPath = _technical.updateResourcesPath()
         ПутьКШаблону = resourcesPath & "Шаблоны\Отчёт_РМАНПО.xlsx"
 
         Шаблон = Excell.Workbooks.Open(ПутьКШаблону, ReadOnly:=True)

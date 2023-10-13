@@ -51,7 +51,9 @@ Public Class PanelOrders_builder
                 currentButton.nextControl = buttons.ElementAt(Number + 1).Value
             End If
 
-            Number += 1
+            currentButton.leftControl = StudentsInGroup.tbl_studentsInGroup.DataGridTablesResult
+
+            number += 1
         Next
 
     End Sub

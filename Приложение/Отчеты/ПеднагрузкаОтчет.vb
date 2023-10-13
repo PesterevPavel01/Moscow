@@ -14,7 +14,7 @@
         End If
 
         'excellApp.Visible = True
-        resourcesPath = _technical.resourcesPath()
+        resourcesPath = _technical.updateResourcesPath()
         samplePath = resourcesPath & "Шаблоны\Педнагрузка.xlsx"
         pathNewFile = resourcesPath & "Отчеты\"
 
@@ -122,7 +122,7 @@
 
         End If
 
-        resourcesPath = _technical.resourcesPath()
+        resourcesPath = _technical.updateResourcesPath()
         samplePath = resourcesPath & "Шаблоны\Педнагрузка.xlsx"
         pathNewFile = resourcesPath & "Отчеты\"
 

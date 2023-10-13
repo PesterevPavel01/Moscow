@@ -12,42 +12,54 @@
 
                 AddHandler button.button.Click,
                     Sub(sender As Object, e As EventArgs)
-                        MainForm.ПО_Зачисление_Click(sender, e)
+                        BuildOrder.fromGroupp = True
+                        createEnrollmentPO(sender, e)
+                        BuildOrder.fromGroupp = False
                     End Sub
 
                 button = buttons("practice")
 
                 AddHandler button.button.Click,
                     Sub(sender As Object, e As EventArgs)
-                        MainForm.ПО_Практика_Click(sender, e)
+                        BuildOrder.fromGroupp = True
+                        createPracticalPO(sender, e)
+                        BuildOrder.fromGroupp = False
                     End Sub
 
                 button = buttons("finalExamination")
 
                 AddHandler button.button.Click,
                     Sub(sender As Object, e As EventArgs)
-                        MainForm.ПО_ДопускКИА_Click(sender, e)
+                        BuildOrder.fromGroupp = True
+                        createFinalExaminationPO(sender, e)
+                        BuildOrder.fromGroupp = False
                     End Sub
 
                 button = buttons("ending")
 
                 AddHandler button.button.Click,
                     Sub(sender As Object, e As EventArgs)
-                        MainForm.ПО_Окончание_Click(sender, e)
+                        BuildOrder.fromGroupp = True
+                        createEndingPO(sender, e)
+                        BuildOrder.fromGroupp = False
                     End Sub
 
                 button = buttons("certificate")
 
                 AddHandler button.button.Click,
                     Sub(sender As Object, e As EventArgs)
-                        MainForm.ПО_Свидетельство_Click(sender, e)
+                        BuildOrder.fromGroupp = True
+                        createCertificate(sender, e)
+                        BuildOrder.fromGroupp = False
                     End Sub
 
                 button = buttons("certificationList")
 
                 AddHandler button.button.Click,
                     Sub(sender As Object, e As EventArgs)
-                        MainForm.ВедомостьПромежуточнойАттестации_Click(sender, e)
+                        BuildOrder.fromGroupp = True
+                        createGradesIinterAPO(sender, e)
+                        BuildOrder.fromGroupp = False
                     End Sub
 
             Case MainForm.PP
@@ -56,49 +68,63 @@
 
                 AddHandler button.button.Click,
                     Sub(sender As Object, e As EventArgs)
-                        MainForm.ППЗачисление_Click(sender, e)
+                        BuildOrder.fromGroupp = True
+                        createEnrollmentPP(sender, e)
+                        BuildOrder.fromGroupp = False
                     End Sub
 
                 button = buttons("practice")
 
                 AddHandler button.button.Click,
                     Sub(sender As Object, e As EventArgs)
-                        MainForm.ПП_Практика_Click(sender, e)
+                        BuildOrder.fromGroupp = True
+                        createPracticalPP(sender, e)
+                        BuildOrder.fromGroupp = False
                     End Sub
 
                 button = buttons("finalExamination")
 
                 AddHandler button.button.Click,
                     Sub(sender As Object, e As EventArgs)
-                        MainForm.ПП_ДопускКИА_Click(sender, e)
+                        BuildOrder.fromGroupp = True
+                        createFinalExaminationPP(sender, e)
+                        BuildOrder.fromGroupp = False
                     End Sub
 
                 button = buttons("ending")
 
                 AddHandler button.button.Click,
                     Sub(sender As Object, e As EventArgs)
-                        MainForm.ПП_Окончание_Click(sender, e)
+                        BuildOrder.fromGroupp = True
+                        createEndingPP(sender, e)
+                        BuildOrder.fromGroupp = False
                     End Sub
 
                 button = buttons("diplomaSupplement")
 
                 AddHandler button.button.Click,
                     Sub(sender As Object, e As EventArgs)
-                        MainForm.ПП_ПриложениеКдиплому_Click(sender, e)
+                        BuildOrder.fromGroupp = True
+                        createDiplomaSupplement(sender, e)
+                        BuildOrder.fromGroupp = False
                     End Sub
 
                 button = buttons("statement")
 
                 AddHandler button.button.Click,
                     Sub(sender As Object, e As EventArgs)
-                        MainForm.ПП_Заявление_Click(sender, e)
+                        BuildOrder.fromGroupp = True
+                        createStatementPP(sender, e)
+                        BuildOrder.fromGroupp = False
                     End Sub
 
                 button = buttons("certificationList")
 
                 AddHandler button.button.Click,
                     Sub(sender As Object, e As EventArgs)
-                        MainForm.ПП_Ведомость_Click(sender, e)
+                        BuildOrder.fromGroupp = True
+                        createGradesIinterAPP(sender, e)
+                        BuildOrder.fromGroupp = False
                     End Sub
 
             Case MainForm.PK
@@ -107,42 +133,54 @@
 
                 AddHandler button.button.Click,
                     Sub(sender As Object, e As EventArgs)
-                        MainForm.ПриказОЗачислении_Click(sender, e)
+                        BuildOrder.fromGroupp = True
+                        createEnrollmentPK(sender, e)
+                        BuildOrder.fromGroupp = False
                     End Sub
 
                 button = buttons("enrollment_pl")
 
                 AddHandler button.button.Click,
                     Sub(sender As Object, e As EventArgs)
-                        MainForm.ПриказОЗачислении_Доп_Click(sender, e)
+                        BuildOrder.fromGroupp = True
+                        createEnrollmentPK_pl(sender, e)
+                        BuildOrder.fromGroupp = False
                     End Sub
 
                 button = buttons("expulsion")
 
                 AddHandler button.button.Click,
                     Sub(sender As Object, e As EventArgs)
-                        MainForm.ПК_Отчисление_Click(sender, e)
+                        BuildOrder.fromGroupp = True
+                        createExpulsionPK(sender, e)
+                        BuildOrder.fromGroupp = False
                     End Sub
 
                 button = buttons("ending")
 
                 AddHandler button.button.Click,
                     Sub(sender As Object, e As EventArgs)
-                        MainForm.ПК_Окончание_Click(sender, e)
+                        BuildOrder.fromGroupp = True
+                        createEndingPK(sender, e)
+                        BuildOrder.fromGroupp = False
                     End Sub
 
                 button = buttons("ending_ud")
 
                 AddHandler button.button.Click,
                     Sub(sender As Object, e As EventArgs)
-                        MainForm.ПК_Окончание_уд_Click(sender, e)
+                        BuildOrder.fromGroupp = True
+                        createEndingUdPK(sender, e)
+                        BuildOrder.fromGroupp = False
                     End Sub
 
                 button = buttons("statement")
 
                 AddHandler button.button.Click,
                     Sub(sender As Object, e As EventArgs)
-                        MainForm.ПК_Заявление_Click(sender, e)
+                        BuildOrder.fromGroupp = True
+                        createStatementPK(sender, e)
+                        BuildOrder.fromGroupp = False
                     End Sub
 
         End Select
