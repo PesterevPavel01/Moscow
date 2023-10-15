@@ -288,6 +288,54 @@ Public Class MainForm_builder
         parents.Add(34, MainForm.sekshionsBlanks)
         parentPage.Add(34, 2)
 
+        button = New Button
+        button.Name = "bookPK"
+        button.Text = "Книга учета выданных удостоверений"
+        button.TabIndex = 34
+        buttons.Add(35, button)
+        parents.Add(35, MainForm.booksSection)
+        parentPage.Add(35, 3)
+
+        button = New Button
+        button.Name = "bookPP"
+        button.Text = "Книга учета выданных дипломов"
+        button.TabIndex = 35
+        buttons.Add(36, button)
+        parents.Add(36, MainForm.booksSection)
+        parentPage.Add(36, 3)
+
+        button = New Button
+        button.Name = "bookPO"
+        button.Text = "Книга учета выданных свидетельств"
+        button.TabIndex = 36
+        buttons.Add(37, button)
+        parents.Add(37, MainForm.booksSection)
+        parentPage.Add(37, 3)
+
+        button = New Button
+        button.Name = "bookFPK"
+        button.Text = "Книга учета выданных удостоверений ФРДО"
+        button.TabIndex = 37
+        buttons.Add(38, button)
+        parents.Add(38, MainForm.booksFRDOSection)
+        parentPage.Add(38, 3)
+
+        button = New Button
+        button.Name = "bookFPP"
+        button.Text = "Книга учета выданных дипломов ФРДО"
+        button.TabIndex = 38
+        buttons.Add(39, button)
+        parents.Add(39, MainForm.booksFRDOSection)
+        parentPage.Add(39, 3)
+
+        button = New Button
+        button.Name = "bookFPO"
+        button.Text = "Книга учета выданных свидетельств ФРДО"
+        button.TabIndex = 39
+        buttons.Add(40, button)
+        parents.Add(40, MainForm.booksFRDOSection)
+        parentPage.Add(40, 3)
+
         buttonsInit()
 
 
@@ -357,6 +405,18 @@ Public Class MainForm_builder
 
                 leftControl.Add(numberButton, MainForm.TabControlOther.TabPages(1))
                 rightControl.Add(numberButton, MainForm.TabControlOther.TabPages(3))
+
+            Case "booksSection"
+
+                leftControl.Add(numberButton, MainForm.TabControlOther.TabPages(2))
+                rightControl.Add(numberButton, MainForm.TabControlOther.TabPages(4))
+
+            Case "booksFRDOSection"
+
+                leftControl.Add(numberButton, MainForm.TabControlOther.TabPages(2))
+                rightControl.Add(numberButton, MainForm.TabControlOther.TabPages(4))
+
+
 
         End Select
 

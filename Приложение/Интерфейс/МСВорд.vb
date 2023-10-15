@@ -27,6 +27,7 @@
         DOK.Paragraphs(номерАбзаца).SpaceBefore = МежстрочныйИнтервал
         DOK.Paragraphs(номерАбзаца).Range.Font.Bold = Жирный
         DOK.Paragraphs(номерАбзаца).Range.ParagraphFormat.LineSpacing = 12
+
     End Sub
 
     Sub ЗаполнитьТаблицу(Таблица As Object, Массив As Object, номерПервойСтроки As Integer, ВключитьНумерацию As Boolean)

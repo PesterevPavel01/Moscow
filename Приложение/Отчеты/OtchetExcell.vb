@@ -112,7 +112,7 @@ Module OtchetExcell
         path = _technical.updateResourcesPath
         path = path & "Отчеты\"
 
-        excellObjects = _technical.СозданиеКнигиЭксельИЛИОшибкаВ0(path, MainForm.Name, MainForm.orderNumber)
+        excellObjects = _technical.createExcellWorkBook(path, MainForm.Name, MainForm.orderNumber)
 
         If excellObjects(0).ToString = "Ошибка" Then
             Exit Sub
@@ -123,6 +123,7 @@ Module OtchetExcell
         MainForm.orderNumber = MainForm.orderNumber + 1
 
         If MainForm.ОтчетРуководителя.Checked Then
+
             excellSheet = excellWorkBook.Worksheets.Add
             excellSheet.Name = "ОтчетРуководителя"
             sqlQuery = SQLString_managerOrder(DateStart, DateEnd)

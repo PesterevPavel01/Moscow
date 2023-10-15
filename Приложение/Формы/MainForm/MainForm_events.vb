@@ -2,8 +2,11 @@
 Public Class MainForm_events
 
     Public mainForm As MainForm
+    Public book As New Books
+    Public bookFRDO As New BookFRDO
     Private initializationСompleted As Boolean = False
     Private button As Button
+    Public orders As New Orders
 
     Public Sub init()
 
@@ -248,55 +251,73 @@ Public Class MainForm_events
             Case "workerReport"
                 openWorkerReport(sender, e)
             Case "enrollmentPK"
-                createEnrollmentPK(sender, e)
+                orders.createEnrollmentPK(sender, e)
             Case "enrollmentPK_pl"
-                createEnrollmentPK_pl(sender, e)
+                orders.createEnrollmentPK_pl(sender, e)
             Case "expulsionPK"
-                createExpulsionPK(sender, e)
+                orders.createExpulsionPK(sender, e)
             Case "endingPK"
-                createEndingPK(sender, e)
+                orders.createEndingPK(sender, e)
             Case "endingUdPK"
-                createEndingUdPK(sender, e)
+                orders.createEndingUdPK(sender, e)
             Case "enrollmentPP"
-                createEnrollmentPP(sender, e)
+                orders.createEnrollmentPP(sender, e)
             Case "practicalPP"
-                createPracticalPP(sender, e)
+                orders.createPracticalPP(sender, e)
             Case "finalExaminationPP"
-                createFinalExaminationPP(sender, e)
+                orders.createFinalExaminationPP(sender, e)
             Case "endingPP"
-                createEndingPP(sender, e)
+                orders.createEndingPP(sender, e)
             Case "enrollmentPO"
-                createEnrollmentPO(sender, e)
+                orders.createEnrollmentPO(sender, e)
             Case "practicalPO"
-                createPracticalPO(sender, e)
+                orders.createPracticalPO(sender, e)
             Case "finalExaminationPO"
-                createFinalExaminationPO(sender, e)
+                orders.createFinalExaminationPO(sender, e)
             Case "endingPO"
-                createEndingPO(sender, e)
+                orders.createEndingPO(sender, e)
             Case "diplomaSupplement"
-                createDiplomaSupplement(sender, e)
+                orders.createDiplomaSupplement(sender, e)
             Case "certificate"
-                createCertificate(sender, e)
+                orders.createCertificate(sender, e)
             Case "statementPK"
-                createStatementPK(sender, e)
+                orders.createStatementPK(sender, e)
             Case "statementPP"
-                createStatementPP(sender, e)
+                orders.createStatementPP(sender, e)
             Case "studentInformation"
-                createStudentInformation(sender, e)
+                orders.createStudentInformation(sender, e)
             Case "studentAndOrganization"
-                createStudentAndOrganization(sender, e)
+                orders.createStudentAndOrganization(sender, e)
             Case "getAllBlank"
-                getAllBlank(sender, e)
+                orders.getAllBlank(sender, e)
             Case "getSomeBlank"
-                getAllBlank(sender, e)
+                orders.getAllBlank(sender, e)
             Case "gradesIinterAPO"
-                createGradesIinterAPO(sender, e)
+                orders.createGradesIinterAPO(sender, e)
             Case "gradesIinterAPP"
-                createGradesIinterAPP(sender, e)
+                orders.createGradesIinterAPP(sender, e)
             Case "certificateStudy"
-                createCertificateStudy(sender, e)
+                orders.createCertificateStudy(sender, e)
             Case "certificateStudyOut"
-                createCertificateStudyOut(sender, e)
+                orders.createCertificateStudyOut(sender, e)
+            Case "bookPK"
+                book.bookArgument.type = "Удостоверение"
+                book.bookClick()
+            Case "bookPP"
+                book.bookArgument.type = "Диплом"
+                book.bookClick()
+            Case "bookPO"
+                book.bookArgument.type = "Свидетельство"
+                book.bookClick()
+            Case "bookFPK"
+                bookFRDO.bookArgument.type = "Удостоверение"
+                bookFRDO.bookFRDOClick()
+            Case "bookFPP"
+                bookFRDO.bookArgument.type = "Диплом"
+                bookFRDO.bookFRDOClick()
+            Case "bookFPO"
+                bookFRDO.bookArgument.type = "Свидетельство"
+                bookFRDO.bookFRDOClick()
 
         End Select
 

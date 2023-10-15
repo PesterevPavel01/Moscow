@@ -92,9 +92,6 @@ Partial Class MainForm
         Me.TabPage4 = New System.Windows.Forms.TabPage()
         Me.createOtchet = New System.Windows.Forms.Button()
         Me.ChРМАНПО = New System.Windows.Forms.CheckBox()
-        Me.КнигаДипломовФРДО = New System.Windows.Forms.Button()
-        Me.КнигаУчетаУдостоверенийФРДО = New System.Windows.Forms.Button()
-        Me.КнигаСвидетельствФРДО = New System.Windows.Forms.Button()
         Me.ОтчетПеднагрузка = New System.Windows.Forms.CheckBox()
         Me.СводПоОрганиз = New System.Windows.Forms.CheckBox()
         Me.БюджетВбюдж = New System.Windows.Forms.CheckBox()
@@ -105,11 +102,8 @@ Partial Class MainForm
         Me.ДатаКонцаОтчета = New System.Windows.Forms.DateTimePicker()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
-        Me.GroupBox7 = New System.Windows.Forms.GroupBox()
-        Me.КнигаУчетаДипломов = New System.Windows.Forms.Button()
-        Me.КнигаУчетаУдостоверений = New System.Windows.Forms.Button()
-        Me.КнигаУчетаСвидетельств = New System.Windows.Forms.Button()
-        Me.GroupBox6 = New System.Windows.Forms.GroupBox()
+        Me.booksFRDOSection = New System.Windows.Forms.GroupBox()
+        Me.booksSection = New System.Windows.Forms.GroupBox()
         Me.chPednagrExt = New System.Windows.Forms.CheckBox()
         Me.GroupBox5 = New System.Windows.Forms.GroupBox()
         Me.TabPage2 = New System.Windows.Forms.TabPage()
@@ -926,9 +920,6 @@ Partial Class MainForm
         '
         Me.TabPage4.Controls.Add(Me.createOtchet)
         Me.TabPage4.Controls.Add(Me.ChРМАНПО)
-        Me.TabPage4.Controls.Add(Me.КнигаДипломовФРДО)
-        Me.TabPage4.Controls.Add(Me.КнигаУчетаУдостоверенийФРДО)
-        Me.TabPage4.Controls.Add(Me.КнигаСвидетельствФРДО)
         Me.TabPage4.Controls.Add(Me.ОтчетПеднагрузка)
         Me.TabPage4.Controls.Add(Me.СводПоОрганиз)
         Me.TabPage4.Controls.Add(Me.БюджетВбюдж)
@@ -939,11 +930,8 @@ Partial Class MainForm
         Me.TabPage4.Controls.Add(Me.ДатаКонцаОтчета)
         Me.TabPage4.Controls.Add(Me.Label3)
         Me.TabPage4.Controls.Add(Me.Label2)
-        Me.TabPage4.Controls.Add(Me.GroupBox7)
-        Me.TabPage4.Controls.Add(Me.КнигаУчетаДипломов)
-        Me.TabPage4.Controls.Add(Me.КнигаУчетаУдостоверений)
-        Me.TabPage4.Controls.Add(Me.КнигаУчетаСвидетельств)
-        Me.TabPage4.Controls.Add(Me.GroupBox6)
+        Me.TabPage4.Controls.Add(Me.booksFRDOSection)
+        Me.TabPage4.Controls.Add(Me.booksSection)
         Me.TabPage4.Controls.Add(Me.chPednagrExt)
         Me.TabPage4.Controls.Add(Me.GroupBox5)
         Me.TabPage4.ImageIndex = 0
@@ -979,54 +967,6 @@ Partial Class MainForm
         Me.ChРМАНПО.TabIndex = 9
         Me.ChРМАНПО.Text = "РМАНПО"
         Me.ChРМАНПО.UseVisualStyleBackColor = True
-        '
-        'КнигаДипломовФРДО
-        '
-        Me.КнигаДипломовФРДО.FlatAppearance.BorderColor = System.Drawing.Color.WhiteSmoke
-        Me.КнигаДипломовФРДО.FlatAppearance.BorderSize = 0
-        Me.КнигаДипломовФРДО.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.КнигаДипломовФРДО.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!)
-        Me.КнигаДипломовФРДО.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.КнигаДипломовФРДО.Location = New System.Drawing.Point(8, 617)
-        Me.КнигаДипломовФРДО.Name = "КнигаДипломовФРДО"
-        Me.КнигаДипломовФРДО.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.КнигаДипломовФРДО.Size = New System.Drawing.Size(1252, 50)
-        Me.КнигаДипломовФРДО.TabIndex = 14
-        Me.КнигаДипломовФРДО.Text = "Книга учета выданных дипломов ФРДО"
-        Me.КнигаДипломовФРДО.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.КнигаДипломовФРДО.UseVisualStyleBackColor = True
-        '
-        'КнигаУчетаУдостоверенийФРДО
-        '
-        Me.КнигаУчетаУдостоверенийФРДО.FlatAppearance.BorderColor = System.Drawing.Color.WhiteSmoke
-        Me.КнигаУчетаУдостоверенийФРДО.FlatAppearance.BorderSize = 0
-        Me.КнигаУчетаУдостоверенийФРДО.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.КнигаУчетаУдостоверенийФРДО.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!)
-        Me.КнигаУчетаУдостоверенийФРДО.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.КнигаУчетаУдостоверенийФРДО.Location = New System.Drawing.Point(8, 564)
-        Me.КнигаУчетаУдостоверенийФРДО.Name = "КнигаУчетаУдостоверенийФРДО"
-        Me.КнигаУчетаУдостоверенийФРДО.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.КнигаУчетаУдостоверенийФРДО.Size = New System.Drawing.Size(1252, 50)
-        Me.КнигаУчетаУдостоверенийФРДО.TabIndex = 13
-        Me.КнигаУчетаУдостоверенийФРДО.Text = "Книга учета выданных удостоверений ФРДО"
-        Me.КнигаУчетаУдостоверенийФРДО.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.КнигаУчетаУдостоверенийФРДО.UseVisualStyleBackColor = True
-        '
-        'КнигаСвидетельствФРДО
-        '
-        Me.КнигаСвидетельствФРДО.FlatAppearance.BorderColor = System.Drawing.Color.WhiteSmoke
-        Me.КнигаСвидетельствФРДО.FlatAppearance.BorderSize = 0
-        Me.КнигаСвидетельствФРДО.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.КнигаСвидетельствФРДО.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!)
-        Me.КнигаСвидетельствФРДО.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.КнигаСвидетельствФРДО.Location = New System.Drawing.Point(8, 670)
-        Me.КнигаСвидетельствФРДО.Name = "КнигаСвидетельствФРДО"
-        Me.КнигаСвидетельствФРДО.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.КнигаСвидетельствФРДО.Size = New System.Drawing.Size(1252, 50)
-        Me.КнигаСвидетельствФРДО.TabIndex = 15
-        Me.КнигаСвидетельствФРДО.Text = "Книга учета выданных свидетельств ФРДО"
-        Me.КнигаСвидетельствФРДО.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.КнигаСвидетельствФРДО.UseVisualStyleBackColor = True
         '
         'ОтчетПеднагрузка
         '
@@ -1124,73 +1064,25 @@ Partial Class MainForm
         Me.Label2.TabIndex = 114
         Me.Label2.Text = "по"
         '
-        'GroupBox7
+        'booksFRDOSection
         '
-        Me.GroupBox7.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+        Me.booksFRDOSection.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.GroupBox7.Location = New System.Drawing.Point(3, 554)
-        Me.GroupBox7.Name = "GroupBox7"
-        Me.GroupBox7.Size = New System.Drawing.Size(1564, 178)
-        Me.GroupBox7.TabIndex = 121
-        Me.GroupBox7.TabStop = False
+        Me.booksFRDOSection.Location = New System.Drawing.Point(3, 565)
+        Me.booksFRDOSection.Name = "booksFRDOSection"
+        Me.booksFRDOSection.Size = New System.Drawing.Size(1845, 178)
+        Me.booksFRDOSection.TabIndex = 121
+        Me.booksFRDOSection.TabStop = False
         '
-        'КнигаУчетаДипломов
+        'booksSection
         '
-        Me.КнигаУчетаДипломов.FlatAppearance.BorderColor = System.Drawing.Color.WhiteSmoke
-        Me.КнигаУчетаДипломов.FlatAppearance.BorderSize = 0
-        Me.КнигаУчетаДипломов.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.КнигаУчетаДипломов.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!)
-        Me.КнигаУчетаДипломов.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.КнигаУчетаДипломов.Location = New System.Drawing.Point(8, 435)
-        Me.КнигаУчетаДипломов.Name = "КнигаУчетаДипломов"
-        Me.КнигаУчетаДипломов.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.КнигаУчетаДипломов.Size = New System.Drawing.Size(1256, 50)
-        Me.КнигаУчетаДипломов.TabIndex = 11
-        Me.КнигаУчетаДипломов.Text = "Книга учёта выданных дипломов"
-        Me.КнигаУчетаДипломов.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.КнигаУчетаДипломов.UseVisualStyleBackColor = True
-        '
-        'КнигаУчетаУдостоверений
-        '
-        Me.КнигаУчетаУдостоверений.FlatAppearance.BorderColor = System.Drawing.Color.WhiteSmoke
-        Me.КнигаУчетаУдостоверений.FlatAppearance.BorderSize = 0
-        Me.КнигаУчетаУдостоверений.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.КнигаУчетаУдостоверений.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!)
-        Me.КнигаУчетаУдостоверений.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.КнигаУчетаУдостоверений.Location = New System.Drawing.Point(8, 382)
-        Me.КнигаУчетаУдостоверений.Name = "КнигаУчетаУдостоверений"
-        Me.КнигаУчетаУдостоверений.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.КнигаУчетаУдостоверений.Size = New System.Drawing.Size(1256, 50)
-        Me.КнигаУчетаУдостоверений.TabIndex = 10
-        Me.КнигаУчетаУдостоверений.Text = "Книга учета выданных удостоверений"
-        Me.КнигаУчетаУдостоверений.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.КнигаУчетаУдостоверений.UseVisualStyleBackColor = True
-        '
-        'КнигаУчетаСвидетельств
-        '
-        Me.КнигаУчетаСвидетельств.FlatAppearance.BorderColor = System.Drawing.Color.WhiteSmoke
-        Me.КнигаУчетаСвидетельств.FlatAppearance.BorderSize = 0
-        Me.КнигаУчетаСвидетельств.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.КнигаУчетаСвидетельств.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!)
-        Me.КнигаУчетаСвидетельств.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.КнигаУчетаСвидетельств.Location = New System.Drawing.Point(8, 488)
-        Me.КнигаУчетаСвидетельств.Name = "КнигаУчетаСвидетельств"
-        Me.КнигаУчетаСвидетельств.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.КнигаУчетаСвидетельств.Size = New System.Drawing.Size(1256, 50)
-        Me.КнигаУчетаСвидетельств.TabIndex = 12
-        Me.КнигаУчетаСвидетельств.Text = "Книга учёта выданных свидетельств"
-        Me.КнигаУчетаСвидетельств.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.КнигаУчетаСвидетельств.UseVisualStyleBackColor = True
-        '
-        'GroupBox6
-        '
-        Me.GroupBox6.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+        Me.booksSection.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.GroupBox6.Location = New System.Drawing.Point(3, 370)
-        Me.GroupBox6.Name = "GroupBox6"
-        Me.GroupBox6.Size = New System.Drawing.Size(1564, 178)
-        Me.GroupBox6.TabIndex = 120
-        Me.GroupBox6.TabStop = False
+        Me.booksSection.Location = New System.Drawing.Point(3, 370)
+        Me.booksSection.Name = "booksSection"
+        Me.booksSection.Size = New System.Drawing.Size(1845, 178)
+        Me.booksSection.TabIndex = 120
+        Me.booksSection.TabStop = False
         '
         'chPednagrExt
         '
@@ -1208,7 +1100,7 @@ Partial Class MainForm
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.GroupBox5.Location = New System.Drawing.Point(3, 36)
         Me.GroupBox5.Name = "GroupBox5"
-        Me.GroupBox5.Size = New System.Drawing.Size(1564, 317)
+        Me.GroupBox5.Size = New System.Drawing.Size(1845, 317)
         Me.GroupBox5.TabIndex = 119
         Me.GroupBox5.TabStop = False
         '
@@ -1776,15 +1668,9 @@ Partial Class MainForm
     Friend WithEvents TabPage4 As TabPage
     Friend WithEvents ChРМАНПО As CheckBox
     Friend WithEvents createOtchet As Button
-    Friend WithEvents КнигаДипломовФРДО As Button
-    Friend WithEvents КнигаУчетаУдостоверенийФРДО As Button
-    Friend WithEvents КнигаСвидетельствФРДО As Button
     Friend WithEvents ОтчетПеднагрузка As CheckBox
-    Friend WithEvents КнигаУчетаСвидетельств As Button
     Friend WithEvents СводПоОрганиз As CheckBox
-    Friend WithEvents КнигаУчетаДипломов As Button
     Friend WithEvents БюджетВбюдж As CheckBox
-    Friend WithEvents КнигаУчетаУдостоверений As Button
     Friend WithEvents ChСводПоКурсам As CheckBox
     Friend WithEvents СводПоСпец As CheckBox
     Friend WithEvents ДатаНачалаОтчета As DateTimePicker
@@ -1793,8 +1679,8 @@ Partial Class MainForm
     Friend WithEvents Label3 As Label
     Friend WithEvents Label2 As Label
     Friend WithEvents GroupBox5 As GroupBox
-    Friend WithEvents GroupBox6 As GroupBox
-    Friend WithEvents GroupBox7 As GroupBox
+    Friend WithEvents booksSection As GroupBox
+    Friend WithEvents booksFRDOSection As GroupBox
     Friend WithEvents TabPage2 As TabPage
     Friend WithEvents TabPage3 As TabPage
     Friend WithEvents TabPage1 As TabPage

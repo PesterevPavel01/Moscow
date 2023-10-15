@@ -1,5 +1,6 @@
 ﻿Public Class PanelOrders_Events
 
+    Public orders As New Orders
     Public Sub init(buttons As Dictionary(Of String, myButton))
 
         Dim button As myButton
@@ -13,7 +14,7 @@
                 AddHandler button.button.Click,
                     Sub(sender As Object, e As EventArgs)
                         BuildOrder.fromGroupp = True
-                        createEnrollmentPO(sender, e)
+                        orders.createEnrollmentPO(sender, e)
                         BuildOrder.fromGroupp = False
                     End Sub
 
@@ -22,7 +23,7 @@
                 AddHandler button.button.Click,
                     Sub(sender As Object, e As EventArgs)
                         BuildOrder.fromGroupp = True
-                        createPracticalPO(sender, e)
+                        orders.createPracticalPO(sender, e)
                         BuildOrder.fromGroupp = False
                     End Sub
 
@@ -31,7 +32,7 @@
                 AddHandler button.button.Click,
                     Sub(sender As Object, e As EventArgs)
                         BuildOrder.fromGroupp = True
-                        createFinalExaminationPO(sender, e)
+                        orders.createFinalExaminationPO(sender, e)
                         BuildOrder.fromGroupp = False
                     End Sub
 
@@ -40,7 +41,7 @@
                 AddHandler button.button.Click,
                     Sub(sender As Object, e As EventArgs)
                         BuildOrder.fromGroupp = True
-                        createEndingPO(sender, e)
+                        orders.createEndingPO(sender, e)
                         BuildOrder.fromGroupp = False
                     End Sub
 
@@ -49,7 +50,7 @@
                 AddHandler button.button.Click,
                     Sub(sender As Object, e As EventArgs)
                         BuildOrder.fromGroupp = True
-                        createCertificate(sender, e)
+                        orders.createCertificate(sender, e)
                         BuildOrder.fromGroupp = False
                     End Sub
 
@@ -58,7 +59,7 @@
                 AddHandler button.button.Click,
                     Sub(sender As Object, e As EventArgs)
                         BuildOrder.fromGroupp = True
-                        createGradesIinterAPO(sender, e)
+                        orders.createGradesIinterAPO(sender, e)
                         BuildOrder.fromGroupp = False
                     End Sub
 
@@ -69,7 +70,7 @@
                 AddHandler button.button.Click,
                     Sub(sender As Object, e As EventArgs)
                         BuildOrder.fromGroupp = True
-                        createEnrollmentPP(sender, e)
+                        orders.createEnrollmentPP(sender, e)
                         BuildOrder.fromGroupp = False
                     End Sub
 
@@ -78,7 +79,7 @@
                 AddHandler button.button.Click,
                     Sub(sender As Object, e As EventArgs)
                         BuildOrder.fromGroupp = True
-                        createPracticalPP(sender, e)
+                        orders.createPracticalPP(sender, e)
                         BuildOrder.fromGroupp = False
                     End Sub
 
@@ -87,7 +88,7 @@
                 AddHandler button.button.Click,
                     Sub(sender As Object, e As EventArgs)
                         BuildOrder.fromGroupp = True
-                        createFinalExaminationPP(sender, e)
+                        orders.createFinalExaminationPP(sender, e)
                         BuildOrder.fromGroupp = False
                     End Sub
 
@@ -96,7 +97,7 @@
                 AddHandler button.button.Click,
                     Sub(sender As Object, e As EventArgs)
                         BuildOrder.fromGroupp = True
-                        createEndingPP(sender, e)
+                        orders.createEndingPP(sender, e)
                         BuildOrder.fromGroupp = False
                     End Sub
 
@@ -105,7 +106,7 @@
                 AddHandler button.button.Click,
                     Sub(sender As Object, e As EventArgs)
                         BuildOrder.fromGroupp = True
-                        createDiplomaSupplement(sender, e)
+                        orders.createDiplomaSupplement(sender, e)
                         BuildOrder.fromGroupp = False
                     End Sub
 
@@ -114,7 +115,7 @@
                 AddHandler button.button.Click,
                     Sub(sender As Object, e As EventArgs)
                         BuildOrder.fromGroupp = True
-                        createStatementPP(sender, e)
+                        orders.createStatementPP(sender, e)
                         BuildOrder.fromGroupp = False
                     End Sub
 
@@ -123,7 +124,7 @@
                 AddHandler button.button.Click,
                     Sub(sender As Object, e As EventArgs)
                         BuildOrder.fromGroupp = True
-                        createGradesIinterAPP(sender, e)
+                        orders.createGradesIinterAPP(sender, e)
                         BuildOrder.fromGroupp = False
                     End Sub
 
@@ -134,7 +135,7 @@
                 AddHandler button.button.Click,
                     Sub(sender As Object, e As EventArgs)
                         BuildOrder.fromGroupp = True
-                        createEnrollmentPK(sender, e)
+                        orders.createEnrollmentPK(sender, e)
                         BuildOrder.fromGroupp = False
                     End Sub
 
@@ -143,7 +144,7 @@
                 AddHandler button.button.Click,
                     Sub(sender As Object, e As EventArgs)
                         BuildOrder.fromGroupp = True
-                        createEnrollmentPK_pl(sender, e)
+                        orders.createEnrollmentPK_pl(sender, e)
                         BuildOrder.fromGroupp = False
                     End Sub
 
@@ -152,7 +153,7 @@
                 AddHandler button.button.Click,
                     Sub(sender As Object, e As EventArgs)
                         BuildOrder.fromGroupp = True
-                        createExpulsionPK(sender, e)
+                        orders.createExpulsionPK(sender, e)
                         BuildOrder.fromGroupp = False
                     End Sub
 
@@ -161,7 +162,7 @@
                 AddHandler button.button.Click,
                     Sub(sender As Object, e As EventArgs)
                         BuildOrder.fromGroupp = True
-                        createEndingPK(sender, e)
+                        orders.createEndingPK(sender, e)
                         BuildOrder.fromGroupp = False
                     End Sub
 
@@ -170,7 +171,7 @@
                 AddHandler button.button.Click,
                     Sub(sender As Object, e As EventArgs)
                         BuildOrder.fromGroupp = True
-                        createEndingUdPK(sender, e)
+                        orders.createEndingUdPK(sender, e)
                         BuildOrder.fromGroupp = False
                     End Sub
 
@@ -179,7 +180,7 @@
                 AddHandler button.button.Click,
                     Sub(sender As Object, e As EventArgs)
                         BuildOrder.fromGroupp = True
-                        createStatementPK(sender, e)
+                        orders.createStatementPK(sender, e)
                         BuildOrder.fromGroupp = False
                     End Sub
 

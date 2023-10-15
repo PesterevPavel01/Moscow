@@ -726,32 +726,8 @@ Module _technical
         updateResourcesPath = ПутьКФайлуRes & "Resources\"
 
     End Function
-    Function ПутьКОбщейБазе() As String
-        Dim ПутьКБазе, Путь As String
-        Dim Массив
-        Dim счетчик As Integer
 
-        Путь = Application.StartupPath
-        Массив = Путь.Split("\")
-        ПутьКБазе = ""
-
-        While счетчик < UBound(Массив)
-
-            If Массив(счетчик).ToString = "bin" Then
-                Exit While
-            End If
-
-            ПутьКБазе = ПутьКБазе & Массив(счетчик) & "\"
-            счетчик += 1
-
-        End While
-
-
-        ПутьКОбщейБазе = ПутьКБазе & "Resources\ОсновнаяБД\БазаДанных.accdb"
-
-    End Function
-
-    Function СозданиеКнигиЭксельИЛИОшибкаВ0(Путь As String, ИмяДокумента As String, Optional НомерОтчета As Integer = 0) As Object
+    Function createExcellWorkBook(Путь As String, ИмяДокумента As String, Optional НомерОтчета As Integer = 0) As Object
         Dim ПриложениеЭксель, КнигаЭксель
         Dim ОбъектыЭксель
         Dim Счетчик, Число As Integer
@@ -774,7 +750,7 @@ Module _technical
             Warning.ShowDialog()
             ОбъектыЭксель(0) = "Ошибка"
             ОбъектыЭксель(1) = "Ошибка"
-            СозданиеКнигиЭксельИЛИОшибкаВ0 = ОбъектыЭксель
+            createExcellWorkBook = ОбъектыЭксель
             Exit Function
         End Try
         Счетчик = 0
@@ -794,7 +770,7 @@ Module _technical
             ПриложениеЭксель.Exit
             ОбъектыЭксель(0) = "Ошибка"
             ОбъектыЭксель(1) = "Ошибка"
-            СозданиеКнигиЭксельИЛИОшибкаВ0 = ОбъектыЭксель
+            createExcellWorkBook = ОбъектыЭксель
             Exit Function
         End Try
         Имя = ИмяДокумента
@@ -826,7 +802,18 @@ Module _technical
 
         ОбъектыЭксель(0) = ПриложениеЭксель
         ОбъектыЭксель(1) = КнигаЭксель
-        СозданиеКнигиЭксельИЛИОшибкаВ0 = ОбъектыЭксель
+        Return ОбъектыЭксель
+    End Function
+
+    Function createNameExcellWorkBook(path As String, name As String) As String
+        Dim counter As Integer = 0
+        name = path & name & Date.Now.ToShortDateString & "_" & counter.ToString & ".xlsx"
+        While File.Exists(name)
+            counter += 1
+            name = path & name & Date.Now.ToShortDateString & "_" & counter.ToString & ".xlsx"
+        End While
+
+        Return name
     End Function
 
     Sub сохранить(DOK As Object, видПриказа As String, Optional ПутьКПапке As String = "не указан")
@@ -876,7 +863,7 @@ Module _technical
 
     End Sub
 
-    Sub saveKniga(DOK As Object, vidDok As String, resourcesPath As String)
+    Sub saveBook(DOK As Object, vidDok As String, resourcesPath As String)
         Dim sqlQuery As String = ""
         Dim listFolder As List(Of String) = New List(Of String)
         Dim gruppa

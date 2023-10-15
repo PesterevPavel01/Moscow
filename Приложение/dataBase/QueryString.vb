@@ -290,7 +290,7 @@ Module QueryString
                       Пол,
                       Снилс,
                       ФормаО,
-                      ИФин,
+                      fs.name,
                       Гражданство                    
                     FROM (
                     group_list 
@@ -300,6 +300,8 @@ Module QueryString
                     ON group_list.Kod = `group`.Код 
                     LEFT JOIN program
                     ON kod_program=program.kod
+                    LEFT JOIN fin_source fs 
+                    ON group_list.source_financing = fs.kod
                     WHERE  
                     `group`.ОсновнойДокумент= 'Свидетельство' 
                     AND NOT ISNULL(group_list.РегНомерСвид) 
@@ -333,7 +335,7 @@ Module QueryString
                       Пол,
                       Снилс,
                       ФормаО,
-                      ИФин,
+                      fs.name,
                       Гражданство
                     FROM (
                     group_list 
@@ -343,6 +345,8 @@ Module QueryString
                     ON group_list.Kod = `group`.Код 
                     LEFT JOIN program
                     ON kod_program=program.kod
+                    LEFT JOIN fin_source fs 
+                    ON group_list.source_financing = fs.kod
                     WHERE 
                     `group`.ОсновнойДокумент= 'Диплом'  
                     AND NOT ISNULL(group_list.РегНомерДиплома) 
@@ -376,7 +380,7 @@ Module QueryString
                       Пол,
                       Снилс,
                       ФормаО,
-                      ИФин,
+                      fs.name,
                       Гражданство                    
                     FROM (
                     group_list 
@@ -387,6 +391,8 @@ Module QueryString
                     ON group_list.Kod = `group`.Код 
                     LEFT JOIN program
                     ON kod_program=program.kod
+                    LEFT JOIN fin_source fs 
+                    ON group_list.source_financing = fs.kod
                         WHERE `group`.ОсновнойДокумент= 'Удостоверение'   
                     AND NOT ISNULL(group_list.РегНомерУд) AND group_list.РегНомерУд<>0 
                     AND ДатаВыдачиУд BETWEEN '" & dateStart & "' and  '" & dateEnd & " ' 
@@ -399,7 +405,7 @@ Module QueryString
     Public Function accountingBook__loadListSvid(dateStart As String, dateEnd As String) As String
 
         sqlString = "SELECT  
-                    group_list.РегНомерСвид, group_list.НомерСвид,`group`.Номер, Фамилия,Имя, Отчество, program.name, КолЧас, ДатаКЗ, ДатаВыдачиСвид 
+                    CONVERT(group_list.РегНомерСвид,decimal(14,0)), CONVERT(group_list.НомерСвид,decimal(14,0)),`group`.Номер, Фамилия,Имя, Отчество, program.name, КолЧас,    DATE_FORMAT(ДатаКЗ,'%d.%m.%Y'),  DATE_FORMAT(ДатаВыдачиСвид,'%d.%m.%Y') 
                     FROM (group_list INNER JOIN students On group_list.students = students.Снилс) 
                     INNER JOIN `group` 
                         ON group_list.Kod = `group`.Код
@@ -413,7 +419,7 @@ Module QueryString
 
     Public Function accountingBook__loadListDip(dateStart As String, dateEnd As String) As String
 
-        sqlString = "SELECT group_list.РегНомерДиплома, group_list.НомерДиплома,`group`.Номер, Фамилия,Имя, Отчество, program.name, КолЧас, ДатаКЗ, ДатаВыдачиДиплома 
+        sqlString = "SELECT CONVERT(group_list.РегНомерДиплома,decimal(14,0)), CONVERT(group_list.НомерДиплома,decimal(14,0)),`group`.Номер, Фамилия,Имя, Отчество, program.name, КолЧас, DATE_FORMAT(ДатаКЗ,'%d.%m.%Y') ,  DATE_FORMAT(ДатаВыдачиДиплома,'%d.%m.%Y') 
                     FROM (group_list INNER JOIN students On group_list.students = students.Снилс) 
                     INNER JOIN `group` 
                         ON group_list.Kod = `group`.Код 
@@ -427,7 +433,7 @@ Module QueryString
 
     Public Function accountingBook__loadListUd(dateStart As String, dateEnd As String) As String
 
-        sqlString = "SELECT  group_list.РегНомерУд, group_list.НомерУд,`group`.Номер, Фамилия,Имя, Отчество, program.name, КолЧас, ДатаКЗ, ДатаВыдачиУд FROM (group_list INNER JOIN students On group_list.students = students.Снилс) INNER JOIN `group` On group_list.Kod = `group`.Код 
+        sqlString = "SELECT  CONVERT(group_list.РегНомерУд,decimal(14,0)),  CONVERT(group_list.НомерУд,decimal(14,0)),`group`.Номер, Фамилия,Имя, Отчество, program.name, КолЧас, DATE_FORMAT(ДатаКЗ,'%d.%m.%Y') ,  DATE_FORMAT(ДатаВыдачиУд,'%d.%m.%Y')  FROM (group_list INNER JOIN students On group_list.students = students.Снилс) INNER JOIN `group` On group_list.Kod = `group`.Код 
                      LEFT JOIN program
                       ON kod_program=program.kod
                      WHERE `group`.ОсновнойДокумент= 'Удостоверение' AND NOT ISNULL(group_list.РегНомерУд) AND group_list.РегНомерУд<>0 AND ДатаВыдачиУд BETWEEN '" & dateStart & "' and  '" & dateEnd & " ' ORDER BY group_list.РегНомерУд"

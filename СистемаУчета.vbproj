@@ -157,6 +157,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationEvents.vb" />
+    <Compile Include="Приложение\Формы\MainForm\Books.vb" />
+    <Compile Include="Приложение\Формы\MainForm\BooksArgument.vb" />
     <Compile Include="Приложение\Формы\MainForm\MainForm_builder.vb" />
     <Compile Include="Приложение\Формы\MainForm\MainForm_events.vb" />
     <Compile Include="Приложение\Формы\MainForm\Orders.vb" />
@@ -227,8 +229,7 @@
     <Compile Include="Приложение\ПриказыКниги\КнигаУчетаСпецэкзамен.vb" />
     <Compile Include="Приложение\Интерфейс\МСВорд.vb" />
     <Compile Include="Приложение\ПриказыКниги\ПК_Окончание.vb" />
-    <Compile Include="Приложение\ПриказыКниги\КнигаУчетаФРДО.vb" />
-    <Compile Include="Приложение\ПриказыКниги\КнигаУчета.vb" />
+    <Compile Include="Приложение\Формы\MainForm\BookFRDO.vb" />
     <Compile Include="Приложение\ВедомостиБланки\АДействияСОценкиИА.vb" />
     <Compile Include="Приложение\Формы\GradesIA.Designer.vb">
       <DependentUpon>GradesIA.vb</DependentUpon>

@@ -1,7 +1,5 @@
 ﻿
-Imports System.Windows.Forms.VisualStyles.VisualStyleElement.ToolBar
-
-Module Orders
+Public Class Orders
 
     Public Sub createEnrollmentPK(sender As Object, e As EventArgs)
 
@@ -1133,4 +1131,4 @@ Module Orders
 
     End Sub
 
-End Module
+End Class

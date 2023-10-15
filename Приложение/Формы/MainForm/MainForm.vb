@@ -1,4 +1,6 @@
 ﻿
+Imports System.Threading
+
 Public Class MainForm
 
     Public redactor_enter As Boolean
@@ -342,50 +344,6 @@ Public Class MainForm
 
     End Sub
 
-    'Private Sub ДобавитьСлушателя_KeyDown(sender As Object, e As KeyEventArgs) Handles ДобавитьСлушателя.KeyDown
-
-    '    If e.KeyCode = 13 Then
-
-    '        addStudent_Click(sender, e)
-
-    '    End If
-
-    '    If e.KeyCode = switchPageKey Then
-
-    '        openNextPage(TabControlOther)
-    '        e.Handled = True
-
-    '    End If
-
-    '    If e.KeyCode = seitchPageKey_Inverse Then
-
-    '        openPrevPage(TabControlOther)
-    '        e.Handled = True
-
-    '    End If
-    ''End Sub
-    'Private Sub СправочникСлушатели_KeyDown(sender As Object, e As KeyEventArgs) Handles СправочникСлушатели.KeyDown
-
-    '    Select Case e.KeyCode
-
-    '        Case Keys.Enter
-
-    '            studentList_Click(sender, e)
-
-    '        Case switchPageKey
-
-    '            openNextPage(TabControlOther)
-    '            e.Handled = True
-
-    '        Case seitchPageKey_Inverse
-
-    '            openPrevPage(TabControlOther)
-    '            e.Handled = True
-
-    '    End Select
-
-    'End Sub
-
     Private Sub ОтчетРуководителя_KeyDown(sender As Object, e As KeyEventArgs) Handles ОтчетРуководителя.KeyDown
 
         ЧекатьНаИнтер(ОтчетРуководителя, e.KeyCode)
@@ -548,43 +506,6 @@ Public Class MainForm
 
     End Sub
 
-    Private Sub КнигаУчетаУдостоверений_Click(sender As Object, e As EventArgs) Handles КнигаУчетаУдостоверений.Click
-        ActiveControl = Button2
-        КнигаУчета.КнигаУчета("Удостоверение")
-
-    End Sub
-
-    Private Sub КнигаУчетаДипломов_Click(sender As Object, e As EventArgs) Handles КнигаУчетаДипломов.Click
-        ActiveControl = Button2
-        КнигаУчета.КнигаУчета("Диплом")
-
-    End Sub
-
-    Private Sub КнигаУчетаСвидетельств_Click(sender As Object, e As EventArgs) Handles КнигаУчетаСвидетельств.Click
-        ActiveControl = Button2
-        КнигаУчета.КнигаУчета("Свидетельство")
-    End Sub
-
-    Private Sub КнигаУчетаУдостоверенийФРДО_Click(sender As Object, e As EventArgs) Handles КнигаУчетаУдостоверенийФРДО.Click
-        ActiveControl = Button2
-        КнигаУчетаФРДО.КнигаУчета("Удостоверение")
-    End Sub
-
-    Private Sub КнигаДипломовФРДО_Click(sender As Object, e As EventArgs) Handles КнигаДипломовФРДО.Click
-        ActiveControl = Button2
-        КнигаУчетаФРДО.КнигаУчета("Диплом")
-    End Sub
-
-    Private Sub КнигаСвидетельствФРДО_Click(sender As Object, e As EventArgs) Handles КнигаСвидетельствФРДО.Click
-        ActiveControl = Button2
-        КнигаУчетаФРДО.КнигаУчета("Свидетельство")
-    End Sub
-
-    Private Sub Книга_учета_протоколов_спецэкзамен_Click(sender As Object, e As EventArgs)
-        ActiveControl = Button2
-        КнигаУчетаСпецэкзамен.КнигаУчетаСпецэкзамен()
-    End Sub
-
     Sub inputField(onOff As Boolean, Optional x As Integer = 90, Optional heightText As Integer = 42)
 
         If Not onOff Then
@@ -611,78 +532,6 @@ Public Class MainForm
         End If
     End Sub
 
-    Private Sub КнигаУчетаУдостоверений_KeyDown(sender As Object, e As KeyEventArgs) Handles КнигаУчетаУдостоверений.KeyDown
-        If e.KeyCode = switchPageKey Then
-            openNextPage(TabControlOther)
-            e.Handled = True
-        End If
-
-        If e.KeyCode = seitchPageKey_Inverse Then
-            openPrevPage(TabControlOther)
-            e.Handled = True
-        End If
-    End Sub
-
-    Private Sub КнигаУчетаДипломов_KeyDown(sender As Object, e As KeyEventArgs) Handles КнигаУчетаДипломов.KeyDown
-        If e.KeyCode = switchPageKey Then
-            openNextPage(TabControlOther)
-            e.Handled = True
-        End If
-
-        If e.KeyCode = seitchPageKey_Inverse Then
-            openPrevPage(TabControlOther)
-            e.Handled = True
-        End If
-    End Sub
-
-    Private Sub КнигаУчетаСвидетельств_KeyDown(sender As Object, e As KeyEventArgs) Handles КнигаУчетаСвидетельств.KeyDown
-        If e.KeyCode = switchPageKey Then
-            openNextPage(TabControlOther)
-            e.Handled = True
-        End If
-
-        If e.KeyCode = seitchPageKey_Inverse Then
-            openPrevPage(TabControlOther)
-            e.Handled = True
-        End If
-    End Sub
-
-    Private Sub КнигаУчетаУдостоверенийФРДО_KeyDown(sender As Object, e As KeyEventArgs) Handles КнигаУчетаУдостоверенийФРДО.KeyDown
-        If e.KeyCode = switchPageKey Then
-            openNextPage(TabControlOther)
-            e.Handled = True
-        End If
-
-        If e.KeyCode = seitchPageKey_Inverse Then
-            openPrevPage(TabControlOther)
-            e.Handled = True
-        End If
-    End Sub
-
-    Private Sub КнигаДипломовФРДО_KeyDown(sender As Object, e As KeyEventArgs) Handles КнигаДипломовФРДО.KeyDown
-        If e.KeyCode = switchPageKey Then
-            openNextPage(TabControlOther)
-            e.Handled = True
-        End If
-
-        If e.KeyCode = seitchPageKey_Inverse Then
-            openPrevPage(TabControlOther)
-            e.Handled = True
-        End If
-    End Sub
-
-    Private Sub КнигаСвидетельствФРДО_KeyDown(sender As Object, e As KeyEventArgs) Handles КнигаСвидетельствФРДО.KeyDown
-        If e.KeyCode = switchPageKey Then
-            openNextPage(TabControlOther)
-            e.Handled = True
-        End If
-
-        If e.KeyCode = seitchPageKey_Inverse Then
-            openPrevPage(TabControlOther)
-            e.Handled = True
-        End If
-    End Sub
-
     Private Sub Button2_KeyDown(sender As Object, e As KeyEventArgs) Handles Button2.KeyDown
         If e.KeyCode = switchPageKey Then
             openNextPage(TabControlOther)
@@ -703,70 +552,6 @@ Public Class MainForm
         If e.KeyCode = seitchPageKey_Inverse Then
             e.IsInputKey = True
         End If
-    End Sub
-
-    Private Sub КнигаУчетаУдостоверений_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs) Handles КнигаУчетаУдостоверений.PreviewKeyDown
-        If e.KeyCode = switchPageKey Then
-            e.IsInputKey = True
-        End If
-
-        If e.KeyCode = seitchPageKey_Inverse Then
-            e.IsInputKey = True
-        End If
-    End Sub
-
-    Private Sub КнигаУчетаДипломов_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs) Handles КнигаУчетаДипломов.PreviewKeyDown
-        If e.KeyCode = switchPageKey Then
-            e.IsInputKey = True
-        End If
-
-        If e.KeyCode = seitchPageKey_Inverse Then
-            e.IsInputKey = True
-        End If
-    End Sub
-
-    Private Sub КнигаУчетаСвидетельств_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs) Handles КнигаУчетаСвидетельств.PreviewKeyDown
-        If e.KeyCode = switchPageKey Then
-            e.IsInputKey = True
-        End If
-
-        If e.KeyCode = seitchPageKey_Inverse Then
-            e.IsInputKey = True
-        End If
-    End Sub
-
-    Private Sub КнигаУчетаУдостоверенийФРДО_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs) Handles КнигаУчетаУдостоверенийФРДО.PreviewKeyDown
-        If e.KeyCode = switchPageKey Then
-            e.IsInputKey = True
-        End If
-
-        If e.KeyCode = seitchPageKey_Inverse Then
-            e.IsInputKey = True
-        End If
-    End Sub
-
-    Private Sub КнигаДипломовФРДО_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs) Handles КнигаДипломовФРДО.PreviewKeyDown
-
-        If e.KeyCode = switchPageKey Then
-            e.IsInputKey = True
-        End If
-
-        If e.KeyCode = seitchPageKey_Inverse Then
-            e.IsInputKey = True
-        End If
-
-    End Sub
-
-    Private Sub КнигаСвидетельствФРДО_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs) Handles КнигаСвидетельствФРДО.PreviewKeyDown
-
-        If e.KeyCode = switchPageKey Then
-            e.IsInputKey = True
-        End If
-
-        If e.KeyCode = seitchPageKey_Inverse Then
-            e.IsInputKey = True
-        End If
-
     End Sub
 
     Private Sub programs__loadPrograms()
@@ -1453,12 +1238,6 @@ Public Class MainForm
 
     End Sub
 
-    'Private Sub dataGridProgs_SelectionChanged(sender As Object, e As EventArgs)
-
-    '    programs__loadModulsInProgramm()
-
-    'End Sub
-
     Private Sub SplitContainerProgs_Enter(sender As Object, e As EventArgs)
 
         progsIndicator.Image = iconsList.Images(9)
@@ -1472,7 +1251,6 @@ Public Class MainForm
     Private Sub SplitModulsInProg_Enter(sender As Object, e As EventArgs) Handles programms__SplitModulsInProg.Enter
 
         modulInProgsIndicatorOn(True)
-        'modulInProgsIndicator.Image = ImageList1.Images(9)
 
     End Sub
 
@@ -2348,4 +2126,5 @@ Public Class MainForm
         DataGridAllModuls.CurrentCell.Selected = True
 
     End Sub
+
 End Class
