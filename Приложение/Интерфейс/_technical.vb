@@ -3,65 +3,7 @@ Imports System.Threading
 
 Module _technical
 
-    Public Sub controlsReaction(dictionaryFlag As Dictionary(Of String, Boolean), currentForm As Form)
-
-        If IsNothing(dictionaryFlag) Then
-
-            dictionaryFlag = New Dictionary(Of String, Boolean)
-
-            For Each currentCBox As ComboBox In currentForm.Controls.OfType(Of ComboBox)
-
-                dictionaryFlag.Add(currentCBox.Name, False)
-
-                AddHandler currentCBox.MouseLeave, Sub()
-                                                       dictionaryFlag(currentCBox.Name) = False
-                                                   End Sub
-
-                AddHandler currentCBox.MouseMove, Sub()
-                                                      dictionaryFlag(currentCBox.Name) = True
-                                                  End Sub
-
-                AddHandler currentCBox.Enter, Sub()
-                                                  _technical.comboBoxDrop(currentCBox, dictionaryFlag(currentCBox.Name))
-                                                  newGroup.message.Visible = False
-                                                  newStudent.message.Visible = False
-                                              End Sub
-
-                AddHandler currentCBox.EnabledChanged, Sub()
-                                                           If currentCBox.Enabled = False Then
-                                                               currentCBox.DroppedDown = False
-                                                           End If
-                                                           activateBlackMode(currentCBox, currentCBox.Enabled, currentForm)
-                                                       End Sub
-
-            Next
-
-            For Each textBox As TextBox In currentForm.Controls.OfType(Of TextBox)
-                AddHandler textBox.EnabledChanged, Sub()
-                                                       activateBlackMode(textBox, textBox.Enabled, currentForm)
-                                                   End Sub
-                AddHandler textBox.Enter, Sub()
-                                              newGroup.message.Visible = False
-                                              newStudent.message.Visible = False
-                                          End Sub
-            Next
-
-            For Each datePicker As DateTimePicker In currentForm.Controls.OfType(Of DateTimePicker)
-
-                AddHandler datePicker.EnabledChanged, Sub()
-                                                          activateBlackMode(datePicker, datePicker.Enabled, currentForm)
-                                                      End Sub
-                AddHandler datePicker.Enter, Sub()
-                                                 newGroup.message.Visible = False
-                                                 newStudent.message.Visible = False
-                                             End Sub
-
-            Next
-
-        End If
-    End Sub
-
-    Private Sub activateBlackMode(currentControl As Control, flagOn As Boolean, currentForm As Form)
+    Public Sub activateBlackMode(currentControl As Control, flagOn As Boolean, currentForm As Form)
 
         Dim cont As String = currentControl.Name
 
@@ -176,6 +118,12 @@ Module _technical
 
         Next
 
+        For Each element As MaskedTextBox In currentForm.Controls.OfType(Of MaskedTextBox)
+
+            element.Clear()
+
+        Next
+
         For Each element As ComboBox In currentForm.Controls.OfType(Of ComboBox)
 
             element.Text = ""
@@ -191,6 +139,7 @@ Module _technical
     End Sub
 
     Function month(nomber As String)
+
         If nomber = "01" Or nomber = "1" Then month = "января"
         If nomber = "02" Or nomber = "2" Then month = "февраля"
         If nomber = "03" Or nomber = "3" Then month = "марта"
@@ -203,6 +152,7 @@ Module _technical
         If nomber = "10" Then month = "октября"
         If nomber = "11" Then month = "ноября"
         If nomber = "12" Then month = "декабря"
+
     End Function
 
     Public Function checkNumber(value As String, Optional name As String = "non", Optional showMessage As Boolean = True) As Boolean

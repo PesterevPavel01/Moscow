@@ -17,19 +17,7 @@ Module QueryString
 
     Public Function studentsList__loadStudentsList(columnSort As String, arg As String) As String
 
-        Dim mameSortCol As String = ""
-
-        Select Case columnSort
-            Case "snils"
-                mameSortCol = "Снилс"
-            Case "nameStudent"
-                mameSortCol = "Имя"
-            Case "secName"
-                mameSortCol = "Фамилия"
-
-        End Select
-
-        sqlString = "SELECT Код, Снилс, Фамилия, Имя, Отчество FROM students ORDER BY " & mameSortCol & arg
+        sqlString = "SELECT Код, Снилс, Фамилия, Имя, Отчество FROM students ORDER BY " & columnSort & arg
 
         Return sqlString
 
@@ -1313,6 +1301,7 @@ Module QueryString
     Public Function load_spr_group(ur_kval As String, sort As String, Optional year As String = "0") As String
 
         sort = sort.Replace("Программа", "program.name")
+        sort = sort.Replace("Специальность", "спец")
 
         sqlString = ""
 
@@ -2070,26 +2059,10 @@ Module QueryString
 
         counter = 0
 
-        Select Case sortColumn
-
-            Case "snils"
-                sortColumn = "Снилс"
-
-            Case "nameStudent"
-                sortColumn = "Имя"
-
-            Case "secName"
-                sortColumn = "Фамилия"
-
-        End Select
-
         Select Case searchColumn
             Case "Куратор"
                 searchColumn = "name"
         End Select
-
-
-        sortColumn += interfaceMod.sortType(sortSettsStudents.sortSetts.flagSortUp)
 
         If nameTable = "Группа" Or nameTable = "`group`" Then
 

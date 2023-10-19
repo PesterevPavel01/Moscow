@@ -1,4 +1,5 @@
 ﻿
+
 Public Class GroupList
 
     Public massiv
@@ -7,7 +8,8 @@ Public Class GroupList
     Public year As Integer
     Public infoAboutGroup
     Public swichCvalification As SwitchCvalification
-
+    Private search_events As New SearchSort_events
+    Private sort_events As New SearchSort_events
     Public gruppaData As New Group.strGruppa
 
     Sub search()
@@ -22,14 +24,15 @@ Public Class GroupList
             groupListTable.Items.Clear()
             updateGroupList()
         Else
-            massiv = sqlSearch(searchRow.Text, "`group`", "Код, Номер, Программа, Куратор, ДатаНЗ, ДатаКЗ", serchCol, sortCol & interfaceMod.sortType(sortSettsGroup.sortSetts.flagSortUp))
-            UpdateListView.updateListView(False, False, groupListTable, massiv, 0, 1, 2, 3, 4, 5)
+            massiv = sqlSearch(searchRow.Text, "`group`", "Код, Номер, Программа, Куратор, ДатаНЗ, ДатаКЗ", serchCol, sortCol & interfaceMod.sortType(sort_events.sortSetts.flagSortUp))
+            updateListView.updateListView(False, False, groupListTable, massiv, 0, 1, 2, 3, 4, 5)
         End If
 
     End Sub
 
 
     Private Sub groupListTable_KeyDown(sender As Object, e As KeyEventArgs) Handles groupListTable.KeyDown
+
         Dim element
         Dim ind As String
         Dim kod As Integer
@@ -170,29 +173,69 @@ Public Class GroupList
 
                 rigthPressed()
 
+            Case Keys.Left
+
+                leftPressed(sender, e)
+
             Case Keys.Enter
 
                 enterPressed(sender, e)
+
+            Case Keys.Tab
+
+                tabPressed()
 
         End Select
 
     End Sub
 
+    Private Sub tabPressed()
+
+        If ActiveControl.Name = "groupListTable" Then
+
+            header.Focus()
+            searchRow.Select()
+            searchRow.Focus()
+
+        End If
+
+    End Sub
+
+    Private Sub leftPressed(sender As Object, e As KeyEventArgs)
+
+        If searchRow.Selected Then
+
+            BtnFocus.Focus()
+            header.Focus()
+            searchSettings.Select()
+
+        ElseIf yearSpravochnikGr.Selected Then
+
+            searchRow.Focus()
+            searchRow.Select()
+
+        End If
+
+    End Sub
     Private Sub enterPressed(sender As Object, e As KeyEventArgs)
 
-        Dim Str As String
+        If ActiveControl.Name = "groupListTable" Then
 
-        Try
-            Str = groupListTable.SelectedItems.Item(0).SubItems(1).Text
+            Dim Str As String
 
-        Catch ex As Exception
+            Try
+                Str = groupListTable.SelectedItems.Item(0).SubItems(1).Text
 
-            Exit Sub
+            Catch ex As Exception
 
-        End Try
+                Exit Sub
+
+            End Try
 
 
-        groupListTable_DoubleClick(sender, e)
+            groupListTable_DoubleClick(sender, e)
+
+        End If
 
     End Sub
 
@@ -210,7 +253,7 @@ Public Class GroupList
         Name = ActiveControl.Name
 
         If Not ActiveControl.Name = "groupListTable" Then
-            SendKeys.Send("{tab}")
+            'SendKeys.Send("{tab}")
         Else
             Try
                 Str = groupListTable.SelectedItems.Item(0).SubItems(1).Text
@@ -248,14 +291,13 @@ Public Class GroupList
         searchRow.Visible = True
 
         If MainForm.cvalific = MainForm.PK Or MainForm.cvalific = MainForm.PP Then
-            Str = load_spr_group(swichCvalification.activeType, sortField & interfaceMod.sortType(sortSettsGroup.sortSetts.flagSortUp), yearSpravochnikGr.Text)
+            Str = load_spr_group(swichCvalification.activeType, sortField & interfaceMod.sortType(sort_events.sortSetts.flagSortUp), yearSpravochnikGr.Text)
         Else
-            Str = load_spr_group(swichCvalification.activeType, sortField & interfaceMod.sortType(sortSettsGroup.sortSetts.flagSortUp))
+            Str = load_spr_group(swichCvalification.activeType, sortField & interfaceMod.sortType(sort_events.sortSetts.flagSortUp))
         End If
-
         massiv = MainForm.mySqlConnect.loadMySqlToArray(Str, 1)
 
-        UpdateListView.updateListView(False, False, Me.groupListTable, Me.massiv, 0, 1, 2, 3, 4, 5)
+        updateListView.updateListView(False, False, Me.groupListTable, Me.massiv, 0, 1, 2, 3, 4, 5)
         Me.searchRow.Text = ""
 
         Try
@@ -282,14 +324,18 @@ Public Class GroupList
 
     Private Sub searchSettings_Click(sender As Object, e As EventArgs) Handles searchSettings.Click
 
+        ActiveControl = BtnFocus
         searchRow.Clear()
-        group__serchSettings.ShowDialog()
+        Group__serchSettings.ShowDialog()
+        groupListTable.Focus()
 
     End Sub
 
     Private Sub sortSettings_Click(sender As Object, e As EventArgs) Handles sortSettings.Click
 
+        ActiveControl = BtnFocus
         sortSettsGroup.ShowDialog()
+        groupListTable.Focus()
 
     End Sub
 
@@ -312,6 +358,27 @@ Public Class GroupList
     End Sub
 
     Private Sub СправочникГруппы_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+        If Not search_events.initializationСompleted Then
+
+            search_events.currentForm = Group__serchSettings
+            search_events.init()
+
+        End If
+
+        If Not sort_events.initializationСompleted Then
+
+            sort_events.currentForm = sortSettsGroup
+            sort_events.pictures.Add(0, sortSettsGroup.sortUp)
+            sort_events.pictures.Add(1, sortSettsGroup.sortDown)
+            sort_events.buttons.Add(0, sortSettsGroup.sortUpFocus)
+            sort_events.buttons.Add(1, sortSettsGroup.sortDounFocus)
+            sort_events.buttonPictureBox.Add(sortSettsGroup.sortUpFocus, sortSettsGroup.sortUp)
+            sort_events.buttonPictureBox.Add(sortSettsGroup.sortDounFocus, sortSettsGroup.sortDown)
+
+            sort_events.init()
+
+        End If
 
         swichCvalification = New SwitchCvalification
         swichCvalification.pp = ppOn
@@ -347,6 +414,33 @@ Public Class GroupList
         swichCvalification.activate(MainForm.cvalific - 1)
         openFormGroupp()
         updateGroupList()
+
+    End Sub
+
+    Private Sub groupListTable_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs) Handles groupListTable.PreviewKeyDown
+
+        Select Case e.KeyValue
+            Case Keys.Enter
+                e.IsInputKey = True
+            Case Keys.Tab
+                e.IsInputKey = True
+        End Select
+
+    End Sub
+
+    Private Sub yearSpravochnikGr_KeyPress(sender As Object, e As KeyPressEventArgs) Handles yearSpravochnikGr.KeyPress
+        If e.KeyChar = Convert.ToChar(Keys.Enter) Then
+            yearSpravochnikGr.DroppedDown = Not yearSpravochnikGr.DroppedDown
+            e.Handled = True
+        End If
+    End Sub
+
+    Private Sub groupListTable_Enter(sender As Object, e As EventArgs) Handles groupListTable.Enter
+
+        If groupListTable.Items.Count < 1 Then Return
+        If groupListTable.SelectedItems.Count = 0 Then
+            groupListTable.Items(0).Selected = True
+        End If
 
     End Sub
 End Class

@@ -5,14 +5,24 @@ Module startApp
 
     Public resourcesPath As String
     Public mainFormBuilder As New MainForm_builder
+    Dim mySqlConnector As New MySQLConnect
 
     Sub ЗапускПриложения()
 
         resourcesPath = updateResourcesPath()
-        work()
+        mySqlConnectorInit()
+        mainFormBuilder.mySQLConnector = mySqlConnector
         mainFormBuilder.init()
+        work()
         MainForm.Show()
 
+    End Sub
+    Sub mySqlConnectorInit()
+        mySqlConnector.mySqlSettings.nameFirstDB = "database"
+        mySqlConnector.mySqlSettings.userName = "admin"
+        mySqlConnector.mySqlSettings.password = "admin"
+        mySqlConnector.mySqlSettings.ODBC = "Dsn=mySQLConnection;uid={admin}"
+        mySqlConnector.mySqlSettings.server = "localhost"
     End Sub
 
     Sub work()
@@ -23,84 +33,92 @@ Module startApp
 
     End Sub
     Function loadParams() As Object
+
         Dim params
         Dim sqlQuery As String
-        Dim mySqlConnector As New MySQLConnect
-
-        mySqlConnector.mySqlSettings.nameFirstDB = "database"
-        mySqlConnector.mySqlSettings.userName = "admin"
-        mySqlConnector.mySqlSettings.password = "admin"
-        mySqlConnector.mySqlSettings.ODBC = "Dsn=mySQLConnection;uid={admin}"
-        mySqlConnector.mySqlSettings.server = "localhost"
 
         sqlQuery = loadSettings()
         params = mySqlConnector.loadMySqlToArray(sqlQuery, 1)
-        loadParams = params
+        Return params
+
     End Function
 
     Sub saveSetts(params As Object)
 
+        Dim comboBox As ComboBox
+
+        comboBox = mainFormBuilder.controls(mainFormBuilder.controlNames("directorName"))
         If Not paramsValue(params, "ДиректорФИО") = "Не найден" Then
-            MainForm.directorName.Text = paramsValue(params, "ДиректорФИО")
+            comboBox.Text = paramsValue(params, "ДиректорФИО")
         End If
 
         If Not paramsValue(params, "0") = "Не найден" Then
             MainForm.password0 = paramsValue(params, "0")
         End If
 
+        comboBox = mainFormBuilder.controls(mainFormBuilder.controlNames("directorPosition"))
         If Not paramsValue(params, "ДиректорДолжность") = "Не найден" Then
-            MainForm.directorPosition.Text = paramsValue(params, "ДиректорДолжность")
+            comboBox.Text = paramsValue(params, "ДиректорДолжность")
         End If
 
+        comboBox = mainFormBuilder.controls(mainFormBuilder.controlNames("Согласовано1ПУ"))
         If Not paramsValue(params, "Согласовано1ПУ") = "Не найден" Then
-            MainForm.Согласовано1ПУ.Text = paramsValue(params, "Согласовано1ПУ")
+            comboBox.Text = paramsValue(params, "Согласовано1ПУ")
         End If
 
+        comboBox = mainFormBuilder.controls(mainFormBuilder.controlNames("Согласовано2ПУ"))
         If Not paramsValue(params, "Согласовано2ПУ") = "Не найден" Then
-            MainForm.Согласовано2ПУ.Text = paramsValue(params, "Согласовано2ПУ")
+            comboBox.Text = paramsValue(params, "Согласовано2ПУ")
         End If
 
+        comboBox = mainFormBuilder.controls(mainFormBuilder.controlNames("Согласовано1ДолжностьПУ"))
         If Not paramsValue(params, "Согласовано1ДолжностьПУ") = "Не найден" Then
-            MainForm.Согласовано1ДолжностьПУ.Text = paramsValue(params, "Согласовано1ДолжностьПУ")
+            comboBox.Text = paramsValue(params, "Согласовано1ДолжностьПУ")
         End If
 
+        comboBox = mainFormBuilder.controls(mainFormBuilder.controlNames("Согласовано2ДолжностьПУ"))
         If Not paramsValue(params, "Согласовано2ДолжностьПУ") = "Не найден" Then
-            MainForm.Согласовано2ДолжностьПУ.Text = paramsValue(params, "Согласовано2ДолжностьПУ")
+            comboBox.Text = paramsValue(params, "Согласовано2ДолжностьПУ")
         End If
 
+        comboBox = mainFormBuilder.controls(mainFormBuilder.controlNames("students_defaultSearchSetts"))
         If Not paramsValue(params, "ПоискСлушателейПоУм") = "Не найден" Then
-            MainForm.students__defaultSearchSetts.Text = paramsValue(params, "ПоискСлушателейПоУм")
+            comboBox.Text = paramsValue(params, "ПоискСлушателейПоУм")
         Else
-            MainForm.students__defaultSearchSetts.Text = "Снилс"
+            comboBox.Text = "Снилс"
         End If
 
-        searchInit(НастройкаПоискаСлушателей, MainForm.students__defaultSearchSetts.Text)
+        searchInit(НастройкаПоискаСлушателей, comboBox.Text)
 
+        comboBox = mainFormBuilder.controls(mainFormBuilder.controlNames("group_dafaultSearchSetts"))
         If Not paramsValue(params, "ПоискГруппПоУм") = "Не найден" Then
-            MainForm.group_dafaultSearchSetts.Text = paramsValue(params, "ПоискГруппПоУм")
+            comboBox.Text = paramsValue(params, "ПоискГруппПоУм")
         Else
-            MainForm.group_dafaultSearchSetts.Text = "Номер"
+            comboBox.Text = "Номер"
         End If
-        searchInit(Group__serchSettings, MainForm.group_dafaultSearchSetts.Text)
+        searchInit(Group__serchSettings, comboBox.Text)
 
+        comboBox = mainFormBuilder.controls(mainFormBuilder.controlNames("group_defaultSortSetts"))
         If Not paramsValue(params, "НастройкаСортировкиГрупп") = "Не найден" Then
-            MainForm.group__dafaultSortSetts.Text = paramsValue(params, "НастройкаСортировкиГрупп")
+            comboBox.Text = paramsValue(params, "НастройкаСортировкиГрупп")
         Else
-            MainForm.group__dafaultSortSetts.Text = "Номер"
+            comboBox.Text = "Номер"
         End If
-        searchInit(sortSettsGroup, MainForm.group__dafaultSortSetts.Text)
+        searchInit(sortSettsGroup, comboBox.Text)
 
+        comboBox = mainFormBuilder.controls(mainFormBuilder.controlNames("students_defaultSortSetts"))
         If Not paramsValue(params, "НастройкаСортировкиСлушателей") = "Не найден" Then
-            MainForm.students__defaultSortSetts.Text = paramsValue(params, "НастройкаСортировкиСлушателей")
+            comboBox.Text = paramsValue(params, "НастройкаСортировкиСлушателей")
         Else
-            MainForm.students__defaultSortSetts.Text = "Снилс"
+            comboBox.Text = "Снилс"
         End If
-        searchInit(sortSettsStudents, MainForm.students__defaultSortSetts.Text)
+        searchInit(sortSettsStudents, comboBox.Text)
 
+        comboBox = mainFormBuilder.controls(mainFormBuilder.controlNames("maxNumberRows"))
         If Not paramsValue(params, "КоличествоСтрокВТаблице") = "Не найден" Then
-            MainForm.maxNumberRows.Text = paramsValue(params, "КоличествоСтрокВТаблице")
+            comboBox.Text = paramsValue(params, "КоличествоСтрокВТаблице")
         Else
-            MainForm.maxNumberRows.Text = 1000
+            comboBox.Text = 1000
         End If
 
     End Sub

@@ -340,7 +340,7 @@ Partial Class newStudent
         Me.snils.Margin = New System.Windows.Forms.Padding(4)
         Me.snils.Name = "snils"
         Me.snils.Size = New System.Drawing.Size(711, 24)
-        Me.snils.TabIndex = 1
+        Me.snils.TabIndex = 0
         '
         'Отчество
         '
@@ -479,7 +479,7 @@ Partial Class newStudent
         Me.ValidOn.Margin = New System.Windows.Forms.Padding(4)
         Me.ValidOn.Name = "ValidOn"
         Me.ValidOn.Size = New System.Drawing.Size(15, 14)
-        Me.ValidOn.TabIndex = 0
+        Me.ValidOn.TabIndex = 1
         Me.ValidOn.UseVisualStyleBackColor = True
         '
         'Пол

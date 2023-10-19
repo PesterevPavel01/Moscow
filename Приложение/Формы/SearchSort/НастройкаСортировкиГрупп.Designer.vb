@@ -29,6 +29,8 @@ Partial Class sortSettsGroup
         Me.sortDown = New System.Windows.Forms.PictureBox()
         Me.sortUp = New System.Windows.Forms.PictureBox()
         Me.Куратор = New System.Windows.Forms.CheckBox()
+        Me.sortUpFocus = New System.Windows.Forms.Button()
+        Me.sortDounFocus = New System.Windows.Forms.Button()
         CType(Me.sortDown, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.sortUp, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -37,7 +39,7 @@ Partial Class sortSettsGroup
         '
         Me.Программа.AutoSize = True
         Me.Программа.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.Программа.Location = New System.Drawing.Point(12, 46)
+        Me.Программа.Location = New System.Drawing.Point(16, 62)
         Me.Программа.Name = "Программа"
         Me.Программа.Size = New System.Drawing.Size(120, 25)
         Me.Программа.TabIndex = 9
@@ -48,7 +50,7 @@ Partial Class sortSettsGroup
         '
         Me.Спец.AutoSize = True
         Me.Спец.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.Спец.Location = New System.Drawing.Point(12, 26)
+        Me.Спец.Location = New System.Drawing.Point(16, 32)
         Me.Спец.Name = "Спец"
         Me.Спец.Size = New System.Drawing.Size(150, 25)
         Me.Спец.TabIndex = 8
@@ -59,7 +61,7 @@ Partial Class sortSettsGroup
         '
         Me.Номер.AutoSize = True
         Me.Номер.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.Номер.Location = New System.Drawing.Point(12, 5)
+        Me.Номер.Location = New System.Drawing.Point(16, 2)
         Me.Номер.Name = "Номер"
         Me.Номер.Size = New System.Drawing.Size(82, 25)
         Me.Номер.TabIndex = 7
@@ -71,7 +73,7 @@ Partial Class sortSettsGroup
         Me.sortDown.ErrorImage = Nothing
         Me.sortDown.Image = CType(resources.GetObject("sortDown.Image"), System.Drawing.Image)
         Me.sortDown.InitialImage = Nothing
-        Me.sortDown.Location = New System.Drawing.Point(371, 10)
+        Me.sortDown.Location = New System.Drawing.Point(375, 12)
         Me.sortDown.Name = "sortDown"
         Me.sortDown.Size = New System.Drawing.Size(41, 41)
         Me.sortDown.TabIndex = 19
@@ -82,7 +84,7 @@ Partial Class sortSettsGroup
         Me.sortUp.ErrorImage = Nothing
         Me.sortUp.Image = CType(resources.GetObject("sortUp.Image"), System.Drawing.Image)
         Me.sortUp.InitialImage = Nothing
-        Me.sortUp.Location = New System.Drawing.Point(328, 10)
+        Me.sortUp.Location = New System.Drawing.Point(328, 12)
         Me.sortUp.Name = "sortUp"
         Me.sortUp.Size = New System.Drawing.Size(41, 41)
         Me.sortUp.TabIndex = 20
@@ -92,24 +94,48 @@ Partial Class sortSettsGroup
         '
         Me.Куратор.AutoSize = True
         Me.Куратор.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.Куратор.Location = New System.Drawing.Point(12, 66)
+        Me.Куратор.Location = New System.Drawing.Point(16, 92)
         Me.Куратор.Name = "Куратор"
         Me.Куратор.Size = New System.Drawing.Size(93, 25)
         Me.Куратор.TabIndex = 21
         Me.Куратор.Text = "Куратор"
         Me.Куратор.UseVisualStyleBackColor = True
         '
+        'sortUpFocus
+        '
+        Me.sortUpFocus.FlatAppearance.BorderSize = 0
+        Me.sortUpFocus.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.sortUpFocus.Location = New System.Drawing.Point(328, 12)
+        Me.sortUpFocus.Name = "sortUpFocus"
+        Me.sortUpFocus.Size = New System.Drawing.Size(41, 41)
+        Me.sortUpFocus.TabIndex = 22
+        Me.sortUpFocus.UseVisualStyleBackColor = True
+        '
+        'sortDounFocus
+        '
+        Me.sortDounFocus.BackColor = System.Drawing.SystemColors.Control
+        Me.sortDounFocus.FlatAppearance.BorderSize = 0
+        Me.sortDounFocus.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.sortDounFocus.Location = New System.Drawing.Point(375, 12)
+        Me.sortDounFocus.Name = "sortDounFocus"
+        Me.sortDounFocus.Size = New System.Drawing.Size(41, 41)
+        Me.sortDounFocus.TabIndex = 23
+        Me.sortDounFocus.UseVisualStyleBackColor = False
+        '
         'sortSettsGroup
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(424, 102)
+        Me.ClientSize = New System.Drawing.Size(424, 135)
         Me.Controls.Add(Me.Куратор)
         Me.Controls.Add(Me.sortUp)
         Me.Controls.Add(Me.sortDown)
         Me.Controls.Add(Me.Программа)
         Me.Controls.Add(Me.Спец)
         Me.Controls.Add(Me.Номер)
+        Me.Controls.Add(Me.sortDounFocus)
+        Me.Controls.Add(Me.sortUpFocus)
+        Me.KeyPreview = True
         Me.Name = "sortSettsGroup"
         Me.Text = "Выбор поля для сортировки"
         CType(Me.sortDown, System.ComponentModel.ISupportInitialize).EndInit()
@@ -125,4 +151,6 @@ Partial Class sortSettsGroup
     Friend WithEvents sortDown As PictureBox
     Friend WithEvents sortUp As PictureBox
     Friend WithEvents Куратор As CheckBox
+    Friend WithEvents sortUpFocus As Button
+    Friend WithEvents sortDounFocus As Button
 End Class

@@ -176,7 +176,7 @@ Public Class Student
 
         If snilsLen <> 14 Then
 
-            MsgBox("Снилс введен некорректно", "Внимание")
+            MsgBox("Снилс введен некорректно", 10, "Внимание")
 
             Return False
 

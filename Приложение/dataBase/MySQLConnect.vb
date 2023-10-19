@@ -36,7 +36,7 @@ Public Class MySQLConnect
         Dim row As DataRow
         Dim rowCount As Integer = 0
 
-        ReDim result(dSet.Tables(0).Columns.Count, dSet.Tables(0).Rows.Count - 1)
+        ReDim result(dSet.Tables(0).Columns.Count - 1, dSet.Tables(0).Rows.Count - 1)
 
         If (dSet.Tables(0).Rows.Count = 0) Then
             ReDim result(1, 1)

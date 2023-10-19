@@ -36,7 +36,7 @@ Partial Class StudentsList
         Me.BtnFocus = New System.Windows.Forms.Button()
         Me.ImageList2 = New System.Windows.Forms.ImageList(Me.components)
         Me.SplitContainer1 = New System.Windows.Forms.SplitContainer()
-        Me.ToolStrip1 = New System.Windows.Forms.ToolStrip()
+        Me.header = New System.Windows.Forms.ToolStrip()
         Me.insertIntoGroupList = New System.Windows.Forms.ToolStripButton()
         Me.sortSetts = New System.Windows.Forms.ToolStripButton()
         Me.searchSetts = New System.Windows.Forms.ToolStripButton()
@@ -46,7 +46,7 @@ Partial Class StudentsList
         Me.SplitContainer1.Panel1.SuspendLayout()
         Me.SplitContainer1.Panel2.SuspendLayout()
         Me.SplitContainer1.SuspendLayout()
-        Me.ToolStrip1.SuspendLayout()
+        Me.header.SuspendLayout()
         CType(Me.ССлушТаблицаИнфСлушателя, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -115,7 +115,7 @@ Partial Class StudentsList
         'SplitContainer1.Panel1
         '
         Me.SplitContainer1.Panel1.Controls.Add(Me.ListViewСписокСлушателей)
-        Me.SplitContainer1.Panel1.Controls.Add(Me.ToolStrip1)
+        Me.SplitContainer1.Panel1.Controls.Add(Me.header)
         '
         'SplitContainer1.Panel2
         '
@@ -124,15 +124,15 @@ Partial Class StudentsList
         Me.SplitContainer1.SplitterDistance = 1317
         Me.SplitContainer1.TabIndex = 20
         '
-        'ToolStrip1
+        'header
         '
-        Me.ToolStrip1.BackColor = System.Drawing.SystemColors.ButtonFace
-        Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.insertIntoGroupList, Me.sortSetts, Me.searchSetts, Me.searchRow})
-        Me.ToolStrip1.Location = New System.Drawing.Point(0, 0)
-        Me.ToolStrip1.Name = "ToolStrip1"
-        Me.ToolStrip1.Size = New System.Drawing.Size(1317, 47)
-        Me.ToolStrip1.TabIndex = 4
-        Me.ToolStrip1.Text = "ToolStrip1"
+        Me.header.BackColor = System.Drawing.SystemColors.ButtonFace
+        Me.header.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.insertIntoGroupList, Me.sortSetts, Me.searchSetts, Me.searchRow})
+        Me.header.Location = New System.Drawing.Point(0, 0)
+        Me.header.Name = "header"
+        Me.header.Size = New System.Drawing.Size(1317, 47)
+        Me.header.TabIndex = 4
+        Me.header.Text = "ToolStrip1"
         '
         'insertIntoGroupList
         '
@@ -225,8 +225,8 @@ Partial Class StudentsList
         Me.SplitContainer1.Panel2.ResumeLayout(False)
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SplitContainer1.ResumeLayout(False)
-        Me.ToolStrip1.ResumeLayout(False)
-        Me.ToolStrip1.PerformLayout()
+        Me.header.ResumeLayout(False)
+        Me.header.PerformLayout()
         CType(Me.ССлушТаблицаИнфСлушателя, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
@@ -242,7 +242,7 @@ Partial Class StudentsList
     Friend WithEvents ImageList2 As ImageList
     Friend WithEvents SplitContainer1 As SplitContainer
     Friend WithEvents ССлушТаблицаИнфСлушателя As DataGridView
-    Friend WithEvents ToolStrip1 As ToolStrip
+    Friend WithEvents header As ToolStrip
     Friend WithEvents searchSetts As ToolStripButton
     Friend WithEvents searchRow As ToolStripTextBox
     Friend WithEvents insertIntoGroupList As ToolStripButton

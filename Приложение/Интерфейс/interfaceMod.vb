@@ -124,9 +124,9 @@ Module interfaceMod
 
     End Sub
 
-    Sub ЧекатьНаИнтер(контрол As Object, номерНажатойКлавиши As Integer)
+    Sub checkedChange(контрол As Object, номерНажатойКлавиши As Integer)
 
-        If номерНажатойКлавиши = 13 Then
+        If номерНажатойКлавиши = Keys.Enter Then
             If контрол.Checked Then
                 контрол.Checked = False
             Else
@@ -207,7 +207,7 @@ Module interfaceMod
 
                 If element.Checked = True Then
 
-                    Return element.Name
+                    Return element.Text
 
                 End If
 
@@ -239,7 +239,7 @@ Module interfaceMod
 
         For Each element In currentForm.Controls.OfType(Of CheckBox)
 
-            If element.Name = nameCheckBox Then
+            If element.Text = nameCheckBox Then
 
                 element.Checked = True
                 Return

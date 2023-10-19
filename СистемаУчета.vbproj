@@ -157,11 +157,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationEvents.vb" />
+    <Compile Include="Приложение\Отчеты\ReportArgument.vb" />
     <Compile Include="Приложение\Формы\MainForm\Books.vb" />
     <Compile Include="Приложение\Формы\MainForm\BooksArgument.vb" />
     <Compile Include="Приложение\Формы\MainForm\MainForm_builder.vb" />
     <Compile Include="Приложение\Формы\MainForm\MainForm_events.vb" />
     <Compile Include="Приложение\Формы\MainForm\Orders.vb" />
+    <Compile Include="Приложение\Формы\newGroup\Controls_events.vb" />
+    <Compile Include="Приложение\Формы\SearchSort\SearchSort_events.vb" />
     <Compile Include="Приложение\Формы\StudentsList\StudentsList_events.vb" />
     <Compile Include="Приложение\Формы\StudentsInGroup\StudentsInGroup_uploader.vb" />
     <Compile Include="Приложение\SwichNumbers.vb" />
@@ -237,28 +240,28 @@
     <Compile Include="Приложение\Формы\GradesIA.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Приложение\Формы\НастройкаСортировкиСлушателей.Designer.vb">
+    <Compile Include="Приложение\Формы\SearchSort\НастройкаСортировкиСлушателей.Designer.vb">
       <DependentUpon>НастройкаСортировкиСлушателей.vb</DependentUpon>
     </Compile>
-    <Compile Include="Приложение\Формы\НастройкаСортировкиСлушателей.vb">
+    <Compile Include="Приложение\Формы\SearchSort\НастройкаСортировкиСлушателей.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Приложение\Формы\НастройкаСортировкиГрупп.Designer.vb">
+    <Compile Include="Приложение\Формы\SearchSort\НастройкаСортировкиГрупп.Designer.vb">
       <DependentUpon>НастройкаСортировкиГрупп.vb</DependentUpon>
     </Compile>
-    <Compile Include="Приложение\Формы\НастройкаСортировкиГрупп.vb">
+    <Compile Include="Приложение\Формы\SearchSort\НастройкаСортировкиГрупп.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Приложение\Формы\Group__serchSettings.Designer.vb">
+    <Compile Include="Приложение\Формы\SearchSort\Group__serchSettings.Designer.vb">
       <DependentUpon>Group__serchSettings.vb</DependentUpon>
     </Compile>
-    <Compile Include="Приложение\Формы\Group__serchSettings.vb">
+    <Compile Include="Приложение\Формы\SearchSort\Group__serchSettings.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Приложение\Формы\НастройкаПоискаСлушателей.Designer.vb">
+    <Compile Include="Приложение\Формы\SearchSort\НастройкаПоискаСлушателей.Designer.vb">
       <DependentUpon>НастройкаПоискаСлушателей.vb</DependentUpon>
     </Compile>
-    <Compile Include="Приложение\Формы\НастройкаПоискаСлушателей.vb">
+    <Compile Include="Приложение\Формы\SearchSort\НастройкаПоискаСлушателей.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Приложение\ВедомостиБланки\gradesManipulation.vb" />
@@ -286,7 +289,7 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Приложение\Интерфейс\arrayMethod.vb" />
-    <Compile Include="Приложение\Отчеты\OtchetExcell.vb" />
+    <Compile Include="Приложение\Отчеты\Report.vb" />
     <Compile Include="Приложение\Интерфейс\updateListView_1.vb" />
     <Compile Include="Приложение\Формы\StudentsInGroup\StudentsInGroup.Designer.vb">
       <DependentUpon>StudentsInGroup.vb</DependentUpon>
@@ -296,10 +299,10 @@
     </Compile>
     <Compile Include="Приложение\Справочники\studentBuilder.vb" />
     <Compile Include="Приложение\Справочники\updateGroupRedactor.vb" />
-    <Compile Include="Приложение\Формы\newStudent.Designer.vb">
+    <Compile Include="Приложение\Формы\newStudent\newStudent.Designer.vb">
       <DependentUpon>newStudent.vb</DependentUpon>
     </Compile>
-    <Compile Include="Приложение\Формы\newStudent.vb">
+    <Compile Include="Приложение\Формы\newStudent\newStudent.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Приложение\Формы\ФормаДаНетУдалить.Designer.vb">
@@ -321,10 +324,10 @@
     <Compile Include="Приложение\Формы\List.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Приложение\Формы\newGroup.Designer.vb">
+    <Compile Include="Приложение\Формы\newGroup\newGroup.Designer.vb">
       <DependentUpon>newGroup.vb</DependentUpon>
     </Compile>
-    <Compile Include="Приложение\Формы\newGroup.vb">
+    <Compile Include="Приложение\Формы\newGroup\newGroup.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Приложение\dataBase\InsertIntoDataBase.vb" />
@@ -378,16 +381,16 @@
     <EmbeddedResource Include="Приложение\Формы\WorkerReport.resx">
       <DependentUpon>WorkerReport.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Приложение\Формы\НастройкаСортировкиСлушателей.resx">
+    <EmbeddedResource Include="Приложение\Формы\SearchSort\НастройкаСортировкиСлушателей.resx">
       <DependentUpon>НастройкаСортировкиСлушателей.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Приложение\Формы\НастройкаСортировкиГрупп.resx">
+    <EmbeddedResource Include="Приложение\Формы\SearchSort\НастройкаСортировкиГрупп.resx">
       <DependentUpon>НастройкаСортировкиГрупп.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Приложение\Формы\Group__serchSettings.resx">
+    <EmbeddedResource Include="Приложение\Формы\SearchSort\Group__serchSettings.resx">
       <DependentUpon>Group__serchSettings.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Приложение\Формы\НастройкаПоискаСлушателей.resx">
+    <EmbeddedResource Include="Приложение\Формы\SearchSort\НастройкаПоискаСлушателей.resx">
       <DependentUpon>НастройкаПоискаСлушателей.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Приложение\Формы\Grades.resx">
@@ -399,7 +402,7 @@
     <EmbeddedResource Include="Приложение\Формы\StudentsInGroup\StudentsInGroup.resx">
       <DependentUpon>StudentsInGroup.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Приложение\Формы\newStudent.resx">
+    <EmbeddedResource Include="Приложение\Формы\newStudent\newStudent.resx">
       <DependentUpon>newStudent.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Приложение\Формы\BuildOrder.resx">
@@ -414,7 +417,7 @@
     <EmbeddedResource Include="Приложение\Формы\List.resx">
       <DependentUpon>List.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Приложение\Формы\newGroup.resx">
+    <EmbeddedResource Include="Приложение\Формы\newGroup\newGroup.resx">
       <DependentUpon>newGroup.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Приложение\Формы\GroupList.resx">

@@ -1,11 +1,16 @@
 ﻿Module ПеднагрузкаОтчет
+    Dim datePicker As DateTimePicker
     Sub workerReport(arg As String, excellApp As Object, excellWorkbook As Object, DateStart As String, DateEnd As String)
 
         Dim sample, ФорматированиеСтолбцов, excellSheet
         Dim adress
         Dim list
         Dim samplePath, pathNewFile, resourcesPath, name, titleRow, adressTbl As String
-
+        Dim shortDateStart, shortDateEnd As String
+        datePicker = mainFormBuilder.controls(mainFormBuilder.controlNames("reportStart"))
+        shortDateStart = datePicker.Value.ToShortDateString
+        datePicker = mainFormBuilder.controls(mainFormBuilder.controlNames("reportEnd"))
+        shortDateEnd = datePicker.Value.ToShortDateString
         If arg = "Педнагрузка" Then
 
             name = "педнагрузка"
@@ -35,8 +40,8 @@
         list = rotateArray(list)
         list = ДобавитьНумерациюВМассив(list)
 
-        titleRow = Strings.Replace(excellSheet.Range("A1").Value, "$ДатаНачала$", MainForm.ДатаНачалаОтчета.Value.ToShortDateString)
-        titleRow = Strings.Replace(titleRow, "$ДатаОкончания$", MainForm.ДатаКонцаОтчета.Value.ToShortDateString)
+        titleRow = Strings.Replace(excellSheet.Range("A1").Value, "$ДатаНачала$", shortDateStart)
+        titleRow = Strings.Replace(titleRow, "$ДатаОкончания$", shortDateEnd)
         excellSheet.Range("A1") = titleRow
 
 
@@ -111,6 +116,11 @@
         Dim samplePath, pathNewFile, resourcesPath, titleRow, adressTbl As String
         Dim numberRow, numberColumnTitle, numberColumnTbl, counterRows As Integer
         Dim listTitelAdress As New List(Of String)
+        Dim shortDateStart, shortDateEnd As String
+        datePicker = mainFormBuilder.controls(mainFormBuilder.controlNames("reportStart"))
+        shortDateStart = datePicker.Value.ToShortDateString
+        datePicker = mainFormBuilder.controls(mainFormBuilder.controlNames("reportEnd"))
+        shortDateEnd = datePicker.Value.ToShortDateString
 
         counterRows = 0
 
@@ -134,8 +144,8 @@
         excellSheet.name = "педнагрузка_расш"
         columnStyle = _technical.styleColumnRange(excellSheet, excellSheet.Range("firstRow"))
 
-        titleRow = Strings.Replace(excellSheet.Range("title").Value, "$ДатаНачала$", MainForm.ДатаНачалаОтчета.Value.ToShortDateString)
-        titleRow = Strings.Replace(titleRow, "$ДатаОкончания$", MainForm.ДатаКонцаОтчета.Value.ToShortDateString)
+        titleRow = Strings.Replace(excellSheet.Range("title").Value, "$ДатаНачала$", shortDateStart)
+        titleRow = Strings.Replace(titleRow, "$ДатаОкончания$", shortDateEnd)
         excellSheet.Range("title") = titleRow
 
         numberRow = excellSheet.Range("title").Row

@@ -159,29 +159,27 @@
     Private Sub createBuildOrder(sender As Object, e As EventArgs) Handles Me.Shown
 
         flagCheck = True
-
         tableStudentsList.Items.Clear()
-
         ActiveControl = Button1
 
-        If MainForm.directorPosition.Text <> "" Then
-            УтверждаетДолжность.Text = MainForm.directorPosition.Text
+        If mainFormBuilder.controls(mainFormBuilder.controlNames("directorPosition")).Text <> "" Then
+            УтверждаетДолжность.Text = mainFormBuilder.controls(mainFormBuilder.controlNames("directorPosition")).Text
         End If
 
-        If MainForm.Согласовано1ПУ.Text <> "" Then
-            Согласовано1.Text = MainForm.Согласовано1ПУ.Text
+        If mainFormBuilder.controls(mainFormBuilder.controlNames("Согласовано1ПУ")).Text <> "" Then
+            Согласовано1.Text = mainFormBuilder.controls(mainFormBuilder.controlNames("Согласовано1ПУ")).Text
         End If
 
-        If MainForm.Согласовано2ПУ.Text <> "" Then
-            Согласовано2.Text = MainForm.Согласовано2ПУ.Text
+        If mainFormBuilder.controls(mainFormBuilder.controlNames("Согласовано2ПУ")).Text <> "" Then
+            Согласовано2.Text = mainFormBuilder.controls(mainFormBuilder.controlNames("Согласовано2ПУ")).Text
         End If
 
-        If MainForm.Согласовано1ДолжностьПУ.Text <> "" Then
-            Согласовано1Должность.Text = MainForm.Согласовано1ДолжностьПУ.Text
+        If mainFormBuilder.controls(mainFormBuilder.controlNames("Согласовано1ДолжностьПУ")).Text <> "" Then
+            Согласовано1Должность.Text = mainFormBuilder.controls(mainFormBuilder.controlNames("Согласовано1ДолжностьПУ")).Text
         End If
 
-        If MainForm.Согласовано2ДолжностьПУ.Text <> "" Then
-            Согласовано2Должность.Text = MainForm.Согласовано2ДолжностьПУ.Text
+        If mainFormBuilder.controls(mainFormBuilder.controlNames("Согласовано2ДолжностьПУ")).Text <> "" Then
+            Согласовано2Должность.Text = mainFormBuilder.controls(mainFormBuilder.controlNames("Согласовано2ДолжностьПУ")).Text
         End If
 
         If comission Then
@@ -234,8 +232,8 @@
 
         If Not MainForm.directorOff Then
 
-            If MainForm.directorName.Text <> "" Then
-                Утверждает.Text = MainForm.directorName.Text
+            If mainFormBuilder.controls(mainFormBuilder.controlNames("directorName")).Text <> "" Then
+                Утверждает.Text = mainFormBuilder.controls(mainFormBuilder.controlNames("directorName")).Text
             End If
 
         End If
@@ -376,11 +374,11 @@
     End Sub
 
     Private Sub CheckBoxММС_KeyDown(sender As Object, e As KeyEventArgs) Handles CheckBoxММС.KeyDown
-        ЧекатьНаИнтер(CheckBoxММС, e.KeyCode)
+        checkedChange(CheckBoxММС, e.KeyCode)
     End Sub
 
     Private Sub CheckBoxСанитар_KeyDown(sender As Object, e As KeyEventArgs) Handles CheckBoxСанитар.KeyDown
-        ЧекатьНаИнтер(CheckBoxСанитар, e.KeyCode)
+        checkedChange(CheckBoxСанитар, e.KeyCode)
     End Sub
 
     Private Sub CheckBoxСанитар_CheckedChanged_1(sender As Object, e As EventArgs) Handles CheckBoxСанитар.CheckedChanged

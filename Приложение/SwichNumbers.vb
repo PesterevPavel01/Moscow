@@ -1,6 +1,4 @@
-﻿Imports Org.BouncyCastle.Asn1.Crmf
-
-Public Class SwichNumbers
+﻿Public Class SwichNumbers
 
     Public controlList As New Dictionary(Of String, List(Of Control))
     Public pkList As New List(Of Control)

@@ -29,6 +29,7 @@
 
             showProgram()
             Return
+
         Else
 
             queryString = formList__loadList(textboxName)
@@ -165,7 +166,7 @@
                         Exit Sub
                     End If
                 End If
-                writeIntoTextBox(MainForm.PanelSetts, ind)
+                writeIntoTextBox(MainForm.panelSetts, ind)
 
             Case "GradesIA"
 

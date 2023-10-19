@@ -8,10 +8,18 @@ Public Class MainForm_events
     Private button As Button
     Public orders As New Orders
 
+    Public mySQLConnector As New MySQLConnect
+    Private dictionaryFlags = New Dictionary(Of String, Boolean)
+    Private threadFlags = New Dictionary(Of String, Boolean)
+
     Public Sub init()
 
         If initializationСompleted Then Return
         initializationСompleted = True
+
+        AddHandler mainForm.FormClosing, Sub(sender As Object, e As FormClosingEventArgs)
+                                             checkThread(e)
+                                         End Sub
 
         AddHandler mainForm.PreviewKeyDown,
             Sub(sender As Object, e As PreviewKeyDownEventArgs)
@@ -23,15 +31,17 @@ Public Class MainForm_events
                 MainForm_KeyDown(sender, e)
             End Sub
 
-        buttonClick_event()
+        controlClick_event()
 
-        buttonKeyDown_event()
+        controlKeyDown_event()
 
-        buttonKeyPress_event()
+        controlKeyPress_event()
 
-        buttonPrev_PreviewKeyDown_event()
+        controlPrev_PreviewKeyDown_event()
 
-        buttonEnter()
+        controlEnter()
+
+        comboBox_event()
 
         AddHandler mainForm.TabControlOther.SelectedIndexChanged,
             Sub(sender As Object, e As EventArgs)
@@ -84,63 +94,208 @@ Public Class MainForm_events
                 worker_name_pad_Leave(sender, e)
             End Sub
 
+        book.threadFlags = threadFlags
+        bookFRDO.threadFlags = threadFlags
+        Report.threadFlags = threadFlags
+
+    End Sub
+
+    Private Sub checkThread(e As FormClosingEventArgs)
+
+        Try
+            For Each flag As KeyValuePair(Of String, Boolean) In threadFlags
+                If flag.Value Then
+                    MsgBox("Дождитесь завершения всех задач", 12, "Внимание")
+                    e.Cancel = True
+                    Return
+                End If
+            Next
+        Catch ex As Exception
+            e.Cancel = True
+        End Try
+
+
+    End Sub
+
+    Private Sub comboBox_event()
+
+        For Each control As KeyValuePair(Of Short, Control) In mainFormBuilder.controls
+
+            If Not control.Value.GetType.ToString = "System.Windows.Forms.ComboBox" Then Continue For
+
+            Dim currentCBox As ComboBox
+            currentCBox = control.Value
+
+            AddHandler currentCBox.SelectedIndexChanged, Sub(sender As Object, e As EventArgs)
+                                                             comboBox_SelectedIndexChanged(sender, e)
+                                                         End Sub
+
+            AddHandler currentCBox.PreviewKeyDown, Sub(sender As Object, e As PreviewKeyDownEventArgs)
+                                                       If e.KeyCode = Keys.Enter Then
+                                                           If Not currentCBox.DroppedDown Then
+                                                               dictionaryFlags(currentCBox.Name) = True
+                                                               e.IsInputKey = True
+                                                           Else
+                                                               dictionaryFlags(currentCBox.Name) = False
+                                                           End If
+                                                       End If
+                                                   End Sub
+
+            AddHandler currentCBox.KeyPress, Sub(sender As Object, e As KeyPressEventArgs)
+                                                 If e.KeyChar = Convert.ToChar(Keys.Enter) Then
+                                                     If dictionaryFlags(currentCBox.Name) Then
+                                                         currentCBox.DroppedDown = Not currentCBox.DroppedDown
+                                                         e.Handled = True
+                                                         dictionaryFlags(currentCBox.Name) = False
+                                                     End If
+                                                 End If
+                                             End Sub
+
+
+        Next
+
     End Sub
 
     Private Sub tabPageActivate()
 
-        For Each button As KeyValuePair(Of Short, Short) In mainFormBuilder.parentPage
-            If button.Value = mainForm.TabControlOther.SelectedIndex Then
-                mainFormBuilder.buttons(button.Key).Focus()
+        For Each control As KeyValuePair(Of Short, Short) In mainFormBuilder.parentPage
+
+            If control.Value = mainForm.TabControlOther.SelectedIndex Then
+                mainFormBuilder.controls(control.Key).Focus()
                 Return
             End If
+
         Next
 
     End Sub
 
-    Private Sub buttonClick_event()
+    Private Sub controlClick_event()
 
-        For Each button As KeyValuePair(Of Short, Button) In mainFormBuilder.buttons
+        For Each control As KeyValuePair(Of Short, Control) In mainFormBuilder.controls
 
-            AddHandler button.Value.Click,
+            If control.Value.GetType.ToString = "System.Windows.Forms.DateTimePicker" Or control.Value.GetType.ToString = "System.Windows.Forms.ComboBox" Then Continue For
+
+            AddHandler control.Value.Click,
                 Sub(sender As Object, e As EventArgs)
-                    buttonClick(button.Value.Name, sender, e)
+                    controlClick(control.Value.Name, sender, e)
                 End Sub
         Next
 
     End Sub
 
-    Private Sub buttonEnter()
+    Private Sub controlEnter()
 
-        For Each button As KeyValuePair(Of Short, Button) In mainFormBuilder.buttons
+        For Each control As KeyValuePair(Of Short, Control) In mainFormBuilder.controls
 
-            AddHandler button.Value.Enter,
+            If control.Value.GetType.ToString = "System.Windows.Forms.DateTimePicker" Or control.Value.GetType.ToString = "System.Windows.Forms.ComboBox" Then Continue For
+
+            AddHandler control.Value.Enter,
                 Sub(sender As Object, e As EventArgs)
-                    button.Value.Font = New Font("Microsoft YaHei", 14)
+                    control.Value.Font = New Font("Microsoft YaHei", 14)
                 End Sub
 
-            AddHandler button.Value.Leave,
+            AddHandler control.Value.Leave,
                 Sub(sender As Object, e As EventArgs)
-                    button.Value.Font = New Font("Microsoft YaHei", 12)
+                    control.Value.Font = New Font("Microsoft YaHei", 12)
                 End Sub
         Next
 
     End Sub
 
-    Private Sub buttonKeyDown_event()
+    Private Sub comboBox_SelectedIndexChanged(sender As Object, e As EventArgs)
 
-        For Each button As KeyValuePair(Of Short, Button) In mainFormBuilder.buttons
+        Dim queryString As String = ""
 
-            AddHandler button.Value.KeyDown,
+        Select Case sender.name
+
+            Case "students_defaultSearchSetts"
+
+                queryString = updateSettings("ПоискСлушателейПоУм", sender.Text)
+                mySQLConnector.sendQuery(queryString, 1)
+                If sender.Text <> "" Then
+                    НастройкаПоискаСлушателей.checkedAnyValue(sender.Text)
+                End If
+
+            Case "group_dafaultSearchSetts"
+
+                queryString = updateSettings("ПоискГруппПоУм", sender.Text)
+                mySQLConnector.sendQuery(queryString, 1)
+
+                If sender.Text <> "" Then
+                    Group__serchSettings.checkedAnyValue(sender.Text)
+                End If
+
+            Case "students_defaultSortSetts"
+
+                queryString = updateSettings("НастройкаСортировкиСлушателей", sender.Text)
+                mySQLConnector.sendQuery(queryString, 1)
+                If sender.Text <> "" Then
+                    sortSettsStudents.checkedAnyValue(sender.Text)
+                End If
+
+            Case "group_defaultSortSetts"
+
+                queryString = updateSettings("НастройкаСортировкиГрупп", sender.Text)
+                mySQLConnector.sendQuery(queryString, 1)
+
+                If sender.Text <> "" Then
+                    sortSettsGroup.checkedAnyValue(sender.Text)
+                End If
+
+            Case "maxNumberRows"
+
+                queryString = updateSettings("КоличествоСтрокВТаблице", sender.Text)
+                mySQLConnector.sendQuery(queryString, 1)
+
+            Case "directorName"
+
+                queryString = updateSettings("ДиректорФИО", sender.Text)
+                mySQLConnector.sendQuery(queryString, 1)
+
+            Case "directorPosition"
+
+                queryString = updateSettings("ДиректорДолжность", sender.Text)
+                mySQLConnector.sendQuery(queryString, 1)
+
+            Case "Согласовано1ПУ"
+
+                queryString = updateSettings("Согласовано1ПУ", sender.Text)
+                mySQLConnector.sendQuery(queryString, 1)
+
+            Case "Согласовано1ДолжностьПУ"
+
+                queryString = updateSettings("Согласовано1ДолжностьПУ", sender.Text)
+                mySQLConnector.sendQuery(queryString, 1)
+
+            Case "Согласовано2ПУ"
+
+                queryString = updateSettings("Согласовано2ПУ", sender.Text)
+                mySQLConnector.sendQuery(queryString, 1)
+
+            Case "Согласовано2ДолжностьПУ"
+
+                queryString = updateSettings("Согласовано2ДолжностьПУ", sender.Text)
+                mySQLConnector.sendQuery(queryString, 1)
+
+        End Select
+
+    End Sub
+
+    Private Sub controlKeyDown_event()
+
+        For Each control As KeyValuePair(Of Short, Control) In mainFormBuilder.controls
+
+            AddHandler control.Value.KeyDown,
                 Sub(sender As Object, e As KeyEventArgs)
-                    buttonKeyDown(button.Value.Name, sender, e)
+                    controlKeyDown(control.Value.Name, sender, e)
                 End Sub
         Next
 
     End Sub
 
-    Private Sub buttonKeyPress_event()
+    Private Sub controlKeyPress_event()
 
-        For Each button As KeyValuePair(Of Short, Button) In mainFormBuilder.buttons
+        For Each button As KeyValuePair(Of Short, Control) In mainFormBuilder.controls
             AddHandler button.Value.KeyPress,
                 Sub(sender As Object, e As KeyPressEventArgs)
                     buttonKeyPress(button.Value.Name, sender, e)
@@ -149,16 +304,16 @@ Public Class MainForm_events
 
     End Sub
 
-    Private Sub buttonPrev_PreviewKeyDown_event()
-        For Each button As KeyValuePair(Of Short, Button) In mainFormBuilder.buttons
-            AddHandler button.Value.PreviewKeyDown,
+    Private Sub controlPrev_PreviewKeyDown_event()
+        For Each control As KeyValuePair(Of Short, Control) In mainFormBuilder.controls
+            AddHandler control.Value.PreviewKeyDown,
                 Sub(sender As Object, e As PreviewKeyDownEventArgs)
-                    buttonPreviewKeyDown(button.Value.Name, sender, e)
+                    controlPreviewKeyDown(control.Value.Name, sender, e)
                 End Sub
         Next
     End Sub
 
-    Private Sub buttonPreviewKeyDown(buttonName As String, sender As Object, e As PreviewKeyDownEventArgs)
+    Private Sub controlPreviewKeyDown(controlName As String, sender As Object, e As PreviewKeyDownEventArgs)
 
         Select Case e.KeyValue
 
@@ -194,43 +349,70 @@ Public Class MainForm_events
 
     End Sub
 
-    Private Sub buttonKeyDown(buttonName As String, sender As Object, e As KeyEventArgs)
+    Private Sub controlKeyDown(controlName As String, sender As Object, e As KeyEventArgs)
 
         Select Case e.KeyValue
+
             Case Keys.Enter
-                buttonClick(buttonName, sender, e)
+
+                If sender.GetType.ToString = "System.Windows.Forms.Button" Then
+                    controlClick(controlName, sender, e)
+                ElseIf sender.GetType.ToString = "System.Windows.Forms.CheckBox" Then
+                    checkedChange(sender, e.KeyValue)
+                End If
                 e.Handled = True
+
             Case Keys.Up
-                mainFormBuilder.prevControl(mainFormBuilder.buttonNames(buttonName)).Focus()
+
+                If sender.GetType.ToString = "System.Windows.Forms.ComboBox" Then
+                    Dim comboBox As ComboBox
+                    comboBox = sender
+                    If comboBox.DroppedDown Then
+                        Return
+                    End If
+                End If
+                mainFormBuilder.prevControl(mainFormBuilder.controlNames(controlName)).Focus()
                 e.Handled = True
+
             Case Keys.Down
-                mainFormBuilder.nextControl(mainFormBuilder.buttonNames(buttonName)).Focus()
+
+                If sender.GetType.ToString = "System.Windows.Forms.ComboBox" Then
+                    Dim comboBox As ComboBox
+                    comboBox = sender
+                    If comboBox.DroppedDown Then
+                        Return
+                    End If
+                End If
+                mainFormBuilder.nextControl(mainFormBuilder.controlNames(controlName)).Focus()
                 e.Handled = True
+
         End Select
 
     End Sub
 
     Private Sub buttonKeyPress(buttonName As String, sender As Object, e As KeyPressEventArgs)
 
+        If sender.GetType.ToString = "System.Windows.Forms.DateTimePicker" Then Return
+
         If e.KeyChar = Convert.ToChar(mainForm.switchPageKey) Then
 
-            openNextPage(mainFormBuilder.nextControl(mainFormBuilder.buttonNames(buttonName)))
+            openNextPage(mainFormBuilder.nextControl(mainFormBuilder.controlNames(buttonName)))
             e.Handled = True
 
         End If
 
         If e.KeyChar = Convert.ToChar(mainForm.seitchPageKey_Inverse) Then
 
-            openPrevPage(mainFormBuilder.prevControl(mainFormBuilder.buttonNames(buttonName)))
+            openPrevPage(mainFormBuilder.prevControl(mainFormBuilder.controlNames(buttonName)))
             e.Handled = True
 
         End If
 
     End Sub
 
-    Private Sub buttonClick(buttonName As String, sender As Object, e As EventArgs)
+    Private Sub controlClick(controlName As String, sender As Object, e As EventArgs)
 
-        Select Case buttonName
+        Select Case controlName
 
             Case "openGroupListPK"
                 openGroupListPK(sender, e)
@@ -318,6 +500,8 @@ Public Class MainForm_events
             Case "bookFPO"
                 bookFRDO.bookArgument.type = "Свидетельство"
                 bookFRDO.bookFRDOClick()
+            Case "reportRun"
+                Report.run()
 
         End Select
 
@@ -355,6 +539,7 @@ Public Class MainForm_events
 
         If e.KeyCode = mainForm.switchPageKey Then
 
+            If sender.ActiveControl.GetType.ToString = "System.Windows.Forms.DateTimePicker" Then Return
             If mainForm.red_moduls.Focused Or mainForm.newModAddName.Focused Or mainForm.newModAddHour.Focused Or mainForm.worker_name.Focused Or mainForm.worker_name_full.Focused Or mainForm.worker_name_pad.Focused Then
                 Return
             End If
@@ -364,7 +549,7 @@ Public Class MainForm_events
         End If
 
         If e.KeyCode = mainForm.seitchPageKey_Inverse Then
-
+            If sender.ActiveControl.GetType.ToString = "System.Windows.Forms.DateTimePicker" Then Return
             If mainForm.red_moduls.Focused Or mainForm.newModAddName.Focused Or mainForm.newModAddHour.Focused Or mainForm.worker_name.Focused Or mainForm.worker_name_full.Focused Or mainForm.worker_name_pad.Focused Then
                 Return
             End If
@@ -379,7 +564,7 @@ Public Class MainForm_events
     Private Sub openGroupListPK(sender As Object, e As EventArgs)
 
         mainForm.cvalific = MainForm.PK
-        mainForm.ActiveControl = mainForm.Button2
+        mainForm.ActiveControl = mainForm.TabControlOther.TabPages(0)
         GroupList.ShowDialog()
 
     End Sub
@@ -387,13 +572,13 @@ Public Class MainForm_events
     Private Sub openGroupListPP(sender As Object, e As EventArgs)
 
         mainForm.cvalific = MainForm.PP
-        mainForm.ActiveControl = mainForm.Button2
+        mainForm.ActiveControl = mainForm.TabControlOther.TabPages(0)
         GroupList.ShowDialog()
 
     End Sub
     Private Sub createGroup_Click(sender As Object, e As EventArgs)
 
-        mainForm.ActiveControl = mainForm.Button2
+        mainForm.ActiveControl = mainForm.TabControlOther.TabPages(0)
         newGroup.redactorMode = False
         newGroup.ShowDialog()
 
@@ -403,19 +588,19 @@ Public Class MainForm_events
     Private Sub openGroupListPO(sender As Object, e As EventArgs)
 
         mainForm.cvalific = MainForm.PO
-        mainForm.ActiveControl = mainForm.Button2
+        mainForm.ActiveControl = mainForm.TabControlOther.TabPages(0)
         GroupList.ShowDialog()
 
     End Sub
 
     Private Sub openStudentList(sender As Object, e As EventArgs)
 
-        If mainForm.students__defaultSearchSetts.Text = "" Then
+        If mainFormBuilder.controls(mainFormBuilder.controlNames("students_defaultSearchSetts")).Text = "" Then
             НастройкаПоискаСлушателей.Снилс.Checked = True
         End If
 
         StudentsList.insertIntoGroupList.Visible = False
-        mainForm.ActiveControl = mainForm.Button2
+        mainForm.ActiveControl = mainForm.TabControlOther.TabPages(0)
         StudentsList.searchSetts.Visible = False
         StudentsList.showStudentsList()
         StudentsList.ShowDialog()
@@ -424,14 +609,14 @@ Public Class MainForm_events
 
     Private Sub addStudent(sender As Object, e As EventArgs)
 
-        mainForm.ActiveControl = mainForm.Button2
+        mainForm.ActiveControl = mainForm.TabControlOther.TabPages(0)
         newStudent.ShowDialog()
 
     End Sub
 
     Private Sub openGgrades(sender As Object, e As EventArgs)
 
-        mainForm.ActiveControl = mainForm.Button2
+        mainForm.ActiveControl = mainForm.TabControlOther.TabPages(0)
         Grades.groupNumber.Clear()
         Grades.resultTable.Rows.Clear()
         Grades.ShowDialog()
@@ -439,7 +624,7 @@ Public Class MainForm_events
     End Sub
     Private Sub openGgradesIA(sender As Object, e As EventArgs)
 
-        mainForm.ActiveControl = mainForm.Button2
+        mainForm.ActiveControl = mainForm.TabControlOther.TabPages(0)
         GradesIA.groupNumber.Clear()
         GradesIA.iaTAble.Rows.Clear()
         GradesIA.ShowDialog()
@@ -453,7 +638,7 @@ Public Class MainForm_events
 
         WorkerReport.WorkerReport_Init()
 
-        mainForm.ActiveControl = mainForm.Button2
+        mainForm.ActiveControl = mainForm.TabControlOther.TabPages(0)
 
         WorkerReport.pednagr__mainTable.Rows.Clear()
         WorkerReport.groupNumber.Clear()

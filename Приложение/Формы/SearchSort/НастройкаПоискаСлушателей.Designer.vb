@@ -32,8 +32,8 @@ Partial Class НастройкаПоискаСлушателей
         '
         Me.Снилс.AutoSize = True
         Me.Снилс.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.Снилс.Location = New System.Drawing.Point(20, 10)
-        Me.Снилс.Margin = New System.Windows.Forms.Padding(5, 5, 5, 5)
+        Me.Снилс.Location = New System.Drawing.Point(16, 2)
+        Me.Снилс.Margin = New System.Windows.Forms.Padding(5)
         Me.Снилс.Name = "Снилс"
         Me.Снилс.Size = New System.Drawing.Size(77, 25)
         Me.Снилс.TabIndex = 0
@@ -44,8 +44,8 @@ Partial Class НастройкаПоискаСлушателей
         '
         Me.Фамилия.AutoSize = True
         Me.Фамилия.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.Фамилия.Location = New System.Drawing.Point(20, 30)
-        Me.Фамилия.Margin = New System.Windows.Forms.Padding(5, 5, 5, 5)
+        Me.Фамилия.Location = New System.Drawing.Point(16, 32)
+        Me.Фамилия.Margin = New System.Windows.Forms.Padding(5)
         Me.Фамилия.Name = "Фамилия"
         Me.Фамилия.Size = New System.Drawing.Size(101, 25)
         Me.Фамилия.TabIndex = 1
@@ -56,8 +56,8 @@ Partial Class НастройкаПоискаСлушателей
         '
         Me.Имя.AutoSize = True
         Me.Имя.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.Имя.Location = New System.Drawing.Point(20, 50)
-        Me.Имя.Margin = New System.Windows.Forms.Padding(5, 5, 5, 5)
+        Me.Имя.Location = New System.Drawing.Point(16, 62)
+        Me.Имя.Margin = New System.Windows.Forms.Padding(5)
         Me.Имя.Name = "Имя"
         Me.Имя.Size = New System.Drawing.Size(63, 25)
         Me.Имя.TabIndex = 2
@@ -68,8 +68,8 @@ Partial Class НастройкаПоискаСлушателей
         '
         Me.Отчество.AutoSize = True
         Me.Отчество.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.Отчество.Location = New System.Drawing.Point(20, 70)
-        Me.Отчество.Margin = New System.Windows.Forms.Padding(5, 5, 5, 5)
+        Me.Отчество.Location = New System.Drawing.Point(16, 92)
+        Me.Отчество.Margin = New System.Windows.Forms.Padding(5)
         Me.Отчество.Name = "Отчество"
         Me.Отчество.Size = New System.Drawing.Size(102, 25)
         Me.Отчество.TabIndex = 3
@@ -80,13 +80,14 @@ Partial Class НастройкаПоискаСлушателей
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(10.0!, 21.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(424, 101)
+        Me.ClientSize = New System.Drawing.Size(424, 122)
         Me.Controls.Add(Me.Отчество)
         Me.Controls.Add(Me.Имя)
         Me.Controls.Add(Me.Фамилия)
         Me.Controls.Add(Me.Снилс)
         Me.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.Margin = New System.Windows.Forms.Padding(5, 5, 5, 5)
+        Me.KeyPreview = True
+        Me.Margin = New System.Windows.Forms.Padding(5)
         Me.Name = "НастройкаПоискаСлушателей"
         Me.Text = "Настройка поиска слушателей"
         Me.ResumeLayout(False)

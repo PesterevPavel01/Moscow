@@ -9,7 +9,6 @@ Public Class MainForm
     Public switchPageKey As Integer = Keys.Right
     Public seitchPageKey_Inverse As Integer = Keys.Left
 
-    Public orderNumber As Integer
     Public directorOff As Boolean = False
     Public mySqlConnect As New MySQLConnect
     Public orderIdGroup As Int64 = 0
@@ -66,8 +65,8 @@ Public Class MainForm
         StudentsInGroup.tbl_studentsInGroup.studentInGroupSettings_init()
         StudentsInGroup.tbl_studentsInGroup.keyboardEvents.userDGV_init()
 
-        mainFormBuilder.buttons(1).Focus()
-        mainFormBuilder.buttons(1).Select()
+        mainFormBuilder.controls(1).Focus()
+        mainFormBuilder.controls(1).Select()
 
     End Sub
 
@@ -93,13 +92,6 @@ Public Class MainForm
             s_control.Select(lenght, 0)
 
         End If
-
-    End Sub
-
-    Private Sub createOtchet_Click(sender As Object, e As EventArgs) Handles createOtchet.Click
-
-        ActiveControl = Button2
-        createMainDokument()
 
     End Sub
 
@@ -344,61 +336,6 @@ Public Class MainForm
 
     End Sub
 
-    Private Sub ОтчетРуководителя_KeyDown(sender As Object, e As KeyEventArgs) Handles ОтчетРуководителя.KeyDown
-
-        ЧекатьНаИнтер(ОтчетРуководителя, e.KeyCode)
-
-    End Sub
-
-    Private Sub ChСводПоКурсам_KeyDown(sender As Object, e As KeyEventArgs) Handles ChСводПоКурсам.KeyDown
-
-        If e.KeyCode = 13 Then
-
-            If ChСводПоКурсам.Checked Then
-
-                ChСводПоКурсам.Checked = False
-
-            Else
-
-                ChСводПоКурсам.Checked = True
-
-            End If
-
-        End If
-    End Sub
-
-
-    Private Sub СводПоСпец_KeyDown(sender As Object, e As KeyEventArgs) Handles СводПоСпец.KeyDown
-
-        ЧекатьНаИнтер(СводПоСпец, e.KeyCode)
-
-    End Sub
-
-
-    Private Sub СводПоОрганиз_KeyDown(sender As Object, e As KeyEventArgs) Handles СводПоОрганиз.KeyDown
-
-        ЧекатьНаИнтер(СводПоОрганиз, e.KeyCode)
-
-    End Sub
-
-    Private Sub БюджетВбюдж_KeyDown(sender As Object, e As KeyEventArgs) Handles БюджетВбюдж.KeyDown
-
-        ЧекатьНаИнтер(БюджетВбюдж, e.KeyCode)
-
-    End Sub
-
-    Private Sub ОтчетПеднагрузка_KeyDown(sender As Object, e As KeyEventArgs) Handles ОтчетПеднагрузка.KeyDown
-
-        ЧекатьНаИнтер(ОтчетПеднагрузка, e.KeyCode)
-
-    End Sub
-
-    Private Sub CheckBoxРМАНПО_KeyDown(sender As Object, e As KeyEventArgs)
-
-        ЧекатьНаИнтер(ChРМАНПО, e.KeyCode)
-
-    End Sub
-
     Sub НормальныйШрифт(контрол As Object)
 
         контрол.Font = New Font("Microsoft YaHei", 12.0F, FontStyle.Regular)
@@ -410,63 +347,14 @@ Public Class MainForm
 
     End Sub
 
-    Private Sub ОтчетРуководителя_GotFocus(sender As Object, e As EventArgs) Handles ОтчетРуководителя.GotFocus
-        Call увеличитьШрифт(ActiveControl)
-    End Sub
-
-    Private Sub ОтчетРуководителя_LostFocus(sender As Object, e As EventArgs) Handles ОтчетРуководителя.LostFocus
-        Call НормальныйШрифт(ОтчетРуководителя)
-    End Sub
-
-    Private Sub ChРМАНПО_GotFocus(sender As Object, e As EventArgs) Handles ChРМАНПО.GotFocus
-        Call увеличитьШрифт(ActiveControl)
-    End Sub
-
-    Private Sub ChРМАНПО_LostFocus(sender As Object, e As EventArgs) Handles ChРМАНПО.LostFocus
-        Call НормальныйШрифт(ChРМАНПО)
-    End Sub
-
-    Private Sub ChСводПоКурсам_GotFocus(sender As Object, e As EventArgs) Handles ChСводПоКурсам.GotFocus
-        Call увеличитьШрифт(ChСводПоКурсам)
-    End Sub
-
-    Private Sub ChСводПоКурсам_LostFocus(sender As Object, e As EventArgs) Handles ChСводПоКурсам.LostFocus
-        Call НормальныйШрифт(ChСводПоКурсам)
-    End Sub
-
-    Private Sub СводПоСпец_GotFocus(sender As Object, e As EventArgs) Handles СводПоСпец.GotFocus
-        Call увеличитьШрифт(ActiveControl)
-    End Sub
-
-    Private Sub СводПоСпец_LostFocus(sender As Object, e As EventArgs) Handles СводПоСпец.LostFocus
-        Call НормальныйШрифт(СводПоСпец)
-    End Sub
-
-
-    Private Sub СводПоОрганиз_GotFocus(sender As Object, e As EventArgs) Handles СводПоОрганиз.GotFocus
-        Call увеличитьШрифт(ActiveControl)
-    End Sub
-
-    Private Sub СводПоОрганиз_LostFocus(sender As Object, e As EventArgs) Handles СводПоОрганиз.LostFocus
-        Call НормальныйШрифт(СводПоОрганиз)
-    End Sub
-
-    Private Sub БюджетВбюдж_GotFocus(sender As Object, e As EventArgs) Handles БюджетВбюдж.GotFocus
-        Call увеличитьШрифт(ActiveControl)
-    End Sub
-
-    Private Sub БюджетВбюдж_LostFocus(sender As Object, e As EventArgs) Handles БюджетВбюдж.LostFocus
-        Call НормальныйШрифт(БюджетВбюдж)
-    End Sub
-
-    Private Sub directorName_Click(sender As Object, e As EventArgs) Handles directorName.Click
+    Private Sub directorName_Click(sender As Object, e As EventArgs)
         List.textboxName = Me.ActiveControl.Name
         List.currentFormName = Me.Name
         List.ShowDialog()
 
     End Sub
 
-    Private Sub directorPosition_Click(sender As Object, e As EventArgs) Handles directorPosition.Click
+    Private Sub directorPosition_Click(sender As Object, e As EventArgs)
 
         List.textboxName = ActiveControl.Name
         List.currentFormName = Name
@@ -474,7 +362,7 @@ Public Class MainForm
 
     End Sub
 
-    Private Sub Согласовано1ДолжностьПУ_Click(sender As Object, e As EventArgs) Handles Согласовано1ДолжностьПУ.Click
+    Private Sub Согласовано1ДолжностьПУ_Click(sender As Object, e As EventArgs)
 
         List.textboxName = ActiveControl.Name
         List.currentFormName = Name
@@ -482,7 +370,7 @@ Public Class MainForm
 
     End Sub
 
-    Private Sub Согласовано2ДолжностьПУ_Click(sender As Object, e As EventArgs) Handles Согласовано2ДолжностьПУ.Click
+    Private Sub Согласовано2ДолжностьПУ_Click(sender As Object, e As EventArgs)
 
         List.textboxName = ActiveControl.Name
         List.currentFormName = Name
@@ -490,7 +378,7 @@ Public Class MainForm
 
     End Sub
 
-    Private Sub Согласовано1ПУ_Click(sender As Object, e As EventArgs) Handles Согласовано1ПУ.Click
+    Private Sub Согласовано1ПУ_Click(sender As Object, e As EventArgs)
 
         List.textboxName = ActiveControl.Name
         List.currentFormName = Name
@@ -498,7 +386,7 @@ Public Class MainForm
 
     End Sub
 
-    Private Sub Согласовано2ПУ_Click(sender As Object, e As EventArgs) Handles Согласовано2ПУ.Click
+    Private Sub Согласовано2ПУ_Click(sender As Object, e As EventArgs)
 
         List.textboxName = ActiveControl.Name
         List.currentFormName = Name
@@ -532,7 +420,7 @@ Public Class MainForm
         End If
     End Sub
 
-    Private Sub Button2_KeyDown(sender As Object, e As KeyEventArgs) Handles Button2.KeyDown
+    Private Sub Button2_KeyDown(sender As Object, e As KeyEventArgs)
         If e.KeyCode = switchPageKey Then
             openNextPage(TabControlOther)
             e.Handled = True
@@ -544,7 +432,7 @@ Public Class MainForm
         End If
     End Sub
 
-    Private Sub Button2_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs) Handles Button2.PreviewKeyDown
+    Private Sub Button2_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs)
         If e.KeyCode = switchPageKey Then
             e.IsInputKey = True
         End If
@@ -1254,95 +1142,6 @@ Public Class MainForm
 
     End Sub
 
-    Private Sub ДиректорФИО_TextChanged(sender As Object, e As EventArgs) Handles directorName.TextChanged
-        Dim queryString As String = ""
-        queryString = updateSettings("ДиректорФИО", directorName.Text)
-        mySqlConnect.sendQuery(queryString, 1)
-    End Sub
-
-    Private Sub ДиректорДолжность_TextChanged(sender As Object, e As EventArgs) Handles directorPosition.TextChanged
-        Dim queryString As String = ""
-        queryString = updateSettings("ДиректорДолжность", directorPosition.Text)
-        mySqlConnect.sendQuery(queryString, 1)
-    End Sub
-
-    Private Sub Согласовано1ПУ_TextChanged(sender As Object, e As EventArgs) Handles Согласовано1ПУ.TextChanged
-        Dim queryString As String = ""
-        queryString = updateSettings("Согласовано1ПУ", Согласовано1ПУ.Text)
-        mySqlConnect.sendQuery(queryString, 1)
-    End Sub
-
-    Private Sub Согласовано1ДолжностьПУ_TextChanged(sender As Object, e As EventArgs) Handles Согласовано1ДолжностьПУ.TextChanged
-        Dim queryString As String = ""
-        queryString = updateSettings("Согласовано1ДолжностьПУ", Согласовано1ДолжностьПУ.Text)
-        mySqlConnect.sendQuery(queryString, 1)
-    End Sub
-
-    Private Sub Согласовано2ПУ_TextChanged(sender As Object, e As EventArgs) Handles Согласовано2ПУ.TextChanged
-        Dim queryString As String = ""
-        queryString = updateSettings("Согласовано2ПУ", Согласовано2ПУ.Text)
-        mySqlConnect.sendQuery(queryString, 1)
-    End Sub
-
-    Private Sub Согласовано2ДолжностьПУ_TextChanged(sender As Object, e As EventArgs) Handles Согласовано2ДолжностьПУ.TextChanged
-        Dim queryString As String = ""
-        queryString = updateSettings("Согласовано2ДолжностьПУ", Согласовано2ДолжностьПУ.Text)
-        mySqlConnect.sendQuery(queryString, 1)
-    End Sub
-
-    Private Sub maxNumberRows_TextChanged(sender As Object, e As EventArgs) Handles maxNumberRows.TextChanged
-        Dim queryString As String = ""
-        queryString = updateSettings("КоличествоСтрокВТаблице", maxNumberRows.Text)
-        mySqlConnect.sendQuery(queryString, 1)
-    End Sub
-
-    Private Sub ПоискСлушателейПоУм_SelectedIndexChanged(sender As Object, e As EventArgs) Handles students__defaultSearchSetts.SelectedIndexChanged
-
-        Dim queryString As String = ""
-        queryString = updateSettings("ПоискСлушателейПоУм", students__defaultSearchSetts.Text)
-        mySqlConnect.sendQuery(queryString, 1)
-        If students__defaultSearchSetts.Text <> "" Then
-            НастройкаПоискаСлушателей.checkedAnyValue(students__defaultSearchSetts.Text)
-        End If
-
-    End Sub
-
-    Private Sub ПоискГруппПоУм_SelectedIndexChanged(sender As Object, e As EventArgs) Handles group_dafaultSearchSetts.SelectedIndexChanged
-
-        Dim queryString As String = ""
-        queryString = updateSettings("ПоискГруппПоУм", group_dafaultSearchSetts.Text)
-        mySqlConnect.sendQuery(queryString, 1)
-
-        If group_dafaultSearchSetts.Text <> "" Then
-            Group__serchSettings.checkedAnyValue(group_dafaultSearchSetts.Text)
-        End If
-
-    End Sub
-
-    Private Sub НастройкаСортировкиСлушателей_SelectedIndexChanged(sender As Object, e As EventArgs) Handles students__defaultSortSetts.SelectedIndexChanged
-
-        Dim queryString As String = ""
-        queryString = updateSettings("НастройкаСортировкиСлушателей", students__defaultSortSetts.Text)
-        mySqlConnect.sendQuery(queryString, 1)
-        If students__defaultSortSetts.Text <> "" Then
-            sortSettsStudents.checkedAnyValue(students__defaultSortSetts.Text)
-        End If
-
-    End Sub
-
-    Private Sub НастройкаСортировкиГрупп_SelectedIndexChanged(sender As Object, e As EventArgs) Handles group__dafaultSortSetts.SelectedIndexChanged
-
-        Dim queryString As String = ""
-
-        queryString = updateSettings("НастройкаСортировкиГрупп", group__dafaultSortSetts.Text)
-        mySqlConnect.sendQuery(queryString, 1)
-
-        If group__dafaultSortSetts.Text <> "" Then
-            sortSettsGroup.checkedAnyValue(group__dafaultSortSetts.Text)
-        End If
-
-    End Sub
-
     Private Sub passwordOther_TextChanged(sender As Object, e As EventArgs) Handles passwordOther.TextChanged
 
         If passwordOther.Text = password0 Then
@@ -1748,7 +1547,7 @@ Public Class MainForm
     Private Sub passwrdSetts_TextChanged(sender As Object, e As EventArgs) Handles passwrdSetts.TextChanged
 
         If passwrdSetts.Text = password0 Then
-            PanelSetts.Visible = True
+            panelSetts.Visible = True
             passwrdSetts.Visible = False
         End If
 

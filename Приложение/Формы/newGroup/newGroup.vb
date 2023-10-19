@@ -13,6 +13,7 @@ Public Class newGroup
     Public swichNumbers As SwichNumbers
     Public dictionaryFlag As Dictionary(Of String, Boolean)
     Public redactorMode As Boolean = False
+    Private controlsEvents As New Controls_events ' Задает повидение комбобоксов и текстбоксов
 
     Public Sub setProgKod(kod As Integer)
 
@@ -338,8 +339,19 @@ Public Class newGroup
 
         If e.KeyCode = Keys.Up Or e.KeyCode = Keys.Down Then
 
-            pressTab(e.KeyCode, Keys.Down)
-            up(Me, e.KeyCode, Keys.Up)
+            If ActiveControl.GetType.ToString = "System.Windows.Forms.ComboBox" Then
+                Dim comboBox As ComboBox = ActiveControl
+                If comboBox.DroppedDown Then Return
+            End If
+
+            If ActiveControl.TabIndex = 0 And e.KeyCode = Keys.Up Then
+                header.Focus()
+                saveButton.Select()
+            Else
+                pressTab(e.KeyCode, Keys.Down)
+                up(Me, e.KeyCode, Keys.Up)
+            End If
+
             e.Handled = True
 
         End If
@@ -529,7 +541,7 @@ Public Class newGroup
 
         Dim path As String = updateResourcesPath() + "images//"
         cover_image = Image.FromFile(path + "deactivate.png")
-        controlsReaction(dictionaryFlag, Me)
+        controlsEvents.controlsReaction(dictionaryFlag, Me)
         ActiveControl = BtnFocus
 
     End Sub

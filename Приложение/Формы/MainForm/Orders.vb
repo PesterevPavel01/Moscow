@@ -35,14 +35,15 @@ Public Class Orders
         BuildOrder.Size = New Size(840, 1020)
         BuildOrder.КнопкаСформировать.Location = New Point(135, 935)
         BuildOrder.КнопкаОчистить.Location = New Point(2, 935)
-        MainForm.directorPosition.Visible = True
-        MainForm.ActiveControl = MainForm.Button2
+        'MainForm.directorPosition.Visible = True
+        MainForm.ActiveControl = MainForm.TabControlOther.TabPages(2)
 
         MainForm.standard_location()
 
         BuildOrder.ShowDialog()
 
         BuildOrder.tableStudentsList.Visible = False
+        MainForm.ActiveControl = MainForm.TabControlOther.TabPages(1)
 
     End Sub
 
@@ -82,8 +83,8 @@ Public Class Orders
         BuildOrder.Size = New Size(840, 1000)
         BuildOrder.КнопкаСформировать.Location = New Point(135, 915)
         BuildOrder.КнопкаОчистить.Location = New Point(2, 915)
-        MainForm.directorPosition.Visible = True
-        MainForm.ActiveControl = MainForm.Button2
+        'MainForm.directorPosition.Visible = True
+        MainForm.ActiveControl = MainForm.TabControlOther.TabPages(2)
 
         'местоНаФормеПослеДиректора(3, BuildOrder.Label4, BuildOrder.Label13, BuildOrder.Ответственный, BuildOrder.ОтветственныйДолжность, BuildOrder.GroupBox5)
         MainForm.местоНаФорме(1, BuildOrder.Label2, BuildOrder.Label14, BuildOrder.Утверждает, BuildOrder.УтверждаетДолжность, BuildOrder.GroupBox6)
@@ -100,6 +101,7 @@ Public Class Orders
         MainForm.местоНаФорме(1, BuildOrder.Label2, BuildOrder.Label14, BuildOrder.Утверждает, BuildOrder.УтверждаетДолжность, BuildOrder.GroupBox6)
         BuildOrder.tableStudentsList.Visible = False
         MainForm.inputField(False)
+        MainForm.ActiveControl = MainForm.TabControlOther.TabPages(1)
 
     End Sub
 
@@ -130,7 +132,7 @@ Public Class Orders
         BuildOrder.КнопкаСформировать.Location = New Point(135, 580)
         BuildOrder.КнопкаОчистить.Location = New Point(2, 580)
 
-        MainForm.ActiveControl = MainForm.Button2
+        MainForm.ActiveControl = MainForm.TabControlOther.TabPages(2)
 
         MainForm.местоНаФормеПослеДиректора(2, BuildOrder.Label4, BuildOrder.Label13, BuildOrder.Ответственный, BuildOrder.ОтветственныйДолжность, BuildOrder.GroupBox5)
         MainForm.местоНаФорме(1, BuildOrder.Label2, BuildOrder.Label14, BuildOrder.Утверждает, BuildOrder.УтверждаетДолжность, BuildOrder.GroupBox6)
@@ -140,6 +142,8 @@ Public Class Orders
         MainForm.местоНаФормеПослеДиректора(6, BuildOrder.Label11, BuildOrder.Label12, BuildOrder.Согласовано2, BuildOrder.Согласовано2Должность, BuildOrder.GroupBox4)
 
         BuildOrder.ShowDialog()
+
+        MainForm.ActiveControl = MainForm.TabControlOther.TabPages(1)
 
     End Sub
 
@@ -171,7 +175,7 @@ Public Class Orders
         BuildOrder.КнопкаСформировать.Location = New Point(135, 580)
         BuildOrder.КнопкаОчистить.Location = New Point(2, 580)
 
-        MainForm.ActiveControl = MainForm.Button2
+        MainForm.ActiveControl = MainForm.TabControlOther.TabPages(2)
 
         MainForm.местоНаФорме(1, BuildOrder.Label2, BuildOrder.Label14, BuildOrder.Утверждает, BuildOrder.УтверждаетДолжность, BuildOrder.GroupBox6)
         MainForm.местоНаФормеПослеДиректора(2, BuildOrder.Label5, BuildOrder.Label6, BuildOrder.ПроектВносит, BuildOrder.ПроектВноситДолжность, BuildOrder.GroupBox1)
@@ -181,6 +185,8 @@ Public Class Orders
 
         BuildOrder.ShowDialog()
 
+        MainForm.ActiveControl = MainForm.TabControlOther.TabPages(1)
+
     End Sub
 
     Public Sub createEndingUdPK(sender As Object, e As EventArgs)
@@ -188,7 +194,7 @@ Public Class Orders
         BuildOrder.cvalification = MainForm.PK
         BuildOrder.orderType = "ПК окончание уд"
         BuildOrder.Text = "ПК_Окончание_уд"
-        MainForm.ActiveControl = MainForm.Button2
+        MainForm.ActiveControl = MainForm.TabControlOther.TabPages(2)
 
         MainForm.ОтветственныйЗаАттестацию(False)
         MainForm.чекбоксы(False, "", "", "")
@@ -217,7 +223,7 @@ Public Class Orders
         BuildOrder.КнопкаСформировать.Location = New Point(135, 907)
         BuildOrder.КнопкаОчистить.Location = New Point(2, 907)
 
-        MainForm.ActiveControl = MainForm.Button2
+        MainForm.ActiveControl = MainForm.TabControlOther.TabPages(2)
 
         MainForm.местоНаФорме(1, BuildOrder.Label2, BuildOrder.Label14, BuildOrder.Утверждает, BuildOrder.УтверждаетДолжность, BuildOrder.GroupBox6)
         MainForm.местоНаФормеПослеДиректора(2, BuildOrder.Label5, BuildOrder.Label6, BuildOrder.ПроектВносит, BuildOrder.ПроектВноситДолжность, BuildOrder.GroupBox1)
@@ -228,6 +234,8 @@ Public Class Orders
         BuildOrder.ShowDialog()
 
         BuildOrder.tableStudentsList.Visible = False
+
+        MainForm.ActiveControl = MainForm.TabControlOther.TabPages(1)
 
     End Sub
 
@@ -254,7 +262,7 @@ Public Class Orders
         BuildOrder.КнопкаСформировать.Location = New Point(135, 505)
         BuildOrder.КнопкаОчистить.Location = New Point(2, 505)
 
-        MainForm.ActiveControl = MainForm.Button2
+        MainForm.ActiveControl = MainForm.TabControlOther.TabPages(2)
 
         'Call местоНаФормеПослеДиректора(2, BuildOrder.Label4, BuildOrder.Label13, BuildOrder.Ответственный, BuildOrder.ОтветственныйДолжность, BuildOrder.GroupBox5)
         MainForm.местоНаФорме(1, BuildOrder.Label2, BuildOrder.Label14, BuildOrder.Утверждает, BuildOrder.УтверждаетДолжность, BuildOrder.GroupBox6)
@@ -264,6 +272,8 @@ Public Class Orders
         MainForm.местоНаФормеПослеДиректора(5, BuildOrder.Label11, BuildOrder.Label12, BuildOrder.Согласовано2, BuildOrder.Согласовано2Должность, BuildOrder.GroupBox4)
 
         BuildOrder.ShowDialog()
+
+        MainForm.ActiveControl = MainForm.TabControlOther.TabPages(1)
 
     End Sub
 
@@ -291,7 +301,7 @@ Public Class Orders
         BuildOrder.КнопкаСформировать.Location = New Point(135, 580)
         BuildOrder.КнопкаОчистить.Location = New Point(2, 580)
 
-        MainForm.ActiveControl = MainForm.Button2
+        MainForm.ActiveControl = MainForm.TabControlOther.TabPages(2)
 
         MainForm.местоНаФормеПослеДиректора(2, BuildOrder.Label4, BuildOrder.Label13, BuildOrder.Ответственный, BuildOrder.ОтветственныйДолжность, BuildOrder.GroupBox5)
         MainForm.местоНаФорме(1, BuildOrder.Label2, BuildOrder.Label14, BuildOrder.Утверждает, BuildOrder.УтверждаетДолжность, BuildOrder.GroupBox6)
@@ -301,6 +311,8 @@ Public Class Orders
         MainForm.местоНаФормеПослеДиректора(6, BuildOrder.Label11, BuildOrder.Label12, BuildOrder.Согласовано2, BuildOrder.Согласовано2Должность, BuildOrder.GroupBox4)
 
         BuildOrder.ShowDialog()
+
+        MainForm.ActiveControl = MainForm.TabControlOther.TabPages(1)
 
     End Sub
 
@@ -329,7 +341,7 @@ Public Class Orders
         BuildOrder.КнопкаСформировать.Location = New Point(135, 877)
         BuildOrder.КнопкаОчистить.Location = New Point(2, 877)
 
-        MainForm.ActiveControl = MainForm.Button2
+        MainForm.ActiveControl = MainForm.TabControlOther.TabPages(2)
 
         MainForm.местоНаФорме(1, BuildOrder.Label4, BuildOrder.Label13, BuildOrder.Ответственный, BuildOrder.ОтветственныйДолжность, BuildOrder.GroupBox5)
         MainForm.местоНаФорме(2, BuildOrder.Label22, BuildOrder.Label23, BuildOrder.ЗамПредседателя, BuildOrder.ЗамПредседателяДолжность, BuildOrder.GroupBox12)
@@ -346,6 +358,8 @@ Public Class Orders
         BuildOrder.ShowDialog()
 
         BuildOrder.comission = False
+
+        MainForm.ActiveControl = MainForm.TabControlOther.TabPages(1)
 
     End Sub
 
@@ -373,7 +387,7 @@ Public Class Orders
         BuildOrder.КнопкаСформировать.Location = New Point(135, 580)
         BuildOrder.КнопкаОчистить.Location = New Point(2, 580)
 
-        MainForm.ActiveControl = MainForm.Button2
+        MainForm.ActiveControl = MainForm.TabControlOther.TabPages(2)
 
         MainForm.местоНаФорме(1, BuildOrder.Label2, BuildOrder.Label14, BuildOrder.Утверждает, BuildOrder.УтверждаетДолжность, BuildOrder.GroupBox6)
         MainForm.местоНаФормеПослеДиректора(2, BuildOrder.Label5, BuildOrder.Label6, BuildOrder.ПроектВносит, BuildOrder.ПроектВноситДолжность, BuildOrder.GroupBox1)
@@ -382,6 +396,8 @@ Public Class Orders
         MainForm.местоНаФормеПослеДиректора(5, BuildOrder.Label11, BuildOrder.Label12, BuildOrder.Согласовано2, BuildOrder.Согласовано2Должность, BuildOrder.GroupBox4)
 
         BuildOrder.ShowDialog()
+
+        MainForm.ActiveControl = MainForm.TabControlOther.TabPages(1)
 
     End Sub
 
@@ -409,7 +425,7 @@ Public Class Orders
         BuildOrder.КнопкаСформировать.Location = New Point(135, 580)
         BuildOrder.КнопкаОчистить.Location = New Point(2, 580)
 
-        MainForm.ActiveControl = MainForm.Button2
+        MainForm.ActiveControl = MainForm.TabControlOther.TabPages(2)
 
         'Call местоНаФормеПослеДиректора(2, BuildOrder.Label4, BuildOrder.Label13, BuildOrder.Ответственный, BuildOrder.ОтветственныйДолжность, BuildOrder.GroupBox5)
         MainForm.местоНаФорме(1, BuildOrder.Label2, BuildOrder.Label14, BuildOrder.Утверждает, BuildOrder.УтверждаетДолжность, BuildOrder.GroupBox6)
@@ -419,6 +435,8 @@ Public Class Orders
         MainForm.местоНаФормеПослеДиректора(5, BuildOrder.Label11, BuildOrder.Label12, BuildOrder.Согласовано2, BuildOrder.Согласовано2Должность, BuildOrder.GroupBox4)
 
         BuildOrder.ShowDialog()
+
+        MainForm.ActiveControl = MainForm.TabControlOther.TabPages(1)
 
     End Sub
 
@@ -448,7 +466,7 @@ Public Class Orders
         BuildOrder.КнопкаСформировать.Location = New Point(135, 580)
         BuildOrder.КнопкаОчистить.Location = New Point(2, 580)
 
-        MainForm.ActiveControl = MainForm.Button2
+        MainForm.ActiveControl = MainForm.TabControlOther.TabPages(2)
 
         MainForm.местоНаФормеПослеДиректора(2, BuildOrder.Label4, BuildOrder.Label13, BuildOrder.Ответственный, BuildOrder.ОтветственныйДолжность, BuildOrder.GroupBox5)
         MainForm.местоНаФорме(1, BuildOrder.Label2, BuildOrder.Label14, BuildOrder.Утверждает, BuildOrder.УтверждаетДолжность, BuildOrder.GroupBox6)
@@ -460,6 +478,8 @@ Public Class Orders
         BuildOrder.ShowDialog()
 
         BuildOrder.practical = False
+
+        MainForm.ActiveControl = MainForm.TabControlOther.TabPages(1)
 
     End Sub
 
@@ -490,7 +510,7 @@ Public Class Orders
         BuildOrder.КнопкаСформировать.Location = New Point(135, 800)
         BuildOrder.КнопкаОчистить.Location = New Point(2, 800)
 
-        MainForm.ActiveControl = MainForm.Button2
+        MainForm.ActiveControl = MainForm.TabControlOther.TabPages(2)
 
         MainForm.местоНаФорме(1, BuildOrder.Label4, BuildOrder.Label13, BuildOrder.Ответственный, BuildOrder.ОтветственныйДолжность, BuildOrder.GroupBox5)
         MainForm.местоНаФорме(2, BuildOrder.LabelРуководительСтажировки, BuildOrder.Label16, BuildOrder.РуководительСтажировки, BuildOrder.РуководительСтажировкиДолжность, BuildOrder.GroupBox7)
@@ -506,6 +526,8 @@ Public Class Orders
         BuildOrder.ShowDialog()
 
         BuildOrder.comission = False
+
+        MainForm.ActiveControl = MainForm.TabControlOther.TabPages(1)
 
     End Sub
 
@@ -533,7 +555,7 @@ Public Class Orders
         BuildOrder.КнопкаСформировать.Location = New Point(135, 580)
         BuildOrder.КнопкаОчистить.Location = New Point(2, 580)
 
-        MainForm.ActiveControl = MainForm.Button2
+        MainForm.ActiveControl = MainForm.TabControlOther.TabPages(2)
 
         MainForm.местоНаФорме(2, BuildOrder.Label4, BuildOrder.Label13, BuildOrder.Ответственный, BuildOrder.ОтветственныйДолжность, BuildOrder.GroupBox5)
         MainForm.местоНаФорме(1, BuildOrder.Label2, BuildOrder.Label14, BuildOrder.Утверждает, BuildOrder.УтверждаетДолжность, BuildOrder.GroupBox6)
@@ -543,6 +565,8 @@ Public Class Orders
         MainForm.местоНаФорме(6, BuildOrder.Label11, BuildOrder.Label12, BuildOrder.Согласовано2, BuildOrder.Согласовано2Должность, BuildOrder.GroupBox4)
 
         BuildOrder.ShowDialog()
+
+        MainForm.ActiveControl = MainForm.TabControlOther.TabPages(1)
     End Sub
 
     Public Sub createDiplomaSupplement(sender As Object, e As EventArgs)
@@ -575,7 +599,7 @@ Public Class Orders
         BuildOrder.КнопкаСформировать.Location = New Point(135, 96)
         BuildOrder.КнопкаОчистить.Location = New Point(2, 96)
 
-        MainForm.ActiveControl = MainForm.Button2
+        MainForm.ActiveControl = MainForm.TabControlOther.TabPages(2)
 
         MainForm.местоНаФорме(2, BuildOrder.Label4, BuildOrder.Label13, BuildOrder.Ответственный, BuildOrder.ОтветственныйДолжность, BuildOrder.GroupBox5)
         MainForm.местоНаФорме(1, BuildOrder.Label2, BuildOrder.Label14, BuildOrder.Утверждает, BuildOrder.УтверждаетДолжность, BuildOrder.GroupBox6)
@@ -628,7 +652,7 @@ Public Class Orders
         BuildOrder.КнопкаСформировать.Location = New Point(135, 96)
         BuildOrder.КнопкаОчистить.Location = New Point(2, 96)
 
-        MainForm.ActiveControl = MainForm.Button2
+        MainForm.ActiveControl = MainForm.TabControlOther.TabPages(2)
 
         MainForm.местоНаФорме(2, BuildOrder.Label4, BuildOrder.Label13, BuildOrder.Ответственный, BuildOrder.ОтветственныйДолжность, BuildOrder.GroupBox5)
         MainForm.местоНаФорме(1, BuildOrder.Label2, BuildOrder.Label14, BuildOrder.Утверждает, BuildOrder.УтверждаетДолжность, BuildOrder.GroupBox6)
@@ -684,7 +708,7 @@ Public Class Orders
         BuildOrder.КнопкаОчистить.Location = New Point(2, 580)
 
 
-        MainForm.ActiveControl = MainForm.Button2
+        MainForm.ActiveControl = MainForm.TabControlOther.TabPages(2)
         BuildOrder.ShowDialog()
 
     End Sub
@@ -723,7 +747,7 @@ Public Class Orders
         BuildOrder.КнопкаОчистить.Location = New Point(2, 580)
 
 
-        MainForm.ActiveControl = MainForm.Button2
+        MainForm.ActiveControl = MainForm.TabControlOther.TabPages(2)
         BuildOrder.ShowDialog()
 
     End Sub
@@ -761,7 +785,7 @@ Public Class Orders
         BuildOrder.КнопкаОчистить.Location = New Point(2, 580)
 
 
-        MainForm.ActiveControl = MainForm.Button2
+        MainForm.ActiveControl = MainForm.TabControlOther.TabPages(3)
         BuildOrder.ShowDialog()
 
     End Sub
@@ -771,7 +795,7 @@ Public Class Orders
         BuildOrder.cvalification = MainForm.PK_PP
         BuildOrder.Text = "Ведомость слушатели и организации"
         BuildOrder.orderType = "Ведомость_слушателиИорганизации"
-        MainForm.ActiveControl = MainForm.Button2
+        MainForm.ActiveControl = MainForm.TabControlOther.TabPages(3)
 
         BuildOrder.Утверждает.Visible = False
         BuildOrder.УтверждаетДолжность.Visible = False
@@ -798,7 +822,7 @@ Public Class Orders
         BuildOrder.КнопкаСформировать.Location = New Point(135, 65)
         BuildOrder.КнопкаОчистить.Location = New Point(2, 65)
 
-        MainForm.ActiveControl = MainForm.Button2
+        MainForm.ActiveControl = MainForm.TabControlOther.TabPages(3)
         BuildOrder.ДатаПриказа.Enabled = False
         BuildOrder.ShowDialog()
         BuildOrder.ДатаПриказа.Enabled = True
@@ -841,7 +865,7 @@ Public Class Orders
         BuildOrder.КнопкаОчистить.Location = New Point(2, 107)
 
         MainForm.directorOff = True
-        MainForm.ActiveControl = MainForm.Button2
+        MainForm.ActiveControl = MainForm.TabControlOther.TabPages(3)
         BuildOrder.ShowDialog()
         MainForm.directorOff = False
         BuildOrder.Label2.Text = "Директор ФИО"
@@ -901,7 +925,7 @@ Public Class Orders
         BuildOrder.КнопкаОчистить.Location = New Point(2, 700)
 
         MainForm.directorOff = True
-        MainForm.ActiveControl = MainForm.Button2
+        MainForm.ActiveControl = MainForm.TabControlOther.TabPages(3)
         BuildOrder.ShowDialog()
 
         MainForm.directorOff = False
@@ -955,7 +979,7 @@ Public Class Orders
         BuildOrder.КнопкаСформировать.Location = New Point(135, 700)
         BuildOrder.КнопкаОчистить.Location = New Point(2, 700)
 
-        MainForm.ActiveControl = MainForm.Button2
+        MainForm.ActiveControl = MainForm.TabControlOther.TabPages(3)
         BuildOrder.ShowDialog()
         BuildOrder.tableStudentsList.Visible = False
 
@@ -1003,7 +1027,7 @@ Public Class Orders
         BuildOrder.КнопкаСформировать.Location = New Point(135, 700)
         BuildOrder.КнопкаОчистить.Location = New Point(2, 700)
 
-        MainForm.ActiveControl = MainForm.Button2
+        MainForm.ActiveControl = MainForm.TabControlOther.TabPages(3)
         BuildOrder.ShowDialog()
 
         BuildOrder.tableStudentsList.Visible = False
@@ -1058,7 +1082,7 @@ Public Class Orders
         MainForm.inputField(True)
 
         BuildOrder.ДатаПриказа.Enabled = False
-        MainForm.ActiveControl = MainForm.Button2
+        MainForm.ActiveControl = MainForm.TabControlOther.TabPages(3)
         BuildOrder.ShowDialog()
         BuildOrder.ДатаПриказа.Enabled = True
 
@@ -1117,7 +1141,7 @@ Public Class Orders
         BuildOrder.КнопкаСформировать.Location = New Point(135, 700)
         BuildOrder.КнопкаОчистить.Location = New Point(2, 700)
         BuildOrder.ДатаПриказа.Enabled = False
-        MainForm.ActiveControl = MainForm.Button2
+        MainForm.ActiveControl = MainForm.TabControlOther.TabPages(3)
         BuildOrder.ShowDialog()
         BuildOrder.ДатаПриказа.Enabled = True
 

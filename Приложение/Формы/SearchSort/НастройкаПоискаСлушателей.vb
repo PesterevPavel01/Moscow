@@ -96,4 +96,15 @@ Public Class НастройкаПоискаСлушателей
         End Select
     End Sub
 
+    Private Sub НастройкаПоискаСлушателей_KeyDown(sender As Object, e As KeyEventArgs) Handles MyBase.KeyDown
+
+        Select Case e.KeyCode
+
+            Case Keys.Escape
+
+                Close()
+
+        End Select
+
+    End Sub
 End Class

@@ -8,6 +8,7 @@ Public Class newStudent
     Public student As New Student
     Public flagRedactor As Boolean = False
     Public dictionaryFlag As Dictionary(Of String, Boolean)
+    Private controlsEvents As New Controls_events ' Задает повидение комбобоксов и текстбоксов
 
     Private Sub saveButton_Click(sender As Object, e As EventArgs) Handles saveButton.Click
 
@@ -292,9 +293,21 @@ Public Class newStudent
         closeEsc(Me, e.KeyCode)
 
         If e.KeyCode = Keys.Up Or e.KeyCode = Keys.Down Then
-            pressTab(e.KeyCode, Keys.Down)
-            up(Me, e.KeyCode, Keys.Up)
+
+            If ActiveControl.GetType.ToString = "System.Windows.Forms.ComboBox" Then
+                Dim comboBox As ComboBox = ActiveControl
+                If comboBox.DroppedDown Then Return
+            End If
+
+            If ActiveControl.TabIndex = 0 And e.KeyCode = Keys.Up Then
+                header.Focus()
+                saveButton.Select()
+            Else
+                pressTab(e.KeyCode, Keys.Down)
+                up(Me, e.KeyCode, Keys.Up)
+            End If
             e.Handled = True
+
         End If
 
     End Sub
@@ -323,16 +336,17 @@ Public Class newStudent
         ДУЛ.Items.Add("")
         ДУЛ.Items.AddRange(student.formSlushLists.doc_UL)
 
-        controlsReaction(dictionaryFlag, Me)
+        If controlsEvents.initFlag Then controlsEvents.controlsReaction(dictionaryFlag, Me)
+        controlsEvents.initFlag = False
 
     End Sub
 
     Private Sub ValidOn_KeyDown(sender As Object, e As KeyEventArgs) Handles ValidOn.KeyDown
-        ЧекатьНаИнтер(ValidOn, e.KeyCode)
+        checkedChange(ValidOn, e.KeyCode)
     End Sub
 
     Private Sub CheckBox1_KeyDown(sender As Object, e As KeyEventArgs) Handles CheckBox1.KeyDown
-        ЧекатьНаИнтер(CheckBox1, e.KeyCode)
+        checkedChange(CheckBox1, e.KeyCode)
     End Sub
 
     Private Sub ValidOn_Enter(sender As Object, e As EventArgs) Handles ValidOn.Enter
@@ -369,4 +383,39 @@ Public Class newStudent
         updateStatus()
     End Sub
 
+    Private Sub newStudent_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs) Handles MyBase.PreviewKeyDown
+
+        Select Case e.KeyValue
+
+            Case Keys.Enter
+
+                e.IsInputKey = True
+
+            Case Keys.Left
+
+                e.IsInputKey = True
+
+            Case Keys.Right
+
+                e.IsInputKey = True
+
+            Case Keys.Up
+
+                e.IsInputKey = True
+
+            Case Keys.Down
+
+                e.IsInputKey = True
+
+            Case MainForm.switchPageKey
+
+                e.IsInputKey = True
+
+            Case MainForm.seitchPageKey_Inverse
+
+                e.IsInputKey = True
+
+        End Select
+
+    End Sub
 End Class

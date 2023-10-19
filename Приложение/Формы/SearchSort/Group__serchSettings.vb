@@ -120,4 +120,16 @@
                 Спец.Checked = True
         End Select
     End Sub
+
+    Private Sub Group__serchSettings_KeyDown(sender As Object, e As KeyEventArgs) Handles MyBase.KeyDown
+
+        Select Case e.KeyCode
+
+            Case Keys.Escape
+
+                Close()
+
+        End Select
+
+    End Sub
 End Class

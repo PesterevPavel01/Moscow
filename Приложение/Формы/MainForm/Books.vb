@@ -2,20 +2,44 @@
 
 Public Class Books
 
+    Public threadFlags As Dictionary(Of String, Boolean)
     Dim booksThread As Thread
     Public bookArgument As New BooksArgument
 
 
     Public Sub bookClick()
 
-        MainForm.ActiveControl = MainForm.Button2
+        Dim datePicker As DateTimePicker
+        Dim shortDateStart, shortDateEnd As String
+        datePicker = mainFormBuilder.controls(mainFormBuilder.controlNames("reportStart"))
+        shortDateStart = datePicker.Value.ToShortDateString
+        datePicker = mainFormBuilder.controls(mainFormBuilder.controlNames("reportEnd"))
+        shortDateEnd = datePicker.Value.ToShortDateString
+        MainForm.ActiveControl = MainForm.TabControlOther.TabPages(3)
         enabledBooks(False)
         bookArgument.SC = SynchronizationContext.Current
-        bookArgument.dateStart = MainForm.ДатаНачалаОтчета.Value.ToShortDateString
-        bookArgument.dateEnd = MainForm.ДатаКонцаОтчета.Value.ToShortDateString()
+        bookArgument.dateStart = shortDateStart
+        bookArgument.dateEnd = shortDateEnd
         booksThread = New Thread(AddressOf run)
         booksThread.IsBackground = True
+        setFlag()
         booksThread.Start(bookArgument)
+
+    End Sub
+
+    Private Sub setFlag()
+
+        Dim status As Boolean = False
+
+        For Each flag As KeyValuePair(Of String, Boolean) In threadFlags
+            If flag.Key = "books" Then status = True
+        Next
+
+        If Not status Then
+            threadFlags.Add("books", True)
+        Else
+            threadFlags("books") = True
+        End If
 
     End Sub
 
@@ -23,6 +47,7 @@ Public Class Books
         For Each button As Button In MainForm.booksSection.Controls.OfType(Of Button)
             button.Enabled = value
         Next
+        If value Then threadFlags("books") = False
     End Sub
 
     Sub run(argument As BooksArgument)

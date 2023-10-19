@@ -2,6 +2,7 @@
 
 Public Class BookFRDO
 
+    Public threadFlags = New Dictionary(Of String, Boolean)
     Dim booksFRDOThread As Thread
     Public bookArgument As New BooksArgument
 
@@ -99,18 +100,43 @@ Public Class BookFRDO
         argument.SC.Send(AddressOf enabledButton, True)
     End Sub
 
+    Private Sub setFlag()
+
+        Dim status As Boolean = False
+
+        For Each flag As KeyValuePair(Of String, Boolean) In threadFlags
+            If flag.Key = "bookFRDO" Then status = True
+        Next
+
+        If Not status Then
+            threadFlags.Add("bookFRDO", True)
+        Else
+            threadFlags("bookFRDO") = True
+        End If
+
+    End Sub
+
     Private Sub enabledButton(value As Boolean)
+
         enabledBooksFRDO(value)
+
     End Sub
 
     Public Sub bookFRDOClick()
+        Dim datePicker As DateTimePicker
+        Dim shortDateStart, shortDateEnd As String
+        datePicker = mainFormBuilder.controls(mainFormBuilder.controlNames("reportStart"))
+        shortDateStart = datePicker.Value.ToShortDateString
+        datePicker = mainFormBuilder.controls(mainFormBuilder.controlNames("reportEnd"))
+        shortDateEnd = datePicker.Value.ToShortDateString
 
         enabledBooksFRDO(False)
         bookArgument.SC = SynchronizationContext.Current
-        bookArgument.dateStart = MainForm.ДатаНачалаОтчета.Value.ToShortDateString
-        bookArgument.dateEnd = MainForm.ДатаКонцаОтчета.Value.ToShortDateString()
+        bookArgument.dateStart = shortDateStart
+        bookArgument.dateEnd = shortDateEnd
         booksFRDOThread = New Thread(AddressOf run)
         booksFRDOThread.IsBackground = True
+        setFlag()
         booksFRDOThread.Start(bookArgument)
 
     End Sub
@@ -118,6 +144,7 @@ Public Class BookFRDO
         For Each button As Button In MainForm.booksFRDOSection.Controls.OfType(Of Button)
             button.Enabled = value
         Next
+        If value Then threadFlags("bookFRDO") = False
     End Sub
 
     Function loadData(Критерий As String, dateStart As String, dateEnd As String) As Object

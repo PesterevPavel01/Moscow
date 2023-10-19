@@ -1,14 +1,47 @@
 ﻿
-Module OtchetExcell
+Imports System.Threading
+Imports Google.Protobuf.WellKnownTypes
 
+Module Report
+
+    Public threadFlags As Dictionary(Of String, Boolean)
+    Dim reportThread As Thread
     Public numberBVB As Integer
     Public numberOtchrtRuk As Integer
     Public adress As String
     Public array
     Public counterBudj As Integer, counterStudents As Integer
+    Dim reportArgument As New ReportArgument
 
-    Sub createMainDokument()
 
+    Public Sub run()
+
+        For Each currentCheckBox As CheckBox In MainForm.reportSection.Controls.OfType(Of CheckBox)
+            setFlag(currentCheckBox.Name)
+            If currentCheckBox.Checked Then reportArgument.reportFlags(currentCheckBox.Name) = True
+        Next
+
+        setThreadFlag()
+
+        Dim datePicker As DateTimePicker
+        datePicker = mainFormBuilder.controls(mainFormBuilder.controlNames("reportStart"))
+        reportArgument.shortDateStart = datePicker.Value.ToShortDateString
+        datePicker = mainFormBuilder.controls(mainFormBuilder.controlNames("reportEnd"))
+        reportArgument.shortDateEnd = datePicker.Value.ToShortDateString
+        reportArgument.month = datePicker.Value.Month
+        reportArgument.mySqlConnector = MainForm.mySqlConnect
+
+        MainForm.ActiveControl = MainForm.TabControlOther.TabPages(0)
+        enabledReport(False)
+        reportArgument.SC = SynchronizationContext.Current
+        reportThread = New Thread(AddressOf createMainDokument)
+        reportThread.IsBackground = True
+        reportThread.Start(reportArgument)
+
+    End Sub
+
+    Sub createMainDokument(argument As ReportArgument)
+        Dim name As String
         Dim excellApp As Object
         Dim excellWorkBook As Object
         Dim excellSheet As Object
@@ -24,18 +57,18 @@ Module OtchetExcell
         Dim counter, counter2, counter3, СчетчикПр As Integer
         Dim sqlQuery, DateStart, DateEnd, path As String
 
-        DateStart = MainForm.mySqlConnect.dateToFormatMySQL(MainForm.ДатаНачалаОтчета.Value.ToShortDateString)
-        DateEnd = MainForm.mySqlConnect.dateToFormatMySQL(MainForm.ДатаКонцаОтчета.Value.ToShortDateString)
+        DateStart = argument.mySqlConnector.dateToFormatMySQL(argument.shortDateStart)
+        DateEnd = argument.mySqlConnector.dateToFormatMySQL(argument.shortDateEnd)
 
         sqlQuery = selectCol_otchet_info(DateStart, DateEnd)
-        groupsArray = MainForm.mySqlConnect.loadMySqlToArray(sqlQuery, 1)
+        groupsArray = argument.mySqlConnector.loadMySqlToArray(sqlQuery, 1)
 
         sqlQuery = selectNumberHours()
-        hours = MainForm.mySqlConnect.loadMySqlToArray(sqlQuery, 1)
+        hours = argument.mySqlConnector.loadMySqlToArray(sqlQuery, 1)
 
 
         sqlQuery = SQLString_OtchetMassSlush(DateStart, DateEnd)
-        list = MainForm.mySqlConnect.loadMySqlToArray(sqlQuery, 1)
+        list = argument.mySqlConnector.loadMySqlToArray(sqlQuery, 1)
 
         '------------------------------------------------------------------------------------------------------
 
@@ -43,9 +76,10 @@ Module OtchetExcell
             MsgBox("Не найденно групп с зарегистрированными слушателями")
             Exit Sub
         End If
+
         sqlQuery = SQLString_OtchetMassDataSlush(DateStart, DateEnd)
 
-        studentList = MainForm.mySqlConnect.loadMySqlToArray(sqlQuery, 1)
+        studentList = argument.mySqlConnector.loadMySqlToArray(sqlQuery, 1)
 
         counter = 0
 
@@ -108,11 +142,11 @@ Module OtchetExcell
 
         resultList = arrayMethod.removeEmpty(resultList)
 
-        MainForm.Name = "Отчет" & Date.Now.ToShortDateString & "_" & MainForm.orderNumber.ToString & ".xlsx"
+        name = "Отчет" & Date.Now.ToShortDateString & "_" & argument.orderNumber.ToString & ".xlsx"
         path = _technical.updateResourcesPath
         path = path & "Отчеты\"
 
-        excellObjects = _technical.createExcellWorkBook(path, MainForm.Name, MainForm.orderNumber)
+        excellObjects = _technical.createExcellWorkBook(path, name, argument.orderNumber)
 
         If excellObjects(0).ToString = "Ошибка" Then
             Exit Sub
@@ -120,14 +154,14 @@ Module OtchetExcell
         excellApp = excellObjects(0)
         excellWorkBook = excellObjects(1)
 
-        MainForm.orderNumber = MainForm.orderNumber + 1
+        argument.orderNumber = argument.orderNumber + 1
 
-        If MainForm.ОтчетРуководителя.Checked Then
+        If argument.reportFlags("managerReport") Then
 
             excellSheet = excellWorkBook.Worksheets.Add
             excellSheet.Name = "ОтчетРуководителя"
             sqlQuery = SQLString_managerOrder(DateStart, DateEnd)
-            listData = MainForm.mySqlConnect.mySqlToListAll(sqlQuery, 1)
+            listData = argument.mySqlConnector.mySqlToListAll(sqlQuery, 1)
 
             If Not listData.Count = 0 Then
                 createORuk(excellSheet, listData, resultList, groupsArray)
@@ -138,23 +172,23 @@ Module OtchetExcell
 
         End If
 
-        If MainForm.ChРМАНПО.Checked Then
+        If argument.reportFlags("RAMNPOReport") Then
             sqlQuery = SQLString_OtchetRMANPO(DateStart, DateEnd)
-            listData = MainForm.mySqlConnect.mySqlToListAll(sqlQuery, 1)
+            listData = argument.mySqlConnector.mySqlToListAll(sqlQuery, 1)
 
             If Not listData.Count = 0 Then
-                CreateRMANPO(excellApp, excellWorkBook, listData, resultList, groupsArray, MonthName(MainForm.ДатаКонцаОтчета.Value.Month))
+                CreateRMANPO(excellApp, excellWorkBook, listData, resultList, groupsArray, MonthName(argument.month))
             Else
-                Warning.content.Text = "Нет информации отвечающей условиям отбора для PVFYGJ"
+                Warning.content.Text = "РАМНПО. Нет информации отвечающей условиям отбора."
                 Warning.ShowDialog()
             End If
         End If
 
-        If MainForm.ChСводПоКурсам.Checked Then
+        If argument.reportFlags("courseReport") Then
             excellSheet = excellWorkBook.Worksheets.Add
             excellSheet.Name = "СводПоКурсам"
             sqlQuery = SQLString_OtchetKurs(DateStart, DateEnd, "курс")
-            otchetList = MainForm.mySqlConnect.loadMySqlToArray(sqlQuery, 1)
+            otchetList = argument.mySqlConnector.loadMySqlToArray(sqlQuery, 1)
 
             If Not otchetList(0, 0).ToString = "нет записей" Then
                 createSPK(excellSheet, rotateArray(otchetList), "СводПоКурсам")
@@ -164,11 +198,11 @@ Module OtchetExcell
             End If
         End If
 
-        If MainForm.СводПоСпец.Checked Then
+        If argument.reportFlags("specialityReport") Then
             excellSheet = excellWorkBook.Worksheets.Add
             excellSheet.Name = "СводПоСпециальностям"
             sqlQuery = SQLString_OtchetKurs(DateStart, DateEnd, "специальность")
-            otchetList = MainForm.mySqlConnect.loadMySqlToArray(sqlQuery, 1)
+            otchetList = argument.mySqlConnector.loadMySqlToArray(sqlQuery, 1)
 
             If Not otchetList.ToString = "нет записей" Then
                 createSPK(excellSheet, rotateArray(otchetList), "СводПоСпециальностям")
@@ -178,11 +212,11 @@ Module OtchetExcell
             End If
         End If
 
-        If MainForm.СводПоОрганиз.Checked Then
+        If argument.reportFlags("organizationReport") Then
             excellSheet = excellWorkBook.Worksheets.Add
             excellSheet.Name = "ПереченьОрганизаций"
             sqlQuery = SQLString_organizationOrder(DateStart, DateEnd)
-            otchetList = MainForm.mySqlConnect.loadMySqlToArray(sqlQuery, 1)
+            otchetList = argument.mySqlConnector.loadMySqlToArray(sqlQuery, 1)
 
             If Not otchetList.ToString = "нет записей" Then
                 createSPO(excellSheet, otchetList)
@@ -192,20 +226,20 @@ Module OtchetExcell
             End If
         End If
 
-        If MainForm.БюджетВбюдж.Checked Then
+        If argument.reportFlags("financingReport") Then
             excellSheet = excellWorkBook.Worksheets.Add
             excellSheet.Name = "БюджетВнебюджет"
 
             ReDim otchetList(2)
             sqlQuery = SQLString_OtchetBud_Vbud(DateStart, DateEnd, "полный")
-            listData = MainForm.mySqlConnect.mySqlToListAll(sqlQuery, 1)
+            listData = argument.mySqlConnector.mySqlToListAll(sqlQuery, 1)
             otchetList(0) = listData
 
             sqlQuery = SQLString_OtchetBud_Vbud(DateStart, DateEnd, "бюджет")
-            otchetList(1) = MainForm.mySqlConnect.mySqlToListAll(sqlQuery, 1)
+            otchetList(1) = argument.mySqlConnector.mySqlToListAll(sqlQuery, 1)
 
             sqlQuery = SQLString_OtchetBud_Vbud(DateStart, DateEnd, "внебюджет")
-            otchetList(2) = MainForm.mySqlConnect.mySqlToListAll(sqlQuery, 1)
+            otchetList(2) = argument.mySqlConnector.mySqlToListAll(sqlQuery, 1)
 
             If Not listData.Count = 0 Then
                 createBVB(excellSheet, otchetList, hours)
@@ -215,13 +249,13 @@ Module OtchetExcell
             End If
         End If
 
-        If MainForm.ОтчетПеднагрузка.Checked Then
+        If argument.reportFlags("workerReportC") Then
 
             ПеднагрузкаОтчет.workerReport("Педнагрузка", excellApp, excellWorkBook, DateStart, DateEnd)
 
         End If
 
-        If MainForm.chPednagrExt.Checked Then
+        If argument.reportFlags("workerReportPlus") Then
 
             ПеднагрузкаОтчет.pednagrExtended(excellApp, excellWorkBook, DateStart, DateEnd)
 
@@ -240,8 +274,49 @@ Module OtchetExcell
         excellApp.DisplayAlerts = True
         excellApp.Visible = True
 
+        argument.SC.Send(AddressOf enabledReport, True)
+
     End Sub
 
+    Public Sub enabledReport(value As Boolean)
+
+        For Each button As Button In MainForm.reportSection.Controls.OfType(Of Button)
+            button.Enabled = value
+        Next
+        If value Then threadFlags("report") = Not value
+
+    End Sub
+
+    Private Sub setThreadFlag()
+
+        Dim status As Boolean = False
+
+        For Each flag As KeyValuePair(Of String, Boolean) In threadFlags
+            If flag.Key = "report" Then status = True
+        Next
+
+        If Not status Then
+            threadFlags.Add("report", True)
+        Else
+            threadFlags("report") = True
+        End If
+
+    End Sub
+    Private Sub setFlag(name As String)
+
+        Dim status As Boolean = False
+
+        For Each flag As KeyValuePair(Of String, Boolean) In reportArgument.reportFlags
+            If flag.Key = name Then status = True
+        Next
+
+        If Not status Then
+            reportArgument.reportFlags.Add(name, False)
+        Else
+            reportArgument.reportFlags(name) = False
+        End If
+
+    End Sub
     Sub CreateRMANPO(Excell As Object, WBook As Object, listData As List(Of List(Of String)), Специальности As Object, Группы As Object, month As String)
         Dim Шаблон, Wsor
         Dim adressRow, spec, Val_A As String
@@ -384,7 +459,7 @@ Module OtchetExcell
         Dim listValues
         Dim counterRows As Integer
 
-        OtchetExcell.array = array
+        Report.array = array
 
         ReDim listValues(1, 10)
 
@@ -493,7 +568,7 @@ Module OtchetExcell
         Dim result As Object
         Dim name As String
         Dim counter, counterRows, column As Integer
-        OtchetExcell.array = array
+        Report.array = array
         If arg = "СводПоКурсам" Then
             column = 6
             name = "Курс"
