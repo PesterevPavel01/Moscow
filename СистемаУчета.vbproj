@@ -90,7 +90,7 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>Приложение\ВедомостиБланки\Иконки\A2.ico</ApplicationIcon>
+    <ApplicationIcon>Application\Forms\MainForm\ВедомостиБланки\Иконки\A2.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="BouncyCastle.Crypto, Version=1.9.0.0, Culture=neutral, PublicKeyToken=0e99375e54769942, processorArchitecture=MSIL">
@@ -157,66 +157,68 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationEvents.vb" />
-    <Compile Include="Приложение\Отчеты\ReportArgument.vb" />
-    <Compile Include="Приложение\Формы\MainForm\Books.vb" />
-    <Compile Include="Приложение\Формы\MainForm\BooksArgument.vb" />
-    <Compile Include="Приложение\Формы\MainForm\MainForm_builder.vb" />
-    <Compile Include="Приложение\Формы\MainForm\MainForm_events.vb" />
-    <Compile Include="Приложение\Формы\MainForm\Orders.vb" />
-    <Compile Include="Приложение\Формы\newGroup\Controls_events.vb" />
-    <Compile Include="Приложение\Формы\SearchSort\SearchSort_events.vb" />
-    <Compile Include="Приложение\Формы\StudentsList\StudentsList_events.vb" />
-    <Compile Include="Приложение\Формы\StudentsInGroup\StudentsInGroup_uploader.vb" />
-    <Compile Include="Приложение\SwichNumbers.vb" />
-    <Compile Include="Приложение\SorterSetts.vb" />
-    <Compile Include="Приложение\SwitchCvalification.vb" />
-    <Compile Include="Приложение\User_controls\button\myButton.Designer.vb">
+    <Compile Include="Application\Forms\BuildOrder\OrderArgument.vb" />
+    <Compile Include="Application\Forms\Grades\Grades_events.vb" />
+    <Compile Include="Application\Forms\MainForm\Отчеты\ReportArgument.vb" />
+    <Compile Include="Application\Forms\MainForm\Book.vb" />
+    <Compile Include="Application\Forms\MainForm\BooksArgument.vb" />
+    <Compile Include="Application\Forms\MainForm\MainForm_builder.vb" />
+    <Compile Include="Application\Forms\MainForm\MainForm_events.vb" />
+    <Compile Include="Application\Forms\MainForm\Order.vb" />
+    <Compile Include="Application\Forms\newGroup\Controls_events.vb" />
+    <Compile Include="Application\Forms\SearchSort\SearchSort_events.vb" />
+    <Compile Include="Application\Forms\StudentsList\StudentsList_events.vb" />
+    <Compile Include="Application\Forms\StudentsInGroup\StudentsInGroup_uploader.vb" />
+    <Compile Include="Application\SwichNumbers.vb" />
+    <Compile Include="Application\SorterSetts.vb" />
+    <Compile Include="Application\SwitchCvalification.vb" />
+    <Compile Include="Application\User_controls\button\myButton.Designer.vb">
       <DependentUpon>myButton.vb</DependentUpon>
     </Compile>
-    <Compile Include="Приложение\User_controls\button\myButton.vb">
+    <Compile Include="Application\User_controls\button\myButton.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Приложение\User_controls\UserGridView\DGVBuilder.vb" />
-    <Compile Include="Приложение\User_controls\UserGridView\DGVRedactorTable.vb" />
-    <Compile Include="Приложение\User_controls\UserGridView\DGV_Events.vb" />
-    <Compile Include="Приложение\User_controls\UserGridView\user_comboBox.Designer.vb">
+    <Compile Include="Application\User_controls\UserGridView\DGVBuilder.vb" />
+    <Compile Include="Application\User_controls\UserGridView\DGVRedactorTable.vb" />
+    <Compile Include="Application\User_controls\UserGridView\DGV_Events.vb" />
+    <Compile Include="Application\User_controls\UserGridView\user_comboBox.Designer.vb">
       <DependentUpon>user_comboBox.vb</DependentUpon>
     </Compile>
-    <Compile Include="Приложение\User_controls\UserGridView\user_comboBox.vb">
+    <Compile Include="Application\User_controls\UserGridView\user_comboBox.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Приложение\User_controls\UserGridView\Tables_control.designer.vb">
+    <Compile Include="Application\User_controls\UserGridView\Tables_control.designer.vb">
       <DependentUpon>Tables_control.vb</DependentUpon>
     </Compile>
-    <Compile Include="Приложение\User_controls\UserGridView\Tables_control.vb">
+    <Compile Include="Application\User_controls\UserGridView\Tables_control.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Приложение\Programm.vb" />
-    <Compile Include="Приложение\SqlQueryString.vb" />
-    <Compile Include="Приложение\Worker.vb" />
-    <Compile Include="Приложение\Group.vb" />
-    <Compile Include="Приложение\Prikaz.vb" />
-    <Compile Include="Приложение\Student.vb" />
-    <Compile Include="Приложение\dataBase\MySQLConnect.vb" />
-    <Compile Include="Приложение\dataBase\QueryString.vb" />
-    <Compile Include="Приложение\Интерфейс\ListViewItemComparer.vb" />
-    <Compile Include="Приложение\Интерфейс\ListViewLib.vb" />
-    <Compile Include="Приложение\ПриказыКниги\ПП_ПриложениеКДиплому.vb" />
-    <Compile Include="Приложение\ПриказыКниги\ПО_Свидетельство.vb" />
-    <Compile Include="Приложение\ПриказыКниги\Приказ_ДопускКИА.vb" />
-    <Compile Include="Приложение\ПриказыКниги\Приказ_Окончание.vb" />
-    <Compile Include="Приложение\ПриказыКниги\Приказ_Отчисление.vb" />
-    <Compile Include="Приложение\ПриказыКниги\Приказ_Зачисление.vb" />
-    <Compile Include="Приложение\Отчеты\ПеднагрузкаОтчет.vb" />
-    <Compile Include="Приложение\Интерфейс\RedactorDataGrid.vb" />
-    <Compile Include="Приложение\ПриказыКниги\Приказ_Практика.vb" />
-    <Compile Include="Приложение\Формы\StudentsInGroup\PanelOrders_builder.vb" />
-    <Compile Include="Приложение\Формы\StudentsInGroup\PanelOrders_Events.vb" />
-    <Compile Include="Приложение\Формы\StudentsInGroup\StudentsInGroup_Events.vb" />
-    <Compile Include="Приложение\Формы\WorkerReport.Designer.vb">
+    <Compile Include="Application\Programm.vb" />
+    <Compile Include="Application\SqlQueryString.vb" />
+    <Compile Include="Application\Worker.vb" />
+    <Compile Include="Application\Group.vb" />
+    <Compile Include="Application\Prikaz.vb" />
+    <Compile Include="Application\Student.vb" />
+    <Compile Include="Application\dataBase\MySQLConnect.vb" />
+    <Compile Include="Application\dataBase\QueryString.vb" />
+    <Compile Include="Application\Интерфейс\ListViewItemComparer.vb" />
+    <Compile Include="Application\Интерфейс\ListViewLib.vb" />
+    <Compile Include="Application\Forms\BuildOrder\ПриказыКниги\ПП_ПриложениеКДиплому.vb" />
+    <Compile Include="Application\Forms\BuildOrder\ПриказыКниги\ПО_Свидетельство.vb" />
+    <Compile Include="Application\Forms\BuildOrder\ПриказыКниги\Приказ_ДопускКИА.vb" />
+    <Compile Include="Application\Forms\BuildOrder\ПриказыКниги\Приказ_Окончание.vb" />
+    <Compile Include="Application\Forms\BuildOrder\ПриказыКниги\Приказ_Отчисление.vb" />
+    <Compile Include="Application\Forms\BuildOrder\ПриказыКниги\Приказ_Зачисление.vb" />
+    <Compile Include="Application\Forms\MainForm\Отчеты\ПеднагрузкаОтчет.vb" />
+    <Compile Include="Application\Интерфейс\RedactorDataGrid.vb" />
+    <Compile Include="Application\Forms\BuildOrder\ПриказыКниги\Приказ_Практика.vb" />
+    <Compile Include="Application\Forms\StudentsInGroup\PanelOrders_builder.vb" />
+    <Compile Include="Application\Forms\StudentsInGroup\PanelOrders_Events.vb" />
+    <Compile Include="Application\Forms\StudentsInGroup\StudentsInGroup_Events.vb" />
+    <Compile Include="Application\Forms\Grades\WorkerReport.Designer.vb">
       <DependentUpon>WorkerReport.vb</DependentUpon>
     </Compile>
-    <Compile Include="Приложение\Формы\WorkerReport.vb">
+    <Compile Include="Application\Forms\Grades\WorkerReport.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="My Project\Resources.Designer.vb">
@@ -224,135 +226,135 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Приложение\ВедомостиБланки\СправкаОбОкончании.vb" />
-    <Compile Include="Приложение\ВедомостиБланки\spravka.vb" />
-    <Compile Include="Приложение\ВедомостиБланки\ВедомостьПромежуточнойАттестации.vb" />
-    <Compile Include="Приложение\ВедомостиБланки\ДоверенностьПолученияБланковНаГруппу.vb" />
-    <Compile Include="Приложение\ВедомостиБланки\StudentsAndOrganization.vb" />
-    <Compile Include="Приложение\ПриказыКниги\КнигаУчетаСпецэкзамен.vb" />
-    <Compile Include="Приложение\Интерфейс\МСВорд.vb" />
-    <Compile Include="Приложение\ПриказыКниги\ПК_Окончание.vb" />
-    <Compile Include="Приложение\Формы\MainForm\BookFRDO.vb" />
-    <Compile Include="Приложение\ВедомостиБланки\АДействияСОценкиИА.vb" />
-    <Compile Include="Приложение\Формы\GradesIA.Designer.vb">
+    <Compile Include="Application\Forms\MainForm\ВедомостиБланки\СправкаОбОкончании.vb" />
+    <Compile Include="Application\Forms\MainForm\ВедомостиБланки\spravka.vb" />
+    <Compile Include="Application\Forms\MainForm\ВедомостиБланки\ВедомостьПромежуточнойАттестации.vb" />
+    <Compile Include="Application\Forms\MainForm\ВедомостиБланки\ДоверенностьПолученияБланковНаГруппу.vb" />
+    <Compile Include="Application\Forms\MainForm\ВедомостиБланки\StudentsAndOrganization.vb" />
+    <Compile Include="Application\Forms\BuildOrder\ПриказыКниги\КнигаУчетаСпецэкзамен.vb" />
+    <Compile Include="Application\Интерфейс\МСВорд.vb" />
+    <Compile Include="Application\Forms\BuildOrder\ПриказыКниги\ПК_Окончание.vb" />
+    <Compile Include="Application\Forms\MainForm\BookFRDO.vb" />
+    <Compile Include="Application\Forms\MainForm\ВедомостиБланки\gradesIAMAnipulation.vb" />
+    <Compile Include="Application\Forms\Grades\GradesIA.Designer.vb">
       <DependentUpon>GradesIA.vb</DependentUpon>
     </Compile>
-    <Compile Include="Приложение\Формы\GradesIA.vb">
+    <Compile Include="Application\Forms\Grades\GradesIA.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Приложение\Формы\SearchSort\НастройкаСортировкиСлушателей.Designer.vb">
+    <Compile Include="Application\Forms\SearchSort\НастройкаСортировкиСлушателей.Designer.vb">
       <DependentUpon>НастройкаСортировкиСлушателей.vb</DependentUpon>
     </Compile>
-    <Compile Include="Приложение\Формы\SearchSort\НастройкаСортировкиСлушателей.vb">
+    <Compile Include="Application\Forms\SearchSort\НастройкаСортировкиСлушателей.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Приложение\Формы\SearchSort\НастройкаСортировкиГрупп.Designer.vb">
+    <Compile Include="Application\Forms\SearchSort\НастройкаСортировкиГрупп.Designer.vb">
       <DependentUpon>НастройкаСортировкиГрупп.vb</DependentUpon>
     </Compile>
-    <Compile Include="Приложение\Формы\SearchSort\НастройкаСортировкиГрупп.vb">
+    <Compile Include="Application\Forms\SearchSort\НастройкаСортировкиГрупп.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Приложение\Формы\SearchSort\Group__serchSettings.Designer.vb">
+    <Compile Include="Application\Forms\SearchSort\Group__serchSettings.Designer.vb">
       <DependentUpon>Group__serchSettings.vb</DependentUpon>
     </Compile>
-    <Compile Include="Приложение\Формы\SearchSort\Group__serchSettings.vb">
+    <Compile Include="Application\Forms\SearchSort\Group__serchSettings.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Приложение\Формы\SearchSort\НастройкаПоискаСлушателей.Designer.vb">
+    <Compile Include="Application\Forms\SearchSort\НастройкаПоискаСлушателей.Designer.vb">
       <DependentUpon>НастройкаПоискаСлушателей.vb</DependentUpon>
     </Compile>
-    <Compile Include="Приложение\Формы\SearchSort\НастройкаПоискаСлушателей.vb">
+    <Compile Include="Application\Forms\SearchSort\НастройкаПоискаСлушателей.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Приложение\ВедомостиБланки\gradesManipulation.vb" />
-    <Compile Include="Приложение\Формы\Grades.Designer.vb">
+    <Compile Include="Application\Forms\MainForm\ВедомостиБланки\gradesManipulation.vb" />
+    <Compile Include="Application\Forms\Grades\Grades.Designer.vb">
       <DependentUpon>Grades.vb</DependentUpon>
     </Compile>
-    <Compile Include="Приложение\Формы\Grades.vb">
+    <Compile Include="Application\Forms\Grades\Grades.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Приложение\ВедомостиБланки\Бланки.vb" />
-    <Compile Include="Приложение\Интерфейс\interfaceMod.vb" />
-    <Compile Include="Приложение\Интерфейс\_technical.vb" />
-    <Compile Include="Приложение\Формы\Warning.Designer.vb">
+    <Compile Include="Application\Forms\MainForm\ВедомостиБланки\Blank.vb" />
+    <Compile Include="Application\Интерфейс\interfaceMod.vb" />
+    <Compile Include="Application\Интерфейс\_technical.vb" />
+    <Compile Include="Application\Forms\Warning.Designer.vb">
       <DependentUpon>Warning.vb</DependentUpon>
     </Compile>
-    <Compile Include="Приложение\Формы\Warning.vb">
+    <Compile Include="Application\Forms\Warning.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="My Project\Module1.bas" />
-    <Compile Include="Приложение\Интерфейс\_formCleaner.vb" />
-    <Compile Include="Приложение\Формы\BuildOrder.Designer.vb">
+    <Compile Include="Application\Интерфейс\_formCleaner.vb" />
+    <Compile Include="Application\Forms\BuildOrder\BuildOrder.Designer.vb">
       <DependentUpon>BuildOrder.vb</DependentUpon>
     </Compile>
-    <Compile Include="Приложение\Формы\BuildOrder.vb">
+    <Compile Include="Application\Forms\BuildOrder\BuildOrder.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Приложение\Интерфейс\arrayMethod.vb" />
-    <Compile Include="Приложение\Отчеты\Report.vb" />
-    <Compile Include="Приложение\Интерфейс\updateListView_1.vb" />
-    <Compile Include="Приложение\Формы\StudentsInGroup\StudentsInGroup.Designer.vb">
+    <Compile Include="Application\Интерфейс\arrayMethod.vb" />
+    <Compile Include="Application\Forms\MainForm\Отчеты\Report.vb" />
+    <Compile Include="Application\Интерфейс\updateListView_1.vb" />
+    <Compile Include="Application\Forms\StudentsInGroup\StudentsInGroup.Designer.vb">
       <DependentUpon>StudentsInGroup.vb</DependentUpon>
     </Compile>
-    <Compile Include="Приложение\Формы\StudentsInGroup\StudentsInGroup.vb">
+    <Compile Include="Application\Forms\StudentsInGroup\StudentsInGroup.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Приложение\Справочники\studentBuilder.vb" />
-    <Compile Include="Приложение\Справочники\updateGroupRedactor.vb" />
-    <Compile Include="Приложение\Формы\newStudent\newStudent.Designer.vb">
+    <Compile Include="Application\Справочники\studentBuilder.vb" />
+    <Compile Include="Application\Справочники\updateGroupRedactor.vb" />
+    <Compile Include="Application\Forms\newStudent\newStudent.Designer.vb">
       <DependentUpon>newStudent.vb</DependentUpon>
     </Compile>
-    <Compile Include="Приложение\Формы\newStudent\newStudent.vb">
+    <Compile Include="Application\Forms\newStudent\newStudent.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Приложение\Формы\ФормаДаНетУдалить.Designer.vb">
+    <Compile Include="Application\Forms\ФормаДаНетУдалить.Designer.vb">
       <DependentUpon>ФормаДаНетУдалить.vb</DependentUpon>
     </Compile>
-    <Compile Include="Приложение\Формы\ФормаДаНетУдалить.vb">
+    <Compile Include="Application\Forms\ФормаДаНетУдалить.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Приложение\Формы\ФормаДаНет.Designer.vb">
+    <Compile Include="Application\Forms\ФормаДаНет.Designer.vb">
       <DependentUpon>ФормаДаНет.vb</DependentUpon>
     </Compile>
-    <Compile Include="Приложение\Формы\ФормаДаНет.vb">
+    <Compile Include="Application\Forms\ФормаДаНет.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Приложение\dataBase\tableIdentificated.vb" />
-    <Compile Include="Приложение\Формы\List.Designer.vb">
+    <Compile Include="Application\dataBase\tableIdentificated.vb" />
+    <Compile Include="Application\Forms\List.Designer.vb">
       <DependentUpon>List.vb</DependentUpon>
     </Compile>
-    <Compile Include="Приложение\Формы\List.vb">
+    <Compile Include="Application\Forms\List.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Приложение\Формы\newGroup\newGroup.Designer.vb">
+    <Compile Include="Application\Forms\newGroup\newGroup.Designer.vb">
       <DependentUpon>newGroup.vb</DependentUpon>
     </Compile>
-    <Compile Include="Приложение\Формы\newGroup\newGroup.vb">
+    <Compile Include="Application\Forms\newGroup\newGroup.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Приложение\dataBase\InsertIntoDataBase.vb" />
-    <Compile Include="Приложение\Интерфейс\addMask.vb" />
-    <Compile Include="Приложение\Формы\GroupList.Designer.vb">
+    <Compile Include="Application\dataBase\InsertIntoDataBase.vb" />
+    <Compile Include="Application\Интерфейс\addMask.vb" />
+    <Compile Include="Application\Forms\GroupList.Designer.vb">
       <DependentUpon>GroupList.vb</DependentUpon>
     </Compile>
-    <Compile Include="Приложение\Формы\GroupList.vb">
+    <Compile Include="Application\Forms\GroupList.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Приложение\Формы\MainForm\MainForm.Designer.vb">
+    <Compile Include="Application\Forms\MainForm\MainForm.Designer.vb">
       <DependentUpon>MainForm.vb</DependentUpon>
     </Compile>
-    <Compile Include="Приложение\Формы\MainForm\MainForm.vb">
+    <Compile Include="Application\Forms\MainForm\MainForm.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Приложение\Интерфейс\startApp.vb" />
-    <Compile Include="Приложение\Формы\StudentsList\StudentsList.Designer.vb">
+    <Compile Include="Application\Интерфейс\startApp.vb" />
+    <Compile Include="Application\Forms\StudentsList\StudentsList.Designer.vb">
       <DependentUpon>StudentsList.vb</DependentUpon>
     </Compile>
-    <Compile Include="Приложение\Формы\StudentsList\StudentsList.vb">
+    <Compile Include="Application\Forms\StudentsList\StudentsList.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Приложение\Интерфейс\snilsMethod.vb" />
-    <Compile Include="Приложение\dataBase\Search.vb" />
+    <Compile Include="Application\Интерфейс\snilsMethod.vb" />
+    <Compile Include="Application\dataBase\Search.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -366,68 +368,68 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Приложение\User_controls\button\myButton.resx">
+    <EmbeddedResource Include="Application\User_controls\button\myButton.resx">
       <DependentUpon>myButton.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Приложение\User_controls\UserGridView\user_comboBox.resx">
+    <EmbeddedResource Include="Application\User_controls\UserGridView\user_comboBox.resx">
       <DependentUpon>user_comboBox.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Приложение\User_controls\UserGridView\Tables_control.resx">
+    <EmbeddedResource Include="Application\User_controls\UserGridView\Tables_control.resx">
       <DependentUpon>Tables_control.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Приложение\Формы\GradesIA.resx">
+    <EmbeddedResource Include="Application\Forms\Grades\GradesIA.resx">
       <DependentUpon>GradesIA.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Приложение\Формы\WorkerReport.resx">
+    <EmbeddedResource Include="Application\Forms\Grades\WorkerReport.resx">
       <DependentUpon>WorkerReport.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Приложение\Формы\SearchSort\НастройкаСортировкиСлушателей.resx">
+    <EmbeddedResource Include="Application\Forms\SearchSort\НастройкаСортировкиСлушателей.resx">
       <DependentUpon>НастройкаСортировкиСлушателей.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Приложение\Формы\SearchSort\НастройкаСортировкиГрупп.resx">
+    <EmbeddedResource Include="Application\Forms\SearchSort\НастройкаСортировкиГрупп.resx">
       <DependentUpon>НастройкаСортировкиГрупп.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Приложение\Формы\SearchSort\Group__serchSettings.resx">
+    <EmbeddedResource Include="Application\Forms\SearchSort\Group__serchSettings.resx">
       <DependentUpon>Group__serchSettings.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Приложение\Формы\SearchSort\НастройкаПоискаСлушателей.resx">
+    <EmbeddedResource Include="Application\Forms\SearchSort\НастройкаПоискаСлушателей.resx">
       <DependentUpon>НастройкаПоискаСлушателей.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Приложение\Формы\Grades.resx">
+    <EmbeddedResource Include="Application\Forms\Grades\Grades.resx">
       <DependentUpon>Grades.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Приложение\Формы\Warning.resx">
+    <EmbeddedResource Include="Application\Forms\Warning.resx">
       <DependentUpon>Warning.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Приложение\Формы\StudentsInGroup\StudentsInGroup.resx">
+    <EmbeddedResource Include="Application\Forms\StudentsInGroup\StudentsInGroup.resx">
       <DependentUpon>StudentsInGroup.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Приложение\Формы\newStudent\newStudent.resx">
+    <EmbeddedResource Include="Application\Forms\newStudent\newStudent.resx">
       <DependentUpon>newStudent.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Приложение\Формы\BuildOrder.resx">
+    <EmbeddedResource Include="Application\Forms\BuildOrder\BuildOrder.resx">
       <DependentUpon>BuildOrder.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Приложение\Формы\ФормаДаНетУдалить.resx">
+    <EmbeddedResource Include="Application\Forms\ФормаДаНетУдалить.resx">
       <DependentUpon>ФормаДаНетУдалить.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Приложение\Формы\ФормаДаНет.resx">
+    <EmbeddedResource Include="Application\Forms\ФормаДаНет.resx">
       <DependentUpon>ФормаДаНет.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Приложение\Формы\List.resx">
+    <EmbeddedResource Include="Application\Forms\List.resx">
       <DependentUpon>List.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Приложение\Формы\newGroup\newGroup.resx">
+    <EmbeddedResource Include="Application\Forms\newGroup\newGroup.resx">
       <DependentUpon>newGroup.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Приложение\Формы\GroupList.resx">
+    <EmbeddedResource Include="Application\Forms\GroupList.resx">
       <DependentUpon>GroupList.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Приложение\Формы\MainForm\MainForm.resx">
+    <EmbeddedResource Include="Application\Forms\MainForm\MainForm.resx">
       <DependentUpon>MainForm.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Приложение\Формы\StudentsList\StudentsList.resx">
+    <EmbeddedResource Include="Application\Forms\StudentsList\StudentsList.resx">
       <DependentUpon>StudentsList.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
@@ -512,15 +514,15 @@
     <None Include="Resources\top.png" />
     <None Include="Resources\plus.png" />
     <None Include="Resources\ok.png" />
-    <Content Include="Приложение\ВедомостиБланки\Иконки\000.ico" />
-    <Content Include="Приложение\ВедомостиБланки\Иконки\A2.ico" />
+    <Content Include="Application\Forms\MainForm\ВедомостиБланки\Иконки\000.ico" />
+    <Content Include="Application\Forms\MainForm\ВедомостиБланки\Иконки\A2.ico" />
     <None Include="packages.config" />
-    <None Include="Приложение\ВедомостиБланки\Иконки\icons8-сохранить-50.png" />
-    <None Include="Приложение\ВедомостиБланки\Иконки\diskette.png" />
-    <None Include="Приложение\ВедомостиБланки\Иконки\ОбновитьБазу %282%29.png" />
-    <None Include="Приложение\ВедомостиБланки\Иконки\ОбновитьБазу.png" />
-    <None Include="Приложение\ВедомостиБланки\Иконки\добавитьКлиента.png" />
-    <None Include="Приложение\ВедомостиБланки\Иконки\поиск.png" />
+    <None Include="Application\Forms\MainForm\ВедомостиБланки\Иконки\icons8-сохранить-50.png" />
+    <None Include="Application\Forms\MainForm\ВедомостиБланки\Иконки\diskette.png" />
+    <None Include="Application\Forms\MainForm\ВедомостиБланки\Иконки\ОбновитьБазу %282%29.png" />
+    <None Include="Application\Forms\MainForm\ВедомостиБланки\Иконки\ОбновитьБазу.png" />
+    <None Include="Application\Forms\MainForm\ВедомостиБланки\Иконки\добавитьКлиента.png" />
+    <None Include="Application\Forms\MainForm\ВедомостиБланки\Иконки\поиск.png" />
     <None Include="Resources\file_icon_129474.ico" />
     <None Include="Resources\file_icon_129474.png" />
     <None Include="Resources\1497559423-upload-file_85001.png" />
@@ -535,9 +537,9 @@
     <Content Include="Resources\Сортировка.png" />
     <Content Include="Resources\Сортировка35.png" />
     <Content Include="Resources\сортировка50.png" />
-    <Content Include="Приложение\ВедомостиБланки\Иконки\А.ico" />
-    <None Include="Приложение\ВедомостиБланки\Иконки\треугольник3.jpg" />
-    <None Include="Приложение\ВедомостиБланки\Иконки\Плей.jpg" />
+    <Content Include="Application\Forms\MainForm\ВедомостиБланки\Иконки\А.ico" />
+    <None Include="Application\Forms\MainForm\ВедомостиБланки\Иконки\треугольник3.jpg" />
+    <None Include="Application\Forms\MainForm\ВедомостиБланки\Иконки\Плей.jpg" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
