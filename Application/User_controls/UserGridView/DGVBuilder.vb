@@ -71,7 +71,7 @@ Public Class DGVBuilder
 
     Public Sub redactorOpen_update()
 
-        If userDGV.DataGridTablesResult.Rows.Count < 0 Then
+        If userDGV.DataGridTablesResult.Rows.Count <= 0 Then
             Return
         ElseIf Convert.ToString(userDGV.DataGridTablesResult.Rows(0).Cells(userDGV.numberElementFirst).Value) = "" And userDGV.name_table <> "group_list" Then
             Return

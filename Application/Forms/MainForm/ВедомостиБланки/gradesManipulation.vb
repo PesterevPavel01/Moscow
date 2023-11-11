@@ -23,7 +23,8 @@
             End If
         Next
     End Function
-    Sub saveVal(Ведомость As Object, kod As Integer)
+    Sub saveVal(table As DataGridView, kod As Integer)
+
         Dim querys, fio, checkArray
         Dim queryString, snils As String
         Dim counter As Integer = 0, rowsCounter As Integer
@@ -31,7 +32,9 @@
         Dim argument As String()
         ReDim argument(12)
 
-        rowsCounter = Ведомость.Rows.Count
+        If Not IsNothing(table.Rows(table.CurrentCell.RowIndex).Cells(1)) Then table.CurrentCell = table.Rows(table.CurrentCell.RowIndex).Cells(1)
+
+        rowsCounter = table.Rows.Count
 
         For counter = 0 To rowsCounter - 1
             If IsNothing(Grades.resultTable.Rows(counter).Cells(1).Value) Then

@@ -535,6 +535,7 @@ Public Class MainForm_builder
             Case "directorName"
                 queryString = sqlQueryString.loadDirector()
                 values = mySQLConnector.loadIntoArray(queryString, 1, 0)
+                values = flipDirector(values)
                 comboBox.Items.AddRange(values)
             Case "directorPosition"
                 queryString = sqlQueryString.loadDirectorPosition()

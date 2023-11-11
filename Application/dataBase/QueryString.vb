@@ -768,6 +768,8 @@ Module QueryString
         Dim sqlStringSecondPart As String
         Dim countRows, countQueryStr As Integer
 
+        If Not IsNothing(dataGridTbl.Rows(dataGridTbl.CurrentCell.RowIndex).Cells(1)) Then dataGridTbl.CurrentCell = dataGridTbl.Rows(dataGridTbl.CurrentCell.RowIndex).Cells(1)
+
         countRows = dataGridTbl.Rows.Count
         countRows = UBound(massTypes, 2)
 
@@ -1359,7 +1361,7 @@ Module QueryString
                       worker.name,
                       ДатаНЗ,
                       ДатаКЗ,
-                      Спец,
+                      Спец AS Специальность,
                       Квалификация,
                       Финансирование
                     FROM `group`
@@ -1402,7 +1404,7 @@ Module QueryString
                       worker.name As Куратор,
                       ДатаНЗ,
                       ДатаКЗ,
-                      Спец,
+                      Спец as Специальность,
                       Квалификация,
                       Финансирование
                     FROM `group`
@@ -1426,99 +1428,99 @@ Module QueryString
 
     Public Function select_moduls_ocenka(kod_group As String, modul_name As String) As String
 
-        sqlString = ""
+        sqlString = "Call `database`.gradesIinterAPP(" + kod_group + ",'" + modul_name + "')"
 
-        sqlString = "SELECT 
-                      ocenka.students,
-                      ocenka.mod1
-                    FROM
-                    (SELECT
-                      " + Chr(64) + "I := " + Chr(64) + "I + 1 AS number,
-                      tbl_mod.name
-                    FROM (SELECT
-                             moduls.name,
-                             progs_mods_hours.modul_number
-                           FROM progs_mods_hours
-                             INNER JOIN moduls
-                               ON progs_mods_hours.kod_modul = moduls.kod
-                             INNER JOIN `group`
-                               ON progs_mods_hours.kod_prog = `group`.kod_program
-                           WHERE `group`.Код = " + kod_group + "
-                           ORDER BY modul_number) AS tbl_mod,
-                         (SELECT
-                             " + Chr(64) + "I := 0) I) AS moduls
-                    LEFT JOIN
-                      (SELECT
-                    1 AS number,
-                    students,
-                      group_list.ОценкаМодуль1 AS mod1
-                    FROM group_list WHERE Kod=" + kod_group + "
-                    UNION ALL 
-                    SELECT
-                    2 AS number,
-                    students,
-                      group_list.ОценкаМодуль2 AS mod2
-                    FROM group_list
-                    WHERE Kod=" + kod_group + "
-                    UNION ALL 
-                    SELECT
-                    3 AS number,
-                    students,
-                      group_list.ОценкаМодуль3 AS mod3
-                    FROM group_list
-                    WHERE Kod=" + kod_group + "
-                    UNION ALL 
-                    SELECT
-                    4 AS number,
-                    students,
-                      group_list.ОценкаМодуль4 AS mod4
-                    FROM group_list
-                    WHERE Kod=" + kod_group + "
-                    UNION ALL 
-                    SELECT
-                    5 AS number,
-                    students,
-                      group_list.ОценкаМодуль5 AS mod5
-                    FROM group_list
-                    WHERE Kod=" + kod_group + "
-                    UNION ALL 
-                    SELECT
-                    6 AS number,
-                    students,
-                      group_list.ОценкаМодуль6 AS mod6
-                    FROM group_list
-                    WHERE Kod=" + kod_group + "
-                    UNION ALL 
-                    SELECT
-                    7 AS number,
-                    students,
-                      group_list.ОценкаМодуль7 AS mod7
-                    FROM group_list
-                    WHERE Kod=" + kod_group + "
-                    UNION ALL 
-                    SELECT
-                    8 AS number,
-                    students,
-                      group_list.ОценкаМодуль8 AS mod8
-                    FROM group_list
-                    WHERE Kod=" + kod_group + "
-                    UNION ALL 
-                    SELECT
-                    9 AS number,
-                    students,
-                      group_list.ОценкаМодуль9 AS mod9
-                    FROM group_list
-                    WHERE Kod=" + kod_group + "
-                    UNION ALL 
-                    SELECT
-                    10 AS number,
-                    students,
-                      group_list.ОценкаМодуль10 AS mod10
-                    FROM group_list
-                    WHERE Kod=" + kod_group + ") AS ocenka
-                    ON moduls.number=ocenka.number
-                    WHERE moduls.name='" + modul_name + "'
-                    ORDER BY moduls.number"
+        'sqlString = "SELECT 
+        '              ocenka.students,
+        '              ocenka.mod1
+        '            FROM
+        '            (SELECT
+        '              " + Chr(64) + "I := " + Chr(64) + "I + 1 AS number,
+        '              tbl_mod.name
+        '            FROM (SELECT
+        '                     moduls.name,
+        '                     progs_mods_hours.modul_number
+        '                   FROM progs_mods_hours
+        '                     INNER JOIN moduls
+        '                       ON progs_mods_hours.kod_modul = moduls.kod
+        '                     INNER JOIN `group`
+        '                       ON progs_mods_hours.kod_prog = `group`.kod_program
+        '                   WHERE `group`.Код = " + kod_group + "
+        '                   ORDER BY modul_number) AS tbl_mod,
+        '                 (SELECT
+        '                     " + Chr(64) + "I := 0) I) AS moduls
+        '            LEFT JOIN
+        '              (SELECT
+        '            1 AS number,
+        '            students,
+        '              group_list.ОценкаМодуль1 AS mod1
+        '            FROM group_list WHERE Kod=" + kod_group + "
+        '            UNION ALL 
+        '            SELECT
+        '            2 AS number,
+        '            students,
+        '              group_list.ОценкаМодуль2 AS mod2
+        '            FROM group_list
+        '            WHERE Kod=" + kod_group + "
+        '            UNION ALL 
+        '            SELECT
+        '            3 AS number,
+        '            students,
+        '              group_list.ОценкаМодуль3 AS mod3
+        '            FROM group_list
+        '            WHERE Kod=" + kod_group + "
+        '            UNION ALL 
+        '            SELECT
+        '            4 AS number,
+        '            students,
+        '              group_list.ОценкаМодуль4 AS mod4
+        '            FROM group_list
+        '            WHERE Kod=" + kod_group + "
+        '            UNION ALL 
+        '            SELECT
+        '            5 AS number,
+        '            students,
+        '              group_list.ОценкаМодуль5 AS mod5
+        '            FROM group_list
+        '            WHERE Kod=" + kod_group + "
+        '            UNION ALL 
+        '            SELECT
+        '            6 AS number,
+        '            students,
+        '              group_list.ОценкаМодуль6 AS mod6
+        '            FROM group_list
+        '            WHERE Kod=" + kod_group + "
+        '            UNION ALL 
+        '            SELECT
+        '            7 AS number,
+        '            students,
+        '              group_list.ОценкаМодуль7 AS mod7
+        '            FROM group_list
+        '            WHERE Kod=" + kod_group + "
+        '            UNION ALL 
+        '            SELECT
+        '            8 AS number,
+        '            students,
+        '              group_list.ОценкаМодуль8 AS mod8
+        '            FROM group_list
+        '            WHERE Kod=" + kod_group + "
+        '            UNION ALL 
+        '            SELECT
+        '            9 AS number,
+        '            students,
+        '              group_list.ОценкаМодуль9 AS mod9
+        '            FROM group_list
+        '            WHERE Kod=" + kod_group + "
+        '            UNION ALL 
+        '            SELECT
+        '            10 AS number,
+        '            students,
+        '              group_list.ОценкаМодуль10 AS mod10
+        '            FROM group_list
+        '            WHERE Kod=" + kod_group + ") AS ocenka
+        '            ON moduls.number=ocenka.number
+        '            WHERE moduls.name='" + modul_name + "'
+        '            ORDER BY moduls.number"
 
         Return sqlString
 
@@ -2024,12 +2026,14 @@ Module QueryString
     Public Function SQLString_OtchetBud_Vbud(dateStart As String, dateEnd As String, argument As String)
 
         Select Case argument
+
             Case "полный"
                 sqlString = "CALL VBOrder_full('" + dateStart + "','" + dateEnd + "')"
             Case "внебюджет"
                 sqlString = "CALL VBOrder_partial('" + dateStart + "','" + dateEnd + "','Платное обучение')"
             Case "бюджет"
                 sqlString = "CALL VBOrder_partial('" + dateStart + "','" + dateEnd + "','Федеральный бюджет')"
+
         End Select
 
         Return sqlString
@@ -2042,7 +2046,21 @@ Module QueryString
 
         sqlString = "SELECT" +
                     "   YEAR(ДатаКЗ) AS date," +
-                    "   УровеньКвалификации AS Kval" +
+                    "   УровеньКвалификации AS Kval," +
+                    " FROM `group`" +
+                    " WHERE Код =" & kod
+
+        Return sqlString
+
+    End Function
+    Public Function SQLString_dateNumbKvalGrupp(kod As Integer)
+
+        sqlString = ""
+
+        sqlString = "SELECT" +
+                    "   YEAR(ДатаКЗ) AS date," +
+                    "   УровеньКвалификации AS Kval,
+                        Номер" +
                     " FROM `group`" +
                     " WHERE Код =" & kod
 
@@ -2330,7 +2348,7 @@ Module QueryString
                   " students.Отчество," +
                   " students.ДатаРождения," +
                   " students.НаимДОО," +
-                  " students.ДатаОкончанияОбразованияПоДОО," +
+                  " 1," +
                   " students.СерияДОО," +
                   " students.НомерДОО" +
                 " FROM students" +

@@ -1,4 +1,5 @@
-﻿Imports Microsoft.Office.Interop.Word
+﻿Imports System.Resources.ResXFileRef
+Imports Microsoft.Office.Interop.Word
 Imports MySql.Data
 
 Public Class Grades_events
@@ -30,6 +31,10 @@ Public Class Grades_events
                                             formKeyDown(e, sender)
                                         End Sub
 
+        AddHandler currentForm.PreviewKeyDown, Sub(sender As Object, e As PreviewKeyDownEventArgs)
+                                                   formPreviewKeyDown(e, sender)
+                                               End Sub
+
         AddHandler groupNumber.Click, Sub(sender As Object, e As EventArgs)
                                           groupNumberClick()
                                       End Sub
@@ -60,56 +65,14 @@ Public Class Grades_events
                                               End If
                                           End Sub
 
+        If currentForm.Name = "WorkerReport" Then
+            AddHandler resultTable.KeyDown, Sub(sender As Object, e As KeyEventArgs)
+                                                textBoxCell_KeyDown(e)
+                                            End Sub
 
-    End Sub
-
-    Private Sub resultTable_Enter()
-        If resultTable.Rows.Count < 1 Then
-            headerFocus()
-            Return
         End If
-    End Sub
 
-    Private Sub groupNumberClick()
-        Select Case currentForm.Name
-            Case "Grades"
-                gradesGroupNumberClick()
-            Case "GradesIA"
-                gradesGroupNumberClick()
-            Case "WorkerReport"
-                gradesGroupNumberClick()
-        End Select
-    End Sub
 
-    Private Sub save_Click()
-
-        Select Case currentForm.Name
-            Case "Grades"
-                gradesSaveClick()
-            Case "GradesIA"
-                gradesIASaveClick()
-            Case "WorkerReport"
-                WorkerReport.save_Click()
-        End Select
-
-    End Sub
-
-    Private Sub gradesIASaveClick()
-        If gradesIAMAnipulation.check(resultTable) Then
-            headerFocus()
-            Return
-        End If
-        gradesIAMAnipulation.saveVal(resultTable, kodGroup)
-        headerFocus()
-    End Sub
-
-    Private Sub gradesSaveClick()
-        If gradesManipulation.check(resultTable) Then
-            headerFocus()
-            Return
-        End If
-        gradesManipulation.saveVal(resultTable, kodGroup)
-        headerFocus()
     End Sub
 
     Private Sub resultTable_addCellHandler()
@@ -172,6 +135,74 @@ Public Class Grades_events
         Next
 
         flagCellEvent = True
+    End Sub
+
+    Private Sub textBoxCell_KeyDown(e As KeyEventArgs)
+
+        If IsNothing(resultTable.CurrentCell) Then Return
+        If resultTable.CurrentCell.RowIndex = resultTable.RowCount - 1 Then Return
+        Dim type As String = resultTable.CurrentCell.GetType.ToString
+        If type = "System.Windows.Forms.DataGridViewTextBoxCell" Then
+            If (e.KeyCode >= Keys.D0 And e.KeyCode <= Keys.D9) Or (e.KeyCode >= Keys.NumPad0 And e.KeyCode <= Keys.NumPad9) Or e.KeyCode = Keys.Decimal Then
+                If Len(resultTable.CurrentCell.Value) = 1 And resultTable.CurrentCell.Value = 0 Then resultTable.CurrentCell.Value = ""
+                resultTable.CurrentCell.Value += e.KeyCode.ToString.Replace("NumPad", "").Replace("Decimal", ",").Replace("D", "")
+            ElseIf e.KeyCode = Keys.Back Then
+                If resultTable.CurrentCell.Value = "" Then Return
+                resultTable.CurrentCell.Value = Left(resultTable.CurrentCell.Value, Len(resultTable.CurrentCell.Value) - 1)
+            ElseIf e.KeyCode = 188 Or e.KeyCode = 190 Then
+                resultTable.CurrentCell.Value += ","
+            End If
+        End If
+
+    End Sub
+
+    Private Sub resultTable_Enter()
+        If resultTable.Rows.Count < 1 Then
+            headerFocus()
+            Return
+        End If
+    End Sub
+
+    Private Sub groupNumberClick()
+        Select Case currentForm.Name
+            Case "Grades"
+                gradesGroupNumberClick()
+            Case "GradesIA"
+                gradesGroupNumberClick()
+            Case "WorkerReport"
+                gradesGroupNumberClick()
+        End Select
+    End Sub
+
+    Private Sub save_Click()
+
+        Select Case currentForm.Name
+            Case "Grades"
+                gradesSaveClick()
+            Case "GradesIA"
+                gradesIASaveClick()
+            Case "WorkerReport"
+                WorkerReport.save_Click()
+        End Select
+
+    End Sub
+
+    Private Sub gradesIASaveClick()
+        If gradesIAMAnipulation.check(resultTable) Then
+            headerFocus()
+            Return
+        End If
+        gradesIAMAnipulation.saveVal(resultTable, kodGroup)
+        headerFocus()
+    End Sub
+
+    Private Sub gradesSaveClick()
+        If gradesManipulation.check(resultTable) Then
+            headerFocus()
+            Return
+        End If
+        gradesManipulation.saveVal(resultTable, kodGroup)
+        headerFocus()
     End Sub
 
     Private Sub combo_KeyPress(combo As ComboBox, e As KeyPressEventArgs)
@@ -252,6 +283,7 @@ Public Class Grades_events
 
         resultTable.Visible = False
         If kodGroup <> -1 Then
+
             Select Case currentForm.Name
                 Case "Grades"
                     Grades.loadTables()
@@ -260,6 +292,7 @@ Public Class Grades_events
                 Case "WorkerReport"
                     WorkerReport.loadTables()
             End Select
+
             resultTable_addCellHandler()
         End If
         If resultTable.Rows.Count < 1 Then
@@ -268,6 +301,14 @@ Public Class Grades_events
             resultTable.CurrentCell = resultTable.Rows(0).Cells(0)
         End If
         resultTable.Visible = True
+    End Sub
+
+    Private Sub formPreviewKeyDown(e As PreviewKeyDownEventArgs, sender As Object)
+
+        If Not flagDropDown Then
+            closeEsc(currentForm, e.KeyCode)
+        End If
+
     End Sub
 
     Private Sub formKeyDown(e As KeyEventArgs, sender As Object)

@@ -16,6 +16,7 @@ Public Class StudentsList_events
         AddHandler studentsList.KeyDown, Sub(sender As Object, e As KeyEventArgs)
                                              studentsList_KeyDown(sender, e)
                                          End Sub
+
         AddHandler studentsList.Load, Sub(sender As Object, e As EventArgs)
                                           load()
                                       End Sub
@@ -35,6 +36,11 @@ Public Class StudentsList_events
         AddHandler studentsList.ListViewСписокСлушателей.DoubleClick, Sub(sender As Object, e As EventArgs)
                                                                           doubleClick(sender, e)
                                                                       End Sub
+
+        AddHandler studentsList.ListViewСписокСлушателей.SelectedIndexChanged, Sub(sender As Object, e As EventArgs)
+                                                                                   studentList_SelectedIndexChanged(sender, e)
+                                                                               End Sub
+
 
         AddHandler studentsList.ССлушТаблицаИнфСлушателя.SelectionChanged, Sub()
                                                                                ' Выделяет всю строку
@@ -80,6 +86,41 @@ Public Class StudentsList_events
 
     End Sub
 
+    Private Sub studentList_SelectedIndexChanged(sender As Object, e As EventArgs)
+
+        Dim Dtable As DataTable
+        Dim Snils, SqlString As String
+
+        Try
+
+            Snils = addMask.deleteMask(studentsList.ListViewСписокСлушателей.SelectedItems.Item(0).SubItems(1).Text)
+
+        Catch ex As Exception
+
+            Exit Sub
+
+        End Try
+
+        SqlString = sprSlushTblGroup(Snils)
+        Dtable = MainForm.mySqlConnect.mySqlToDataTable(SqlString, 1)
+        studentsList.ССлушТаблицаИнфСлушателя.DataSource = Dtable
+
+        If studentsList.ССлушТаблицаИнфСлушателя.Columns.Count <> 5 Then
+
+            Return
+
+        End If
+
+        studentsList.ССлушТаблицаИнфСлушателя.Columns(0).Width = studentsList.ССлушТаблицаИнфСлушателя.Width * 0.1
+        studentsList.ССлушТаблицаИнфСлушателя.Columns(1).Width = studentsList.ССлушТаблицаИнфСлушателя.Width * 0.15
+        studentsList.ССлушТаблицаИнфСлушателя.Columns(2).Width = studentsList.ССлушТаблицаИнфСлушателя.Width * 0.5
+        studentsList.ССлушТаблицаИнфСлушателя.Columns(3).Width = studentsList.ССлушТаблицаИнфСлушателя.Width * 0.125
+        studentsList.ССлушТаблицаИнфСлушателя.Columns(4).Width = studentsList.ССлушТаблицаИнфСлушателя.Width * 0.125
+
+        studentsList.ССлушТаблицаИнфСлушателя.DefaultCellStyle.Font = New Font("Microsoft YaHei", 10)
+
+    End Sub
+
     Private Sub ListViewСписокСлушателей_Enter(sender As Object, e As EventArgs)
 
         If IsNothing(studentsList.ListViewСписокСлушателей.Items(0)) Then Return
@@ -93,7 +134,7 @@ Public Class StudentsList_events
 
         Dim snils As String
 
-        If IsNothing(studentsList.ССлушТаблицаИнфСлушателя.CurrentCell) Then
+        If IsNothing(studentsList.ListViewСписокСлушателей.SelectedItems.Item(0)) Then
             MsgBox("Слушатель не выбран")
             studentsList.ListViewСписокСлушателей.Focus()
             Return
@@ -103,6 +144,7 @@ Public Class StudentsList_events
         snils = addMask.deleteMask(snils)
         _technical.insertIntoGroupList(snils)
 
+        studentList_SelectedIndexChanged(sender, e)
         studentsList.ListViewСписокСлушателей.Focus()
 
     End Sub
@@ -332,7 +374,7 @@ Public Class StudentsList_events
 
             studentsList.BtnFocus.Focus()
             studentsList.header.Focus()
-            studentsList.sortSetts.Select()
+            studentsList.insertIntoGroupList.Select()
 
         End If
 

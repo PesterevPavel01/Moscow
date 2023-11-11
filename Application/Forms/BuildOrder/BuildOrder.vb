@@ -13,6 +13,7 @@ Public Class BuildOrder
     Public practical As Boolean = False
     Public cvalification As Int16
     Dim orderThread As Thread
+    Public currentOrderType As String
     Public orderArgument As New OrderArgument
     Public dictionaryFlag As Dictionary(Of String, Boolean)
     Private controlsEvents As New Controls_events ' Задает повидение комбобоксов
@@ -37,7 +38,7 @@ Public Class BuildOrder
             Exit Sub
 
         End If
-
+        orderArgument.orderType = currentOrderType
         Select Case orderArgument.orderType
 
             Case "Ведомость_слушателиИорганизации"
@@ -680,7 +681,7 @@ Public Class BuildOrder
 
     Private Sub ListViewСписокСлушателей_ItemChecked(sender As Object, e As ItemCheckedEventArgs) Handles tableStudentsList.ItemChecked
 
-        If orderArgument.orderType = "СправкаОбОбучении" Or orderArgument.orderType = "ПК_Зачисление" Or orderArgument.orderType = "ПК_Зачисление_Доп" Then
+        If currentOrderType = "СправкаОбОбучении" Or currentOrderType = "ПК_Зачисление" Or currentOrderType = "ПК_Зачисление_Доп" Then
             If Not flagCheck Then
                 flagCheck = True
                 Return
@@ -740,7 +741,7 @@ Public Class BuildOrder
 
         tableStudentsList.Items.Clear()
 
-        If orderArgument.orderType = "ПК_Отчисление" Then
+        If currentOrderType = "ПК_Отчисление" Then
 
             If Not groupNumber.Text = "" Then
                 Label4.Visible = True
@@ -752,19 +753,19 @@ Public Class BuildOrder
 
         End If
 
-        If orderArgument.orderType = "ПК_Окончание_уд" Or orderArgument.orderType = "СправкаОбОкончании" Or orderArgument.orderType = "ДоверенностьПолученияБланковСлушателей" Or orderArgument.orderType = "СправкаОбОбучении" Or orderArgument.orderType = "СправкаОбОкончании" Then
+        If currentOrderType = "ПК_Окончание_уд" Or currentOrderType = "СправкаОбОкончании" Or currentOrderType = "ДоверенностьПолученияБланковСлушателей" Or currentOrderType = "СправкаОбОбучении" Or currentOrderType = "СправкаОбОкончании" Then
 
             If Not groupNumber.Text = "" Then
                 loadStudentsList()
             End If
 
-            If orderArgument.orderType = "СправкаОбОбучении" Then
+            If currentOrderType = "СправкаОбОбучении" Then
                 tableStudentsList.Items.Insert(0, New ListViewItem("Выделить всех"))
             End If
 
         End If
 
-        If orderArgument.orderType = "ВедомостьПромежуточнойАттестации" Or orderArgument.orderType = "ПП_Ведомость" Then
+        If currentOrderType = "ВедомостьПромежуточнойАттестации" Or currentOrderType = "ПП_Ведомость" Then
 
             If Not groupNumber.Text = "" Then
                 loadModuls()
@@ -772,7 +773,7 @@ Public Class BuildOrder
 
         End If
 
-        If orderArgument.orderType = "ПК_Зачисление" Or orderArgument.orderType = "ПК_Зачисление_Доп" Then
+        If currentOrderType = "ПК_Зачисление" Or currentOrderType = "ПК_Зачисление_Доп" Then
 
             If Not groupNumber.Text = "" Then
                 loadStudentsList()
@@ -813,5 +814,4 @@ Public Class BuildOrder
         List.resultList.Columns(1).Text = "Наименование"
 
     End Sub
-
 End Class

@@ -6,7 +6,7 @@ Public Class Order
 
         BuildOrder.cvalification = MainForm.PK
         BuildOrder.Text = "ПК Зачисление"
-        BuildOrder.orderArgument.orderType = "ПК_Зачисление"
+        BuildOrder.currentOrderType = "ПК_Зачисление"
 
         BuildOrder.tableStudentsList.Visible = True
         BuildOrder.tableStudentsList.Location = New Point(9, 350)
@@ -52,7 +52,7 @@ Public Class Order
 
         BuildOrder.cvalification = MainForm.PK
         BuildOrder.Text = "ПК зачисление доп"
-        BuildOrder.orderArgument.orderType = "ПК_Зачисление_Доп"
+        BuildOrder.currentOrderType = "ПК_Зачисление_Доп"
 
         BuildOrder.tableStudentsList.Visible = True
         BuildOrder.tableStudentsList.Location = New Point(9, 320)
@@ -110,7 +110,7 @@ Public Class Order
 
         BuildOrder.cvalification = MainForm.PK
         BuildOrder.Text = "ПК отчисление"
-        BuildOrder.orderArgument.orderType = "ПК_Отчисление"
+        BuildOrder.currentOrderType = "ПК_Отчисление"
 
         MainForm.ОтветственныйЗаАттестацию(False)
         MainForm.чекбоксы(False, "", "", "")
@@ -156,7 +156,7 @@ Public Class Order
 
         BuildOrder.Label2.Visible = True
         BuildOrder.Label14.Visible = True
-        BuildOrder.orderArgument.orderType = "ПК_Окончание"
+        BuildOrder.currentOrderType = "ПК_Окончание"
 
         MainForm.ОтветственныйЗаАттестацию(False)
         MainForm.чекбоксы(False, "", "", "")
@@ -193,7 +193,7 @@ Public Class Order
     Public Sub createEndingUdPK(sender As Object, e As EventArgs)
 
         BuildOrder.cvalification = MainForm.PK
-        BuildOrder.orderArgument.orderType = "ПК окончание уд"
+        BuildOrder.currentOrderType = "ПК окончание уд"
         BuildOrder.Text = "ПК_Окончание_уд"
         MainForm.ActiveControl = MainForm.TabControlOther.TabPages(2)
 
@@ -243,7 +243,7 @@ Public Class Order
     Public Sub createEnrollmentPP(sender As Object, e As EventArgs)
         BuildOrder.cvalification = MainForm.PP
         BuildOrder.Text = "ПП зачисление"
-        BuildOrder.orderArgument.orderType = "ПП_Зачисление"
+        BuildOrder.currentOrderType = "ПП_Зачисление"
 
         MainForm.ОтветственныйЗаАттестацию(False)
         MainForm.чекбоксы(True, "иной приносящей доход деятельности", "федерального бюджета", "за счет средств")
@@ -282,7 +282,7 @@ Public Class Order
 
         BuildOrder.cvalification = MainForm.PP
         BuildOrder.Text = "ПП практика"
-        BuildOrder.orderArgument.orderType = "ПП_Практика"
+        BuildOrder.currentOrderType = "ПП_Практика"
 
         MainForm.ОтветственныйЗаАттестацию(True, "Руководитель ПП")
         MainForm.чекбоксы(False, "", "", "")
@@ -321,7 +321,7 @@ Public Class Order
 
         BuildOrder.cvalification = MainForm.PP
         BuildOrder.Text = "ПП допуск к ИА"
-        BuildOrder.orderArgument.orderType = "ПП_ДопускКИА"
+        BuildOrder.currentOrderType = "ПП_ДопускКИА"
 
         BuildOrder.comission = True
         MainForm.ОтветственныйЗаАттестацию(True, "Председатель комиссии")
@@ -368,7 +368,7 @@ Public Class Order
 
         BuildOrder.cvalification = MainForm.PP
         BuildOrder.Text = "ПП окончание"
-        BuildOrder.orderArgument.orderType = "ПП_Окончание"
+        BuildOrder.currentOrderType = "ПП_Окончание"
 
         MainForm.ОтветственныйЗаАттестацию(False)
         MainForm.чекбоксы(False, "", "", "")
@@ -406,7 +406,7 @@ Public Class Order
 
         BuildOrder.cvalification = MainForm.PO
         BuildOrder.Text = "ПО зачисление"
-        BuildOrder.orderArgument.orderType = "ПО_Зачисление"
+        BuildOrder.currentOrderType = "ПО_Зачисление"
 
         MainForm.ОтветственныйЗаАттестацию(False)
         MainForm.чекбоксы(True, "иной приносящей доход деятельности", "федерального бюджета", "за счет средств")
@@ -445,7 +445,7 @@ Public Class Order
 
         BuildOrder.cvalification = MainForm.PO
         BuildOrder.Text = "ПО практика"
-        BuildOrder.orderArgument.orderType = "ПО_Практика"
+        BuildOrder.currentOrderType = "ПО_Практика"
 
         MainForm.ОтветственныйЗаАттестацию(True, "Руководитель ПО")
         BuildOrder.practical = True
@@ -488,7 +488,7 @@ Public Class Order
 
         BuildOrder.cvalification = MainForm.PO
         BuildOrder.Text = "ПО допуск к ИА"
-        BuildOrder.orderArgument.orderType = "ПО_ДопускКИА"
+        BuildOrder.currentOrderType = "ПО_ДопускКИА"
 
         MainForm.ОтветственныйЗаАттестацию(True, "Председатель комиссии")
         MainForm.чекбоксы(True, "ММС", "санитар", "должность слушателей")
@@ -536,7 +536,7 @@ Public Class Order
 
         BuildOrder.cvalification = MainForm.PO
         BuildOrder.Text = "ПО_Окончание"
-        BuildOrder.orderArgument.orderType = "ПО_Окончание"
+        BuildOrder.currentOrderType = "ПО_Окончание"
 
         MainForm.ОтветственныйЗаАттестацию(False)
         MainForm.чекбоксы(False, "", "", "")
@@ -574,7 +574,7 @@ Public Class Order
 
         BuildOrder.cvalification = MainForm.PP
         BuildOrder.Text = "ПП приложение к диплому"
-        BuildOrder.orderArgument.orderType = "ПП_ПриложениеКдиплому"
+        BuildOrder.currentOrderType = "ПП_ПриложениеКдиплому"
 
         BuildOrder.Label24.Text = "Производственная практика"
 
@@ -627,7 +627,7 @@ Public Class Order
 
         BuildOrder.cvalification = MainForm.PO
         BuildOrder.Text = "ПО свидетельство"
-        BuildOrder.orderArgument.orderType = "ПО_Свидетельство"
+        BuildOrder.currentOrderType = "ПО_Свидетельство"
 
         BuildOrder.Label24.Text = "Практическая подготовка"
 
@@ -679,7 +679,7 @@ Public Class Order
 
         BuildOrder.cvalification = MainForm.PK
         BuildOrder.Text = "ПК заявление"
-        BuildOrder.orderArgument.orderType = "ПК_Заявление"
+        BuildOrder.currentOrderType = "ПК_Заявление"
 
         BuildOrder.Утверждает.Visible = False
         BuildOrder.УтверждаетДолжность.Visible = False
@@ -718,7 +718,7 @@ Public Class Order
 
         BuildOrder.cvalification = MainForm.PP
         BuildOrder.Text = "ПП заявление"
-        BuildOrder.orderArgument.orderType = "ПП_Заявление"
+        BuildOrder.currentOrderType = "ПП_Заявление"
 
         BuildOrder.Утверждает.Visible = False
         BuildOrder.УтверждаетДолжность.Visible = False
@@ -757,7 +757,7 @@ Public Class Order
 
         BuildOrder.cvalification = MainForm.PK_PP_PO
         BuildOrder.Text = "Карточка слушателя"
-        BuildOrder.orderArgument.orderType = "Карточка_слушателя"
+        BuildOrder.currentOrderType = "Карточка_слушателя"
 
         BuildOrder.Утверждает.Visible = False
         BuildOrder.УтверждаетДолжность.Visible = False
@@ -795,7 +795,7 @@ Public Class Order
 
         BuildOrder.cvalification = MainForm.PK_PP
         BuildOrder.Text = "Ведомость слушатели и организации"
-        BuildOrder.orderArgument.orderType = "Ведомость_слушателиИорганизации"
+        BuildOrder.currentOrderType = "Ведомость_слушателиИорганизации"
         MainForm.ActiveControl = MainForm.TabControlOther.TabPages(3)
 
         BuildOrder.Утверждает.Visible = False
@@ -834,7 +834,7 @@ Public Class Order
 
         BuildOrder.cvalification = MainForm.PK_PP_PO
         BuildOrder.Text = "Доверенность получения бланков на группу"
-        BuildOrder.orderArgument.orderType = "ДоверенностьПолученияБланков"
+        BuildOrder.currentOrderType = "ДоверенностьПолученияБланков"
 
         BuildOrder.Утверждает.Visible = True
         BuildOrder.УтверждаетДолжность.Visible = False
@@ -877,7 +877,7 @@ Public Class Order
 
         BuildOrder.cvalification = MainForm.PK_PP_PO
         BuildOrder.Text = "Доверенность получения бланков на слушателя"
-        BuildOrder.orderArgument.orderType = "ДоверенностьПолученияБланковСлушателей"
+        BuildOrder.currentOrderType = "ДоверенностьПолученияБланковСлушателей"
 
         BuildOrder.tableStudentsList.Visible = True
         BuildOrder.tableStudentsList.Location = New Point(9, 120)
@@ -940,7 +940,7 @@ Public Class Order
 
         BuildOrder.cvalification = MainForm.PO
         BuildOrder.Text = "Ведомость промежуточной аттестации"
-        BuildOrder.orderArgument.orderType = "ВедомостьПромежуточнойАттестации"
+        BuildOrder.currentOrderType = "ВедомостьПромежуточнойАттестации"
 
         While BuildOrder.tableStudentsList.Columns.Count < 3
             BuildOrder.tableStudentsList.Columns.Add("Преподаватель", 200)
@@ -990,7 +990,7 @@ Public Class Order
 
         BuildOrder.cvalification = MainForm.PP
         BuildOrder.Text = "ПП Ведомость промежуточной аттестации"
-        BuildOrder.orderArgument.orderType = "ПП_Ведомость"
+        BuildOrder.currentOrderType = "ПП_Ведомость"
 
         While BuildOrder.tableStudentsList.Columns.Count < 3
             BuildOrder.tableStudentsList.Columns.Add("Преподаватель", 200)
@@ -1039,7 +1039,7 @@ Public Class Order
 
         BuildOrder.cvalification = MainForm.PK_PP_PO
         BuildOrder.Text = "Справка об обучении"
-        BuildOrder.orderArgument.orderType = "СправкаОбОбучении"
+        BuildOrder.currentOrderType = "СправкаОбОбучении"
 
         BuildOrder.LabelИзмениПадеж.Visible = True
         BuildOrder.tableStudentsList.Visible = True
@@ -1103,7 +1103,7 @@ Public Class Order
 
         BuildOrder.cvalification = MainForm.PK_PP_PO
         BuildOrder.Text = "Справка об окончании без ИА"
-        BuildOrder.orderArgument.orderType = "СправкаОбОкончании"
+        BuildOrder.currentOrderType = "СправкаОбОкончании"
 
         BuildOrder.LabelИзмениПадеж.Visible = True
         BuildOrder.tableStudentsList.Visible = True

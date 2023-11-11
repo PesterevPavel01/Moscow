@@ -16,7 +16,7 @@
 
         dateInOrder = Chr(34) & Format(argument.orderDate, "dd") & Chr(34) & " " & monthRP(Format(argument.orderDate, "MMMM")) & " " & Format(argument.orderDate, "yyyy")
 
-        queryString = vedomPromAtt__loadListSlush(MainForm.orderIdGroup)
+        queryString = vedomPromAtt__loadListSlush(argument.orderIdGroup)
 
         studentsData = argument.mySqlConnector.loadMySqlToArray(queryString, 1)
 
@@ -26,7 +26,7 @@
             Exit Sub
         End If
 
-        queryString = load_prog_kurator(MainForm.orderIdGroup)
+        queryString = load_prog_kurator(argument.orderIdGroup)
         group = argument.mySqlConnector.loadMySqlToArray(queryString, 1)
 
         If group(0, 0) = "нет записей" Then
@@ -59,7 +59,7 @@
 
             wordDoc = wordApp.Documents.Open(samplePath, ReadOnly:=True)
 
-            _technical.savePrikazBlank(wordDoc, argument.orderIdGroup, argument.selectedModuls & " " & argument.selectedModuls(0, i), resourcesPath, "Ведомости", argument.mySqlConnector)
+            _technical.savePrikazBlank(wordDoc, argument.orderIdGroup, argument.selectedModuls(0, i), resourcesPath, "Ведомости", argument.mySqlConnector)
 
             Warning.content.Visible = False
             Warning.TextBox.Visible = True

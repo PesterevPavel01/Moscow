@@ -27,16 +27,13 @@
 
         End If
 
-
-
         resourcesPath = startApp.resourcesPath
         samplePath = resourcesPath & "Шаблоны\Приказы\" & argument.orderType & ".docx"
 
         wordApp = CreateObject("Word.Application")
-
         wordDoc = wordApp.Documents.Open(samplePath, ReadOnly:=True)
 
-        _technical.savePrikazBlank(wordDoc, MainForm.orderIdGroup, argument.orderType, resourcesPath, "Приказы", argument.mySqlConnector)
+        _technical.savePrikazBlank(wordDoc, argument.orderIdGroup, argument.orderType, resourcesPath, "Приказы", argument.mySqlConnector)
 
         МСВорд.ДобавитьСписокПоМеткеСтрокой(wordDoc, "$СписокСлушателей$", studentsData, wordApp)
 

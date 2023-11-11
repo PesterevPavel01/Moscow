@@ -30,7 +30,7 @@ Module ПП_ПриложениеКДиплому
             Exit Sub
         End If
 
-        sqlQuery = selectMassForPrilDiplom(MainForm.orderIdGroup)
+        sqlQuery = selectMassForPrilDiplom(argument.orderIdGroup)
         group = argument.mySqlConnector.loadMySqlToArray(sqlQuery, 1)
 
         If group(0, 0) = "нет записей" Then

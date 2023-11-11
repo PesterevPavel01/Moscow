@@ -31,7 +31,7 @@
         sumResult.Clear()
 
 
-        pednagr__mainTable.Rows.Clear()
+        mainTable.Rows.Clear()
         programTable = New DataTable()
 
         queryString = workerReport__load(Convert.ToString(kodGroup))
@@ -43,12 +43,12 @@
 
             Warning.content.Text = "Нет данных для отображения"
             openForm(Warning)
-            ActiveControl = pednagr__mainTable
+            ActiveControl = mainTable
             Exit Sub
 
         End If
 
-        RedactorDataGrid.arrayToDataGrid(pednagr__mainTable, resultList)
+        RedactorDataGrid.arrayToDataGrid(mainTable, resultList)
 
     End Sub
 
@@ -138,11 +138,11 @@
 
     End Function
 
-    Private Sub ТаблицаВедомость_CellValueChanged(sender As Object, e As DataGridViewCellEventArgs) Handles pednagr__mainTable.CellValueChanged
+    Private Sub ТаблицаВедомость_CellValueChanged(sender As Object, e As DataGridViewCellEventArgs) Handles mainTable.CellValueChanged
 
         Dim value As Double
 
-        If IsNothing(pednagr__mainTable.Rows(0).Cells(0).Value) Or Trim(pednagr__mainTable.Rows(0).Cells(0).Value) = "" Then
+        If IsNothing(mainTable.Rows(0).Cells(0).Value) Or Trim(mainTable.Rows(0).Cells(0).Value) = "" Then
             Exit Sub
         End If
 
@@ -150,7 +150,7 @@
 
         For Each row As DataGridViewRow In pednagr__infoTable.Rows
 
-            row.Cells(2).Value = sumInColumn(pednagr__mainTable, count)
+            row.Cells(2).Value = sumInColumn(mainTable, count)
 
             If row.Cells(2).Value.ToString = "" Then
                 row.Cells(2).Value = 0
@@ -172,27 +172,27 @@
 
         Next
 
-        sumResult.Text = sumInColumn(pednagr__mainTable, 7)
+        sumResult.Text = sumInColumn(mainTable, 7)
 
 
         Dim счетчикСтрок As Integer = 0
 
-        For Each строка In pednagr__mainTable.Rows
+        For Each строка In mainTable.Rows
 
-            If IsNothing(строка.Cells(0).Value) Or Trim(pednagr__mainTable.Rows(0).Cells(0).Value) = "" Then
+            If IsNothing(строка.Cells(0).Value) Or Trim(mainTable.Rows(0).Cells(0).Value) = "" Then
                 счетчикСтрок += 1
                 Continue For
             End If
 
-            count = pednagr__mainTable.Columns.Count
-            value = sumInRow(pednagr__mainTable, счетчикСтрок, 1, pednagr__mainTable.Columns.Count - 2)
+            count = mainTable.Columns.Count
+            value = sumInRow(mainTable, счетчикСтрок, 1, mainTable.Columns.Count - 2)
 
             If value = -1 Then
                 счетчикСтрок += 1
                 Continue For
             End If
 
-            строка.Cells(pednagr__mainTable.Columns.Count - 1).Value = value
+            строка.Cells(mainTable.Columns.Count - 1).Value = value
             счетчикСтрок += 1
 
         Next
@@ -222,7 +222,7 @@
         arrayNameAndType(0, 6) = "IA"
         arrayNameAndType(1, 6) = "Double"
 
-        datagridInsertRowIntoDB(pednagr__mainTable, "worker_report", arg, arrayNameAndType, 0, 6)
+        datagridInsertRowIntoDB(mainTable, "worker_report", arg, arrayNameAndType, 0, 6)
 
     End Sub
 
@@ -324,7 +324,7 @@
         myEvents.header = header
         myEvents.groupNumber = groupNumber
         myEvents.saveButton = save
-        myEvents.resultTable = pednagr__mainTable
+        myEvents.resultTable = mainTable
         myEvents.init()
     End Sub
 End Class

@@ -14,17 +14,6 @@ Public Class DGV_Events
 
         dictionaryFlag = New Dictionary(Of String, Boolean)
 
-        ' События родительских форм
-
-        If userDGV.name_table = "group_list" Then
-            ' Событие при нажатии Esc закрывает открытый редактор, если закрыт, то закрывает форму
-            Dim form As StudentsInGroup = formParent
-
-            AddHandler form.KeyDown, Sub(sender As Object, e As KeyEventArgs)
-                                         form.studentsInGroup_KeyDown(e)
-                                     End Sub
-        End If
-
         ' События контрола Пользовательская таблица
 
         AddHandler userDGV.Enter, Sub()
@@ -32,9 +21,9 @@ Public Class DGV_Events
                                       userDGV.tables_control_Activate()
                                   End Sub
 
-        AddHandler userDGV.Leave, Sub()
-                                      ' Событие у Слушателей в группе только ставит флаг flag_active_control = False, у программы зажигает индикатор
-                                      userDGV.tables_control_Leave()
+        AddHandler userDGV.Enter, Sub()
+                                      ' Событие у Слушателей в группе только ставит флаг flag_active_control = True, у программы зажигает индикатор
+                                      userDGV.tables_control_Activate()
                                   End Sub
 
         'События Дата грид
@@ -48,6 +37,11 @@ Public Class DGV_Events
                                                            ' Если редактор закрыт, ставит флаг active_last_element = True
                                                            userDGV.dataGridTables_activate()
                                                        End Sub
+
+        AddHandler userDGV.DataGridTablesResult.PreviewKeyDown, Sub(sender As Object, e As PreviewKeyDownEventArgs)
+                                                                    ' Обрабатывает нажатие +, R, Delete, вправо и Tab
+                                                                    DataGridTables_PreviewKeyDown(sender, e)
+                                                                End Sub
 
         AddHandler userDGV.DataGridTablesResult.KeyDown, Sub(sender As Object, e As KeyEventArgs)
                                                              ' Обрабатывает нажатие +, R, Delete, вправо и Tab
@@ -202,6 +196,12 @@ Public Class DGV_Events
                 If saveKeyS Then Return
                 userDGV.table_enterPress(sender, e)
         End Select
+    End Sub
+
+    Private Sub DataGridTables_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs)
+
+        e.IsInputKey = True
+
     End Sub
 
     Private Sub DataGridTables_KeyDown(sender As Object, e As KeyEventArgs)

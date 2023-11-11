@@ -1,12 +1,19 @@
 ﻿Public Class StudentsInGroup_Events
 
     Public studentsInGroup As StudentsInGroup
-    Private initializationСompleted As Boolean = False
+    Public initializationСompleted As Boolean = False
 
     Public Sub init()
 
         If initializationСompleted Then Return
         initializationСompleted = True
+
+        ' Событие при нажатии Esc закрывает открытый редактор, если закрыт, то закрывает форму
+
+        AddHandler studentsInGroup.KeyDown,
+            Sub(sender As Object, e As KeyEventArgs)
+                studentsInGroup.studentsInGroup_KeyDown(e)
+            End Sub
 
         AddHandler studentsInGroup.FormClosing,
             Sub(sender As Object, e As FormClosingEventArgs)
@@ -16,6 +23,15 @@
         AddHandler studentsInGroup.header.Enter,
             Sub()
                 studentsInGroup.newStudent.Select()
+            End Sub
+
+        AddHandler studentsInGroup.header.PreviewKeyDown,
+            Sub(sender As Object, e As PreviewKeyDownEventArgs)
+
+                If e.KeyCode = Keys.Escape Then
+                    e.IsInputKey = True
+                End If
+
             End Sub
 
         AddHandler studentsInGroup.toolOrders.Enter,

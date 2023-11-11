@@ -652,7 +652,7 @@ Public Class MainForm_events
 
         mainForm.ActiveControl = mainForm.TabControlOther.TabPages(0)
 
-        WorkerReport.pednagr__mainTable.Rows.Clear()
+        WorkerReport.mainTable.Rows.Clear()
         WorkerReport.groupNumber.Clear()
 
         _formCleaner.cleaner(WorkerReport)
@@ -669,7 +669,7 @@ Public Class MainForm_events
 
         End If
 
-        listIntoComboBox(WorkerReport.pednagr__mainTable, List, "ФИО")
+        listIntoComboBox(WorkerReport.mainTable, List, "ФИО")
         WorkerReport.ShowDialog()
 
     End Sub

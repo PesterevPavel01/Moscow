@@ -7,7 +7,7 @@
         Dim number As Int64
         Dim sqlQuery As String, resorsesPath, samplePath As String
 
-        sqlQuery = poSvid__loadListSvid(MainForm.orderIdGroup)
+        sqlQuery = poSvid__loadListSvid(argument.orderIdGroup)
         students = argument.mySqlConnector.loadMySqlToArray(sqlQuery, 1)
 
         If students(0, 0) = "нет записей" Then
@@ -16,7 +16,7 @@
             Exit Sub
         End If
 
-        sqlQuery = selectMassForPrilSvidetelstvo(MainForm.orderIdGroup)
+        sqlQuery = selectMassForPrilSvidetelstvo(argument.orderIdGroup)
         group = argument.mySqlConnector.loadMySqlToArray(sqlQuery, 1)
 
         If group(0, 0) = "нет записей" Then
@@ -40,7 +40,7 @@
 
         wordDok = WordApp.Documents.Open(samplePath, ReadOnly:=True)
 
-        _technical.savePrikazBlank(wordDok, MainForm.orderIdGroup, argument.orderType, resorsesPath, "Приказы", argument.mySqlConnector)
+        _technical.savePrikazBlank(wordDok, argument.orderIdGroup, argument.orderType, resorsesPath, "Приказы", argument.mySqlConnector)
 
         WordApp.DisplayAlerts = False
 

@@ -22,7 +22,6 @@
 
     Function ОпределитьСНИЛС(номер As Integer) As String
         For СчетчикСтрок = 0 To UBound(СписокСлушателей, 2)
-
             If CDbl(СписокСлушателей(UBound(СписокСлушателей, 1), СчетчикСтрок)) = номер Then
 
                 ОпределитьСНИЛС = СписокСлушателей(UBound(СписокСлушателей, 1) - 1, СчетчикСтрок)
@@ -30,13 +29,16 @@
             End If
         Next
     End Function
-    Sub saveVal(Ведомость As Object, kod As Integer)
+
+    Sub saveVal(table As Object, kod As Integer)
         Dim fio, array
         Dim queryString, snils As String
         Dim rowCounter As Integer
-        rowCounter = Ведомость.Rows.Count
+        rowCounter = table.Rows.Count
+
         queryString = GradesIA.resultTable.Rows(rowCounter - 1).Cells(1).Value
 
+        If Not IsNothing(table.Rows(table.CurrentCell.RowIndex).Cells(1)) Then table.CurrentCell = table.Rows(table.CurrentCell.RowIndex).Cells(1)
 
         For Each row As DataGridViewRow In GradesIA.resultTable.Rows
 

@@ -37,15 +37,7 @@ Partial Class WorkerReport
         Dim DataGridViewCellStyle12 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Группа = New System.Windows.Forms.TextBox()
-        Me.pednagr__mainTable = New System.Windows.Forms.DataGridView()
-        Me.ФИО = New System.Windows.Forms.DataGridViewComboBoxColumn()
-        Me.Лекции = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Практические = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Стимулирующие = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Консультация = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.ПА = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.ИА = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Итого = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.mainTable = New System.Windows.Forms.DataGridView()
         Me.ПодписьИтого = New System.Windows.Forms.TextBox()
         Me.sumLectures = New System.Windows.Forms.TextBox()
         Me.sumPracticals = New System.Windows.Forms.TextBox()
@@ -75,7 +67,15 @@ Partial Class WorkerReport
         Me.DataGridViewTextBoxColumn5 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn6 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn7 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        CType(Me.pednagr__mainTable, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.ФИО = New System.Windows.Forms.DataGridViewComboBoxColumn()
+        Me.Лекции = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Практические = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Стимулирующие = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Консультация = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.ПА = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.ИА = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Итого = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        CType(Me.mainTable, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.pednagr__splitContainerMain, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.pednagr__splitContainerMain.Panel1.SuspendLayout()
         Me.pednagr__splitContainerMain.Panel2.SuspendLayout()
@@ -113,12 +113,12 @@ Partial Class WorkerReport
         Me.Группа.Size = New System.Drawing.Size(294, 20)
         Me.Группа.TabIndex = 6
         '
-        'pednagr__mainTable
+        'mainTable
         '
-        Me.pednagr__mainTable.AllowUserToResizeColumns = False
-        Me.pednagr__mainTable.AllowUserToResizeRows = False
-        Me.pednagr__mainTable.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells
-        Me.pednagr__mainTable.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight
+        Me.mainTable.AllowUserToResizeColumns = False
+        Me.mainTable.AllowUserToResizeRows = False
+        Me.mainTable.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells
+        Me.mainTable.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight
         DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
         DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
         DataGridViewCellStyle1.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
@@ -126,9 +126,9 @@ Partial Class WorkerReport
         DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.ControlLight
         DataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.ControlText
         DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.pednagr__mainTable.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
-        Me.pednagr__mainTable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.pednagr__mainTable.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.ФИО, Me.Лекции, Me.Практические, Me.Стимулирующие, Me.Консультация, Me.ПА, Me.ИА, Me.Итого})
+        Me.mainTable.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
+        Me.mainTable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.mainTable.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.ФИО, Me.Лекции, Me.Практические, Me.Стимулирующие, Me.Консультация, Me.ПА, Me.ИА, Me.Итого})
         DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
         DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window
         DataGridViewCellStyle2.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
@@ -137,77 +137,16 @@ Partial Class WorkerReport
         DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.ControlLight
         DataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.ControlText
         DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.pednagr__mainTable.DefaultCellStyle = DataGridViewCellStyle2
-        Me.pednagr__mainTable.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.pednagr__mainTable.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter
-        Me.pednagr__mainTable.Location = New System.Drawing.Point(0, 51)
-        Me.pednagr__mainTable.MultiSelect = False
-        Me.pednagr__mainTable.Name = "pednagr__mainTable"
-        Me.pednagr__mainTable.RowHeadersVisible = False
-        Me.pednagr__mainTable.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
-        Me.pednagr__mainTable.Size = New System.Drawing.Size(1134, 804)
-        Me.pednagr__mainTable.TabIndex = 7
-        '
-        'ФИО
-        '
-        Me.ФИО.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.ComboBox
-        Me.ФИО.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.ФИО.HeaderText = "ФИО"
-        Me.ФИО.Name = "ФИО"
-        Me.ФИО.Width = 300
-        '
-        'Лекции
-        '
-        Me.Лекции.HeaderText = "Лекции"
-        Me.Лекции.Name = "Лекции"
-        Me.Лекции.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Лекции.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        Me.Лекции.Width = 120
-        '
-        'Практические
-        '
-        Me.Практические.HeaderText = "Практ. занятия"
-        Me.Практические.Name = "Практические"
-        Me.Практические.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Практические.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        Me.Практические.Width = 120
-        '
-        'Стимулирующие
-        '
-        Me.Стимулирующие.HeaderText = "Стимул. занятия"
-        Me.Стимулирующие.Name = "Стимулирующие"
-        Me.Стимулирующие.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Стимулирующие.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        Me.Стимулирующие.Width = 120
-        '
-        'Консультация
-        '
-        Me.Консультация.HeaderText = "Консультация"
-        Me.Консультация.Name = "Консультация"
-        Me.Консультация.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Консультация.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        Me.Консультация.Width = 140
-        '
-        'ПА
-        '
-        Me.ПА.HeaderText = "ПА"
-        Me.ПА.Name = "ПА"
-        Me.ПА.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.ПА.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        '
-        'ИА
-        '
-        Me.ИА.HeaderText = "ИА"
-        Me.ИА.Name = "ИА"
-        Me.ИА.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.ИА.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        '
-        'Итого
-        '
-        Me.Итого.HeaderText = "Итого нагрузка"
-        Me.Итого.Name = "Итого"
-        Me.Итого.ReadOnly = True
-        Me.Итого.Width = 120
+        Me.mainTable.DefaultCellStyle = DataGridViewCellStyle2
+        Me.mainTable.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.mainTable.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter
+        Me.mainTable.Location = New System.Drawing.Point(0, 51)
+        Me.mainTable.MultiSelect = False
+        Me.mainTable.Name = "mainTable"
+        Me.mainTable.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.[Single]
+        Me.mainTable.RowHeadersVisible = False
+        Me.mainTable.Size = New System.Drawing.Size(1134, 804)
+        Me.mainTable.TabIndex = 7
         '
         'ПодписьИтого
         '
@@ -301,7 +240,7 @@ Partial Class WorkerReport
         '
         'pednagr__splitContainerMain.Panel1
         '
-        Me.pednagr__splitContainerMain.Panel1.Controls.Add(Me.pednagr__mainTable)
+        Me.pednagr__splitContainerMain.Panel1.Controls.Add(Me.mainTable)
         Me.pednagr__splitContainerMain.Panel1.Controls.Add(Me.sumPA)
         Me.pednagr__splitContainerMain.Panel1.Controls.Add(Me.ПодписьИтого)
         Me.pednagr__splitContainerMain.Panel1.Controls.Add(Me.sumConsultations)
@@ -656,6 +595,73 @@ Partial Class WorkerReport
         Me.DataGridViewTextBoxColumn7.ReadOnly = True
         Me.DataGridViewTextBoxColumn7.Width = 120
         '
+        'ФИО
+        '
+        Me.ФИО.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.ComboBox
+        Me.ФИО.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.ФИО.HeaderText = "ФИО"
+        Me.ФИО.Name = "ФИО"
+        Me.ФИО.Width = 300
+        '
+        'Лекции
+        '
+        Me.Лекции.HeaderText = "Лекции"
+        Me.Лекции.Name = "Лекции"
+        Me.Лекции.ReadOnly = True
+        Me.Лекции.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Лекции.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        Me.Лекции.Width = 120
+        '
+        'Практические
+        '
+        Me.Практические.HeaderText = "Практ. занятия"
+        Me.Практические.Name = "Практические"
+        Me.Практические.ReadOnly = True
+        Me.Практические.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Практические.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        Me.Практические.Width = 120
+        '
+        'Стимулирующие
+        '
+        Me.Стимулирующие.HeaderText = "Стимул. занятия"
+        Me.Стимулирующие.Name = "Стимулирующие"
+        Me.Стимулирующие.ReadOnly = True
+        Me.Стимулирующие.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Стимулирующие.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        Me.Стимулирующие.Width = 120
+        '
+        'Консультация
+        '
+        Me.Консультация.HeaderText = "Консультация"
+        Me.Консультация.Name = "Консультация"
+        Me.Консультация.ReadOnly = True
+        Me.Консультация.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Консультация.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        Me.Консультация.Width = 140
+        '
+        'ПА
+        '
+        Me.ПА.HeaderText = "ПА"
+        Me.ПА.Name = "ПА"
+        Me.ПА.ReadOnly = True
+        Me.ПА.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.ПА.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        '
+        'ИА
+        '
+        Me.ИА.HeaderText = "ИА"
+        Me.ИА.Name = "ИА"
+        Me.ИА.ReadOnly = True
+        Me.ИА.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.ИА.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        '
+        'Итого
+        '
+        Me.Итого.HeaderText = "Итого нагрузка"
+        Me.Итого.Name = "Итого"
+        Me.Итого.ReadOnly = True
+        Me.Итого.Width = 120
+        '
         'WorkerReport
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -669,7 +675,7 @@ Partial Class WorkerReport
         Me.Name = "WorkerReport"
         Me.Padding = New System.Windows.Forms.Padding(5, 0, 5, 5)
         Me.Text = "Педнагрузка"
-        CType(Me.pednagr__mainTable, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.mainTable, System.ComponentModel.ISupportInitialize).EndInit()
         Me.pednagr__splitContainerMain.Panel1.ResumeLayout(False)
         Me.pednagr__splitContainerMain.Panel1.PerformLayout()
         Me.pednagr__splitContainerMain.Panel2.ResumeLayout(False)
@@ -697,7 +703,7 @@ Partial Class WorkerReport
 
     Friend WithEvents Label2 As Label
     Friend WithEvents Группа As TextBox
-    Friend WithEvents pednagr__mainTable As DataGridView
+    Friend WithEvents mainTable As DataGridView
     Friend WithEvents ПодписьИтого As TextBox
     Friend WithEvents sumLectures As TextBox
     Friend WithEvents sumPracticals As TextBox
@@ -706,14 +712,6 @@ Partial Class WorkerReport
     Friend WithEvents sumPA As TextBox
     Friend WithEvents sumIA As TextBox
     Friend WithEvents sumResult As TextBox
-    Friend WithEvents ФИО As DataGridViewComboBoxColumn
-    Friend WithEvents Лекции As DataGridViewTextBoxColumn
-    Friend WithEvents Практические As DataGridViewTextBoxColumn
-    Friend WithEvents Стимулирующие As DataGridViewTextBoxColumn
-    Friend WithEvents Консультация As DataGridViewTextBoxColumn
-    Friend WithEvents ПА As DataGridViewTextBoxColumn
-    Friend WithEvents ИА As DataGridViewTextBoxColumn
-    Friend WithEvents Итого As DataGridViewTextBoxColumn
     Friend WithEvents pednagr__splitContainerMain As SplitContainer
     Friend WithEvents DataGridView1 As DataGridView
     Friend WithEvents DataGridViewComboBoxColumn1 As DataGridViewComboBoxColumn
@@ -735,4 +733,12 @@ Partial Class WorkerReport
     Friend WithEvents programHoursContainer As SplitContainer
     Friend WithEvents DataGridView3 As DataGridView
     Friend WithEvents wr__program As DataGridView
+    Friend WithEvents ФИО As DataGridViewComboBoxColumn
+    Friend WithEvents Лекции As DataGridViewTextBoxColumn
+    Friend WithEvents Практические As DataGridViewTextBoxColumn
+    Friend WithEvents Стимулирующие As DataGridViewTextBoxColumn
+    Friend WithEvents Консультация As DataGridViewTextBoxColumn
+    Friend WithEvents ПА As DataGridViewTextBoxColumn
+    Friend WithEvents ИА As DataGridViewTextBoxColumn
+    Friend WithEvents Итого As DataGridViewTextBoxColumn
 End Class

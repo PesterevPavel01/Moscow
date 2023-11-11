@@ -228,6 +228,6 @@ Partial Class StudentsInGroup
     Friend WithEvents orders As ToolStripButton
     Friend WithEvents mainConteiner As SplitContainer
     Friend WithEvents toolOrders As ToolStrip
-    Friend WithEvents panelOrders As Panel
     Friend WithEvents closePanelOrders As ToolStripButton
+    Friend WithEvents panelOrders As Panel
 End Class

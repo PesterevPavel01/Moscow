@@ -27,15 +27,15 @@ Partial Class GradesIA
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(GradesIA))
         Me.ЗагрузитьИнформацию = New System.Windows.Forms.Button()
         Me.resultTable = New System.Windows.Forms.DataGridView()
+        Me.header = New System.Windows.Forms.ToolStrip()
+        Me.ToolStripLabel1 = New System.Windows.Forms.ToolStripLabel()
+        Me.save = New System.Windows.Forms.ToolStripButton()
+        Me.groupNumber = New System.Windows.Forms.ToolStripTextBox()
         Me.Номер = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.ФИО = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.ИАТест = New System.Windows.Forms.DataGridViewComboBoxColumn()
         Me.ИАПрактНав = New System.Windows.Forms.DataGridViewComboBoxColumn()
         Me.ИАИтог = New System.Windows.Forms.DataGridViewComboBoxColumn()
-        Me.header = New System.Windows.Forms.ToolStrip()
-        Me.ToolStripLabel1 = New System.Windows.Forms.ToolStripLabel()
-        Me.save = New System.Windows.Forms.ToolStripButton()
-        Me.groupNumber = New System.Windows.Forms.ToolStripTextBox()
         CType(Me.resultTable, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.header.SuspendLayout()
         Me.SuspendLayout()
@@ -92,6 +92,45 @@ Partial Class GradesIA
         Me.resultTable.Size = New System.Drawing.Size(1378, 786)
         Me.resultTable.TabIndex = 9
         '
+        'header
+        '
+        Me.header.AutoSize = False
+        Me.header.BackColor = System.Drawing.SystemColors.ControlLight
+        Me.header.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
+        Me.header.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripLabel1, Me.save, Me.groupNumber})
+        Me.header.Location = New System.Drawing.Point(0, 0)
+        Me.header.Name = "header"
+        Me.header.Padding = New System.Windows.Forms.Padding(0)
+        Me.header.Size = New System.Drawing.Size(1378, 51)
+        Me.header.TabIndex = 22
+        Me.header.Text = "ToolStrip2"
+        '
+        'ToolStripLabel1
+        '
+        Me.ToolStripLabel1.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
+        Me.ToolStripLabel1.ImageAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.ToolStripLabel1.Name = "ToolStripLabel1"
+        Me.ToolStripLabel1.Size = New System.Drawing.Size(65, 48)
+        Me.ToolStripLabel1.Text = "Группа"
+        '
+        'save
+        '
+        Me.save.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
+        Me.save.AutoSize = False
+        Me.save.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.save.Image = CType(resources.GetObject("save.Image"), System.Drawing.Image)
+        Me.save.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
+        Me.save.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.save.Name = "save"
+        Me.save.Size = New System.Drawing.Size(48, 48)
+        Me.save.Text = "toolStripButton2"
+        '
+        'groupNumber
+        '
+        Me.groupNumber.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
+        Me.groupNumber.Name = "groupNumber"
+        Me.groupNumber.Size = New System.Drawing.Size(380, 51)
+        '
         'Номер
         '
         Me.Номер.HeaderText = "№"
@@ -134,45 +173,6 @@ Partial Class GradesIA
         Me.ИАИтог.Name = "ИАИтог"
         Me.ИАИтог.Width = 200
         '
-        'header
-        '
-        Me.header.AutoSize = False
-        Me.header.BackColor = System.Drawing.SystemColors.ControlLight
-        Me.header.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
-        Me.header.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripLabel1, Me.save, Me.groupNumber})
-        Me.header.Location = New System.Drawing.Point(0, 0)
-        Me.header.Name = "header"
-        Me.header.Padding = New System.Windows.Forms.Padding(0)
-        Me.header.Size = New System.Drawing.Size(1378, 51)
-        Me.header.TabIndex = 22
-        Me.header.Text = "ToolStrip2"
-        '
-        'ToolStripLabel1
-        '
-        Me.ToolStripLabel1.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.ToolStripLabel1.ImageAlign = System.Drawing.ContentAlignment.BottomCenter
-        Me.ToolStripLabel1.Name = "ToolStripLabel1"
-        Me.ToolStripLabel1.Size = New System.Drawing.Size(65, 48)
-        Me.ToolStripLabel1.Text = "Группа"
-        '
-        'save
-        '
-        Me.save.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
-        Me.save.AutoSize = False
-        Me.save.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.save.Image = CType(resources.GetObject("save.Image"), System.Drawing.Image)
-        Me.save.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
-        Me.save.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.save.Name = "save"
-        Me.save.Size = New System.Drawing.Size(48, 48)
-        Me.save.Text = "toolStripButton2"
-        '
-        'groupNumber
-        '
-        Me.groupNumber.Font = New System.Drawing.Font("Microsoft YaHei", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-        Me.groupNumber.Name = "groupNumber"
-        Me.groupNumber.Size = New System.Drawing.Size(380, 51)
-        '
         'GradesIA
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -193,13 +193,13 @@ Partial Class GradesIA
 
     Friend WithEvents ЗагрузитьИнформацию As Button
     Friend WithEvents resultTable As DataGridView
+    Friend WithEvents header As ToolStrip
+    Friend WithEvents ToolStripLabel1 As ToolStripLabel
+    Private WithEvents save As ToolStripButton
+    Friend WithEvents groupNumber As ToolStripTextBox
     Friend WithEvents Номер As DataGridViewTextBoxColumn
     Friend WithEvents ФИО As DataGridViewTextBoxColumn
     Friend WithEvents ИАТест As DataGridViewComboBoxColumn
     Friend WithEvents ИАПрактНав As DataGridViewComboBoxColumn
     Friend WithEvents ИАИтог As DataGridViewComboBoxColumn
-    Friend WithEvents header As ToolStrip
-    Friend WithEvents ToolStripLabel1 As ToolStripLabel
-    Private WithEvents save As ToolStripButton
-    Friend WithEvents groupNumber As ToolStripTextBox
 End Class

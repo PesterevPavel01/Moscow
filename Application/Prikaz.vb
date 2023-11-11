@@ -45,7 +45,7 @@ Public Class Prikaz
 
         queryString = sqlQueryString.loadDirector()
         formPrikazList.director = mySQLConnector.loadIntoArray(queryString, 1, 0)
-        flipDirector()
+        formPrikazList.director = flipDirector(formPrikazList.director)
 
         queryString = sqlQueryString.loadDirectorPosition()
         formPrikazList.Position = mySQLConnector.loadIntoArray(queryString, 1, 0)
@@ -67,15 +67,17 @@ Public Class Prikaz
 
     End Sub
 
-    Private Sub flipDirector()
-        Dim result As List(Of String) = New List(Of String)
-        For Each fio As String In formPrikazList.director
-            fio = fio.Trim
-            fio = Strings.Right(fio, 4) & " " & Strings.Left(fio, Strings.Len(fio) - 4)
-            result.Add(fio)
-        Next
-        formPrikazList.director = result.ToArray
-    End Sub
+    'Private Sub flipDirector()
+
+    '    Dim result As List(Of String) = New List(Of String)
+    '    For Each fio As String In formPrikazList.director
+    '        fio = fio.Trim
+    '        fio = Strings.Right(fio, 4) & " " & Strings.Left(fio, Strings.Len(fio) - 4)
+    '        result.Add(fio)
+    '    Next
+    '    formPrikazList.director = result.ToArray
+
+    'End Sub
 
     Private Sub load_ruk_staj()
         Dim queryString As String

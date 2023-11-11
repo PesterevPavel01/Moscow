@@ -110,11 +110,9 @@
     End Sub
     Private Sub groupListTable_DoubleClick(sender As Object, e As EventArgs) Handles groupListTable.DoubleClick
 
-        Dim sqiQuery As String
+        Dim sqlQuery As String
 
         If Not groupListTable.SelectedItems.Item(0).SubItems(1).Text = "удалено" Then
-
-            'StudentsInGroup.ListViewStudentsList.Items.Clear()
 
             numberGr = groupListTable.SelectedItems.Item(0).SubItems(1).Text
             StudentsInGroup.cvalification = MainForm.cvalific
@@ -132,9 +130,9 @@
                 Exit Sub
             End Try
 
-            sqiQuery = checkGroup(kod)
+            sqlQuery = checkGroup(kod)
 
-            infoAboutGroup = MainForm.mySqlConnect.loadMySqlToArray(sqiQuery, 1)
+            infoAboutGroup = MainForm.mySqlConnect.loadMySqlToArray(sqlQuery, 1)
 
             If CStr(infoAboutGroup(0, 0)) = "нет записей" Then
                 MsgBox("Группа была изменена, обновите данные нажатием кнопки 'Загрузить из базы' ")

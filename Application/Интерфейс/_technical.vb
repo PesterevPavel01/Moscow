@@ -1,7 +1,21 @@
 ﻿Imports System.IO
 Imports System.Threading
+Imports WindowsApp2.Prikaz
 
 Module _technical
+
+    Public Function flipDirector(director() As String) As String()
+
+        Dim result As List(Of String) = New List(Of String)
+        For Each fio As String In director
+            fio = fio.Trim
+            fio = Strings.Right(fio, 4) & " " & Strings.Left(fio, Strings.Len(fio) - 4)
+            result.Add(fio)
+        Next
+
+        Return result.ToArray
+
+    End Function
 
     Public Sub activateBlackMode(currentControl As Control, flagOn As Boolean, currentForm As Form)
 
@@ -816,10 +830,6 @@ Module _technical
     Sub saveBook(DOK As Object, vidDok As String, resourcesPath As String)
         Dim sqlQuery As String = ""
         Dim listFolder As List(Of String) = New List(Of String)
-        Dim gruppa
-
-        sqlQuery = QueryString.SQLString_SELECT_dateAndKvalGrupp(MainForm.orderIdGroup)
-        gruppa = MainForm.mySqlConnect.loadMySqlToArray(sqlQuery, 1)
 
         listFolder.Add("Отчеты")
         listFolder.Add("Книги")
@@ -836,13 +846,13 @@ Module _technical
         Dim listFolder As List(Of String) = New List(Of String)
         Dim gruppa
 
-        sqlQuery = QueryString.SQLString_SELECT_dateAndKvalGrupp(MainForm.orderIdGroup)
+        sqlQuery = QueryString.SQLString_dateNumbKvalGrupp(kodGroupp)
         gruppa = mySqlConnector.loadMySqlToArray(sqlQuery, 1)
 
         listFolder.Add("Приказы")
         listFolder.Add(gruppa(0, 0))
         listFolder.Add(gruppa(1, 0))
-        listFolder.Add("Группа N" & checkName(BuildOrder.groupNumber.Text))
+        listFolder.Add("Группа N" & gruppa(2, 0))
         listFolder.Add(grouppDok)
 
         If checkDirectory(resourcesPath, listFolder) Then

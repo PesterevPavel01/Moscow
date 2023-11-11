@@ -19,7 +19,7 @@
 
         End If
 
-        queryString = blanki_loadProgAndDateTFromGroup(MainForm.orderIdGroup)
+        queryString = blanki_loadProgAndDateTFromGroup(argument.orderIdGroup)
 
         group = argument.mySqlConnector.loadMySqlToArray(queryString, 1)
 
@@ -40,7 +40,7 @@
         MSWord.DisplayAlerts = False
         DOK = MSWord.Documents.Add
 
-        Call addHeader(MSWord, DOK, argument.orderDate.ToShortDateString, 1)
+        addHeader(MSWord, DOK, argument.orderDate.ToShortDateString, 1)
 
         DOK.Paragraphs.Add()
 
@@ -48,31 +48,31 @@
 
         numberParagraph = DOK.Paragraphs.count
 
-        Call addParagraph(DOK, numberParagraph, "1. Наименование курса: «" & group(0, 0) & "»", "Times New Roman", 14, 3, 0, 1, 0, False)
+        addParagraph(DOK, numberParagraph, "1. Наименование курса: «" & group(0, 0) & "»", "Times New Roman", 14, 3, 0, 1, 0, False)
 
         DOK.Paragraphs.Add()
 
         numberParagraph = DOK.Paragraphs.count
 
-        Call addParagraph(DOK, numberParagraph, "2. Дата начала обучения: " & group(1, 0).ToShortDateString, "Times New Roman", 14, 3, 0, 1, 0, False)
+        addParagraph(DOK, numberParagraph, "2. Дата начала обучения: " & group(1, 0), "Times New Roman", 14, 3, 0, 1, 0, False)
 
         DOK.Paragraphs.Add()
 
         numberParagraph = DOK.Paragraphs.count
 
-        Call addParagraph(DOK, numberParagraph, "3. ФИО (по паспорту) " & students(0, 0) & " " & students(1, 0) & " " & students(2, 0), "Times New Roman", 14, 3, 0, 1, 0, False)
+        addParagraph(DOK, numberParagraph, "3. ФИО (по паспорту) " & students(0, 0) & " " & students(1, 0) & " " & students(2, 0), "Times New Roman", 14, 3, 0, 1, 0, False)
 
         DOK.Paragraphs.Add()
 
         numberParagraph = DOK.Paragraphs.count
 
-        Call addParagraph(DOK, numberParagraph, "4. Дата рождения: " & students(3, 0).ToShortDateString, "Times New Roman", 14, 3, 0, 1, 0, False)
+        addParagraph(DOK, numberParagraph, "4. Дата рождения: " & students(3, 0), "Times New Roman", 14, 3, 0, 1, 0, False)
 
         DOK.Paragraphs.Add()
 
         numberParagraph = DOK.Paragraphs.count
 
-        Call addParagraph(DOK, numberParagraph, "5. Место рождения: ", "Times New Roman", 14, 3, 0, 1, 0, False)
+        addParagraph(DOK, numberParagraph, "5. Место рождения: ", "Times New Roman", 14, 3, 0, 1, 0, False)
 
         DOK.Paragraphs.Add()
 
@@ -87,86 +87,86 @@
 
         End Try
 
-        Call addParagraph(DOK, numberParagraph, "6. Сведения о высшем/ среднем образовании: окончил(а) " & students(4, 0) & " в " & year & " году ", "Times New Roman", 14, 3, 0, 1, 0, False)
+        addParagraph(DOK, numberParagraph, "6. Сведения о высшем/ среднем образовании: окончил(а) " & students(4, 0) & " в " & year & " году ", "Times New Roman", 14, 3, 0, 1, 0, False)
 
         DOK.Paragraphs.Add()
 
         numberParagraph = DOK.Paragraphs.count
 
-        Call addParagraph(DOK, numberParagraph, "Диплом: серия " & students(6, 0) & " номер диплома " & students(7, 0), "Times New Roman", 14, 3, 0, 1, 0, False)
+        addParagraph(DOK, numberParagraph, "Диплом: серия " & students(6, 0) & " номер диплома " & students(7, 0), "Times New Roman", 14, 3, 0, 1, 0, False)
 
         DOK.Paragraphs.Add()
 
         numberParagraph = DOK.Paragraphs.count
 
-        Call addParagraph(DOK, numberParagraph, "Специальность по диплому: ________________________________________", "Times New Roman", 14, 3, 0, 1, 0, False)
+        addParagraph(DOK, numberParagraph, "Специальность по диплому: ________________________________________", "Times New Roman", 14, 3, 0, 1, 0, False)
 
         DOK.Paragraphs.Add()
 
         numberParagraph = DOK.Paragraphs.count
 
-        Call addParagraph(DOK, numberParagraph, "7. Стаж работы: специальность (по сертификату): «____________________»; ____лет;", "Times New Roman", 14, 3, 0, 1, 0, False)
+        addParagraph(DOK, numberParagraph, "7. Стаж работы: специальность (по сертификату): «____________________»; ____лет;", "Times New Roman", 14, 3, 0, 1, 0, False)
 
         DOK.Paragraphs.Add()
 
         numberParagraph = DOK.Paragraphs.count
 
-        Call addParagraph(DOK, numberParagraph, "8. Сведения о прохождении профессиональной переподготовки (специализации).", "Times New Roman", 14, 3, 0, 1, 0, False)
+        addParagraph(DOK, numberParagraph, "8. Сведения о прохождении профессиональной переподготовки (специализации).", "Times New Roman", 14, 3, 0, 1, 0, False)
 
         DOK.Paragraphs.Add()
 
         numberParagraph = DOK.Paragraphs.count
 
-        Call addParagraph(DOK, numberParagraph, "Наименование программы: «_________________________________________ ____________________»; год_____", "Times New Roman", 14, 3, 0, 1, 0, False)
+        addParagraph(DOK, numberParagraph, "Наименование программы: «_________________________________________ ____________________»; год_____", "Times New Roman", 14, 3, 0, 1, 0, False)
 
         DOK.Paragraphs.Add()
 
         numberParagraph = DOK.Paragraphs.count
 
-        Call addParagraph(DOK, numberParagraph, "Диплом: серия___________ номер _____________", "Times New Roman", 14, 3, 0, 1, 0, False)
+        addParagraph(DOK, numberParagraph, "Диплом: серия___________ номер _____________", "Times New Roman", 14, 3, 0, 1, 0, False)
 
 
         DOK.Paragraphs.Add()
 
         numberParagraph = DOK.Paragraphs.count
 
-        Call addParagraph(DOK, numberParagraph, "9. Сведения о прохождении повышения квалификации", "Times New Roman", 14, 3, 0, 1, 0, False)
+        addParagraph(DOK, numberParagraph, "9. Сведения о прохождении повышения квалификации", "Times New Roman", 14, 3, 0, 1, 0, False)
 
         DOK.Paragraphs.Add()
 
         numberParagraph = DOK.Paragraphs.count
 
-        Call addParagraph(DOK, numberParagraph, "Наименование программы: «________________________________________» год__________________", "Times New Roman", 14, 3, 0, 1, 0, False)
+        addParagraph(DOK, numberParagraph, "Наименование программы: «________________________________________» год__________________", "Times New Roman", 14, 3, 0, 1, 0, False)
 
         DOK.Paragraphs.Add()
 
         numberParagraph = DOK.Paragraphs.count
 
-        Call addParagraph(DOK, numberParagraph, "10. Предыдущий сертификат специалиста", "Times New Roman", 14, 3, 0, 1, 0, False)
+        addParagraph(DOK, numberParagraph, "10. Предыдущий сертификат специалиста", "Times New Roman", 14, 3, 0, 1, 0, False)
 
         DOK.Paragraphs.Add()
 
         numberParagraph = DOK.Paragraphs.count
 
-        Call addParagraph(DOK, numberParagraph, "Наименование специальности «___________________________»; год________.", "Times New Roman", 14, 3, 0, 1, 0, False)
+        addParagraph(DOK, numberParagraph, "Наименование специальности «___________________________»; год________.", "Times New Roman", 14, 3, 0, 1, 0, False)
 
         DOK.Paragraphs.Add()
 
         numberParagraph = DOK.Paragraphs.count
 
-        Call addParagraph(DOK, numberParagraph, "11. Наименование организации работодателя _________________________", "Times New Roman", 14, 3, 0, 1, 0, False)
+        addParagraph(DOK, numberParagraph, "11. Наименование организации работодателя _________________________", "Times New Roman", 14, 3, 0, 1, 0, False)
 
         DOK.Paragraphs.Add()
 
         numberParagraph = DOK.Paragraphs.count
 
-        Call addParagraph(DOK, numberParagraph, "_________________________________________________________________", "Times New Roman", 14, 3, 0, 1, 0, False)
+        addParagraph(DOK, numberParagraph, "_________________________________________________________________", "Times New Roman", 14, 3, 0, 1, 0, False)
 
         DOK.Paragraphs.Add()
 
         numberParagraph = DOK.Paragraphs.count
 
-        Call addParagraph(DOK, numberParagraph, "12. Занимаемая должность: _________________________________________", "Times New Roman", 14, 3, 0, 1, 0, False)
+        addParagraph(DOK, numberParagraph, "12. Занимаемая должность: _________________________________________", "Times New Roman", 14, 3, 0, 1, 0, False)
 
         DOK.Paragraphs.Add()
         DOK.Paragraphs.Add()
@@ -174,20 +174,20 @@
 
         numberParagraph = DOK.Paragraphs.count
 
-        Call addParagraph(DOK, numberParagraph, "«____»_____________					Подпись____________", "Times New Roman", 14, 3, 0, 1, 0, False)
+        addParagraph(DOK, numberParagraph, "«____»_____________					Подпись____________", "Times New Roman", 14, 3, 0, 1, 0, False)
 
         DOK.Paragraphs.Add()
         DOK.Paragraphs.Add()
 
         numberParagraph = DOK.Paragraphs.count
 
-        Call addParagraph(DOK, numberParagraph, "Ответственный за обучение от организации работодателя_____________________		_____________________________", "Times New Roman", 14, 3, 0, 1, 0, False)
+        addParagraph(DOK, numberParagraph, "Ответственный за обучение от организации работодателя_____________________		_____________________________", "Times New Roman", 14, 3, 0, 1, 0, False)
 
         DOK.Paragraphs.Add()
 
         numberParagraph = DOK.Paragraphs.count
 
-        Call addParagraph(DOK, numberParagraph, "			(подпись)					(ФИО ответственного лица)", "Times New Roman", 12, 3, 0, 1, 0, False)
+        addParagraph(DOK, numberParagraph, "			(подпись)					(ФИО ответственного лица)", "Times New Roman", 12, 3, 0, 1, 0, False)
         DOK.Bookmarks("\EndOfDoc").Select
         MSWord.Selection.InsertBreak(Type:=7)
 
@@ -201,19 +201,19 @@
 
             numberParagraph = DOK.Paragraphs.count
 
-            Call addParagraph(DOK, numberParagraph, "3. ФИО (по паспорту) " & students(0, counter) & " " & students(1, counter) & " " & students(2, counter), "Times New Roman", 14, 3, 0, 1, 0, False)
+            addParagraph(DOK, numberParagraph, "3. ФИО (по паспорту) " & students(0, counter) & " " & students(1, counter) & " " & students(2, counter), "Times New Roman", 14, 3, 0, 1, 0, False)
 
             DOK.Paragraphs.Add()
 
             numberParagraph = DOK.Paragraphs.count
 
-            Call addParagraph(DOK, numberParagraph, "4. Дата рождения: " & students(3, counter).ToShortDateString, "Times New Roman", 14, 3, 0, 1, 0, False)
+            addParagraph(DOK, numberParagraph, "4. Дата рождения: " & students(3, counter), "Times New Roman", 14, 3, 0, 1, 0, False)
 
             DOK.Paragraphs.Add()
 
             numberParagraph = DOK.Paragraphs.count
 
-            Call addParagraph(DOK, numberParagraph, "5. Место рождения: ", "Times New Roman", 14, 3, 0, 1, 0, False)
+            addParagraph(DOK, numberParagraph, "5. Место рождения: ", "Times New Roman", 14, 3, 0, 1, 0, False)
 
             DOK.Paragraphs.Add()
 
@@ -228,23 +228,23 @@
 
             End Try
 
-            Call addParagraph(DOK, numberParagraph, "6. Сведения о высшем/ среднем образовании: окончил(а) " & students(4, counter) & " в " & year & " году ", "Times New Roman", 14, 3, 0, 1, 0, False)
+            addParagraph(DOK, numberParagraph, "6. Сведения о высшем/ среднем образовании: окончил(а) " & students(4, counter) & " в " & year & " году ", "Times New Roman", 14, 3, 0, 1, 0, False)
 
             DOK.Paragraphs.Add()
 
             numberParagraph = DOK.Paragraphs.count
 
-            Call addParagraph(DOK, numberParagraph, "Диплом: серия " & students(6, counter) & " номер диплома " & students(7, counter), "Times New Roman", 14, 3, 0, 1, 0, False)
-
+            addParagraph(DOK, numberParagraph, "Диплом: серия " & students(6, counter) & " номер диплома " & students(7, counter), "Times New Roman", 14, 3, 0, 1, 0, False)
 
             DOK.Paragraphs.Add()
             КопироватьВставить(MSWord, DOK, 16, 33)
             DOK.Bookmarks("\EndOfDoc").Select
             MSWord.Selection.InsertBreak(Type:=7)
             counter = counter + 1
+
         End While
 
-        _technical.savePrikazBlank(DOK, MainForm.orderIdGroup, argument.orderType, updateResourcesPath, "Карточки", argument.mySqlConnector)
+        _technical.savePrikazBlank(DOK, argument.orderIdGroup, argument.orderType, updateResourcesPath, "Карточки", argument.mySqlConnector)
         MSWord.Visible = True
 
     End Sub
@@ -528,7 +528,7 @@
             counter = counter + 1
         End While
 
-        _technical.savePrikazBlank(DOK, MainForm.orderIdGroup, argument.orderType, updateResourcesPath, "Заявления", argument.mySqlConnector)
+        _technical.savePrikazBlank(DOK, argument.orderIdGroup, argument.orderType, updateResourcesPath, "Заявления", argument.mySqlConnector)
 
         MSWord.Visible = True
 
@@ -561,7 +561,7 @@
 
         group = argument.mySqlConnector.loadMySqlToArray(sqlQuery, 1)
 
-        sqlQuery = SQLSTring_PKZayavlenie(MainForm.orderIdGroup)
+        sqlQuery = SQLSTring_PKZayavlenie(argument.orderIdGroup)
 
         students = argument.mySqlConnector.loadMySqlToArray(sqlQuery, 1)
 
@@ -795,7 +795,7 @@
             counter = counter + 1
         End While
 
-        _technical.savePrikazBlank(DOK, MainForm.orderIdGroup, argument.orderType, updateResourcesPath, "Заявления", argument.mySqlConnector)
+        _technical.savePrikazBlank(DOK, argument.orderIdGroup, argument.orderType, updateResourcesPath, "Заявления", argument.mySqlConnector)
         MSWord.Visible = True
 
         'Call сохранить(DOK, видПриказа)

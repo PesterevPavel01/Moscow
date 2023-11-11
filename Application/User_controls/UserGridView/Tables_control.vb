@@ -61,18 +61,10 @@ Public Class Tables_control
 
     Public Sub table_init()
 
-        builder.userDGV = Me
-        tableRedactor.userDGV = Me
-
-        aligment_column.Clear()
-
-        aligment_column.Add(0, DataGridViewContentAlignment.MiddleLeft)
-        aligment_column.Add(1, DataGridViewContentAlignment.MiddleLeft)
-        aligment_column.Add(2, DataGridViewContentAlignment.MiddleLeft)
-        aligment_column.Add(3, DataGridViewContentAlignment.MiddleLeft)
-        aligment_column.Add(4, DataGridViewContentAlignment.MiddleLeft)
-        aligment_column.Add(5, DataGridViewContentAlignment.MiddleLeft)
-        aligment_column.Add(6, DataGridViewContentAlignment.MiddleLeft)
+        If Not flagInit Then
+            builder.userDGV = Me
+            tableRedactor.userDGV = Me
+        End If
 
         If number_column = 2 Then
 
@@ -121,15 +113,25 @@ Public Class Tables_control
         End If
 
         redactor_name_element_first.Text = names.redactor_element_first
-
         SplitContainer_main.Panel2Collapsed = True
 
-        result = New DataTable
-
-        DataGridTablesResult.DataSource = result
-
         If Not flagInit Then
+
             flagInit = True
+
+            aligment_column.Clear()
+
+            aligment_column.Add(0, DataGridViewContentAlignment.MiddleLeft)
+            aligment_column.Add(1, DataGridViewContentAlignment.MiddleLeft)
+            aligment_column.Add(2, DataGridViewContentAlignment.MiddleLeft)
+            aligment_column.Add(3, DataGridViewContentAlignment.MiddleLeft)
+            aligment_column.Add(4, DataGridViewContentAlignment.MiddleLeft)
+            aligment_column.Add(5, DataGridViewContentAlignment.MiddleLeft)
+            aligment_column.Add(6, DataGridViewContentAlignment.MiddleLeft)
+
+            result = New DataTable
+            DataGridTablesResult.DataSource = result
+
             keyboardEvents.formParent = Me.ParentForm
             keyboardEvents.userDGV = Me
             keyboardEvents.listCombo.Clear()
@@ -139,7 +141,9 @@ Public Class Tables_control
             If name_table <> "group_list" Then
                 keyboardEvents.userDGV_init()
             End If
+
         End If
+
         load_table()
 
     End Sub
@@ -175,6 +179,21 @@ Public Class Tables_control
         DataGridTablesResult.DataSource = result
 
         builder.build_table()
+
+        checkRows()
+
+    End Sub
+
+    Public Sub checkRows()
+
+        If DataGridTablesResult.Rows.Count <= 0 Then
+
+            Dim nextControl As ToolStrip = adjacentControls("next")
+            nextControl.Focus()
+            nextControl.Select()
+            nextControl.Items(0).Select()
+
+        End If
 
     End Sub
 
@@ -239,6 +258,7 @@ Public Class Tables_control
         Else
             If name_table = "group_list" Then
                 Dim nextControl As ToolStrip = adjacentControls("next")
+                nextControl.Focus()
                 nextControl.Select()
                 nextControl.Items(0).Select()
             End If
