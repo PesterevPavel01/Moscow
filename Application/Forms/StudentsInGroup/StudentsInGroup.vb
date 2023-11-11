@@ -142,20 +142,12 @@ Public Class StudentsInGroup
 
     End Sub
 
-    'Public Sub StudentsInGroup_PreviewKeyDown(e As PreviewKeyDownEventArgs)
-
-    '    Dim N As String = ActiveControl.Name
-    '    e.IsInputKey = True
-
-    'End Sub
-
     Public Sub studentsList_Click()
 
         WindowsApp2.StudentsList.showStudentsList()
         WindowsApp2.StudentsList.insertIntoGroupList.Visible = True
         WindowsApp2.StudentsList.ShowDialog()
-        header.Focus()
-        newStudent.Select()
+        tbl_studentsInGroup.DataGridTablesResult.Focus()
 
 
     End Sub
