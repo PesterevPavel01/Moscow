@@ -40,7 +40,7 @@ Public Class Tables_control
     Public redactor_autoUpdate As Boolean = False
     Public flagRedactorOpen As Boolean = False
     Public flagUpdate As Boolean = False
-    Private flagInit As Boolean = False
+    Public flagInit As Boolean = False
 
 
     Public mySQLConnector As New MySQLConnect
@@ -62,8 +62,10 @@ Public Class Tables_control
     Public Sub table_init()
 
         If Not flagInit Then
+
             builder.userDGV = Me
             tableRedactor.userDGV = Me
+
         End If
 
         If number_column = 2 Then

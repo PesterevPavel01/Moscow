@@ -26,6 +26,7 @@ Public Class MainForm
     Private flag_ToolStrip_name_list As Boolean
     Private flag_worker_dolgnost As Boolean
     Private flag_worker_type As Boolean
+    Private programsFlagInit As Boolean = True
     Public tbl_education As New Tables_control
     Public programs__progrs_tbl As New Tables_control
     Public programs_type_tbl As New Tables_control
@@ -316,82 +317,6 @@ Public Class MainForm
 
     End Sub
 
-    Private Sub redactor_full_name_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs)
-
-        If e.KeyValue = Keys.Tab Then
-
-            e.IsInputKey = True
-
-        ElseIf e.KeyValue = Keys.Left Then
-
-            e.IsInputKey = True
-
-        ElseIf e.KeyValue = Keys.Right Then
-
-            e.IsInputKey = True
-
-        End If
-
-    End Sub
-
-    Sub НормальныйШрифт(контрол As Object)
-
-        контрол.Font = New Font("Microsoft YaHei", 12.0F, FontStyle.Regular)
-
-    End Sub
-    Sub увеличитьШрифт(контрол As Object)
-
-        контрол.Font = New Font("Microsoft YaHei", 14.0F, FontStyle.Regular)
-
-    End Sub
-
-    Private Sub directorName_Click(sender As Object, e As EventArgs)
-        List.textboxName = Me.ActiveControl.Name
-        List.currentFormName = Me.Name
-        List.ShowDialog()
-
-    End Sub
-
-    Private Sub directorPosition_Click(sender As Object, e As EventArgs)
-
-        List.textboxName = ActiveControl.Name
-        List.currentFormName = Name
-        List.ShowDialog()
-
-    End Sub
-
-    Private Sub Согласовано1ДолжностьПУ_Click(sender As Object, e As EventArgs)
-
-        List.textboxName = ActiveControl.Name
-        List.currentFormName = Name
-        List.ShowDialog()
-
-    End Sub
-
-    Private Sub Согласовано2ДолжностьПУ_Click(sender As Object, e As EventArgs)
-
-        List.textboxName = ActiveControl.Name
-        List.currentFormName = Name
-        List.ShowDialog()
-
-    End Sub
-
-    Private Sub Согласовано1ПУ_Click(sender As Object, e As EventArgs)
-
-        List.textboxName = ActiveControl.Name
-        List.currentFormName = Name
-        List.ShowDialog()
-
-    End Sub
-
-    Private Sub Согласовано2ПУ_Click(sender As Object, e As EventArgs)
-
-        List.textboxName = ActiveControl.Name
-        List.currentFormName = Name
-        List.ShowDialog()
-
-    End Sub
-
     Sub inputField(onOff As Boolean, Optional x As Integer = 90, Optional heightText As Integer = 42)
 
         If Not onOff Then
@@ -418,93 +343,80 @@ Public Class MainForm
         End If
     End Sub
 
-    Private Sub Button2_KeyDown(sender As Object, e As KeyEventArgs)
-        If e.KeyCode = switchPageKey Then
-            openNextPage(TabControlOther)
-            e.Handled = True
-        End If
-
-        If e.KeyCode = seitchPageKey_Inverse Then
-            openPrevPage(TabControlOther)
-            e.Handled = True
-        End If
-    End Sub
-
-    Private Sub Button2_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs)
-        If e.KeyCode = switchPageKey Then
-            e.IsInputKey = True
-        End If
-
-        If e.KeyCode = seitchPageKey_Inverse Then
-            e.IsInputKey = True
-        End If
-    End Sub
-
     Private Sub programs__loadPrograms()
-
-        programs__progrs_tbl.Parent = programs_tbl_parent
-        programs__progrs_tbl.Dock = DockStyle.Fill
-        programs__progrs_tbl.Visible = True
-        programs__progrs_tbl.number_column = 2
-
-        programs__progrs_tbl.flag_second_control_combo = True
-
-        programs__progrs_tbl.program_on = True
-
 
         programs__progrs_tbl.queryString_load = program.program__loadPrograms()
 
-        programs__progrs_tbl.width_column.Clear()
-        programs__progrs_tbl.width_column.Add(0, 65)
-        programs__progrs_tbl.width_column.Add(1, 10)
-        programs__progrs_tbl.width_column.Add(2, 0)
-        programs__progrs_tbl.width_column.Add(3, 20)
+        If programsFlagInit Then
 
+            programs__progrs_tbl.Parent = programs_tbl_parent
+            programs__progrs_tbl.Dock = DockStyle.Fill
+            programs__progrs_tbl.Visible = True
+            programs__progrs_tbl.number_column = 2
 
-        programs__progrs_tbl.names.redactor_element_first = "Наименование"
-        programs__progrs_tbl.names.db_element_first = "name"
-        programs__progrs_tbl.names.redactor_element_second = "Часы"
-        programs__progrs_tbl.names.db_element_second = "hours"
-        programs__progrs_tbl.name_table = "program"
+            programs__progrs_tbl.flag_second_control_combo = True
 
-        program.program_loadHoursList()
+            programs__progrs_tbl.program_on = True
 
-        programs__progrs_tbl.comboBox_second_element.settings.item_list = program.struct_progs.list_hours
+            programs__progrs_tbl.width_column.Clear()
+            programs__progrs_tbl.width_column.Add(0, 65)
+            programs__progrs_tbl.width_column.Add(1, 10)
+            programs__progrs_tbl.width_column.Add(2, 0)
+            programs__progrs_tbl.width_column.Add(3, 20)
 
-        programs__progrs_tbl.kod_number = 2
+            programs__progrs_tbl.names.redactor_element_first = "Наименование"
+            programs__progrs_tbl.names.db_element_first = "name"
+            programs__progrs_tbl.names.redactor_element_second = "Часы"
+            programs__progrs_tbl.names.db_element_second = "hours"
+            programs__progrs_tbl.name_table = "program"
+
+            AddHandler programs__progrs_tbl.Enter, AddressOf SplitContainerProgs_Enter
+            AddHandler programs__progrs_tbl.Leave, AddressOf SplitContainerProgs_Leave
+
+            program.program_loadHoursList()
+            programs__progrs_tbl.comboBox_second_element.settings.item_list = program.struct_progs.list_hours
+            programs__progrs_tbl.kod_number = 2
+
+        End If
+
         programs__progrs_tbl.table_init()
 
     End Sub
 
     Private Sub programs__loadType()
 
-        programs_type_tbl.Parent = programs__SplitContainerModulsType.Panel2
-        programs_type_tbl.Dock = DockStyle.Fill
-        programs_type_tbl.Visible = True
-        programs_type_tbl.number_column = 1
-        programs_type_tbl.kod_number = 2
+        If programsFlagInit Then
 
-        programs_type_tbl.type_progs_on = True
-        programs_type_tbl.add_on = False
+            programs_type_tbl.Parent = programs__SplitContainerModulsType.Panel2
+            programs_type_tbl.Dock = DockStyle.Fill
+            programs_type_tbl.Visible = True
+            programs_type_tbl.number_column = 1
+            programs_type_tbl.kod_number = 2
 
-        If programs_type_tbl.width_column.Count = 0 Then
+            programs_type_tbl.type_progs_on = True
+            programs_type_tbl.add_on = False
 
-            programs_type_tbl.width_column.Add(0, 78)
-            programs_type_tbl.width_column.Add(1, 20)
-            programs_type_tbl.width_column.Add(2, 0)
-            programs_type_tbl.width_column.Add(3, -1)
+            If programs_type_tbl.width_column.Count = 0 Then
+
+                programs_type_tbl.width_column.Add(0, 78)
+                programs_type_tbl.width_column.Add(1, 20)
+                programs_type_tbl.width_column.Add(2, 0)
+                programs_type_tbl.width_column.Add(3, -1)
+
+            End If
+
+            programs_type_tbl.numberElementFirst = 1
+            programs_type_tbl.numberElementSecond = 0
+
+            programs_type_tbl.names.redactor_element_first = "Часы"
+            programs_type_tbl.names.db_element_first = "hours"
+            programs_type_tbl.name_table = "progs_type_hours"
+
+
+            AddHandler programs_type_tbl.Enter, AddressOf programs__type_tbl_Enter
+            AddHandler programs_type_tbl.Leave, AddressOf programs__type_tbl_Leave
 
         End If
-
-        programs_type_tbl.numberElementFirst = 1
-        programs_type_tbl.numberElementSecond = 0
-
-        programs_type_tbl.names.redactor_element_first = "Часы"
-        programs_type_tbl.names.db_element_first = "hours"
-        programs_type_tbl.name_table = "progs_type_hours"
-
-        AddHandler programs_type_tbl.Enter, AddressOf programs__type_tbl_Enter
-        AddHandler programs_type_tbl.Leave, AddressOf programs__type_tbl_Leave
 
         programs__tblTypeUpdateContent()
 
@@ -542,11 +454,11 @@ Public Class MainForm
 
     End Sub
 
-    Private Sub ToolStripUpdate_Click(sender As Object, e As EventArgs)
+    'Private Sub ToolStripUpdate_Click(sender As Object, e As EventArgs)
 
-        programms__SplitModulsInProg.SplitterDistance = 540
+    '    programms__SplitModulsInProg.SplitterDistance = 540
 
-    End Sub
+    'End Sub
 
     Public Sub addModulInGroupSelect()
         addMidulInGroupp.Select()
@@ -571,24 +483,6 @@ Public Class MainForm
 
     End Sub
 
-    Private Sub newProgramm_PreviewKeyDown(sender As Object, e As PreviewKeyDownEventArgs)
-
-        If e.KeyValue = Keys.Enter Or e.KeyValue = Keys.Tab Then
-
-            e.IsInputKey = True
-
-        End If
-
-    End Sub
-
-    Private Sub dataGridProgs_MouseEnter(sender As Object, e As EventArgs)
-        program.struct_progs.flagProgTbl = True
-    End Sub
-
-    Private Sub dataGridProgs_MouseLeave(sender As Object, e As EventArgs)
-        program.struct_progs.flagProgTbl = False
-    End Sub
-
     Private Sub comboBoxProgramms_SelectedIndexChanged(sender As Object, e As EventArgs) Handles comboBoxProgramms.SelectedIndexChanged
 
         If comboBoxProgramms.Text = "" Then
@@ -602,7 +496,6 @@ Public Class MainForm
 
     Private Sub programs__loadTables()
 
-
         program.uroven_cval = comboBoxProgramms.Text
 
         programs__loadPrograms()
@@ -615,6 +508,7 @@ Public Class MainForm
 
         programs__panelProgs.Visible = False
         programs__panelType.Visible = False
+        programsFlagInit = False
 
     End Sub
 
@@ -1562,24 +1456,15 @@ Public Class MainForm
             comboBoxProgramms.Focus()
             e.Handled = True
 
-        ElseIf e.KeyValue = Keys.Add Then
-
-            If Not comboBoxProgramms.Text.Trim = "" Then
-
-                ToolStripAddModul_Click(sender, e)
-
-            End If
-
         ElseIf e.KeyValue = Keys.Left Then
 
-            toolStripModulsInProg.Focus()
-            addMidulInGroupp.Select()
 
-        ElseIf e.KeyValue = Keys.R Then
 
-            Dim e1 As DataGridViewCellEventArgs
+            'ElseIf e.KeyValue = Keys.R Then
 
-            DataGridAllModuls_CellDoubleClick(sender, e1)
+            '    Dim e1 As DataGridViewCellEventArgs
+
+            '    DataGridAllModuls_CellDoubleClick(sender, e1)
 
         End If
 

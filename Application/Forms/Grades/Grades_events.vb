@@ -138,19 +138,29 @@ Public Class Grades_events
     End Sub
 
     Private Sub textBoxCell_KeyDown(e As KeyEventArgs)
-
+        Dim typeCell As String
+        Dim s As String
         If IsNothing(resultTable.CurrentCell) Then Return
         If resultTable.CurrentCell.RowIndex = resultTable.RowCount - 1 Then Return
-        Dim type As String = resultTable.CurrentCell.GetType.ToString
-        If type = "System.Windows.Forms.DataGridViewTextBoxCell" Then
+        typeCell = resultTable.CurrentCell.GetType.ToString
+        s = e.KeyCode.ToString
+
+        If typeCell = "System.Windows.Forms.DataGridViewTextBoxCell" Then
+
             If (e.KeyCode >= Keys.D0 And e.KeyCode <= Keys.D9) Or (e.KeyCode >= Keys.NumPad0 And e.KeyCode <= Keys.NumPad9) Or e.KeyCode = Keys.Decimal Then
-                If Len(resultTable.CurrentCell.Value) = 1 And resultTable.CurrentCell.Value = 0 Then resultTable.CurrentCell.Value = ""
-                resultTable.CurrentCell.Value += e.KeyCode.ToString.Replace("NumPad", "").Replace("Decimal", ",").Replace("D", "")
+
+                If Len(resultTable.CurrentCell.Value) = 1 And resultTable.CurrentCell.Value = "0" Then resultTable.CurrentCell.Value = ""
+                resultTable.CurrentCell.Value += Convert.ToString(e.KeyCode.ToString.Replace("NumPad", "").Replace("Decimal", ",").Replace("D", ""))
+
             ElseIf e.KeyCode = Keys.Back Then
+
                 If resultTable.CurrentCell.Value = "" Then Return
                 resultTable.CurrentCell.Value = Left(resultTable.CurrentCell.Value, Len(resultTable.CurrentCell.Value) - 1)
+
             ElseIf e.KeyCode = 188 Or e.KeyCode = 190 Then
+
                 resultTable.CurrentCell.Value += ","
+
             End If
         End If
 

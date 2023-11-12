@@ -122,6 +122,7 @@ Public Class StudentsInGroup
         WindowsApp2.newStudent.fromStudentsList = True
         WindowsApp2.newStudent.ShowDialog()
         WindowsApp2.newStudent.flagRedactor = False
+        tbl_studentsInGroup.DataGridTablesResult.Focus()
 
     End Sub
 
@@ -149,12 +150,13 @@ Public Class StudentsInGroup
         WindowsApp2.StudentsList.ShowDialog()
         tbl_studentsInGroup.DataGridTablesResult.Focus()
 
-
     End Sub
 
     Public Sub newStudent_Click()
         WindowsApp2.newStudent.fromStudentsList = True
         WindowsApp2.newStudent.ShowDialog()
+        tbl_studentsInGroup.DataGridTablesResult.Focus()
+
     End Sub
 
     Public Sub allInfo_Click()

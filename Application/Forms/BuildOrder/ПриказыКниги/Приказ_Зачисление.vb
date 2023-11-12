@@ -36,7 +36,7 @@
         wordApp = CreateObject("Word.Application")
         wordDoc = wordApp.Documents.Open(samplePath, ReadOnly:=True)
 
-        _technical.savePrikazBlank(wordDoc, MainForm.orderIdGroup, argument.orderType, resourcesPath, "Приказы", MainForm.mySqlConnect)
+        _technical.savePrikazBlank(wordDoc, argument.orderIdGroup, argument.orderType, resourcesPath, "Приказы", argument.mySqlConnector)
 
         If argument.orderType = "ПК_Зачисление" Or argument.orderType = "ПК_Зачисление_Доп" Then
             МСВорд.ДобавитьСписокПоМеткеСтрокой(wordDoc, "$СписокСлушателей$", argument.selectedStudents, wordApp)

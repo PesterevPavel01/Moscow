@@ -1,5 +1,4 @@
-﻿
-Public Class DGV_Events
+﻿Public Class DGV_Events
     Public dictionaryFlag As Dictionary(Of String, Boolean)
     Public userDGV As Tables_control
     Public listCombo As New List(Of user_comboBox)
@@ -21,9 +20,9 @@ Public Class DGV_Events
                                       userDGV.tables_control_Activate()
                                   End Sub
 
-        AddHandler userDGV.Enter, Sub()
+        AddHandler userDGV.Leave, Sub()
                                       ' Событие у Слушателей в группе только ставит флаг flag_active_control = True, у программы зажигает индикатор
-                                      userDGV.tables_control_Activate()
+                                      userDGV.tables_control_Leave()
                                   End Sub
 
         'События Дата грид

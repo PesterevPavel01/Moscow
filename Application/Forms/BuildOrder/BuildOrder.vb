@@ -20,7 +20,6 @@ Public Class BuildOrder
 
     Private Sub build_Click(sender As Object, e As EventArgs) Handles КнопкаСформировать.Click
 
-        enabledRun(False)
         Dim checkContent As Boolean
 
         checkContent = checkField(Me)
@@ -35,9 +34,13 @@ Public Class BuildOrder
                 Warning.content.Text = "Необходимо заполнить все обязательные поля!"
                 openForm(Warning)
             End Try
-            Exit Sub
+
+            Return
 
         End If
+
+        enabledRun(False)
+
         orderArgument.orderType = currentOrderType
         Select Case orderArgument.orderType
 
@@ -80,7 +83,7 @@ Public Class BuildOrder
         orderArgument.orderIdGroup = MainForm.orderIdGroup
         orderArgument.groupNumber = groupNumber.Text
         orderArgument.mySqlConnector = MainForm.mySqlConnect
-        orderArgument.orderDate = ДатаПриказа.Value
+        orderArgument.orderDate = ДатаПриказа.Text
         orderArgument.practical = ПрактическаяПодготовка.Text
         orderArgument.approves = Утверждает.Text
         orderArgument.approvesPosition = УтверждаетДолжность.Text
@@ -753,7 +756,7 @@ Public Class BuildOrder
 
         End If
 
-        If currentOrderType = "ПК_Окончание_уд" Or currentOrderType = "СправкаОбОкончании" Or currentOrderType = "ДоверенностьПолученияБланковСлушателей" Or currentOrderType = "СправкаОбОбучении" Or currentOrderType = "СправкаОбОкончании" Then
+        If currentOrderType = "ПК окончание уд" Or currentOrderType = "СправкаОбОкончании" Or currentOrderType = "ДоверенностьПолученияБланковСлушателей" Or currentOrderType = "СправкаОбОбучении" Or currentOrderType = "СправкаОбОкончании" Then
 
             If Not groupNumber.Text = "" Then
                 loadStudentsList()

@@ -731,6 +731,7 @@ Public Class MainForm_events
         Select Case e.KeyCode
 
             Case Keys.Tab
+
                 If mainForm.DataGridAllModuls.Focused Then
                     If mainForm.programms__SplitContainerModuls.Panel2Collapsed = True Then
                         mainForm.toolStripProgram.Focus()
@@ -755,10 +756,10 @@ Public Class MainForm_events
 
                 If mainForm.DataGridAllModuls.Focused Then
                     If mainForm.programms__SplitContainerModuls.Panel2Collapsed = True Then
-                        Return
-                    Else
                         mainForm.toolStripModulsInProg.Focus()
                         mainForm.addModulInGroupSelect()
+                    Else
+                        Return
                     End If
                 ElseIf mainForm.newModAddHour.Focused() Then
                     mainForm.newModAddName.Focus()

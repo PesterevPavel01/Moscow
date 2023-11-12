@@ -138,7 +138,7 @@
 
     End Function
 
-    Private Sub ТаблицаВедомость_CellValueChanged(sender As Object, e As DataGridViewCellEventArgs) Handles mainTable.CellValueChanged
+    Private Sub mainTable_CellValueChanged(sender As Object, e As DataGridViewCellEventArgs) Handles mainTable.CellValueChanged
 
         Dim value As Double
 

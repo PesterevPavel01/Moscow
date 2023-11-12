@@ -36,7 +36,7 @@ Public Class Order
         BuildOrder.Size = New Size(840, 1020)
         BuildOrder.КнопкаСформировать.Location = New Point(135, 935)
         BuildOrder.КнопкаОчистить.Location = New Point(2, 935)
-        'MainForm.directorPosition.Visible = True
+
         MainForm.ActiveControl = MainForm.TabControlOther.TabPages(2)
 
         MainForm.standard_location()
