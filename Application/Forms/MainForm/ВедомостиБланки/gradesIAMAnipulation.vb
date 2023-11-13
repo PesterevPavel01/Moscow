@@ -90,13 +90,13 @@
 
     End Sub
 
-    Function check(Ведомость As Object) As Boolean
+    Function check(currentTable As DataGridView) As Boolean
 
-        If Ведомость.Rows.Count = 1 Then
+        If currentTable.Rows.Count < 1 Then
 
             Return True
 
-        ElseIf Ведомость.Rows(0).Cells(1).Value = "" Then
+        ElseIf currentTable.Rows(0).Cells(1).Value = "" Then
 
             Return True
 

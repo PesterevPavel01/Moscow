@@ -203,6 +203,11 @@
     End Sub
 
     Public Sub save_Click()
+
+        If IsNothing(mainTable.Rows(0).Cells(0).Value) Then Return
+
+        If mainTable.RowCount < 2 Or mainTable.Rows(0).Cells(0).Value.trim = "" Then Return
+
         Dim arg, arrayNameAndType
         ReDim arg(1)
         ReDim arrayNameAndType(1, 6)

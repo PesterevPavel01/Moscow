@@ -1,8 +1,4 @@
-﻿Imports System.Resources.ResXFileRef
-Imports Microsoft.Office.Interop.Word
-Imports MySql.Data
-
-Public Class Grades_events
+﻿Public Class Grades_events
 
     Public resultTable As DataGridView
     Public header As ToolStrip
@@ -23,6 +19,8 @@ Public Class Grades_events
         If initializationСompleted Then Return
         initializationСompleted = True
 
+        groupNumber.ReadOnly = True
+
         AddHandler currentForm.Shown, Sub()
                                           headerFocus()
                                       End Sub
@@ -32,6 +30,7 @@ Public Class Grades_events
                                         End Sub
 
         AddHandler currentForm.PreviewKeyDown, Sub(sender As Object, e As PreviewKeyDownEventArgs)
+                                                   e.IsInputKey = True
                                                    formPreviewKeyDown(e, sender)
                                                End Sub
 
@@ -42,6 +41,14 @@ Public Class Grades_events
         AddHandler saveButton.Click, Sub(sender As Object, e As EventArgs)
                                          save_Click()
                                      End Sub
+
+        AddHandler header.PreviewKeyDown, Sub(sender As Object, e As PreviewKeyDownEventArgs)
+                                              If e.KeyCode = Keys.Enter Then e.IsInputKey = True
+                                          End Sub
+
+        AddHandler header.KeyDown, Sub(sender As Object, e As KeyEventArgs)
+                                       headerKeyDown(e, sender)
+                                   End Sub
 
         AddHandler resultTable.Enter, Sub()
                                           resultTable_Enter()
@@ -171,7 +178,7 @@ Public Class Grades_events
     End Sub
 
     Private Sub resultTable_Enter()
-        If resultTable.Rows.Count < 1 Then
+        If resultTable.Rows.Count < 1 Or groupNumber.Text.Trim = "" Then
             headerFocus()
             Return
         End If
@@ -338,6 +345,20 @@ Public Class Grades_events
 
     End Sub
 
+    Private Sub headerKeyDown(e As KeyEventArgs, sender As Object)
+
+        gradesPressDown(e)
+        gradesPressUp(e)
+        gradesPressTab(e)
+        gradesPressRight(e)
+        gradesPressLeft(e)
+
+        If Not flagDropDown Then
+            closeEsc(currentForm, e.KeyCode)
+        End If
+
+    End Sub
+
     Private Sub formKeyDown(e As KeyEventArgs, sender As Object)
 
         gradesPressDown(e)
@@ -346,10 +367,24 @@ Public Class Grades_events
         gradesPressEnter(e)
         gradesPressRight(e)
 
+        If e.KeyCode = Keys.F Then
+            header.Focus()
+            groupNumber.Focus()
+        End If
+
         If Not flagDropDown Then
             closeEsc(currentForm, e.KeyCode)
         End If
 
+    End Sub
+    Private Sub gradesPressLeft(e As KeyEventArgs)
+
+        If e.KeyCode = Keys.Left Then
+            If saveButton.Selected Then
+                header.Focus()
+                groupNumber.Focus()
+            End If
+        End If
     End Sub
     Private Sub gradesPressRight(e As KeyEventArgs)
 
@@ -365,11 +400,14 @@ Public Class Grades_events
 
         If e.KeyCode = Keys.Enter Then
             If resultTable.Focused Then
+            ElseIf saveButton.Selected Then
+                save_Click()
             ElseIf groupNumber.Focused Then
                 e.Handled = True
                 gradesGroupNumberClick()
             End If
         End If
+
     End Sub
 
     Private Sub gradesPressTab(e As KeyEventArgs)
@@ -382,18 +420,20 @@ Public Class Grades_events
     End Sub
 
     Private Sub gradesPressUp(e As KeyEventArgs)
+
         If e.KeyCode = Keys.Up Then
             If resultTable.Focused Then
                 If rowSelected(resultTable.Rows(0).Cells) Then headerFocus()
                 Return
-            ElseIf header.Focused Or groupNumber.Focused Or saveButton.Selected Then
-                If resultTable.Rows.Count < 1 Then
+            ElseIf header.Focused Or groupNumber.Focused Or saveButton.Selected Or groupNumber.Text.Trim = "" Then
+                If resultTable.Rows.Count < 1 Or groupNumber.Text.Trim = "" Then
                     headerFocus()
                     Return
                 End If
                 resultTable.Focus()
             End If
         End If
+
     End Sub
 
     Private Function rowSelected(row As DataGridViewCellCollection) As Boolean
@@ -408,8 +448,8 @@ Public Class Grades_events
         If e.KeyCode = Keys.Down Then
             If resultTable.Focused Then
                 Return
-            ElseIf header.Focused Or groupNumber.Focused Or saveButton.Selected Then
-                If resultTable.Rows.Count < 1 Then
+            ElseIf header.Focused Or groupNumber.Focused Or saveButton.Selected Or groupNumber.Text.Trim = "" Then
+                If resultTable.Rows.Count < 1 Or groupNumber.Text.Trim = "" Then
                     headerFocus()
                     Return
                 End If
