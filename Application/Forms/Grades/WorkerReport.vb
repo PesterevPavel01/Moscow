@@ -9,6 +9,7 @@
     Private modulsTable As DataTable
     Dim queryString As String
     Private tables As List(Of DGVBuilder)
+    Private initializationСompleted As Boolean = False
 
     Public myEvents As New Grades_events
 
@@ -30,7 +31,7 @@
         sumIA.Clear()
         sumResult.Clear()
 
-
+        mainTable.ReadOnly = False
         mainTable.Rows.Clear()
         programTable = New DataTable()
 
@@ -43,7 +44,9 @@
 
             Warning.content.Text = "Нет данных для отображения"
             openForm(Warning)
-            ActiveControl = mainTable
+            'mainTable.CurrentCell = mainTable.Rows(0).Cells(0)
+            'mainTable.Focus()
+            'myEvents.headerFocus()
             Exit Sub
 
         End If
@@ -226,31 +229,10 @@
 
     End Sub
 
-    'Private Sub WorkerReport_KeyDown(sender As Object, e As KeyEventArgs) Handles MyBase.KeyDown
-    '    closeEsc(Me, e.KeyCode)
-    'End Sub
-
-    'Private Sub groupNumber_Click(sender As Object, e As EventArgs) Handles groupNumber.Click
-
-    '    List.resultList.Columns(0).Width = 120
-    '    List.resultList.Columns.Add("Год", 100)
-    '    List.resultList.Columns.Add("Код", 100)
-    '    List.textboxName = sender.Name
-    '    List.currentFormName = "WorkerReport"
-
-    '    List.ShowDialog()
-
-    '    List.resultList.Columns.RemoveAt(1)
-    '    List.resultList.Columns.RemoveAt(2)
-    '    List.resultList.Columns(1).Width = 50
-    '    List.resultList.Columns(1).Width = 620
-    '    List.resultList.Columns(1).Text = "Наименование"
-
-    '    loadTables()
-
-    'End Sub
-
     Public Sub WorkerReport_Init()
+
+        If initializationСompleted Then Return
+        initializationСompleted = True
 
         dvgBuilderProg = New DGVBuilder
         dvgBuilderHours = New DGVBuilder
@@ -327,4 +309,5 @@
         myEvents.resultTable = mainTable
         myEvents.init()
     End Sub
+
 End Class

@@ -38,6 +38,14 @@ Partial Class WorkerReport
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Группа = New System.Windows.Forms.TextBox()
         Me.mainTable = New System.Windows.Forms.DataGridView()
+        Me.ФИО = New System.Windows.Forms.DataGridViewComboBoxColumn()
+        Me.Лекции = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Практические = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Стимулирующие = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Консультация = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.ПА = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.ИА = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Итого = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.ПодписьИтого = New System.Windows.Forms.TextBox()
         Me.sumLectures = New System.Windows.Forms.TextBox()
         Me.sumPracticals = New System.Windows.Forms.TextBox()
@@ -67,14 +75,6 @@ Partial Class WorkerReport
         Me.DataGridViewTextBoxColumn5 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn6 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn7 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.ФИО = New System.Windows.Forms.DataGridViewComboBoxColumn()
-        Me.Лекции = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Практические = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Стимулирующие = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Консультация = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.ПА = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.ИА = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Итого = New System.Windows.Forms.DataGridViewTextBoxColumn()
         CType(Me.mainTable, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.pednagr__splitContainerMain, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.pednagr__splitContainerMain.Panel1.SuspendLayout()
@@ -147,6 +147,73 @@ Partial Class WorkerReport
         Me.mainTable.RowHeadersVisible = False
         Me.mainTable.Size = New System.Drawing.Size(1134, 804)
         Me.mainTable.TabIndex = 7
+        '
+        'ФИО
+        '
+        Me.ФИО.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.ComboBox
+        Me.ФИО.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.ФИО.HeaderText = "ФИО"
+        Me.ФИО.Name = "ФИО"
+        Me.ФИО.Width = 300
+        '
+        'Лекции
+        '
+        Me.Лекции.HeaderText = "Лекции"
+        Me.Лекции.Name = "Лекции"
+        Me.Лекции.ReadOnly = True
+        Me.Лекции.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Лекции.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        Me.Лекции.Width = 120
+        '
+        'Практические
+        '
+        Me.Практические.HeaderText = "Практ. занятия"
+        Me.Практические.Name = "Практические"
+        Me.Практические.ReadOnly = True
+        Me.Практические.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Практические.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        Me.Практические.Width = 120
+        '
+        'Стимулирующие
+        '
+        Me.Стимулирующие.HeaderText = "Стимул. занятия"
+        Me.Стимулирующие.Name = "Стимулирующие"
+        Me.Стимулирующие.ReadOnly = True
+        Me.Стимулирующие.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Стимулирующие.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        Me.Стимулирующие.Width = 120
+        '
+        'Консультация
+        '
+        Me.Консультация.HeaderText = "Консультация"
+        Me.Консультация.Name = "Консультация"
+        Me.Консультация.ReadOnly = True
+        Me.Консультация.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Консультация.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        Me.Консультация.Width = 140
+        '
+        'ПА
+        '
+        Me.ПА.HeaderText = "ПА"
+        Me.ПА.Name = "ПА"
+        Me.ПА.ReadOnly = True
+        Me.ПА.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.ПА.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        '
+        'ИА
+        '
+        Me.ИА.HeaderText = "ИА"
+        Me.ИА.Name = "ИА"
+        Me.ИА.ReadOnly = True
+        Me.ИА.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.ИА.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        '
+        'Итого
+        '
+        Me.Итого.HeaderText = "Итого нагрузка"
+        Me.Итого.Name = "Итого"
+        Me.Итого.ReadOnly = True
+        Me.Итого.Width = 120
         '
         'ПодписьИтого
         '
@@ -594,73 +661,6 @@ Partial Class WorkerReport
         Me.DataGridViewTextBoxColumn7.Name = "DataGridViewTextBoxColumn7"
         Me.DataGridViewTextBoxColumn7.ReadOnly = True
         Me.DataGridViewTextBoxColumn7.Width = 120
-        '
-        'ФИО
-        '
-        Me.ФИО.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.ComboBox
-        Me.ФИО.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.ФИО.HeaderText = "ФИО"
-        Me.ФИО.Name = "ФИО"
-        Me.ФИО.Width = 300
-        '
-        'Лекции
-        '
-        Me.Лекции.HeaderText = "Лекции"
-        Me.Лекции.Name = "Лекции"
-        Me.Лекции.ReadOnly = True
-        Me.Лекции.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Лекции.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        Me.Лекции.Width = 120
-        '
-        'Практические
-        '
-        Me.Практические.HeaderText = "Практ. занятия"
-        Me.Практические.Name = "Практические"
-        Me.Практические.ReadOnly = True
-        Me.Практические.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Практические.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        Me.Практические.Width = 120
-        '
-        'Стимулирующие
-        '
-        Me.Стимулирующие.HeaderText = "Стимул. занятия"
-        Me.Стимулирующие.Name = "Стимулирующие"
-        Me.Стимулирующие.ReadOnly = True
-        Me.Стимулирующие.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Стимулирующие.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        Me.Стимулирующие.Width = 120
-        '
-        'Консультация
-        '
-        Me.Консультация.HeaderText = "Консультация"
-        Me.Консультация.Name = "Консультация"
-        Me.Консультация.ReadOnly = True
-        Me.Консультация.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Консультация.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        Me.Консультация.Width = 140
-        '
-        'ПА
-        '
-        Me.ПА.HeaderText = "ПА"
-        Me.ПА.Name = "ПА"
-        Me.ПА.ReadOnly = True
-        Me.ПА.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.ПА.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        '
-        'ИА
-        '
-        Me.ИА.HeaderText = "ИА"
-        Me.ИА.Name = "ИА"
-        Me.ИА.ReadOnly = True
-        Me.ИА.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.ИА.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        '
-        'Итого
-        '
-        Me.Итого.HeaderText = "Итого нагрузка"
-        Me.Итого.Name = "Итого"
-        Me.Итого.ReadOnly = True
-        Me.Итого.Width = 120
         '
         'WorkerReport
         '

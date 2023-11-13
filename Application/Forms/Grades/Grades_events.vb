@@ -62,6 +62,8 @@ Public Class Grades_events
                                               End If
                                               If locate = Convert.ToString(e.RowIndex) + Convert.ToString(e.ColumnIndex) Then
                                                   flagMouseClick = True
+                                              Else
+                                                  flagMouseClick = False
                                               End If
                                           End Sub
 
@@ -115,7 +117,9 @@ Public Class Grades_events
                                                      e.IsInputKey = True
                                                  End Sub
                 AddHandler combo.Enter, Sub()
-                                            If flagMouseClick Then combo.DroppedDown = True
+                                            If flagMouseClick Then
+                                                combo.DroppedDown = True
+                                            End If
                                         End Sub
                 flagCellEvent = True
                 Exit For
@@ -260,9 +264,10 @@ Public Class Grades_events
     End Sub
 
     Private Sub comboPressDown(combo As ComboBox, e As KeyEventArgs, sender As DataGridViewCell)
+
         If combo.DroppedDown = True Then Return
 
-        If sender.RowIndex = resultTable.Rows.Count + 1 Then
+        If sender.RowIndex = resultTable.Rows.Count - 1 Then
             headerFocus()
             e.Handled = True
             Return
@@ -292,6 +297,7 @@ Public Class Grades_events
         List.resultList.Columns(1).Text = "Наименование"
 
         resultTable.Visible = False
+
         If kodGroup <> -1 Then
 
             Select Case currentForm.Name
@@ -304,13 +310,24 @@ Public Class Grades_events
             End Select
 
             resultTable_addCellHandler()
+
         End If
-        If resultTable.Rows.Count < 1 Then
-            headerFocus()
-        Else
-            resultTable.CurrentCell = resultTable.Rows(0).Cells(0)
-        End If
+
         resultTable.Visible = True
+
+        If currentForm.Name = "WorkerReport" Then
+            resultTable.CurrentCell = resultTable.Rows(0).Cells(1)
+            resultTable.Focus()
+        Else
+            If resultTable.Rows.Count < 1 Then
+                headerFocus()
+            Else
+                resultTable.CurrentCell = resultTable.Rows(0).Cells(0)
+                resultTable.Focus()
+            End If
+        End If
+
+
     End Sub
 
     Private Sub formPreviewKeyDown(e As PreviewKeyDownEventArgs, sender As Object)
@@ -387,6 +404,7 @@ Public Class Grades_events
     End Function
 
     Private Sub gradesPressDown(e As KeyEventArgs)
+
         If e.KeyCode = Keys.Down Then
             If resultTable.Focused Then
                 Return
@@ -398,9 +416,10 @@ Public Class Grades_events
                 resultTable.Focus()
             End If
         End If
+
     End Sub
 
-    Private Sub headerFocus()
+    Public Sub headerFocus()
         header.Focus()
         groupNumber.Focus()
     End Sub
