@@ -658,6 +658,7 @@ Partial Class newGroup
         '
         'НоваяГруппаФормаОбучения
         '
+        Me.НоваяГруппаФормаОбучения.AccessibleRole = System.Windows.Forms.AccessibleRole.None
         Me.НоваяГруппаФормаОбучения.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.НоваяГруппаФормаОбучения.FormattingEnabled = True
         Me.НоваяГруппаФормаОбучения.ItemHeight = 16

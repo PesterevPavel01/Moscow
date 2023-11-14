@@ -10,6 +10,9 @@
     Private sort_events As New SearchSort_events
     Public gruppaData As New Group.strGruppa
 
+    Dim toolCboxReaction As New ToolComboBoxReaction
+    Public dictionaryFlag As New Dictionary(Of String, Boolean)
+
     Sub search()
 
         Dim serchCol As String, sortCol As String
@@ -158,6 +161,7 @@
 
             Case Keys.Escape
 
+                If yearSpravochnikGr.DroppedDown Then Return
                 Close()
 
             Case Keys.Down
@@ -175,6 +179,10 @@
             Case Keys.Enter
 
                 enterPressed(sender, e)
+
+            Case Keys.F
+
+                keyFPressed(sender, e)
 
             Case Keys.Tab
 
@@ -212,6 +220,17 @@
         End If
 
     End Sub
+
+    Private Sub keyFPressed(sender As Object, e As KeyEventArgs)
+        Dim year As String = ""
+        If searchRow.Focused Then Return
+        e.SuppressKeyPress = True
+        BtnFocus.Focus()
+        header.Focus()
+        sortSettings.Select()
+
+    End Sub
+
     Private Sub enterPressed(sender As Object, e As KeyEventArgs)
 
         If ActiveControl.Name = "groupListTable" Then
@@ -354,6 +373,7 @@
 
     Private Sub СправочникГруппы_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
+
         If Not search_events.initializationСompleted Then
 
             search_events.currentForm = Group__serchSettings
@@ -380,6 +400,8 @@
         swichCvalification.po = poOn
         swichCvalification.pk = pkOn
         swichCvalification.init()
+
+        toolCboxReaction.init(dictionaryFlag, yearSpravochnikGr)
 
     End Sub
 
@@ -423,12 +445,14 @@
 
     End Sub
 
-    Private Sub yearSpravochnikGr_KeyPress(sender As Object, e As KeyPressEventArgs) Handles yearSpravochnikGr.KeyPress
-        If e.KeyChar = Convert.ToChar(Keys.Enter) Then
-            yearSpravochnikGr.DroppedDown = Not yearSpravochnikGr.DroppedDown
-            e.Handled = True
-        End If
-    End Sub
+    'Private Sub yearSpravochnikGr_KeyPress(sender As Object, e As KeyPressEventArgs) Handles yearSpravochnikGr.KeyPress
+    '    If e.KeyChar = Convert.ToChar(Keys.Enter) Then
+    '        If Not yearSpravochnikGr.DroppedDown Then
+    '            yearSpravochnikGr.DroppedDown = Not yearSpravochnikGr.DroppedDown
+    '        End If
+    '        e.Handled = True
+    '    End If
+    'End Sub
 
     Private Sub groupListTable_Enter(sender As Object, e As EventArgs) Handles groupListTable.Enter
 

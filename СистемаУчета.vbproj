@@ -159,6 +159,7 @@
     <Compile Include="ApplicationEvents.vb" />
     <Compile Include="Application\Forms\BuildOrder\OrderArgument.vb" />
     <Compile Include="Application\Forms\Grades\Grades_events.vb" />
+    <Compile Include="Application\Forms\GroupList\ToolComboBoxReaction.vb" />
     <Compile Include="Application\Forms\MainForm\Отчеты\ReportArgument.vb" />
     <Compile Include="Application\Forms\MainForm\Book.vb" />
     <Compile Include="Application\Forms\MainForm\BooksArgument.vb" />
@@ -334,10 +335,10 @@
     </Compile>
     <Compile Include="Application\dataBase\InsertIntoDataBase.vb" />
     <Compile Include="Application\Интерфейс\addMask.vb" />
-    <Compile Include="Application\Forms\GroupList.Designer.vb">
+    <Compile Include="Application\Forms\GroupList\GroupList.Designer.vb">
       <DependentUpon>GroupList.vb</DependentUpon>
     </Compile>
-    <Compile Include="Application\Forms\GroupList.vb">
+    <Compile Include="Application\Forms\GroupList\GroupList.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Application\Forms\MainForm\MainForm.Designer.vb">
@@ -422,7 +423,7 @@
     <EmbeddedResource Include="Application\Forms\newGroup\newGroup.resx">
       <DependentUpon>newGroup.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Application\Forms\GroupList.resx">
+    <EmbeddedResource Include="Application\Forms\GroupList\GroupList.resx">
       <DependentUpon>GroupList.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Application\Forms\MainForm\MainForm.resx">

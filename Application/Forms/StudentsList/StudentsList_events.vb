@@ -319,6 +319,10 @@ Public Class StudentsList_events
 
                 keyEnterPressed(sender, e)
 
+            Case Keys.F
+
+                keyFPressed(sender, e)
+
         End Select
 
     End Sub
@@ -394,6 +398,16 @@ Public Class StudentsList_events
         ListViewСписокСлушателей_DoubleClick(sender, e)
 
     End Sub
+
+    Private Sub keyFPressed(sender As Object, e As KeyEventArgs)
+
+        e.SuppressKeyPress = True
+        If studentsList.searchRow.Focused Then Return
+        studentsList.BtnFocus.Focus()
+        studentsList.header.Focus()
+        studentsList.sortSetts.Select()
+
+    End Sub
     Private Sub ListViewСписокСлушателей_DoubleClick(sender As Object, e As EventArgs)
 
         Dim queryString As String
@@ -423,11 +437,11 @@ Public Class StudentsList_events
 
     Private Sub keyDownPressed()
 
-        'If Not studentsList.ListViewСписокСлушателей.Focused Then
+        If Not studentsList.ListViewСписокСлушателей.Focused Then
 
-        '    SendKeys.Send("{tab}")
+            studentsList.ListViewСписокСлушателей.Focus()
 
-        'End If
+        End If
 
     End Sub
 

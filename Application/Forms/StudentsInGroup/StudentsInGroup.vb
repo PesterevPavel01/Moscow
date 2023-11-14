@@ -128,18 +128,21 @@ Public Class StudentsInGroup
 
     Public Sub studentsInGroup_KeyDown(e As KeyEventArgs)
 
-        If tbl_studentsInGroup.flag_active_control And tbl_studentsInGroup.flagUpdate Then
 
-            Select Case e.KeyCode
-                Case Keys.Escape
+
+        Select Case e.KeyCode
+
+            Case Keys.Escape
+                If tbl_studentsInGroup.flag_active_control And tbl_studentsInGroup.flagUpdate Then
                     tbl_studentsInGroup.builder.redactorClose()
-            End Select
+                    Return
+                End If
+            Case Keys.F
+                header.Focus()
+                newStudent.Select()
+        End Select
 
-        Else
-
-            closeEsc(Me, e.KeyCode)
-
-        End If
+        closeEsc(Me, e.KeyCode)
 
     End Sub
 
