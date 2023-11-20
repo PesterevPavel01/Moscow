@@ -435,6 +435,7 @@ Module _technical
 
             'updateStudentsInGroup.updateFormStudentsInGroup(GroupList.kod)
             StudentsInGroup.tbl_studentsInGroup.load_table()
+            StudentsInGroup.updateStudentsCounter()
 
         Else MsgBox("Слушатель уже добавлен в группу")
 

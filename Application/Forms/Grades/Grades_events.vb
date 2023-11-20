@@ -92,6 +92,8 @@
 
         Dim count As Int16 = resultTable.Rows.Count
 
+        If resultTable.Rows.Count < 1 Then Return
+
         For Each cell As DataGridViewCell In resultTable.Rows(0).Cells.OfType(Of System.Windows.Forms.DataGridViewComboBoxCell)
 
             Dim type As String = cell.GetType.ToString
@@ -322,7 +324,7 @@
 
         resultTable.Visible = True
 
-        If currentForm.Name = "WorkerReport" Then
+        If currentForm.Name = "WorkerReport" And resultTable.Rows.Count > 0 Then
             resultTable.CurrentCell = resultTable.Rows(0).Cells(1)
             resultTable.Focus()
         Else
@@ -399,10 +401,13 @@
     Private Sub gradesPressEnter(e As KeyEventArgs)
 
         If e.KeyCode = Keys.Enter Then
+
             If resultTable.Focused Then
+
             ElseIf saveButton.Selected Then
                 save_Click()
             ElseIf groupNumber.Focused Then
+                e.SuppressKeyPress = True
                 e.Handled = True
                 gradesGroupNumberClick()
             End If
@@ -447,7 +452,9 @@
 
         If e.KeyCode = Keys.Down Then
             If resultTable.Focused Then
+
                 Return
+
             ElseIf header.Focused Or groupNumber.Focused Or saveButton.Selected Or groupNumber.Text.Trim = "" Then
                 If resultTable.Rows.Count < 1 Or groupNumber.Text.Trim = "" Then
                     headerFocus()

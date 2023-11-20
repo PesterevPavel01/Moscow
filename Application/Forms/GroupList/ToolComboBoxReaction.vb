@@ -9,10 +9,6 @@
 
         Dim currentCBox As ComboBox
         currentCBox = toolCBox.ComboBox
-        'currentCBox.DropDownStyle = ComboBoxStyle.DropDown
-        'currentCBox.FlatStyle = FlatStyle.Standard
-        'currentCBox.AutoCompleteMode = AutoCompleteMode.None
-        'currentCBox.AutoCompleteSource = AutoCompleteSource.None
 
         dictionaryFlag = New Dictionary(Of String, Boolean)
 

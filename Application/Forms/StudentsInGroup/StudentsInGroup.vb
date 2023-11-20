@@ -63,10 +63,13 @@ Public Class StudentsInGroup
         End If
 
         tbl_studentsInGroup.queryString_load = studentList__studentListInGroup(GroupList.kod)
-
+        uploader.groupId = GroupList.kod
 
         uploader.load_listOrganization()
         uploader.load_listFinancing()
+
+        updateStudentsCounter()
+
         tbl_studentsInGroup.comboBox_second_element.settings.item_list = uploader.listOrganization
         tbl_studentsInGroup.comboBox_first_element.settings.item_list = uploader.listFinancing
 
@@ -75,6 +78,11 @@ Public Class StudentsInGroup
 
         formEvents.init()
 
+    End Sub
+
+    Public Sub updateStudentsCounter()
+        uploader.load_studentsCounter()
+        studentsCounter.Text = uploader.studentsCounter
     End Sub
 
     Public Sub dataGridTables_RemoveStudent(snils As String, name As String)
@@ -103,7 +111,9 @@ Public Class StudentsInGroup
         If InsertIntoDataBase.checkUniq_No2() = 2 Then
             InsertIntoDataBase.deleteFromDB_NumberArg()
             tbl_studentsInGroup.load_table()
+            updateStudentsCounter()
         End If
+
 
     End Sub
 
@@ -194,9 +204,11 @@ Public Class StudentsInGroup
 
         If tbl_studentsInGroup.flagRedactorOpen Then
             tbl_studentsInGroup.flagRedactorOpen = False 'нужно, чтобы не обновлять каждый раз значения в редакторе по userDGV.DataGridTablesResult.SelectionChanged
+            updateStudentsCounter()
             tbl_studentsInGroup.load_table()
             tbl_studentsInGroup.flagRedactorOpen = True
         Else
+            updateStudentsCounter()
             tbl_studentsInGroup.load_table()
         End If
 

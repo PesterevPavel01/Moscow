@@ -1,6 +1,7 @@
 ﻿
 Public Class StudentsInGroup_uploader
-
+    Public studentsCounter As Int16
+    Public groupId As Int16
     Public listOrganization As String()
     Public listFinancing As String()
     Dim queryString As String
@@ -17,6 +18,18 @@ Public Class StudentsInGroup_uploader
 
         queryString = loadFinancing()
         listFinancing = mySQLConnector.loadIntoArray(queryString, 1, 0)
+
+    End Sub
+
+    Public Sub load_studentsCounter()
+
+        Dim listResult As List(Of String)
+        studentsCounter = 0
+        queryString = loadStudentsCounter(groupId)
+        listResult = mySQLConnector.mySqlToList(queryString, 1, 0)
+        If Not listResult.Count = 1 Then Return
+        If Not IsNumeric(listResult(0)) Then Return
+        studentsCounter = listResult(0)
 
     End Sub
 

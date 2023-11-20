@@ -35,6 +35,7 @@ Partial Class StudentsInGroup
         Me.everyone = New System.Windows.Forms.ToolStripButton()
         Me.allInfo = New System.Windows.Forms.ToolStripButton()
         Me.orders = New System.Windows.Forms.ToolStripButton()
+        Me.studentsCounter = New System.Windows.Forms.ToolStripTextBox()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SplitContainer1.Panel2.SuspendLayout()
         Me.SplitContainer1.SuspendLayout()
@@ -128,7 +129,7 @@ Partial Class StudentsInGroup
         '
         Me.header.AllowMerge = False
         Me.header.BackColor = System.Drawing.SystemColors.ButtonFace
-        Me.header.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.newStudent, Me.studentsList, Me.everyone, Me.allInfo, Me.orders})
+        Me.header.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.newStudent, Me.studentsList, Me.everyone, Me.allInfo, Me.orders, Me.studentsCounter})
         Me.header.Location = New System.Drawing.Point(0, 0)
         Me.header.Name = "header"
         Me.header.Size = New System.Drawing.Size(1899, 47)
@@ -190,6 +191,19 @@ Partial Class StudentsInGroup
         Me.orders.Text = "документы"
         Me.orders.ToolTipText = "документы"
         '
+        'studentsCounter
+        '
+        Me.studentsCounter.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
+        Me.studentsCounter.BackColor = System.Drawing.Color.WhiteSmoke
+        Me.studentsCounter.BorderStyle = System.Windows.Forms.BorderStyle.None
+        Me.studentsCounter.Enabled = False
+        Me.studentsCounter.Font = New System.Drawing.Font("Microsoft YaHei", 26.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
+        Me.studentsCounter.Margin = New System.Windows.Forms.Padding(1, 0, 20, 0)
+        Me.studentsCounter.Name = "studentsCounter"
+        Me.studentsCounter.ReadOnly = True
+        Me.studentsCounter.Size = New System.Drawing.Size(60, 47)
+        Me.studentsCounter.Text = "0"
+        '
         'StudentsInGroup
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -230,4 +244,5 @@ Partial Class StudentsInGroup
     Friend WithEvents toolOrders As ToolStrip
     Friend WithEvents closePanelOrders As ToolStripButton
     Friend WithEvents panelOrders As Panel
+    Friend WithEvents studentsCounter As ToolStripTextBox
 End Class

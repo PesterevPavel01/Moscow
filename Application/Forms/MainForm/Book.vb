@@ -98,6 +98,9 @@ Public Class Book
 
         listData = rotateArray(listData)
 
+        Dim x = UBound(listData, 1) + 1
+        Dim y = UBound(listData, 2) + 1
+
         excellSheet.Range("A3").Resize(UBound(listData, 1) + 1, UBound(listData, 2) + 1) = listData
 
         With excellSheet.Range("A3").Resize(UBound(listData, 1) + 1, UBound(listData, 2) + 1)
@@ -110,7 +113,7 @@ Public Class Book
 
         numberPar = wordDoc.Paragraphs.Count
 
-        excellSheet.Range("A1").Resize(UBound(listData, 1) + 1, 12).Copy
+        excellSheet.Range("A1").Resize(UBound(listData, 1) + 3, 12).Copy
         endDoc = wordDoc.Paragraphs(numberPar)
         endDoc.Range.Select
         wordApp.Selection.paste

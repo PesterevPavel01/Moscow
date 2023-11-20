@@ -1049,6 +1049,13 @@ Module QueryString
         Return sqlString
 
     End Function
+    Public Function loadStudentsCounter(group As Int16)
+
+        sqlString = "SELECT COUNT(students)  FROM group_list WHERE Kod=" + Convert.ToString(group)
+
+        Return sqlString
+
+    End Function
 
     Public Function loadOrganization()
 

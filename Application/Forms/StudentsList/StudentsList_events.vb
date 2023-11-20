@@ -1,6 +1,4 @@
 ﻿
-Imports WindowsApp2.Student
-
 Public Class StudentsList_events
     Private flag_rowSelect As Boolean = False
     Public studentsList As StudentsList
@@ -218,7 +216,11 @@ Public Class StudentsList_events
 
                 If Not InsertIntoDataBase.checkDuplicates() Then
 
-                    StudentsInGroup.tbl_studentsInGroup.load_table()
+                    If StudentsInGroup.tbl_studentsInGroup.flagInit Then
+                        StudentsInGroup.tbl_studentsInGroup.load_table()
+                        StudentsInGroup.updateStudentsCounter()
+                    End If
+
                     счетчик = 0
                     While счетчик < UBound(studentsList.massiv, 1)
 
@@ -228,6 +230,8 @@ Public Class StudentsList_events
                     End While
 
                 End If
+
+                studentsList.search()
 
             End If
         End If
@@ -401,8 +405,8 @@ Public Class StudentsList_events
 
     Private Sub keyFPressed(sender As Object, e As KeyEventArgs)
 
-        e.SuppressKeyPress = True
         If studentsList.searchRow.Focused Then Return
+        e.SuppressKeyPress = True
         studentsList.BtnFocus.Focus()
         studentsList.header.Focus()
         studentsList.sortSetts.Select()

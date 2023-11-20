@@ -157,6 +157,8 @@
 
     Private Sub groupList_KeyDown(sender As Object, e As KeyEventArgs) Handles Me.KeyDown
 
+        Dim n As Int16 = e.KeyCode
+
         Select Case e.KeyCode
 
             Case Keys.Escape
@@ -164,9 +166,13 @@
                 If yearSpravochnikGr.DroppedDown Then Return
                 Close()
 
+            Case Keys.Up
+
+                upPressed(e)
+
             Case Keys.Down
 
-                dounPressed()
+                dounPressed(e)
 
             Case Keys.Right
 
@@ -260,16 +266,24 @@
         End If
 
     End Sub
+    Private Sub upPressed(e As KeyEventArgs)
 
-    Private Sub dounPressed()
+        If yearSpravochnikGr.Focused Then
+            e.SuppressKeyPress = True
+            If groupListTable.Items.Count > 0 Then groupListTable.Focus()
+        End If
+
+    End Sub
+    Private Sub dounPressed(e As KeyEventArgs)
 
         Dim Str As String
         Name = ActiveControl.Name
 
-        If Not ActiveControl.Name = "groupListTable" Then
-            'SendKeys.Send("{tab}")
-        Else
-            Try
+        If yearSpravochnikGr.Focused Then
+            e.SuppressKeyPress = True
+            If groupListTable.Items.Count > 0 Then groupListTable.Focus()
+        ElseIf ActiveControl.Name = "groupListTable" Then
+                Try
                 Str = groupListTable.SelectedItems.Item(0).SubItems(1).Text
             Catch ex As Exception
 
@@ -462,4 +476,5 @@
         End If
 
     End Sub
+
 End Class
