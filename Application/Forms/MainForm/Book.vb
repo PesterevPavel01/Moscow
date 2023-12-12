@@ -1,4 +1,6 @@
 ﻿Imports System.Threading
+Imports System.Windows.Forms.VisualStyles.VisualStyleElement.ProgressBar
+Imports Microsoft.Office.Interop.Word
 
 Public Class Book
 
@@ -54,8 +56,9 @@ Public Class Book
         Dim wordApp
         Dim wordDoc, endDoc
         Dim excellApp, excellTemplate, excellWorkBook, excellSheet
-        Dim listData
+        Dim listData, Range
         Dim templatePath, newFilePath, resourcesPath, name As String
+        Dim aligmentList As List(Of Integer) = New List(Of Integer)
 
 
         If argument.type = "Удостоверение" Then
@@ -86,8 +89,13 @@ Public Class Book
         wordApp = CreateObject("Word.Application")
         wordDoc = wordApp.Documents.Open(templatePath, ReadOnly:=True)
         Dim numberPar = wordDoc.Paragraphs.Count
-        addParagraph(wordDoc, 2, "за период с " & argument.dateStart & " по " & argument.dateEnd, "Times New Roman", 14, 1, 0, 1, 0, False)
-        wordDoc.Paragraphs.Add()
+        'addParagraph(wordDoc, 2, "за период с " & argument.dateStart & " по " & argument.dateEnd, "Times New Roman", 14, 1, 0, 1, 0, False)
+        replaceTextInWordApp(wordDoc.Range, "$ДатаН$", argument.dateStart, WdReplace.wdReplaceAll)
+        replaceTextInWordApp(wordDoc.Range, "$ДатаК$", argument.dateEnd, WdReplace.wdReplaceAll)
+
+        'wordDoc.Paragraphs(2).Range.Text = "за период с " & argument.dateStart & " по " & argument.dateEnd
+        'wordDoc.Paragraphs.Add()
+
         excellApp = CreateObject("Excel.Application")
         excellApp.DisplayAlerts = False
         excellTemplate = excellApp.Workbooks.Open(resourcesPath & "Шаблоны/Книги учета/Книга учета выданных " & name & ".xlsx", ReadOnly:=True)
@@ -101,21 +109,44 @@ Public Class Book
         Dim x = UBound(listData, 1) + 1
         Dim y = UBound(listData, 2) + 1
 
+        For i = 1 To UBound(listData, 2) + 1
+            excellSheet.Cells(3, i).Select
+            aligmentList.Add(excellSheet.Cells(3, i).HorizontalAlignment)
+        Next
+
         excellSheet.Range("A3").Resize(UBound(listData, 1) + 1, UBound(listData, 2) + 1) = listData
 
         With excellSheet.Range("A3").Resize(UBound(listData, 1) + 1, UBound(listData, 2) + 1)
             .EntireRow.AutoFit
         End With
 
-
         excellSheet.Columns("B:B").Select
         excellApp.Selection.NumberFormat = "0"
 
-        numberPar = wordDoc.Paragraphs.Count
+        For i = 1 To aligmentList.Count
+            Range = excellSheet.Cells(3, i)
+            Range = Range.Resize(UBound(listData, 1) + 3, 1)
+            Range.Select
+            Range.HorizontalAlignment = aligmentList(i - 1)
+        Next
+
+        Dim flagPoint = False
+
+        For Each currentParagraph In wordDoc.Paragraphs
+            If InStr(currentParagraph.Range.Text, "$Таблица$") > 0 Then
+                currentParagraph.Range.Select
+                flagPoint = True
+            End If
+        Next
+
+        If Not flagPoint Then
+            numberPar = wordDoc.Paragraphs.Count
+            endDoc = wordDoc.Paragraphs(numberPar)
+            endDoc.Range.Select
+        End If
 
         excellSheet.Range("A1").Resize(UBound(listData, 1) + 3, 12).Copy
-        endDoc = wordDoc.Paragraphs(numberPar)
-        endDoc.Range.Select
+
         wordApp.Selection.paste
 
         _technical.saveBook(wordDoc, "Книга учета " & argument.type, resourcesPath)

@@ -535,7 +535,7 @@ Module _technical
 
     End Function
 
-    Sub replaceTextInWordApp(ВесьТекст As Object, ЗаменяемыйТекст As String, ТекстНаКоторыйМеняем As String, Optional КоличествоЗамен As Integer = 2)
+    Sub replaceTextInWordApp(ВесьТекст As Object, ЗаменяемыйТекст As String, ТекстНаКоторыйМеняем As String, Optional КоличествоЗамен As Object = 2)
 
         ВесьТекст.Find.Execute(FindText:=ЗаменяемыйТекст, ReplaceWith:=ТекстНаКоторыйМеняем, Replace:=КоличествоЗамен)
 

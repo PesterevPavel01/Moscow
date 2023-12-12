@@ -1,4 +1,6 @@
 ﻿Imports System.Threading
+Imports Microsoft.Office.Interop.Word
+
 Module ПП_ПриложениеКДиплому
 
     Dim SC As SynchronizationContext
@@ -6,7 +8,7 @@ Module ПП_ПриложениеКДиплому
     Dim readyBackSide As Boolean = False
     Sub ПП_ПриложениеКДиплому(argument As OrderArgument)
 
-        Dim ВторойПоток As Thread
+        Dim secondThread As Thread
 
         Dim wordApp
         Dim wordDoc, location, range
@@ -65,12 +67,12 @@ Module ПП_ПриложениеКДиплому
         params(0) = students
         params(1) = group
 
-        ВторойПоток = New Thread(AddressOf createBackSide)
-        ВторойПоток.IsBackground = True
-        ВторойПоток.Start(params)
+        secondThread = New Thread(AddressOf createBackSide)
+        secondThread.IsBackground = True
+        secondThread.Start(params)
 
         wordApp.DisplayAlerts = False
-        'ПриложениеВорд.Visible = True
+        'wordApp.Visible = True
 
         replaceTextInWordApp(wordDoc.Range, "$ДКонец$", students(18, 0))
         replaceTextInWordApp(wordDoc.Range, "$ДатаВ$", students(17, 0))
@@ -99,23 +101,21 @@ Module ПП_ПриложениеКДиплому
 
         For счетчикСлушателей = 1 To UBound(students, 2)
 
-            location(0, счетчикСлушателей) = wordDoc.Paragraphs().Count - 1
+            '    location(0, счетчикСлушателей) = wordDoc.Paragraphs().Count - 1
 
             wordDoc.Bookmarks("\EndOfDoc").Range.PasteAndFormat(0)
             wordDoc.Bookmarks("\EndOfDoc").Range.Delete
-            location(1, счетчикСлушателей) = wordDoc.Paragraphs.Count
+            '    location(1, счетчикСлушателей) = wordDoc.Paragraphs.Count
         Next
 
         For счетчикСлушателей = 0 To UBound(students, 2)
-            range = wordDoc.Paragraphs(location(0, счетчикСлушателей)).Range
-            range.SetRange(Start:=range.Start,
-                                 End:=wordDoc.Paragraphs(location(1, счетчикСлушателей)).Range.End)
-
-            replaceTextInWordApp(range, "$Фамилия$", students(0, счетчикСлушателей))
-            replaceTextInWordApp(range, "$Имя$", students(1, счетчикСлушателей))
-            replaceTextInWordApp(range, "$Отчество$", students(2, счетчикСлушателей))
-            replaceTextInWordApp(range, "$НаимДОО$", students(19, счетчикСлушателей))
-            replaceTextInWordApp(range, "$НомерДиплома$", students(16, счетчикСлушателей))
+            'range.SetRange(Start:=range.Start,
+            '                     End:=wordDoc.Paragraphs(location(1, счетчикСлушателей)).Range.End)
+            replaceTextInWordApp(wordDoc.Range, "$Фамилия$", students(0, счетчикСлушателей), WdReplace.wdReplaceOne)
+            replaceTextInWordApp(wordDoc.Range, "$Имя$", students(1, счетчикСлушателей), WdReplace.wdReplaceOne)
+            replaceTextInWordApp(wordDoc.Range, "$Отчество$", students(2, счетчикСлушателей), WdReplace.wdReplaceOne)
+            replaceTextInWordApp(wordDoc.Range, "$НаимДОО$", students(19, счетчикСлушателей), WdReplace.wdReplaceOne)
+            replaceTextInWordApp(wordDoc.Range, "$НомерДиплома$", students(16, счетчикСлушателей), WdReplace.wdReplaceOne)
         Next
 
         wordApp.Visible = True
